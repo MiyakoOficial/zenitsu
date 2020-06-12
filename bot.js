@@ -1,12 +1,8 @@
-function print(todo) {
-    print(todo)
-}
-
 const Discord = require('discord.js');
 const client = new Discord.Client();
 
 client.on('ready', () => {
-    print(`${client.user.tag} está listo!`)
+    console.log(`${client.user.tag} está listo!`)
 });
 
 client.on('message', async (message) => {
