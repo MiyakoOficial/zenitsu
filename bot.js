@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
-
+const config = require('config.json');
 client.on('ready', () => {
     console.log(`${client.user.tag} está listo!`)
     client.user.setPresence({
@@ -31,4 +31,4 @@ client.on('message', async (message) => {
     }
 });
 
-client.login('NzIxMDgwMTkzNjc4MzExNTU0.XuPUVg.wvxc3MlUakZVsxvaqLH4hxwK35o')
+client.login(config.token)
