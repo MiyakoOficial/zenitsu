@@ -9,7 +9,7 @@
     },
     "dependencies": {
         "express": "^4.17.1",
-        "discord.js": "^12.2.1",
+        "discord.js": "^12.2.0",
         "request": "^2.88.2",
         "weather-js": "^2.0.0",
         "megadb": "^3.4.0"
