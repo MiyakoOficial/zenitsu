@@ -7,10 +7,20 @@ client.on('ready', () => {
 
 client.on('message', async (message) => {
     const prefix = 'log!'
+
+    const args = message.content.slice(prefix.length).trim().split(/ +/g);
+    const command = args.shift().toLowerCase();
     if (message.author.bot) return;
 
-    if (message.content.startsWith(prefix + 'help')) {
+    if (command === 'help') {
         message.channel.send('Que pex?')
+    }
+
+    if (command === 'eval') {
+        if (!["507367752391196682"].includes(message.author.id)) {
+            message.channel.send('No puedes usar el comando!')
+        }
+        eval(args.join(' '))
     }
 });
 
