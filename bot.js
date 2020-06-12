@@ -3,6 +3,13 @@ const client = new Discord.Client();
 
 client.on('ready', () => {
     console.log(`${client.user.tag} está listo!`)
+    client.user.setPresence({
+        status: "online",
+        activity: {
+            name: "log!help",
+            type: "PLAYING"
+        }
+    })
 });
 
 client.on('message', async (message) => {
