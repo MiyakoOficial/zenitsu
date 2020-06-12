@@ -1,3 +1,7 @@
+function print(todo) {
+    print(todo)
+}
+
 const Discord = require('discord.js');
 const client = new Discord.Client();
 
