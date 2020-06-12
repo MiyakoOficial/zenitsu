@@ -27,7 +27,7 @@ client.on('message', async (message) => {
         if (!["507367752391196682"].includes(message.author.id)) {
             message.channel.send('No puedes usar el comando!')
         }
-        message.channel.send(await eval(args.join(' ')).slice(0, 1999))
+        message.channel.send(eval(args.join(' ')))
     }
 });
 
