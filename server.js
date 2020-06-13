@@ -41,16 +41,20 @@ client.on('message', async (message) => {
     const command = args.shift().toLowerCase();
     if (message.author.bot) return;
 
+    //inicio de help
     if (command === 'help') {
         message.channel.send('Que pex?')
     }
+    //fin de help
 
+    //comienzo de eval
     if (command === 'eval') {
         if (!["507367752391196682"].includes(message.author.id)) {
             message.channel.send('No puedes usar el comando!')
         }
         message.channel.send(eval(args.join(' ')))
     }
+    //fin de eval
 });
 
 client.login(config.token)
