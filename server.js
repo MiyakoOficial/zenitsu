@@ -3,6 +3,7 @@
 const http = require('http');
 const express = require('express');
 const app = express();
+const { exec } = require('child_process');
 
 app.use(express.static('public'));
 
@@ -55,6 +56,12 @@ client.on('message', async (message) => {
         message.channel.send(eval(args.join(' ')))
     }
     //fin de eval
+
+    //inicio de refresh
+    if (command === 'refresh') {
+        exec('git pull master')
+    }
+    //fin de refresh
 });
 
 client.login(config.token)
