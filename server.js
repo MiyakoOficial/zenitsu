@@ -62,7 +62,7 @@ client.on('message', async (message) => {
         if (!["507367752391196682"].includes(message.author.id)) {
             message.channel.send('No puedes usar el comando!')
         }
-        exec('git pull master')
+        return exec('git pull master')
     }
     //fin de refresh
 });
