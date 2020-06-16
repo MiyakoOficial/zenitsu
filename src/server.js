@@ -1,4 +1,5 @@
 //ESTE CODIGO NO AFECTARA SU BOT, SCRIPT DE ARRANQUE
+const color = 0xf19a00;
 require('dotenv').config();
 const Discord = require('discord.js');
 const client = new Discord.Client();
@@ -7,7 +8,7 @@ const mongoose = require('mongoose');
 mongoose.connect(process.env.MONGODB, { useNewUrlParser: true, useUnifiedTopology: true }).then(() => {
     console.log("[MongoDB] Conectado a la base de datos Mongodb.");
 }).catch((err) => {
-    console.log("[Error] No se puede conectar a la base de datos de Mongodb. Error: "+err);
+    console.log("[Error] No se puede conectar a la base de datos de Mongodb. Error: " + err);
 });
 
 client.on('ready', () => {
@@ -35,14 +36,40 @@ client.on('message', async (message) => {
 
     //comienzo de eval
     if (command === 'eval') {
-        if (!["507367752391196682"].includes(message.author.id)) {
-            return;
+        if (!["507367752391196682", "433415551868600321"].includes(message.author.id))
+            return message.channel.send(
+                "Solo los desarolladores pueden usar esto!"
+            );
+        let limit = 1950;
+        try {
+            let code = args.join(" ");
+            let evalued = await eval(code);
+            let asd = typeof (evalued)
+            evalued = require("util").inspect(evalued, { depth: 0 });
+            let txt = "" + evalued;
+            let limit = 1024
+            if (txt.length > limit) return (txt, "js").then(p => {
+                let embed = new Discord.MessageEmbed()
+                    .setTitle(`Eval`)
+                    .addField(`Entrada`, `\`\`\`js\n${code}\`\`\``)
+                    .addField(`Salida`, `[Click aquí](${p})`)
+                    .addField(`Tipo`, `\`\`\`js\n${asd}\`\`\``.replace("number", "Number").replace("object", "Object").replace("string", "String").replace(undefined, "Undefined").replace("boolean", "Boolean").replace("function", "Function"))
+                    .setColor(color)
+                    .setTimestamp()
+                message.channel.send(embed)
+            })
+            let embed = new Discord.MessageEmbed()
+                .setTitle(`Eval`)
+                .addField(`Entrada`, `\`\`\`js\n${code}\`\`\``)
+                .addField(`Salida`, `\`\`\`js\n${evalued}\n\`\`\``.replace(client.token, "Contenido privado").replace(client.key, "Contenido privado").replace(client.googleapikey, "Contenido privado"))
+                .addField(`Tipo`, `\`\`\`js\n${asd}\`\`\``.replace("number", "Number").replace("object", "Object").replace("string", "String").replace(undefined, "Undefined").replace("boolean", "Boolean").replace("function", "Function"))
+                .setColor(color)
+                .setTimestamp()
+            message.channel.send(embed)
+        } catch (err) {
+            message.channel.send(`\`ERROR\` \`\`\`js\n${err}\n\`\`\``);
         }
-        try{
-        message.channel.send(`\`\`\`${eval(args.join(' '))}\`\`\``)
-    }catch(e){ console.log(`Error: ${e}`)
-}
-}
+    }
     //fin de eval
 
 });
