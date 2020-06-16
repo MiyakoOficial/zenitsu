@@ -38,20 +38,6 @@ client.on('message', async (message) => {
 }
     //fin de eval
 
-    //inicio de reset
-if(command === 'reset'){
-    if (!["507367752391196682"].includes(message.author.id)) {
-        return;
-    }
-    else{
-        message.channel.send(`${client.user.tag} resetandose!`).then(a => {
-            client.destroy()
-            process.exit()
-        })
-    }
-    }
-
-    //fin de reset
 });
 
 client.login(process.env.BOT_TOKEN)
