@@ -2,6 +2,7 @@
 require('dotenv').config();
 const Discord = require('discord.js');
 const client = new Discord.Client();
+const mongoose = require('mongoose');
 client.on('ready', () => {
     console.log(`${client.user.tag} está listo!`)
     client.user.setPresence({
@@ -15,7 +16,6 @@ client.on('ready', () => {
 
 client.on('message', async (message) => {
     const prefix = 'log!'
-
     const args = message.content.slice(prefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
     if (message.author.bot) return;
