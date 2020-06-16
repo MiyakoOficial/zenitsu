@@ -3,6 +3,13 @@ require('dotenv').config();
 const Discord = require('discord.js');
 const client = new Discord.Client();
 const mongoose = require('mongoose');
+
+mongoose.connect(process.env.MONGODB, { useNewUrlParser: true, useUnifiedTopology: true }).then(() => {
+    console.log("[MongoDB] Conectado a la base de datos Mongodb.");
+}).catch((err) => {
+    console.log("[Error] No se puede conectar a la base de datos de Mongodb. Error: "+err);
+});
+
 client.on('ready', () => {
     console.log(`${client.user.tag} está listo!`)
     client.user.setPresence({
