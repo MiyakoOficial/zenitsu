@@ -55,7 +55,8 @@ client.on('message', async (message) => {
         }
         try{
         message.channel.send(`\`\`\`${eval(args.join(' '))}\`\`\``)
-    }catch(e => console.log(`Error: ${e}`))
+    }catch(e){ console.log(`Error: ${e}`)
+}
 }
     //fin de eval
 
