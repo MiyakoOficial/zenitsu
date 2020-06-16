@@ -1,5 +1,5 @@
 //ESTE CODIGO NO AFECTARA SU BOT, SCRIPT DE ARRANQUE
-const color = 0xf19a00;
+const color = 0xfab600;
 require('dotenv').config();
 const Discord = require('discord.js');
 const client = new Discord.Client();
