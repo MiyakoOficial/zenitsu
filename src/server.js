@@ -3,7 +3,7 @@
 const http = require('http');
 const express = require('express');
 const app = express();
-const { exec } = require('child_process');
+//const { exec } = require('child_process');
 
 app.use(express.static('public'));
 
@@ -23,7 +23,7 @@ setInterval(() => {
 
 const Discord = require('discord.js');
 const client = new Discord.Client();
-const config = require('./config.json');
+const config = require('../config.json');
 client.on('ready', () => {
     console.log(`${client.user.tag} está listo!`)
     client.user.setPresence({
@@ -57,14 +57,8 @@ client.on('message', async (message) => {
     }
     //fin de eval
 
-    //inicio de refresh
-    if (command === 'refresh') {
-        if (!["507367752391196682"].includes(message.author.id)) {
-            message.channel.send('No puedes usar el comando!')
-        }
-        return exec('git pull master')
-    }
-    //fin de refresh
+    //inicio de reset
+    //fin de reset
 });
 
 client.login(config.token)
