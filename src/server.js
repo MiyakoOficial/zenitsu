@@ -1,26 +1,5 @@
 //ESTE CODIGO NO AFECTARA SU BOT, SCRIPT DE ARRANQUE
 require('dotenv').config();
-const http = require('http');
-const express = require('express');
-const app = express();
-//const { exec } = require('child_process');
-
-app.use(express.static('public'));
-
-app.get("/", function (request, response) {
-    response.sendFile(__dirname + '/views/index.html');
-});
-
-app.get("/", (request, response) => {
-    response.sendStatus(200);
-});
-
-app.listen(process.env.PORT);
-
-setInterval(() => {
-    http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);
-}, 280000);
-
 const Discord = require('discord.js');
 const client = new Discord.Client();
 client.on('ready', () => {
