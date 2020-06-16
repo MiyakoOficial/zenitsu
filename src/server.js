@@ -44,12 +44,13 @@ if(command === 'reset'){
         return;
     }
     else{
-        message.channel.send(`${client.user.tag} resetandose!`).then(a => }{
+        message.channel.send(`${client.user.tag} resetandose!`).then(a => {
             client.destroy()
             process.exit()
         })
     }
-}
+    }
+
     //fin de reset
 });
 
