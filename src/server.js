@@ -1,5 +1,5 @@
 //ESTE CODIGO NO AFECTARA SU BOT, SCRIPT DE ARRANQUE
-
+require('dotenv').config();
 const http = require('http');
 const express = require('express');
 const app = express();
@@ -51,14 +51,16 @@ client.on('message', async (message) => {
     //comienzo de eval
     if (command === 'eval') {
         if (!["507367752391196682"].includes(message.author.id)) {
-            message.channel.send('No puedes usar el comando!')
+            return;
         }
+        try{
         message.channel.send(`\`\`\`${eval(args.join(' '))}\`\`\``)
-    }
+    }catch(e => console.log(`Error: ${e}`))
+}
     //fin de eval
 
     //inicio de reset
     //fin de reset
 });
 
-client.login(config.token)
+client.login(process.env.BOT_TOKEN)
