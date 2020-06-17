@@ -88,7 +88,7 @@ client.on('message', async (message) => {
         } else {
             try {
                 data.channellogs = channel.id;
-                data.save().catch(e => { return console.log(e); });
+                //data.save().catch(e => { return console.log(e); });
             } catch { return; }
         }
     }
