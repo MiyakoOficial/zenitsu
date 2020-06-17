@@ -73,8 +73,12 @@ client.on('message', async (message) => {
     }
 
     if (command === 'canal') {
-        let doc = await GuildModel.findOne({ id: message.guild.id })
-        message.reply(`Logs: ${doc}`)
+        await GuildModel.findOne({ id: message.guild.id }, async (err, data) => {
+            if (err) return console.log(err);
+
+            if (!data) return message.reply("Este servidor no tiene definido un canal de logs");
+            else return message.reply(`Logs: ${doc.chanellogs}`); // doc.channellogs o como hayas definido el canal de logs (supongo que para eso estás usando esta config)
+        });
     }
 });
 
