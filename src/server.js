@@ -1,15 +1,10 @@
 //ESTE CODIGO NO AFECTARA SU BOT, SCRIPT DE ARRANQUE
 const color = 0xfab600;
+const GuildModel = require('./models/Guild')
 require('dotenv').config();
 const Discord = require('discord.js');
 const client = new Discord.Client();
 const mongoose = require('mongoose');
-
-mongoose.connect(process.env.MONGODB, { useNewUrlParser: true, useUnifiedTopology: true }).then(() => {
-    console.log("[MongoDB] Conectado a la base de datos Mongodb.");
-}).catch((err) => {
-    console.log("[Error] No se puede conectar a la base de datos de Mongodb. Error: " + err);
-});
 
 client.on('ready', () => {
     console.log(`${client.user.tag} está listo!`)
@@ -71,7 +66,21 @@ client.on('message', async (message) => {
         }
     }
     //fin de eval
+    if (command === 'setlogs') {
+        let doc = await GuildModel.findOneAndUpdate({ id: message.guild.id }, { $set: { channellogs: args[0] } })
+        message.reply(`Cambiado a <#${args[0]}>`)
+    }
 
+    if (command === 'canal') {
+        let doc = await GuildModel.findOne({ id: message.guild.id })
+        message.reply(`Logs: ${doc}`)
+    }
 });
 
 client.login(process.env.BOT_TOKEN)
+
+mongoose.connect(process.env.MONGODB, { useNewUrlParser: true, useUnifiedTopology: true }).then(() => {
+    console.log("[MongoDB] Conectado a la base de datos Mongodb.");
+}).catch((err) => {
+    console.log("[Error] No se puede conectar a la base de datos de Mongodb. Error: " + err);
+});
