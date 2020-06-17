@@ -66,6 +66,7 @@ client.on('message', async (message) => {
         }
     }
     //fin de eval
+    //progrando mongoose
     if (command === 'setlogs') {
         let channel = message.mentions.channels.first() || message.guild.channels.cache.get(args[0]);
         if (!channel) return message.reply("Ese canal no existe.");
@@ -82,6 +83,7 @@ client.on('message', async (message) => {
             else return message.reply(`Logs: ${doc.chanellogs}`); // doc.channellogs o como hayas definido el canal de logs (supongo que para eso estás usando esta config)
         });
     }
+    //probando mongoose
 });
 
 client.login(process.env.BOT_TOKEN)
