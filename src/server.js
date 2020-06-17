@@ -66,7 +66,8 @@ client.on('message', async (message) => {
         }
     }
     //fin de eval
-    //progrando mongoose
+    //probando mongoose
+    //comienzo de setlogs
     if (command === 'setlogs') {
         let channel = message.mentions.channels.first() || message.guild.channels.cache.get(args[0]);
         if (!channel) return message.reply("Ese canal no existe.");
@@ -87,7 +88,7 @@ client.on('message', async (message) => {
         }
         return message.reply(`Cambiado a <#${channel.id}>`)
     }
-
+    //fin de setlogs
     if (command === 'canal') {
         await GuildModel.findOne({ id: message.guild.id }, async (err, data) => {
             if (err) return console.log(err);
