@@ -76,12 +76,21 @@ client.on('message', async (message) => {
     }
 
     if (command === 'canal') {
-        await GuildModel.findOne({ id: message.guild.id }, async (err, data) => {
-            if (err) return console.log(err);
-
-            if (!data) return message.reply("Este servidor no tiene definido un canal de logs");
-            else return message.reply(`Logs: ${doc.chanellogs}`); // doc.channellogs o como hayas definido el canal de logs (supongo que para eso estás usando esta config)
-        });
+        let data = await GuildModel.findOne({ id: message.guild.id });
+        if (!data) {
+            try {
+                const configLogs = new GuildModel({
+                    id: message.guild.id,
+                    channellogs: channel.id
+                });
+                configLogs.save().catch(e => { return console.log(e); });
+            } catch { return; }
+        } else {
+            try {
+                data.channellogs = channel.id;
+                data.save().catch(e => { return console.log(e); });
+            } catch { return; }
+        }
     }
     //probando mongoose
 });
