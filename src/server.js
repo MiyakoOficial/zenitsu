@@ -68,14 +68,6 @@ client.on('message', async (message) => {
     //fin de eval
     //progrando mongoose
     if (command === 'setlogs') {
-        let channel = message.mentions.channels.first() || message.guild.channels.cache.get(args[0]);
-        if (!channel) return message.reply("Ese canal no existe.");
-        let doc = await GuildModel.updateOne({ id: message.guild.id }, { $set: { channellogs: channel.id } });
-        //doc.save().catch(e => { return console.log(e) }); // Si es que ocurre algún error, te avisará en consola.
-        return message.reply(`Cambiado a <#${channel.id}>`)
-    }
-
-    if (command === 'canal') {
         let data = await GuildModel.findOne({ id: message.guild.id });
         if (!data) {
             try {
@@ -91,6 +83,16 @@ client.on('message', async (message) => {
                 data.save().catch(e => { return console.log(e); });
             } catch { return; }
         }
+        return message.reply(`Cambiado a <#${channel.id}>`)
+    }
+
+    if (command === 'canal') {
+        await GuildModel.findOne({ id: message.guild.id }, async (err, data) => {
+            if (err) return console.log(err);
+
+            if (!data) return message.reply("Este servidor no tiene definido un canal de logs");
+            else return message.reply(`Logs: ${data.channellogs}`); // doc.channellogs o como hayas definido el canal de logs (supongo que para eso estás usando esta config)
+        });
     }
     //probando mongoose
 });
