@@ -1,6 +1,6 @@
 //ESTE CODIGO NO AFECTARA SU BOT, SCRIPT DE ARRANQUE
 const color = 0xfab600;
-const GuildModel = require('./models/Guild')
+const GuildModel = require('./models/Guild.js')
 require('dotenv').config();
 const Discord = require('discord.js');
 const client = new Discord.Client();
@@ -68,6 +68,7 @@ client.on('message', async (message) => {
     //fin de eval
     if (command === 'setlogs') {
         let doc = await GuildModel.findOneAndUpdate({ id: message.guild.id }, { $set: { channellogs: args[0] } })
+        doc.save()
         message.reply(`Cambiado a <#${args[0]}>`)
     }
 
