@@ -71,7 +71,7 @@ client.on('message', async (message) => {
         let channel = message.mentions.channels.first() || message.guild.channels.cache.get(args[0]);
         if (!channel) return message.reply("Ese canal no existe.");
         let doc = await GuildModel.updateOne({ id: message.guild.id }, { $set: { channellogs: channel.id } });
-        doc.save().catch(e => { return console.log(e) }); // Si es que ocurre algún error, te avisará en consola.
+        //doc.save().catch(e => { return console.log(e) }); // Si es que ocurre algún error, te avisará en consola.
         return message.reply(`Cambiado a <#${channel.id}>`)
     }
 
@@ -88,7 +88,7 @@ client.on('message', async (message) => {
         } else {
             try {
                 data.channellogs = channel.id;
-                //data.save().catch(e => { return console.log(e); });
+                data.save().catch(e => { return console.log(e); });
             } catch { return; }
         }
     }
