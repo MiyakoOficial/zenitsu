@@ -68,6 +68,8 @@ client.on('message', async (message) => {
     //fin de eval
     //progrando mongoose
     if (command === 'setlogs') {
+        let channel = message.mentions.channels.first() || message.guild.channels.cache.get(args[0]);
+        if (!channel) return message.reply("Ese canal no existe.");
         let data = await GuildModel.findOne({ id: message.guild.id });
         if (!data) {
             try {
