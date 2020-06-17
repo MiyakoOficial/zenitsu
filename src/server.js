@@ -66,7 +66,7 @@ client.on('message', async (message) => {
         }
     }
     //fin de eval
-    //probando mongoose
+    //probando mongooseDB
     //comienzo de setlogs
     if (command === 'setlogs') {
         let channel = message.mentions.channels.first() || message.guild.channels.cache.get(args[0]);
@@ -97,7 +97,7 @@ client.on('message', async (message) => {
             else return message.reply(`Logs: ${data.channellogs}`); // doc.channellogs o como hayas definido el canal de logs (supongo que para eso estás usando esta config)
         });
     }
-    //probando mongoose
+    //probando mongooseDB
 });
 
 client.login(process.env.BOT_TOKEN)
