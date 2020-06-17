@@ -1,6 +1,6 @@
 //ESTE CODIGO NO AFECTARA SU BOT, SCRIPT DE ARRANQUE
 const color = 0xfab600;
-const GuildModel = require('Guild.js')
+const GuildModel = require('../src/Guild.js')
 require('dotenv').config();
 const Discord = require('discord.js');
 const client = new Discord.Client();
