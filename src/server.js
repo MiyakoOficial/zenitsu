@@ -67,9 +67,11 @@ client.on('message', async (message) => {
     }
     //fin de eval
     if (command === 'setlogs') {
-        let doc = await GuildModel.findOneAndUpdate({ id: message.guild.id }, { $set: { channellogs: args[0] } })
-        doc.save()
-        message.reply(`Cambiado a <#${args[0]}>`)
+        let channel = message.mentions.channels.first() || message.guild.channels.cache.get(args[0]);
+        if (!channel) return message.reply("Ese canal no existe.");
+        let doc = await GuildModel.findOneAndUpdate({ id: message.guild.id }, { $set: { channellogs: channel.replace(/[<#>]/g, "") } });
+        doc.save().catch(e => { return console.log(e) }); // Si es que ocurre algún error, te avisará en consola.
+        return message.reply(`Cambiado a <#${channel.id}>`)
     }
 
     if (command === 'canal') {
