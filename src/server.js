@@ -67,7 +67,7 @@ client.on('message', async (message) => {
     }
     //fin de eval
     if (command === 'setlogs') {
-        let doc = await GuildModel.findOneAndUpdate({ id: message.guild.id }, { $set: { channellogs: args[0] } })
+        let doc = await GuildModel.findOneAndModify({ id: message.guild.id }, { $set: { channellogs: args[0] } })
         doc.save()
         message.reply(`Cambiado a <#${args[0]}>`)
     }
