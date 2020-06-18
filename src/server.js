@@ -123,7 +123,7 @@ client.on('messageUpdate', async (oldMessage, newMessage) => {
             .addField('Author channel mention', `<#${newMessage.channel.id}>`, false)
             .setFooter(newMessage.guild.name, newMessage.guild.iconURL({ format: 'png', size: 2048 }))
             .setTimestamp()
-        if (data.channellogs === 'defaultValue') return console('No se ha establecido ningun canal en el servidor ' + newMessage.guild.name + '')
+        if (data.channellogs === 'defaultValue') return console.log('No se ha establecido ningun canal en el servidor ' + newMessage.guild.name + '')
         if (err) return console.log(err);
         if (!data) return console.log('Error!')
         else return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }); // doc.channellogs o como hayas definido el canal de logs (supongo que para eso estás usando esta config)
