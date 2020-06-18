@@ -105,7 +105,7 @@ client.on('message', async (message) => {
     //mongoose
 });
 
-cliet.on('messageUpdate', async (oldMessage, newMessage) => {
+client.on('messageUpdate', async (oldMessage, newMessage) => {
     await GuildModel.findOne({ id: newMessage.guild.id }, async (err, data) => {
         if (err) return console.log(err);
 
