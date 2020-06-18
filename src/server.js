@@ -107,7 +107,7 @@ client.on('message', async (message) => {
 
 client.on('messageUpdate', async (oldMessage, newMessage) => {
     await GuildModel.findOne({ id: newMessage.guild.id }, async (err, data) => {
-        if (message.author.bot) return;
+        if (newMessage.author.bot) return;
         let embed = new Discord.MessageEmbed()
             .setColor(color)
             .setTitle('Message Updated')
