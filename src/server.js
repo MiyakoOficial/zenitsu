@@ -110,7 +110,7 @@ client.on('messageUpdate', async (oldMessage, newMessage) => {
         if (err) return console.log(err);
 
         if (!data) return console.log('Error!');
-        else return client.channels.cache.get(data.channellogs).reply(`Logs: ${data.channellogs}`); // doc.channellogs o como hayas definido el canal de logs (supongo que para eso estás usando esta config)
+        else return client.channels.cache.get(`${data.channellogs}`).send(`Logs: ${data.channellogs}`); // doc.channellogs o como hayas definido el canal de logs (supongo que para eso estás usando esta config)
     });
 });
 
