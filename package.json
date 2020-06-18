@@ -11,9 +11,7 @@
         "discord.js": "^12.2.0",
         "dotenv": "^8.2.0",
         "express": "^4.17.1",
-        "mongoose": "^5.9.19",
-        "request": "^2.88.2",
-        "weather-js": "^2.0.0"
+        "mongoose": "^5.9.19"
     },
     "engines": {
         "node": "12.x"
