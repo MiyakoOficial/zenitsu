@@ -105,6 +105,15 @@ client.on('message', async (message) => {
     //mongoose
 });
 
+cliet.on('messageUpdate', async (oldMessage, newMessage) => {
+    await GuildModel.findOne({ id: newMessage.guild.id }, async (err, data) => {
+        if (err) return console.log(err);
+
+        if (!data) return console.log('Error!');
+        else return client.channels.cache.get(data.channellogs).reply(`Logs: ${data.channellogs}`); // doc.channellogs o como hayas definido el canal de logs (supongo que para eso estás usando esta config)
+    });
+});
+
 client.login(process.env.BOT_TOKEN)
 
 mongoose.connect(process.env.MONGODB, { useNewUrlParser: true, useUnifiedTopology: true }).then(() => {
