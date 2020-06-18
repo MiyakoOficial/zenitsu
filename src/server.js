@@ -104,7 +104,7 @@ client.on('message', async (message) => {
     }
     //mongoose
 });
-
+//inicio de eventos
 client.on('messageUpdate', async (oldMessage, newMessage) => {
     await GuildModel.findOne({ id: newMessage.guild.id }, async (err, data) => {
         if (newMessage.author.bot) return;
@@ -151,7 +151,7 @@ client.on('messageDelete', async (message) => {
         else return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { console.log('Error: ' + error + '') }); // doc.channellogs o como hayas definido el canal de logs (supongo que para eso estás usando esta config)
     });
 });
-
+//fin de eventos
 client.login(process.env.BOT_TOKEN)
 
 mongoose.connect(process.env.MONGODB, { useNewUrlParser: true, useUnifiedTopology: true }).then(() => {
