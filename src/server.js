@@ -111,17 +111,39 @@ client.on('messageUpdate', async (oldMessage, newMessage) => {
         if (newMessage.content === oldMessage.content) return;
         let embed = new Discord.MessageEmbed()
             .setColor(color)
-            .setTitle('Message Updated')
-            .addField('Old message', oldMessage.content, true)
-            .addField('New message', newMessage.content, true)
-            .addField('Link', `[Link of the message](https://discordapp.com/channels/${newMessage.guild.id}/${newMessage.channel.id}/${newMessage.id})`, false)
-            .addField('Author', newMessage.author.tag, true)
-            .addField('Author ID', newMessage.author.id, true)
-            .addField('Author mention', `<@${newMessage.author.id}>`, false)
-            .addField('Author channel', newMessage.channel.name, true)
-            .addField('Author channel ID', newMessage.channel.id, true)
-            .addField('Author channel mention', `<#${newMessage.channel.id}>`, false)
+            .setTitle('<:messageUpdate:723267945194586122> Message Updated')
+            .addField('• Old message', oldMessage.content, true)
+            .addField('• New message', newMessage.content, true)
+            .addField('• Link', `[Link of the message](https://discordapp.com/channels/${newMessage.guild.id}/${newMessage.channel.id}/${newMessage.id})`, false)
+            .addField('• Author', newMessage.author.tag, true)
+            .addField('• Author ID', newMessage.author.id, true)
+            .addField('• Author mention', `<@${newMessage.author.id}>`, false)
+            .addField('• Author channel', newMessage.channel.name, true)
+            .addField('• Author channel ID', newMessage.channel.id, true)
+            .addField('• Author channel mention', `<#${newMessage.channel.id}>`, false)
             .setFooter(newMessage.guild.name, newMessage.guild.iconURL({ format: 'png', size: 2048 }))
+            .setTimestamp()
+        if (data.channellogs === 'defaultValue') return console.log('No se ha establecido ningun canal en el servidor ' + newMessage.guild.name + '')
+        if (err) return console.log(err);
+        if (!data) return console.log('Error!')
+        else return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }); // doc.channellogs o como hayas definido el canal de logs (supongo que para eso estás usando esta config)
+    });
+});
+
+client.on('messageDelete', async (message) => {
+    await GuildModel.findOne({ id: message.guild.id }, async (err, data) => {
+        if (message.author.bot) return;
+        let embed = new Discord.MessageEmbed()
+            .setColor(color)
+            .setTitle('<:messageDelete:723270093475414026> Message Deleted')
+            .addField('• Message', message.content)
+            .addField('• Author', message.author.tag, true)
+            .addField('• Author ID', message.author.id, true)
+            .addField('• Author mention', `<@${message.author.id}>`, false)
+            .addField('• Author channel', message.channel.name, true)
+            .addField('• Author channel ID', message.channel.id, true)
+            .addField('• Author channel mention', `<#${message.channel.id}>`, false)
+            .setFooter(message.guild.name, message.guild.iconURL({ format: 'png', size: 2048 }))
             .setTimestamp()
         if (data.channellogs === 'defaultValue') return console.log('No se ha establecido ningun canal en el servidor ' + newMessage.guild.name + '')
         if (err) return console.log(err);
