@@ -107,9 +107,24 @@ client.on('message', async (message) => {
 
 client.on('messageUpdate', async (oldMessage, newMessage) => {
     await GuildModel.findOne({ id: newMessage.guild.id }, async (err, data) => {
+        if (message.author.bot) return;
+        let embed = new Discord.MessageEmbed()
+            .setColor(color)
+            .setTitle('Message Updated')
+            .addField('Old message', oldMessage.content, true)
+            .addField('New message', newMessage.content, true)
+            .addField('Link', `https://discordapp.com/channels/${newMessage.guild.id}/${newMessage.channel.id}/${newMessage.id}`, false)
+            .addField('Author', newMessage.author.tag, true)
+            .addField('Author ID', newMessage.author.id, true)
+            .addField('Author mention', `<@${newMessage.author.id}>`, false)
+            .addField('Author channel', newMessage.channel.name, true)
+            .addField('Author channel ID', newMessage.channel.id, true)
+            .addField('Author channel mention', `<#${newMessage.channel.id}>`, false)
+            .setFooter(newMessage.guild.name, newMessage.guild.iconURL({ format: 'png', size: 2048 }))
+            .setTimestamp()
+        if (data.channellogs === 'defaultValue') return console('No se ha establecido ningun canal en el servidor ' + newMessage.guild.name + '')
         if (err) return console.log(err);
-
-        if (!data) return console.log('Error!');
+        if (!data) return console.log('Error!')
         else return client.channels.cache.get(`${data.channellogs}`).send(`Logs: ${data.channellogs}`); // doc.channellogs o como hayas definido el canal de logs (supongo que para eso estás usando esta config)
     });
 });
