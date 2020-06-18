@@ -28,6 +28,7 @@ client.on('message', async (message) => {
         message.channel.send(new Discord.MessageEmbed()
             .setColor(color)
             .setDescription('Comando: log!setlogs')
+            .setThumbnail(client.user.displayAvatarURL({ format: 'png', size: 2048 }))
         )
     }
     //fin de help
