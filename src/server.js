@@ -126,7 +126,7 @@ client.on('messageUpdate', async (oldMessage, newMessage) => {
         if (data.channellogs === 'defaultValue') return console.log('No se ha establecido ningun canal en el servidor ' + newMessage.guild.name + '')
         if (err) return console.log(err);
         if (!data) return console.log('Error!')
-        else return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }); // doc.channellogs o como hayas definido el canal de logs (supongo que para eso estás usando esta config)
+        else return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { console.log('Error: ' + error + '') }); // doc.channellogs o como hayas definido el canal de logs (supongo que para eso estás usando esta config)
     });
 });
 
@@ -148,7 +148,7 @@ client.on('messageDelete', async (message) => {
         if (data.channellogs === 'defaultValue') return console.log('No se ha establecido ningun canal en el servidor ' + newMessage.guild.name + '')
         if (err) return console.log(err);
         if (!data) return console.log('Error!')
-        else return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }); // doc.channellogs o como hayas definido el canal de logs (supongo que para eso estás usando esta config)
+        else return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { console.log('Error: ' + error + '') }); // doc.channellogs o como hayas definido el canal de logs (supongo que para eso estás usando esta config)
     });
 });
 
