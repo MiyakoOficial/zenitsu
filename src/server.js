@@ -25,7 +25,10 @@ client.on('message', async (message) => {
 
     //inicio de help
     if (command === 'help') {
-        message.channel.send('Que pex?')
+        message.channel.send(new Discord.MessageEmbed()
+            .setColor(color)
+            .setDescription('Comando: log!setlogs')
+        )
     }
     //fin de help
 
