@@ -1,5 +1,5 @@
 //ESTE CODIGO NO AFECTARA SU BOT, SCRIPT DE ARRANQUE
-const color = 0xfab600;
+const color = 0xff0000;
 const GuildModel = require('../src/Guild.js')
 require('dotenv').config();
 const Discord = require('discord.js');
