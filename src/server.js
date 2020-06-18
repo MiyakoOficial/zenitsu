@@ -113,7 +113,7 @@ client.on('messageUpdate', async (oldMessage, newMessage) => {
             .setTitle('Message Updated')
             .addField('Old message', oldMessage.content, true)
             .addField('New message', newMessage.content, true)
-            .addField('Link', `https://discordapp.com/channels/${newMessage.guild.id}/${newMessage.channel.id}/${newMessage.id}`, false)
+            .addField('Link', `[Link of the message](https://discordapp.com/channels/${newMessage.guild.id}/${newMessage.channel.id}/${newMessage.id})`, false)
             .addField('Author', newMessage.author.tag, true)
             .addField('Author ID', newMessage.author.id, true)
             .addField('Author mention', `<@${newMessage.author.id}>`, false)
