@@ -28,7 +28,7 @@ client.on('message', async (message) => {
         message.channel.send({
             embed: new Discord.MessageEmbed()
                 .setColor(color)
-                .setDescription('Comando: log!setlogs')
+                .setDescription('Comandos: log!setlogs, log!ping, log!canal')
                 .setThumbnail(client.user.displayAvatarURL({ format: 'png', size: 2048 }))
         })
     }
@@ -71,6 +71,13 @@ client.on('message', async (message) => {
         }
     }
     //fin de eval
+
+    //inicio de ping
+    if (command === 'ping') {
+        message.channel.send(`Ping: ${client.ws.ping}ms`)
+    }
+    //fin de ping
+
     //mongoose
     //comienzo de setlogs
     if (command === 'setlogs') {
@@ -157,7 +164,7 @@ client.on('roleUpdate', async (oldRole, newRole) => {
         if (oldRole.permissions === newRole.permissions) return;
         let embed = new Discord.MessageEmbed()
             .setTitle('Role Updated')
-            .addField('New perms', newRole.permissions.toArray().join(', ').replace('_', ' '), true)
+            .addField('New perms', newRole.permissions.toArray().join(' | '), true)
             .addField('Role name', newRole.name, true)
             .addField('Role ID', newRole.id, true)
             .setTimestamp()
