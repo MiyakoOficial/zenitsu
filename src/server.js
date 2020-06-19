@@ -161,6 +161,7 @@ client.on('roleUpdate', async (oldRole, newRole) => {
             .addField('New name', newRole.name, true)
             .addField('Role ID', newRole.id, true)
             .setTimestamp()
+            .setFooter(newRole.guild.name, newRole.guild.iconURL({ format: 'png', size: 2048 }))
             .setColor(color)
         if (data.channellogs === 'defaultValue') return console.log('No se ha establecido ningun canal en el servidor ' + newRole.guild.name + '')
         if (err) return console.log(err);
