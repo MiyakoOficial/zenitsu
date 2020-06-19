@@ -164,7 +164,7 @@ client.on('roleUpdate', async (oldRole, newRole) => {
         if (oldRole.permissions === newRole.permissions) return;
         let embed = new Discord.MessageEmbed()
             .setTitle('Role Updated')
-            .addField('New perms', newRole.permissions.toArray().join(' | '), true)
+            .addField('New permissions', newRole.permissions.toArray().join(' | '), true)
             .addField('Role name', newRole.name, true)
             .addField('Role ID', newRole.id, true)
             .setTimestamp()
