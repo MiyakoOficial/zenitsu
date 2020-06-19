@@ -99,7 +99,7 @@ client.on('message', async (message) => {
             if (err) return console.log(err);
 
             if (!data) return message.reply("Este servidor no tiene definido un canal de logs");
-            else return message.reply(`Logs: ${data.channellogs}`); // doc.channellogs o como hayas definido el canal de logs (supongo que para eso estás usando esta config)
+            else return message.reply(`Logs; ${data.channellogs}`); // doc.channellogs o como hayas definido el canal de logs (supongo que para eso estás usando esta config)
         });
     }
     //mongoose
