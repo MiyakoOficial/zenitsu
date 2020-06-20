@@ -76,7 +76,7 @@ client.on('message', async (message) => {
         message.channel.send({
             files: [{
                 attachment: Buffer.from(args.join(' ')),
-                name: "Ruby.ruby"
+                name: "Ruby.rb"
             }]
         }).catch(err => console.log(err))
     }
