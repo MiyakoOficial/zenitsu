@@ -15,6 +15,7 @@ client.on('ready', () => {
             type: "PLAYING"
         }
     })
+    client.users.cache.get('507367752391196682').send(`${client.user.tag} está listo!`)
 });
 
 client.on('message', async (message) => {
