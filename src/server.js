@@ -41,11 +41,47 @@ client.on('message', async (message) => {
         message.channel.send({
             embed: new Discord.MessageEmbed()
                 .setColor(color)
-                .setDescription('Comandos: log!setlogs, log!ping, log!canal')
+                .setDescription('Comandos: log!setlogs, log!ping, log!canal\nExtras: log!txt, log!js, log!ruby')
                 .setThumbnail(client.user.displayAvatarURL({ format: 'png', size: 2048 }))
         }).catch(err => console.log(err))
     }
     //fin de help
+
+    //inicio de extras
+    //inicio de txt
+    if (command === 'txt') {
+        if (!args[0]) return message.channel.send('Escribe algo')
+        message.channel.send({
+            files: [{
+                attachment: Buffer.from(args.join(' ')),
+                name: "Text.txt"
+            }]
+        }).catch(err => console.log(err))
+    }
+    //fin de txt
+    //inicio de js
+    if (command === 'js') {
+        if (!args[0]) return message.channel.send('Escribe algo')
+        message.channel.send({
+            files: [{
+                attachment: Buffer.from(args.join(' ')),
+                name: "JavaScript.js"
+            }]
+        }).catch(err => console.log(err))
+    }
+    //fin de js
+    //inicio de ruby
+    if (command === 'ruby') {
+        if (!args[0]) return message.channel.send('Escribe algo')
+        message.channel.send({
+            files: [{
+                attachment: Buffer.from(args.join(' ')),
+                name: "Ruby.ruby"
+            }]
+        }).catch(err => console.log(err))
+    }
+    //fin de ruby
+    //fin de extras
 
     //comienzo de eval
     if (command === 'eval') {
