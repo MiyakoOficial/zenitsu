@@ -99,7 +99,7 @@ client.on('message', async (message) => {
                 data.save().catch(e => { return console.log(e); });
             } catch { return; }
         }
-        return message.channel.send(`Cambiado a <#${channel.id}>`)
+        return message.channel.send(`Canal establecido en <#${channel.id}>`)
     }
     //fin de setlogs
     if (command === 'canal') {
