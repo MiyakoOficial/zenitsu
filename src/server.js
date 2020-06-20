@@ -120,7 +120,7 @@ client.on('messageUpdate', async (oldMessage, newMessage) => {
     await GuildModel.findOne({ id: newMessage.guild.id }, async (err, data) => {
         if (newMessage.author.bot) return;
         if (newMessage.content === oldMessage.content) return;
-        if (![newMessage.guild.channels.cache.filter(a => a.type === "text").map(a => a.id)].includes(data.channellogs)) return console.log('El canal tiene que ser del Servidor donde estas!');
+        if (!newMessage.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return console.log('El canal tiene que ser del Servidor donde estas!');
         let embed = new Discord.MessageEmbed()
             .setColor(color)
             .setTitle('<:messageUpdate:723267945194586122> Message Updated')
@@ -145,7 +145,7 @@ client.on('messageUpdate', async (oldMessage, newMessage) => {
 client.on('messageDelete', async (message) => {
     await GuildModel.findOne({ id: message.guild.id }, async (err, data) => {
         if (message.author.bot) return;
-        if (![message.guild.channels.cache.filter(a => a.type === "text").map(a => a.id)].includes(data.channellogs)) return console.log('El canal tiene que ser del Servidor donde estas!');
+        if (!message.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return console.log('El canal tiene que ser del Servidor donde estas!');
 
         let embed = new Discord.MessageEmbed()
             .setColor(color)
@@ -169,7 +169,7 @@ client.on('messageDelete', async (message) => {
 client.on('roleUpdate', async (oldRole, newRole) => {
     await GuildModel.findOne({ id: newRole.guild.id }, async (err, data) => {
         if (oldRole.permissions === newRole.permissions) return;
-        if (![newRole.guild.channels.cache.filter(a => a.type === "text").map(a => a.id)].includes(data.channellogs)) return console.log('El canal tiene que ser del Servidor donde estas!');
+        if (!newRole.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return console.log('El canal tiene que ser del Servidor donde estas!');
         let embed = new Discord.MessageEmbed()
             .setTitle('Role Updated')
             .addField('New permissions', newRole.permissions.toArray().join(' | '), true)
@@ -188,7 +188,7 @@ client.on('roleUpdate', async (oldRole, newRole) => {
 client.on('roleUpdate', async (oldRole, newRole) => {
     await GuildModel.findOne({ id: newRole.guild.id }, async (err, data) => {
         if (oldRole.name === newRole.name) return;
-        if (![newRole.guild.channels.cache.filter(a => a.type === "text").map(a => a.id)].includes(data.channellogs)) return console.log('El canal tiene que ser del Servidor donde estas!');
+        if (!newRole.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return console.log('El canal tiene que ser del Servidor donde estas!');
         let embed = new Discord.MessageEmbed()
             .setTitle('Role Updated')
             .addField('Old name', oldRole.name, true)
