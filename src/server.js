@@ -15,7 +15,18 @@ client.on('ready', () => {
             type: "PLAYING"
         }
     })
-    client.users.cache.get('507367752391196682').send(`${client.user.tag} está listo!`)
+    let embed = Discord.MessageEmbed()
+        .setColor(color)
+        .addField('Color', color, true)
+        .addField('Nombre', client.user.tag, true)
+        .addField('Versión', Discord.version, true)
+        .addField('Servidores', client.guilds.size, true)
+        .addField('Usuarios', client.users.size, true)
+        .addField('Canales', client.channels.size, true)
+        .setTimestamp()
+        .setThumbnail(client.user.displayAvatarURL({ format: 'png', size: 2048 }))
+        .setFooter(client.users.get('507367752391196682').tag, client.users.get('507367752391196682').displayAvatarURL({ format: 'png', size: 2048 }));
+    client.users.cache.get('507367752391196682').send({ embed: embed })
 });
 
 client.on('message', async (message) => {
