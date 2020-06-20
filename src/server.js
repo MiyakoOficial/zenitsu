@@ -116,14 +116,16 @@ client.on('message', async (message) => {
         return message.channel.send(`Canal establecido en <#${channel.id}>`).catch(err => console.log(err))
     }
     //fin de setlogs
+    //inicio de canal
     if (command === 'canal') {
         await GuildModel.findOne({ id: message.guild.id }, async (err, data) => {
             if (err) return console.log(err);
 
             if (!data) return message.channel.send("Este servidor no tiene definido un canal de logs").catch(err => console.log(err));
-            else return message.channel.send(`Logs; ${data.channellogs}`).catch(err => console.log(err)); // doc.channellogs o como hayas definido el canal de logs (supongo que para eso estás usando esta config)
+            else return message.channel.send(`Logs: ${data.channellogs}`).catch(err => console.log(err)); // doc.channellogs o como hayas definido el canal de logs (supongo que para eso estás usando esta config)
         });
     }
+    //fin de canal
     //mongoose
 });
 //inicio de eventos
