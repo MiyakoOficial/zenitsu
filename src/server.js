@@ -169,6 +169,7 @@ client.on('message', async (message) => {
 client.on('messageUpdate', async (oldMessage, newMessage) => {
     await GuildModel.findOne({ id: newMessage.guild.id }, async (err, data) => {
         if (newMessage.author.bot) return;
+        if (newMessage.channel.type === 'dm') return;
         if (newMessage.content === oldMessage.content) return;
         if (!newMessage.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return console.log('El canal tiene que ser del Servidor donde estas!');
         let embed = new Discord.MessageEmbed()
@@ -195,6 +196,7 @@ client.on('messageUpdate', async (oldMessage, newMessage) => {
 client.on('messageDelete', async (message) => {
     await GuildModel.findOne({ id: message.guild.id }, async (err, data) => {
         if (message.author.bot) return;
+        if (message.channel.type === 'dm') return;
         if (!message.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return console.log('El canal tiene que ser del Servidor donde estas!');
 
         let embed = new Discord.MessageEmbed()
