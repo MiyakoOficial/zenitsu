@@ -20,13 +20,13 @@ client.on('ready', () => {
         .addField('Color', color, true)
         .addField('Nombre', client.user.tag, true)
         .addField('Versión', Discord.version, true)
-        .addField('Servidores', client.guilds.size, true)
-        .addField('Usuarios', client.users.size, true)
-        .addField('Canales', client.channels.size, true)
+        .addField('Servidores', client.guilds.cache.size, true)
+        .addField('Usuarios', client.users.cache.size, true)
+        .addField('Canales', client.channels.cache.size, true)
         .setTimestamp()
         .setThumbnail(client.user.displayAvatarURL({ format: 'png', size: 2048 }))
         .setFooter(client.users.cache.get('507367752391196682').tag, client.users.cache.get('507367752391196682').displayAvatarURL({ format: 'png', size: 2048 }));
-    client.users.cache.get('507367752391196682').send({ embed: embed })
+    client.users.cache.get('507367752391196682').send({ embed: embed }).catch(err => console.log(err))
 });
 
 client.on('message', async (message) => {
@@ -43,7 +43,7 @@ client.on('message', async (message) => {
                 .setColor(color)
                 .setDescription('Comandos: log!setlogs, log!ping, log!canal')
                 .setThumbnail(client.user.displayAvatarURL({ format: 'png', size: 2048 }))
-        })
+        }).catch(err => console.log(err))
     }
     //fin de help
 
@@ -52,7 +52,7 @@ client.on('message', async (message) => {
         if (!["507367752391196682", "433415551868600321"].includes(message.author.id))
             return message.channel.send(
                 "Solo los desarolladores pueden usar esto!"
-            );
+            ).catch(err => console.log(err));
         let limit = 1950;
         try {
             let code = args.join(" ");
@@ -70,7 +70,7 @@ client.on('message', async (message) => {
                     .setColor(color)
                     .setTimestamp()
                 message.channel.send(embed)
-            })
+            }).catch(err => console.log(err))
             let embed = new Discord.MessageEmbed()
                 .setTitle(`Eval`)
                 .addField(`Entrada`, `\`\`\`js\n${code}\`\`\``)
@@ -78,26 +78,26 @@ client.on('message', async (message) => {
                 .addField(`Tipo`, `\`\`\`js\n${asd}\`\`\``.replace("number", "Number").replace("object", "Object").replace("string", "String").replace(undefined, "Undefined").replace("boolean", "Boolean").replace("function", "Function"))
                 .setColor(color)
                 .setTimestamp()
-            message.channel.send(embed)
+            message.channel.send(embed).catch(err => console.log(err))
         } catch (err) {
-            message.channel.send(`\`ERROR\` \`\`\`js\n${err}\n\`\`\``);
+            message.channel.send(`\`ERROR\` \`\`\`js\n${err}\n\`\`\``).catch(err => console.log(err));
         }
     }
     //fin de eval
 
     //inicio de ping
     if (command === 'ping') {
-        message.channel.send(`Ping: ${client.ws.ping}ms`)
+        message.channel.send(`Ping: ${client.ws.ping}ms`).catch(err => console.log(err))
     }
     //fin de ping
 
     //mongoose
     //comienzo de setlogs
     if (command === 'setlogs') {
-        if (!message.member.hasPermission("ADMINISTRATOR")) return message.channel.send("No tienes el permiso `ADMINISTRATOR`");
+        if (!message.member.hasPermission("ADMINISTRATOR")) return message.channel.send("No tienes el permiso `ADMINISTRATOR`").catch(err => console.log(err));
         let channel = message.mentions.channels.first();
-        if (!channel) return message.channel.send("No has mencionado un canal/Ese canal no existe.");
-        if (![message.guild.channels.cache.filter(a => a.type === "text").map(a => a.id)].includes(channel.id)) return message.channel.send('El canal tiene que ser del Servidor donde estas!');
+        if (!channel) return message.channel.send("No has mencionado un canal/Ese canal no existe.").catch(err => console.log(err));
+        if (![message.guild.channels.cache.filter(a => a.type === "text").map(a => a.id)].includes(channel.id)) return message.channel.send('El canal tiene que ser del Servidor donde estas!').catch(err => console.log(err));
         let data = await GuildModel.findOne({ id: message.guild.id });
         if (!data) {
             try {
@@ -113,15 +113,15 @@ client.on('message', async (message) => {
                 data.save().catch(e => { return console.log(e); });
             } catch { return; }
         }
-        return message.channel.send(`Canal establecido en <#${channel.id}>`)
+        return message.channel.send(`Canal establecido en <#${channel.id}>`).catch(err => console.log(err))
     }
     //fin de setlogs
     if (command === 'canal') {
         await GuildModel.findOne({ id: message.guild.id }, async (err, data) => {
             if (err) return console.log(err);
 
-            if (!data) return message.channel.send("Este servidor no tiene definido un canal de logs");
-            else return message.channel.send(`Logs; ${data.channellogs}`); // doc.channellogs o como hayas definido el canal de logs (supongo que para eso estás usando esta config)
+            if (!data) return message.channel.send("Este servidor no tiene definido un canal de logs").catch(err => console.log(err));
+            else return message.channel.send(`Logs; ${data.channellogs}`).catch(err => console.log(err)); // doc.channellogs o como hayas definido el canal de logs (supongo que para eso estás usando esta config)
         });
     }
     //mongoose
