@@ -25,7 +25,7 @@ client.on('ready', () => {
         .addField('Canales', client.channels.size, true)
         .setTimestamp()
         .setThumbnail(client.user.displayAvatarURL({ format: 'png', size: 2048 }))
-        .setFooter(client.users.get('507367752391196682').tag, client.users.get('507367752391196682').displayAvatarURL({ format: 'png', size: 2048 }));
+        .setFooter(client.users.cache.get('507367752391196682').tag, client.users.cache.get('507367752391196682').displayAvatarURL({ format: 'png', size: 2048 }));
     client.users.cache.get('507367752391196682').send({ embed: embed })
 });
 
