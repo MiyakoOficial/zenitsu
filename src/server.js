@@ -83,7 +83,7 @@ client.on('message', async (message) => {
     if (command === 'setlogs') {
         if (!message.member.hasPermission("ADMINISTRATOR")) return message.channel.send("No tienes el permiso `ADMINISTRATOR`");
         let channel = message.mentions.channels.first() || message.guild.channels.cache.get(args[0]);
-        if (!channel) return message.reply("No has mencionado un canal/Ese canal no existe.");
+        if (!channel) return message.channel.send("No has mencionado un canal/Ese canal no existe.");
         let data = await GuildModel.findOne({ id: message.guild.id });
         if (!data) {
             try {
@@ -99,15 +99,15 @@ client.on('message', async (message) => {
                 data.save().catch(e => { return console.log(e); });
             } catch { return; }
         }
-        return message.reply(`Cambiado a <#${channel.id}>`)
+        return message.channel.send(`Cambiado a <#${channel.id}>`)
     }
     //fin de setlogs
     if (command === 'canal') {
         await GuildModel.findOne({ id: message.guild.id }, async (err, data) => {
             if (err) return console.log(err);
 
-            if (!data) return message.reply("Este servidor no tiene definido un canal de logs");
-            else return message.reply(`Logs; ${data.channellogs}`); // doc.channellogs o como hayas definido el canal de logs (supongo que para eso estás usando esta config)
+            if (!data) return message.channel.send("Este servidor no tiene definido un canal de logs");
+            else return message.channel.send(`Logs; ${data.channellogs}`); // doc.channellogs o como hayas definido el canal de logs (supongo que para eso estás usando esta config)
         });
     }
     //mongoose
