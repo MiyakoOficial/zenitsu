@@ -15,7 +15,7 @@ client.on('ready', () => {
             type: "PLAYING"
         }
     })
-    let embed = Discord.MessageEmbed()
+    let embed = new Discord.MessageEmbed()
         .setColor(color)
         .addField('Color', color, true)
         .addField('Nombre', client.user.tag, true)
