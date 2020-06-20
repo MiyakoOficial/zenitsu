@@ -22,6 +22,7 @@ client.on('message', async (message) => {
     const args = message.content.slice(prefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
     if (message.author.bot) return;
+    if (!message.content.startsWith(prefix)) return;
 
     //inicio de help
     if (command === 'help') {
@@ -82,8 +83,9 @@ client.on('message', async (message) => {
     //comienzo de setlogs
     if (command === 'setlogs') {
         if (!message.member.hasPermission("ADMINISTRATOR")) return message.channel.send("No tienes el permiso `ADMINISTRATOR`");
-        let channel = message.mentions.channels.first() || message.guild.channels.cache.get(args[0]);
+        let channel = message.mentions.channels.first();
         if (!channel) return message.channel.send("No has mencionado un canal/Ese canal no existe.");
+        if (![message.guild.channels.cache.filter(a => a.type === "text").map(a => a.id)].includes(channel.id)) return message.channel.send('El canal tiene que ser del Servidor donde estas!');
         let data = await GuildModel.findOne({ id: message.guild.id });
         if (!data) {
             try {
@@ -117,6 +119,7 @@ client.on('messageUpdate', async (oldMessage, newMessage) => {
     await GuildModel.findOne({ id: newMessage.guild.id }, async (err, data) => {
         if (newMessage.author.bot) return;
         if (newMessage.content === oldMessage.content) return;
+        if (![newMessage.guild.channels.cache.filter(a => a.type === "text").map(a => a.id)].includes(data.channellogs)) return console.log('El canal tiene que ser del Servidor donde estas!');
         let embed = new Discord.MessageEmbed()
             .setColor(color)
             .setTitle('<:messageUpdate:723267945194586122> Message Updated')
@@ -141,6 +144,8 @@ client.on('messageUpdate', async (oldMessage, newMessage) => {
 client.on('messageDelete', async (message) => {
     await GuildModel.findOne({ id: message.guild.id }, async (err, data) => {
         if (message.author.bot) return;
+        if (![message.guild.channels.cache.filter(a => a.type === "text").map(a => a.id)].includes(data.channellogs)) return console.log('El canal tiene que ser del Servidor donde estas!');
+
         let embed = new Discord.MessageEmbed()
             .setColor(color)
             .setTitle('<:messageDelete:723270093475414026> Message Deleted')
@@ -163,6 +168,7 @@ client.on('messageDelete', async (message) => {
 client.on('roleUpdate', async (oldRole, newRole) => {
     await GuildModel.findOne({ id: newRole.guild.id }, async (err, data) => {
         if (oldRole.permissions === newRole.permissions) return;
+        if (![newRole.guild.channels.cache.filter(a => a.type === "text").map(a => a.id)].includes(data.channellogs)) return console.log('El canal tiene que ser del Servidor donde estas!');
         let embed = new Discord.MessageEmbed()
             .setTitle('Role Updated')
             .addField('New permissions', newRole.permissions.toArray().join(' | '), true)
@@ -181,6 +187,7 @@ client.on('roleUpdate', async (oldRole, newRole) => {
 client.on('roleUpdate', async (oldRole, newRole) => {
     await GuildModel.findOne({ id: newRole.guild.id }, async (err, data) => {
         if (oldRole.name === newRole.name) return;
+        if (![newRole.guild.channels.cache.filter(a => a.type === "text").map(a => a.id)].includes(data.channellogs)) return console.log('El canal tiene que ser del Servidor donde estas!');
         let embed = new Discord.MessageEmbed()
             .setTitle('Role Updated')
             .addField('Old name', oldRole.name, true)
