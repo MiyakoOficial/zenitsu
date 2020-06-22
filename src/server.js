@@ -293,7 +293,7 @@ client.on('roleUpdate', async (oldRole, newRole) => {
             .setTitle('Role Updated')
             .addField('Old color', oldRole.hexColor, true)
             .addField('New color', newRole.hexColor, true)
-            .addField('Role ID', newRole.id, true)
+            .addField('Role', `${newRole.name}(${newRole.id})`, true)
             .setTimestamp()
             .setFooter(newRole.guild.name, newRole.guild.iconURL({ format: 'png', size: 2048 }))
             .setColor(color)
