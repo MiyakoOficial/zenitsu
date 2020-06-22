@@ -5,6 +5,7 @@ require('dotenv').config();
 const Discord = require('discord.js');
 const client = new Discord.Client();
 const mongoose = require('mongoose');
+const { info } = require('console');
 
 client.on('ready', () => {
     console.log(`${client.user.tag} está listo!`)
@@ -194,6 +195,33 @@ client.on('messageUpdate', async (oldMessage, newMessage) => {
 });
 
 client.on('messageDelete', async (message) => {
+    try {
+        let info;
+        const al = await message.guild.fetchAuditLogs({
+            limit: 1
+        });
+        let auditlog = al.entries.first();
+        if (
+            auditlog.action === "MESSAGE_DELETE" &&
+            message.author.id === auditlog.target.id
+        ) {
+            if (auditlog.extra.channel.id === message.channel.id) {
+                info =
+                    "Possibly removed by " +
+                    auditlog.executor.tag +
+                    " (Count = " +
+                    auditlog.extra.count +
+                    ")";
+            } else {
+                info = "None, possibly has been removed by the author.";
+            }
+        } else {
+            info = "None, possibly has been removed by the author.";
+        }
+        //info retorna quíen eliminó el mensaje
+    } catch (error) {
+        console.log(error);
+    }
     await GuildModel.findOne({ id: message.guild.id }, async (err, data) => {
         if (message.author.bot) return;
         if (message.channel.type === 'dm') return;
@@ -209,6 +237,7 @@ client.on('messageDelete', async (message) => {
             .addField('• Author channel', message.channel.name, true)
             .addField('• Author channel ID', message.channel.id, true)
             .addField('• Author channel mention', `<#${message.channel.id}>`, false)
+            .addField('Test!', info)
             .setFooter(message.guild.name, message.guild.iconURL({ format: 'png', size: 2048 }))
             .setTimestamp()
         if (data.channellogs === 'defaultValue') return console.log('No se ha establecido ningun canal en el servidor ' + newMessage.guild.name + '')
