@@ -134,7 +134,7 @@ client.on('message', async (message) => {
         if (!message.member.hasPermission("ADMINISTRATOR")) return message.channel.send("No tienes el permiso `ADMINISTRATOR`").catch(err => console.log(err));
         let channel = message.mentions.channels.first();
         if (!channel) return message.channel.send("No has mencionado un canal/Ese canal no existe.").catch(err => console.log(err));
-        if (![message.guild.channels.cache.filter(a => a.type === "text").map(a => a.id)].includes(channel.id)) return message.channel.send('El canal tiene que ser del Servidor donde estas!').catch(err => console.log(err));
+        if (!message.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(channel.id)) return message.channel.send('El canal tiene que ser del Servidor donde estas!').catch(err => console.log(err));
         let data = await GuildModel.findOne({ id: message.guild.id });
         if (!data) {
             try {
