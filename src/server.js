@@ -199,7 +199,6 @@ client.on('messageDelete', async (message) => {
         if (message.author.bot) return;
         if (message.channel.type === 'dm') return;
         if (!message.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return console.log('El canal tiene que ser del Servidor donde estas!');
-
         let embed = new Discord.MessageEmbed()
             .setColor(color)
             .setTitle('<:messageDelete:723270093475414026> Message Deleted')
