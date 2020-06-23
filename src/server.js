@@ -280,5 +280,5 @@ client.login(process.env.BOT_TOKEN)
 mongoose.connect(process.env.MONGODB, { useNewUrlParser: true, useUnifiedTopology: true }).then(() => {
     console.log("[MongoDB]: Conectado a la base de datos Mongodb.");
 }).catch((err) => {
-    console.log("[Error]: No se puede conectar a la base de datos de Mongodb. Error: " + err);
+    console.log(`[Error]: No se puede conectar a la base de datos de Mongodb. Error: ${err}`);
 });
