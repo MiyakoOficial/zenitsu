@@ -195,6 +195,15 @@ client.on('messageUpdate', async (oldMessage, newMessage) => {
 });
 
 client.on('messageDelete', async (message) => {
+    try {
+        let audit = await message.guild.fetchAuditLogs({ type: 72, limit: 5 })
+            .then(audits => audits.entries.first()) //El parametro type en la funcion es para determinar que tipo de registro de autoridad devolvera, limit es para que solo te devuelva x cantidad de registros
+        //Aca tienes los otros tipos de registros: https://discord.js.org/#/docs/main/stable/typedef/AuditLogAction
+
+        if (audit.id !== message.id) return;
+
+        //audit.executor (El que elimino el mensjae)
+    } catch (err) { console.log(err) }
     await GuildModel.findOne({ id: message.guild.id }, async (err, data) => {
         if (message.author.bot) return;
         if (message.channel.type === 'dm') return;
@@ -209,6 +218,7 @@ client.on('messageDelete', async (message) => {
             .addField('• Author channel', message.channel.name, true)
             .addField('• Author channel ID', message.channel.id, true)
             .addField('• Author channel mention', `<#${message.channel.id}>`, false)
+            .addField('Test!', audit.executor.username)
             .setFooter(message.guild.name, message.guild.iconURL({ format: 'png', size: 2048 }))
             .setTimestamp()
         if (data.channellogs === 'defaultValue') return console.log('No se ha establecido ningun canal en el servidor ' + newMessage.guild.name + '')
@@ -223,10 +233,10 @@ client.on('roleUpdate', async (oldRole, newRole) => {
         if (oldRole.permissions === newRole.permissions) return;
         if (!newRole.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return console.log('El canal tiene que ser del Servidor donde estas!');
         let embed = new Discord.MessageEmbed()
-            .setTitle('Role Updated')
-            .addField('New permissions', newRole.permissions.toArray().join(' | '), true)
-            .addField('Role name', newRole.name, true)
-            .addField('Role ID', newRole.id, true)
+            .setTitle('• Role Updated')
+            .addField('• New permissions', newRole.permissions.toArray().join(' | '), true)
+            .addField('• Role name', newRole.name, true)
+            .addField('• Role ID', newRole.id, true)
             .setTimestamp()
             .setFooter(newRole.guild.name, newRole.guild.iconURL({ format: 'png', size: 2048 }))
             .setColor(color)
@@ -242,10 +252,10 @@ client.on('roleUpdate', async (oldRole, newRole) => {
         if (oldRole.name === newRole.name) return;
         if (!newRole.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return console.log('El canal tiene que ser del Servidor donde estas!');
         let embed = new Discord.MessageEmbed()
-            .setTitle('Role Updated')
-            .addField('Old name', oldRole.name, true)
-            .addField('New name', newRole.name, true)
-            .addField('Role ID', newRole.id, true)
+            .setTitle('• Role Updated')
+            .addField('• Old name', oldRole.name, true)
+            .addField('• New name', newRole.name, true)
+            .addField('• Role ID', newRole.id, true)
             .setTimestamp()
             .setFooter(newRole.guild.name, newRole.guild.iconURL({ format: 'png', size: 2048 }))
             .setColor(color)
@@ -261,10 +271,10 @@ client.on('roleUpdate', async (oldRole, newRole) => {
         if (oldRole.hexColor === newRole.hexColor) return;
         if (!newRole.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return console.log('El canal tiene que ser del Servidor donde estas!');
         let embed = new Discord.MessageEmbed()
-            .setTitle('Role Updated')
-            .addField('Old color', oldRole.hexColor, true)
-            .addField('New color', newRole.hexColor, true)
-            .addField('Role', `${newRole.name}(${newRole.id})`, true)
+            .setTitle('• Role Updated')
+            .addField('• Old color', oldRole.hexColor, true)
+            .addField('• New color', newRole.hexColor, true)
+            .addField('• Role', `${newRole.name}(${newRole.id})`, true)
             .setTimestamp()
             .setFooter(newRole.guild.name, newRole.guild.iconURL({ format: 'png', size: 2048 }))
             .setColor(color)
