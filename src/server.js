@@ -1,4 +1,3 @@
-//ESTE CODIGO NO AFECTARA SU BOT, SCRIPT DE ARRANQUE
 const color = "#E09E36";
 const GuildModel = require('../src/Guild.js')
 require('dotenv').config();
