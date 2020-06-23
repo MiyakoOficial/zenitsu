@@ -32,7 +32,7 @@ client.on('ready', () => {
 
 client.on('message', async (message) => {
     const prefix = 'z!'
-    const args = message.content.slice(prefix.length).trim().split(/ +/g);
+    const args = message.content.slice(1 + prefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
     if (message.author.bot) return;
     if (!message.content.startsWith(prefix)) return;
