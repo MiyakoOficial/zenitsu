@@ -12,8 +12,8 @@ client.on('ready', () => {
     client.user.setPresence({
         status: "online",
         activity: {
-            name: "log!help",
-            type: "PLAYING"
+            name: "z!help",
+            type: "LISTENING"
         }
     })
     let embed = new Discord.MessageEmbed()
@@ -31,7 +31,7 @@ client.on('ready', () => {
 });
 
 client.on('message', async (message) => {
-    const prefix = 'log!'
+    const prefix = 'z!'
     const args = message.content.slice(prefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
     if (message.author.bot) return;
