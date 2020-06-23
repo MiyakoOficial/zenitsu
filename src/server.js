@@ -219,7 +219,7 @@ client.on('messageDelete', async (message) => {
 
 client.on('roleUpdate', async (oldRole, newRole) => {
     await LogsModel.findOne({ id: newRole.guild.id }, async (err, data) => {
-        if (oldRole.permissions === newRole.permissions) return;
+        if (oldRole.permissions.bitfield === newRole.permissions.bitfield) return;
         if (!newRole.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return console.log('El canal tiene que ser del Servidor donde estas!');
         let embed = new Discord.MessageEmbed()
             .setTitle('• Role Updated')
