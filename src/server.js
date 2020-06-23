@@ -1,5 +1,5 @@
 const color = "#E09E36";
-const GuildModel = require('../src/Guild.js')
+const LogsModel = require('../src/Guild.js')
 require('dotenv').config();
 const Discord = require('discord.js');
 const client = new Discord.Client();
@@ -135,10 +135,10 @@ client.on('message', async (message) => {
         let channel = message.mentions.channels.first();
         if (!channel) return message.channel.send("No has mencionado un canal/Ese canal no existe.").catch(err => console.log(err));
         if (!message.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(channel.id)) return message.channel.send('El canal tiene que ser del Servidor donde estas!').catch(err => console.log(err));
-        let data = await GuildModel.findOne({ id: message.guild.id });
+        let data = await LogsModel.findOne({ id: message.guild.id });
         if (!data) {
             try {
-                const configLogs = new GuildModel({
+                const configLogs = new LogsModel({
                     id: message.guild.id,
                     channellogs: channel.id
                 });
@@ -155,7 +155,7 @@ client.on('message', async (message) => {
     //fin de setlogs
     //inicio de canal
     if (command === 'canal') {
-        await GuildModel.findOne({ id: message.guild.id }, async (err, data) => {
+        await LogsModel.findOne({ id: message.guild.id }, async (err, data) => {
             if (err) return console.log(err);
 
             if (!data) return message.channel.send("Este servidor no tiene definido un canal de logs").catch(err => console.log(err));
@@ -167,7 +167,7 @@ client.on('message', async (message) => {
 });
 //inicio de eventos
 client.on('messageUpdate', async (oldMessage, newMessage) => {
-    await GuildModel.findOne({ id: newMessage.guild.id }, async (err, data) => {
+    await LogsModel.findOne({ id: newMessage.guild.id }, async (err, data) => {
         if (newMessage.author.bot) return;
         if (newMessage.channel.type === 'dm') return;
         if (newMessage.content === oldMessage.content) return;
@@ -194,7 +194,7 @@ client.on('messageUpdate', async (oldMessage, newMessage) => {
 });
 
 client.on('messageDelete', async (message) => {
-    await GuildModel.findOne({ id: message.guild.id }, async (err, data) => {
+    await LogsModel.findOne({ id: message.guild.id }, async (err, data) => {
         if (message.author.bot) return;
         if (message.channel.type === 'dm') return;
         if (!message.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return console.log('El canal tiene que ser del Servidor donde estas!');
@@ -218,7 +218,7 @@ client.on('messageDelete', async (message) => {
 });
 
 client.on('roleUpdate', async (oldRole, newRole) => {
-    await GuildModel.findOne({ id: newRole.guild.id }, async (err, data) => {
+    await LogsModel.findOne({ id: newRole.guild.id }, async (err, data) => {
         if (oldRole.permissions === newRole.permissions) return;
         if (!newRole.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return console.log('El canal tiene que ser del Servidor donde estas!');
         let embed = new Discord.MessageEmbed()
@@ -237,7 +237,7 @@ client.on('roleUpdate', async (oldRole, newRole) => {
 });
 
 client.on('roleUpdate', async (oldRole, newRole) => {
-    await GuildModel.findOne({ id: newRole.guild.id }, async (err, data) => {
+    await LogsModel.findOne({ id: newRole.guild.id }, async (err, data) => {
         if (oldRole.name === newRole.name) return;
         if (!newRole.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return console.log('El canal tiene que ser del Servidor donde estas!');
         let embed = new Discord.MessageEmbed()
@@ -256,7 +256,7 @@ client.on('roleUpdate', async (oldRole, newRole) => {
 });
 
 client.on('roleUpdate', async (oldRole, newRole) => {
-    await GuildModel.findOne({ id: newRole.guild.id }, async (err, data) => {
+    await LogsModel.findOne({ id: newRole.guild.id }, async (err, data) => {
         if (oldRole.hexColor === newRole.hexColor) return;
         if (!newRole.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return console.log('El canal tiene que ser del Servidor donde estas!');
         let embed = new Discord.MessageEmbed()
