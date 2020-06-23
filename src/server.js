@@ -42,8 +42,8 @@ client.on('message', async (message) => {
         message.channel.send({
             embed: new Discord.MessageEmbed()
                 .setColor(color)
-                .addField('Comandos', 'log!help, log!setlogs, log!ping, log!canal')
-                .addField('Extras', 'log!txt, log!js, log!ruby')
+                .addField('Comandos', 'z!help, z!setlogs, z!ping, z!canal')
+                .addField('Extras', 'z!txt, z!js, z!ruby')
                 .setThumbnail(client.user.displayAvatarURL({ format: 'png', size: 2048 }))
         }).catch(err => console.log(err))
     }
