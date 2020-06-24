@@ -30,6 +30,15 @@ client.on('ready', () => {
 });
 
 client.on('message', async (message) => {
+
+    function errorEmbed(argumentoDeLaDescripcion) {
+        message.channel.send(new Discord.MessageEmbed()
+            .setDescription(`¡<:ohno:721174460073377804> => \`Error\`: ${argumentoDeLaDescripcion}!`)
+            .setColor(color)
+            .setTimestamp()
+        )
+    }
+
     const prefix = 'z!'
     const args = message.content.slice(prefix.length).split(/ +/);
     const command = args.shift().toLowerCase();
