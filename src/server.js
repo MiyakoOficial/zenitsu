@@ -65,7 +65,7 @@ client.on('message', async (message) => {
     }
     //fin de help
     //inicio suggest
-    if (commad === 'suggest') {
+    if (command === 'suggest') {
         if (!args[0]) return embedResponse('Escribe algo!')
         let embed = new Discord.MessageEmbed()
             .setColor(color)
