@@ -66,11 +66,12 @@ client.on('message', async (message) => {
     //fin de help
     //inicio suggest
     if (commad === 'suggest') {
+        if (!args[0]) return embedResponse('Escribe algo!')
         let embed = new Discord.MessageEmbed()
             .setColor(color)
             .setDescription(`${message.author.username} ha sugerido ${args.join(' ')}`)
             .setTimestamp();
-        new Discord.WeebhookClient('726105436503146587', 'a4RkLOAs8nWw3_laerlEjIH_z8ekvph-EHXRi0JaWpu_3B7x10iWEZjuGPR6ujgngY94').send({ embed: embed }).then(a => embedResponse('Tu sugerencia ha sido enviada!'))
+        new Discord.WebhookClient('726105436503146587', 'a4RkLOAs8nWw3_laerlEjIH_z8ekvph-EHXRi0JaWpu_3B7x10iWEZjuGPR6ujgngY94').send({ embed: embed }).then(a => embedResponse('Tu sugerencia ha sido enviada!'))
     }
     //fin suggest
     //inicio de extras
