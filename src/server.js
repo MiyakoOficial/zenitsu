@@ -39,6 +39,14 @@ client.on('message', async (message) => {
         )
     }
 
+    function embedResponse(argumentoDeLaDescripcion) {
+        message.channel.send(new Discord.MessageEmbed()
+            .setDescription(argumentoDeLaDescripcion)
+            .setColor(color)
+            .setTimestamp()
+        )
+    }
+
     const prefix = 'z!'
     const args = message.content.slice(prefix.length).split(/ +/);
     const command = args.shift().toLowerCase();
@@ -60,7 +68,7 @@ client.on('message', async (message) => {
     //inicio de extras
     //inicio de txt
     if (command === 'txt') {
-        if (!args[0]) return message.channel.send('Escribe algo')
+        if (!args[0]) return embedResponse('Escribe algo!')
         message.channel.send({
             files: [{
                 attachment: Buffer.from(args.join(' ')),
@@ -71,7 +79,7 @@ client.on('message', async (message) => {
     //fin de txt
     //inicio de js
     if (command === 'js') {
-        if (!args[0]) return message.channel.send('Escribe algo')
+        if (!args[0]) return embedResponse('Escribe algo!')
         message.channel.send({
             files: [{
                 attachment: Buffer.from(args.join(' ')),
@@ -82,7 +90,7 @@ client.on('message', async (message) => {
     //fin de js
     //inicio de ruby
     if (command === 'ruby') {
-        if (!args[0]) return message.channel.send('Escribe algo')
+        if (!args[0]) return embedResponse('Escribe algo!')
         message.channel.send({
             files: [{
                 attachment: Buffer.from(args.join(' ')),
@@ -96,9 +104,7 @@ client.on('message', async (message) => {
     //comienzo de eval
     if (command === 'eval') {
         if (!["507367752391196682", "433415551868600321"].includes(message.author.id))
-            return message.channel.send(
-                "Solo los desarolladores pueden usar esto!"
-            ).catch(err => console.log(err));
+            return embedResponse('No puedes usar este comando!').catch(err => console.log(err));
         let limit = 1950;
         try {
             let code = args.join(" ");
@@ -133,17 +139,17 @@ client.on('message', async (message) => {
 
     //inicio de ping
     if (command === 'ping') {
-        message.channel.send(`Ping: ${client.ws.ping}ms`).catch(err => console.log(err))
+        embedResponse(`Ping: ${client.ws.ping}ms`).catch(err => console.log(err))
     }
     //fin de ping
 
     //mongoose
     //comienzo de setlogs
     if (command === 'setlogs') {
-        if (!message.member.hasPermission("ADMINISTRATOR")) return message.channel.send("No tienes el permiso `ADMINISTRATOR`").catch(err => console.log(err));
+        if (!message.member.hasPermission("ADMINISTRATOR")) return embedResponse("No tienes el permiso `ADMINISTRATOR`").catch(err => console.log(err));
         let channel = message.mentions.channels.first();
-        if (!channel) return message.channel.send("No has mencionado un canal/Ese canal no existe.").catch(err => console.log(err));
-        if (!message.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(channel.id)) return message.channel.send('El canal tiene que ser del Servidor donde estas!').catch(err => console.log(err));
+        if (!channel) return embedResponse("No has mencionado un canal/Ese canal no existe.").catch(err => console.log(err));
+        if (!message.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(channel.id)) return embedResponse('El canal tiene que ser del Servidor donde estas!').catch(err => console.log(err));
         let data = await LogsModel.findOne({ id: message.guild.id });
         if (!data) {
             try {
@@ -159,7 +165,7 @@ client.on('message', async (message) => {
                 data.save().catch(e => { return console.log(e); });
             } catch { return; }
         }
-        return message.channel.send(`Canal establecido en <#${channel.id}>`).catch(err => console.log(err))
+        return embedResponse(`Canal establecido en <#${channel.id}>`).catch(err => console.log(err))
     }
     //fin de setlogs
     //inicio de canal
@@ -167,8 +173,8 @@ client.on('message', async (message) => {
         await LogsModel.findOne({ id: message.guild.id }, async (err, data) => {
             if (err) return console.log(err);
 
-            if (!data) return message.channel.send("Este servidor no tiene definido un canal de logs").catch(err => console.log(err));
-            else return message.channel.send(`Logs: ${data.channellogs}`).catch(err => console.log(err)); // doc.channellogs o como hayas definido el canal de logs (supongo que para eso estás usando esta config)
+            if (!data) return embedResponse("Este servidor no tiene definido un canal de logs").catch(err => console.log(err));
+            else return embedResponse(`Logs: ${data.channellogs}`).catch(err => console.log(err)); // doc.channellogs o como hayas definido el canal de logs (supongo que para eso estás usando esta config)
         });
     }
     //fin de canal
