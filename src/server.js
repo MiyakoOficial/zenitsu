@@ -282,7 +282,7 @@ client.on('roleUpdate', async (oldRole, newRole) => {
 client.on('guildUpdate', async (oldGuild, newGuild) => {
     await LogsModel.findOne({ id: newGuild.id }, async (err, data) => {
         if (oldGuild.name === newGuild.name) return;
-        if (!newGuild.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return console.log('El canal tiene que ser del Servidor donde estas!');
+        if (!newGuild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return console.log('El canal tiene que ser del Servidor donde estas!');
         let embed = new Discord.MessageEmbed()
             .setTitle('• Guild Updated')
             .addField('• Old name', oldGuild.name, true)
