@@ -6,6 +6,24 @@ const client = new Discord.Client();
 const mongoose = require('mongoose');
 const { info } = require('console');
 
+function duration(s) {
+    var ms = s % 1000;
+    s = (s - ms) / 1000;
+    var secs = s % 60;
+    s = (s - secs) / 60;
+    var mins = s % 60;
+    var hrs = (s - mins) / 60;
+    if (hrs <= 0) {
+        if (mins <= 0) {
+            return secs + " s";
+        } else {
+            return mins + " m " + secs + " s";
+        }
+    } else {
+        return hrs + " h " + mins + " m " + secs + " s";
+    }
+}
+
 client.on('ready', () => {
     console.log(`${client.user.tag} está listo!`)
     client.user.setPresence({
