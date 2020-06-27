@@ -39,8 +39,7 @@ client.on('ready', () => {
         client.channels.cache.get('705741696322895983').setName(`Ping: ${client.ws.ping} ms`)
         client.channels.cache.get('707986771085885581').setName(`Servidores: ${client.guilds.cache.size}`)
         client.channels.cache.get('707988731507900468').setName(`Usuarios: ${client.users.cache.size}`)
-        client.channels.cache.get('714811411045548073').setName(`Uptime: ${duration(client.uptime)}`)
-    }, mil('5m'))
+    }, mil('3m'))
 
     let embed = new Discord.MessageEmbed()
         .setColor(color)
