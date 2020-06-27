@@ -41,7 +41,7 @@ client.on('ready', () => {
 
     setInterval(() => {
         client.channels.cache.get('707986771085885581').setName(`Servidores: ${client.guilds.cache.size}`)
-    }, mil('5n'))
+    }, mil('5m'))
 
     setInterval(() => {
         client.channels.cache.get('707988731507900468').setName(`Usuarios: ${client.users.cache.size}`)
