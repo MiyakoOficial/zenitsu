@@ -5,6 +5,7 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 const mongoose = require('mongoose');
 const { info } = require('console');
+const mil = require("ms")
 
 function duration(s) {
     var ms = s % 1000;
@@ -32,7 +33,24 @@ client.on('ready', () => {
             name: "z!help",
             type: "LISTENING"
         }
+
     })
+    setInterval(() => {
+        client.channels.cache.get('705741696322895983').setName(`Ping: ${client.ws.ping}`)
+    }, mil('1m'))
+
+    setInterval(() => {
+        client.channels.cache.get('707986771085885581').setName(`Servidores: ${client.guilds.cache.size}`)
+    }, mil('1m'))
+
+    setInterval(() => {
+        client.channels.cache.get('707988731507900468').setName(`Usuarios: ${client.users.cache.size}`)
+    }, mil('1m'))
+
+    setInterval(() => {
+        client.channels.cache.get('714811411045548073').setName(`Uptime: ${duration(client.uptime)}`)
+    }, mil('1m'))
+
     let embed = new Discord.MessageEmbed()
         .setColor(color)
         .addField('Color', color, true)
