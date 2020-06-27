@@ -37,19 +37,19 @@ client.on('ready', () => {
     })
     setInterval(() => {
         client.channels.cache.get('705741696322895983').setName(`Ping: ${client.ws.ping}`)
-    }, mil('1m'))
+    }, mil('5m'))
 
     setInterval(() => {
         client.channels.cache.get('707986771085885581').setName(`Servidores: ${client.guilds.cache.size}`)
-    }, mil('1m'))
+    }, mil('5n'))
 
     setInterval(() => {
         client.channels.cache.get('707988731507900468').setName(`Usuarios: ${client.users.cache.size}`)
-    }, mil('1m'))
+    }, mil('5m'))
 
     setInterval(() => {
         client.channels.cache.get('714811411045548073').setName(`Uptime: ${duration(client.uptime)}`)
-    }, mil('1m'))
+    }, mil('5m'))
 
     let embed = new Discord.MessageEmbed()
         .setColor(color)
