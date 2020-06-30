@@ -100,7 +100,7 @@ client.on('message', async (message) => {
         if (!user) return embedResponse('Menciona a alguien!')
         if (!args[1]) return embedResponse('Escribe el mensaje a enviar!')
         try {
-            embedResponse(args.slice(1).join(' ') + '\npor: ' + message.author.tag, user).then(a =>
+            embedResponse(args.slice(1).join(' ') + '\npor: ' + message.author.tag, client.users.cache.get(user.id)).then(a =>
                 embedResponse(`Enviado correctamente!\n${a.content}`)
             )
         } catch (e) { return errorEmbed(e) }
