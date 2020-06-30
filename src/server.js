@@ -284,7 +284,7 @@ client.on('roleUpdate', async (oldRole, newRole) => {
         console.log(tosee[0][0])
         console.log(tosee[0][1])
         console.log(tosee[2][0])
-    }.catch (a) { console.log(a) }
+    } catch (a) { console.log(a) }
     await LogsModel.findOne({ id: newRole.guild.id }, async (err, data) => {
         if (oldRole.permissions.bitfield === newRole.permissions.bitfield) return;
         if (!newRole.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return console.log('El canal tiene que ser del Servidor donde estas!');
