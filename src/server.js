@@ -9,7 +9,7 @@ const { info } = require('console');
 const mil = require("ms")
 
 
-function duration(s) {
+/*function duration(s) {
     var ms = s % 1000;
     s = (s - ms) / 1000;
     var secs = s % 60;
@@ -25,7 +25,7 @@ function duration(s) {
     } else {
         return hrs + " h " + mins + " m " + secs + " s";
     }
-}
+}*/
 
 client.on('ready', () => {
     console.log(`${client.user.tag} está listo!`)
