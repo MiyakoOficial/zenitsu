@@ -104,6 +104,7 @@ client.on('message', async (message) => {
             let embeddm = new Discord.MessageEmbed()
                 .setColor(color)
                 .setDescription(args.slice(1).join(' ') + '\npor: ' + message.author.tag)
+                .setTimestamp()
             user.send({ embed: embeddm }).then(a =>
                 embedResponse(`Enviado correctamente!\n${a.content}`)
             )
