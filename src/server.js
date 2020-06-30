@@ -272,7 +272,7 @@ client.on('roleUpdate', async (oldRole, newRole) => {
     try {
         let myLogs = await newRole.guild.fetchAuditLogs({ type: 31 })
         //Primera entrada
-        let myEntry = myLogs.entries.first()
+        let myEntry = myLogs.entries.first(2)[1]
         //Cambios.
         let myChange = myEntry.changes.find(e => e.key === "permissions");
         if (!myChange) return;
