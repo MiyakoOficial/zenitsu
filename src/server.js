@@ -6,7 +6,7 @@ const client = new Discord.Client();
 const mongoose = require('mongoose');
 const { info } = require('console');
 const mil = require("ms")
-client.memesURL = JSON.parse(require('fs').readFileSync('memes.json', 'utf8'));
+
 
 function duration(s) {
     var ms = s % 1000;
@@ -79,18 +79,7 @@ client.on('message', async (message) => {
     const command = args.shift().toLowerCase();
     if (message.author.bot) return;
     if (!message.content.startsWith(prefix)) return;
-    /*
-        //inicio de meme
-        if (command === 'meme') {
-            let randomImage = client.memesURL[Math.floor(Math.random() * client.memesURL.length)]
-            let embed = new Discord.MessageEmbed()
-                .setImage(randomImage)
-                .setColor(color)
-                .setTimestamp()
-            return message.channel.send(embed)
-        }
-        //fin de meme
-    */
+
     //inicio de help
     if (command === 'help') {
         message.channel.send({
