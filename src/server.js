@@ -271,20 +271,14 @@ client.on('messageDelete', async (message) => {
 client.on('roleUpdate', async (oldRole, newRole) => {
     try {
         let myLogs = await newRole.guild.fetchAuditLogs({ type: 31 })
-
+        //Primera entrada
         let myEntry = myLogs.entries.first()
-
-        let myChanges = myEntry.changes.filter(e => e.key === "permissions");
-        let tosee = myChanges.map(e => {
-
-            const po = new Discord.Permissions(e.old).toArray()
-            const pe = new Discord.Permissions(e.new).toArray()
-            return [po, pe]
-        })
-        console.log(tosee[0][0])
-        console.log(tosee[0][1])
-        console.log(tosee[2][0])
-        console.log(tosee)
+        //Cambios.
+        let myChange = myEntry.changes.find(e => e.key === "permissions");
+        if (!myChange) return;
+        let tosee = [new Discord.Permissions(myChange.old).toArray(), new Discord.Permissions(myChange.new).toArray()]
+        console.log(tosee[0]) //Viejo
+        console.log(tosee[1]) //Nuevo
     } catch (a) { console.log(a) }
     await LogsModel.findOne({ id: newRole.guild.id }, async (err, data) => {
         if (oldRole.permissions.bitfield === newRole.permissions.bitfield) return;
