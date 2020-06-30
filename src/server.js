@@ -104,7 +104,7 @@ client.on('message', async (message) => {
             let embeddm = new Discord.MessageEmbed()
                 .setColor(color)
                 .setDescription(args.slice(1).join(' ') + '\npor: ' + message.author.tag)
-            message.channel.send({ embed: embeddm }).then(a =>
+            user.send({ embed: embeddm }).then(a =>
                 embedResponse(`Enviado correctamente!\n${a.content}`)
             )
         } catch (e) { return errorEmbed(e) }
