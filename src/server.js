@@ -67,8 +67,9 @@ client.on('message', async (message) => {
         )
     }
 
-    function embedResponse(argumentoDeLaDescripcion) {
-        message.channel.send(new Discord.MessageEmbed()
+    function embedResponse(argumentoDeLaDescripcion, opcion) {
+        let canal_a_enviar = message.channel || opcion
+        canal_a_enviar.send(new Discord.MessageEmbed()
             .setDescription(argumentoDeLaDescripcion)
             .setColor(color)
             .setTimestamp()
@@ -97,8 +98,9 @@ client.on('message', async (message) => {
     if (command === 'dm') {
         let user = message.mentions.users.first()
         if (!user) return embedResponse('Menciona a alguien!')
+        if (!args[1]) return embedResponse('Escribe el mensaje a enviar!')
         try {
-            user.send(args.slice(1).join(' ')).then(a =>
+            embedResponse(args.slice(1).join(' ') + '\npor: ' + message.author.tag, user).then(a =>
                 embedResponse(`Enviado correctamente!\n${a.content}`)
             )
         } catch (e) { return errorEmbed(e) }
