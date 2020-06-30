@@ -60,7 +60,7 @@ client.on('ready', () => {
 client.on('message', async (message) => {
 
     function errorEmbed(argumentoDeLaDescripcion) {
-        message.channel.send(new Discord.MessageEmbed()
+        return message.channel.send(new Discord.MessageEmbed()
             .setDescription(`¡<:ohno:721174460073377804> => \`Error\`: ${argumentoDeLaDescripcion}!`)
             .setColor(color)
             .setTimestamp()
@@ -68,9 +68,9 @@ client.on('message', async (message) => {
     }
 
 
-    function embedResponse(argumentoDeLaDescripcion) {
-        let canal_a_enviar = message.channel
-        canal_a_enviar.send(new Discord.MessageEmbed()
+    function embedResponse(argumentoDeLaDescripcion, opcion) {
+        let canal_a_enviar = opcion || message.channel
+        return canal_a_enviar.send(new Discord.MessageEmbed()
             .setDescription(argumentoDeLaDescripcion)
             .setColor(color)
             .setTimestamp()
