@@ -5,7 +5,7 @@ require('dotenv').config();
 const Discord = require('discord.js');
 const client = new Discord.Client();
 const mongoose = require('mongoose');
-const { info } = require('console');
+const { info, error } = require('console');
 const mil = require("ms")
 
 
@@ -106,8 +106,7 @@ client.on('message', async (message) => {
                 .setDescription(args.slice(1).join(' ') + '\npor: ' + message.author.tag)
                 .setTimestamp()
             user.send({ embed: embeddm }).then(a =>
-                embedResponse(`Enviado correctamente!\n${a.content}`)
-            )
+                embedResponse(`Enviado correctamente!\n${a.content}`))
         } catch (e) { return errorEmbed(e) }
     }
     //fin de dm
