@@ -288,7 +288,7 @@ client.on('messageDelete', async (message) => {
     });
 });
 
-client.on('roleUpdate', async (oldRole, newRole) => {
+/*client.on('roleUpdate', async (oldRole, newRole) => {
     await LogsModel.findOne({ id: newRole.guild.id }, async (err, data) => {
         if (oldRole.permissions.bitfield === newRole.permissions.bitfield) return;
         if (!newRole.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return console.log('El canal tiene que ser del Servidor donde estas!');
@@ -308,7 +308,7 @@ client.on('roleUpdate', async (oldRole, newRole) => {
         if (!data) return console.log('Error!')
         else return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { console.log('Error: ' + error + '') });
     });
-});
+});*/
 
 client.on('roleUpdate', async (oldRole, newRole) => {
     await LogsModel.findOne({ id: newRole.guild.id }, async (err, data) => {
