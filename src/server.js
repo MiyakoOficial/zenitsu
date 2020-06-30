@@ -6,6 +6,7 @@ const client = new Discord.Client();
 const mongoose = require('mongoose');
 const { info } = require('console');
 const mil = require("ms")
+client.memesURL = JSON.parse(require('fs').readFileSync('memes.json', 'utf8'));
 
 function duration(s) {
     var ms = s % 1000;
@@ -39,7 +40,7 @@ client.on('ready', () => {
         client.channels.cache.get('705741696322895983').setName(`Ping: ${client.ws.ping} ms`)
         client.channels.cache.get('707986771085885581').setName(`Servidores: ${client.guilds.cache.size}`)
         client.channels.cache.get('707988731507900468').setName(`Usuarios: ${client.users.cache.size}`)
-    }, mil('3m'))
+    }, mil('5m'))
 
     let embed = new Discord.MessageEmbed()
         .setColor(color)
@@ -78,7 +79,18 @@ client.on('message', async (message) => {
     const command = args.shift().toLowerCase();
     if (message.author.bot) return;
     if (!message.content.startsWith(prefix)) return;
-
+    /*
+        //inicio de meme
+        if (command === 'meme') {
+            let randomImage = client.memesURL[Math.floor(Math.random() * client.memesURL.length)]
+            let embed = new Discord.MessageEmbed()
+                .setImage(randomImage)
+                .setColor(color)
+                .setTimestamp()
+            return message.channel.send(embed)
+        }
+        //fin de meme
+    */
     //inicio de help
     if (command === 'help') {
         message.channel.send({
