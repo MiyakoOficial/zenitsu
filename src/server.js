@@ -269,22 +269,22 @@ client.on('messageDelete', async (message) => {
 });
 
 client.on('roleUpdate', async (oldRole, newRole) => {
+    try {
+        let myLogs = await newRole.guild.fetchAuditLogs({ type: 31 })
 
-    let myLogs = await newRole.guild.fetchAuditLogs({ type: 31 })
+        let myEntry = myLogs.entries.first()
 
-    let myEntry = myLogs.entries.first()
+        let myChanges = myEntry.changes.filter(e => e.key === "permissions");
+        let tosee = myChanges.map(e => {
 
-    let myChanges = myEntry.changes.filter(e => e.key === "permissions");
-    let tosee = myChanges.map(e => {
-
-        const po = new Discord.Permissions(e.old).toArray()
-        const pe = new Discord.Permissions(e.new).toArray()
-        return [po, pe]
-    })
-    console.log(tosee[0][0])
-    console.log(tosee[0][1])
-    console.log(tosee[2][0])
-
+            const po = new Discord.Permissions(e.old).toArray()
+            const pe = new Discord.Permissions(e.new).toArray()
+            return [po, pe]
+        })
+        console.log(tosee[0][0])
+        console.log(tosee[0][1])
+        console.log(tosee[2][0])
+    }.catch (a) { console.log(a) }
     await LogsModel.findOne({ id: newRole.guild.id }, async (err, data) => {
         if (oldRole.permissions.bitfield === newRole.permissions.bitfield) return;
         if (!newRole.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return console.log('El canal tiene que ser del Servidor donde estas!');
