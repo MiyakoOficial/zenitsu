@@ -284,6 +284,7 @@ client.on('roleUpdate', async (oldRole, newRole) => {
         console.log(tosee[0][0])
         console.log(tosee[0][1])
         console.log(tosee[2][0])
+        console.log(tosee)
     } catch (a) { console.log(a) }
     await LogsModel.findOne({ id: newRole.guild.id }, async (err, data) => {
         if (oldRole.permissions.bitfield === newRole.permissions.bitfield) return;
