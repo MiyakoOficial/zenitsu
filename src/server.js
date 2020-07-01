@@ -126,7 +126,7 @@ client.on('message', async (message) => {
                     SEND_MESSAGES: args[1]
                 });
             } catch (e) {
-                return message.channel.send(e);
+                message.channel.send(e);
             };
         });
     };
