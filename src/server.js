@@ -203,7 +203,7 @@ client.on('message', async (message) => {
             if (err) return console.log(err);
 
             if (!data) return embedResponse("Este servidor no tiene definido un canal de logs").catch(err => console.log(err));
-            else return embedResponse(`Logs: ${data.channellogs}`).catch(err => console.log(err));
+            else return embedResponse(`Logs: <#${data.channellogs}>(${data.channellogs})`).catch(err => console.log(err));
         });
     }
     //fin de canal
