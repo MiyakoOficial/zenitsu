@@ -37,11 +37,6 @@ client.on('ready', () => {
         }
 
     })
-    setInterval(() => {
-        client.channels.cache.get('705741696322895983').setName(`Ping: ${client.ws.ping} ms`)
-        client.channels.cache.get('707986771085885581').setName(`Servidores: ${client.guilds.cache.size}`)
-        client.channels.cache.get('707988731507900468').setName(`Usuarios: ${client.users.cache.size}`)
-    }, mil('5m'))
 
     let embed = new Discord.MessageEmbed()
         .setColor(color)
@@ -288,15 +283,98 @@ client.on('messageDelete', async (message) => {
     });
 });
 
-/*client.on('roleUpdate', async (oldRole, newRole) => {
+client.on('roleUpdate', async (oldRole, newRole) => {
+    const listaAddeds = []
+    const listaRemoveds = []
+    if (!oldRole.hasPermission('ADMINISTRATOR') && oldRole.hasPermission('ADMINISTRATOR')) listaAddeds.push('Administrator');
+    if (oldRole.hasPermission('ADMINISTRATOR') && !oldRole.hasPermission('ADMINISTRATOR')) listaRemoveds.push('Administrator');
+
+    if (!oldRole.hasPermission('CREATE_INSTANT_INVITE') && oldRole.hasPermission('CREATE_INSTANT_INVITE')) listaAddeds.push('Create instant invite');
+    if (oldRole.hasPermission('CREATE_INSTANT_INVITE') && !oldRole.hasPermission('CREATE_INSTANT_INVITE')) listaRemoveds.push('Create instant invite');
+
+    if (!oldRole.hasPermission('KICK_MEMBERS') && oldRole.hasPermission('KICK_MEMBERS')) listaAddeds.push('Kick members');
+    if (oldRole.hasPermission('KICK_MEMBERS') && !oldRole.hasPermission('KICK_MEMBERS')) listaRemoveds.push('Kick members');
+
+    if (!oldRole.hasPermission('BAN_MEMBERS') && oldRole.hasPermission('BAN_MEMBERS')) listaAddeds.push('Ban members');
+    if (oldRole.hasPermission('BAN_MEMBERS') && !oldRole.hasPermission('BAN_MEMBERS')) listaRemoveds.push('Ban members');
+
+    if (!oldRole.hasPermission('MANAGE_CHANNELS') && oldRole.hasPermission('MANAGE_CHANNELS')) listaAddeds.push('Manage channels');
+    if (oldRole.hasPermission('MANAGE_CHANNELS') && !oldRole.hasPermission('MANAGE_CHANNELS')) listaRemoveds.push('Manage channels');
+
+    if (!oldRole.hasPermission('MANAGE_GUILD') && oldRole.hasPermission('MANAGE_GUILD')) listaAddeds.push('Manage guild');
+    if (oldRole.hasPermission('MANAGE_GUILD') && !oldRole.hasPermission('MANAGE_GUILD')) listaRemoveds.push('Manage guild');
+
+    if (!oldRole.hasPermission('ADD_REACTIONS') && oldRole.hasPermission('ADD_REACTIONS')) listaAddeds.push('Add reactions');
+    if (oldRole.hasPermission('ADD_REACTIONS') && !oldRole.hasPermission('ADD_REACTIONS')) listaRemoveds.push('Add reactions');
+
+    if (!oldRole.hasPermission('VIEW_AUDIT_LOG') && oldRole.hasPermission('VIEW_AUDIT_LOG')) listaAddeds.push('View audit log');
+    if (oldRole.hasPermission('VIEW_AUDIT_LOG') && !oldRole.hasPermission('VIEW_AUDIT_LOG')) listaRemoveds.push('View audit log');
+
+    if (!oldRole.hasPermission('PRIORITY_SPEAKER') && oldRole.hasPermission('PRIORITY_SPEAKER')) listaAddeds.push('Priority speaker');
+    if (oldRole.hasPermission('PRIORITY_SPEAKER') && !oldRole.hasPermission('PRIORITY_SPEAKER')) listaRemoveds.push('Priority speaker');
+
+    if (!oldRole.hasPermission('STREAM') && oldRole.hasPermission('STREAM')) listaAddeds.push('Stream');
+    if (oldRole.hasPermission('STREAM') && !oldRole.hasPermission('STREAM')) listaRemoveds.push('Stream');
+
+    if (!oldRole.hasPermission('VIEW_CHANNEL') && oldRole.hasPermission('VIEW_CHANNEL')) listaAddeds.push('View channel');
+    if (oldRole.hasPermission('VIEW_CHANNEL') && !oldRole.hasPermission('VIEW_CHANNEL')) listaRemoveds.push('View channel');
+
+    if (!oldRole.hasPermission('SEND_MESSAGES') && oldRole.hasPermission('SEND_MESSAGES')) listaAddeds.push('Send messages');
+    if (oldRole.hasPermission('SEND_MESSAGES') && !oldRole.hasPermission('SEND_MESSAGES')) listaRemoveds.push('Send messages');
+
+    if (!oldRole.hasPermission('SEND_TTS_MESSAGES') && oldRole.hasPermission('SEND_TTS_MESSAGES')) listaAddeds.push('Send tts messages');
+    if (oldRole.hasPermission('SEND_TTS_MESSAGES') && !oldRole.hasPermission('SEND_TTS_MESSAGES')) listaRemoveds.push('Send tts messages');
+
+    if (!oldRole.hasPermission('ADMINISTRATOR') && oldRole.hasPermission('ADMINISTRATOR')) listaAddeds.push('Administrator');
+    if (oldRole.hasPermission('ADMINISTRATOR') && !oldRole.hasPermission('ADMINISTRATOR')) listaRemoveds.push('Administrator');
+
+    if (!oldRole.hasPermission('MANAGE_MESSAGES') && oldRole.hasPermission('MANAGE_MESSAGES')) listaAddeds.push('Manage messages');
+    if (oldRole.hasPermission('MANAGE_MESSAGES') && !oldRole.hasPermission('MANAGE_MESSAGES')) listaRemoveds.push('Manage messages');
+
+    if (!oldRole.hasPermission('EMBED_LINKS') && oldRole.hasPermission('EMBED_LINKS')) listaAddeds.push('Embed links');
+    if (oldRole.hasPermission('EMBED_LINKS') && !oldRole.hasPermission('EMBED_LINKS')) listaRemoveds.push('Embed links');
+
+    if (!oldRole.hasPermission('ATTACH_FILES') && oldRole.hasPermission('ATTACH_FILES')) listaAddeds.push('Attach files');
+    if (oldRole.hasPermission('ATTACH_FILES') && !oldRole.hasPermission('ATTACH_FILES')) listaRemoveds.push('Attach files');
+
+    if (!oldRole.hasPermission('READ_MESSAGE_HISTORY') && oldRole.hasPermission('READ_MESSAGE_HISTORY')) listaAddeds.push('Read message history');
+    if (oldRole.hasPermission('READ_MESSAGE_HISTORY') && !oldRole.hasPermission('READ_MESSAGE_HISTORY')) listaRemoveds.push('Read message history');
+
+    if (!oldRole.hasPermission('MENTION_EVERYONE') && oldRole.hasPermission('MENTION_EVERYONE')) listaAddeds.push('Mention everyone');
+    if (oldRole.hasPermission('MENTION_EVERYONE') && !oldRole.hasPermission('MENTION_EVERYONE')) listaRemoveds.push('Mention everyone');
+
+    if (!oldRole.hasPermission('ADMINISTRATOR') && oldRole.hasPermission('ADMINISTRATOR')) listaAddeds.push('Administrator');
+    if (oldRole.hasPermission('ADMINISTRATOR') && !oldRole.hasPermission('ADMINISTRATOR')) listaRemoveds.push('Administrator');
+    if (!oldRole.hasPermission('ADMINISTRATOR') && oldRole.hasPermission('ADMINISTRATOR')) listaAddeds.push('Administrator');
+    if (oldRole.hasPermission('ADMINISTRATOR') && !oldRole.hasPermission('ADMINISTRATOR')) listaRemoveds.push('Administrator');
+    if (!oldRole.hasPermission('ADMINISTRATOR') && oldRole.hasPermission('ADMINISTRATOR')) listaAddeds.push('Administrator');
+    if (oldRole.hasPermission('ADMINISTRATOR') && !oldRole.hasPermission('ADMINISTRATOR')) listaRemoveds.push('Administrator');
+    if (!oldRole.hasPermission('ADMINISTRATOR') && oldRole.hasPermission('ADMINISTRATOR')) listaAddeds.push('Administrator');
+    if (oldRole.hasPermission('ADMINISTRATOR') && !oldRole.hasPermission('ADMINISTRATOR')) listaRemoveds.push('Administrator');
+    if (!oldRole.hasPermission('ADMINISTRATOR') && oldRole.hasPermission('ADMINISTRATOR')) listaAddeds.push('Administrator');
+    if (oldRole.hasPermission('ADMINISTRATOR') && !oldRole.hasPermission('ADMINISTRATOR')) listaRemoveds.push('Administrator');
+    if (!oldRole.hasPermission('ADMINISTRATOR') && oldRole.hasPermission('ADMINISTRATOR')) listaAddeds.push('Administrator');
+    if (oldRole.hasPermission('ADMINISTRATOR') && !oldRole.hasPermission('ADMINISTRATOR')) listaRemoveds.push('Administrator');
+    if (!oldRole.hasPermission('ADMINISTRATOR') && oldRole.hasPermission('ADMINISTRATOR')) listaAddeds.push('Administrator');
+    if (oldRole.hasPermission('ADMINISTRATOR') && !oldRole.hasPermission('ADMINISTRATOR')) listaRemoveds.push('Administrator');
+    if (!oldRole.hasPermission('ADMINISTRATOR') && oldRole.hasPermission('ADMINISTRATOR')) listaAddeds.push('Administrator');
+    if (oldRole.hasPermission('ADMINISTRATOR') && !oldRole.hasPermission('ADMINISTRATOR')) listaRemoveds.push('Administrator');
+    if (!oldRole.hasPermission('ADMINISTRATOR') && oldRole.hasPermission('ADMINISTRATOR')) listaAddeds.push('Administrator');
+    if (oldRole.hasPermission('ADMINISTRATOR') && !oldRole.hasPermission('ADMINISTRATOR')) listaRemoveds.push('Administrator');
+    if (!oldRole.hasPermission('ADMINISTRATOR') && oldRole.hasPermission('ADMINISTRATOR')) listaAddeds.push('Administrator');
+    if (oldRole.hasPermission('ADMINISTRATOR') && !oldRole.hasPermission('ADMINISTRATOR')) listaRemoveds.push('Administrator');
+    if (!oldRole.hasPermission('ADMINISTRATOR') && oldRole.hasPermission('ADMINISTRATOR')) listaAddeds.push('Administrator');
+    if (oldRole.hasPermission('ADMINISTRATOR') && !oldRole.hasPermission('ADMINISTRATOR')) listaRemoveds.push('Administrator');
+    if (!oldRole.hasPermission('ADMINISTRATOR') && oldRole.hasPermission('ADMINISTRATOR')) listaAddeds.push('Administrator');
+    if (oldRole.hasPermission('ADMINISTRATOR') && !oldRole.hasPermission('ADMINISTRATOR')) listaRemoveds.push('Administrator');
     await LogsModel.findOne({ id: newRole.guild.id }, async (err, data) => {
         if (oldRole.permissions.bitfield === newRole.permissions.bitfield) return;
         if (!newRole.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return console.log('El canal tiene que ser del Servidor donde estas!');
         let embed = new Discord.MessageEmbed()
             .setTitle('• Role Updated')
-            .addField('• New permissions', newRole.permissions.toArray().join(' | '), true)
-            .addField('• Role name', newRole.name, true)
-            .addField('• Role ID', newRole.id, true)
+            .addField('• Addeds permissions', listaAddeds.join(' - '), true)
+            .addField('• Removeds permissions', listaRemoveds.join(' - '), true)
+            .addField('• Role', `${newRole.name}(${newRole.id})`, true)
             .setTimestamp()
             .setFooter(newRole.guild.name, newRole.guild.iconURL({ format: 'png', size: 2048 }))
             .setColor(color)
@@ -308,7 +386,7 @@ client.on('messageDelete', async (message) => {
         if (!data) return console.log('Error!')
         else return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { console.log('Error: ' + error + '') });
     });
-});*/
+});
 
 client.on('roleUpdate', async (oldRole, newRole) => {
     await LogsModel.findOne({ id: newRole.guild.id }, async (err, data) => {
