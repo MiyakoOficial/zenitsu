@@ -83,7 +83,7 @@ client.on('message', async (message) => {
         message.channel.send({
             embed: new Discord.MessageEmbed()
                 .setColor(color)
-                .addField('Comandos', 'z!help, z!setlogs, z!canal, z!suggest, z!bugreport')
+                .addField('Comandos', 'z!help, z!setlogs, z!canal, z!suggest, z!bugreport, z!blockchannels')
                 .addField('Extras', 'z!txt, z!dm, z!ping')
                 .addField('Diversion', 'pronto...')
                 .setThumbnail(client.user.displayAvatarURL({ format: 'png', size: 2048 }))
@@ -106,6 +106,25 @@ client.on('message', async (message) => {
         } catch (e) { return errorEmbed(e) }
     }
     //fin de dm
+
+    //!inicio de blockchannels
+    if (command === 'blockchannels') {
+        if (!message.guild.member(client.user).hasPermission('MANAGE_CHANNELS')) return errorEmbed('No tengo el permisos MANAGE_CHANNELS');
+        if (message.member.hasPermission('MANAGE_CHANNELS')) return errorEmbed('No tienes el permiso MANAGE_CHANNELS');
+        let canales = message.guild.channels.cache.filter(a => a.type === 'text');
+        if (!args[1]) return embedResponse('Ejemplo: z!blockchannels <id de rol/user> <true | false | null>')
+        if (!message.guild.roles.cache(args[0]) && !message.guild.users.cache(args[0])) return errorEmbed('Error en encontrar la ID de usuario/rol');
+        if (['true', 'false', 'null'].includes(args[1])) return errorEmbed('Escoge entre true, false, null');
+        canales.forEach(ch => {
+            try {
+                message.channel.send(`Editando ${ch.name}`);
+                ch.updateOverwrite(args[0], {
+                    SEND_MESSAGES: args[1]
+                });
+            } catch (e) { errorEmbed(e) };
+        });
+    };
+    //!fin de blockchannels
 
     //inicio bugreport
     if (command === 'bugreport') {
