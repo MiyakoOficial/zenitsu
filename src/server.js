@@ -78,6 +78,16 @@ client.on('message', async (message) => {
     if (message.author.bot) return;
     if (!message.content.startsWith(prefix)) return;
 
+    let cooldown = new Set();
+    if (cooldown.has(message.author.id)) {
+        message.channel.send('Estas en cooldown!');
+        return;
+    }
+    cooldown.add(message.author.id);
+    setTimeout(() => {
+        cooldown.delete(message.author.id);
+    }, mil('5s'));
+
     //inicio de help
     if (command === 'help') {
         message.channel.send({
