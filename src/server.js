@@ -134,7 +134,7 @@ client.on('message', async (message) => {
     
             });
     
-            message.channel.send('Empieza ' + client.users.cache.get(partida.turno.jugador).username + ', elige un número del 1 al 9 [' + partida.turno.ficha + ']\n\n' + partida.tablero.string);
+            message.channel.send('Empieza ' + client.users.cache.get(partida.turno.jugador).username + ', elige un número del 1 al 9 [`' + partida.turno.ficha + '`]\n\n' + partida.tablero.string);
     
             const colector = message.channel.createMessageCollector(msg => msg.author.id === partida.turno.jugador && !isNaN(msg.content) && (Number(msg.content) >= 1 && Number(msg.content) <= 9) && partida.disponible(msg.content) && !partida.finalizado);
     
