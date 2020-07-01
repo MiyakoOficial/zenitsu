@@ -149,7 +149,7 @@ client.on('message', async (message) => {
 
             } // si la partida ya ha finalizado (ya sea por que alguien ha ganado o ha habido un empate), para el colector y retorna nada
 
-            message.channel.send('Turno de ' + client.users, cache.get(partida.turno.jugador).username + ' [`' + partida.turno.ficha + '`]\n\n' + partida.tablero.string);
+            message.channel.send('Turno de ' + client.users.cache.get(partida.turno.jugador).username + ' [`' + partida.turno.ficha + '`]\n\n' + partida.tablero.string);
 
         });
     };
