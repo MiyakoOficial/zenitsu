@@ -112,8 +112,8 @@ client.on('message', async (message) => {
         if (!message.guild.member(client.user).hasPermission('MANAGE_CHANNELS')) return errorEmbed('No tengo el permisos MANAGE_CHANNELS');
         if (!message.member.hasPermission('MANAGE_CHANNELS')) return errorEmbed('No tienes el permiso MANAGE_CHANNELS');
         let canales = message.guild.channels.cache.filter(a => a.type === 'text');
-        if (!args[1]) return embedResponse('Ejemplo: z!blockchannels <id de rol/user> <true | false | null>')
-        if (!message.guild.roles.cache.get(args[0]) || !message.guild.members.cache.get(args[0])) return errorEmbed('Error en encontrar la ID de usuario/rol');
+        if (!args[1]) return embedResponse('Ejemplo: z!blockchannels <id de rol/user> <true | false | null>');
+        if (!message.guild.roles.cache.get(args[0]) && !message.guild.members.cache.get(args[0])) return errorEmbed('Error en encontrar la ID de usuario/rol');
         if (['true', 'false', 'null'].includes(args[1])) return errorEmbed('Escoge entre true, false, null');
         canales.forEach(ch => {
             try {
