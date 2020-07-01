@@ -343,18 +343,24 @@ client.on('roleUpdate', async (oldRole, newRole) => {
     if (!oldRole.hasPermission('MENTION_EVERYONE') && oldRole.hasPermission('MENTION_EVERYONE')) listaAddeds.push('Mention everyone');
     if (oldRole.hasPermission('MENTION_EVERYONE') && !oldRole.hasPermission('MENTION_EVERYONE')) listaRemoveds.push('Mention everyone');
 
-    if (!oldRole.hasPermission('ADMINISTRATOR') && oldRole.hasPermission('ADMINISTRATOR')) listaAddeds.push('Administrator');
-    if (oldRole.hasPermission('ADMINISTRATOR') && !oldRole.hasPermission('ADMINISTRATOR')) listaRemoveds.push('Administrator');
-    if (!oldRole.hasPermission('ADMINISTRATOR') && oldRole.hasPermission('ADMINISTRATOR')) listaAddeds.push('Administrator');
-    if (oldRole.hasPermission('ADMINISTRATOR') && !oldRole.hasPermission('ADMINISTRATOR')) listaRemoveds.push('Administrator');
-    if (!oldRole.hasPermission('ADMINISTRATOR') && oldRole.hasPermission('ADMINISTRATOR')) listaAddeds.push('Administrator');
-    if (oldRole.hasPermission('ADMINISTRATOR') && !oldRole.hasPermission('ADMINISTRATOR')) listaRemoveds.push('Administrator');
-    if (!oldRole.hasPermission('ADMINISTRATOR') && oldRole.hasPermission('ADMINISTRATOR')) listaAddeds.push('Administrator');
-    if (oldRole.hasPermission('ADMINISTRATOR') && !oldRole.hasPermission('ADMINISTRATOR')) listaRemoveds.push('Administrator');
-    if (!oldRole.hasPermission('ADMINISTRATOR') && oldRole.hasPermission('ADMINISTRATOR')) listaAddeds.push('Administrator');
-    if (oldRole.hasPermission('ADMINISTRATOR') && !oldRole.hasPermission('ADMINISTRATOR')) listaRemoveds.push('Administrator');
-    if (!oldRole.hasPermission('ADMINISTRATOR') && oldRole.hasPermission('ADMINISTRATOR')) listaAddeds.push('Administrator');
-    if (oldRole.hasPermission('ADMINISTRATOR') && !oldRole.hasPermission('ADMINISTRATOR')) listaRemoveds.push('Administrator');
+    if (!oldRole.hasPermission('USE_EXTERNAL_EMOJIS') && oldRole.hasPermission('USE_EXTERNAL_EMOJIS')) listaAddeds.push('Use external emojis');
+    if (oldRole.hasPermission('USE_EXTERNAL_EMOJIS') && !oldRole.hasPermission('USE_EXTERNAL_EMOJIS')) listaRemoveds.push('Use external emojis');
+
+    if (!oldRole.hasPermission('VIEW_GUILD_INSIGHTS') && oldRole.hasPermission('VIEW_GUILD_INSIGHTS')) listaAddeds.push('View guild insigths');
+    if (oldRole.hasPermission('VIEW_GUILD_INSIGHTS') && !oldRole.hasPermission('VIEW_GUILD_INSIGHTS')) listaRemoveds.push('View guild insigths');
+
+    if (!oldRole.hasPermission('CONNECT') && oldRole.hasPermission('CONNECT')) listaAddeds.push('Connect');
+    if (oldRole.hasPermission('CONNECT') && !oldRole.hasPermission('CONNECT')) listaRemoveds.push('Connect');
+
+    if (!oldRole.hasPermission('SPEAK') && oldRole.hasPermission('SPEAK')) listaAddeds.push('Speak');
+    if (oldRole.hasPermission('SPEAK') && !oldRole.hasPermission('SPEAK')) listaRemoveds.push('Speak');
+
+    if (!oldRole.hasPermission('MUTE_MEMBERS') && oldRole.hasPermission('MUTE_MEMBERS')) listaAddeds.push('Mute members');
+    if (oldRole.hasPermission('MUTE_MEMBERS') && !oldRole.hasPermission('MUTE_MEMBERS')) listaRemoveds.push('Mute members');
+
+    if (!oldRole.hasPermission('DEAFEN_MEMBERS') && oldRole.hasPermission('DEAFEN_MEMBERS')) listaAddeds.push('Defen members');
+    if (oldRole.hasPermission('DEAFEN_MEMBERS') && !oldRole.hasPermission('DEAFEN_MEMBERS')) listaRemoveds.push('Defen members');
+
     if (!oldRole.hasPermission('ADMINISTRATOR') && oldRole.hasPermission('ADMINISTRATOR')) listaAddeds.push('Administrator');
     if (oldRole.hasPermission('ADMINISTRATOR') && !oldRole.hasPermission('ADMINISTRATOR')) listaRemoveds.push('Administrator');
     if (!oldRole.hasPermission('ADMINISTRATOR') && oldRole.hasPermission('ADMINISTRATOR')) listaAddeds.push('Administrator');
