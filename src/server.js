@@ -325,8 +325,8 @@ client.on('roleUpdate', async (oldRole, newRole) => {
     if (!oldRole.hasPermission('SEND_TTS_MESSAGES') && oldRole.hasPermission('SEND_TTS_MESSAGES')) listaAddeds.push('Send tts messages');
     if (oldRole.hasPermission('SEND_TTS_MESSAGES') && !oldRole.hasPermission('SEND_TTS_MESSAGES')) listaRemoveds.push('Send tts messages');
 
-    if (!oldRole.hasPermission('ADMINISTRATOR') && oldRole.hasPermission('ADMINISTRATOR')) listaAddeds.push('Administrator');
-    if (oldRole.hasPermission('ADMINISTRATOR') && !oldRole.hasPermission('ADMINISTRATOR')) listaRemoveds.push('Administrator');
+    if (!oldRole.hasPermission('MANAGE_EMOJIS') && oldRole.hasPermission('MANAGE_EMOJIS')) listaAddeds.push('Manage emojis');
+    if (oldRole.hasPermission('MANAGE_EMOJIS') && !oldRole.hasPermission('MANAGE_EMOJIS')) listaRemoveds.push('Manage emojis');
 
     if (!oldRole.hasPermission('MANAGE_MESSAGES') && oldRole.hasPermission('MANAGE_MESSAGES')) listaAddeds.push('Manage messages');
     if (oldRole.hasPermission('MANAGE_MESSAGES') && !oldRole.hasPermission('MANAGE_MESSAGES')) listaRemoveds.push('Manage messages');
@@ -361,18 +361,23 @@ client.on('roleUpdate', async (oldRole, newRole) => {
     if (!oldRole.hasPermission('DEAFEN_MEMBERS') && oldRole.hasPermission('DEAFEN_MEMBERS')) listaAddeds.push('Defen members');
     if (oldRole.hasPermission('DEAFEN_MEMBERS') && !oldRole.hasPermission('DEAFEN_MEMBERS')) listaRemoveds.push('Defen members');
 
-    if (!oldRole.hasPermission('ADMINISTRATOR') && oldRole.hasPermission('ADMINISTRATOR')) listaAddeds.push('Administrator');
-    if (oldRole.hasPermission('ADMINISTRATOR') && !oldRole.hasPermission('ADMINISTRATOR')) listaRemoveds.push('Administrator');
-    if (!oldRole.hasPermission('ADMINISTRATOR') && oldRole.hasPermission('ADMINISTRATOR')) listaAddeds.push('Administrator');
-    if (oldRole.hasPermission('ADMINISTRATOR') && !oldRole.hasPermission('ADMINISTRATOR')) listaRemoveds.push('Administrator');
-    if (!oldRole.hasPermission('ADMINISTRATOR') && oldRole.hasPermission('ADMINISTRATOR')) listaAddeds.push('Administrator');
-    if (oldRole.hasPermission('ADMINISTRATOR') && !oldRole.hasPermission('ADMINISTRATOR')) listaRemoveds.push('Administrator');
-    if (!oldRole.hasPermission('ADMINISTRATOR') && oldRole.hasPermission('ADMINISTRATOR')) listaAddeds.push('Administrator');
-    if (oldRole.hasPermission('ADMINISTRATOR') && !oldRole.hasPermission('ADMINISTRATOR')) listaRemoveds.push('Administrator');
-    if (!oldRole.hasPermission('ADMINISTRATOR') && oldRole.hasPermission('ADMINISTRATOR')) listaAddeds.push('Administrator');
-    if (oldRole.hasPermission('ADMINISTRATOR') && !oldRole.hasPermission('ADMINISTRATOR')) listaRemoveds.push('Administrator');
-    if (!oldRole.hasPermission('ADMINISTRATOR') && oldRole.hasPermission('ADMINISTRATOR')) listaAddeds.push('Administrator');
-    if (oldRole.hasPermission('ADMINISTRATOR') && !oldRole.hasPermission('ADMINISTRATOR')) listaRemoveds.push('Administrator');
+    if (!oldRole.hasPermission('MOVE_MEMBERS') && oldRole.hasPermission('MOVE_MEMBERS')) listaAddeds.push('Move members');
+    if (oldRole.hasPermission('MOVE_MEMBERS') && !oldRole.hasPermission('MOVE_MEMBERS')) listaRemoveds.push('Move members');
+
+    if (!oldRole.hasPermission('USE_VAD') && oldRole.hasPermission('USE_VAD')) listaAddeds.push('Use vad');
+    if (oldRole.hasPermission('USE_VAD') && !oldRole.hasPermission('USE_VAD')) listaRemoveds.push('Use vad');
+
+    if (!oldRole.hasPermission('CHANGE_NICKNAME') && oldRole.hasPermission('CHANGE_NICKNAME')) listaAddeds.push('Change nickname');
+    if (oldRole.hasPermission('CHANGE_NICKNAME') && !oldRole.hasPermission('CHANGE_NICKNAME')) listaRemoveds.push('Change nickname');
+
+    if (!oldRole.hasPermission('MANAGE_NICKNAMES') && oldRole.hasPermission('MANAGE_NICKNAMES')) listaAddeds.push('Manage nicknames');
+    if (oldRole.hasPermission('MANAGE_NICKNAMES') && !oldRole.hasPermission('MANAGE_NICKNAMES')) listaRemoveds.push('Manage nicknames');
+
+    if (!oldRole.hasPermission('MANAGE_ROLES') && oldRole.hasPermission('MANAGE_ROLES')) listaAddeds.push('Manage roles');
+    if (oldRole.hasPermission('MANAGE_ROLES') && !oldRole.hasPermission('MANAGE_ROLES')) listaRemoveds.push('Manage roles');
+
+    if (!oldRole.hasPermission('MANAGE_WEBHOOKS') && oldRole.hasPermission('MANAGE_WEBHOOKS')) listaAddeds.push('Manage webhooks');
+    if (oldRole.hasPermission('MANAGE_WEBHOOKS') && !oldRole.hasPermission('MANAGE_WEBHOOKS')) listaRemoveds.push('Manage webhooks');
     await LogsModel.findOne({ id: newRole.guild.id }, async (err, data) => {
         if (oldRole.permissions.bitfield === newRole.permissions.bitfield) return;
         if (!newRole.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return console.log('El canal tiene que ser del Servidor donde estas!');
