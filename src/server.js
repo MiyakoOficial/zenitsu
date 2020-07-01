@@ -8,7 +8,7 @@ const mongoose = require('mongoose');
 const { info, error } = require('console');
 const mil = require("ms")
 const tresenraya = require('tresenraya');
-const juego = new tresenraya(opciones);
+const juego = new tresenraya();
 
 /*function duration(s) {
     var ms = s % 1000;
