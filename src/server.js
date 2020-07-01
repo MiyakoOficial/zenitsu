@@ -54,7 +54,7 @@ client.on('ready', () => {
 
 client.on('message', async (message) => {
 
-    if (!message.guild.member(client.user).hasPermission('EMBED_LINKS')) return errorEmbed('No tengo el permiso para mandar embed :c');
+    if (!message.guild.me.hasPermission('EMBED_LINKS')) return errorEmbed('No tengo el permiso para mandar embed :c');
 
 
     function errorEmbed(argumentoDeLaDescripcion) {
@@ -116,7 +116,7 @@ client.on('message', async (message) => {
 
     //!inicio de blockchannels
     if (command === 'blockchannels') {
-        if (!message.guild.member(client.user).hasPermission('MANAGE_CHANNELS')) return errorEmbed('No tengo el permiso MANAGE_CHANNELS');
+        if (!message.guild.me.hasPermission('MANAGE_CHANNELS')) return errorEmbed('No tengo el permiso MANAGE_CHANNELS');
         if (!message.member.hasPermission('MANAGE_CHANNELS')) return errorEmbed('No tienes el permiso MANAGE_CHANNELS');
         let canales = message.guild.channels.cache.filter(a => a.type === 'text');
         if (!args[1]) return embedResponse('Ejemplo: z!blockchannels <id de rol/user> <true | false | null>');
