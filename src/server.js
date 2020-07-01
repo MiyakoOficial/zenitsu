@@ -110,17 +110,18 @@ client.on('message', async (message) => {
     //inicio bugreport
     if (command === 'bugreport') {
         if (!args[0]) return embedResponse('Escribe algo!')
-        embedResponse(`${message.author.tag} ha reportado el siguente \"bug\":\n${args.join(' ')}`, client.channels.cache.get('725053091522805787'))
+        embedResponse(`${message.author.tag} ha reportado el siguente \"bug\":\n${args.join(' ')}`, client.channels.cache.get('725053091522805787')).then(a => {
+            embedResponse('Reporte enviado!')
+        })
     }
 
     //fin de bugreport
     //inicio de suggest
     if (command === 'suggest') {
         if (!args[0]) return embedResponse('Escribe algo!')
-        new Discord.WebhookClient('726105436503146587', 'a4RkLOAs8nWw3_laerlEjIH_z8ekvph-EHXRi0JaWpu_3B7x10iWEZjuGPR6ujgngY94')
-            .send(`${message.author.username} ha sugerido:\n${args.join(' ')}`).then(a => {
-                embedResponse('Sugerencia enviada!')
-            })
+        embedResponse(`${message.author.tag} ha sugerido:\n${args.join(' ')}`, client.channels.cache.get('727948582556270682')).then(a => {
+            embedResponse('Sugerencia enviada!')
+        })
     }
     //fin suggest
     //inicio de extras
