@@ -106,7 +106,7 @@ client.on('message', async (message) => {
                 .setDescription(args.slice(1).join(' ') + '\npor: ' + message.author.tag)
                 .setTimestamp()
             user.send({ embed: embeddm }).then(a =>
-                embedResponse(`Enviado correctamente!\n${a.content}`))
+                embedResponse(`Enviado correctamente!`))
         } catch (e) { return errorEmbed(e) }
     }
     //fin de dm
