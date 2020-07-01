@@ -83,8 +83,9 @@ client.on('message', async (message) => {
         message.channel.send({
             embed: new Discord.MessageEmbed()
                 .setColor(color)
-                .addField('Comandos', 'z!help, z!setlogs, z!canal, z!suggest, z!bugreport, z!blockchannels')
+                .addField('Comandos', 'z!help, z!setlogs, z!canal, z!suggest, z!bugreport')
                 .addField('Extras', 'z!txt, z!dm, z!ping')
+                .addField('Administración', 'z!blockchannels')
                 .addField('Diversion', 'pronto...')
                 .setThumbnail(client.user.displayAvatarURL({ format: 'png', size: 2048 }))
         }).catch(err => console.log(err))
@@ -115,9 +116,9 @@ client.on('message', async (message) => {
         if (!args[1]) return embedResponse('Ejemplo: z!blockchannels <id de rol/user> <true | false | null>');
         if (!message.guild.roles.cache.get(args[0]) && !message.guild.members.cache.get(args[0])) return errorEmbed('Error en encontrar la ID de usuario/rol');
         if (!['true', 'false', 'null'].includes(args[1])) return errorEmbed('Escoge entre true, false, null');
+        message.channel.send(`Editando canales...`);
         canales.forEach(ch => {
             try {
-                message.channel.send(`Editando ${ch.name}`);
                 ch.updateOverwrite(args[0], {
                     SEND_MESSAGES: args[1]
                 });
