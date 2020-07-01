@@ -79,7 +79,7 @@ client.on('message', async (message) => {
     if (message.author.bot) return;
     if (!message.content.startsWith(prefix)) return;
 
-    if (!message.guild.me.hasPermission('EMBED_LINKS')) return message.channel.send('No tengo el permiso para mandar embed :c');
+    if (!message.guild.me.hasPermission('EMBED_LINKS')) return message.channel.send('No tengo el permiso para mandar mensajes en embed :c');
 
 
     const blacklist = []
