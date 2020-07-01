@@ -125,7 +125,9 @@ client.on('message', async (message) => {
                 ch.updateOverwrite(args[0], {
                     SEND_MESSAGES: args[1]
                 });
-            } catch (e) { errorEmbed(e) };
+            } catch (e) {
+                return message.channel.send(e);
+            };
         });
     };
     //!fin de blockchannels
