@@ -284,8 +284,8 @@ client.on('messageDelete', async (message) => {
 });
 
 client.on('roleUpdate', async (oldRole, newRole) => {
-    const listaAddeds = []
-    const listaRemoveds = []
+    const listaAddeds = ['.']
+    const listaRemoveds = ['.']
     if (!oldRole.permissions.has('ADMINISTRATOR') && newRole.permissions.has('ADMINISTRATOR')) listaAddeds.push('Administrator');
     if (oldRole.permissions.has('ADMINISTRATOR') && !newRole.permissions.has('ADMINISTRATOR')) listaRemoveds.push('Administrator');
 
@@ -379,8 +379,7 @@ client.on('roleUpdate', async (oldRole, newRole) => {
     if (!oldRole.permissions.has('MANAGE_WEBHOOKS') && newRole.permissions.has('MANAGE_WEBHOOKS')) listaAddeds.push('Manage webhooks');
     if (oldRole.permissions.has('MANAGE_WEBHOOKS') && !newRole.permissions.has('MANAGE_WEBHOOKS')) listaRemoveds.push('Manage webhooks');
     await LogsModel.findOne({ id: newRole.guild.id }, async (err, data) => {
-        if (listaAddeds === null) listaAddeds = 'Null'
-        if (listaRemoveds === null) listaRemoveds = 'Null'
+
         if (oldRole.permissions.bitfield === newRole.permissions.bitfield) return;
         if (!newRole.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return console.log('El canal tiene que ser del Servidor donde estas!');
         let embed = new Discord.MessageEmbed()
