@@ -114,7 +114,7 @@ client.on('message', async (message) => {
         let canales = message.guild.channels.cache.filter(a => a.type === 'text');
         if (!args[1]) return embedResponse('Ejemplo: z!blockchannels <id de rol/user> <true | false | null>');
         if (!message.guild.roles.cache.get(args[0]) && !message.guild.members.cache.get(args[0])) return errorEmbed('Error en encontrar la ID de usuario/rol');
-        if (['true', 'false', 'null'].includes(args[1])) return errorEmbed('Escoge entre true, false, null');
+        if (!['true', 'false', 'null'].includes(args[1])) return errorEmbed('Escoge entre true, false, null');
         canales.forEach(ch => {
             try {
                 message.channel.send(`Editando ${ch.name}`);
