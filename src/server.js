@@ -83,8 +83,9 @@ client.on('message', async (message) => {
         message.channel.send({
             embed: new Discord.MessageEmbed()
                 .setColor(color)
-                .addField('Comandos', 'z!help, z!setlogs, z!ping, z!canal, z!suggest, z!dm')
-                .addField('Extras', 'z!txt, z!js, z!ruby')
+                .addField('Comandos', 'z!help, z!setlogs, z!canal, z!suggest')
+                .addField('Extras', 'z!txt, z!dm, z!ping')
+                .addField('Diversion', 'pronto...')
                 .setThumbnail(client.user.displayAvatarURL({ format: 'png', size: 2048 }))
         }).catch(err => console.log(err))
     }
@@ -127,28 +128,6 @@ client.on('message', async (message) => {
         }).catch(err => console.log(err))
     }
     //fin de txt
-    //inicio de js
-    if (command === 'js') {
-        if (!args[0]) return embedResponse('Escribe algo!')
-        message.channel.send({
-            files: [{
-                attachment: Buffer.from(args.join(' ')),
-                name: "JavaScript.js"
-            }]
-        }).catch(err => console.log(err))
-    }
-    //fin de js
-    //inicio de ruby
-    if (command === 'ruby') {
-        if (!args[0]) return embedResponse('Escribe algo!')
-        message.channel.send({
-            files: [{
-                attachment: Buffer.from(args.join(' ')),
-                name: "Ruby.rb"
-            }]
-        }).catch(err => console.log(err))
-    }
-    //fin de ruby
     //fin de extras
 
     //comienzo de eval
