@@ -53,9 +53,7 @@ client.on('ready', () => {
 });
 
 client.on('message', async (message) => {
-
-    if (!message.guild.me.hasPermission('EMBED_LINKS')) return errorEmbed('No tengo el permiso para mandar embed :c');
-
+    if (!message.guild) return;
 
     function errorEmbed(argumentoDeLaDescripcion) {
         return message.channel.send(new Discord.MessageEmbed()
@@ -80,6 +78,9 @@ client.on('message', async (message) => {
     const command = args.shift().toLowerCase();
     if (message.author.bot) return;
     if (!message.content.startsWith(prefix)) return;
+
+    if (!message.guild.me.hasPermission('EMBED_LINKS')) return message.channel.send('No tengo el permiso para mandar embed :c');
+
 
     const blacklist = []
     if (blacklist.includes(message.author.id)) return embedResponse('Por alguna razon estas en la lista negra...')
