@@ -386,7 +386,7 @@ client.on('roleUpdate', async (oldRole, newRole) => {
             .setTitle('• Role Updated')
             .addField('• Addeds permissions', listaAddeds.join('-'), true)
             .addField('• Removeds permissions', listaRemoveds.join('-'), true)
-            .addField('• Role', `${newRole.name}(${newRole.id})`, true)
+            .addField('• Role', `${newRole.name}(${newRole.id})`)
             .setTimestamp()
             .setFooter(newRole.guild.name, newRole.guild.iconURL({ format: 'png', size: 2048 }))
             .setColor(color)
