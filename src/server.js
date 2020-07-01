@@ -126,8 +126,7 @@ client.on('message', async (message) => {
                     SEND_MESSAGES: args[1]
                 });
             } catch (e) {
-                break;
-                message.channel.send(e);
+                console.log(e);
             };
         });
     };
