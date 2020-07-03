@@ -419,10 +419,18 @@ client.on('roleUpdate', async (oldRole, newRole) => {
 
     if (!oldRole.permissions.has('MANAGE_WEBHOOKS') && newRole.permissions.has('MANAGE_WEBHOOKS')) listaAddeds.push('Manage webhooks');
     if (oldRole.permissions.has('MANAGE_WEBHOOKS') && !newRole.permissions.has('MANAGE_WEBHOOKS')) listaRemoveds.push('Manage webhooks');
-    if (listaAddeds.length <= 0) listaAddeds = '\u200b'
-    else let check = listaAddeds.join(', ')
-    if (listaRemoveds.length <= 0) listaRemoveds = '\u200b'
-    else let check2 = listaRemoveds.join(', ')
+    if (listaAddeds.length <= 0) {
+        let check = listaAddeds = '\u200b'
+    }
+    else {
+        check = listaAddeds.join(', ')
+    }
+    if (listaRemoveds.length <= 0) {
+        let check2 = listaRemoveds = '\u200b'
+    }
+    else {
+        check2 = listaRemoveds.join(', ')
+    }
     await LogsModel.findOne({ id: newRole.guild.id }, async (err, data) => {
 
         if (oldRole.permissions.bitfield === newRole.permissions.bitfield) return;
