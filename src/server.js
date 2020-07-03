@@ -327,8 +327,6 @@ client.on('messageDelete', async (message) => {
 client.on('roleUpdate', async (oldRole, newRole) => {
     const listaAddeds = []
     const listaRemoveds = []
-    if (listaAddeds === []) listaAddeds = '\u200b'
-    if (listaRemoveds === []) listaRemoveds = '\u200b'
     if (!oldRole.permissions.has('ADMINISTRATOR') && newRole.permissions.has('ADMINISTRATOR')) listaAddeds.push('Administrator');
     if (oldRole.permissions.has('ADMINISTRATOR') && !newRole.permissions.has('ADMINISTRATOR')) listaRemoveds.push('Administrator');
 
@@ -421,6 +419,8 @@ client.on('roleUpdate', async (oldRole, newRole) => {
 
     if (!oldRole.permissions.has('MANAGE_WEBHOOKS') && newRole.permissions.has('MANAGE_WEBHOOKS')) listaAddeds.push('Manage webhooks');
     if (oldRole.permissions.has('MANAGE_WEBHOOKS') && !newRole.permissions.has('MANAGE_WEBHOOKS')) listaRemoveds.push('Manage webhooks');
+    if (listaAddeds === []) listaAddeds = '\u200b'
+    if (listaRemoveds === []) listaRemoveds = '\u200b'
     await LogsModel.findOne({ id: newRole.guild.id }, async (err, data) => {
 
         if (oldRole.permissions.bitfield === newRole.permissions.bitfield) return;
