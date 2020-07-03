@@ -325,8 +325,8 @@ client.on('messageDelete', async (message) => {
 });
 
 client.on('roleUpdate', async (oldRole, newRole) => {
-    let listaAddeds = []
-    let listaRemoveds = []
+    let listaAddeds = ['\u200b']
+    let listaRemoveds = ['\u200b']
     if (!oldRole.permissions.has('ADMINISTRATOR') && newRole.permissions.has('ADMINISTRATOR')) listaAddeds.push('Administrator');
     if (oldRole.permissions.has('ADMINISTRATOR') && !newRole.permissions.has('ADMINISTRATOR')) listaRemoveds.push('Administrator');
 
@@ -419,26 +419,15 @@ client.on('roleUpdate', async (oldRole, newRole) => {
 
     if (!oldRole.permissions.has('MANAGE_WEBHOOKS') && newRole.permissions.has('MANAGE_WEBHOOKS')) listaAddeds.push('Manage webhooks');
     if (oldRole.permissions.has('MANAGE_WEBHOOKS') && !newRole.permissions.has('MANAGE_WEBHOOKS')) listaRemoveds.push('Manage webhooks');
-    if (listaAddeds.length <= 0) {
-        let check = listaAddeds = '\u200b'
-    }
-    else {
-        check = listaAddeds.join(', ')
-    }
-    if (listaRemoveds.length <= 0) {
-        let check2 = listaRemoveds = '\u200b'
-    }
-    else {
-        check2 = listaRemoveds.join(', ')
-    }
+
     await LogsModel.findOne({ id: newRole.guild.id }, async (err, data) => {
 
         if (oldRole.permissions.bitfield === newRole.permissions.bitfield) return;
         if (!newRole.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return console.log('El canal tiene que ser del Servidor donde estas!');
         let embed = new Discord.MessageEmbed()
             .setTitle('• Role Updated')
-            .addField('• Addeds permissions', check, true)
-            .addField('• Removeds permissions', check2, true)
+            .addField('• Addeds permissions', listaAddeds.join(', '), true)
+            .addField('• Removeds permissions', listaRemoveds.join(', '), true)
             .addField('• Role', `${newRole.name}(${newRole.id})`)
             .setTimestamp()
             .setFooter(newRole.guild.name, newRole.guild.iconURL({ format: 'png', size: 2048 }))
