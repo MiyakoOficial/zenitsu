@@ -5,7 +5,7 @@
     "main": "node ./src/server.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "node ./src/shard.js"
+        "start": "node shard.js"
     },
     "dependencies": {
         "discord.js": "^12.2.0",
