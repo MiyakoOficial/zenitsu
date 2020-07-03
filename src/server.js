@@ -271,7 +271,10 @@ client.on('message', async (message) => {
     //fin de canal
     //mongoose
 });
-//inicio de eventos
+//?inicio de eventos
+
+//?inicio mensajes eventos
+
 client.on('messageUpdate', async (oldMessage, newMessage) => {
     if (!newMessage.guild || !oldMessage.guild) return;
     await LogsModel.findOne({ id: newMessage.guild.id }, async (err, data) => {
@@ -323,6 +326,8 @@ client.on('messageDelete', async (message) => {
         else return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { console.log('Error: ' + error + '') });
     });
 });
+//!fin mensajes eventos
+//?inicio de roles eventos
 
 client.on('roleUpdate', async (oldRole, newRole) => {
     let listaAddeds = ['\u200b']
@@ -459,26 +464,6 @@ client.on('roleUpdate', async (oldRole, newRole) => {
     });
 });
 
-client.on('guildUpdate', async (oldGuild, newGuild) => {
-    await LogsModel.findOne({ id: newGuild.id }, async (err, data) => {
-        if (oldGuild.name === newGuild.name) return;
-        if (!newGuild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return console.log('El canal tiene que ser del Servidor donde estas!');
-        let embed = new Discord.MessageEmbed()
-            .setTitle('• Guild Updated')
-            .addField('• Old name', oldGuild.name, true)
-            .addField('• New name', newGuild.name, true)
-            .addField('• Guild ID', newGuild.id, true)
-            .setTimestamp()
-            .setFooter(newGuild.name, newGuild.iconURL({ format: 'png', size: 2048 }))
-            .setColor(color)
-        if (data.channellogs === 'defaultValue') return console.log('No se ha establecido ningun canal en el servidor ' + newGuild.name + '')
-        if (err) return console.log(err);
-        if (!data) return console.log('Error!')
-        else return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { console.log('Error: ' + error + '') });
-    });
-});
-
-
 client.on('roleUpdate', async (oldRole, newRole) => {
     await LogsModel.findOne({ id: newRole.guild.id }, async (err, data) => {
         if (oldRole.hexColor === newRole.hexColor) return;
@@ -498,7 +483,28 @@ client.on('roleUpdate', async (oldRole, newRole) => {
     });
 });
 
-//fin de eventos
+//!fin de roles eventos
+//?inicio servidor eventos
+client.on('guildUpdate', async (oldGuild, newGuild) => {
+    await LogsModel.findOne({ id: newGuild.id }, async (err, data) => {
+        if (oldGuild.name === newGuild.name) return;
+        if (!newGuild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return console.log('El canal tiene que ser del Servidor donde estas!');
+        let embed = new Discord.MessageEmbed()
+            .setTitle('• Guild Updated')
+            .addField('• Old name', oldGuild.name, true)
+            .addField('• New name', newGuild.name, true)
+            .addField('• Guild ID', newGuild.id, true)
+            .setTimestamp()
+            .setFooter(newGuild.name, newGuild.iconURL({ format: 'png', size: 2048 }))
+            .setColor(color)
+        if (data.channellogs === 'defaultValue') return console.log('No se ha establecido ningun canal en el servidor ' + newGuild.name + '')
+        if (err) return console.log(err);
+        if (!data) return console.log('Error!')
+        else return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { console.log('Error: ' + error + '') });
+    });
+});
+//!fin servidor eventos
+//!fin de eventos
 client.login(process.env.BOT_TOKEN)
 
 mongoose.connect(process.env.MONGODB, { useNewUrlParser: true, useUnifiedTopology: true }).then(() => {
