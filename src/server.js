@@ -64,10 +64,6 @@ client.on('message', async (message) => {
         )
     }
 
-    function capitalize(string) {
-        return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
-    }
-
     function embedResponse(argumentoDeLaDescripcion, opcion) {
         let canal_a_enviar = opcion || message.channel
         return canal_a_enviar.send(new Discord.MessageEmbed()
@@ -535,3 +531,7 @@ mongoose.connect(process.env.MONGODB, { useNewUrlParser: true, useUnifiedTopolog
 }).catch((err) => {
     console.log(`[Error]: No se puede conectar a la base de datos de Mongodb. Error: ${err}`);
 });
+
+function capitalize(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+}
