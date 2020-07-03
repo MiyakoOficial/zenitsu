@@ -503,6 +503,26 @@ client.on('guildUpdate', async (oldGuild, newGuild) => {
         else return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { console.log('Error: ' + error + '') });
     });
 });
+
+client.on('guildUpdate', async (oldGuild, newGuild) => {
+    await LogsModel.findOne({ id: newGuild.id }, async (err, data) => {
+        if (oldGuild.verificationLevel === newGuild.verificationLevel) return;
+        if (!newGuild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return console.log('El canal tiene que ser del Servidor donde estas!');
+        let embed = new Discord.MessageEmbed()
+            .setTitle('• Guild Updated')
+            .addField('• Old verification level', oldGuild.verificationLevel, true)
+            .addField('• New verification level', newGuild.verificationLevel, true)
+            .addField('• Guild', `${newGuild.name}${newGuild.id}`, true)
+            .setTimestamp()
+            .setFooter(newGuild.name, newGuild.iconURL({ format: 'png', size: 2048 }))
+            .setColor(color)
+        if (data.channellogs === 'defaultValue') return console.log('No se ha establecido ningun canal en el servidor ' + newGuild.name + '')
+        if (err) return console.log(err);
+        if (!data) return console.log('Error!')
+        else return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { console.log('Error: ' + error + '') });
+    });
+});
+
 //!fin servidor eventos
 //!fin de eventos
 client.login(process.env.BOT_TOKEN)
