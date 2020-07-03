@@ -205,12 +205,8 @@ client.on('message', async (message) => {
             let limit = 1999
             if (txt.length > limit) return (txt, "js").then(p => {
                 let embed = new Discord.MessageEmbed()
-                    .setTitle(`Eval`)
-                    .addField(`Entrada`, `\`\`\`js\n${code}\`\`\``)
-                    .addField(`Salida`, `[Click aquí](${p})`)
-                    .addField(`Tipo`, `\`\`\`js\n${asd}\`\`\``.replace("number", "Number").replace("object", "Object").replace("string", "String").replace(undefined, "Undefined").replace("boolean", "Boolean").replace("function", "Function"))
+                    .setDescription('Evaluacion mayor a 1999 caracteres :c')
                     .setColor(color)
-                    .setTimestamp()
                 message.channel.send(embed)
             }).catch(err => console.log(err))
             let embed = new Discord.MessageEmbed()
