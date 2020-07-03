@@ -227,6 +227,29 @@ client.on('message', async (message) => {
 });
 //?inicio de eventos
 
+//?inicio usuarios eventos
+
+client.on('userUpdate', async (oldUser, newUser) => {
+    await LogsModel.findOne({ id: newUser.guild.id }, async (err, data) => {
+        if (newUser.name === newUser.name) return;
+        if (!newUser.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return console.log('El canal tiene que ser del Servidor donde estas!');
+        let embed = new Discord.MessageEmbed()
+            .setTitle('• User Updated')
+            .addField('• Old name', oldUser.name, true)
+            .addField('• New name', newUser.name, true)
+            .addField('• User ID', newUser.id, true)
+            .setTimestamp()
+            .setFooter(newUser.guild.name, newUser.guild.iconURL({ format: 'png', size: 2048 }))
+            .setColor(color)
+        if (data.channellogs === 'defaultValue') return console.log('No se ha establecido ningun canal en el servidor ' + newUser.guild.name + '')
+        if (err) return console.log(err);
+        if (!data) return console.log('Error!')
+        else return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { console.log('Error: ' + error + '') });
+    });
+});
+
+//!fin usuarios eventos
+
 //?inicio mensajes eventos
 
 client.on('messageUpdate', async (oldMessage, newMessage) => {
@@ -274,7 +297,7 @@ client.on('messageDelete', async (message) => {
             .addField('• Author channel mention', `<#${message.channel.id}>`, false)
             .setFooter(message.guild.name, message.guild.iconURL({ format: 'png', size: 2048 }))
             .setTimestamp()
-        if (data.channellogs === 'defaultValue') return console.log('No se ha establecido ningun canal en el servidor ' + newMessage.guild.name + '')
+        if (data.channellogs === 'defaultValue') return console.log('No se ha establecido ningun canal en el servidor ' + message.guild.name + '')
         if (err) return console.log(err);
         if (!data) return console.log('Error!')
         else return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { console.log('Error: ' + error + '') });
@@ -498,7 +521,7 @@ client.on('guildUpdate', async (oldGuild, newGuild) => {
 
 //!fin servidor eventos
 //!fin de eventos
-client.login(process.env.BOT_TOKEN)
+client.login(process.env.BOT_TOKEN);
 
 mongoose.connect(process.env.MONGODB, { useNewUrlParser: true, useUnifiedTopology: true }).then(() => {
     console.log("[MongoDB]: Conectado a la base de datos Mongodb.");
@@ -508,4 +531,4 @@ mongoose.connect(process.env.MONGODB, { useNewUrlParser: true, useUnifiedTopolog
 
 function capitalize(string) {
     return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
-}
+};
