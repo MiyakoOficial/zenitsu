@@ -202,7 +202,7 @@ client.on('message', async (message) => {
             let asd = typeof (evalued)
             evalued = require("util").inspect(evalued, { depth: 0 });
             let txt = "" + evalued;
-            let limit = 1024
+            let limit = 1999
             if (txt.length > limit) return (txt, "js").then(p => {
                 let embed = new Discord.MessageEmbed()
                     .setTitle(`Eval`)
