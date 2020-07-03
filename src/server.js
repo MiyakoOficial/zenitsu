@@ -511,7 +511,7 @@ client.on('guildUpdate', async (oldGuild, newGuild) => {
             .setTitle('• Guild Updated')
             .addField('• Old verification level', capitalize(oldGuild.verificationLevel), true)
             .addField('• New verification level', capitalize(newGuild.verificationLevel), true)
-            .addField('• Guild', `${newGuild.name}${newGuild.id}`, true)
+            .addField('• Guild', `${newGuild.name}(${newGuild.id})`, true)
             .setTimestamp()
             .setFooter(newGuild.name, newGuild.iconURL({ format: 'png', size: 2048 }))
             .setColor(color)
