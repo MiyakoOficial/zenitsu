@@ -325,8 +325,10 @@ client.on('messageDelete', async (message) => {
 });
 
 client.on('roleUpdate', async (oldRole, newRole) => {
-    const listaAddeds = ['.']
-    const listaRemoveds = ['.']
+    const listaAddeds = []
+    const listaRemoveds = []
+    if (listaAddeds === []) listaAddeds = '\u200b'
+    if (listaRemoveds === []) listaRemoveds = '\u200b'
     if (!oldRole.permissions.has('ADMINISTRATOR') && newRole.permissions.has('ADMINISTRATOR')) listaAddeds.push('Administrator');
     if (oldRole.permissions.has('ADMINISTRATOR') && !newRole.permissions.has('ADMINISTRATOR')) listaRemoveds.push('Administrator');
 
