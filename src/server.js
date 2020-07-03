@@ -92,29 +92,14 @@ client.on('message', async (message) => {
             embed: new Discord.MessageEmbed()
                 .setColor(color)
                 .addField('Comandos', 'z!help, z!setlogs, z!canal, z!suggest, z!bugreport')
-                .addField('Extras', 'z!txt, z!dm, z!ping')
+                .addField('Extras', 'z!txt, z!ping')
                 .addField('Administración', 'z!blockchannels')
                 .addField('Diversion', 'pronto...')
                 .setThumbnail(client.user.displayAvatarURL({ format: 'png', size: 2048 }))
         }).catch(err => console.log(err))
     }
     //fin de help
-
-    //inicio de dm
-    if (command === 'dm') {
-        let user = message.mentions.users.first()
-        if (!user) return embedResponse('Menciona a alguien!')
-        if (!args[1]) return embedResponse('Escribe el mensaje a enviar!')
-        try {
-            let embeddm = new Discord.MessageEmbed()
-                .setColor(color)
-                .setDescription(args.slice(1).join(' ') + '\npor: ' + message.author.tag)
-                .setTimestamp()
-            user.send({ embed: embeddm }).then(a =>
-                embedResponse(`<:correcto:721174526930714634> tratando de enviar!`))
-        } catch (e) { return errorEmbed(e) }
-    }
-    //fin de dm
+    //inicio de 3enraya
     /*
         if (command === '3enraya') {
             const usuario = message.mentions.users.first();
@@ -154,6 +139,7 @@ client.on('message', async (message) => {
             });
         };
     */
+    //fin de 3enraya
     //!inicio de blockchannels
     if (command === 'blockchannels') {
         if (!message.guild.me.hasPermission('MANAGE_CHANNELS')) return errorEmbed('No tengo el permiso MANAGE_CHANNELS');
