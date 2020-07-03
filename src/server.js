@@ -64,6 +64,9 @@ client.on('message', async (message) => {
         )
     }
 
+    function capitalize(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+    }
 
     function embedResponse(argumentoDeLaDescripcion, opcion) {
         let canal_a_enviar = opcion || message.channel
@@ -510,8 +513,8 @@ client.on('guildUpdate', async (oldGuild, newGuild) => {
         if (!newGuild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return console.log('El canal tiene que ser del Servidor donde estas!');
         let embed = new Discord.MessageEmbed()
             .setTitle('• Guild Updated')
-            .addField('• Old verification level', oldGuild.verificationLevel, true)
-            .addField('• New verification level', newGuild.verificationLevel, true)
+            .addField('• Old verification level', capitalize(oldGuild.verificationLevel), true)
+            .addField('• New verification level', capitalize(newGuild.verificationLevel), true)
             .addField('• Guild', `${newGuild.name}${newGuild.id}`, true)
             .setTimestamp()
             .setFooter(newGuild.name, newGuild.iconURL({ format: 'png', size: 2048 }))
