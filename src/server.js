@@ -75,8 +75,8 @@ client.on('message', async (message) => {
 
     let prefix = await PrefixsModel.findOne({ id: message.guild.id }, async (err, data) => {
         if (err) return console.log(err);
-        if (!data) prefix = 'z!'
-        else return data.prefix
+        if (!data) prefix = 'z!';
+        else prefix = data.prefix
     });
     const args = message.content.slice(prefix.length).split(/ +/);
     const command = args.shift().toLowerCase();
