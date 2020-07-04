@@ -560,8 +560,8 @@ client.on('channelUpdate', async (oldChannel, newChannel) => {
         if (!newChannel.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return console.log('El canal tiene que ser del Servidor donde estas!');
         let embed = new Discord.MessageEmbed()
             .setTitle('• User Updated')
-            .addField('• Old cooldown', oldChannel.rateLimitPerUser, true)
-            .addField('• New cooldown', newChannel.rateLimitPerUser, true)
+            .addField('• Old cooldown', oldChannel.rateLimitPerUser + 's', true)
+            .addField('• New cooldown', newChannel.rateLimitPerUser + 's', true)
             .addField('• Channel', `${newChannel.name}(${newChannel.id})`, true)
             .setTimestamp()
             .setFooter(newChannel.guild.name, newChannel.guild.iconURL({ format: 'png', size: 2048 }))
@@ -572,7 +572,6 @@ client.on('channelUpdate', async (oldChannel, newChannel) => {
         else return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { console.log('Error: ' + error + '') });
     });
 });
-
 //!fin canales eventos
 //!fin servidor eventos
 //?inicio usuarios eventos
