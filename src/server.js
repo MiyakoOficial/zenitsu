@@ -226,30 +226,6 @@ client.on('message', async (message) => {
     //mongoose
 });
 //?inicio de eventos
-
-//?inicio usuarios eventos
-
-client.on('guildMemberUpdate', async (oldUser, newUser) => {
-    await LogsModel.findOne({ id: newUser.guild.id }, async (err, data) => {
-        if (newUser.nickname === newUser.nickname) return;
-        if (!newUser.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return console.log('El canal tiene que ser del Servidor donde estas!');
-        let embed = new Discord.MessageEmbed()
-            .setTitle('• User Updated')
-            .addField('• Old nickname', oldUser.nickname, true)
-            .addField('• New nickname', newUser.nickname, true)
-            .addField('• User', `${newUser.user.username}(${newUser.user.id})`, true)
-            .setTimestamp()
-            .setFooter(newUser.guild.name, newUser.guild.iconURL({ format: 'png', size: 2048 }))
-            .setColor(color)
-        if (data.channellogs === 'defaultValue') return console.log('No se ha establecido ningun canal en el servidor ' + newUser.guild.name + '')
-        if (err) return console.log(err);
-        if (!data) return console.log('Error!')
-        else return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { console.log('Error: ' + error + '') });
-    });
-});
-
-//!fin usuarios eventos
-
 //?inicio mensajes eventos
 
 client.on('messageUpdate', async (oldMessage, newMessage) => {
