@@ -217,6 +217,8 @@ client.on('message', async (message) => {
     //inicio de setprefix
     if (command === 'setprefix') {
         if (!message.member.hasPermission("ADMINISTRATOR")) return embedResponse("No tienes el permiso `ADMINISTRATOR`").catch(err => console.log(err));
+        if (!args[0] || args[0].length >= 4) return embedResponse('El prefix debe tener menos de 3 caracteres!');
+
         let data = await PrefixsModel.findOne({ id: message.guild.id });
         if (!data) {
             try {
@@ -232,7 +234,6 @@ client.on('message', async (message) => {
                 data.save().catch(e => { return console.log(e); });
             } catch { return; }
         }
-        if (args[0].length >= 4) return embedResponse('El prefix debe tener menos de 3 caracteres!')
         return embedResponse(`Prefix establecido a ${args[0]}`).catch(err => console.log(err))
     }
     //fin de setprefix
