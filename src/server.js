@@ -1,6 +1,7 @@
 const { join } = require('path');
 const color = "#E09E36";
 const LogsModel = require('../src/Guild.js')
+const PrefixsModel = require('../src/Prefix.js')
 require('dotenv').config();
 const Discord = require('discord.js');
 const client = new Discord.Client();
@@ -8,6 +9,7 @@ const mongoose = require('mongoose');
 const { info, error } = require('console');
 const mil = require("ms")
 const tresenraya = require('tresenraya');
+const Prefix = require('../src/Prefix.js');
 const juego = new tresenraya();
 
 /*function duration(s) {
@@ -55,7 +57,6 @@ client.on('ready', () => {
 
 client.on('message', async (message) => {
     if (!message.guild) return;
-
     function errorEmbed(argumentoDeLaDescripcion) {
         return message.channel.send(new Discord.MessageEmbed()
             .setDescription(`¡<:ohno:721174460073377804> => \`Error\`: ${argumentoDeLaDescripcion}!`)
@@ -73,7 +74,14 @@ client.on('message', async (message) => {
         )
     }
 
-    const prefix = 'z!'
+    let prefix = await PrefixsModel.findOne({ id: message.guild.id }, async (err, data) => {
+        if (err) return console.log(err);
+        if (!data) return console.log('Error de prefix, (raro');
+        else return data.prefix
+    });
+
+
+    let prefix = 'z!'
     const args = message.content.slice(prefix.length).split(/ +/);
     const command = args.shift().toLowerCase();
     if (message.author.bot) return;
@@ -213,6 +221,28 @@ client.on('message', async (message) => {
         return embedResponse(`Canal establecido en <#${channel.id}>`).catch(err => console.log(err))
     }
     //fin de setlogs
+    //inicio de setprefix
+    if (command === 'setprefix') {
+        if (!message.member.hasPermission("ADMINISTRATOR")) return embedResponse("No tienes el permiso `ADMINISTRATOR`").catch(err => console.log(err));
+        let data = await PrefixsModel.findOne({ id: message.guild.id });
+        if (!data) {
+            try {
+                const configLogs = new PrefixsModel({
+                    id: message.guild.id,
+                    prefix: args[0]
+                });
+                configLogs.save().catch(e => { return console.log(e); });
+            } catch { return; }
+        } else {
+            try {
+                data.prefix = args[0];
+                data.save().catch(e => { return console.log(e); });
+            } catch { return; }
+        }
+        if (args[0].length >= 4) return embedResponse('El prefix debe tener menos de 3 caracteres!')
+        return embedResponse(`Prefix establecido a ${args[0]}`).catch(err => console.log(err))
+    }
+    //fin de setprefix
     //inicio de canal
     if (command === 'canal') {
         await LogsModel.findOne({ id: message.guild.id }, async (err, data) => {
