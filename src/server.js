@@ -114,8 +114,8 @@ client.on('message', async (message) => {
         chatbot.hablar(args).then(respuesta => {
             message.channel.stopTyping();
 
-            message.channel.send(respuesta).catch(e => message.channel.send(e));
-        })
+            message.channel.send(respuesta);
+        }).catch(e => message.channel.send(e));
     }
     //fin de chat
     //!inicio de blockchannels
