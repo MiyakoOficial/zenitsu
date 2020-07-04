@@ -74,14 +74,7 @@ client.on('message', async (message) => {
         )
     }
 
-    let prefix = await PrefixsModel.findOne({ id: message.guild.id }, async (err, data) => {
-        if (err) return console.log(err);
-        if (!data) return console.log('Error de prefix, (raro');
-        else return data.prefix
-    });
-
-
-
+    const prefix = 'z!'
     const args = message.content.slice(prefix.length).split(/ +/);
     const command = args.shift().toLowerCase();
     if (message.author.bot) return;
