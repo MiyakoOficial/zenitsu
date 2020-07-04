@@ -96,9 +96,9 @@ client.on('message', async (message) => {
         message.channel.send({
             embed: new Discord.MessageEmbed()
                 .setColor(color)
-                .addField('Comandos', `${prefix}help, ${prefix}setlogs, ${prefix}canal, ${prefix}suggest, ${prefix}bugreport`)
+                .addField('Comandos', `${prefix}help, ${prefix}setlogs/logschannel, ${prefix}canal/channel, ${prefix}suggest, ${prefix}bugreport`)
                 .addField('Extras', `${prefix}txt, ${prefix}ping`)
-                .addField('Administración', `${prefix}blockchannels, ${prefix}setprefix`)
+                .addField('Administración', `${prefix}blockchannels, ${prefix}setprefix/changeprefix`)
                 .addField('Diversión', 'pronto...')
                 .setThumbnail(client.user.displayAvatarURL({ format: 'png', size: 2048 }))
         }).catch(err => console.log(err))
@@ -196,7 +196,7 @@ client.on('message', async (message) => {
 
     //mongoose
     //comienzo de setlogs
-    if (command === 'setlogs') {
+    if (command === 'setlogs' || command === 'logschannel') {
         if (!message.member.hasPermission("ADMINISTRATOR")) return embedResponse("No tienes el permiso `ADMINISTRATOR`").catch(err => console.log(err));
         let channel = message.mentions.channels.first();
         if (!channel) return embedResponse("No has mencionado un canal/Ese canal no existe.").catch(err => console.log(err));
@@ -220,7 +220,7 @@ client.on('message', async (message) => {
     }
     //fin de setlogs
     //inicio de setprefix
-    if (command === 'setprefix') {
+    if (command === 'setprefix' || command === 'changeprefix') {
         if (!message.member.hasPermission("ADMINISTRATOR")) return embedResponse("No tienes el permiso `ADMINISTRATOR`").catch(err => console.log(err));
         if (!args[0] || args[0].length >= 4) return embedResponse('El prefix debe tener menos de 3 caracteres!');
 
@@ -243,7 +243,7 @@ client.on('message', async (message) => {
     }
     //fin de setprefix
     //inicio de canal
-    if (command === 'canal') {
+    if (command === 'canal' || command === 'channel') {
         await LogsModel.findOne({ id: message.guild.id }, async (err, data) => {
             if (err) return console.log(err);
 
