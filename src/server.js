@@ -559,7 +559,7 @@ client.on('channelUpdate', async (oldChannel, newChannel) => {
         if (oldChannel.rateLimitPerUser === newChannel.rateLimitPerUser) return;
         if (!newChannel.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return console.log('El canal tiene que ser del Servidor donde estas!');
         let embed = new Discord.MessageEmbed()
-            .setTitle('• User Updated')
+            .setTitle('• Channel Updated')
             .addField('• Old cooldown', oldChannel.rateLimitPerUser + 's', true)
             .addField('• New cooldown', newChannel.rateLimitPerUser + 's', true)
             .addField('• Channel', `${newChannel.name}(${newChannel.id})`, true)
@@ -579,7 +579,7 @@ client.on('channelUpdate', async (oldChannel, newChannel) => {
         if (oldChannel.topic === newChannel.topic) return;
         if (!newChannel.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return console.log('El canal tiene que ser del Servidor donde estas!');
         let embed = new Discord.MessageEmbed()
-            .setTitle('• User Updated')
+            .setTitle('• Channel Updated')
             .addField('• Old topic', oldChannel.topic, true)
             .addField('• New topic', newChannel.topic, true)
             .addField('• Channel', `${newChannel.name}(${newChannel.id})`, true)
