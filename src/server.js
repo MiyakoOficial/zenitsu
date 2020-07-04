@@ -96,9 +96,9 @@ client.on('message', async (message) => {
         message.channel.send({
             embed: new Discord.MessageEmbed()
                 .setColor(color)
-                .addField('Comandos', 'z!help, z!setlogs, z!canal, z!suggest, z!bugreport')
-                .addField('Extras', 'z!txt, z!ping')
-                .addField('Administración', 'z!blockchannels')
+                .addField('Comandos', `${prefix}help, ${prefix}setlogs, ${prefix}canal, ${prefix}suggest, ${prefix}bugreport`)
+                .addField('Extras', `${prefix}txt, ${prefix}ping`)
+                .addField('Administración', `${prefix}blockchannels, ${prefix}setprefix`)
                 .addField('Diversión', 'pronto...')
                 .setThumbnail(client.user.displayAvatarURL({ format: 'png', size: 2048 }))
         }).catch(err => console.log(err))
