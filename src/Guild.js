@@ -5,6 +5,10 @@ const Guild = Schema({
     channellogs: {
         default: 'defaultValue',
         type: String
+    },
+    prefix: {
+        default: 'z!',
+        type: String
     }
 })
 

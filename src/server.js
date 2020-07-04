@@ -1,7 +1,7 @@
 const { join } = require('path');
 const color = "#E09E36";
 const LogsModel = require('../src/Guild.js')
-const PrefixsModel = require('../src/Prefix.js')
+const PrefixsModel = require('../src/Guild.js')
 require('dotenv').config();
 const Discord = require('discord.js');
 const client = new Discord.Client();
@@ -74,7 +74,7 @@ client.on('message', async (message) => {
         )
     }
 
-    let prefix = await PrefixsModel.findOne({ id: message.guild.id }, async (err, data) => {
+    let prefix = await PrefixsModel.findOne({ id: `prefix_${message.guild.id}` }, async (err, data) => {
         if (err) return console.log(err);
         if (!data) prefix = 'z!'
         else return data.prefix
@@ -223,11 +223,11 @@ client.on('message', async (message) => {
         if (!message.member.hasPermission("ADMINISTRATOR")) return embedResponse("No tienes el permiso `ADMINISTRATOR`").catch(err => console.log(err));
         if (!args[0] || args[0].length >= 4) return embedResponse('El prefix debe tener menos de 3 caracteres!');
 
-        let data = await PrefixsModel.findOne({ id: message.guild.id });
+        let data = await PrefixsModel.findOne({ id: `prefix_${message.guild.id}` });
         if (!data) {
             try {
                 const configLogs = new PrefixsModel({
-                    id: message.guild.id,
+                    id: `prefix_${message.guild.id}`,
                     prefix: args[0]
                 });
                 configLogs.save().catch(e => { return console.log(e); });
