@@ -90,20 +90,6 @@ client.on('message', async (message) => {
 
     const blacklist = []
     if (blacklist.includes(message.author.id)) return embedResponse('Por alguna razon estas en la lista negra...')
-    //incio de chat
-    if (command === 'chat') {
-        const chatbot = require("espchatbotapi"); // npm i espchatbotapi
-        if (!args[0]) return message.channel.send("Escribe algo");
-
-        message.channel.startTyping();
-
-        chatbot.hablar(args).then(respuesta => {
-            message.channel.stopTyping();
-
-            message.channel.send(respuesta);
-        })
-    }
-    //fin de chat
 
     //inicio de help
     if (command === 'help') {
@@ -118,6 +104,20 @@ client.on('message', async (message) => {
         }).catch(err => console.log(err))
     }
     //fin de help
+    //incio de chat
+    if (command === 'chat') {
+        const chatbot = require("espchatbotapi"); // npm i espchatbotapi
+        if (!args[0]) return message.channel.send("Escribe algo");
+
+        message.channel.startTyping();
+
+        chatbot.hablar(args).then(respuesta => {
+            message.channel.stopTyping();
+
+            message.channel.send(respuesta).catch(e => message.channel.send(e));
+        })
+    }
+    //fin de chat
     //!inicio de blockchannels
     if (command === 'blockchannels') {
         if (!message.guild.me.hasPermission('MANAGE_CHANNELS')) return errorEmbed('No tengo el permiso MANAGE_CHANNELS');
