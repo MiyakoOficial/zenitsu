@@ -75,12 +75,12 @@ client.on('message', async (message) => {
 
     let guildInfo = await PrefixsModel.findOne({ id: message.guild.id }, async (err, data) => {
         if (err) return console.log(err);
-        var prefix;
+        let prefix;
         !data ? prefix = "z!" : prefix = data.prefix;
 
+        const args = message.content.slice(prefix.length).split(/ +/);
+        const command = args.shift().toLowerCase();
     });
-    const args = message.content.slice(prefix.length).split(/ +/);
-    const command = args.shift().toLowerCase();
     if (message.author.bot) return;
     if (!message.content.startsWith(prefix)) return;
 
