@@ -75,7 +75,7 @@ client.on('message', async (message) => {
 
     let guildInfo = await PrefixsModel.findOne({ id: message.guild.id }, async (err, data) => {
         if (err) return console.log(err);
-        let prefix;
+        var prefix;
         !data ? prefix = "z!" : prefix = data.prefix;
 
     });
