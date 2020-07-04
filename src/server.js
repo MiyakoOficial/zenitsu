@@ -229,15 +229,15 @@ client.on('message', async (message) => {
 
 //?inicio usuarios eventos
 
-client.on('userUpdate', async (oldUser, newUser) => {
+client.on('guildMemberUpdate', async (oldUser, newUser) => {
     await LogsModel.findOne({ id: newUser.guild.id }, async (err, data) => {
-        if (newUser.name === newUser.name) return;
+        if (newUser.nickname === newUser.nickname) return;
         if (!newUser.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return console.log('El canal tiene que ser del Servidor donde estas!');
         let embed = new Discord.MessageEmbed()
             .setTitle('• User Updated')
-            .addField('• Old name', oldUser.name, true)
-            .addField('• New name', newUser.name, true)
-            .addField('• User ID', newUser.id, true)
+            .addField('• Old nickname', oldUser.nickname, true)
+            .addField('• New nickname', newUser.nickname, true)
+            .addField('• User', `${newUser.user.username}(${newUser.user.id})`, true)
             .setTimestamp()
             .setFooter(newUser.guild.name, newUser.guild.iconURL({ format: 'png', size: 2048 }))
             .setColor(color)
