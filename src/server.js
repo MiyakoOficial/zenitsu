@@ -580,8 +580,8 @@ client.on('channelUpdate', async (oldChannel, newChannel) => {
         if (!newChannel.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return console.log('El canal tiene que ser del Servidor donde estas!');
         let embed = new Discord.MessageEmbed()
             .setTitle('• User Updated')
-            .addField('• Old topic', oldChannel.topic + 's', true)
-            .addField('• New topic', newChannel.topic + 's', true)
+            .addField('• Old topic', oldChannel.topic, true)
+            .addField('• New topic', newChannel.topic, true)
             .addField('• Channel', `${newChannel.name}(${newChannel.id})`, true)
             .setTimestamp()
             .setFooter(newChannel.guild.name, newChannel.guild.iconURL({ format: 'png', size: 2048 }))
