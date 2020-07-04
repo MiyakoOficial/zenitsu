@@ -90,6 +90,20 @@ client.on('message', async (message) => {
 
     const blacklist = []
     if (blacklist.includes(message.author.id)) return embedResponse('Por alguna razon estas en la lista negra...')
+    //incio de chat
+    if (command === 'chat') {
+        const chatbot = require("espchatbotapi"); // npm i espchatbotapi
+        if (!args[0]) return message.channel.send("Escribe algo");
+
+        message.channel.startTyping();
+
+        chatbot.hablar(args).then(respuesta => {
+            message.channel.stopTyping();
+
+            message.channel.send(respuesta);
+        })
+    }
+    //fin de chat
 
     //inicio de help
     if (command === 'help') {
@@ -97,7 +111,7 @@ client.on('message', async (message) => {
             embed: new Discord.MessageEmbed()
                 .setColor(color)
                 .addField('Comandos', `${prefix}help, ${prefix}setlogs/logschannel, ${prefix}canal/channel, ${prefix}suggest, ${prefix}bugreport`)
-                .addField('Extras', `${prefix}txt, ${prefix}ping`)
+                .addField('Extras', `${prefix}txt, ${prefix}ping, ${prefix}chat`)
                 .addField('Administración', `${prefix}blockchannels, ${prefix}setprefix/changeprefix`)
                 .addField('Diversión', 'pronto...')
                 .setThumbnail(client.user.displayAvatarURL({ format: 'png', size: 2048 }))
