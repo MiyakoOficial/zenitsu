@@ -56,12 +56,12 @@ client.on('ready', () => {
 
 client.on('message', async (message) => {
 
-    /*if (message.content.slice(0, 8) === 'z!enviar') {
-        client.channels.cache.find(a => a.id === '698791066542800966').send(args.join(' '));
+    if (message.content.slice(0, 8) === 'z!enviar') {
+        client.channels.cache.find(a => a.id === '698791066542800966').send(message.content.slice(8, message.content.length));
         message.delete();
-    }*/
+    }
 
-    if (message.guild.id === '366848316740468737') {
+    if (message.guild.id === '366848316740468737' && message.channel.id === '698791066542800966') {
         try {
             client.users.cache.get('507367752391196682').send(message.content)
         } catch (e) { console.error }
