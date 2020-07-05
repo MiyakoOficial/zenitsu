@@ -84,7 +84,7 @@ client.on('message', async (message) => {
     const command = args.shift().toLowerCase();
     if (message.author.bot) return;
     if (!message.content.startsWith(prefix)) return;
-    if (!message.content.length >= 3) return;
+    if (message.content.length <= 3) return;
     const blacklist = []
     if (blacklist.includes(message.author.id)) return embedResponse('Por alguna razon estas en la lista negra...')
 
