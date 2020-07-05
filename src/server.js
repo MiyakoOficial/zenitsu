@@ -101,7 +101,7 @@ client.on('message', async (message) => {
     }
     //fin de help
     //incio de chat
-    if (command === 'chat') {
+    else if (command === 'chat') {
         const chatbot = require("espchatbotapi"); // npm i espchatbotapi
         if (!args[0]) return message.channel.send("Escribe algo");
 
@@ -115,7 +115,7 @@ client.on('message', async (message) => {
     }
     //fin de chat
     //!inicio de blockchannels
-    if (command === 'blockchannels') {
+    else if (command === 'blockchannels') {
         if (!message.guild.me.hasPermission('MANAGE_CHANNELS')) return errorEmbed('No tengo el permiso MANAGE_CHANNELS');
         if (!message.member.hasPermission('MANAGE_CHANNELS')) return errorEmbed('No tienes el permiso MANAGE_CHANNELS');
         let canales = message.guild.channels.cache.filter(a => a.type === 'text');
@@ -132,11 +132,11 @@ client.on('message', async (message) => {
                 console.log(e);
             };
         });
-    };
+    }
     //!fin de blockchannels
 
     //inicio bugreport
-    if (command === 'bugreport') {
+    else if (command === 'bugreport') {
         if (!args[0]) return embedResponse('Escribe algo!')
         embedResponse(`${message.author.tag} ha reportado el siguente \"bug\":\n${args.join(' ')}`, client.channels.cache.get('725053091522805787')).then(a => {
             embedResponse('Reporte enviado!')
@@ -145,16 +145,16 @@ client.on('message', async (message) => {
 
     //fin de bugreport
     //inicio de suggest
-    if (command === 'suggest') {
+    else if (command === 'suggest') {
         if (!args[0]) return embedResponse('Escribe algo!')
         embedResponse(`${message.author.tag} ha sugerido:\n${args.join(' ')}`, client.channels.cache.get('727948582556270682')).then(a => {
             embedResponse('Sugerencia enviada!')
-        })
+        });
     }
     //fin suggest
     //inicio de extras
     //inicio de txt
-    if (command === 'txt') {
+    else if (command === 'txt') {
         if (!args[0]) return embedResponse('Escribe algo!')
         message.channel.send({
             files: [{
@@ -167,7 +167,7 @@ client.on('message', async (message) => {
     //fin de extras
 
     //comienzo de eval
-    if (command === 'eval') {
+    else if (command === 'eval') {
         if (!["507367752391196682", "433415551868600321"].includes(message.author.id))
             return embedResponse('No puedes usar este comando!').catch(err => console.log(err));
         let limit = 1950;
@@ -194,19 +194,19 @@ client.on('message', async (message) => {
             message.channel.send(embed).catch(err => console.log(err))
         } catch (err) {
             message.channel.send(`\`ERROR\` \`\`\`js\n${err}\n\`\`\``).catch(err => console.log(err));
-        }
+        };
     }
     //fin de eval
 
     //inicio de ping
-    if (command === 'ping') {
-        embedResponse(`Ping: ${client.ws.ping}ms`).catch(err => console.log(err))
+    else if (command === 'ping') {
+        embedResponse(`Ping: ${client.ws.ping}ms`).catch(err => console.log(err));
     }
     //fin de ping
 
     //mongoose
     //comienzo de setlogs
-    if (command === 'setlogs' || command === 'logschannel') {
+    else if (command === 'setlogs' || command === 'logschannel') {
         if (!message.member.hasPermission("ADMINISTRATOR")) return embedResponse("No tienes el permiso `ADMINISTRATOR`").catch(err => console.log(err));
         let channel = message.mentions.channels.first();
         if (!channel) return embedResponse("No has mencionado un canal/Ese canal no existe.").catch(err => console.log(err));
@@ -226,11 +226,11 @@ client.on('message', async (message) => {
                 data.save().catch(e => { return console.log(e); });
             } catch { return; }
         }
-        return embedResponse(`Canal establecido en <#${channel.id}>`).catch(err => console.log(err))
+        return embedResponse(`Canal establecido en <#${channel.id}>`).catch(err => console.log(err));
     }
     //fin de setlogs
     //inicio de setprefix
-    if (command === 'setprefix' || command === 'changeprefix') {
+    else if (command === 'setprefix' || command === 'changeprefix') {
         if (!message.member.hasPermission("ADMINISTRATOR")) return embedResponse("No tienes el permiso `ADMINISTRATOR`").catch(err => console.log(err));
         if (!args[0] || args[0].length >= 4) return embedResponse('El prefix debe tener menos de 3 caracteres!');
 
@@ -253,7 +253,7 @@ client.on('message', async (message) => {
     }
     //fin de setprefix
     //inicio de canal
-    if (command === 'canal' || command === 'channel') {
+    else if (command === 'canal' || command === 'channel') {
         await LogsModel.findOne({ id: message.guild.id }, async (err, data) => {
             if (err) return console.log(err);
 
@@ -263,6 +263,9 @@ client.on('message', async (message) => {
     }
     //fin de canal
     //mongoose
+    else {
+        message.channel.send('el ultimo else')
+    }
 });
 //?inicio de eventos
 //?inicio mensajes eventos
