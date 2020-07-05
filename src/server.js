@@ -72,16 +72,18 @@ client.on('message', async (message) => {
             .setTimestamp()
         )
     }
-    var prefix;
-    await PrefixsModel.findOne({ id: message.guild.id }, async (err, data) => {
-        if (err) return console.log(err);
+    try {
+        var prefix;
+        await PrefixsModel.findOne({ id: message.guild.id }, async (err, data) => {
+            if (err) return console.log(err);
 
-        !data ? prefix = "z!" : prefix = `${data.prefix}`;
+            !data ? prefix = "z!" : prefix = `${data.prefix}`;
 
 
-    });
-    const args = message.content.slice(prefix.length).split(/ +/);
-    const command = args.shift().toLowerCase();
+        });
+        const args = message.content.slice(prefix.length).split(/ +/);
+        const command = args.shift().toLowerCase();
+    } catch (errorOfCommmandOrArgs) { }
     if (message.author.bot) return;
     if (!message.content.startsWith(prefix)) return;
     if (message.content.length <= 2) return;
