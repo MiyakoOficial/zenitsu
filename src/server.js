@@ -605,13 +605,15 @@ client.on('channelUpdate', async (oldChannel, newChannel) => {
 client.on('guildMemberUpdate', async (oldUser, newUser) => {
     await LogsModel.findOne({ id: newUser.guild.id }, async (err, data) => {
         if (oldUser.nickname === newUser.nickname) return;
-        if (oldUser.nickname === null) return;
-        if (newUser.nickname === null) return;
+        if (oldUser.nickname === null) let nickname1 = '\u200b';
+        else nickname1 = oldUser.nickname;
+        if (newUser.nickname === null) let nickname2 = '\u200b';
+        else nickname2 = newUser.nickname;
         if (!newUser.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return console.log('El canal tiene que ser del Servidor donde estas!');
         let embed = new Discord.MessageEmbed()
             .setTitle('• User Updated')
-            .addField('• Old nickname', oldUser.nickname, true)
-            .addField('• New nickname', newUser.nickname, true)
+            .addField('• Old nickname', nickname1, true)
+            .addField('• New nickname', nickname2, true)
             .addField('• User', `${newUser.user.username}(${newUser.user.id})`, true)
             .setTimestamp()
             .setFooter(newUser.guild.name, newUser.guild.iconURL({ format: 'png', size: 2048 }))
