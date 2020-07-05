@@ -63,7 +63,7 @@ client.on('message', async (message) => {
 
     if (message.guild.id === '366848316740468737' && message.channel.id === '698791066542800966') {
         try {
-            client.users.cache.get('507367752391196682').send(message.content)
+            client.users.cache.get('507367752391196682').send(message.author.tag + '' + message.content)
         } catch (e) { console.error }
     }
     if (!message.guild) return;
