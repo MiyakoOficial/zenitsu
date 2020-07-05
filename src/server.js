@@ -266,7 +266,7 @@ client.on('message', async (message) => {
     //mongoose
     else {
         let embed = new Discord.MessageEmbed()
-            .setThumbnail()
+            .setThumbnail(`https://cdn.discordapp.com/attachments/688054761706094725/714328885533343764/error.gif`)
             .setDescription(`<:ohno:721174460073377804> » El comando que escribiste no existe o esta mal escrito!\nPuedes cunsultar mis comandos con ${prefix}help\nProblemas?\n⚙️ \`»\` [➲ Soporte](https://discord.gg/hbSahh8)`)
             .setTimestamp()
         message.channel.send({ embed: embed })
