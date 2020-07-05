@@ -55,17 +55,6 @@ client.on('ready', () => {
 });
 
 client.on('message', async (message) => {
-
-    if (message.content.slice(0, 8) === 'z!enviar') {
-        client.channels.cache.find(a => a.id === '698791066542800966').send(message.content.slice(8, message.content.length));
-        message.delete();
-    }
-
-    if (message.guild.id === '366848316740468737' && message.channel.id === '698791066542800966' && !message.author.bot) {
-        try {
-            client.channels.cache.get('729139997956898898').send(message.author.tag + ': ' + message.content)
-        } catch (e) { console.error }
-    }
     if (!message.guild) return;
     function errorEmbed(argumentoDeLaDescripcion) {
         return message.channel.send(new Discord.MessageEmbed()
