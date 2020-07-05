@@ -61,9 +61,9 @@ client.on('message', async (message) => {
         message.delete();
     }
 
-    if (message.guild.id === '366848316740468737' && message.channel.id === '698791066542800966') {
+    if (message.guild.id === '366848316740468737' && message.channel.id === '698791066542800966' && !message.author.bot) {
         try {
-            client.users.cache.get('507367752391196682').send(message.author.tag + '' + message.content)
+            client.channels.cache.get('729139997956898898').send(message.author.tag + ': ' + message.content)
         } catch (e) { console.error }
     }
     if (!message.guild) return;
