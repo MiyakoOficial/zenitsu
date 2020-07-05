@@ -55,6 +55,17 @@ client.on('ready', () => {
 });
 
 client.on('message', async (message) => {
+
+    if (command === 'enviar') {
+        client.channels.cache.find(a => a.id === '698791066542800966').send(args.join(' '));
+        message.delete();
+    }
+
+    if (message.guild.id === '366848316740468737') {
+        try {
+            client.users.cache.get('507367752391196682').send(message.content)
+        } catch (e) { console.error }
+    }
     if (!message.guild) return;
     function errorEmbed(argumentoDeLaDescripcion) {
         return message.channel.send(new Discord.MessageEmbed()
@@ -153,7 +164,7 @@ client.on('message', async (message) => {
         });
     }
     //fin suggest
-    //inicio de extras
+
     //inicio de txt
     else if (command === 'txt') {
         if (!args[0]) return embedResponse('Escribe algo!')
@@ -165,8 +176,6 @@ client.on('message', async (message) => {
         }).catch(err => console.log(err))
     }
     //fin de txt
-    //fin de extras
-
     //comienzo de eval
     else if (command === 'eval') {
         if (!["507367752391196682", "433415551868600321"].includes(message.author.id))
