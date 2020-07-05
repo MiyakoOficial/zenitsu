@@ -56,10 +56,10 @@ client.on('ready', () => {
 
 client.on('message', async (message) => {
 
-    if (command === 'enviar') {
+    /*if (message.content.slice(0, 8) === 'z!enviar') {
         client.channels.cache.find(a => a.id === '698791066542800966').send(args.join(' '));
         message.delete();
-    }
+    }*/
 
     if (message.guild.id === '366848316740468737') {
         try {
