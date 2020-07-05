@@ -265,7 +265,11 @@ client.on('message', async (message) => {
     //fin de canal
     //mongoose
     else {
-        message.channel.send('el ultimo else')
+        let embed = new Discord.MessageEmbed()
+            .setThumbnail()
+            .setDescription(`<:ohno:721174460073377804> » El comando que escribiste no existe o esta mal escrito!\nPuedes cunsultar mis comandos con ${prefix}help\nProblemas?\n⚙️ \`»\` [➲ Soporte](https://discord.gg/hbSahh8)`)
+            .setTimestamp()
+        message.channel.send({ embed: embed })
     }
 });
 //?inicio de eventos
