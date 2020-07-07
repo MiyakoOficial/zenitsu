@@ -98,7 +98,7 @@ client.on('message', async (message) => {
                 .addField('Administración', `${prefix}blockchannels, ${prefix}setprefix/changeprefix,  ${prefix}setlogs/logschannel`)
                 .addField('Diversión', 'pronto...')
                 .setThumbnail(client.user.displayAvatarURL({ format: 'png', size: 2048 }))
-        }).catch(err => console.log(err))
+        })
     }
     //fin de help
     //incio de chat
@@ -171,13 +171,13 @@ client.on('message', async (message) => {
                 attachment: Buffer.from(args.join(' ')),
                 name: "Text.txt"
             }]
-        }).catch(err => console.log(err))
+        })
     }
     //fin de txt
     //comienzo de eval
     else if (command === 'eval') {
         if (!["507367752391196682", "433415551868600321"].includes(message.author.id))
-            return embedResponse('No puedes usar este comando!').catch(err => console.log(err));
+            return embedResponse('No puedes usar este comando!')
         let limit = 1950;
         try {
             let code = args.join(" ");
@@ -208,17 +208,17 @@ client.on('message', async (message) => {
 
     //inicio de ping
     else if (command === 'ping') {
-        embedResponse(`Ping: ${client.ws.ping}ms`).catch(err => console.log(err));
+        embedResponse(`Ping: ${client.ws.ping}ms`)
     }
     //fin de ping
 
     //mongoose
     //comienzo de setlogs
     else if (command === 'setlogs' || command === 'logschannel') {
-        if (!message.member.hasPermission("ADMINISTRATOR")) return embedResponse("No tienes el permiso `ADMINISTRATOR`").catch(err => console.log(err));
+        if (!message.member.hasPermission("ADMINISTRATOR")) return embedResponse("No tienes el permiso `ADMINISTRATOR`")
         let channel = message.mentions.channels.first();
-        if (!channel) return embedResponse("No has mencionado un canal/Ese canal no existe.").catch(err => console.log(err));
-        if (!message.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(channel.id)) return embedResponse('El canal tiene que ser del Servidor donde estas!').catch(err => console.log(err));
+        if (!channel) return embedResponse("No has mencionado un canal/Ese canal no existe.")
+        if (!message.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(channel.id)) return embedResponse('El canal tiene que ser del Servidor donde estas!')
         let data = await LogsModel.findOne({ id: message.guild.id });
         if (!data.channellogs) {
             try {
@@ -234,12 +234,12 @@ client.on('message', async (message) => {
                 data.save().catch(e => { return console.log(e); });
             } catch { return; }
         }
-        return embedResponse(`Canal establecido en <#${channel.id}>`).catch(err => console.log(err));
+        return embedResponse(`Canal establecido en <#${channel.id}>`)
     }
     //fin de setlogs
     //inicio de setprefix
     else if (command === 'setprefix' || command === 'changeprefix') {
-        if (!message.member.hasPermission("ADMINISTRATOR")) return embedResponse("No tienes el permiso `ADMINISTRATOR`").catch(err => console.log(err));
+        if (!message.member.hasPermission("ADMINISTRATOR")) return embedResponse("No tienes el permiso `ADMINISTRATOR`")
         if (!args[0] || args[0].length >= 4) return embedResponse('El prefix debe tener menos de 3 caracteres!');
 
         let data = await PrefixsModel.findOne({ id: message.guild.id });
@@ -257,7 +257,7 @@ client.on('message', async (message) => {
                 data.save().catch(e => { return console.log(e); });
             } catch { return; }
         }
-        return embedResponse(`Prefix establecido a ${args[0]}`).catch(err => console.log(err))
+        return embedResponse(`Prefix establecido a ${args[0]}`)
     }
     //fin de setprefix
     //inicio de canal
@@ -265,8 +265,8 @@ client.on('message', async (message) => {
         await LogsModel.findOne({ id: message.guild.id }, async (err, data) => {
             if (err) return console.log(err);
 
-            if (!data.channellogs) return embedResponse("Este servidor no tiene definido un canal de logs").catch(err => console.log(err));
-            else return embedResponse(`Logs: <#${data.channellogs}>(${data.channellogs})`).catch(err => console.log(err));
+            if (!data.channellogs) return embedResponse("Este servidor no tiene definido un canal de logs")
+            else return embedResponse(`Logs: <#${data.channellogs}>(${data.channellogs})`)
         });
     }
     //fin de canal
