@@ -223,7 +223,7 @@ client.on('message', async (message) => {
         } else {
             try {
                 data.channellogs = channel.id;
-                data.channellogs.save().catch(e => { return console.log(e); });
+                data.save().catch(e => { return console.log(e); });
             } catch { return; }
         }
         return embedResponse(`Canal establecido en <#${channel.id}>`).catch(err => console.log(err));
@@ -246,7 +246,7 @@ client.on('message', async (message) => {
         } else {
             try {
                 data.prefix = args[0];
-                data.prefix.save().catch(e => { return console.log(e); });
+                data.save().catch(e => { return console.log(e); });
             } catch { return; }
         }
         return embedResponse(`Prefix establecido a ${args[0]}`).catch(err => console.log(err))
