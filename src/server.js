@@ -53,7 +53,7 @@ client.on('ready', () => {
         .setFooter(client.users.cache.get('507367752391196682').tag, client.users.cache.get('507367752391196682').displayAvatarURL({ format: 'png', size: 2048 }));
     client.users.cache.get('507367752391196682').send({ embed: embed }).catch(err => console.log(err))
 });
-
+let cooldown = new Set()
 client.on('message', async (message) => {
     if (!message.guild) return;
     function errorEmbed(argumentoDeLaDescripcion) {
@@ -76,8 +76,7 @@ client.on('message', async (message) => {
     await PrefixsModel.findOne({ id: message.guild.id }, async (err, data) => {
         if (err) return console.log(err);
 
-        !data.prefix ? prefix = "z!" : prefix = `${data.prefix}`;
-
+        prefix = data.prefix || 'z!'
 
     });
     const args = message.content.slice(prefix.length).split(/ +/);
@@ -120,6 +119,14 @@ client.on('message', async (message) => {
     else if (command === 'blockchannels') {
         if (!message.guild.me.hasPermission('MANAGE_CHANNELS')) return errorEmbed('No tengo el permiso MANAGE_CHANNELS');
         if (!message.member.hasPermission('MANAGE_CHANNELS')) return errorEmbed('No tienes el permiso MANAGE_CHANNELS');
+        if (cooldown.has(message.guild.id)) {
+            embedResponse(message.author.username + " utilice el comando despues de 5 minutos!");
+            return;
+        }
+        cooldown.add(message.guild.id);
+        setTimeout(() => {
+            cooldown.delete(message.author.id);
+        }, mil('5m'));
         let canales = message.guild.channels.cache.filter(a => a.type === 'text');
         if (!args[1]) return embedResponse('Ejemplo: z!blockchannels <id de rol/user> <true | false | null>');
         if (!message.guild.roles.cache.get(args[0]) && !message.guild.members.cache.get(args[0])) return errorEmbed('Error en encontrar la ID de usuario/rol');
