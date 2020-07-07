@@ -72,7 +72,7 @@ client.on('message', async (message) => {
             .setTimestamp()
         )
     }
-    let prefix;
+    let prefix = 'z!';
     await PrefixsModel.findOne({ id: message.guild.id }, async (err, data) => {
         if (err) return console.log(err);
 
