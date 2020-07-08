@@ -272,6 +272,16 @@ client.on('message', async (message) => {
     }
     //fin de canal
     //mongoose
+    //inicio de snipe
+    else if (command === 'snipe') {
+        await LogsModel.findOne({ id: message.channel.id }, async (err, data) => {
+            if (err) return console.log(err);
+
+            if (!data.channellogs) return embedResponse("Nada en la base de datos")
+            else return embedResponse(`Mensaje ${data.snipe}`)
+        });
+    }
+    //fin de snipe
     else {
         let embed = new Discord.MessageEmbed()
             .setThumbnail(`https://cdn.discordapp.com/attachments/688054761706094725/714328885533343764/error.gif`)
@@ -313,10 +323,27 @@ client.on('messageUpdate', async (oldMessage, newMessage) => {
 });
 
 client.on('messageDelete', async (message) => {
+    if (message.author.bot) return;
+    if (message.channel.type === 'dm') return;
+    if (!message.content) return;
+
+    let data = await PrefixsModel.findOne({ id: message.channel.id });
+    if (!data.snipe) {
+        try {
+            const configLogs = new PrefixsModel({
+                id: message.channel.id,
+                snipe: message.content
+            });
+            configLogs.save().catch(e => { return console.log(e); });
+        } catch { return; }
+    } else {
+        try {
+            data.snipe = message.content;
+            data.save().catch(e => { return console.log(e); });
+        } catch { return; }
+    }
+
     await LogsModel.findOne({ id: message.guild.id }, async (err, data) => {
-        if (message.author.bot) return;
-        if (message.channel.type === 'dm') return;
-        if (!message.content) return;
         if (!message.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return console.log('El canal tiene que ser del Servidor donde estas!');
         let embed = new Discord.MessageEmbed()
             .setColor(color)

@@ -9,6 +9,10 @@ const Guild = Schema({
     prefix: {
         default: 'z!',
         type: String
+    },
+    snipe: {
+        default: 'defaultValue',
+        type: String
     }
 })
 
