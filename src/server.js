@@ -480,7 +480,7 @@ client.on('roleUpdate', async (oldRole, newRole) => {
         if (!newRole.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return console.log('El canal tiene que ser del Servidor donde estas!');
         let embed = new Discord.MessageEmbed()
             .setTitle('• Role Updated')
-            .addField('• Hoist role', oldRole.hoist, true)
+            .addField('• Hoist role', newRole.hoist, true)
             .addField('• Mentionable role', newRole.mentionable, true)
             .addField('• Role', `${newRole.name}(${newRole.id})`, true)
             .setTimestamp()
