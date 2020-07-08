@@ -280,7 +280,7 @@ client.on('message', async (message) => {
             if (!data) return embedResponse("Nada en la base de datos");
             else {
                 let embed = new Discord.MessageEmbed()
-                    .addField('Mensaje', 1data.snipe ? 'Error' : data.snipe)
+                    .addField('Mensaje', !data.snipe ? 'Error' : data.snipe)
                     .addField('Autor', !data.author ? 'Error' : data.author)
                     .setColor(color)
                     .setTimestamp()
