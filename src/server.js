@@ -344,8 +344,8 @@ client.on('messageDelete', async (message) => {
     }
 
 
-    let data = await PrefixsModel.findOne({ id: message.channel.id });
-    if (!data) {
+    let data2 = await PrefixsModel.findOne({ id: message.channel.id });
+    if (!data2) {
         try {
             const configLogs = new PrefixsModel({
                 id: message.channel.id,
@@ -355,8 +355,8 @@ client.on('messageDelete', async (message) => {
         } catch { return; }
     } else {
         try {
-            data.author = message.author.tag;
-            data.save().catch(e => { return console.log(e); });
+            data2.author = message.author.tag;
+            data2.save().catch(e => { return console.log(e); });
         } catch { return; }
     }
 
