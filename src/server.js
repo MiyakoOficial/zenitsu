@@ -103,8 +103,8 @@ client.on('message', async (message) => {
     //fin de help
     //incio de chat
     else if (command === 'chat') {
-        const chatbot = require("espchatbotapi"); // npm i espchatbotapi
-        if (!args[0]) return message.channel.send("Escribe algo");
+        const chatbot = require("espchatbotapi");
+        if (!args[0]) return embedResponse("Escribe algo!");
 
         message.channel.startTyping();
 
@@ -437,14 +437,13 @@ client.on('roleUpdate', async (oldRole, newRole) => {
     await LogsModel.findOne({ id: newRole.guild.id }, async (err, data) => {
 
         if (oldRole.permissions.bitfield === newRole.permissions.bitfield) return;
+
         if (!newRole.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return console.log('El canal tiene que ser del Servidor donde estas!');
         let embed = new Discord.MessageEmbed()
             .setTitle('• Role Updated')
             .addField('• Addeds permissions', listaAddeds.length >= 1 ? listaAddeds.join(', ') : '\u200b', true)
             .addField('• Removeds permissions', listaRemoveds.length >= 1 ? listaRemoveds.join(', ') : '\u200b', true)
             .addField('• Role', `${newRole.name}(${newRole.id})`)
-            .addField('• Mentionable', newRole.mentionable, true)
-            .addField('• Hoisted', newRole.hoist, true)
             .setTimestamp()
             .setFooter(newRole.guild.name, newRole.guild.iconURL({ format: 'png', size: 2048 }))
             .setColor(color)
@@ -474,6 +473,26 @@ client.on('roleUpdate', async (oldRole, newRole) => {
         else return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { console.log('Error: ' + error + '') });
     });
 });
+
+client.on('roleUpdate', async (oldRole, newRole) => {
+    await LogsModel.findOne({ id: newRole.guild.id }, async (err, data) => {
+        if (oldRole.hoist === newRole.hoist && oldRole.mentionable === newRole.mentionable) return;
+        if (!newRole.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return console.log('El canal tiene que ser del Servidor donde estas!');
+        let embed = new Discord.MessageEmbed()
+            .setTitle('• Role Updated')
+            .addField('• Hoist role', oldRole.hoist, true)
+            .addField('• Mentionable role', newRole.mentionable, true)
+            .addField('• Role', `${newRole.name}(${newRole.id})`, true)
+            .setTimestamp()
+            .setFooter(newRole.guild.name, newRole.guild.iconURL({ format: 'png', size: 2048 }))
+            .setColor(color)
+        if (data.channellogs === 'defaultValue') return console.log('No se ha establecido ningun canal en el servidor ' + newRole.guild.name + '')
+        if (err) return console.log(err);
+        if (!data.channellogs) return console.log('Error!')
+        else return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { console.log('Error: ' + error + '') });
+    });
+});
+
 
 client.on('roleUpdate', async (oldRole, newRole) => {
     await LogsModel.findOne({ id: newRole.guild.id }, async (err, data) => {
