@@ -266,6 +266,7 @@ client.on('message', async (message) => {
             if (err) return console.log(err);
 
             if (!data.channellogs) return embedResponse("Este servidor no tiene definido un canal de logs")
+            if (!message.guild.channels.cache.filter(a => a.type === 'text').includes(data.channellogs)) return embedResponse('El canal en la base de datos no existe!')
             else return embedResponse(`Logs: <#${data.channellogs}>(${data.channellogs})`)
         });
     }
