@@ -716,8 +716,11 @@ client.on('guildMemberUpdate', async (oldUser, newUser) => {
 });
 //!fin usuarios eventos
 //!fin de eventos
-client.login(process.env.BOT_TOKEN);
-
+try {
+    client.login(process.env.BOT_TOKEN);
+} catch (e) {
+    console.log('Error de login:' + e)
+}
 mongoose.connect(process.env.MONGODB, { useNewUrlParser: true, useUnifiedTopology: true }).then(() => {
     console.log("[MongoDB]: Conectado a la base de datos Mongodb.");
 }).catch((err) => {
