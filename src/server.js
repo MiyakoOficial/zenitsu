@@ -514,6 +514,25 @@ client.on('roleUpdate', async (oldRole, newRole) => {
     });
 });
 
+client.on('roleUpdate', async (oldRole, newRole) => {
+    await LogsModel.findOne({ id: newRole.guild.id }, async (err, data) => {
+        if (oldRole.position === newRole.position) return;
+        if (!newRole.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return console.log('El canal tiene que ser del Servidor donde estas!');
+        let embed = new Discord.MessageEmbed()
+            .setTitle('• Role Updated')
+            .addField('• Old position', oldRole.position, true)
+            .addField('• New position', newRole.position, true)
+            .addField('• Role', `${newRole.name}(${newRole.id})`, true)
+            .setTimestamp()
+            .setFooter(newRole.guild.name, newRole.guild.iconURL({ format: 'png', size: 2048 }))
+            .setColor(color)
+        if (data.channellogs === 'defaultValue') return console.log('No se ha establecido ningun canal en el servidor ' + newRole.guild.name + '')
+        if (err) return console.log(err);
+        if (!data.channellogs) return console.log('Error!')
+        else return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { console.log('Error: ' + error + '') }); // doc.channellogs o como hayas definido el canal de logs (supongo que para eso estás usando esta config)
+    });
+});
+
 client.on('roleCreate', async (role) => {
     await LogsModel.findOne({ id: role.guild.id }, async (err, data) => {
         if (!role.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return console.log('El canal tiene que ser del Servidor donde estas!');
