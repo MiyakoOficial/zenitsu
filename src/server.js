@@ -344,7 +344,7 @@ client.on('messageDelete', async (message) => {
     }
 
 
-    data = await PrefixsModel.findOne({ id: message.channel.id });
+    let data = await PrefixsModel.findOne({ id: message.channel.id });
     if (!data) {
         try {
             const configLogs = new PrefixsModel({
