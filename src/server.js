@@ -277,7 +277,7 @@ client.on('message', async (message) => {
         await LogsModel.findOne({ id: message.channel.id }, async (err, data) => {
             if (err) return console.log(err);
 
-            if (!data.snipe && !data.author) return embedResponse("Nada en la base de datos")
+            if (!data) return embedResponse("Nada en la base de datos")
             else return embedResponse(`Mensaje: ${data.snipe}\nAutor: ${data.author}`)
         });
     }
