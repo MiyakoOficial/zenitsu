@@ -339,8 +339,8 @@ client.on('messageDelete', async (message) => {
 //?inicio de roles eventos
 
 client.on('roleUpdate', async (oldRole, newRole) => {
-    let listaAddeds = ['\u200b']
-    let listaRemoveds = ['\u200b']
+    let listaAddeds = []
+    let listaRemoveds = []
     if (!oldRole.permissions.has('ADMINISTRATOR') && newRole.permissions.has('ADMINISTRATOR')) listaAddeds.push('Administrator');
     if (oldRole.permissions.has('ADMINISTRATOR') && !newRole.permissions.has('ADMINISTRATOR')) listaRemoveds.push('Administrator');
 
@@ -440,8 +440,8 @@ client.on('roleUpdate', async (oldRole, newRole) => {
         if (!newRole.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return console.log('El canal tiene que ser del Servidor donde estas!');
         let embed = new Discord.MessageEmbed()
             .setTitle('• Role Updated')
-            .addField('• Addeds permissions', listaAddeds.join(', '), true)
-            .addField('• Removeds permissions', listaRemoveds.join(', '), true)
+            .addField('• Addeds permissions', listaAddeds.length >= 1 ? listaAddeds.join(', ') : '\u200b', true)
+            .addField('• Removeds permissions', listaRemoveds.length >= 1 ? listaRemoveds.join(', ') : '\u200b', true)
             .addField('• Role', `${newRole.name}(${newRole.id})`)
             .setTimestamp()
             .setFooter(newRole.guild.name, newRole.guild.iconURL({ format: 'png', size: 2048 }))
