@@ -280,13 +280,13 @@ client.on('message', async (message) => {
             if (!data) return embedResponse("Nada en la base de datos");
             else {
                 let embed = new Discord.MessageEmbed()
-                    .addField('Mensaje', !data.snipe ? 'Error' : data.snipe)
-                    .addField('Autor', !data.author ? 'Error' : data.author)
+                    .addField('Mensaje', data.snipe)
+                    .addField('Autor', data.author)
                     .setColor(color)
                     .setTimestamp()
                     .setTitle('Snipe')
                     .setImage('https://media1.tenor.com/images/8c3e8a0a3c7b0afc22624c9278be6a89/tenor.gif?itemid=5489827')
-                return embedResponse({ embed: embed });
+                return message.channel.send({ embed: embed });
             }
         });
     }
