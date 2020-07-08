@@ -285,7 +285,7 @@ client.on('message', async (message) => {
                     .setColor(color)
                     .setTimestamp()
                     .setTitle('Snipe')
-                    .setImage('https://media1.tenor.com/images/8c3e8a0a3c7b0afc22624c9278be6a89/tenor.gif?itemid=5489827')
+                    .setThumbnail('https://media1.tenor.com/images/8c3e8a0a3c7b0afc22624c9278be6a89/tenor.gif?itemid=5489827')
                 return message.channel.send({ embed: embed });
             }
         });
