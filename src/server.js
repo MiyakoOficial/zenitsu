@@ -278,14 +278,16 @@ client.on('message', async (message) => {
 
             if (err) return console.log(err);
             if (!data) return embedResponse("Nada en la base de datos");
-            let embed = new Discord.MessageEmbed()
-                .addField('Mensaje', data.snipe)
-                .addField('Autor', data.author)
-                .setColor(color)
-                .setTimestamp()
-                .setTitle('Snipe')
-                .setImage('https://media1.tenor.com/images/8c3e8a0a3c7b0afc22624c9278be6a89/tenor.gif?itemid=5489827')
-            if (data) return embedResponse({ embed: embed });
+            else {
+                let embed = new Discord.MessageEmbed()
+                    .addField('Mensaje', data.snipe)
+                    .addField('Autor', data.author)
+                    .setColor(color)
+                    .setTimestamp()
+                    .setTitle('Snipe')
+                    .setImage('https://media1.tenor.com/images/8c3e8a0a3c7b0afc22624c9278be6a89/tenor.gif?itemid=5489827')
+                return embedResponse({ embed: embed });
+            }
         });
     }
     //fin de snipe
