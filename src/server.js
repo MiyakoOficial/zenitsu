@@ -443,6 +443,8 @@ client.on('roleUpdate', async (oldRole, newRole) => {
             .addField('• Addeds permissions', listaAddeds.length >= 1 ? listaAddeds.join(', ') : '\u200b', true)
             .addField('• Removeds permissions', listaRemoveds.length >= 1 ? listaRemoveds.join(', ') : '\u200b', true)
             .addField('• Role', `${newRole.name}(${newRole.id})`)
+            .addField('• Mentionable', newRole.mentionable, true)
+            .addField('• Hoisted', newRole.hoist, true)
             .setTimestamp()
             .setFooter(newRole.guild.name, newRole.guild.iconURL({ format: 'png', size: 2048 }))
             .setColor(color)
