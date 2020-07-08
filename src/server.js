@@ -278,7 +278,7 @@ client.on('message', async (message) => {
             if (err) return console.log(err);
 
             if (!data.channellogs) return embedResponse("Nada en la base de datos")
-            else return embedResponse(`Mensaje ${data.snipe}`)
+            else return embedResponse(`Mensaje: ${data.snipe}`)
         });
     }
     //fin de snipe
@@ -339,6 +339,23 @@ client.on('messageDelete', async (message) => {
     } else {
         try {
             data.snipe = message.content;
+            data.save().catch(e => { return console.log(e); });
+        } catch { return; }
+    }
+
+
+    data = await PrefixsModel.findOne({ id: message.channel.id });
+    if (!data) {
+        try {
+            const configLogs = new PrefixsModel({
+                id: message.channel.id,
+                author: message.author.tag
+            });
+            configLogs.save().catch(e => { return console.log(e); });
+        } catch { return; }
+    } else {
+        try {
+            data.author = message.author.tag;
             data.save().catch(e => { return console.log(e); });
         } catch { return; }
     }

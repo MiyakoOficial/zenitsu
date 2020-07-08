@@ -13,6 +13,10 @@ const Guild = Schema({
     snipe: {
         default: 'defaultValue',
         type: String
+    },
+    author: {
+        default: '',
+        type: String
     }
 })
 
