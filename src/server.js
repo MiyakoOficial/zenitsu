@@ -267,7 +267,7 @@ client.on('message', async (message) => {
         await LogsModel.findOne({ id: message.guild.id }, async (err, data) => {
             if (err) return console.log(err);
 
-            if (!data.channellogs) return embedResponse("Este servidor no tiene definido un canal de logs")
+            if (!data) return embedResponse("Este servidor no tiene definido un canal de logs")
             if (!message.guild.channels.cache.filter(a => a.type === 'text').map(a => a.id).includes(data.channellogs)) return embedResponse('El canal en la base de datos no existe!')
             else return embedResponse(`Logs: <#${data.channellogs}>(${data.channellogs})`)
         });
