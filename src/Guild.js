@@ -6,18 +6,5 @@ const Guild = Schema({
         default: 'defaultValue',
         type: String
     },
-    prefix: {
-        default: 'z!',
-        type: String
-    },
-    snipe: {
-        default: 'defaultValue',
-        type: String
-    },
-    author: {
-        default: '',
-        type: String
-    }
 })
-
 module.exports = model('Guild', Guild)

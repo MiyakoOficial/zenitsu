@@ -1,7 +1,8 @@
 const { join } = require('path');
 const color = "#E09E36";
-const LogsModel = require('../src/Guild.js')
-const PrefixsModel = require('../src/Guild.js')
+const LogsModel = require('../src/Guild.js');
+const PrefixsModel = require('../src/Prefix.js');
+const SnipeModel = require('../src/Snipe.js')
 require('dotenv').config();
 const Discord = require('discord.js');
 const client = new Discord.Client();
@@ -9,6 +10,7 @@ const mongoose = require('mongoose');
 const { info, error } = require('console');
 const mil = require("ms")
 const tresenraya = require('tresenraya');
+const Snipe = require('../src/Snipe.js');
 const juego = new tresenraya();
 
 /*function duration(s) {
@@ -220,7 +222,7 @@ client.on('message', async (message) => {
         if (!channel) return embedResponse("No has mencionado un canal/Ese canal no existe.")
         if (!message.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(channel.id)) return embedResponse('El canal tiene que ser del Servidor donde estas!')
         let data = await LogsModel.findOne({ id: message.guild.id });
-        if (!data.channellogs) {
+        if (!data) {
             try {
                 const configLogs = new LogsModel({
                     id: message.guild.id,
@@ -243,7 +245,7 @@ client.on('message', async (message) => {
         if (!args[0] || args[0].length >= 4) return embedResponse('El prefix debe tener menos de 3 caracteres!');
 
         let data = await PrefixsModel.findOne({ id: message.guild.id });
-        if (!data.prefix) {
+        if (!data) {
             try {
                 const configLogs = new PrefixsModel({
                     id: message.guild.id,
@@ -274,14 +276,14 @@ client.on('message', async (message) => {
     //mongoose
     //inicio de snipe
     else if (command === 'snipe') {
-        await LogsModel.findOne({ id: message.channel.id }, async (err, data) => {
+        await SnipeModel.findOne({ id: message.channel.id }, async (err, data) => {
 
             if (err) return console.log(err);
             if (!data) return embedResponse("Nada en la base de datos");
             else {
                 let embed = new Discord.MessageEmbed()
-                    .addField('Mensaje', !data.snipe ? 'Error' : data.snipe)
-                    .addField('Autor', !data.author ? 'Error' : data.author)
+                    .addField('Mensaje', data.snipe)
+                    .addField('Autor', data.author)
                     .setColor(color)
                     .setTimestamp()
                     .setTitle('Snipe')
@@ -336,10 +338,10 @@ client.on('messageDelete', async (message) => {
     if (message.channel.type === 'dm') return;
     if (!message.content) return;
 
-    let data = await PrefixsModel.findOne({ id: message.channel.id });
+    let data = await SnipeModel.findOne({ id: message.channel.id });
     if (!data) {
         try {
-            const configLogs = new PrefixsModel({
+            const configLogs = new SnipeModel({
                 id: message.channel.id,
                 snipe: message.content
             });
@@ -353,7 +355,7 @@ client.on('messageDelete', async (message) => {
     }
 
 
-    let data2 = await PrefixsModel.findOne({ id: message.channel.id });
+    let data2 = await SnipeModel.findOne({ id: message.channel.id });
     if (!data2) {
         try {
             const configLogs = new PrefixsModel({
