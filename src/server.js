@@ -302,9 +302,8 @@ client.on('message', async (message) => {
         if (isNaN(args[0])) return embedResponse('' + mal + ' Escribe un numero!')
         if (args[0] >= 99 || args[0] === 0) return embedResponse('Un numero del 1 al 99');
         (await message.channel.send(`Borrando ${args[0]}`)).then(p => {
-            await message.channel.bulkDelete(args[0]).then(p => {
-                message.channel.send('Listo!')
-            }).catch(e => message.channel.send(e))
+            message.channel.bulkDelete(args[0])
+                .catch(e => message.channel.send(e))
         })
 
     }
