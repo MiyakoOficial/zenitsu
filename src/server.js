@@ -11,6 +11,8 @@ const { info, error } = require('console');
 const mil = require("ms")
 const tresenraya = require('tresenraya');
 const juego = new tresenraya();
+const mal = '<:ohno:721174460073377804>';
+const bien = '<:correcto:721174526930714634>';
 
 /*function duration(s) {
     var ms = s % 1000;
@@ -292,6 +294,21 @@ client.on('message', async (message) => {
         });
     }
     //fin de snipe
+    //inicio de clear
+    else if (command === 'clear') {
+        if (!message.member.hasPermission('MANAGE_MESSAGES')) return embedResponse('No tienes el permiso `MANAGE_MESSAGES`!');
+        if (!message.guild.me.hasPermission('MANAGE_MESSAGES')) return errorEmbed('No tengo el permiso MANAGE_CHANNELS');
+        if (!args[0]) return embedResponse('Escribe un numero!');
+        if (isNaN(args[0])) return embedResponse('' + mal + ' Escribe un numero!')
+        if (args[0] >= 99 || args[0] === 0) return embedResponse('Un numero del 1 al 99');
+        (await message.channel.send(`Borrando ${args[0]}`)).then(p => {
+            await message.channel.bulkDelete(args[0]).then(p => {
+                message.channel.send('Listo!')
+            }).catch(e => message.channel.send(e))
+        })
+
+    }
+    //fin de clear
     else {
         let embed = new Discord.MessageEmbed()
             .setThumbnail(`https://cdn.discordapp.com/attachments/688054761706094725/714328885533343764/error.gif`)
