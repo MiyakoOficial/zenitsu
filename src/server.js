@@ -357,7 +357,7 @@ client.on('messageDelete', async (message) => {
     let data2 = await SnipeModel.findOne({ id: message.channel.id });
     if (!data2) {
         try {
-            const configLogs = new PrefixsModel({
+            const configLogs = new SnipeModel({
                 id: message.channel.id,
                 author: message.author.tag
             });
@@ -689,7 +689,7 @@ client.on('channelUpdate', async (oldChannel, newChannel) => {
         if (oldChannel.name === newChannel.name) return;
         if (!newChannel.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return console.log('El canal tiene que ser del Servidor donde estas!');
         let embed = new Discord.MessageEmbed()
-            .setTitle('• User Updated')
+            .setTitle('• Channel Updated')
             .addField('• Old name', oldChannel.name, true)
             .addField('• New name', newChannel.name, true)
             .addField('• Channel ID', `${newChannel.id}`, true)
