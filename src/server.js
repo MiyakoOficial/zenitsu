@@ -120,8 +120,8 @@ client.on('message', async (message) => {
     //fin de chat
     //!inicio de blockchannels
     else if (command === 'blockchannels') {
-        if (!message.guild.me.hasPermission('MANAGE_CHANNELS')) return errorEmbed('No tengo el permiso MANAGE_CHANNELS');
-        if (!message.member.hasPermission('MANAGE_CHANNELS')) return errorEmbed('No tienes el permiso MANAGE_CHANNELS');
+        if (!message.guild.me.hasPermission('MANAGE_CHANNELS')) return errorEmbed('No tengo el permiso `MANAGE_CHANNELS`');
+        if (!message.member.hasPermission('MANAGE_CHANNELS')) return errorEmbed('No tienes el permiso `MANAGE_CHANNELS`');
         if (cooldown.has(message.guild.id)) {
             embedResponse(message.author.username + " utilice el comando despues de 5 minutos!");
             return;
@@ -218,7 +218,7 @@ client.on('message', async (message) => {
     //mongoose
     //comienzo de setlogs
     else if (command === 'setlogs' || command === 'logschannel') {
-        if (!message.member.hasPermission("ADMINISTRATOR")) return embedResponse("No tienes el permiso `ADMINISTRATOR`")
+        if (!message.member.hasPermission("ADMINISTRATOR")) return errorEmbed("No tienes el permiso `ADMINISTRATOR`")
         let channel = message.mentions.channels.first();
         if (!channel) return embedResponse("No has mencionado un canal/Ese canal no existe.")
         if (!message.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(channel.id)) return embedResponse('El canal tiene que ser del Servidor donde estas!')
@@ -242,7 +242,7 @@ client.on('message', async (message) => {
     //fin de setlogs
     //inicio de setprefix
     else if (command === 'setprefix' || command === 'changeprefix') {
-        if (!message.member.hasPermission("ADMINISTRATOR")) return embedResponse("No tienes el permiso `ADMINISTRATOR`")
+        if (!message.member.hasPermission("ADMINISTRATOR")) return errorEmbed("No tienes el permiso `ADMINISTRATOR`")
         if (!args[0] || args[0].length >= 4) return embedResponse('El prefix debe tener menos de 3 caracteres!');
 
         let data = await PrefixsModel.findOne({ id: message.guild.id });
@@ -296,8 +296,8 @@ client.on('message', async (message) => {
     //fin de snipe
     //inicio de clear
     else if (command === 'clear') {
-        if (!message.member.hasPermission('MANAGE_MESSAGES')) return embedResponse('No tienes el permiso `MANAGE_MESSAGES`!');
-        if (!message.guild.me.hasPermission('MANAGE_MESSAGES')) return errorEmbed('No tengo el permiso MANAGE_CHANNELS');
+        if (!message.member.hasPermission('MANAGE_MESSAGES')) return errorEmbed('No tienes el permiso `MANAGE_MESSAGES`!');
+        if (!message.guild.me.hasPermission('MANAGE_MESSAGES')) return errorEmbed('No tengo el permiso `MANAGE_MESSAGES`');
         if (!args[0]) return embedResponse('Escribe un numero!');
         if (isNaN(args[0])) return embedResponse('' + mal + ' Escribe un numero!')
         if (args[0] >= 100 || args[0] === 0) return embedResponse('Un numero del 1 al 99');
