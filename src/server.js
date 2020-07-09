@@ -88,7 +88,7 @@ client.on('message', async (message) => {
 
     if (message.author.bot) return;
     if (!message.content.startsWith(prefix)) return;
-    if (message.content.length <= prefix.length + 1) return;
+    if (message.content.length < prefix.length + 1) return;
     const blacklist = []
     if (blacklist.includes(message.author.id)) return embedResponse('Por alguna razon estas en la lista negra...')
 
@@ -317,8 +317,10 @@ client.on('message', async (message) => {
         if (isNaN(args[0])) return embedResponse('' + mal + ' Escribe un numero!')
         if (args[0] >= 100 || args[0] === 0) return embedResponse('Un numero del 1 al 99');
         await message.channel.send(`Borrando ${args[0]}`).then(p => {
-            message.channel.bulkDelete(args[0])
-                .catch(e => message.channel.send(e))
+            message.channel.bulkDelete(args[0]).then(d => {
+                if (d.size < args[0]) return d.size === 0 ? errorEmbed('Ningun mensaje fue eliminado!') : embedResponse('Mensajes eliminados ' + d.size)
+                else return embedResponse('Mensajes eliminados!')
+            });
         })
 
     }
