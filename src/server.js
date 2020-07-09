@@ -198,10 +198,10 @@ client.on('message', async (message) => {
             let embed = new Discord.MessageEmbed()
                 .setTitle(`Eval`)
                 .addField(`Entrada`, `\`\`\`js\n${code}\`\`\``)
-                .addField(`Salida`, `\`\`\`js\n${evalued}\n\`\`\``.replace(client.token, "Contenido privado")
-                    .addField(`Tipo`, `\`\`\`js\n${asd}\`\`\``.replace("number", "Number").replace("object", "Object").replace("string", "String").replace(undefined, "Undefined").replace("boolean", "Boolean").replace("function", "Function"))
-                    .setColor(color)
-                    .setTimestamp()
+                .addField(`Salida`, `\`\`\`js\n${evalued}\n\`\`\``.replace(client.token, "Contenido privado"))
+                .addField(`Tipo`, `\`\`\`js\n${asd}\`\`\``.replace("number", "Number").replace("object", "Object").replace("string", "String").replace(undefined, "Undefined").replace("boolean", "Boolean").replace("function", "Function"))
+                .setColor(color)
+                .setTimestamp()
             message.channel.send(embed).catch(err => console.log(err))
         } catch (err) {
             message.channel.send(`\`ERROR\` \`\`\`js\n${err}\n\`\`\``).catch(err => console.log(err));
