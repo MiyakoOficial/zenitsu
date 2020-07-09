@@ -318,7 +318,7 @@ client.on('message', async (message) => {
         if (args[0] >= 100 || args[0] === 0) return embedResponse('Un numero del 1 al 99');
         await embedResponse(`Borrando ${args[0]}`).then(p => {
             message.channel.bulkDelete(args[0]).then(d => {
-                if (d.size < args[0]) return d.size === 0 ? errorEmbed('Ningun mensaje fue eliminado!') : embedResponse('Mensajes eliminados ' + d.size)
+                if (d.size < args[0]) return d.size === 0 ? errorEmbed('Ningun mensaje fue eliminado!') : embedResponse('Mensajes eliminados: ' + d.size)
                 else return embedResponse('Mensajes eliminados!')
             });
         })
