@@ -300,7 +300,7 @@ client.on('message', async (message) => {
         if (!message.guild.me.hasPermission('MANAGE_MESSAGES')) return errorEmbed('No tengo el permiso MANAGE_CHANNELS');
         if (!args[0]) return embedResponse('Escribe un numero!');
         if (isNaN(args[0])) return embedResponse('' + mal + ' Escribe un numero!')
-        if (args[0] >= 99 || args[0] === 0) return embedResponse('Un numero del 1 al 99');
+        if (args[0] >= 100 || args[0] === 0) return embedResponse('Un numero del 1 al 99');
         (await message.channel.send(`Borrando ${args[0]}`)).then(p => {
             message.channel.bulkDelete(args[0])
                 .catch(e => message.channel.send(e))
