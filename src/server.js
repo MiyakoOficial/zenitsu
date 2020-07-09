@@ -10,6 +10,7 @@ const mongoose = require('mongoose');
 const { info, error } = require('console');
 const mil = require("ms")
 const tresenraya = require('tresenraya');
+const e = require('express');
 const juego = new tresenraya();
 const mal = '<:ohno:721174460073377804>';
 const bien = '<:correcto:721174526930714634>';
@@ -105,6 +106,19 @@ client.on('message', async (message) => {
         })
     }
     //fin de help
+
+    //inicio de voicekick
+    else if (command === 'voicekick') {
+        if (!message.member.hasPermission('MOVE_MEMBERS')) return errorEmbed('No tienes el permiso `MOVE_MEMBERS`');
+        if (!message.guild.me.hasPermission('MOVE_MEMBERS')) return errorEmbed('No tengo el permiso `MOVE_MEMBERS`');
+        let member = message.mentions.members.first()
+        if (!member) return embedResponse('Menciona a alguien!')
+        if (!member.voice.channel) return embedResponse('El usuario mencionado no esta en un canal de voz!')
+        embedResponse('Kickeado del canal de voz');
+        member.voice.setChannel(null).catch(a => message.channel.send(e))
+    }
+    //fin de voicekick
+
     //incio de chat
     else if (command === 'chat') {
         const chatbot = require("espchatbotapi");
