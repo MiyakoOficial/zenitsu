@@ -95,7 +95,7 @@ client.on('message', async (message) => {
             embed: new Discord.MessageEmbed()
                 .setColor(color)
                 .addField('Comandos', `${prefix}help, ${prefix}suggest, ${prefix}bugreport`)
-                .addField('Extras', `${prefix}txt, ${prefix}ping, ${prefix}chat, ${prefix}canal/channel`)
+                .addField('Extras', `${prefix}txt, ${prefix}ping, ${prefix}chat, ${prefix}canal/channel, ${prefix}snipe`)
                 .addField('Administración', `${prefix}blockchannels, ${prefix}setprefix/changeprefix,  ${prefix}setlogs/logschannel`)
                 .addField('Diversión', 'pronto...')
                 .setThumbnail(client.user.displayAvatarURL({ format: 'png', size: 2048 }))
@@ -187,7 +187,7 @@ client.on('message', async (message) => {
             evalued = require("util").inspect(evalued, { depth: 0 });
             let txt = "" + evalued;
             let limit = 1999
-            if (txt.length > limit) return (txt, "js").then(p => {
+            if (txt.length > limit) return console.log('¿?').then(p => {
                 let embed = new Discord.MessageEmbed()
                     .setDescription('Evaluacion mayor a 1999 caracteres :c')
                     .setColor(color)
