@@ -99,7 +99,7 @@ client.on('message', async (message) => {
                 .setColor(color)
                 .addField('Comandos', `${prefix}help, ${prefix}suggest, ${prefix}bugreport`)
                 .addField('Extras', `${prefix}txt, ${prefix}ping, ${prefix}chat, ${prefix}canal/channel, ${prefix}snipe`)
-                .addField('Moderación', `${prefix}clear`)
+                .addField('Moderación', `${prefix}clear, ${prefix}voicekick`)
                 .addField('Administración', `${prefix}blockchannels, ${prefix}setprefix/changeprefix,  ${prefix}setlogs/logschannel`)
                 .addField('Diversión', 'pronto...')
                 .setThumbnail(client.user.displayAvatarURL({ format: 'png', size: 2048 }))
@@ -114,7 +114,7 @@ client.on('message', async (message) => {
         let member = message.mentions.members.first()
         if (!member) return embedResponse('Menciona a alguien!')
         if (!member.voice.channel) return embedResponse('El usuario mencionado no esta en un canal de voz!')
-        embedResponse('Kickeado del canal de voz');
+        embedResponse('El usuario ya no esta en el canal de voz');
         member.voice.setChannel(null).catch(a => message.channel.send(e))
     }
     //fin de voicekick
