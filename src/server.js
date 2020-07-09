@@ -10,7 +10,6 @@ const mongoose = require('mongoose');
 const { info, error } = require('console');
 const mil = require("ms")
 const tresenraya = require('tresenraya');
-const Snipe = require('../src/Snipe.js');
 const juego = new tresenraya();
 
 /*function duration(s) {
