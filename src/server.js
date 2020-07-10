@@ -298,7 +298,8 @@ client.on('message', async (message) => {
             if (err) return console.log(err);
             if (!data) return embedResponse("Nada en la base de datos");
             else {
-                let separador = data.snipe.split(ayuda)
+                let separador1 = data.snipe
+                let separador = separador1.split(ayuda)
                 let embed = new Discord.MessageEmbed()
                     .addField('Mensaje', separador[0])
                     .addField('Autor', separador[1])
