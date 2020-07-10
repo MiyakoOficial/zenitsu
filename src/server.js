@@ -384,7 +384,7 @@ client.on('messageDelete', async (message) => {
         } catch { return; }
     } else {
         try {
-            data.snipe = `${message.content} ${ayuda} ${message.author.tag}`;
+            data.snipe = `${message.content}${ayuda}${message.author.tag}`;
             data.save().catch(e => { return console.log(e); });
         } catch { return; }
     }
