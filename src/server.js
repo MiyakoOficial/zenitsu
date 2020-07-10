@@ -379,7 +379,7 @@ client.on('messageDelete', async (message) => {
         try {
             const configLogs = new SnipeModel({
                 id: message.channel.id,
-                snipe: `${message.content} | ${message.author.tag}`
+                snipe: `${message.content}${ayuda}${message.author.tag}`
             });
             configLogs.save().catch(e => { return console.log(e); });
         } catch { return; }
