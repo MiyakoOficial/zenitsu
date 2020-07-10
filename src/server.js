@@ -329,7 +329,7 @@ client.on('message', async (message) => {
     else {
         let embed = new Discord.MessageEmbed()
             .setThumbnail(`https://cdn.discordapp.com/attachments/688054761706094725/714328885533343764/error.gif`)
-            .setDescription(`<:ohno:721174460073377804> » El comando que escribiste no existe o esta mal escrito!\nPuedes cunsultar mis comandos con ${prefix}help\nProblemas?\n⚙️ \`»\` [➲ Soporte](https://discord.gg/hbSahh8)`)
+            .setDescription(`<:ohno:721174460073377804> » El comando que escribiste no existe o esta mal escrito!\nPuedes cunsultar mis comandos con ${prefix}help.\nProblemas?\n⚙️ \`»\` [➲ Soporte](https://discord.gg/hbSahh8)`)
             .setTimestamp()
             .setColor(color)
         message.channel.send({ embed: embed })
@@ -371,18 +371,6 @@ client.on('messageDelete', async (message) => {
     if (message.author.bot) return;
     if (message.channel.type === 'dm') return;
     if (!message.content) return;
-});
-
-client.on('messageDelete', async (message) => {
-    if (message.author.bot) return;
-    if (message.channel.type === 'dm') return;
-    if (!message.content) return;
-})
-
-client.on('messageDelete', async (message) => {
-    if (message.author.bot) return;
-    if (message.channel.type === 'dm') return;
-    if (!message.content) return;
 
     let data = await SnipeModel.findOne({ id: message.channel.id });
     if (!data) {
@@ -400,6 +388,12 @@ client.on('messageDelete', async (message) => {
         } catch { return; }
     }
 
+});
+
+client.on('messageDelete', async (message) => {
+    if (message.author.bot) return;
+    if (message.channel.type === 'dm') return;
+    if (!message.content) return;
 
     let data2 = await SnipeModel.findOne({ id: message.channel.id });
     if (!data2) {
@@ -417,6 +411,12 @@ client.on('messageDelete', async (message) => {
         } catch { return; }
     }
 
+})
+
+client.on('messageDelete', async (message) => {
+    if (message.author.bot) return;
+    if (message.channel.type === 'dm') return;
+    if (!message.content) return;
     await LogsModel.findOne({ id: message.guild.id }, async (err, data) => {
         if (!data) return;
         if (!message.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return console.log('El canal tiene que ser del Servidor donde estas!');
