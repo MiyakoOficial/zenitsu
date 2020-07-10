@@ -14,6 +14,7 @@ const e = require('express');
 const juego = new tresenraya();
 const mal = '<:ohno:721174460073377804>';
 const bien = '<:correcto:721174526930714634>';
+const ayuda = 'elsuperduperincreibleseparadordearraysencaminoxdxd:v:vxdxdestonadieloescribiranuncaxdxd'
 
 /*function duration(s) {
     var ms = s % 1000;
@@ -297,7 +298,7 @@ client.on('message', async (message) => {
             if (err) return console.log(err);
             if (!data) return embedResponse("Nada en la base de datos");
             else {
-                let separador = data.snipe.split('elsuperduperincreibleseparadordearraysencaminoxdxd:v:vxdxdestonadieloescribiranuncaxdxd')
+                let separador = data.snipe.split(ayuda)
                 let embed = new Discord.MessageEmbed()
                     .addField('Mensaje', separador[0])
                     .addField('Autor', separador[1])
@@ -383,7 +384,7 @@ client.on('messageDelete', async (message) => {
         } catch { return; }
     } else {
         try {
-            data.snipe = `${message.content} elsuperduperincreibleseparadordearraysencaminoxdxd:v:vxdxdestonadieloescribiranuncaxdxd ${message.author.tag}`;
+            data.snipe = `${message.content} ${ayuda} ${message.author.tag}`;
             data.save().catch(e => { return console.log(e); });
         } catch { return; }
     }
