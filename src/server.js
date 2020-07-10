@@ -14,7 +14,7 @@ const e = require('express');
 const juego = new tresenraya();
 const mal = '<:ohno:721174460073377804>';
 const bien = '<:correcto:721174526930714634>';
-const ayuda = 'elsuperduperincreibleseparadordearraysencaminoxdxd:v:vxdxdestonadieloescribiranuncaxdxd'
+const ayuda = 'elsuperduperincreibleseparadordearraysencaminoxdxd:v:vxdxdestonadieloescribiranuncaxdxdhdsbasudkjbsdjnasiudhaskkdhbdjfasdfilshdvfaciludvshfilahsdvfcliuasdbvfcilukjbsdvfiulKJVIUHJIOSDHADUJohifjbdsofihbsfihjbsdfiohbaiaslhabodhb'
 
 /*function duration(s) {
     var ms = s % 1000;
