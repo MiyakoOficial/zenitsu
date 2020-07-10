@@ -297,9 +297,10 @@ client.on('message', async (message) => {
             if (err) return console.log(err);
             if (!data) return embedResponse("Nada en la base de datos");
             else {
+                let separador = data.snipe.split(' |,|,|,|,|,|,|,|,|,|,|,| ')
                 let embed = new Discord.MessageEmbed()
-                    .addField('Mensaje', data.snipe)
-                    .addField('Autor', data.author)
+                    .addField('Mensaje', separador[0])
+                    .addField('Autor', separador[1])
                     .setColor(color)
                     .setTimestamp()
                     .setTitle('Snipe')
@@ -376,42 +377,18 @@ client.on('messageDelete', async (message) => {
         try {
             const configLogs = new SnipeModel({
                 id: message.channel.id,
-                snipe: message.content
+                snipe: `${message.content} | ${message.author.tag}`
             });
             configLogs.save().catch(e => { return console.log(e); });
         } catch { return; }
     } else {
         try {
-            data.snipe = message.content;
+            data.snipe = `${message.content} |,|,|,|,|,|,|,|,|,|,|,|,|,|,|,|,|,|,|,|,|,|,|,| ${message.author.tag}`;
             data.save().catch(e => { return console.log(e); });
         } catch { return; }
     }
 
 });
-
-client.on('messageDelete', async (message) => {
-    if (message.author.bot) return;
-    if (message.channel.type === 'dm') return;
-    if (!message.content) return;
-
-    let data2 = await SnipeModel.findOne({ id: message.channel.id });
-    if (!data2) {
-        try {
-            const configLogs = new SnipeModel({
-                id: message.channel.id,
-                author: message.author.tag
-            });
-            configLogs.save().catch(e => { return console.log(e); });
-        } catch { return; }
-    } else {
-        try {
-            data2.author = message.author.tag;
-            data2.save().catch(e => { return console.log(e); });
-        } catch { return; }
-    }
-
-})
-
 client.on('messageDelete', async (message) => {
     if (message.author.bot) return;
     if (message.channel.type === 'dm') return;
