@@ -337,9 +337,10 @@ client.on('message', async (message) => {
 //?inicio mensajes eventos
 
 client.on('messageUpdate', async (oldMessage, newMessage) => {
-    if (!data) return;
+
     if (!newMessage.guild || !oldMessage.guild) return;
     await LogsModel.findOne({ id: newMessage.guild.id }, async (err, data) => {
+        if (!data) return;
         if (newMessage.author.bot) return;
         if (newMessage.channel.type === 'dm') return;
         if (newMessage.content === oldMessage.content) return;
