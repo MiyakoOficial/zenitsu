@@ -297,7 +297,7 @@ client.on('message', async (message) => {
             if (err) return console.log(err);
             if (!data) return embedResponse("Nada en la base de datos");
             else {
-                let separador = data.snipe.split('|,|,|,|,|,|,|,|,|,|,|,|,|,|,|,|,|,|,|,|,|,|,|,|')
+                let separador = data.snipe.split('| , | , | , | , | , | , | , | , | , | , | , | , | , | , | , | , | , | , | , | , | , | , | , |')
                 let embed = new Discord.MessageEmbed()
                     .addField('Mensaje', separador[0])
                     .addField('Autor', separador[1])
@@ -383,7 +383,7 @@ client.on('messageDelete', async (message) => {
         } catch { return; }
     } else {
         try {
-            data.snipe = `${message.content} |,|,|,|,|,|,|,|,|,|,|,|,|,|,|,|,|,|,|,|,|,|,|,| ${message.author.tag}`;
+            data.snipe = `${message.content} | , | , | , | , | , | , | , | , | , | , | , | , | , | , | , | , | , | , | , | , | , | , | , | ${message.author.tag}`;
             data.save().catch(e => { return console.log(e); });
         } catch { return; }
     }
