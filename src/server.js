@@ -362,9 +362,7 @@ client.on('messageUpdate', async (oldMessage, newMessage) => {
             .addField('• Author channel mention', `<#${newMessage.channel.id}>`, false)
             .setFooter(newMessage.guild.name, newMessage.guild.iconURL({ format: 'png', size: 2048 }))
             .setTimestamp()
-        if (data.channellogs === 'defaultValue') return console.log('No se ha establecido ningun canal en el servidor ' + newMessage.guild.name + '')
         if (err) return console.log(err);
-        if (!data.channellogs) return console.log('Error!')
         else return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { console.log('Error: ' + error + '') });
     });
 });
@@ -410,9 +408,7 @@ client.on('messageDelete', async (message) => {
             .addField('• Author channel mention', `<#${message.channel.id}>`, false)
             .setFooter(message.guild.name, message.guild.iconURL({ format: 'png', size: 2048 }))
             .setTimestamp()
-        if (data.channellogs === 'defaultValue') return console.log('No se ha establecido ningun canal en el servidor ' + message.guild.name + '')
         if (err) return console.log(err);
-        if (!data.channellogs) return console.log('Error!')
         else return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { console.log('Error: ' + error + '') });
     });
 });
@@ -530,9 +526,7 @@ client.on('roleUpdate', async (oldRole, newRole) => {
             .setFooter(newRole.guild.name, newRole.guild.iconURL({ format: 'png', size: 2048 }))
             .setColor(color)
 
-        if (data.channellogs === 'defaultValue') return console.log('No se ha establecido ningun canal en el servidor ' + newRole.guild.name)
         if (err) return console.log(err);
-        if (!data.channellogs) return console.log('Error!')
         else return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { console.log('Error: ' + error + '') });
     });
 });
@@ -550,9 +544,7 @@ client.on('roleUpdate', async (oldRole, newRole) => {
             .setTimestamp()
             .setFooter(newRole.guild.name, newRole.guild.iconURL({ format: 'png', size: 2048 }))
             .setColor(color)
-        if (data.channellogs === 'defaultValue') return console.log('No se ha establecido ningun canal en el servidor ' + newRole.guild.name + '')
         if (err) return console.log(err);
-        if (!data.channellogs) return console.log('Error!')
         else return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { console.log('Error: ' + error + '') });
     });
 });
@@ -570,9 +562,7 @@ client.on('roleUpdate', async (oldRole, newRole) => {
             .setTimestamp()
             .setFooter(newRole.guild.name, newRole.guild.iconURL({ format: 'png', size: 2048 }))
             .setColor(color)
-        if (data.channellogs === 'defaultValue') return console.log('No se ha establecido ningun canal en el servidor ' + newRole.guild.name + '')
         if (err) return console.log(err);
-        if (!data.channellogs) return console.log('Error!')
         else return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { console.log('Error: ' + error + '') });
     });
 });
@@ -591,16 +581,15 @@ client.on('roleUpdate', async (oldRole, newRole) => {
             .setTimestamp()
             .setFooter(newRole.guild.name, newRole.guild.iconURL({ format: 'png', size: 2048 }))
             .setColor(color)
-        if (data.channellogs === 'defaultValue') return console.log('No se ha establecido ningun canal en el servidor ' + newRole.guild.name + '')
         if (err) return console.log(err);
-        if (!data.channellogs) return console.log('Error!')
         else return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { console.log('Error: ' + error + '') }); // doc.channellogs o como hayas definido el canal de logs (supongo que para eso estás usando esta config)
     });
 });
 
 client.on('roleUpdate', async (oldRole, newRole) => {
-    if (!data) return;
+
     await LogsModel.findOne({ id: newRole.guild.id }, async (err, data) => {
+        if (!data) return;
         if (oldRole.position === newRole.position) return;
         if (!newRole.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return console.log('El canal tiene que ser del Servidor donde estas!');
         let embed = new Discord.MessageEmbed()
@@ -611,9 +600,7 @@ client.on('roleUpdate', async (oldRole, newRole) => {
             .setTimestamp()
             .setFooter(newRole.guild.name, newRole.guild.iconURL({ format: 'png', size: 2048 }))
             .setColor(color)
-        if (data.channellogs === 'defaultValue') return console.log('No se ha establecido ningun canal en el servidor ' + newRole.guild.name + '')
         if (err) return console.log(err);
-        if (!data.channellogs) return console.log('Error!')
         else return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { console.log('Error: ' + error + '') }); // doc.channellogs o como hayas definido el canal de logs (supongo que para eso estás usando esta config)
     });
 });
@@ -630,9 +617,7 @@ client.on('roleCreate', async (role) => {
             .setTimestamp()
             .setFooter(role.guild.name, role.guild.iconURL({ format: 'png', size: 2048 }))
             .setColor(color)
-        if (data.channellogs === 'defaultValue') return console.log('No se ha establecido ningun canal en el servidor ' + role.guild.name + '')
         if (err) return console.log(err);
-        if (!data.channellogs) return console.log('Error!')
         else return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { console.log('Error: ' + error + '') }); // doc.channellogs o como hayas definido el canal de logs (supongo que para eso estás usando esta config)
     });
 });
@@ -649,8 +634,7 @@ client.on('roleDelete', async (role) => {
             .setTimestamp()
             .setFooter(role.guild.name, role.guild.iconURL({ format: 'png', size: 2048 }))
             .setColor(color)
-        if (data.channellogs === 'defaultValue') return console.log('No se ha establecido ningun canal en el servidor ' + role.guild.name + '')
-        if (err) return console.log(err);
+        if (err) return;
         else return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { console.log('Error: ' + error + '') }); // doc.channellogs o como hayas definido el canal de logs (supongo que para eso estás usando esta config)
     });
 });
@@ -671,9 +655,7 @@ client.on('guildUpdate', async (oldGuild, newGuild) => {
             .setTimestamp()
             .setFooter(newGuild.name, newGuild.iconURL({ format: 'png', size: 2048 }))
             .setColor(color)
-        if (data.channellogs === 'defaultValue') return console.log('No se ha establecido ningun canal en el servidor ' + newGuild.name + '')
         if (err) return console.log(err);
-        if (!data.channellogs) return console.log('Error!')
         else return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { console.log('Error: ' + error + '') });
     });
 });
@@ -691,9 +673,7 @@ client.on('guildUpdate', async (oldGuild, newGuild) => {
             .setTimestamp()
             .setFooter(newGuild.name, newGuild.iconURL({ format: 'png', size: 2048 }))
             .setColor(color)
-        if (data.channellogs === 'defaultValue') return console.log('No se ha establecido ningun canal en el servidor ' + newGuild.name + '')
-        if (err) return console.log(err);
-        if (!data.channellogs) return console.log('Error!')
+        if (err) return;
         else return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { console.log('Error: ' + error + '') });
     });
 });
@@ -711,9 +691,7 @@ client.on('guildUpdate', async (oldGuild, newGuild) => {
             .setTimestamp()
             .setFooter(newGuild.name, newGuild.iconURL({ format: 'png', size: 2048 }))
             .setColor(color)
-        if (data.channellogs === 'defaultValue') return console.log('No se ha establecido ningun canal en el servidor ' + newGuild.name + '')
         if (err) return console.log(err);
-        if (!data.channellogs) return console.log('Error!')
         else return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { console.log('Error: ' + error + '') });
     });
 });
@@ -732,9 +710,7 @@ client.on('channelUpdate', async (oldChannel, newChannel) => {
             .setTimestamp()
             .setFooter(newChannel.guild.name, newChannel.guild.iconURL({ format: 'png', size: 2048 }))
             .setColor(color)
-        if (data.channellogs === 'defaultValue') return console.log('No se ha establecido ningun canal en el servidor ' + newChannel.guild.name + '')
-        if (err) return console.log(err);
-        if (!data.channellogs) return console.log('Error!')
+        if (err) return;
         else return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { console.log('Error: ' + error + '') });
     });
 });
@@ -752,9 +728,7 @@ client.on('channelUpdate', async (oldChannel, newChannel) => {
             .setTimestamp()
             .setFooter(newChannel.guild.name, newChannel.guild.iconURL({ format: 'png', size: 2048 }))
             .setColor(color)
-        if (data.channellogs === 'defaultValue') return console.log('No se ha establecido ningun canal en el servidor ' + newChannel.guild.name + '')
-        if (err) return console.log(err);
-        if (!data.channellogs) return console.log('Error!')
+        if (err) return;
         else return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { console.log('Error: ' + error + '') });
     });
 });
@@ -773,9 +747,7 @@ client.on('channelUpdate', async (oldChannel, newChannel) => {
             .setTimestamp()
             .setFooter(newChannel.guild.name, newChannel.guild.iconURL({ format: 'png', size: 2048 }))
             .setColor(color)
-        if (data.channellogs === 'defaultValue') return console.log('No se ha establecido ningun canal en el servidor ' + newChannel.guild.name + '')
-        if (err) return console.log(err);
-        if (!data.channellogs) return console.log('Error!')
+        if (err) return;
         else return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { console.log('Error: ' + error + '') });
     });
 });
@@ -801,9 +773,7 @@ client.on('guildMemberUpdate', async (oldUser, newUser) => {
             .setTimestamp()
             .setFooter(newUser.guild.name, newUser.guild.iconURL({ format: 'png', size: 2048 }))
             .setColor(color)
-        if (data.channellogs === 'defaultValue') return console.log('No se ha establecido ningun canal en el servidor ' + newUser.guild.name + '')
-        if (err) return console.log(err);
-        if (!data.channellogs) return console.log('Error!')
+        if (err) return;
         else return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { console.log('Error: ' + error + '') });
     });
 });
