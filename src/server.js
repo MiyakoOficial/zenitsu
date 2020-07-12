@@ -363,7 +363,7 @@ client.on('messageUpdate', async (oldMessage, newMessage) => {
             .setFooter(newMessage.guild.name, newMessage.guild.iconURL({ format: 'png', size: 2048 }))
             .setTimestamp()
         if (err) return;
-        else return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { console.log('Error: ' + error + '') });
+        else return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { return; });
     });
 });
 
@@ -409,7 +409,7 @@ client.on('messageDelete', async (message) => {
             .setFooter(message.guild.name, message.guild.iconURL({ format: 'png', size: 2048 }))
             .setTimestamp()
         if (err) return;
-        else return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { console.log('Error: ' + error + '') });
+        else return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { return; });
     });
 });
 //!fin mensajes eventos
@@ -526,7 +526,7 @@ client.on('roleUpdate', async (oldRole, newRole) => {
             .setFooter(newRole.guild.name, newRole.guild.iconURL({ format: 'png', size: 2048 }))
             .setColor(color)
         if (err) return;
-        else return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { console.log('Error: ' + error + '') });
+        else return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { return; });
     });
 });
 
@@ -544,7 +544,7 @@ client.on('roleUpdate', async (oldRole, newRole) => {
             .setFooter(newRole.guild.name, newRole.guild.iconURL({ format: 'png', size: 2048 }))
             .setColor(color)
         if (err) return;
-        else return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { console.log('Error: ' + error + '') });
+        else return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { return; });
     });
 });
 
@@ -562,7 +562,7 @@ client.on('roleUpdate', async (oldRole, newRole) => {
             .setFooter(newRole.guild.name, newRole.guild.iconURL({ format: 'png', size: 2048 }))
             .setColor(color)
         if (err) return;
-        else return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { console.log('Error: ' + error + '') });
+        else return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { return; });
     });
 });
 
@@ -581,7 +581,7 @@ client.on('roleUpdate', async (oldRole, newRole) => {
             .setFooter(newRole.guild.name, newRole.guild.iconURL({ format: 'png', size: 2048 }))
             .setColor(color)
         if (err) return;
-        else return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { console.log('Error: ' + error + '') }); // doc.channellogs o como hayas definido el canal de logs (supongo que para eso estás usando esta config)
+        else return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { return; });
     });
 });
 
@@ -600,7 +600,7 @@ client.on('roleUpdate', async (oldRole, newRole) => {
             .setFooter(newRole.guild.name, newRole.guild.iconURL({ format: 'png', size: 2048 }))
             .setColor(color)
         if (err) return console.log(err);
-        else return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { console.log('Error: ' + error + '') }); // doc.channellogs o como hayas definido el canal de logs (supongo que para eso estás usando esta config)
+        else return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { return; });
     });
 });
 
@@ -617,7 +617,7 @@ client.on('roleCreate', async (role) => {
             .setFooter(role.guild.name, role.guild.iconURL({ format: 'png', size: 2048 }))
             .setColor(color)
         if (err) return;
-        else return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { console.log('Error: ' + error + '') }); // doc.channellogs o como hayas definido el canal de logs (supongo que para eso estás usando esta config)
+        else return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { return; });
     });
 });
 
@@ -634,7 +634,7 @@ client.on('roleDelete', async (role) => {
             .setFooter(role.guild.name, role.guild.iconURL({ format: 'png', size: 2048 }))
             .setColor(color)
         if (err) return;
-        else return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { console.log('Error: ' + error + '') }); // doc.channellogs o como hayas definido el canal de logs (supongo que para eso estás usando esta config)
+        else return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { return; });
     });
 });
 
@@ -655,7 +655,7 @@ client.on('guildUpdate', async (oldGuild, newGuild) => {
             .setFooter(newGuild.name, newGuild.iconURL({ format: 'png', size: 2048 }))
             .setColor(color)
         if (err) return;
-        else return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { console.log('Error: ' + error + '') });
+        else return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { return; });
     });
 });
 
@@ -673,7 +673,7 @@ client.on('guildUpdate', async (oldGuild, newGuild) => {
             .setFooter(newGuild.name, newGuild.iconURL({ format: 'png', size: 2048 }))
             .setColor(color)
         if (err) return;
-        else return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { console.log('Error: ' + error + '') });
+        else return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { return; });
     });
 });
 
@@ -691,11 +691,44 @@ client.on('guildUpdate', async (oldGuild, newGuild) => {
             .setFooter(newGuild.name, newGuild.iconURL({ format: 'png', size: 2048 }))
             .setColor(color)
         if (err) return;
-        else return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { console.log('Error: ' + error + '') });
+        else return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { return; });
     });
 });
 //!fin servidor eventos
 //?inicio canales eventos
+
+client.on('channelCreate', async (channel) => {
+    await LogsModel.findOne({ id: channel.guild.id }, async (err, data) => {
+        if (!data) return;
+        if (!channel.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return;
+        let embed = new Discord.MessageEmbed()
+            .setTitle('• Channel Created')
+            .addField('• Channel name', channel.name, true)
+            .addField('• Channel ID', channel.id, true)
+            .setTimestamp()
+            .setFooter(channel.guild.name, channel.guild.iconURL({ format: 'png', size: 2048 }))
+            .setColor(color)
+        if (err) return;
+        else return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { return; });
+    });
+});
+
+client.on('channelDelete', async (channel) => {
+    await LogsModel.findOne({ id: channel.guild.id }, async (err, data) => {
+        if (!data) return;
+        if (!channel.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return;
+        let embed = new Discord.MessageEmbed()
+            .setTitle('• Channel Deleted')
+            .addField('• Channel name', channel.name, true)
+            .addField('• Channel ID', channel.id, true)
+            .setTimestamp()
+            .setFooter(channel.guild.name, channel.guild.iconURL({ format: 'png', size: 2048 }))
+            .setColor(color)
+        if (err) return;
+        else return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { return; }); // doc.channellogs o como hayas definido el canal de logs (supongo que para eso estás usando esta config)
+    });
+});
+
 client.on('channelUpdate', async (oldChannel, newChannel) => {
     await LogsModel.findOne({ id: newChannel.guild.id }, async (err, data) => {
         if (!data) return;
