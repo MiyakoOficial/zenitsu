@@ -328,11 +328,11 @@ client.on('message', async (message) => {
     }
     //fin de clear
     else if (command === 'serverlist') {
-        let servidores = client.guilds.cache.map(a => a.name).join(', ')
+        let servidores = client.guilds.cache.map(a => `\`${a.name}\``).join(', ')
         let embed = new Discord.MessageEmbed()
             .setTitle('Lista de servidores')
             .setColor(color)
-            .setDescription(servidores.length >= 1996 ? `\`${servidores.slice(0, 1996)}\`...` : `\`${servidores}\``)
+            .setDescription(servidores.length >= 1996 ? `${servidores.slice(0, 1996)}...` : `\`${servidores}\``)
             .setFooter(`Total de servidores: ${client.guilds.cache.size}`)
         message.channel.send({ embed: embed });
     }
