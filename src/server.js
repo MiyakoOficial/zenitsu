@@ -99,10 +99,10 @@ client.on('message', async (message) => {
             embed: new Discord.MessageEmbed()
                 .setColor(color)
                 .addField('Comandos', `${prefix}help, ${prefix}suggest, ${prefix}bugreport`)
-                .addField('Extras', `${prefix}txt, ${prefix}ping, ${prefix}chat, ${prefix}canal/channel, ${prefix}snipe`)
+                .addField('Extras', `${prefix}txt, ${prefix}ping, ${prefix}chat, ${prefix}canal/channel, ${prefix}snipe, ${prefix}serverlist`)
                 .addField('Moderación', `${prefix}clear, ${prefix}voicekick`)
                 .addField('Administración', `${prefix}blockchannels, ${prefix}setprefix/changeprefix,  ${prefix}setlogs/logschannel`)
-                .addField('Diversión', 'pronto...')
+                .addField('Diversión', 'Pronto...')
                 .setThumbnail(client.user.displayAvatarURL({ format: 'png', size: 2048 }))
         })
     }
@@ -327,6 +327,15 @@ client.on('message', async (message) => {
 
     }
     //fin de clear
+    else if (command === 'serverlist') {
+        let servidores = client.guilds.cache.map(a => a.name).join(', ')
+        let embed = new Discord.MessageEmbed()
+            .setTitle('Lista de servidores')
+            .setColor(color)
+            .setDescription(servidores)
+            .setFooter(`Total de servidores: ${client.guilds.cache.size}`)
+        message.channel.send({ embed: embed });
+    }
     else {
         let embed = new Discord.MessageEmbed()
             .setThumbnail(`https://cdn.discordapp.com/attachments/688054761706094725/714328885533343764/error.gif`)
