@@ -195,7 +195,7 @@ client.on('message', async (message) => {
     //fin de txt
     //comienzo de eval
     else if (command === 'eval') {
-        if (!["507367752391196682", "433415551868600321"].includes(message.author.id))
+        if (!["507367752391196682", "374710341868847104"].includes(message.author.id))
             return embedResponse('No puedes usar este comando!')
         let limit = 1950;
         try {
