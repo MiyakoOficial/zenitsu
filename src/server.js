@@ -200,7 +200,7 @@ client.on('message', async (message) => {
         let limit = 1950;
         try {
             let code = args.join(" ");
-            let evalued = await eval(`(async() => ${code})()`);
+            let evalued = await eval(`(async() => {${code})}()`);
             let asd = typeof (evalued)
             evalued = require("util").inspect(evalued, { depth: 0 });
             let txt = "" + evalued;
