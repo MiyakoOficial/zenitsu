@@ -708,6 +708,7 @@ client.on('guildUpdate', async (oldGuild, newGuild) => {
 
 client.on('channelCreate', async (channel) => {
     await LogsModel.findOne({ id: channel.guild.id }, async (err, data) => {
+        if (!channel.guild) return;
         if (!data) return;
         if (!channel.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return;
         let embed = new Discord.MessageEmbed()
@@ -724,6 +725,7 @@ client.on('channelCreate', async (channel) => {
 
 client.on('channelDelete', async (channel) => {
     await LogsModel.findOne({ id: channel.guild.id }, async (err, data) => {
+        if (!channel.guild) return;
         if (!data) return;
         if (!channel.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return;
         let embed = new Discord.MessageEmbed()
@@ -740,6 +742,7 @@ client.on('channelDelete', async (channel) => {
 
 client.on('channelUpdate', async (oldChannel, newChannel) => {
     await LogsModel.findOne({ id: newChannel.guild.id }, async (err, data) => {
+        if (!oldChannel.guild || !newChannel.guild) return;
         if (!data) return;
         if (oldChannel.name === newChannel.name) return;
         if (!newChannel.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return console.log('El canal tiene que ser del Servidor donde estas!');
