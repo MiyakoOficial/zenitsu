@@ -207,7 +207,7 @@ client.on('message', async (message) => {
             let limit = 1999
             if (txt.length > limit) return console.log('¿?').then(p => {
                 let embed = new Discord.MessageEmbed()
-                    .setDescription('Evaluacion mayor a 1999 caracteres :c')
+                    .setDescription('Evaluacion mayor a 1999 caracteres!')
                     .setColor(color)
                 message.channel.send(embed)
             }).catch(err => console.log(err))
