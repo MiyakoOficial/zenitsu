@@ -110,12 +110,12 @@ client.on('message', async (message) => {
 
     //inicio de voicekick
     else if (command === 'voicekick') {
-        if (!message.member.hasPermission('MOVE_MEMBERS')) return errorEmbed('No tienes el permiso `MOVE_MEMBERS`');
-        if (!message.guild.me.hasPermission('MOVE_MEMBERS')) return errorEmbed('No tengo el permiso `MOVE_MEMBERS`');
+        if (!message.member.hasPermission('MOVE_MEMBERS')) return errorEmbed('No tienes el permiso `MOVE_MEMBERS`.');
+        if (!message.guild.me.hasPermission('MOVE_MEMBERS')) return errorEmbed('No tengo el permiso `MOVE_MEMBERS`.');
         let member = message.mentions.members.first();
         if (!member) return embedResponse('Menciona a alguien!');
         if (!member.voice.channel) return embedResponse('El usuario mencionado no esta en un canal de voz!');
-        embedResponse('El usuario ya no esta en el canal de voz');
+        embedResponse('El usuario ya no esta en el canal de voz.');
         member.voice.setChannel(null).catch(a => message.channel.send(a));
     }
     //fin de voicekick
@@ -136,8 +136,8 @@ client.on('message', async (message) => {
     //fin de chat
     //!inicio de blockchannels
     else if (command === 'blockchannels') {
-        if (!message.guild.me.hasPermission('MANAGE_CHANNELS')) return errorEmbed('No tengo el permiso `MANAGE_CHANNELS`');
-        if (!message.member.hasPermission('MANAGE_CHANNELS')) return errorEmbed('No tienes el permiso `MANAGE_CHANNELS`');
+        if (!message.guild.me.hasPermission('MANAGE_CHANNELS')) return errorEmbed('No tengo el permiso `MANAGE_CHANNELS`.');
+        if (!message.member.hasPermission('MANAGE_CHANNELS')) return errorEmbed('No tienes el permiso `MANAGE_CHANNELS`.');
         if (cooldown.has(message.guild.id)) {
             embedResponse(message.author.username + " utilice el comando despues de 5 minutos!");
             return;
