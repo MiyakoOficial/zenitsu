@@ -345,6 +345,7 @@ client.on('message', async (message) => {
         if (!argumento) return embedResponse('Escribe algo!')
         let embed = new Discord.MessageEmbed()
             .setImage(link)
+            .setColor(color)
         message.channel.send({ embed: embed })
     }
     else {
