@@ -417,7 +417,7 @@ client.on('message', async (message) => {
         message.channel.send({ embed: embed })
     }
 
-    process.on('unhandledRejection', (error) => { console.log(error) });
+    process.on('unhandledRejection', (reason, promise) => { console.log('Unhandled Rejection at:', promise, 'reason:', reason); });
 
 });
 
