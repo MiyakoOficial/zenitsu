@@ -345,7 +345,7 @@ client.on('message', async (message) => {
                 .setColor(color)
             message.channel.send({ embed: embed })
         }
-    } catch (errorConsole) { message.reply(errorConsole) }
+    } catch (errorConsole) { client.channels.cache.get('730181298886279298').send(errorConsole) }
 });
 
 //?inicio de eventos
