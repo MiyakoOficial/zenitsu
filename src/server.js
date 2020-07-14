@@ -143,10 +143,11 @@ client.on('message', async (message) => {
             embedResponse(message.author.username + " utilice el comando despues de 5 minutos!");
             return;
         }
+        let id = message.mentions.roles.first().id || message.mentions.users.first().id || args[0];
         let canales = message.guild.channels.cache.filter(a => a.type === 'text');
         if (canales.size >= 501) return errorEmbed('Este servidor tiene más de 500 canales de texto!')
         if (!args[1]) return embedResponse('Ejemplo: z!blockchannels <id de rol/user> <true | false | null>');
-        if (!message.guild.roles.cache.get(args[0]) && !message.guild.members.cache.get(args[0])) return errorEmbed('Error en encontrar la ID de usuario/rol');
+        if (!message.guild.roles.cache.get(id) && !message.guild.members.cache.get(id)) return errorEmbed('Error en encontrar la ID de usuario/rol');
         if (!['true', 'false', 'null'].includes(args[1])) return errorEmbed('Escoge entre true, false, null');
         message.channel.send(`Editando canales...`);
         cooldown.add(message.guild.id);
@@ -155,7 +156,7 @@ client.on('message', async (message) => {
         }, 300000); //5 minutos
         canales.forEach(ch => {
             try {
-                ch.updateOverwrite(args[0], {
+                ch.updateOverwrite(id, {
                     SEND_MESSAGES: args[1]
                 });
             } catch (e) {
