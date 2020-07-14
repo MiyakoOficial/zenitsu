@@ -103,7 +103,7 @@ client.on('message', async (message) => {
                 .addField('Extras', `${prefix}txt, ${prefix}ping, ${prefix}chat, ${prefix}canal/channel, ${prefix}snipe, ${prefix}serverlist`)
                 .addField('Moderación', `${prefix}clear, ${prefix}voicekick`)
                 .addField('Administración', `${prefix}blockchannels, ${prefix}setprefix/changeprefix,  ${prefix}setlogs/logschannel`)
-                .addField('Diversión', `${prefix}challenge, ${prefix}achievement, ${prefix}ship, ${prefix}supreme, ${prefix}didyoumean`)
+                .addField('Diversión', `${prefix}challenge, ${prefix}achievement, ${prefix}ship, ${prefix}supreme, ${prefix}didyoumean, ${prefix}captcha`)
                 .setThumbnail(client.user.displayAvatarURL({ format: 'png', size: 2048 }))
         })
     }
@@ -370,6 +370,18 @@ client.on('message', async (message) => {
             .setColor(color)
         message.channel.send({ embed: embed })
     }
+
+    else if (command === 'captcha') {
+        let argumento = args.join(' ')
+        let txt = encodeURIComponent(argumento);
+        let link = `https://api.alexflipnote.dev/captcha?text=${txt}`;
+        if (!argumento) return embedResponse('Escribe algo!')
+        let embed = new Discord.MessageEmbed()
+            .setImage(link)
+            .setColor(color)
+        message.channel.send({ embed: embed })
+    }
+
 
     else if (command === 'didyoumean') {
         let argumento = args.join(' ').split(',|,')
