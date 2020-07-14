@@ -105,7 +105,7 @@ client.on('message', async (message) => {
         message.channel.send({
             embed: new Discord.MessageEmbed()
                 .setColor(color)
-                .addField('Comandos', `${prefix}help, ${prefix}suggest, ${prefix}bugreport`)
+                .addField('Comandos', `${prefix}help, ${prefix}suggest, ${prefix}bugreport, ${prefix}invite`)
                 .addField('Extras', `${prefix}txt, ${prefix}ping, ${prefix}chat, ${prefix}canal/channel, ${prefix}snipe, ${prefix}serverlist`)
                 .addField('Moderación', `${prefix}clear, ${prefix}voicekick, ${prefix}voicemute, ${prefix}voiceunmute, ${prefix}voicedeaf, ${prefix}voiceundeaf`)
                 .addField('Administración', `${prefix}blockchannels, ${prefix}setprefix/changeprefix,  ${prefix}setlogs/logschannel`)
@@ -114,6 +114,19 @@ client.on('message', async (message) => {
         });
     }
     //fin de help
+
+    //inicio de invite
+    else if (command === 'invite') {
+        let link = 'https://discordapp.com/oauth2/authorize?client_id=721080193678311554&scope=bot&permissions=2146958847';
+        let invitacionLink = 'https://discord.gg/hbSahh8';
+        let embed = new Discord.MessageEmbed()
+            .setImage(client.user.displayAvatarURL({ format: 'png', size: 2048 }))
+            .setDescription(`Link de invitación del bot => [Link](${link})\nLink de invitación al servidor de soporte => [Link](${invitacionLink})`)
+            .setColor(color)
+            .setFooter('Gracias por apoyar!', message.author.displayAvatarURL({ format: 'png', size: 2048 }))
+        message.channel.send({ embed: embed })
+    }
+    //fin de invite
 
     //inicio de voicekick
     else if (command === 'voicekick') {
