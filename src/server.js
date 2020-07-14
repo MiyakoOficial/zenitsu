@@ -114,7 +114,7 @@ client.on('message', async (message) => {
         let member = message.mentions.members.first();
         if (!member) return embedResponse('Menciona a alguien!');
         if (!member.voice.channel) return embedResponse('El usuario mencionado no esta en un canal de voz!');
-        embedResponse('El usuario ya no esta en el canal de voz.');
+        embedResponse('El usuario ya no está en el canal de voz.');
         member.voice.setChannel(null)
     }
     //fin de voicekick
@@ -349,7 +349,7 @@ client.on('message', async (message) => {
         message.channel.send({ embed: embed })
     }
 
-    else if (command === 'achievement') {
+    else if (command === 'achienavement') {
         let argumento = args.join(' ')
         let txt = encodeURIComponent(argumento);
         let link = `https://api.alexflipnote.dev/achievement?text=${txt}`;
