@@ -117,7 +117,7 @@ client.on('message', async (message) => {
             if (!member) return embedResponse('Menciona a alguien!');
             if (!member.voice.channel) return embedResponse('El usuario mencionado no esta en un canal de voz!');
             embedResponse('El usuario ya no esta en el canal de voz.');
-            member.voice.setChannel(null).catch(a => message.channel.send(a));
+            member.voice.setChannel(null)
         }
         //fin de voicekick
 
@@ -345,7 +345,7 @@ client.on('message', async (message) => {
                 .setColor(color)
             message.channel.send({ embed: embed })
         }
-    } catch (errorConsole) { embedResponse(errorConsole) }
+    } catch (errorConsole) { message.reply(errorConsole) }
 });
 
 //?inicio de eventos
