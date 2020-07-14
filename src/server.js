@@ -338,6 +338,15 @@ client.on('message', async (message) => {
             .setFooter(`Total de servidores: ${client.guilds.cache.size}`)
         message.channel.send({ embed: embed });
     }
+    else if (command === 'challenge') {
+        let argumento = args.join(' ')
+        let txt = encodeURIComponent(argumento);
+        let link = `https://api.alexflipnote.dev/challenge?text=${txt}`;
+        if (!argumento) return embedResponse('Escribe algo!')
+        let embed = new Discord.MessageEmbed()
+            .setImage(link)
+        message.channel.send({ embed: embed })
+    }
     else {
         let embed = new Discord.MessageEmbed()
             .setThumbnail(`https://cdn.discordapp.com/attachments/688054761706094725/714328885533343764/error.gif`)
