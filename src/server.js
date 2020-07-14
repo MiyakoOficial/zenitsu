@@ -60,365 +60,366 @@ client.on('ready', () => {
 });
 let cooldown = new Set()
 client.on('message', async (message) => {
+    if (command) {
 
-    if (!message.guild) return;
-    function errorEmbed(argumentoDeLaDescripcion) {
-        return message.channel.send(new Discord.MessageEmbed()
-            .setDescription(`¡<:ohno:721174460073377804> => \`Error\`: ${argumentoDeLaDescripcion}!`)
-            .setColor(color)
-            .setTimestamp()
-        )
-    }
-
-    function embedResponse(argumentoDeLaDescripcion, opcion) {
-        let canal_a_enviar = opcion || message.channel
-        return canal_a_enviar.send(new Discord.MessageEmbed()
-            .setDescription(argumentoDeLaDescripcion)
-            .setColor(color)
-            .setTimestamp()
-        )
-    }
-    let prefix = 'z!';
-    await PrefixsModel.findOne({ id: message.guild.id }, async (err, data) => {
-        if (err) return console.log(err);
-        if (!data) prefix = 'z!'
-        else prefix = data.prefix || 'z!'
-
-    });
-    const args = message.content.slice(prefix.length).split(/ +/);
-    const command = args.shift().toLowerCase();
-
-    if (message.author.bot) return;
-    if (!message.content.startsWith(prefix)) return;
-    if (message.content.length < prefix.length + 1) return;
-    const blacklist = []
-    if (blacklist.includes(message.author.id)) return;
-
-    //inicio de help
-    if (command === 'help') {
-        message.channel.send({
-            embed: new Discord.MessageEmbed()
-                .setColor(color)
-                .addField('Comandos', `${prefix}help, ${prefix}suggest, ${prefix}bugreport`)
-                .addField('Extras', `${prefix}txt, ${prefix}ping, ${prefix}chat, ${prefix}canal/channel, ${prefix}snipe, ${prefix}serverlist`)
-                .addField('Moderación', `${prefix}clear, ${prefix}voicekick`)
-                .addField('Administración', `${prefix}blockchannels, ${prefix}setprefix/changeprefix,  ${prefix}setlogs/logschannel`)
-                .addField('Diversión', `${prefix}challenge, ${prefix}achievement, ${prefix}ship, ${prefix}supreme, ${prefix}didyoumean, ${prefix}captcha`)
-                .setThumbnail(client.user.displayAvatarURL({ format: 'png', size: 2048 }))
-        })
-    }
-    //fin de help
-
-    //inicio de voicekick
-    else if (command === 'voicekick') {
-        if (!message.member.hasPermission('MOVE_MEMBERS')) return errorEmbed('No tienes el permiso `MOVE_MEMBERS`.');
-        if (!message.guild.me.hasPermission('MOVE_MEMBERS')) return errorEmbed('No tengo el permiso `MOVE_MEMBERS`.');
-        let member = message.mentions.members.first();
-        if (!member) return embedResponse('Menciona a alguien!');
-        if (!member.voice.channel) return embedResponse('El usuario mencionado no esta en un canal de voz!');
-        embedResponse('El usuario ya no esta en el canal de voz.');
-        member.voice.setChannel(null)
-    }
-    //fin de voicekick
-
-    //incio de chat
-    else if (command === 'chat') {
-        const chatbot = require("espchatbotapi");
-        if (!args[0]) return embedResponse("Escribe algo!");
-
-        message.channel.startTyping();
-
-        chatbot.hablar(args).then(respuesta => {
-            message.channel.stopTyping();
-
-            message.channel.send(respuesta);
-        }).catch(e => message.channel.send(e));
-    }
-    //fin de chat
-    //!inicio de blockchannels
-    else if (command === 'blockchannels') {
-        if (!message.guild.me.hasPermission('MANAGE_CHANNELS')) return errorEmbed('No tengo el permiso `MANAGE_CHANNELS`.');
-        if (!message.member.hasPermission('MANAGE_CHANNELS')) return errorEmbed('No tienes el permiso `MANAGE_CHANNELS`.');
-        if (cooldown.has(message.guild.id)) {
-            embedResponse(message.author.username + " utilice el comando despues de 5 minutos!");
-            return;
-        }
-        let id = message.mentions.roles.first().id || message.mentions.users.first().id || args[0];
-        let canales = message.guild.channels.cache.filter(a => a.type === 'text');
-        if (canales.size >= 501) return errorEmbed('Este servidor tiene más de 500 canales de texto!')
-        if (!args[1]) return embedResponse('Ejemplo: z!blockchannels <id de rol/user> <true | false | null>');
-        if (!message.guild.roles.cache.get(id) && !message.guild.members.cache.get(id)) return errorEmbed('Error en encontrar la ID de usuario/rol');
-        if (!['true', 'false', 'null'].includes(args[1])) return errorEmbed('Escoge entre true, false, null');
-        message.channel.send(`Editando canales...`);
-        cooldown.add(message.guild.id);
-        setTimeout(() => {
-            cooldown.delete(message.author.id);
-        }, 300000); //5 minutos
-        canales.forEach(ch => {
-            try {
-                ch.updateOverwrite(id, {
-                    SEND_MESSAGES: args[1]
-                });
-            } catch (e) {
-                return;
-            };
-        });
-    }
-    //!fin de blockchannels
-
-    //inicio bugreport
-    else if (command === 'bugreport') {
-        if (!args[0]) return embedResponse('Escribe algo!')
-        embedResponse(`${message.author.tag} ha reportado el siguente \"bug\":\n${args.join(' ')}`, client.channels.cache.get('725053091522805787')).then(a => {
-            embedResponse('Reporte enviado!')
-        })
-    }
-
-    //fin de bugreport
-    //inicio de suggest
-    else if (command === 'suggest') {
-        if (!args[0]) return embedResponse('Escribe algo!')
-        embedResponse(`${message.author.tag} ha sugerido:\n${args.join(' ')}`, client.channels.cache.get('727948582556270682')).then(a => {
-            embedResponse('Sugerencia enviada!')
-        });
-    }
-    //fin suggest
-
-    //inicio de txt
-    else if (command === 'txt') {
-        if (!args[0]) return embedResponse('Escribe algo!')
-        message.channel.send({
-            files: [{
-                attachment: Buffer.from(args.join(' ')),
-                name: "Text.txt"
-            }]
-        })
-    }
-    //fin de txt
-    //comienzo de eval
-    else if (command === 'eval') {
-        if (!["507367752391196682", "374710341868847104"].includes(message.author.id))
-            return embedResponse('No puedes usar este comando!')
-        let limit = 1950;
-        try {
-            let code = args.join(" ");
-            let evalued = await eval(`(async() => {${code}})()`);
-            let asd = typeof (evalued)
-            evalued = require("util").inspect(evalued, { depth: 0 });
-            let txt = "" + evalued;
-            let limit = 1999
-            if (txt.length > limit) return console.log('¿?').then(p => {
-                let embed = new Discord.MessageEmbed()
-                    .setDescription('Evaluacion mayor a 1999 caracteres!')
-                    .setColor(color)
-                message.channel.send(embed)
-            }).catch(err => console.log(err))
-            let embed = new Discord.MessageEmbed()
-                .setTitle(`Eval`)
-                .addField(`Entrada`, `\`\`\`js\n${code}\`\`\``)
-                .addField(`Salida`, `\`\`\`js\n${evalued}\n\`\`\``.replace(client.token, "Contenido privado"))
-                .addField(`Tipo`, `\`\`\`js\n${asd}\`\`\``.replace("number", "Number").replace("object", "Object").replace("string", "String").replace(undefined, "Undefined").replace("boolean", "Boolean").replace("function", "Function"))
+        if (!message.guild) return;
+        function errorEmbed(argumentoDeLaDescripcion) {
+            return message.channel.send(new Discord.MessageEmbed()
+                .setDescription(`¡<:ohno:721174460073377804> => \`Error\`: ${argumentoDeLaDescripcion}!`)
                 .setColor(color)
                 .setTimestamp()
-            message.channel.send(embed).catch(err => console.log(err))
-        } catch (err) {
-            message.channel.send(`\`ERROR\` \`\`\`js\n${err}\n\`\`\``).catch(err => console.log(err));
-        };
-    }
-    //fin de eval
-
-    //inicio de ping
-    else if (command === 'ping') {
-        embedResponse(`Ping: ${client.ws.ping}ms`)
-    }
-    //fin de ping
-
-    //mongoose
-    //comienzo de setlogs
-    else if (command === 'setlogs' || command === 'logschannel') {
-        if (!message.member.hasPermission("ADMINISTRATOR")) return errorEmbed("No tienes el permiso `ADMINISTRATOR`")
-        let channel = message.mentions.channels.first();
-        if (!channel) return embedResponse("No has mencionado un canal/Ese canal no existe.")
-        if (!message.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(channel.id)) return embedResponse('El canal tiene que ser del Servidor donde estas!')
-        let data = await LogsModel.findOne({ id: message.guild.id });
-        if (!data) {
-            try {
-                const configLogs = new LogsModel({
-                    id: message.guild.id,
-                    channellogs: channel.id
-                });
-                configLogs.save().catch(e => { return console.log(e); });
-            } catch { return; }
-        } else {
-            try {
-                data.channellogs = channel.id;
-                data.save().catch(e => { return console.log(e); });
-            } catch { return; }
+            )
         }
-        return embedResponse(`Canal establecido en <#${channel.id}>`)
-    }
-    //fin de setlogs
-    //inicio de setprefix
-    else if (command === 'setprefix' || command === 'changeprefix') {
-        if (!message.member.hasPermission("ADMINISTRATOR")) return errorEmbed("No tienes el permiso `ADMINISTRATOR`")
-        if (!args[0] || args[0].length >= 4) return embedResponse('El prefix debe tener menos de 3 caracteres!');
 
-        let data = await PrefixsModel.findOne({ id: message.guild.id });
-        if (!data) {
-            try {
-                const configLogs = new PrefixsModel({
-                    id: message.guild.id,
-                    prefix: args[0]
-                });
-                configLogs.save().catch(e => { return console.log(e); });
-            } catch { return; }
-        } else {
-            try {
-                data.prefix = args[0];
-                data.save().catch(e => { return console.log(e); });
-            } catch { return; }
-        }
-        return embedResponse(`Prefix establecido a ${args[0]}`)
-    }
-    //fin de setprefix
-    //inicio de canal
-    else if (command === 'canal' || command === 'channel') {
-        await LogsModel.findOne({ id: message.guild.id }, async (err, data) => {
-            if (err) return console.log(err);
-
-            if (!data) return embedResponse("Este servidor no tiene definido un canal de logs")
-            if (!message.guild.channels.cache.filter(a => a.type === 'text').map(a => a.id).includes(data.channellogs)) return embedResponse('El canal en la base de datos no existe!')
-            else return embedResponse(`Logs: <#${data.channellogs}>(${data.channellogs})`)
-        });
-    }
-    //fin de canal
-    //mongoose
-    //inicio de snipe
-    else if (command === 'snipe') {
-        await SnipeModel.findOne({ id: message.channel.id }, async (err, data) => {
-
-            if (err) return console.log(err);
-            if (!data) return embedResponse("Nada en la base de datos");
-            else {
-                let la_data = data.snipe
-                let separador = la_data.split(ayuda)
-                let embed = new Discord.MessageEmbed()
-                    .addField('Mensaje', separador[0])
-                    .addField('Autor', separador[1])
-                    .setColor(color)
-                    .setTimestamp()
-                    .setTitle('Snipe')
-                    .setThumbnail('https://media1.tenor.com/images/8c3e8a0a3c7b0afc22624c9278be6a89/tenor.gif?itemid=5489827')
-                return message.channel.send({ embed: embed });
-            }
-        });
-    }
-    //fin de snipe
-    //inicio de clear
-    else if (command === 'clear') {
-        if (!message.member.hasPermission('MANAGE_MESSAGES')) return errorEmbed('No tienes el permiso `MANAGE_MESSAGES`!');
-        if (!message.guild.me.hasPermission('MANAGE_MESSAGES')) return errorEmbed('No tengo el permiso `MANAGE_MESSAGES`');
-        if (!args[0]) return embedResponse('Escribe un numero!');
-        if (isNaN(args[0])) return embedResponse('' + mal + ' Escribe un numero!')
-        if (args[0] >= 100 || args[0] === 0) return embedResponse('Un numero del 1 al 99');
-        await message.delete();
-        await message.channel.bulkDelete(args[0]).then(d => {
-            if (d.size < args[0]) return d.size === 0 ? errorEmbed('Ningun mensaje fue eliminado!') : embedResponse('Mensajes eliminados: ' + d.size)
-            else return embedResponse('Mensajes eliminados: ' + args[0])
-        });
-
-    }
-    //fin de clear
-    else if (command === 'serverlist') {
-        let servidores = client.guilds.cache.map(a => a.name).join(' <=|=> ')
-        let embed = new Discord.MessageEmbed()
-            .setTitle('Lista de servidores')
-            .setColor(color)
-            .setDescription(servidores.length >= 1996 ? `${servidores.slice(0, 1996)}...` : `${servidores}`)
-            .setFooter(`Total de servidores: ${client.guilds.cache.size}`)
-        message.channel.send({ embed: embed });
-    }
-    else if (command === 'challenge') {
-        let argumento = args.join(' ')
-        let txt = encodeURIComponent(argumento);
-        let link = `https://api.alexflipnote.dev/challenge?text=${txt}`;
-        if (!argumento) return embedResponse('Escribe algo!')
-        let embed = new Discord.MessageEmbed()
-            .setImage(link)
-            .setColor(color)
-        message.channel.send({ embed: embed })
-    }
-
-    else if (command === 'achievement') {
-        let argumento = args.join(' ')
-        let txt = encodeURIComponent(argumento);
-        let link = `https://api.alexflipnote.dev/achievement?text=${txt}`;
-        if (!argumento) return embedResponse('Escribe algo!')
-        let embed = new Discord.MessageEmbed()
-            .setImage(link)
-            .setColor(color)
-        message.channel.send({ embed: embed })
-    }
-
-    else if (command === 'supreme') {
-        let argumento = args.join(' ')
-        let txt = encodeURIComponent(argumento);
-        let link = `https://api.alexflipnote.dev/supreme?text=${txt}`;
-        if (!argumento) return embedResponse('Escribe algo!')
-        let embed = new Discord.MessageEmbed()
-            .setImage(link)
-            .setColor(color)
-        message.channel.send({ embed: embed })
-    }
-
-    else if (command === 'captcha') {
-        let argumento = args.join(' ')
-        let txt = encodeURIComponent(argumento);
-        let link = `https://api.alexflipnote.dev/captcha?text=${txt}`;
-        if (!argumento) return embedResponse('Escribe algo!')
-        let embed = new Discord.MessageEmbed()
-            .setImage(link)
-            .setColor(color)
-        message.channel.send({ embed: embed })
-    }
-
-
-    else if (command === 'didyoumean') {
-        let argumento = args.join(' ').split(',|,')
-        let txt = encodeURIComponent(argumento[0]);
-        let texto = encodeURIComponent(argumento[1])
-        let link = `https://api.alexflipnote.dev/didyoumean?top=${txt}&bottom=${texto}`;
-        if (!argumento[1]) return embedResponse('Ejemplo de uso:\n```js\n' + prefix + 'didyoumean Hola ,|, Adios```')
-        if (txt.length >= 45) return embedResponse('El primer argumento debe tener menos de `45`')
-        if (texto.length >= 40) return embedResponse('El segundo argumento debe tener menos de `40`')
-        let embed = new Discord.MessageEmbed()
-            .setImage(link)
-            .setColor(color)
-        message.channel.send({ embed: embed })
-    }
-
-
-    else if (command === 'ship') {
-        let mencionado = message.mentions.users.first()
-        if (!mencionado) return embedResponse('Menciona a alguien!');
-        message.channel.send(
-            new Discord.MessageEmbed()
-                .setImage(`https://api.alexflipnote.dev/ship?user=${message.author.displayAvatarURL({ format: 'png', size: 2048 })}&user2=${mencionado.displayAvatarURL({ format: 'png', size: 2048 })}",`)
+        function embedResponse(argumentoDeLaDescripcion, opcion) {
+            let canal_a_enviar = opcion || message.channel
+            return canal_a_enviar.send(new Discord.MessageEmbed()
+                .setDescription(argumentoDeLaDescripcion)
                 .setColor(color)
-        )
+                .setTimestamp()
+            )
+        }
+        let prefix = 'z!';
+        await PrefixsModel.findOne({ id: message.guild.id }, async (err, data) => {
+            if (err) return console.log(err);
+            if (!data) prefix = 'z!'
+            else prefix = data.prefix || 'z!'
+
+        });
+        const args = message.content.slice(prefix.length).split(/ +/);
+        const command = args.shift().toLowerCase();
+
+        if (message.author.bot) return;
+        if (!message.content.startsWith(prefix)) return;
+        if (message.content.length < prefix.length + 1) return;
+        const blacklist = []
+        if (blacklist.includes(message.author.id)) return;
+        try {
+            //inicio de help
+            if (command === 'help') {
+                message.channel.send({
+                    embed: new Discord.MessageEmbed()
+                        .setColor(color)
+                        .addField('Comandos', `${prefix}help, ${prefix}suggest, ${prefix}bugreport`)
+                        .addField('Extras', `${prefix}txt, ${prefix}ping, ${prefix}chat, ${prefix}canal/channel, ${prefix}snipe, ${prefix}serverlist`)
+                        .addField('Moderación', `${prefix}clear, ${prefix}voicekick`)
+                        .addField('Administración', `${prefix}blockchannels, ${prefix}setprefix/changeprefix,  ${prefix}setlogs/logschannel`)
+                        .addField('Diversión', `${prefix}challenge, ${prefix}achievement, ${prefix}ship, ${prefix}supreme, ${prefix}didyoumean, ${prefix}captcha`)
+                        .setThumbnail(client.user.displayAvatarURL({ format: 'png', size: 2048 }))
+                })
+            }
+            //fin de help
+
+            //inicio de voicekick
+            else if (command === 'voicekick') {
+                if (!message.member.hasPermission('MOVE_MEMBERS')) return errorEmbed('No tienes el permiso `MOVE_MEMBERS`.');
+                if (!message.guild.me.hasPermission('MOVE_MEMBERS')) return errorEmbed('No tengo el permiso `MOVE_MEMBERS`.');
+                let member = message.mentions.members.first();
+                if (!member) return embedResponse('Menciona a alguien!');
+                if (!member.voice.channel) return embedResponse('El usuario mencionado no esta en un canal de voz!');
+                embedResponse('El usuario ya no esta en el canal de voz.');
+                member.voice.setChannel(null)
+            }
+            //fin de voicekick
+
+            //incio de chat
+            else if (command === 'chat') {
+                const chatbot = require("espchatbotapi");
+                if (!args[0]) return embedResponse("Escribe algo!");
+
+                message.channel.startTyping();
+
+                chatbot.hablar(args).then(respuesta => {
+                    message.channel.stopTyping();
+
+                    message.channel.send(respuesta);
+                }).catch(e => message.channel.send(e));
+            }
+            //fin de chat
+            //!inicio de blockchannels
+            else if (command === 'blockchannels') {
+                if (!message.guild.me.hasPermission('MANAGE_CHANNELS')) return errorEmbed('No tengo el permiso `MANAGE_CHANNELS`.');
+                if (!message.member.hasPermission('MANAGE_CHANNELS')) return errorEmbed('No tienes el permiso `MANAGE_CHANNELS`.');
+                if (cooldown.has(message.guild.id)) {
+                    embedResponse(message.author.username + " utilice el comando despues de 5 minutos!");
+                    return;
+                }
+                let id = message.mentions.roles.first().id || message.mentions.users.first().id || args[0];
+                let canales = message.guild.channels.cache.filter(a => a.type === 'text');
+                if (canales.size >= 501) return errorEmbed('Este servidor tiene más de 500 canales de texto!')
+                if (!args[1]) return embedResponse('Ejemplo: z!blockchannels <id de rol/user> <true | false | null>');
+                if (!message.guild.roles.cache.get(id) && !message.guild.members.cache.get(id)) return errorEmbed('Error en encontrar la ID de usuario/rol');
+                if (!['true', 'false', 'null'].includes(args[1])) return errorEmbed('Escoge entre true, false, null');
+                message.channel.send(`Editando canales...`);
+                cooldown.add(message.guild.id);
+                setTimeout(() => {
+                    cooldown.delete(message.author.id);
+                }, 300000); //5 minutos
+                canales.forEach(ch => {
+                    try {
+                        ch.updateOverwrite(id, {
+                            SEND_MESSAGES: args[1]
+                        });
+                    } catch (e) {
+                        return;
+                    };
+                });
+            }
+            //!fin de blockchannels
+
+            //inicio bugreport
+            else if (command === 'bugreport') {
+                if (!args[0]) return embedResponse('Escribe algo!')
+                embedResponse(`${message.author.tag} ha reportado el siguente \"bug\":\n${args.join(' ')}`, client.channels.cache.get('725053091522805787')).then(a => {
+                    embedResponse('Reporte enviado!')
+                })
+            }
+
+            //fin de bugreport
+            //inicio de suggest
+            else if (command === 'suggest') {
+                if (!args[0]) return embedResponse('Escribe algo!')
+                embedResponse(`${message.author.tag} ha sugerido:\n${args.join(' ')}`, client.channels.cache.get('727948582556270682')).then(a => {
+                    embedResponse('Sugerencia enviada!')
+                });
+            }
+            //fin suggest
+
+            //inicio de txt
+            else if (command === 'txt') {
+                if (!args[0]) return embedResponse('Escribe algo!')
+                message.channel.send({
+                    files: [{
+                        attachment: Buffer.from(args.join(' ')),
+                        name: "Text.txt"
+                    }]
+                })
+            }
+            //fin de txt
+            //comienzo de eval
+            else if (command === 'eval') {
+                if (!["507367752391196682", "374710341868847104"].includes(message.author.id))
+                    return embedResponse('No puedes usar este comando!')
+                let limit = 1950;
+                try {
+                    let code = args.join(" ");
+                    let evalued = await eval(`(async() => {${code}})()`);
+                    let asd = typeof (evalued)
+                    evalued = require("util").inspect(evalued, { depth: 0 });
+                    let txt = "" + evalued;
+                    let limit = 1999
+                    if (txt.length > limit) return console.log('¿?').then(p => {
+                        let embed = new Discord.MessageEmbed()
+                            .setDescription('Evaluacion mayor a 1999 caracteres!')
+                            .setColor(color)
+                        message.channel.send(embed)
+                    }).catch(err => console.log(err))
+                    let embed = new Discord.MessageEmbed()
+                        .setTitle(`Eval`)
+                        .addField(`Entrada`, `\`\`\`js\n${code}\`\`\``)
+                        .addField(`Salida`, `\`\`\`js\n${evalued}\n\`\`\``.replace(client.token, "Contenido privado"))
+                        .addField(`Tipo`, `\`\`\`js\n${asd}\`\`\``.replace("number", "Number").replace("object", "Object").replace("string", "String").replace(undefined, "Undefined").replace("boolean", "Boolean").replace("function", "Function"))
+                        .setColor(color)
+                        .setTimestamp()
+                    message.channel.send(embed).catch(err => console.log(err))
+                } catch (err) {
+                    message.channel.send(`\`ERROR\` \`\`\`js\n${err}\n\`\`\``).catch(err => console.log(err));
+                };
+            }
+            //fin de eval
+
+            //inicio de ping
+            else if (command === 'ping') {
+                embedResponse(`Ping: ${client.ws.ping}ms`)
+            }
+            //fin de ping
+
+            //mongoose
+            //comienzo de setlogs
+            else if (command === 'setlogs' || command === 'logschannel') {
+                if (!message.member.hasPermission("ADMINISTRATOR")) return errorEmbed("No tienes el permiso `ADMINISTRATOR`")
+                let channel = message.mentions.channels.first();
+                if (!channel) return embedResponse("No has mencionado un canal/Ese canal no existe.")
+                if (!message.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(channel.id)) return embedResponse('El canal tiene que ser del Servidor donde estas!')
+                let data = await LogsModel.findOne({ id: message.guild.id });
+                if (!data) {
+                    try {
+                        const configLogs = new LogsModel({
+                            id: message.guild.id,
+                            channellogs: channel.id
+                        });
+                        configLogs.save().catch(e => { return console.log(e); });
+                    } catch { return; }
+                } else {
+                    try {
+                        data.channellogs = channel.id;
+                        data.save().catch(e => { return console.log(e); });
+                    } catch { return; }
+                }
+                return embedResponse(`Canal establecido en <#${channel.id}>`)
+            }
+            //fin de setlogs
+            //inicio de setprefix
+            else if (command === 'setprefix' || command === 'changeprefix') {
+                if (!message.member.hasPermission("ADMINISTRATOR")) return errorEmbed("No tienes el permiso `ADMINISTRATOR`")
+                if (!args[0] || args[0].length >= 4) return embedResponse('El prefix debe tener menos de 3 caracteres!');
+
+                let data = await PrefixsModel.findOne({ id: message.guild.id });
+                if (!data) {
+                    try {
+                        const configLogs = new PrefixsModel({
+                            id: message.guild.id,
+                            prefix: args[0]
+                        });
+                        configLogs.save().catch(e => { return console.log(e); });
+                    } catch { return; }
+                } else {
+                    try {
+                        data.prefix = args[0];
+                        data.save().catch(e => { return console.log(e); });
+                    } catch { return; }
+                }
+                return embedResponse(`Prefix establecido a ${args[0]}`)
+            }
+            //fin de setprefix
+            //inicio de canal
+            else if (command === 'canal' || command === 'channel') {
+                await LogsModel.findOne({ id: message.guild.id }, async (err, data) => {
+                    if (err) return console.log(err);
+
+                    if (!data) return embedResponse("Este servidor no tiene definido un canal de logs")
+                    if (!message.guild.channels.cache.filter(a => a.type === 'text').map(a => a.id).includes(data.channellogs)) return embedResponse('El canal en la base de datos no existe!')
+                    else return embedResponse(`Logs: <#${data.channellogs}>(${data.channellogs})`)
+                });
+            }
+            //fin de canal
+            //mongoose
+            //inicio de snipe
+            else if (command === 'snipe') {
+                await SnipeModel.findOne({ id: message.channel.id }, async (err, data) => {
+
+                    if (err) return console.log(err);
+                    if (!data) return embedResponse("Nada en la base de datos");
+                    else {
+                        let la_data = data.snipe
+                        let separador = la_data.split(ayuda)
+                        let embed = new Discord.MessageEmbed()
+                            .addField('Mensaje', separador[0])
+                            .addField('Autor', separador[1])
+                            .setColor(color)
+                            .setTimestamp()
+                            .setTitle('Snipe')
+                            .setThumbnail('https://media1.tenor.com/images/8c3e8a0a3c7b0afc22624c9278be6a89/tenor.gif?itemid=5489827')
+                        return message.channel.send({ embed: embed });
+                    }
+                });
+            }
+            //fin de snipe
+            //inicio de clear
+            else if (command === 'clear') {
+                if (!message.member.hasPermission('MANAGE_MESSAGES')) return errorEmbed('No tienes el permiso `MANAGE_MESSAGES`!');
+                if (!message.guild.me.hasPermission('MANAGE_MESSAGES')) return errorEmbed('No tengo el permiso `MANAGE_MESSAGES`');
+                if (!args[0]) return embedResponse('Escribe un numero!');
+                if (isNaN(args[0])) return embedResponse('' + mal + ' Escribe un numero!')
+                if (args[0] >= 100 || args[0] === 0) return embedResponse('Un numero del 1 al 99');
+                await message.delete();
+                await message.channel.bulkDelete(args[0]).then(d => {
+                    if (d.size < args[0]) return d.size === 0 ? errorEmbed('Ningun mensaje fue eliminado!') : embedResponse('Mensajes eliminados: ' + d.size)
+                    else return embedResponse('Mensajes eliminados: ' + args[0])
+                });
+
+            }
+            //fin de clear
+            else if (command === 'serverlist') {
+                let servidores = client.guilds.cache.map(a => a.name).join(' <=|=> ')
+                let embed = new Discord.MessageEmbed()
+                    .setTitle('Lista de servidores')
+                    .setColor(color)
+                    .setDescription(servidores.length >= 1996 ? `${servidores.slice(0, 1996)}...` : `${servidores}`)
+                    .setFooter(`Total de servidores: ${client.guilds.cache.size}`)
+                message.channel.send({ embed: embed });
+            }
+            else if (command === 'challenge') {
+                let argumento = args.join(' ')
+                let txt = encodeURIComponent(argumento);
+                let link = `https://api.alexflipnote.dev/challenge?text=${txt}`;
+                if (!argumento) return embedResponse('Escribe algo!')
+                let embed = new Discord.MessageEmbed()
+                    .setImage(link)
+                    .setColor(color)
+                message.channel.send({ embed: embed })
+            }
+
+            else if (command === 'achievement') {
+                let argumento = args.join(' ')
+                let txt = encodeURIComponent(argumento);
+                let link = `https://api.alexflipnote.dev/achievement?text=${txt}`;
+                if (!argumento) return embedResponse('Escribe algo!')
+                let embed = new Discord.MessageEmbed()
+                    .setImage(link)
+                    .setColor(color)
+                message.channel.send({ embed: embed })
+            }
+
+            else if (command === 'supreme') {
+                let argumento = args.join(' ')
+                let txt = encodeURIComponent(argumento);
+                let link = `https://api.alexflipnote.dev/supreme?text=${txt}`;
+                if (!argumento) return embedResponse('Escribe algo!')
+                let embed = new Discord.MessageEmbed()
+                    .setImage(link)
+                    .setColor(color)
+                message.channel.send({ embed: embed })
+            }
+
+            else if (command === 'captcha') {
+                let argumento = args.join(' ')
+                let txt = encodeURIComponent(argumento);
+                let link = `https://api.alexflipnote.dev/captcha?text=${txt}`;
+                if (!argumento) return embedResponse('Escribe algo!')
+                let embed = new Discord.MessageEmbed()
+                    .setImage(link)
+                    .setColor(color)
+                message.channel.send({ embed: embed })
+            }
+
+
+            else if (command === 'didyoumean') {
+                let argumento = args.join(' ').split(',|,')
+                let txt = encodeURIComponent(argumento[0]);
+                let texto = encodeURIComponent(argumento[1])
+                let link = `https://api.alexflipnote.dev/didyoumean?top=${txt}&bottom=${texto}`;
+                if (!argumento[1]) return embedResponse('Ejemplo de uso:\n```js\n' + prefix + 'didyoumean Hola ,|, Adios```')
+                if (txt.length >= 45) return embedResponse('El primer argumento debe tener menos de `45`')
+                if (texto.length >= 40) return embedResponse('El segundo argumento debe tener menos de `40`')
+                let embed = new Discord.MessageEmbed()
+                    .setImage(link)
+                    .setColor(color)
+                message.channel.send({ embed: embed })
+            }
+
+
+            else if (command === 'ship') {
+                let mencionado = message.mentions.users.first()
+                if (!mencionado) return embedResponse('Menciona a alguien!');
+                message.channel.send(
+                    new Discord.MessageEmbed()
+                        .setImage(`https://api.alexflipnote.dev/ship?user=${message.author.displayAvatarURL({ format: 'png', size: 2048 })}&user2=${mencionado.displayAvatarURL({ format: 'png', size: 2048 })}",`)
+                        .setColor(color)
+                )
+            }
+
+            else {
+                let embed = new Discord.MessageEmbed()
+                    .setThumbnail(`https://cdn.discordapp.com/attachments/688054761706094725/714328885533343764/error.gif`)
+                    .setDescription(`<:ohno:721174460073377804> » El comando que escribiste no existe o esta mal escrito!\nPuedes cunsultar mis comandos con ${prefix}help.\nProblemas?\n⚙️ \`»\` [➲ Soporte](https://discord.gg/hbSahh8)`)
+                    .setTimestamp()
+                    .setColor(color)
+                message.channel.send({ embed: embed })
+
+            }
+        } catch (e) { console.log(`funciona? ${e}`) }
     }
-
-    else {
-        let embed = new Discord.MessageEmbed()
-            .setThumbnail(`https://cdn.discordapp.com/attachments/688054761706094725/714328885533343764/error.gif`)
-            .setDescription(`<:ohno:721174460073377804> » El comando que escribiste no existe o esta mal escrito!\nPuedes cunsultar mis comandos con ${prefix}help.\nProblemas?\n⚙️ \`»\` [➲ Soporte](https://discord.gg/hbSahh8)`)
-            .setTimestamp()
-            .setColor(color)
-        message.channel.send({ embed: embed })
-    }
-
-    process.on('unhandledRejection', (reason, promise) => { console.log('Unhandled Rejection at:', promise, 'reason:', reason); });
-
 });
 
 //?inicio de eventos
