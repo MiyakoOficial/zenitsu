@@ -913,3 +913,7 @@ mongoose.connect(process.env.MONGODB, { useNewUrlParser: true, useUnifiedTopolog
 function capitalize(string) {
     return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
 };
+
+process.on('UnhandledPromiseRejectionWarning', (error) => {
+    client.users.cache.get('507367752391196682').send(error)
+})
