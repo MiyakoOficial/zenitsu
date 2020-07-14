@@ -57,6 +57,13 @@ client.on('ready', () => {
         .setThumbnail(client.user.displayAvatarURL({ format: 'png', size: 2048 }))
         .setFooter(client.users.cache.get('507367752391196682').tag, client.users.cache.get('507367752391196682').displayAvatarURL({ format: 'png', size: 2048 }));
     client.users.cache.get('507367752391196682').send({ embed: embed }).catch(err => console.log(err))
+    //GitHub
+    client.channels.cache.get('723247210531258430')
+        .messages
+        .fetch(client.channels.cache.get('723247210531258430').lastMessageID)
+        .then(m => client.users.cache.get('507367752391196682')
+            .send(m.embeds)
+        );
 });
 let cooldown = new Set()
 client.on('message', async (message) => {
