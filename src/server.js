@@ -352,7 +352,8 @@ client.on('message', async (message) => {
 //?inicio mensajes eventos
 
 client.on('messageUpdate', async (oldMessage, newMessage) => {
-
+    if (!oldMessage.content) return;
+    if (!newMessage.content) return;
     if (!newMessage.guild || !oldMessage.guild) return;
     await LogsModel.findOne({ id: newMessage.guild.id }, async (err, data) => {
         if (!data) return;
