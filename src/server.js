@@ -103,7 +103,7 @@ client.on('message', async (message) => {
                 .addField('Extras', `${prefix}txt, ${prefix}ping, ${prefix}chat, ${prefix}canal/channel, ${prefix}snipe, ${prefix}serverlist`)
                 .addField('Moderación', `${prefix}clear, ${prefix}voicekick`)
                 .addField('Administración', `${prefix}blockchannels, ${prefix}setprefix/changeprefix,  ${prefix}setlogs/logschannel`)
-                .addField('Diversión', 'Pronto...')
+                .addField('Diversión', `${prefix}challenge`)
                 .setThumbnail(client.user.displayAvatarURL({ format: 'png', size: 2048 }))
         })
     }
