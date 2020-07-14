@@ -152,7 +152,7 @@ client.on('message', async (message) => {
         let member = message.mentions.members.first();
         if (!member) return embedResponse('Menciona a alguien!');
         if (!member.voice.channel) return embedResponse('El usuario mencionado no está en un canal de voz!');
-        if (member.voice.serverMute === true) return embedResponse('El usuario ya está ensordecido!')
+        if (member.voice.serverDeaf === true) return embedResponse('El usuario ya está ensordecido!')
         embedResponse(`El miembro \`${member.displayName}\` se ha ensordecido correctamente!`);
         member.voice.setDeaf(true)
     }
@@ -165,7 +165,7 @@ client.on('message', async (message) => {
         let member = message.mentions.members.first();
         if (!member) return embedResponse('Menciona a alguien!');
         if (!member.voice.channel) return embedResponse('El usuario mencionado no está en un canal de voz!');
-        if (member.voice.serverMute === false) return embedResponse('El usuario ya podia escuchar!')
+        if (member.voice.serverDeaf === false) return embedResponse('El usuario ya podia escuchar!')
         embedResponse(`El miembro \`${member.displayName}\` ya puede escuchar!`);
         member.voice.setDeaf(false)
     }
