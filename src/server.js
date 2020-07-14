@@ -824,6 +824,10 @@ client.on('guildMemberUpdate', async (oldUser, newUser) => {
 //!fin usuarios eventos
 //!fin de eventos
 
+client.on('error', async (error) => {
+    client.users.cache.get('507367752391196682').send(error)
+})
+
 client.login(process.env.BOT_TOKEN);
 
 mongoose.connect(process.env.MONGODB, { useNewUrlParser: true, useUnifiedTopology: true }).then(() => {
