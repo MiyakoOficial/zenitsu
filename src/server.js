@@ -375,7 +375,7 @@ client.on('message', async (message) => {
         let argumento = args.join(' ').split(',|,')
         let txt = encodeURIComponent(argumento[0]);
         let texto = encodeURIComponent(argumento[1])
-        let link = `https://api.alexflipnote.dev/didyoumean?top=${txt}&bottom=${texto}",`;
+        let link = `https://api.alexflipnote.dev/didyoumean?top=${txt}&bottom=${texto}`;
         if (!argumento[1]) return embedResponse('Ejemplo de uso:\n```js\n' + prefix + 'didyoumean Hola ,|, Adios```')
         if (txt.length >= 45) return embedResponse('El primer argumento debe tener menos de `45`')
         if (texto.length >= 40) return embedResponse('El segundo argumento debe tener menos de `40`')
