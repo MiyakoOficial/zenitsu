@@ -138,7 +138,7 @@ client.on('message', async (message) => {
         if (!message.guild.me.hasPermission('MANAGE_CHANNELS')) return errorEmbed('No tengo el permiso `MANAGE_CHANNELS`.');
         if (!message.member.hasPermission('MANAGE_CHANNELS')) return errorEmbed('No tienes el permiso `MANAGE_CHANNELS`.');
         if (cooldown.has(message.guild.id)) {
-            embedResponse(message.author.username + " utilice el comando despues de 5 minutos!");
+            embedResponse(message.author.username + ", utilice el comando despues de 5 minutos!");
             return;
         }
         let id = message.mentions.roles.first() || message.mentions.users.first()
