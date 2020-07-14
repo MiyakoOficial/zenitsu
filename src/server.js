@@ -60,40 +60,39 @@ client.on('ready', () => {
 });
 let cooldown = new Set()
 client.on('message', async (message) => {
+    if (!message.guild) return;
+    function errorEmbed(argumentoDeLaDescripcion) {
+        return message.channel.send(new Discord.MessageEmbed()
+            .setDescription(`¡<:ohno:721174460073377804> => \`Error\`: ${argumentoDeLaDescripcion}!`)
+            .setColor(color)
+            .setTimestamp()
+        )
+    }
+
+    function embedResponse(argumentoDeLaDescripcion, opcion) {
+        let canal_a_enviar = opcion || message.channel
+        return canal_a_enviar.send(new Discord.MessageEmbed()
+            .setDescription(argumentoDeLaDescripcion)
+            .setColor(color)
+            .setTimestamp()
+        )
+    }
+    let prefix = 'z!';
+    await PrefixsModel.findOne({ id: message.guild.id }, async (err, data) => {
+        if (err) return console.log(err);
+        if (!data) prefix = 'z!'
+        else prefix = data.prefix || 'z!'
+
+    });
+    const args = message.content.slice(prefix.length).split(/ +/);
+    const command = args.shift().toLowerCase();
+
+    if (message.author.bot) return;
+    if (!message.content.startsWith(prefix)) return;
+    if (message.content.length < prefix.length + 1) return;
+    const blacklist = []
+    if (blacklist.includes(message.author.id)) return;
     if (command) {
-
-        if (!message.guild) return;
-        function errorEmbed(argumentoDeLaDescripcion) {
-            return message.channel.send(new Discord.MessageEmbed()
-                .setDescription(`¡<:ohno:721174460073377804> => \`Error\`: ${argumentoDeLaDescripcion}!`)
-                .setColor(color)
-                .setTimestamp()
-            )
-        }
-
-        function embedResponse(argumentoDeLaDescripcion, opcion) {
-            let canal_a_enviar = opcion || message.channel
-            return canal_a_enviar.send(new Discord.MessageEmbed()
-                .setDescription(argumentoDeLaDescripcion)
-                .setColor(color)
-                .setTimestamp()
-            )
-        }
-        let prefix = 'z!';
-        await PrefixsModel.findOne({ id: message.guild.id }, async (err, data) => {
-            if (err) return console.log(err);
-            if (!data) prefix = 'z!'
-            else prefix = data.prefix || 'z!'
-
-        });
-        const args = message.content.slice(prefix.length).split(/ +/);
-        const command = args.shift().toLowerCase();
-
-        if (message.author.bot) return;
-        if (!message.content.startsWith(prefix)) return;
-        if (message.content.length < prefix.length + 1) return;
-        const blacklist = []
-        if (blacklist.includes(message.author.id)) return;
         try {
             //inicio de help
             if (command === 'help') {
