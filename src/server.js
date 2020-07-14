@@ -92,6 +92,7 @@ client.on('message', async (message) => {
     if (message.content.length < prefix.length + 1) return;
     const blacklist = []
     if (blacklist.includes(message.author.id)) return;
+
     //inicio de help
     if (command === 'help') {
         message.channel.send({
@@ -103,7 +104,7 @@ client.on('message', async (message) => {
                 .addField('Administración', `${prefix}blockchannels, ${prefix}setprefix/changeprefix,  ${prefix}setlogs/logschannel`)
                 .addField('Diversión', `${prefix}challenge, ${prefix}achievement, ${prefix}ship, ${prefix}supreme, ${prefix}didyoumean, ${prefix}captcha`)
                 .setThumbnail(client.user.displayAvatarURL({ format: 'png', size: 2048 }))
-        })
+        });
     }
     //fin de help
 
@@ -113,7 +114,7 @@ client.on('message', async (message) => {
         if (!message.guild.me.hasPermission('MOVE_MEMBERS')) return errorEmbed('No tengo el permiso `MOVE_MEMBERS`.');
         let member = message.mentions.members.first();
         if (!member) return embedResponse('Menciona a alguien!');
-        if (!member.voice.channel) return embedResponse('El usuario mencionado no esta en un canal de voz!');
+        if (!member.voice.channel) return embedResponse('El miembro mencionado no esta en un canal de voz!');
         embedResponse('El usuario ya no está en el canal de voz.');
         member.voice.setChannel(null)
     }
@@ -125,8 +126,8 @@ client.on('message', async (message) => {
         if (!message.guild.me.hasPermission('MUTE_MEMBERS')) return errorEmbed('No tengo el permiso `MUTE_MEMBERS`.');
         let member = message.mentions.members.first();
         if (!member) return embedResponse('Menciona a alguien!');
-        if (!member.voice.channel) return embedResponse('El usuario mencionado no esta en un canal de voz!');
-        if (member.voice.serverMute === true) return embedResponse('El usuario ya está silenciado!')
+        if (!member.voice.channel) return embedResponse('El miembro mencionado no esta en un canal de voz!');
+        if (member.voice.serverMute === true) return embedResponse('El miembro ya está silenciado!');
         embedResponse(`El miembro \`${member.displayName}\` se ha silenciado correctamente!`);
         member.voice.setMute(true)
     }
@@ -138,8 +139,8 @@ client.on('message', async (message) => {
         if (!message.guild.me.hasPermission('MUTE_MEMBERS')) return errorEmbed('No tengo el permiso `MUTE_MEMBERS`.');
         let member = message.mentions.members.first();
         if (!member) return embedResponse('Menciona a alguien!');
-        if (!member.voice.channel) return embedResponse('El usuario mencionado no esta en un canal de voz!');
-        if (member.voice.serverMute === false) return embedResponse('El usuario ya podia hablar!')
+        if (!member.voice.channel) return embedResponse('El miembro mencionado no esta en un canal de voz!');
+        if (member.voice.serverMute === false) return embedResponse('El miembro ya podia hablar!')
         embedResponse(`El miembro \`${member.displayName}\` ya puede hablar!`);
         member.voice.setMute(false)
     }
@@ -151,8 +152,8 @@ client.on('message', async (message) => {
         if (!message.guild.me.hasPermission('DEAFEN_MEMBERS')) return errorEmbed('No tengo el permiso `DEAFEN_MEMBERS`.');
         let member = message.mentions.members.first();
         if (!member) return embedResponse('Menciona a alguien!');
-        if (!member.voice.channel) return embedResponse('El usuario mencionado no está en un canal de voz!');
-        if (member.voice.serverDeaf === true) return embedResponse('El usuario ya está ensordecido!')
+        if (!member.voice.channel) return embedResponse('El miembro mencionado no está en un canal de voz!');
+        if (member.voice.serverDeaf === true) return embedResponse('El miembro ya está ensordecido!')
         embedResponse(`El miembro \`${member.displayName}\` se ha ensordecido correctamente!`);
         member.voice.setDeaf(true)
     }
@@ -164,8 +165,8 @@ client.on('message', async (message) => {
         if (!message.guild.me.hasPermission('DEAFEN_MEMBERS')) return errorEmbed('No tengo el permiso `DEAFEN_MEMBERS`.');
         let member = message.mentions.members.first();
         if (!member) return embedResponse('Menciona a alguien!');
-        if (!member.voice.channel) return embedResponse('El usuario mencionado no está en un canal de voz!');
-        if (member.voice.serverDeaf === false) return embedResponse('El usuario ya podia escuchar!')
+        if (!member.voice.channel) return embedResponse('El miembro mencionado no está en un canal de voz!');
+        if (member.voice.serverDeaf === false) return embedResponse('El miembro ya podia escuchar!')
         embedResponse(`El miembro \`${member.displayName}\` ya puede escuchar!`);
         member.voice.setDeaf(false)
     }
