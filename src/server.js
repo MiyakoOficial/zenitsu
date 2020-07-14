@@ -142,11 +142,11 @@ client.on('message', async (message) => {
             return;
         }
         let id = message.mentions.roles.first() || message.mentions.users.first()
-        if (!id) return embedResponse('Menciona un rol o usuario!')
+        if (!id) return embedResponse('Menciona un rol o usuario!\nEjemplo:\n' + prefix + 'blockchannels <mencion de rol o user> <true | false | null>')
         id = id.id
         let canales = message.guild.channels.cache.filter(a => a.type === 'text');
         if (canales.size >= 501) return errorEmbed('Este servidor tiene más de 500 canales de texto!')
-        if (!args[1]) return embedResponse('Ejemplo: z!blockchannels <mencion de rol o user> <true | false | null>');
+        if (!args[1]) return embedResponse('Ejemplo:\n' + prefix + 'blockchannels <mencion de rol o user> <true | false | null>');
         if (!message.guild.roles.cache.get(id) && !message.guild.members.cache.get(id)) return errorEmbed('Error en encontrar la ID de usuario/rol');
         if (!['true', 'false', 'null'].includes(args[1])) return errorEmbed('Escoge entre true, false, null');
         message.channel.send(`Editando canales...`);
