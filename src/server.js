@@ -103,7 +103,7 @@ client.on('message', async (message) => {
                 .addField('Extras', `${prefix}txt, ${prefix}ping, ${prefix}chat, ${prefix}canal/channel, ${prefix}snipe, ${prefix}serverlist`)
                 .addField('Moderación', `${prefix}clear, ${prefix}voicekick`)
                 .addField('Administración', `${prefix}blockchannels, ${prefix}setprefix/changeprefix,  ${prefix}setlogs/logschannel`)
-                .addField('Diversión', `${prefix}challenge, ${prefix}achievement, ${prefix}ship`)
+                .addField('Diversión', `${prefix}challenge, ${prefix}achievement, ${prefix}ship, ${prefix}supreme, ${prefix}didyoumean`)
                 .setThumbnail(client.user.displayAvatarURL({ format: 'png', size: 2048 }))
         })
     }
@@ -359,6 +359,32 @@ client.on('message', async (message) => {
             .setColor(color)
         message.channel.send({ embed: embed })
     }
+
+    else if (command === 'supreme') {
+        let argumento = args.join(' ')
+        let txt = encodeURIComponent(argumento);
+        let link = `https://api.alexflipnote.dev/supreme?text=${txt}`;
+        if (!argumento) return embedResponse('Escribe algo!')
+        let embed = new Discord.MessageEmbed()
+            .setImage(link)
+            .setColor(color)
+        message.channel.send({ embed: embed })
+    }
+
+    else if (command === 'didyoumean') {
+        let argumento = args.join(' ').split(',|,')
+        let txt = encodeURIComponent(argumento[0]);
+        let texto = encodeURIComponent(argumento[1])
+        let link = `https://api.alexflipnote.dev/didyoumean?top=${txt}&bottom=${texto}",`;
+        if (!argumento[1]) return embedResponse('Ejemplo de uso:\n```js\n' + prefix + 'didyoumean Hola ,|, Adios```')
+        if (txt.length >= 45) return embedResponse('El primer argumento debe tener menos de `45`')
+        if (texto.length >= 40) return embedResponse('El segundo argumento debe tener menos de `40`')
+        let embed = new Discord.MessageEmbed()
+            .setImage(link)
+            .setColor(color)
+        message.channel.send({ embed: embed })
+    }
+
 
     else if (command === 'ship') {
         let mencionado = message.mentions.users.first()
