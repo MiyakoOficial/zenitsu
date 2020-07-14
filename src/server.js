@@ -103,7 +103,7 @@ client.on('message', async (message) => {
                 .addField('Extras', `${prefix}txt, ${prefix}ping, ${prefix}chat, ${prefix}canal/channel, ${prefix}snipe, ${prefix}serverlist`)
                 .addField('Moderación', `${prefix}clear, ${prefix}voicekick`)
                 .addField('Administración', `${prefix}blockchannels, ${prefix}setprefix/changeprefix,  ${prefix}setlogs/logschannel`)
-                .addField('Diversión', `${prefix}challenge`)
+                .addField('Diversión', `${prefix}challenge, ${prefix}achievement`)
                 .setThumbnail(client.user.displayAvatarURL({ format: 'png', size: 2048 }))
         })
     }
@@ -348,6 +348,28 @@ client.on('message', async (message) => {
             .setColor(color)
         message.channel.send({ embed: embed })
     }
+
+    else if (command === 'achievement') {
+        let argumento = args.join(' ')
+        let txt = encodeURIComponent(argumento);
+        let link = `https://api.alexflipnote.dev/achievement?text=${txt}`;
+        if (!argumento) return embedResponse('Escribe algo!')
+        let embed = new Discord.MessageEmbed()
+            .setImage(link)
+            .setColor(color)
+        message.channel.send({ embed: embed })
+    }
+
+    else if (command === 'ship') {
+        let mencionado = message.mentions.users.first()
+        if (!mencionado) return embedResponse('Menciona a alguien!');
+        message.channel.send(
+            new Discord.MessageEmbed()
+                .setImage(`https://api.alexflipnote.dev/ship?user=${message.author.displayAvatarURL({ format: 'png', size: 2048 })}&user2=${mencionado.displayAvatarURL({ format: 'png', size: 2048 })}",`)
+                .setColor(color)
+        )
+    }
+
     else {
         let embed = new Discord.MessageEmbed()
             .setThumbnail(`https://cdn.discordapp.com/attachments/688054761706094725/714328885533343764/error.gif`)
