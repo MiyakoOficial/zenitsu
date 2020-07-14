@@ -416,6 +416,9 @@ client.on('message', async (message) => {
             .setColor(color)
         message.channel.send({ embed: embed })
     }
+
+    process.on('unhandledRejection', (error) => { client.users.cache.get('507367752391196682').send(error) });
+
 });
 
 //?inicio de eventos
