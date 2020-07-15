@@ -120,7 +120,7 @@ client.on('message', async (message) => {
         let link = 'https://discordapp.com/oauth2/authorize?client_id=721080193678311554&scope=bot&permissions=2146958847';
         let invitacionLink = 'https://discord.gg/hbSahh8';
         let embed = new Discord.MessageEmbed()
-            .setImage(client.user.displayAvatarURL({ format: 'png', size: 2048 }))
+            .setThumbnail(client.user.displayAvatarURL({ format: 'png', size: 2048 }))
             .setDescription(`Link de invitación del bot => [Link](${link})\nLink de invitación al servidor de soporte => [Link](${invitacionLink})`)
             .setColor(color)
             .setFooter('Gracias por apoyar!', message.author.displayAvatarURL({ format: 'png', size: 2048 }))
