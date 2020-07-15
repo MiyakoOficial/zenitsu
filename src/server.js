@@ -97,8 +97,8 @@ client.on('message', async (message) => {
     if (message.author.bot) return;
     if (!message.content.startsWith(prefix)) return;
     if (message.content.length < prefix.length + 1) return;
-    const blacklist = []
-    if (blacklist.includes(message.author.id)) return;
+    /*const blacklist = []
+    if (blacklist.includes(message.author.id)) return;*/
 
     //inicio de help
     if (command === 'help') {
