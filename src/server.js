@@ -40,7 +40,7 @@ client.on('ready', () => {
         status: "dnd",
         activity: {
             name: "z!help",
-            type: "LISTENING"
+            type: "WATCHING"
         }
 
     })
