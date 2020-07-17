@@ -93,10 +93,8 @@ client.on('message', async (message) => {
     });
     const args = message.content.slice(prefix.length).split(/ +/);
     const command = args.shift().toLowerCase();
-
-    if (message.content === '<@721080193678311554>') return embedResponse('El prefix del servidor es ' + prefix);
-
     if (message.author.bot) return;
+    if (message.mentions.users.first().id === '721080193678311554' && message.mentions.users.size === 1) return embedResponse('El prefix del servidor es ' + prefix);
     if (!message.content.startsWith(prefix)) return;
     if (message.content.length < prefix.length + 1) return;
     /*const blacklist = []
