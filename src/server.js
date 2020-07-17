@@ -482,7 +482,7 @@ client.on('message', async (message) => {
 
     //inicio de didyoumean
     else if (command === 'didyoumean') {
-        let argumento = args.join(' ').split(',|,')
+        let argumento = args.join(' ').split(' ,|, ')
         let txt = encodeURIComponent(argumento[0]);
         let texto = encodeURIComponent(argumento[1])
         let link = `https://api.alexflipnote.dev/didyoumean?top=${txt}&bottom=${texto}`;
