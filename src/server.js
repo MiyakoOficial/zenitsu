@@ -6,7 +6,10 @@ const SnipeModel = require('../src/Snipe.js')
 require('dotenv').config();
 const Discord = require('discord.js');
 const client = new Discord.Client();
+client.owner = client.users.cache.get('507367752391196682');
 const mongoose = require('mongoose');
+client.databaseVersion = mongoose.version;
+client.database = 'mongoose'
 const { info, error } = require('console');
 const mil = require("ms")
 const tresenraya = require('tresenraya');
@@ -53,6 +56,8 @@ client.on('ready', () => {
         .addField('Servidores', client.guilds.cache.size, true)
         .addField('Usuarios', client.users.cache.size, true)
         .addField('Canales', client.channels.cache.size, true)
+        .addField('Base de datos', client.database, true)
+        .addField('Version de database', client.databaseVersion, true)
         .setTimestamp()
         .setThumbnail(client.user.displayAvatarURL({ format: 'png', size: 2048 }))
         .setFooter(client.users.cache.get('507367752391196682').tag, client.users.cache.get('507367752391196682').displayAvatarURL({ format: 'png', size: 2048 }));
