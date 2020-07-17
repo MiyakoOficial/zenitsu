@@ -37,8 +37,8 @@ const ayuda = 'elsuperduperincreibleseparadordearraysencaminoxdxd:v:vxdxdestonad
 client.on('ready', () => {
     console.log(`${client.user.tag} está listo!`)
     client.user.setPresence({
+        status: "dnd",
         activity: {
-            status: "dnd",
             name: "z!help",
             type: "WATCHING"
         }
