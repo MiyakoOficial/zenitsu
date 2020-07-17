@@ -999,7 +999,12 @@ client.on('error', async (error) => {
 })
 
 client.on('message', async (msg) => {
-
+    msg.channel.messages.fetch({ limit: 3 }).then(m => {
+        let a = m.array()
+        if (a[0].content.toLowerCase() === a[1].content.toLowerCase() === a[2].content.toLowerCase) {
+            message.channel.send(a[2].content)
+        }
+    })
 })
 client.login(process.env.BOT_TOKEN);
 
