@@ -37,7 +37,7 @@ const ayuda = 'elsuperduperincreibleseparadordearraysencaminoxdxd:v:vxdxdestonad
 client.on('ready', () => {
     console.log(`${client.user.tag} está listo!`)
     client.user.setPresence({
-        status: "online",
+        status: "dnd",
         activity: {
             name: "z!help",
             type: "LISTENING"
