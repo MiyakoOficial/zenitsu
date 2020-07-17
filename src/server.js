@@ -456,7 +456,7 @@ client.on('message', async (message) => {
 
     //inicio de supreme
     else if (command === 'supreme') {
-        let argumento = args.join(' ')
+        let argumento = args.join(' ');
         let txt = encodeURIComponent(argumento);
         let link = `https://api.alexflipnote.dev/supreme?text=${txt}`;
         if (!argumento) return embedResponse('Escribe algo!')
