@@ -1003,6 +1003,9 @@ client.on('message', async (msg) => {
     msg.channel.messages.fetch({ limit: 3 }).then(m => {
         let a = m.filter(E => !E.author.bot).array()
         let e = m.filter(E => !E.author.bot).array()
+        if (!a[0]) return;
+        if (!a[1]) return;
+        if (!a[2]) return;
         if (a[0].content.toLowerCase() === a[1].content.toLowerCase() && a[1].content.toLowerCase() === a[2].content.toLowerCase() && e[0].author.id !== e[1].author.id && e[1].author.id !== e[2].author.id) {
             msg.channel.send(a[2].content)
         }
