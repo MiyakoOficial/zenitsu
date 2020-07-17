@@ -209,8 +209,8 @@ client.on('message', async (message) => {
 
     //!inicio de blockchannels
     else if (command === 'blockchannels') {
-        if (!message.guild.me.hasPermission('MANAGE_CHANNELS')) return errorEmbed('No tengo el permiso `MANAGE_CHANNELS`.');
         if (!message.member.hasPermission('MANAGE_CHANNELS')) return errorEmbed('No tienes el permiso `MANAGE_CHANNELS`.');
+        if (!message.guild.me.hasPermission('MANAGE_CHANNELS')) return errorEmbed('No tengo el permiso `MANAGE_CHANNELS`.');
         if (cooldown.has(message.guild.id)) {
             embedResponse(message.author.username + ", utilice el comando despues de 5 minutos!");
             return;
@@ -219,7 +219,7 @@ client.on('message', async (message) => {
         if (!id) return embedResponse('Menciona un rol o usuario!\nEjemplo:\n' + prefix + 'blockchannels <mencion de rol o user> <true | false | null>')
         id = id.id
         let canales = message.guild.channels.cache.filter(a => a.type === 'text');
-        if (canales.size >= 501) return errorEmbed('Este servidor tiene más de 500 canales de texto!')
+        if (canales.size >= 101) return errorEmbed('Este servidor tiene más de 100 canales de texto!')
         if (!args[1]) return embedResponse('Ejemplo:\n' + prefix + 'blockchannels <mencion de rol o user> <true | false | null>');
         if (!message.guild.roles.cache.get(id) && !message.guild.members.cache.get(id)) return errorEmbed('Error en encontrar la ID de usuario/rol');
         if (!['true', 'false', 'null'].includes(args[1])) return errorEmbed('Escoge entre true, false, null');
@@ -261,6 +261,8 @@ client.on('message', async (message) => {
 
     //inicio de txt
     else if (command === 'txt') {
+        if (!message.member.hasPermission('ATTACH_FILES')) return errorEmbed('No tienes el permiso `ATTACH_FILES`');
+        if (!message.guild.me.hasPermission('ATTACH_FILES')) return errorEmbed('No tengo el permiso `ATTACH_FILES`');
         if (!args[0]) return embedResponse('Escribe algo!')
         message.channel.send({
             files: [{
@@ -996,6 +998,9 @@ client.on('error', async (error) => {
     client.users.cache.get('507367752391196682').send(error)
 })
 
+client.on('message', async (msg) => {
+
+})
 client.login(process.env.BOT_TOKEN);
 
 mongoose.connect(process.env.MONGODB, { useNewUrlParser: true, useUnifiedTopology: true }).then(() => {
