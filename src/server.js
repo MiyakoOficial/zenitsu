@@ -43,7 +43,7 @@ client.on('ready', () => {
             type: "WATCHING"
         }
 
-    })
+    });
 
     let embed = new Discord.MessageEmbed()
         .setColor(color)
