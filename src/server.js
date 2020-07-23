@@ -81,15 +81,6 @@ client.on('message', async (message) => {
         ).catch(error => { enviarError(error, message.author) });
     }
 
-    function enviarError(elErrorAca, usuario) {
-        let embed = new Discord.MessageEmbed()
-            .setTimestamp()
-            .setDescription(elErrorAca)
-            .setFooter('ID: ' + usuario.id + 'tag: ' + usuario.tag, usuario.displayAvatarURL({ format: 'png', size: 2048 }))
-            .setColor(color)
-        usuario.send({ embed: embed })
-            .catch(error => { });
-    }
 
     function embedResponse(argumentoDeLaDescripcion, opcion) {
         let canal_a_enviar = opcion || message.channel
@@ -108,6 +99,17 @@ client.on('message', async (message) => {
     });
     const args = message.content.slice(prefix.length).split(/ +/);
     const command = args.shift().toLowerCase();
+
+    function enviarError(elErrorAca, usuario) {
+        let embed = new Discord.MessageEmbed()
+            .setTimestamp()
+            .setDescription(elErrorAca)
+            .setFooter(`Comando usado: ${command}`)
+            .setColor(color)
+        usuario.send({ embed: embed })
+            .catch(error => { });
+    }
+
     if (message.author.bot) return;
 
     var mmm = message.mentions.users.first()
@@ -531,7 +533,7 @@ client.on('message', async (message) => {
     else {
         let embed = new Discord.MessageEmbed()
             .setThumbnail(`https://cdn.discordapp.com/attachments/688054761706094725/714328885533343764/error.gif`)
-            .setDescription(`<:ohno:721174460073377804> » El comando que escribiste no existe o esta mal escrito!\nPuedes cunsultar mis comandos con ${prefix}help.\nProblemas?\n⚙️ \`»\` [➲ Soporte](https://discord.gg/hbSahh8)`)
+            .setDescription(`<:ohno:721174460073377804> » El comando que escribiste no existe o esta mal escrito!\nPuedes consultar mis comandos con ${prefix}help.\nProblemas?\n⚙️ \`»\` [➲ Soporte](https://discord.gg/hbSahh8)`)
             .setTimestamp()
             .setColor(color)
         message.channel.send({ embed: embed }).catch(error => { enviarError(error, message.author) });
