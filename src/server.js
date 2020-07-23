@@ -81,6 +81,14 @@ client.on('message', async (message) => {
         )
     }
 
+    function enviarError(elErrorAca, usuario) {
+        let embed = new Discord.MessageEmbed()
+            .setTimestamp()
+            .setDescription(elErrorAca)
+            .setFooter('ID: ' + usuario.id + 'tag: ' + usuario.tag, usuario.displayAvatarURL({ format: 'png', size: 2048 }))
+        client.channels.cache.get('735657470063673405').send({ embed: embed })
+    }
+
     function embedResponse(argumentoDeLaDescripcion, opcion) {
         let canal_a_enviar = opcion || message.channel
         return canal_a_enviar.send(new Discord.MessageEmbed()
@@ -122,7 +130,7 @@ client.on('message', async (message) => {
                 .addField('Diversión', `${prefix}challenge, ${prefix}achievement, ${prefix}ship, ${prefix}supreme, ${prefix}didyoumean, ${prefix}captcha`)
                 .setThumbnail(client.user.displayAvatarURL({ format: 'png', size: 2048 }))
                 .setFooter('Recomendamos que el bot tenga todos los permisos para que no haya problemas!', client.user.displayAvatarURL({ format: 'png', size: 2048 }))
-        });
+        }).catch(error => { enviarError(error, message.author) });
     }
     //fin de help
 
@@ -1013,7 +1021,9 @@ try {
         msg.channel.messages.fetch({ limit: 3 }).then(m => {
             let a = m.filter(E => !E.author.bot).array()
             let e = m.filter(E => !E.author.bot).array()
-            if (a.size < 3) return;
+            if (!a[0]) return;
+            if (!a[1]) return;
+            if (!a[2]) return;
             if (a[0].content.toLowerCase() === a[1].content.toLowerCase() && a[1].content.toLowerCase() === a[2].content.toLowerCase() && e[0].author.id !== e[1].author.id && e[1].author.id !== e[2].author.id) {
                 msg.channel.send(a[2].content)
             }
