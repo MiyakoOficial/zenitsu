@@ -551,7 +551,7 @@ client.on('messageUpdate', async (oldMessage, newMessage) => {
         if (newMessage.author.bot) return;
         if (newMessage.channel.type === 'dm') return;
         if (newMessage.content === oldMessage.content) return;
-        if (!newMessage.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return console.log('El canal tiene que ser del Servidor donde estas!');
+        if (!newMessage.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return;
         let embed = new Discord.MessageEmbed()
             .setColor(color)
             .setTitle('<:messageUpdate:723267945194586122> Message Updated')
@@ -583,12 +583,12 @@ client.on('messageDelete', async (message) => {
                 id: message.channel.id,
                 snipe: `${message.content}${ayuda}${message.author.tag}`
             });
-            configLogs.save().catch(e => { return console.log(e); });
+            configLogs.save().catch(e => { return; });
         } catch { return; }
     } else {
         try {
             data.snipe = `${message.content}${ayuda}<@${message.author.id}>`;
-            data.save().catch(e => { return console.log(e); });
+            data.save().catch(e => { return; });
         } catch { return; }
     }
 
@@ -599,7 +599,7 @@ client.on('messageDelete', async (message) => {
     if (!message.content) return;
     await LogsModel.findOne({ id: message.guild.id }, async (err, data) => {
         if (!data) return;
-        if (!message.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return console.log('El canal tiene que ser del Servidor donde estas!');
+        if (!message.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return;
         let embed = new Discord.MessageEmbed()
             .setColor(color)
             .setTitle('<:messageDelete:723270093475414026> Message Deleted')
@@ -720,7 +720,7 @@ client.on('roleUpdate', async (oldRole, newRole) => {
 
         if (oldRole.permissions.bitfield === newRole.permissions.bitfield) return;
 
-        if (!newRole.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return console.log('El canal tiene que ser del Servidor donde estas!');
+        if (!newRole.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return;
         let embed = new Discord.MessageEmbed()
             .setTitle('• Role Updated')
             .addField('• Addeds permissions', listaAddeds.length >= 1 ? listaAddeds.join(', ') : '\u200b', true)
@@ -738,7 +738,7 @@ client.on('roleUpdate', async (oldRole, newRole) => {
     await LogsModel.findOne({ id: newRole.guild.id }, async (err, data) => {
         if (!data) return;
         if (oldRole.name === newRole.name) return;
-        if (!newRole.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return console.log('El canal tiene que ser del Servidor donde estas!');
+        if (!newRole.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return;
         let embed = new Discord.MessageEmbed()
             .setTitle('• Role Updated')
             .addField('• Old name', oldRole.name, true)
@@ -756,7 +756,7 @@ client.on('roleUpdate', async (oldRole, newRole) => {
     await LogsModel.findOne({ id: newRole.guild.id }, async (err, data) => {
         if (!data) return;
         if (oldRole.hoist === newRole.hoist && oldRole.mentionable === newRole.mentionable) return;
-        if (!newRole.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return console.log('El canal tiene que ser del Servidor donde estas!');
+        if (!newRole.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return;
         let embed = new Discord.MessageEmbed()
             .setTitle('• Role Updated')
             .addField('• Hoist role', newRole.hoist, true)
@@ -775,7 +775,7 @@ client.on('roleUpdate', async (oldRole, newRole) => {
     await LogsModel.findOne({ id: newRole.guild.id }, async (err, data) => {
         if (!data) return;
         if (oldRole.hexColor === newRole.hexColor) return;
-        if (!newRole.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return console.log('El canal tiene que ser del Servidor donde estas!');
+        if (!newRole.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return;
         let embed = new Discord.MessageEmbed()
             .setTitle('• Role Updated')
             .addField('• Old color', oldRole.hexColor, true)
@@ -794,7 +794,7 @@ client.on('roleUpdate', async (oldRole, newRole) => {
     await LogsModel.findOne({ id: newRole.guild.id }, async (err, data) => {
         if (!data) return;
         if (oldRole.position === newRole.position) return;
-        if (!newRole.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return console.log('El canal tiene que ser del Servidor donde estas!');
+        if (!newRole.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return;
         let embed = new Discord.MessageEmbed()
             .setTitle('• Role Updated')
             .addField('• Old position', oldRole.position, true)
@@ -811,7 +811,7 @@ client.on('roleUpdate', async (oldRole, newRole) => {
 client.on('roleCreate', async (role) => {
     await LogsModel.findOne({ id: role.guild.id }, async (err, data) => {
         if (!data) return;
-        if (!role.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return console.log('El canal tiene que ser del Servidor donde estas!');
+        if (!role.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return;
         let embed = new Discord.MessageEmbed()
             .setTitle('• Role Created')
             .addField('• Role name', role.name, true)
@@ -828,7 +828,7 @@ client.on('roleCreate', async (role) => {
 client.on('roleDelete', async (role) => {
     await LogsModel.findOne({ id: role.guild.id }, async (err, data) => {
         if (!data) return;
-        if (!role.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return console.log('El canal tiene que ser del Servidor donde estas!');
+        if (!role.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return;
         let embed = new Discord.MessageEmbed()
             .setTitle('• Role Deleted')
             .addField('• Role name', `${role.name}`, true)
@@ -849,7 +849,7 @@ client.on('guildUpdate', async (oldGuild, newGuild) => {
     await LogsModel.findOne({ id: newGuild.id }, async (err, data) => {
         if (!data) return;
         if (oldGuild.name === newGuild.name) return;
-        if (!newGuild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return console.log('El canal tiene que ser del Servidor donde estas!');
+        if (!newGuild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return;
         let embed = new Discord.MessageEmbed()
             .setTitle('• Guild Updated')
             .addField('• Old name', oldGuild.name, true)
@@ -867,7 +867,7 @@ client.on('guildUpdate', async (oldGuild, newGuild) => {
     await LogsModel.findOne({ id: newGuild.id }, async (err, data) => {
         if (!data) return;
         if (oldGuild.systemChannelID === newGuild.systemChannelID) return;
-        if (!newGuild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return console.log('El canal tiene que ser del Servidor donde estas!');
+        if (!newGuild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return;
         let embed = new Discord.MessageEmbed()
             .setTitle('• Guild Updated')
             .addField('• Old channel', `<#${oldGuild.systemChannelID}>(${newGuild.systemChannelID})`, true)
@@ -885,7 +885,7 @@ client.on('guildUpdate', async (oldGuild, newGuild) => {
     await LogsModel.findOne({ id: newGuild.id }, async (err, data) => {
         if (!data) return;
         if (oldGuild.verificationLevel === newGuild.verificationLevel) return;
-        if (!newGuild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return console.log('El canal tiene que ser del Servidor donde estas!');
+        if (!newGuild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return;
         let embed = new Discord.MessageEmbed()
             .setTitle('• Guild Updated')
             .addField('• Old verification level', capitalize(oldGuild.verificationLevel), true)
@@ -940,7 +940,7 @@ client.on('channelUpdate', async (oldChannel, newChannel) => {
     await LogsModel.findOne({ id: newChannel.guild.id }, async (err, data) => {
         if (!data) return;
         if (oldChannel.name === newChannel.name) return;
-        if (!newChannel.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return console.log('El canal tiene que ser del Servidor donde estas!');
+        if (!newChannel.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return;
         let embed = new Discord.MessageEmbed()
             .setTitle('• Channel Updated')
             .addField('• Old name', oldChannel.name, true)
@@ -950,7 +950,7 @@ client.on('channelUpdate', async (oldChannel, newChannel) => {
             .setFooter(newChannel.guild.name, newChannel.guild.iconURL({ format: 'png', size: 2048 }))
             .setColor(color)
         if (err) return;
-        else return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { console.log('Error: ' + error + '') });
+        else return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { return; });
     });
 });
 
@@ -958,7 +958,7 @@ client.on('channelUpdate', async (oldChannel, newChannel) => {
     await LogsModel.findOne({ id: newChannel.guild.id }, async (err, data) => {
         if (!data) return;
         if (oldChannel.rateLimitPerUser === newChannel.rateLimitPerUser) return;
-        if (!newChannel.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return console.log('El canal tiene que ser del Servidor donde estas!');
+        if (!newChannel.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return;
         let embed = new Discord.MessageEmbed()
             .setTitle('• Channel Updated')
             .addField('• Old cooldown', oldChannel.rateLimitPerUser + 's', true)
@@ -968,7 +968,7 @@ client.on('channelUpdate', async (oldChannel, newChannel) => {
             .setFooter(newChannel.guild.name, newChannel.guild.iconURL({ format: 'png', size: 2048 }))
             .setColor(color)
         if (err) return;
-        else return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { console.log('Error: ' + error + '') });
+        else return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { return; });
     });
 });
 
@@ -977,7 +977,7 @@ client.on('channelUpdate', async (oldChannel, newChannel) => {
     await LogsModel.findOne({ id: newChannel.guild.id }, async (err, data) => {
         if (!data) return;
         if (oldChannel.topic === newChannel.topic) return;
-        if (!newChannel.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return console.log('El canal tiene que ser del Servidor donde estas!');
+        if (!newChannel.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return;
         let embed = new Discord.MessageEmbed()
             .setTitle('• Channel Updated')
             .addField('• Old topic', !oldChannel.topic ? '\u200b' : oldChannel.topic, true)
@@ -987,7 +987,7 @@ client.on('channelUpdate', async (oldChannel, newChannel) => {
             .setFooter(newChannel.guild.name, newChannel.guild.iconURL({ format: 'png', size: 2048 }))
             .setColor(color)
         if (err) return;
-        else return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { console.log('Error: ' + error + '') });
+        else return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { return; });
     });
 });
 //!fin canales eventos
@@ -1003,7 +1003,7 @@ client.on('guildMemberUpdate', async (oldUser, newUser) => {
         else nickname1 = oldUser.nickname;
         if (newUser.nickname === null) nickname2 = '\u200b';
         else nickname2 = newUser.nickname;
-        if (!newUser.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return console.log('El canal tiene que ser del Servidor donde estas!');
+        if (!newUser.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return;
         let embed = new Discord.MessageEmbed()
             .setTitle('• User Updated')
             .addField('• Old nickname', nickname1, true)
@@ -1013,15 +1013,11 @@ client.on('guildMemberUpdate', async (oldUser, newUser) => {
             .setFooter(newUser.guild.name, newUser.guild.iconURL({ format: 'png', size: 2048 }))
             .setColor(color)
         if (err) return;
-        else return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { console.log('Error: ' + error + '') });
+        else return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { return; });
     });
 });
 //!fin usuarios eventos
 //!fin de eventos
-
-client.on('error', async (error) => {
-    client.users.cache.get('507367752391196682').send(error)
-})
 client.on('message', async (msg) => {
     msg.channel.messages.fetch({ limit: 3 }).then(m => {
         let a = m.filter(E => !E.author.bot).array()
