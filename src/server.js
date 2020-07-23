@@ -78,7 +78,7 @@ client.on('message', async (message) => {
             .setDescription(`¡<:ohno:721174460073377804> => \`Error\`: ${argumentoDeLaDescripcion}!`)
             .setColor(color)
             .setTimestamp()
-        )
+        ).catch(error => { enviarError(error, message.author) });
     }
 
     function enviarError(elErrorAca, usuario) {
@@ -87,6 +87,7 @@ client.on('message', async (message) => {
             .setDescription(elErrorAca)
             .setFooter('ID: ' + usuario.id + 'tag: ' + usuario.tag, usuario.displayAvatarURL({ format: 'png', size: 2048 }))
         client.channels.cache.get('735657470063673405').send({ embed: embed })
+            .catch(error => { enviarError(error, message.author) });
     }
 
     function embedResponse(argumentoDeLaDescripcion, opcion) {
@@ -95,7 +96,7 @@ client.on('message', async (message) => {
             .setDescription(argumentoDeLaDescripcion)
             .setColor(color)
             .setTimestamp()
-        )
+        ).catch(error => { enviarError(error, message.author) });
     }
     let prefix = 'z!';
     await PrefixsModel.findOne({ id: message.guild.id }, async (err, data) => {
@@ -143,108 +144,108 @@ client.on('message', async (message) => {
             .setDescription(`Link de invitación del bot => [Link](${link})\nLink de invitación al servidor de soporte => [Link](${invitacionLink})`)
             .setColor(color)
             .setFooter('Gracias por apoyar!', message.author.displayAvatarURL({ format: 'png', size: 2048 }))
-        message.channel.send({ embed: embed })
+        message.channel.send({ embed: embed }).catch(error => { enviarError(error, message.author) });
     }
     //fin de invite
 
     //inicio de voicekick
     else if (command === 'voicekick') {
-        if (!message.member.hasPermission('MOVE_MEMBERS')) return errorEmbed('No tienes el permiso `MOVE_MEMBERS`.');
-        if (!message.guild.me.hasPermission('MOVE_MEMBERS')) return errorEmbed('No tengo el permiso `MOVE_MEMBERS`.');
+        if (!message.member.hasPermission('MOVE_MEMBERS')) return errorEmbed('No tienes el permiso `MOVE_MEMBERS`.').catch(error => { enviarError(error, message.author) });
+        if (!message.guild.me.hasPermission('MOVE_MEMBERS')) return errorEmbed('No tengo el permiso `MOVE_MEMBERS`.').catch(error => { enviarError(error, message.author) });
         let member = message.mentions.members.first();
-        if (!member) return embedResponse('Menciona a alguien!');
-        if (!member.voice.channel) return embedResponse('El miembro mencionado no esta en un canal de voz!');
-        embedResponse('El usuario ya no está en el canal de voz.');
-        member.voice.setChannel(null)
+        if (!member) return embedResponse('Menciona a alguien!').catch(error => { enviarError(error, message.author) });
+        if (!member.voice.channel) return embedResponse('El miembro mencionado no esta en un canal de voz!').catch(error => { enviarError(error, message.author) });
+        embedResponse('El usuario ya no está en el canal de voz.').catch(error => { enviarError(error, message.author) });
+        member.voice.setChannel(null).catch(error => { enviarError(error, message.author) });
     }
     //fin de voicekick
 
     //inicio de voicemute
     else if (command === 'voicemute') {
-        if (!message.member.hasPermission('MUTE_MEMBERS')) return errorEmbed('No tienes el permiso `MUTE_MEMBERS`.');
-        if (!message.guild.me.hasPermission('MUTE_MEMBERS')) return errorEmbed('No tengo el permiso `MUTE_MEMBERS`.');
+        if (!message.member.hasPermission('MUTE_MEMBERS')) return errorEmbed('No tienes el permiso `MUTE_MEMBERS`.').catch(error => { enviarError(error, message.author) });
+        if (!message.guild.me.hasPermission('MUTE_MEMBERS')) return errorEmbed('No tengo el permiso `MUTE_MEMBERS`.').catch(error => { enviarError(error, message.author) });
         let member = message.mentions.members.first();
-        if (!member) return embedResponse('Menciona a alguien!');
-        if (!member.voice.channel) return embedResponse('El miembro mencionado no esta en un canal de voz!');
-        if (member.voice.serverMute === true) return embedResponse('El miembro ya está silenciado!');
-        embedResponse(`El miembro \`${member.displayName}\` se ha silenciado correctamente!`);
-        member.voice.setMute(true)
+        if (!member) return embedResponse('Menciona a alguien!').catch(error => { enviarError(error, message.author) });
+        if (!member.voice.channel) return embedResponse('El miembro mencionado no esta en un canal de voz!').catch(error => { enviarError(error, message.author) });
+        if (member.voice.serverMute === true) return embedResponse('El miembro ya está silenciado!').catch(error => { enviarError(error, message.author) });
+        embedResponse(`El miembro \`${member.displayName}\` se ha silenciado correctamente!`).catch(error => { enviarError(error, message.author) });
+        member.voice.setMute(true).catch(error => { enviarError(error, message.author) });
     }
     //fin de voicemute
 
     //inicio de voiceunmute
     else if (command === 'voiceunmute') {
-        if (!message.member.hasPermission('MUTE_MEMBERS')) return errorEmbed('No tienes el permiso `MUTE_MEMBERS`.');
-        if (!message.guild.me.hasPermission('MUTE_MEMBERS')) return errorEmbed('No tengo el permiso `MUTE_MEMBERS`.');
+        if (!message.member.hasPermission('MUTE_MEMBERS')) return errorEmbed('No tienes el permiso `MUTE_MEMBERS`.').catch(error => { enviarError(error, message.author) });
+        if (!message.guild.me.hasPermission('MUTE_MEMBERS')) return errorEmbed('No tengo el permiso `MUTE_MEMBERS`.').catch(error => { enviarError(error, message.author) });
         let member = message.mentions.members.first();
-        if (!member) return embedResponse('Menciona a alguien!');
-        if (!member.voice.channel) return embedResponse('El miembro mencionado no esta en un canal de voz!');
-        if (member.voice.serverMute === false) return embedResponse('El miembro ya podia hablar!')
-        embedResponse(`El miembro \`${member.displayName}\` ya puede hablar!`);
-        member.voice.setMute(false)
+        if (!member) return embedResponse('Menciona a alguien!').catch(error => { enviarError(error, message.author) });
+        if (!member.voice.channel) return embedResponse('El miembro mencionado no esta en un canal de voz!').catch(error => { enviarError(error, message.author) });
+        if (member.voice.serverMute === false) return embedResponse('El miembro ya podia hablar!').catch(error => { enviarError(error, message.author) });
+        embedResponse(`El miembro \`${member.displayName}\` ya puede hablar!`).catch(error => { enviarError(error, message.author) });
+        member.voice.setMute(false).catch(error => { enviarError(error, message.author) })
     }
     //fin de voiceunmute
 
     //inicio de voicedeaf
     else if (command === 'voicedeaf') {
-        if (!message.member.hasPermission('DEAFEN_MEMBERS')) return errorEmbed('No tienes el permiso `DEAFEN_MEMBERS`.');
-        if (!message.guild.me.hasPermission('DEAFEN_MEMBERS')) return errorEmbed('No tengo el permiso `DEAFEN_MEMBERS`.');
+        if (!message.member.hasPermission('DEAFEN_MEMBERS')) return errorEmbed('No tienes el permiso `DEAFEN_MEMBERS`.').catch(error => { enviarError(error, message.author) });
+        if (!message.guild.me.hasPermission('DEAFEN_MEMBERS')) return errorEmbed('No tengo el permiso `DEAFEN_MEMBERS`.').catch(error => { enviarError(error, message.author) });
         let member = message.mentions.members.first();
-        if (!member) return embedResponse('Menciona a alguien!');
-        if (!member.voice.channel) return embedResponse('El miembro mencionado no está en un canal de voz!');
-        if (member.voice.serverDeaf === true) return embedResponse('El miembro ya está ensordecido!')
-        embedResponse(`El miembro \`${member.displayName}\` se ha ensordecido correctamente!`);
-        member.voice.setDeaf(true)
+        if (!member) return embedResponse('Menciona a alguien!').catch(error => { enviarError(error, message.author) });
+        if (!member.voice.channel) return embedResponse('El miembro mencionado no está en un canal de voz!').catch(error => { enviarError(error, message.author) });
+        if (member.voice.serverDeaf === true) return embedResponse('El miembro ya está ensordecido!').catch(error => { enviarError(error, message.author) });
+        embedResponse(`El miembro \`${member.displayName}\` se ha ensordecido correctamente!`).catch(error => { enviarError(error, message.author) });
+        member.voice.setDeaf(true).catch(error => { enviarError(error, message.author) })
     }
     //fin de voicedeaf
 
     //inicio de voiceundeaf
     else if (command === 'voiceundeaf') {
-        if (!message.member.hasPermission('DEAFEN_MEMBERS')) return errorEmbed('No tienes el permiso `DEAFEN_MEMBERS`.');
-        if (!message.guild.me.hasPermission('DEAFEN_MEMBERS')) return errorEmbed('No tengo el permiso `DEAFEN_MEMBERS`.');
+        if (!message.member.hasPermission('DEAFEN_MEMBERS')) return errorEmbed('No tienes el permiso `DEAFEN_MEMBERS`.').catch(error => { enviarError(error, message.author) });
+        if (!message.guild.me.hasPermission('DEAFEN_MEMBERS')) return errorEmbed('No tengo el permiso `DEAFEN_MEMBERS`.').catch(error => { enviarError(error, message.author) });
         let member = message.mentions.members.first();
-        if (!member) return embedResponse('Menciona a alguien!');
-        if (!member.voice.channel) return embedResponse('El miembro mencionado no está en un canal de voz!');
-        if (member.voice.serverDeaf === false) return embedResponse('El miembro ya podia escuchar!')
-        embedResponse(`El miembro \`${member.displayName}\` ya puede escuchar!`);
-        member.voice.setDeaf(false)
+        if (!member) return embedResponse('Menciona a alguien!').catch(error => { enviarError(error, message.author) });
+        if (!member.voice.channel) return embedResponse('El miembro mencionado no está en un canal de voz!').catch(error => { enviarError(error, message.author) });
+        if (member.voice.serverDeaf === false) return embedResponse('El miembro ya podia escuchar!').catch(error => { enviarError(error, message.author) });
+        embedResponse(`El miembro \`${member.displayName}\` ya puede escuchar!`).catch(error => { enviarError(error, message.author) });
+        member.voice.setDeaf(false).catch(error => { enviarError(error, message.author) })
     }
     //fin de voiceundeaf
 
     //incio de chat
     else if (command === 'chat') {
         const chatbot = require("espchatbotapi");
-        if (!args[0]) return embedResponse("Escribe algo!");
+        if (!args[0]) return embedResponse("Escribe algo!").catch(error => { enviarError(error, message.author) });
 
         message.channel.startTyping();
 
         chatbot.hablar(args).then(respuesta => {
             message.channel.stopTyping();
 
-            message.channel.send(respuesta);
+            message.channel.send(respuesta).catch(error => { enviarError(error, message.author) });
         }).catch(e => message.channel.send(e));
     }
     //fin de chat
 
     //!inicio de blockchannels
     else if (command === 'blockchannels') {
-        if (!message.member.hasPermission('ADMINISTRATOR')) return errorEmbed('No tienes el permiso `ADMINISTRATOR`.');
-        if (!message.member.hasPermission('MANAGE_CHANNELS')) return errorEmbed('No tienes el permiso `MANAGE_CHANNELS`.');
-        if (!message.guild.me.hasPermission('ADMINISTRATOR')) return errorEmbed('No tengo el permiso `ADMINISTRATOR`.');
-        if (!message.guild.me.hasPermission('MANAGE_CHANNELS')) return errorEmbed('No tengo el permiso `MANAGE_CHANNELS`.');
+        if (!message.member.hasPermission('ADMINISTRATOR')) return errorEmbed('No tienes el permiso `ADMINISTRATOR`.').catch(error => { enviarError(error, message.author) });
+        if (!message.member.hasPermission('MANAGE_CHANNELS')) return errorEmbed('No tienes el permiso `MANAGE_CHANNELS`.').catch(error => { enviarError(error, message.author) });
+        if (!message.guild.me.hasPermission('ADMINISTRATOR')) return errorEmbed('No tengo el permiso `ADMINISTRATOR`.').catch(error => { enviarError(error, message.author) });
+        if (!message.guild.me.hasPermission('MANAGE_CHANNELS')) return errorEmbed('No tengo el permiso `MANAGE_CHANNELS`.').catch(error => { enviarError(error, message.author) });
         if (cooldown.has(message.guild.id)) {
-            embedResponse(message.author.username + ", utilice el comando despues de 5 minutos!");
+            embedResponse(message.author.username + ", utilice el comando despues de 5 minutos!").catch(error => { enviarError(error, message.author) });
             return;
         }
         let id = message.mentions.roles.first() || message.mentions.users.first()
-        if (!id) return embedResponse('Menciona un rol o usuario!\nEjemplo:\n' + prefix + 'blockchannels <mencion de rol o user> <true | false | null>')
+        if (!id) return embedResponse('Menciona un rol o usuario!\nEjemplo:\n' + prefix + 'blockchannels <mencion de rol o user> <true | false | null>').catch(error => { enviarError(error, message.author) });
         id = id.id
         let canales = message.guild.channels.cache.filter(a => a.type === 'text');
-        if (canales.size >= 101) return errorEmbed('Este servidor tiene más de 100 canales de texto!')
-        if (!args[1]) return embedResponse('Ejemplo:\n' + prefix + 'blockchannels <mencion de rol o user> <true | false | null>');
-        if (!message.guild.roles.cache.get(id) && !message.guild.members.cache.get(id)) return errorEmbed('Error en encontrar la ID de usuario/rol');
-        if (!['true', 'false', 'null'].includes(args[1])) return errorEmbed('Escoge entre true, false, null');
-        message.channel.send(`Editando canales...`);
+        if (canales.size >= 101) return errorEmbed('Este servidor tiene más de 100 canales de texto!').catch(error => { enviarError(error, message.author) })
+        if (!args[1]) return embedResponse('Ejemplo:\n' + prefix + 'blockchannels <mencion de rol o user> <true | false | null>').catch(error => { enviarError(error, message.author) })
+        if (!message.guild.roles.cache.get(id) && !message.guild.members.cache.get(id)) return errorEmbed('Error en encontrar la ID de usuario/rol').catch(error => { enviarError(error, message.author) });
+        if (!['true', 'false', 'null'].includes(args[1])) return errorEmbed('Escoge entre true, false, null').catch(error => { enviarError(error, message.author) });
+        message.channel.send(`Editando canales...`).catch(error => { enviarError(error, message.author) });
         cooldown.add(message.guild.id);
         setTimeout(() => {
             cooldown.delete(message.author.id);
@@ -253,7 +254,7 @@ client.on('message', async (message) => {
             try {
                 ch.updateOverwrite(id, {
                     SEND_MESSAGES: args[1]
-                });
+                }).catch(error => { enviarError(error, message.author) });
             } catch (e) {
                 return;
             };
@@ -263,9 +264,9 @@ client.on('message', async (message) => {
 
     //inicio bugreport
     else if (command === 'bugreport') {
-        if (!args[0]) return embedResponse('Escribe algo!')
+        if (!args[0]) return embedResponse('Escribe algo!').catch(error => { enviarError(error, message.author) })
         embedResponse(`${message.author.tag} ha reportado el siguente \"bug\":\n${args.join(' ')}`, client.channels.cache.get('725053091522805787')).then(a => {
-            embedResponse('Reporte enviado!')
+            embedResponse('Reporte enviado!').catch(error => { enviarError(error, message.author) })
         })
     }
 
@@ -273,31 +274,31 @@ client.on('message', async (message) => {
 
     //inicio de suggest
     else if (command === 'suggest') {
-        if (!args[0]) return embedResponse('Escribe algo!')
+        if (!args[0]) return embedResponse('Escribe algo!').catch(error => { enviarError(error, message.author) })
         embedResponse(`${message.author.tag} ha sugerido:\n${args.join(' ')}`, client.channels.cache.get('727948582556270682')).then(a => {
-            embedResponse('Sugerencia enviada!')
+            embedResponse('Sugerencia enviada!').catch(error => { enviarError(error, message.author) })
         });
     }
     //fin suggest
 
     //inicio de txt
     else if (command === 'txt') {
-        if (!message.member.hasPermission('ATTACH_FILES')) return errorEmbed('No tienes el permiso `ATTACH_FILES`');
-        if (!message.guild.me.hasPermission('ATTACH_FILES')) return errorEmbed('No tengo el permiso `ATTACH_FILES`');
-        if (!args[0]) return embedResponse('Escribe algo!')
+        if (!message.member.hasPermission('ATTACH_FILES')) return errorEmbed('No tienes el permiso `ATTACH_FILES`').catch(error => { enviarError(error, message.author) });
+        if (!message.guild.me.hasPermission('ATTACH_FILES')) return errorEmbed('No tengo el permiso `ATTACH_FILES`').catch(error => { enviarError(error, message.author) });
+        if (!args[0]) return embedResponse('Escribe algo!').catch(error => { enviarError(error, message.author) })
         message.channel.send({
             files: [{
                 attachment: Buffer.from(args.join(' ')),
                 name: "Text.txt"
             }]
-        })
+        }).catch(error => { enviarError(error, message.author) })
     }
     //fin de txt
 
     //inicio de eval
     else if (command === 'eval') {
         if (!["507367752391196682", "374710341868847104"].includes(message.author.id))
-            return embedResponse('No puedes usar este comando!')
+            return embedResponse('No puedes usar este comando!').catch(error => { enviarError(error, message.author) })
         let limit = 1950;
         try {
             let code = args.join(" ");
@@ -310,7 +311,7 @@ client.on('message', async (message) => {
                 let embed = new Discord.MessageEmbed()
                     .setDescription('Evaluacion mayor a 1999 caracteres!')
                     .setColor(color)
-                message.channel.send(embed)
+                message.channel.send(embed).catch(error => { enviarError(error, message.author) })
             }).catch(err => console.log(err))
             let embed = new Discord.MessageEmbed()
                 .setTitle(`Eval`)
@@ -319,9 +320,9 @@ client.on('message', async (message) => {
                 .addField(`Tipo`, `\`\`\`js\n${asd}\`\`\``.replace("number", "Number").replace("object", "Object").replace("string", "String").replace(undefined, "Undefined").replace("boolean", "Boolean").replace("function", "Function"))
                 .setColor(color)
                 .setTimestamp()
-            message.channel.send(embed).catch(err => console.log(err))
+            message.channel.send(embed).catch(error => { enviarError(error, message.author) })
         } catch (err) {
-            message.channel.send(`\`ERROR\` \`\`\`js\n${err}\n\`\`\``).catch(err => console.log(err));
+            message.channel.send(`\`ERROR\` \`\`\`js\n${err}\n\`\`\``).catch(err => console.log(err)).catch(error => { enviarError(error, message.author) });
         };
     }
     //fin de eval
@@ -334,10 +335,10 @@ client.on('message', async (message) => {
 
     //comienzo de setlogs
     else if (command === 'setlogs' || command === 'logschannel') {
-        if (!message.member.hasPermission("ADMINISTRATOR")) return errorEmbed("No tienes el permiso `ADMINISTRATOR`")
+        if (!message.member.hasPermission("ADMINISTRATOR")) return errorEmbed("No tienes el permiso `ADMINISTRATOR`").catch(error => { enviarError(error, message.author) })
         let channel = message.mentions.channels.first();
-        if (!channel) return embedResponse("No has mencionado un canal/Ese canal no existe.")
-        if (!message.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(channel.id)) return embedResponse('El canal tiene que ser del Servidor donde estas!')
+        if (!channel) return embedResponse("No has mencionado un canal/Ese canal no existe.").catch(error => { enviarError(error, message.author) })
+        if (!message.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(channel.id)) return embedResponse('El canal tiene que ser del Servidor donde estas!').catch(error => { enviarError(error, message.author) })
         let data = await LogsModel.findOne({ id: message.guild.id });
         if (!data) {
             try {
@@ -345,22 +346,22 @@ client.on('message', async (message) => {
                     id: message.guild.id,
                     channellogs: channel.id
                 });
-                configLogs.save().catch(e => { return console.log(e); });
+                configLogs.save().catch(e => { return enviarError(e, message.author) });
             } catch { return; }
         } else {
             try {
                 data.channellogs = channel.id;
-                data.save().catch(e => { return console.log(e); });
+                data.save().catch(e => { return enviarError(e, message.author) });
             } catch { return; }
         }
-        return embedResponse(`Canal establecido en <#${channel.id}>`)
+        return embedResponse(`Canal establecido en <#${channel.id}>`).catch(error => { enviarError(error, message.author) })
     }
     //fin de setlogs
 
     //inicio de setprefix
     else if (command === 'setprefix' || command === 'changeprefix') {
-        if (!message.member.hasPermission("ADMINISTRATOR")) return errorEmbed("No tienes el permiso `ADMINISTRATOR`")
-        if (!args[0] || args[0].length >= 4) return embedResponse('El prefix debe tener menos de 3 caracteres!');
+        if (!message.member.hasPermission("ADMINISTRATOR")) return errorEmbed("No tienes el permiso `ADMINISTRATOR`").catch(error => { enviarError(error, message.author) })
+        if (!args[0] || args[0].length >= 4) return embedResponse('El prefix debe tener menos de 3 caracteres!').catch(error => { enviarError(error, message.author) });
 
         let data = await PrefixsModel.findOne({ id: message.guild.id });
         if (!data) {
@@ -374,10 +375,12 @@ client.on('message', async (message) => {
         } else {
             try {
                 data.prefix = args[0];
-                data.save().catch(e => { return console.log(e); });
+                data.save().catch(e => {
+                    return enviarError(e, message.author);
+                });
             } catch { return; }
         }
-        return embedResponse(`Prefix establecido a ${args[0]}`)
+        return embedResponse(`Prefix establecido a ${args[0]}`).catch(error => { enviarError(error, message.author) })
     }
     //fin de setprefix
 
@@ -386,9 +389,9 @@ client.on('message', async (message) => {
         await LogsModel.findOne({ id: message.guild.id }, async (err, data) => {
             if (err) return console.log(err);
 
-            if (!data) return embedResponse("Este servidor no tiene definido un canal de logs")
-            if (!message.guild.channels.cache.filter(a => a.type === 'text').map(a => a.id).includes(data.channellogs)) return embedResponse('El canal en la base de datos no existe!')
-            else return embedResponse(`Logs: <#${data.channellogs}>(${data.channellogs})`)
+            if (!data) return embedResponse("Este servidor no tiene definido un canal de logs").catch(error => { enviarError(error, message.author) })
+            if (!message.guild.channels.cache.filter(a => a.type === 'text').map(a => a.id).includes(data.channellogs)) return embedResponse('El canal en la base de datos no existe!').catch(error => { enviarError(error, message.author) })
+            else return embedResponse(`Logs: <#${data.channellogs}>(${data.channellogs})`).catch(error => { enviarError(error, message.author) })
         });
     }
     //fin de canal
@@ -409,7 +412,7 @@ client.on('message', async (message) => {
                     .setTimestamp()
                     .setTitle('Snipe')
                     .setThumbnail('https://media1.tenor.com/images/8c3e8a0a3c7b0afc22624c9278be6a89/tenor.gif?itemid=5489827')
-                return message.channel.send({ embed: embed });
+                return message.channel.send({ embed: embed }).catch(error => { enviarError(error, message.author) });
             }
         });
     }
@@ -417,16 +420,16 @@ client.on('message', async (message) => {
 
     //inicio de clear
     else if (command === 'clear') {
-        if (!message.member.hasPermission('MANAGE_MESSAGES')) return errorEmbed('No tienes el permiso `MANAGE_MESSAGES`!');
-        if (!message.guild.me.hasPermission('MANAGE_MESSAGES')) return errorEmbed('No tengo el permiso `MANAGE_MESSAGES`');
-        if (!args[0]) return embedResponse('Escribe un numero!');
-        if (isNaN(args[0])) return embedResponse('' + mal + ' Escribe un numero!')
-        if (args[0] >= 100 || args[0] === 0) return embedResponse('Un numero del 1 al 99');
-        await message.delete();
+        if (!message.member.hasPermission('MANAGE_MESSAGES')) return errorEmbed('No tienes el permiso `MANAGE_MESSAGES`!').catch(error => { enviarError(error, message.author) });
+        if (!message.guild.me.hasPermission('MANAGE_MESSAGES')) return errorEmbed('No tengo el permiso `MANAGE_MESSAGES`').catch(error => { enviarError(error, message.author) });
+        if (!args[0]) return embedResponse('Escribe un numero!').catch(error => { enviarError(error, message.author) });
+        if (isNaN(args[0])) return embedResponse('' + mal + ' Escribe un numero!').catch(error => { enviarError(error, message.author) })
+        if (args[0] >= 100 || args[0] === 0) return embedResponse('Un numero del 1 al 99').catch(error => { enviarError(error, message.author) });
+        await message.delete().catch(error => { enviarError(error, message.author) });
         await message.channel.bulkDelete(args[0]).then(d => {
-            if (d.size < args[0]) return d.size === 0 ? errorEmbed('Ningun mensaje fue eliminado!') : embedResponse('Mensajes eliminados: ' + d.size)
+            if (d.size < args[0]) return d.size === 0 ? errorEmbed('Ningun mensaje fue eliminado!').catch(error => { enviarError(error, message.author) }) : embedResponse('Mensajes eliminados: ' + d.size).catch(error => { enviarError(error, message.author) })
             else return embedResponse('Mensajes eliminados: ' + args[0])
-        });
+        }).catch(error => { enviarError(error, message.author) });
 
     }
     //fin de clear
@@ -439,7 +442,7 @@ client.on('message', async (message) => {
             .setColor(color)
             .setDescription(servidores.length >= 1996 ? `${servidores.slice(0, 1996)}...` : `${servidores}`)
             .setFooter(`Total de servidores: ${client.guilds.cache.size}`)
-        message.channel.send({ embed: embed });
+        message.channel.send({ embed: embed }).catch(error => { enviarError(error, message.author) });
     }
     //fin de serverlist
 
@@ -448,11 +451,11 @@ client.on('message', async (message) => {
         let argumento = args.join(' ')
         let txt = encodeURIComponent(argumento);
         let link = `https://api.alexflipnote.dev/challenge?text=${txt}`;
-        if (!argumento) return embedResponse('Escribe algo!')
+        if (!argumento) return embedResponse('Escribe algo!').catch(error => { enviarError(error, message.author) })
         let embed = new Discord.MessageEmbed()
             .setImage(link)
             .setColor(color)
-        message.channel.send({ embed: embed })
+        message.channel.send({ embed: embed }).catch(error => { enviarError(error, message.author) })
     }
     //fin de challenge
 
@@ -461,11 +464,11 @@ client.on('message', async (message) => {
         let argumento = args.join(' ')
         let txt = encodeURIComponent(argumento);
         let link = `https://api.alexflipnote.dev/achievement?text=${txt}`;
-        if (!argumento) return embedResponse('Escribe algo!')
+        if (!argumento) return embedResponse('Escribe algo!').catch(error => { enviarError(error, message.author) })
         let embed = new Discord.MessageEmbed()
             .setImage(link)
             .setColor(color)
-        message.channel.send({ embed: embed })
+        message.channel.send({ embed: embed }).catch(error => { enviarError(error, message.author) })
     }
     //fin de achievement
 
@@ -474,11 +477,11 @@ client.on('message', async (message) => {
         let argumento = args.join(' ');
         let txt = encodeURIComponent(argumento);
         let link = `https://api.alexflipnote.dev/supreme?text=${txt}`;
-        if (!argumento) return embedResponse('Escribe algo!')
+        if (!argumento) return embedResponse('Escribe algo!').catch(error => { enviarError(error, message.author) })
         let embed = new Discord.MessageEmbed()
             .setImage(link)
             .setColor(color)
-        message.channel.send({ embed: embed })
+        message.channel.send({ embed: embed }).catch(error => { enviarError(error, message.author) })
     }
     //fin de supreme
 
@@ -487,11 +490,11 @@ client.on('message', async (message) => {
         let argumento = args.join(' ')
         let txt = encodeURIComponent(argumento);
         let link = `https://api.alexflipnote.dev/captcha?text=${txt}`;
-        if (!argumento) return embedResponse('Escribe algo!')
+        if (!argumento) return embedResponse('Escribe algo!').catch(error => { enviarError(error, message.author) })
         let embed = new Discord.MessageEmbed()
             .setImage(link)
             .setColor(color)
-        message.channel.send({ embed: embed })
+        message.channel.send({ embed: embed }).catch(error => { enviarError(error, message.author) })
     }
     //fin de captcha
 
