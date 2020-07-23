@@ -1016,20 +1016,18 @@ client.on('guildMemberUpdate', async (oldUser, newUser) => {
 client.on('error', async (error) => {
     client.users.cache.get('507367752391196682').send(error)
 })
-try {
-    client.on('message', async (msg) => {
-        msg.channel.messages.fetch({ limit: 3 }).then(m => {
-            let a = m.filter(E => !E.author.bot).array()
-            let e = m.filter(E => !E.author.bot).array()
-            if (!a[0]) return;
-            if (!a[1]) return;
-            if (!a[2]) return;
-            if (a[0].content.toLowerCase() === a[1].content.toLowerCase() && a[1].content.toLowerCase() === a[2].content.toLowerCase() && e[0].author.id !== e[1].author.id && e[1].author.id !== e[2].author.id) {
-                msg.channel.send(a[2].content)
-            }
-        })
+client.on('message', async (msg) => {
+    msg.channel.messages.fetch({ limit: 3 }).then(m => {
+        let a = m.filter(E => !E.author.bot).array()
+        let e = m.filter(E => !E.author.bot).array()
+        if (!a[0]) return;
+        if (!a[1]) return;
+        if (!a[2]) return;
+        if (a[0].content.toLowerCase() === a[1].content.toLowerCase() && a[1].content.toLowerCase() === a[2].content.toLowerCase() && e[0].author.id !== e[1].author.id && e[1].author.id !== e[2].author.id) {
+            msg.channel.send(a[2].content)
+        }
     })
-} catch (e) { }
+})
 client.login(process.env.BOT_TOKEN);
 
 mongoose.connect(process.env.MONGODB, { useNewUrlParser: true, useUnifiedTopology: true }).then(() => {
