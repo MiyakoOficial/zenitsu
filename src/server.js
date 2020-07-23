@@ -1021,6 +1021,7 @@ client.on('guildMemberUpdate', async (oldUser, newUser) => {
 //!fin usuarios eventos
 //!fin de eventos
 client.on('message', async (msg) => {
+    if (msg.channel.type === 'dm') return;
     msg.channel.messages.fetch({ limit: 3 }).then(m => {
         let a = m.filter(E => !E.author.bot).array()
         let e = m.filter(E => !E.author.bot).array()
