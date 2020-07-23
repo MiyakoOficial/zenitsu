@@ -228,7 +228,9 @@ client.on('message', async (message) => {
 
     //!inicio de blockchannels
     else if (command === 'blockchannels') {
+        if (!message.member.hasPermission('ADMINISTRATOR')) return errorEmbed('No tienes el permiso `ADMINISTRATOR`.');
         if (!message.member.hasPermission('MANAGE_CHANNELS')) return errorEmbed('No tienes el permiso `MANAGE_CHANNELS`.');
+        if (!message.guild.me.hasPermission('ADMINISTRATOR')) return errorEmbed('No tengo el permiso `ADMINISTRATOR`.');
         if (!message.guild.me.hasPermission('MANAGE_CHANNELS')) return errorEmbed('No tengo el permiso `MANAGE_CHANNELS`.');
         if (cooldown.has(message.guild.id)) {
             embedResponse(message.author.username + ", utilice el comando despues de 5 minutos!");
