@@ -1,5 +1,6 @@
 const { join } = require('path');
 const color = "#E09E36";
+const ytdl = require('ytdl-core');
 const LogsModel = require('../src/Guild.js');
 const PrefixsModel = require('../src/Prefix.js');
 const SnipeModel = require('../src/Snipe.js')
@@ -529,7 +530,18 @@ client.on('message', async (message) => {
         ).catch(error => { enviarError(error, message.author) });
     }
     //fin de ship
-
+    else if (command === 'play') {
+        let conection = await message.member.voice.channel.join()
+        let dispacther = conection.play(ytdl(args.join(' ')))
+            .on('finish', () => {
+                message.channel.send('Terminado')
+                message.member.voice.channel.leave()
+            })
+            .on('error', error => {
+                message.channel.send(error)
+            })
+        dispacther.setVolumeLogarithmic(5 / 5)
+    }
     else {
         let embed = new Discord.MessageEmbed()
             .setThumbnail(`https://cdn.discordapp.com/attachments/688054761706094725/714328885533343764/error.gif`)
@@ -1020,6 +1032,7 @@ client.on('guildMemberUpdate', async (oldUser, newUser) => {
 });
 //!fin usuarios eventos
 //!fin de eventos
+/*
 client.on('message', async (msg) => {
     if (msg.channel.type === 'dm') return;
     msg.channel.messages.fetch({ limit: 3 }).then(m => {
@@ -1032,7 +1045,7 @@ client.on('message', async (msg) => {
             msg.channel.send(a[2].content.toLowerCase()).catch(error => { enviarError(error, msg.author) });
         }
     })
-})
+})*/
 client.login(process.env.BOT_TOKEN);
 
 mongoose.connect(process.env.MONGODB, { useNewUrlParser: true, useUnifiedTopology: true }).then(() => {
