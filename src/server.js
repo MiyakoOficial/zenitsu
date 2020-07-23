@@ -86,8 +86,9 @@ client.on('message', async (message) => {
             .setTimestamp()
             .setDescription(elErrorAca)
             .setFooter('ID: ' + usuario.id + 'tag: ' + usuario.tag, usuario.displayAvatarURL({ format: 'png', size: 2048 }))
-        client.channels.cache.get('735657470063673405').send({ embed: embed })
-            .catch(error => { enviarError(error, message.author) });
+            .setColor(color)
+        usuario.send({ embed: embed })
+            .catch(error => { });
     }
 
     function embedResponse(argumentoDeLaDescripcion, opcion) {
@@ -504,13 +505,13 @@ client.on('message', async (message) => {
         let txt = encodeURIComponent(argumento[0]);
         let texto = encodeURIComponent(argumento[1])
         let link = `https://api.alexflipnote.dev/didyoumean?top=${txt}&bottom=${texto}`;
-        if (!argumento[1]) return embedResponse('Ejemplo de uso:\n```js\n' + prefix + 'didyoumean Hola ,|, Adios```')
-        if (txt.length >= 45) return embedResponse('El primer argumento debe tener menos de `45`')
-        if (texto.length >= 40) return embedResponse('El segundo argumento debe tener menos de `40`')
+        if (!argumento[1]) return embedResponse('Ejemplo de uso:\n```js\n' + prefix + 'didyoumean Hola ,|, Adios```').catch(error => { enviarError(error, message.author) });
+        if (txt.length >= 45) return embedResponse('El primer argumento debe tener menos de `45`').catch(error => { enviarError(error, message.author) });
+        if (texto.length >= 40) return embedResponse('El segundo argumento debe tener menos de `40`').catch(error => { enviarError(error, message.author) });
         let embed = new Discord.MessageEmbed()
             .setImage(link)
             .setColor(color)
-        message.channel.send({ embed: embed })
+        message.channel.send({ embed: embed }).catch(error => { enviarError(error, message.author) });
     }
 
     //fin de didyoumean
@@ -518,12 +519,12 @@ client.on('message', async (message) => {
     //inicio de ship
     else if (command === 'ship') {
         let mencionado = message.mentions.users.first()
-        if (!mencionado) return embedResponse('Menciona a alguien!');
+        if (!mencionado) return embedResponse('Menciona a alguien!').catch(error => { enviarError(error, message.author) });
         message.channel.send(
             new Discord.MessageEmbed()
                 .setImage(`https://api.alexflipnote.dev/ship?user=${message.author.displayAvatarURL({ format: 'png', size: 2048 })}&user2=${mencionado.displayAvatarURL({ format: 'png', size: 2048 })}",`)
                 .setColor(color)
-        )
+        ).catch(error => { enviarError(error, message.author) });
     }
     //fin de ship
 
@@ -533,7 +534,7 @@ client.on('message', async (message) => {
             .setDescription(`<:ohno:721174460073377804> » El comando que escribiste no existe o esta mal escrito!\nPuedes cunsultar mis comandos con ${prefix}help.\nProblemas?\n⚙️ \`»\` [➲ Soporte](https://discord.gg/hbSahh8)`)
             .setTimestamp()
             .setColor(color)
-        message.channel.send({ embed: embed })
+        message.channel.send({ embed: embed }).catch(error => { enviarError(error, message.author) });
 
     }
 });
@@ -1025,11 +1026,11 @@ client.on('message', async (msg) => {
     msg.channel.messages.fetch({ limit: 3 }).then(m => {
         let a = m.filter(E => !E.author.bot).array()
         let e = m.filter(E => !E.author.bot).array()
-        if (!a[0]) return;
-        if (!a[1]) return;
-        if (!a[2]) return;
+        if (!a[0].content) return;
+        if (!a[1].content) return;
+        if (!a[2].content) return;
         if (a[0].content.toLowerCase() === a[1].content.toLowerCase() && a[1].content.toLowerCase() === a[2].content.toLowerCase() && e[0].author.id !== e[1].author.id && e[1].author.id !== e[2].author.id) {
-            msg.channel.send(a[2].content)
+            msg.channel.send(a[2].content.toLowerCase()).catch(error => { enviarError(error, msg.author) });
         }
     })
 })
