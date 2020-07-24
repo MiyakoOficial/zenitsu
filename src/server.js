@@ -535,7 +535,8 @@ client.on('message', async (message) => {
         if (!args[0]) return message.channel.send('Escribe algo!');
         const opts = {
             maxResults: 1, //Maximo de resultados a encontrar 
-            key: process.env.YOUTUBEKEY //Necesitas una CLAVE de la API de youtube.      
+            key: process.env.YOUTUBEKEY, //Necesitas una CLAVE de la API de youtube.      
+            type: 'video'
         };
         /*const songArg = await search(args.join(' '), opts);
         const songURL = songArg.results[0].link;
