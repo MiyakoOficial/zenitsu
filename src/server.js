@@ -542,12 +542,12 @@ client.on('message', async (message) => {
         const songInfo = await ytdl.getInfo(songURL);*/
         let songURL = search(args.join(' '), opts, function (err, results) {
             if (err) return console.log(err);
-
+            songURL = results.link
             console.dir(results);
         });
         let conection = await message.member.voice.channel.join()
         message.channel.send(`Reproduciendo`)
-        /*let dispacther = conection.play(songURL)
+        let dispacther = conection.play(songURL)
             .on('finish', () => {
                 message.channel.send('Terminado')
                 message.member.voice.channel.leave()
@@ -555,7 +555,7 @@ client.on('message', async (message) => {
             .on('error', error => {
                 message.channel.send(error)
             })
-        dispacther.setVolumeLogarithmic(5 / 5)*/
+        dispacther.setVolumeLogarithmic(5 / 5)
     }
     else {
         let embed = new Discord.MessageEmbed()
