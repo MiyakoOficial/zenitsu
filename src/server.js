@@ -8,6 +8,7 @@ require('dotenv').config();
 const Discord = require('discord.js');
 const client = new Discord.Client();
 client.owner = client.users.cache.get('507367752391196682');
+const search = require('youtube-search')
 const mongoose = require('mongoose');
 client.databaseVersion = mongoose.version;
 client.database = 'mongoose'
@@ -531,8 +532,18 @@ client.on('message', async (message) => {
     }
     //fin de ship
     else if (command === 'play') {
+        if (!args[0]) return message.channel.send('Escribe algo!');
+        const opts = {
+            maxResults: 1, //Maximo de resultados a encontrar 
+            key: process.env.YOUTUBEKEY, //Necesitas una CLAVE de la API de youtube.
+            type: "video" // Que tipo de resultado a obtener.
+        };
+        const songArg = await search(args.join(' '), opts);
+        const songURL = songArg.results[0].link;
+        const songInfo = await ytdl.getInfo(songURL);
         let conection = await message.member.voice.channel.join()
-        let dispacther = conection.play(ytdl(args.join(' ')))
+        let dispacther = conection.play(songURL)
+        message.channel.send(`Reproduciendo ${songInfo.title}`)
             .on('finish', () => {
                 message.channel.send('Terminado')
                 message.member.voice.channel.leave()
