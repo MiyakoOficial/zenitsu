@@ -543,9 +543,9 @@ client.on('message', async (message) => {
         const songInfo = await ytdl.getInfo(songURL);*/
         let songURL = search(args.join(' '), opts, function (err, results) {
             if (err) return console.log(err);
-            songURL = results.link
+            songURL = results[0].link
             console.dir(results);
-            console.log(results.link)
+            console.log(results[0].link)
         });
         let conection = await message.member.voice.channel.join()
         message.channel.send(`Reproduciendo`)
