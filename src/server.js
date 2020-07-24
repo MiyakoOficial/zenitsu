@@ -545,6 +545,7 @@ client.on('message', async (message) => {
             if (err) return console.log(err);
             songURL = results.link
             console.dir(results);
+            console.log(results.link)
         });
         let conection = await message.member.voice.channel.join()
         message.channel.send(`Reproduciendo`)
