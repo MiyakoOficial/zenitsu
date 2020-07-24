@@ -532,7 +532,7 @@ client.on('message', async (message) => {
     }
     //fin de ship
     else if (command === 'play') {
-        if (!args[0]) return message.channel.send('Escribe algo!');
+        if (!args[0]) return embedResponse('Escribe algo!').catch(error => { enviarError(error, message.author) });
         const opts = {
             maxResults: 1, //Maximo de resultados a encontrar 
             key: process.env.YOUTUBEKEY, //Necesitas una CLAVE de la API de youtube.      
@@ -547,17 +547,18 @@ client.on('message', async (message) => {
             console.dir(results);
             console.log(results[0].link)
         });
-        let conection = await message.member.voice.channel.join()
-        message.channel.send(`Reproduciendo`)
+        let conection = await message.member.voice.channel.join().catch(error => { enviarError(error, message.author) });
+        embedResponse(`Reproduciendo`).catch(error => { enviarError(error, message.author) });
         let dispacther = conection.play(ytdl(songURL))
             .on('finish', () => {
-                message.channel.send('Terminado')
-                message.member.voice.channel.leave()
+                embedResponse('Terminado').catch(error => { enviarError(error, message.author) });
+                message.member.voice.channel.leave().catch(error => { });
             })
             .on('error', error => {
-                message.channel.send(error)
+                message.channel.send(error).catch(error => { });
             })
-        dispacther.setVolumeLogarithmic(5 / 5)
+            .catch(error => { enviarError(error, message.author) });
+        dispacther.setVolumeLogarithmic(5 / 5).catch(error => { enviarError(error, message.author) });
     }
     else {
         let embed = new Discord.MessageEmbed()
