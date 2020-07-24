@@ -540,7 +540,7 @@ client.on('message', async (message) => {
         /*const songArg = await search(args.join(' '), opts);
         const songURL = songArg.results[0].link;
         const songInfo = await ytdl.getInfo(songURL);*/
-        let songURL = search(args.join(' '), opts, function (err, resuls) {
+        let songURL = search(args.join(' '), opts, function (err, results) {
             if (err) return console.log(err);
 
             console.dir(results);
