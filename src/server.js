@@ -549,7 +549,7 @@ client.on('message', async (message) => {
         });
         let conection = await message.member.voice.channel.join()
         message.channel.send(`Reproduciendo`)
-        let dispacther = conection.playStream(ytdl(songURL))
+        let dispacther = conection.play(ytdl(songURL))
             .on('finish', () => {
                 message.channel.send('Terminado')
                 message.member.voice.channel.leave()
