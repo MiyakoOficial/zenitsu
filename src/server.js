@@ -538,12 +538,17 @@ client.on('message', async (message) => {
             key: process.env.YOUTUBEKEY, //Necesitas una CLAVE de la API de youtube.
             type: "video" // Que tipo de resultado a obtener.
         };
-        const songArg = await search(args.join(' '), opts);
+        /*const songArg = await search(args.join(' '), opts);
         const songURL = songArg.results[0].link;
-        const songInfo = await ytdl.getInfo(songURL);
+        const songInfo = await ytdl.getInfo(songURL);*/
+        let songURL = search(args.join(' '), opts, function (err, resuls) {
+            if (err) return console.log(err);
+
+            console.dir(results);
+        });
         let conection = await message.member.voice.channel.join()
-        let dispacther = conection.play(songURL)
-        message.channel.send(`Reproduciendo ${songInfo.title}`)
+        message.channel.send(`Reproduciendo`)
+        /*let dispacther = conection.play(songURL)
             .on('finish', () => {
                 message.channel.send('Terminado')
                 message.member.voice.channel.leave()
@@ -551,7 +556,7 @@ client.on('message', async (message) => {
             .on('error', error => {
                 message.channel.send(error)
             })
-        dispacther.setVolumeLogarithmic(5 / 5)
+        dispacther.setVolumeLogarithmic(5 / 5)*/
     }
     else {
         let embed = new Discord.MessageEmbed()
