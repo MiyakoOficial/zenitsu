@@ -542,6 +542,7 @@ client.on('message', async (message) => {
         let songLink = await search(args.join(' '), opts, function (err, results) {
             if (err) return console.log(err);
             songLink = results[0]
+            console.log(songLink)
         });
 
         let song = {
