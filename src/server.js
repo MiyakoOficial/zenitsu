@@ -541,13 +541,12 @@ client.on('message', async (message) => {
         };
         let songLink = await search(args.join(' '), opts, function (err, results) {
             if (err) return console.log(err);
-            songLink = results[0].link
+            songLink = results[0]
         });
 
-        const songInfo = await ytdl.videoInfo(songLink);
         let song = {
-            title: songInfo.title,
-            url: songInfo.video_url
+            title: songLink.title,
+            url: songLink.link
         }
 
         if (!serverQueue) {
