@@ -600,9 +600,11 @@ function play(guild, song) {
         .on('end', () => {
             serverQueue.songs.shift();
             play(guild, serverQueue.songs[0]);
+            serverQueue.textChannel.send(`Reproduciendo: [${song.title}](${song.url})`)
         })
         .on('error', error => {
             serverQueue.textChannel.send(error)
+            serverQueue.delete()
         });
     dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
 
