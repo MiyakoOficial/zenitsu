@@ -544,7 +544,7 @@ client.on('message', async (message) => {
             songLink = results[0].link
         });
 
-        const songInfo = await ytdl.getInfo(songLink);
+        const songInfo = await ytdl.videoInfo(songLink);
         let song = {
             title: songInfo.title,
             url: songInfo.video_url
