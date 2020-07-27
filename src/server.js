@@ -565,7 +565,6 @@ client.on('message', async (message) => {
                 let connection = await message.member.voice.channel.join()
                 serverQueue.connection = connection;
                 embedResponse(`Reproduciendo [${song.title}](${song.url})`)
-                dispacther.setVolumeLogarithmic(serverQueue.volume / 5)
                 play(message.guild, queueObject.songs[0])
             } catch (err) {
                 serverQueue.delete()
