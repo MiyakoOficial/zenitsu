@@ -563,10 +563,10 @@ client.on('message', async (message) => {
             queueObject.songs.push(song)
             play(message.guild, queueObject.songs[0])
             try {
-                let connection = await message.member.voice.channel.join().catch(error => { });
+                let connection = await message.member.voice.channel.join()
                 serverQueue.connection = connection;
-                embedResponse(`Reproduciendo [${song.title}](${song.url})`).catch(error => { });
-                dispacther.setVolumeLogarithmic(serverQueue.volume / 5).catch(error => { });
+                embedResponse(`Reproduciendo [${song.title}](${song.url})`)
+                dispacther.setVolumeLogarithmic(serverQueue.volume / 5)
                 play(message.guild, queueObject.songs[0])
             } catch (err) {
                 serverQueue.delete()
