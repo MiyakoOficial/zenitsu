@@ -564,7 +564,9 @@ client.on('message', async (message) => {
                 let connection = await message.member.voice.channel.join()
                 serverQueue.connection = connection;
                 play(message.guild, queueObject.songs[0])
-            } catch (err) { }
+            } catch (err) {
+                serverQueue.delete()
+            }
             embedResponse(`Reproduciendo [${song.title}](${song.link})`)
         }
         else {
