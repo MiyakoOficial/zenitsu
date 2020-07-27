@@ -565,7 +565,7 @@ client.on('message', async (message) => {
                 serverQueue.connection = connection;
                 play(message.guild, queueObject.songs[0])
             } catch (err) {
-                message.channel.send('Error')
+                message.channel.send('Error' + err)
             }
             embedResponse(`Reproduciendo [${song.title}](${song.link})`)
         }
