@@ -20,7 +20,7 @@ const juego = new tresenraya();
 const mal = '<:ohno:721174460073377804>';
 const bien = '<:correcto:721174526930714634>';
 const ayuda = 'elsuperduperincreibleseparadordearraysencaminoxdxd:v:vxdxdestonadieloescribiranuncaxdxdhdsbasudkjbsdjnasiudhaskkdhbdjfasdfilshdvfaciludvshfilahsdvfcliuasdbvfcilukjbsdvfiulKJVIUHJIOSDHADUJohifjbdsofihbsfihjbsdfiohbaiaslhabodhb'
-
+const queue = new Map()
 /*function duration(s) {
     var ms = s % 1000;
     s = (s - ms) / 1000;
@@ -74,6 +74,7 @@ client.on('ready', () => {
 });
 let cooldown = new Set()
 client.on('message', async (message) => {
+    const serverQueue = queue.get(message.guild.id)
     if (!message.guild) return;
     function errorEmbed(argumentoDeLaDescripcion) {
         return message.channel.send(new Discord.MessageEmbed()
@@ -532,33 +533,49 @@ client.on('message', async (message) => {
     }
     //fin de ship
     else if (command === 'play') {
-        if (!args[0]) return embedResponse('Escribe algo!').catch(error => { enviarError(error, message.author) });
+        if (!args[0]) return embedResponse('Escribe algo!').catch(error => { });
         const opts = {
             maxResults: 1, //Maximo de resultados a encontrar 
             key: process.env.YOUTUBEKEY, //Necesitas una CLAVE de la API de youtube.      
             type: 'video'
         };
-        /*const songArg = await search(args.join(' '), opts);
-        const songURL = songArg.results[0].link;
-        const songInfo = await ytdl.getInfo(songURL);*/
-        let songURL = search(args.join(' '), opts, function (err, results) {
+        const songJSON = search(args.join(' '), opts, function (err, results) {
             if (err) return console.log(err);
-            songURL = results[0].link
-            console.dir(results);
-            console.log(results[0].link)
+            songJSON = results[0]
         });
-        let conection = await message.member.voice.channel.join().catch(error => { enviarError(error, message.author) });
-        embedResponse(`Reproduciendo`).catch(error => { enviarError(error, message.author) });
-        let dispacther = conection.play(ytdl(songURL))
-            .on('finish', () => {
-                embedResponse('Terminado').catch(error => { enviarError(error, message.author) });
-                message.member.voice.channel.leave().catch(error => { });
-            })
-            .on('error', error => {
-                message.channel.send(error).catch(error => { });
-            })
-            .catch(error => { enviarError(error, message.author) });
-        dispacther.setVolumeLogarithmic(5 / 5).catch(error => { enviarError(error, message.author) });
+
+        const songInfo = await ytdl.getInfo(songJSON.link);
+        let song = {
+            title: songInfo.title,
+            url: songInfo.video_url
+        }
+
+        if (!serverQueue) {
+            const queueObject = {
+                textChannel: message.channel,
+                voiceChannel: message.member.voice.channel,
+                connection: null,
+                songs: [],
+                volume: 5
+            }
+            queue.set(message.guild.id, queueObject)
+            queueObject.songs.push(song)
+            play(message.guild, queueObject.songs[0])
+            try {
+                let connection = await message.member.voice.channel.join().catch(error => { });
+                serverQueue.connection = connection;
+                embedResponse(`Reproduciendo [${song.title}](${song.url})`).catch(error => { });
+                dispacther.setVolumeLogarithmic(serverQueue.volume / 5).catch(error => { });
+                play(message.guild, queueObject.songs[0])
+            } catch (err) {
+                serverQueue.delete()
+                return message.channel.send(err)
+            }
+        }
+        else {
+            serverQueue.songs.push(song)
+            embedResponse(`Añadiendo a la cola: [${song.title}](${song.url})`)
+        }
     }
     else {
         let embed = new Discord.MessageEmbed()
@@ -570,7 +587,26 @@ client.on('message', async (message) => {
 
     }
 });
+// <-- FUNCION PLAY (REPRODUCIR): -->
 
+function play(guild, song) {
+    const serverQueue = queue.get(guild.id);
+    if (!song) {
+        serverQueue.voiceChannel.leave();
+        queue.delete(guild.id);
+        return;
+    }
+    const dispatcher = serverQueue.connection.play(ytdl(song.url))
+        .on('end', () => {
+            serverQueue.songs.shift();
+            play(guild, serverQueue.songs[0]);
+        })
+        .on('error', error => {
+            serverQueue.textChannel.send(error)
+        });
+    dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
+
+}
 //?inicio de eventos
 //?inicio mensajes eventos
 
