@@ -543,6 +543,8 @@ client.on('message', async (message) => {
             if (err) return console.log(err);
             songJSON = results[0]
             console.log(results[0])
+            console.log('----')
+            console.log(results[0].link)
         });
 
         const songInfo = await ytdl.getInfo(songJSON.link);
