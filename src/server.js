@@ -539,7 +539,7 @@ client.on('message', async (message) => {
             key: process.env.YOUTUBEKEY, //Necesitas una CLAVE de la API de youtube.      
             type: 'video'
         };
-        let songLink = search(args.join(' '), opts, function (err, results) {
+        let songLink = await search(args.join(' '), opts, function (err, results) {
             if (err) return console.log(err);
             songLink = results[0]
         });
