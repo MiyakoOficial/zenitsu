@@ -541,13 +541,13 @@ client.on('message', async (message) => {
         };
         var songLink = await search(args.join(' '), opts, function (err, results) {
             if (err) return console.log(err);
-            songLink = results[0]
+            songLink = results
             console.log(songLink)
         });
 
         let song = {
-            title: songLink.title,
-            url: songLink.link
+            title: songLink[0].title,
+            url: songLink[0].link
         }
 
         if (!serverQueue) {
