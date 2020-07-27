@@ -74,7 +74,6 @@ client.on('ready', () => {
 });
 let cooldown = new Set()
 client.on('message', async (message) => {
-    const serverQueue = queue.get(message.guild.id)
     if (!message.guild) return;
     function errorEmbed(argumentoDeLaDescripcion) {
         return message.channel.send(new Discord.MessageEmbed()
@@ -126,6 +125,7 @@ client.on('message', async (message) => {
     if (blacklist.includes(message.author.id)) return;*/
 
     //inicio de help
+    const serverQueue = queue.get(message.guild.id)
     if (command === 'help') {
         message.channel.send({
             embed: new Discord.MessageEmbed()
