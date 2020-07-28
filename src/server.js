@@ -545,15 +545,15 @@ client.on('message', async (message) => {
         };*/
         let videos;
 
-        await ytsP(args.join(' '), function (err, r) {
+        { videos } await yts(args.join(' '), function (err, r) {
             if (err) return;
             videos = r.videos[0];
             console.log(videos)
         })
         let song = {
-            title: videos.title,
-            url: videos.url,
-            time: videos.timestamp
+            title: videos[0].title,
+            url: videos[0].url,
+            time: videos[0].timestamp
         }
         if (!serverQueue) {
             const queueObject = {
