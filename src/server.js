@@ -21,6 +21,7 @@ const mal = '<:ohno:721174460073377804>';
 const bien = '<:correcto:721174526930714634>';
 const ayuda = 'elsuperduperincreibleseparadordearraysencaminoxdxd:v:vxdxdestonadieloescribiranuncaxdxdhdsbasudkjbsdjnasiudhaskkdhbdjfasdfilshdvfaciludvshfilahsdvfcliuasdbvfcilukjbsdvfiulKJVIUHJIOSDHADUJohifjbdsofihbsfihjbsdfiohbaiaslhabodhb'
 const queue = new Map()
+const yts = require('yt-search');
 /*function duration(s) {
     var ms = s % 1000;
     s = (s - ms) / 1000;
