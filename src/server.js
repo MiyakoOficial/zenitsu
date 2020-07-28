@@ -22,6 +22,8 @@ const bien = '<:correcto:721174526930714634>';
 const ayuda = 'elsuperduperincreibleseparadordearraysencaminoxdxd:v:vxdxdestonadieloescribiranuncaxdxdhdsbasudkjbsdjnasiudhaskkdhbdjfasdfilshdvfaciludvshfilahsdvfcliuasdbvfcilukjbsdvfiulKJVIUHJIOSDHADUJohifjbdsofihbsfihjbsdfiohbaiaslhabodhb'
 const queue = new Map()
 const yts = require('yt-search');
+const { promisify } = require('util');
+const ytsP = promisify(yts);
 /*function duration(s) {
     var ms = s % 1000;
     s = (s - ms) / 1000;
@@ -543,7 +545,7 @@ client.on('message', async (message) => {
         };*/
         let videos;
 
-        yts(args.join(' '), function (err, r) {
+        await ytsP(args.join(' '), function (err, r) {
             if (err) return;
             videos = r.videos[0];
             console.log(videos)
