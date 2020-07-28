@@ -551,9 +551,9 @@ client.on('message', async (message) => {
             console.log(videos)
         })
         let song = {
-            title: videos[0].title,
-            url: videos[0].url,
-            time: videos[0].timestamp
+            title: videos.title,
+            url: videos.url,
+            time: videos.timestamp
         }
         if (!serverQueue) {
             const queueObject = {
