@@ -550,7 +550,10 @@ client.on('message', async (message) => {
                 url: songLink[0].link
             }
         });
-
+        songJSON = {
+            title: song.title,
+            url: song.url
+        }
         if (!serverQueue) {
             const queueObject = {
                 textChannel: message.channel,
@@ -560,7 +563,7 @@ client.on('message', async (message) => {
                 volume: 5
             }
             queue.set(message.guild.id, queueObject)
-            queueObject.songs.push(song)
+            queueObject.songs.push(songJSON)
             try {
                 let connection = await message.member.voice.channel.join()
                 queueObject.connection = connection;
@@ -570,11 +573,11 @@ client.on('message', async (message) => {
                 queue.delete(message.guild.id)
                 return message.channel.send('Error: ' + err)
             }
-            embedResponse(`Reproduciendo: [${song.title}](${song.url})`)
+            embedResponse(`Reproduciendo: [${songJSON.title}](${songJSON.url})`)
         }
         else {
-            serverQueue.songs.push(song)
-            embedResponse(`Añadiendo a la cola: [${song.title}](${song.url})`)
+            serverQueue.songs.push(songJSON)
+            embedResponse(`Añadiendo a la cola: [${songJSON.title}](${songJSON.url})`)
         }
     }
     else {
