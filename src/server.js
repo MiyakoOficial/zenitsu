@@ -1110,3 +1110,11 @@ mongoose.connect(process.env.MONGODB, { useNewUrlParser: true, useUnifiedTopolog
 function capitalize(string) {
     return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
 };
+
+client.on('voiceStateUpdate', (oldState, newState) => {
+    if (newState.user.id === client.user.id) {
+        if (oldState.voice.channel && !newState.voice.channel) {
+            queue.delete(newState.guild.id);
+        };
+    };
+});
