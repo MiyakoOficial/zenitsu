@@ -117,9 +117,8 @@ client.on('message', async (message) => {
 
     if (message.author.bot) return;
 
-    var mmm = message.mentions.users.first()
-    if (!mmm) { } else {
-        if (mmm.id === client.user.id && message.mentions.users.size === 1) return embedResponse('El prefix del servidor es ' + prefix);
+    if (message.content === `<@${client.user.id}>` || message.content === `<@!${client.user.id}>`) {
+        return embedResponse(`El prefix del servidor es \`${prefix}\``)
     }
 
     if (!message.content.startsWith(prefix)) return;
