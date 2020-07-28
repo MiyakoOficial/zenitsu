@@ -558,16 +558,16 @@ client.on('message', async (message) => {
                 songs: [],
                 volume: 5
             }
-            queueObject.songs.push(song)
             queue.set(message.guild.id, queueObject)
+            queueObject.songs.push(song)
             try {
                 let connection = await message.member.voice.channel.join()
                 queueObject.connection = connection;
                 play(message.guild, queueObject.songs[0])
                 console.log(queueObject.songs)
             } catch (err) {
-                message.channel.send('Error: ' + err)
                 queue.delete(message.guild.id)
+                return message.channel.send('Error: ' + err)
             }
             embedResponse(`Reproduciendo: [${song.title}](${song.url})`)
         }
