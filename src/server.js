@@ -1111,7 +1111,7 @@ function capitalize(string) {
 };
 
 client.on('voiceStateUpdate', (oldState, newState) => {
-    if (newState.user.id === client.user.id) {
+    if (newState.member.id === client.user.id) {
         if (oldState.voice.channel && !newState.voice.channel) {
             queue.delete(newState.guild.id);
         };
