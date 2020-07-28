@@ -592,7 +592,7 @@ function play(guild, song) {
         queue.delete(guild.id);
         return;
     }
-    if (serverQueue.songs.length === 0) return serverQueue.textChannel.send('Lista de reproducción acabada.');
+    // if (serverQueue.songs.length === 0) return serverQueue.textChannel.send('Lista de reproducción acabada.');
     const dispatcher = serverQueue.connection.play(ytdl(song.url))
         .on('end', () => {
             serverQueue.songs.shift();
