@@ -563,16 +563,16 @@ client.on('message', async (message) => {
             try {
                 let connection = await message.member.voice.channel.join()
                 queueObject.connection = connection;
-                play(message.guild, serverQueue.songs[0])
+                play(message.guild, queueObject.songs[0])
             } catch (err) {
                 message.channel.send('Error: ' + err)
                 queue.delete(message.guild.id)
             }
-            embedResponse(`Reproduciendo [${song.title}](${song.link})`)
+            embedResponse(`Reproduciendo [${song.title}](${song.url})`)
         }
         else {
             serverQueue.songs.push(song)
-            embedResponse(`Añadiendo a la cola: [${song.title}](${song.link})`)
+            embedResponse(`Añadiendo a la cola: [${song.title}](${song.url})`)
         }
     }
     else {
@@ -592,11 +592,11 @@ function play(guild, song) {
     if (!song) {
         return;
     }
-    const dispatcher = serverQueue.connection.play(ytdl(song.link))
+    const dispatcher = serverQueue.connection.play(ytdl(song.url))
         .on('end', () => {
             serverQueue.songs.shift();
             play(guild, serverQueue.songs[0]);
-            serverQueue.textChannel.send(`Reproduciendo: [${song.title}](${song.link})`)
+            serverQueue.textChannel.send(`Reproduciendo: [${song.title}](${song.url})`)
         })
         .on('error', error => {
             serverQueue.textChannel.send('Error: ' + error)
