@@ -546,6 +546,7 @@ client.on('message', async (message) => {
         yts(args.join(' '), function (err, r) {
             if (err) return;
             videos = r.videos[0];
+            console.log(videos)
         })
         let song = {
             title: videos.title,
