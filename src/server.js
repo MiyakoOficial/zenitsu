@@ -7,7 +7,6 @@ const SnipeModel = require('../src/Snipe.js')
 require('dotenv').config();
 const Discord = require('discord.js');
 const client = new Discord.Client();
-client.owner = client.users.cache.get('507367752391196682');
 const search = require('youtube-search')
 const mongoose = require('mongoose');
 client.databaseVersion = mongoose.version;
