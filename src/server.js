@@ -536,24 +536,21 @@ client.on('message', async (message) => {
     else if (command === 'play') {
         if (!message.member.voice.channel) return embedResponse('Necesitas estar en un canal de voz!').catch(error => { })
         if (!args[0]) return embedResponse('Escribe algo!').catch(error => { });
-        const opts = {
+        /*const opts = {
             maxResults: 1, //Maximo de resultados a encontrar 
             key: process.env.YOUTUBEKEY, //Necesitas una CLAVE de la API de youtube.      
             type: 'video'
-        };
-        let song;
-        let songLink = await search(args.join(' '), opts, function (err, results) {
-            if (err) return console.log(err);
-            songLink = results
+        };*/
+        let videos;
 
-            song = {
-                title: songLink[0].title,
-                url: songLink[0].link
-            }
-        });
-        songJSON = {
-            title: song.title,
-            url: song.url
+        yts(args.join(' '), function (err, r) {
+            if (err) return;
+            videos = r.videos[0];
+        })
+        song = {
+            title: videos.title,
+            url: videos.url,
+            time: videos.timestamp
         }
         if (!serverQueue) {
             const queueObject = {
@@ -564,7 +561,7 @@ client.on('message', async (message) => {
                 volume: 5
             }
             queue.set(message.guild.id, queueObject)
-            queueObject.songs.push(songJSON)
+            queueObject.songs.push(song)
             try {
                 let connection = await message.member.voice.channel.join()
                 queueObject.connection = connection;
@@ -574,11 +571,11 @@ client.on('message', async (message) => {
                 queue.delete(message.guild.id)
                 return message.channel.send('Error: ' + err)
             }
-            embedResponse(`Reproduciendo: [${songJSON.title}](${songJSON.url})`)
+            embedResponse(`Reproduciendo: [${song.title}](${song.url})`)
         }
         else {
-            serverQueue.songs.push(songJSON)
-            embedResponse(`Añadiendo a la cola: [${songJSON.title}](${songJSON.url})`)
+            serverQueue.songs.push(song)
+            embedResponse(`Añadiendo a la cola: [${song.title}](${song.url})`)
         }
     }
     else {
