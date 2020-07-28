@@ -539,21 +539,15 @@ client.on('message', async (message) => {
         if (!message.member.voice.channel) return embedResponse('Necesitas estar en un canal de voz!').catch(error => { })
         if (!args[0]) return embedResponse('Escribe algo!').catch(error => { });
         /*const opts = {
-            maxResults: 1, //Maximo de resultados a encontrar 
-            key: process.env.YOUTUBEKEY, //Necesitas una CLAVE de la API de youtube.      
+            maxResults: 1, 
+            key: process.env.YOUTUBEKEY,      
             type: 'video'
         };*/
-        let videos;
-
-        { videos } await yts(args.join(' '), function (err, r) {
-            if (err) return;
-            videos = r.videos[0];
-            console.log(videos)
-        })
+        { videos } await yts(args.join(' '))
         let song = {
-            title: videos.title,
-            url: videos.url,
-            time: videos.timestamp
+            title: videos[0].title,
+            url: videos[0].url,
+            time: videos[0].timestamp
         }
         if (!serverQueue) {
             const queueObject = {
