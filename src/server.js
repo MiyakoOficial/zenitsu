@@ -543,7 +543,7 @@ client.on('message', async (message) => {
             key: process.env.YOUTUBEKEY,      
             type: 'video'
         };*/
-        { videos } await yts(args.join(' '))
+        let { videos } = await yts(args.join(' '))
         let song = {
             title: videos[0].title,
             url: videos[0].url,
