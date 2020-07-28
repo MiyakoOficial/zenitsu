@@ -590,6 +590,8 @@ client.on('message', async (message) => {
 function play(guild, song) {
     const serverQueue = queue.get(guild.id);
     if (!song) {
+        serverQueue.voiceChannel.leave();
+        queue.delete(guild.id);
         return;
     }
     const dispatcher = serverQueue.connection.play(ytdl(song.url))
