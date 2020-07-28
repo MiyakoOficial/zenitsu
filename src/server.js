@@ -533,6 +533,7 @@ client.on('message', async (message) => {
     }
     //fin de ship
     else if (command === 'play') {
+        if (!message.member.voice.channel) return embedResponse('Necesitas estar en un canal de voz!').catch(error => { })
         if (!args[0]) return embedResponse('Escribe algo!').catch(error => { });
         const opts = {
             maxResults: 1, //Maximo de resultados a encontrar 
