@@ -590,8 +590,6 @@ client.on('message', async (message) => {
 function play(guild, song) {
     const serverQueue = queue.get(guild.id);
     if (!song) {
-        serverQueue.voiceChannel.leave();
-        queue.delete(guild.id);
         return;
     }
     const dispatcher = serverQueue.connection.play(ytdl(song.link))
@@ -601,7 +599,7 @@ function play(guild, song) {
             serverQueue.textChannel.send(`Reproduciendo: [${song.title}](${song.link})`)
         })
         .on('error', error => {
-            serverQueue.textChannel.send(error)
+            serverQueue.textChannel.send('Error: ' + error)
             serverQueue.delete()
         });
     dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
