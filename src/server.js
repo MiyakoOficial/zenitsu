@@ -547,7 +547,7 @@ client.on('message', async (message) => {
             if (err) return;
             videos = r.videos[0];
         })
-        song = {
+        let song = {
             title: videos.title,
             url: videos.url,
             time: videos.timestamp
