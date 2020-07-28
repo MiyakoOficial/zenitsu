@@ -558,8 +558,8 @@ client.on('message', async (message) => {
                 songs: [],
                 volume: 5
             }
-            queue.set(message.guild.id, queueObject)
             queueObject.songs.push(song)
+            queue.set(message.guild.id, queueObject)
             try {
                 let connection = await message.member.voice.channel.join()
                 queueObject.connection = connection;
