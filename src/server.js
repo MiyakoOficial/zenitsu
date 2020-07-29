@@ -633,7 +633,7 @@ function play(guild, song) {
     const dispatcher = serverQueue.connection.play(ytdl(song.url))
         .on('finish', () => {
             serverQueue.songs.shift();
-            console.log(serverQueue.songs)
+            //console.log(serverQueue.songs)
             play(guild, serverQueue.songs[0]);
             if (!serverQueue.songs[0]) return;
             embedMusic(`Reproduciendo: [${serverQueue.songs[0].title}](${serverQueue.songs[0].url})`, serverQueue.textChannel)
