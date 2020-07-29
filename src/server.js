@@ -552,6 +552,7 @@ client.on('message', async (message) => {
     //inicio de play
     else if (command === 'play') {
         if (!message.member.voice.channel) return embedResponse('Necesitas estar en un canal de voz!').catch(error => { enviarError(error, message.author) });
+        if (!message.member.voice.channel.permissionsFor(message.client.user).has('CONNECT')) return embedResponse('No puedo unirme a ese canal de voz!').catch(error => { enviarError(error, message.author) });
         if (!args[0]) return embedResponse('Escribe algo!').catch(error => { enviarError(error, message.author) });
         /*const opts = {
             maxResults: 1, 
