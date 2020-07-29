@@ -622,7 +622,7 @@ client.on('message', async (message) => {
     else if (command === 'skip') {
         if (!serverQueue) return embedResponse('Al parecer no hay ninguna canción reproduciendose!')
         if (!serverQueue.songs[0]) return embedResponse('Al parecer no hay ninguna canción reproduciendose!')
-        if (serverQueue.songs.length >= 1) return embedResponse('Nada que saltar por aca!')
+        if (serverQueue.songs.length <= 1) return embedResponse('Nada que saltar por aca!')
         else {
             serverQueue.connection.dispatcher.end()
             return embedResponse('Saltando a la siguiente música!')
