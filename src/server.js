@@ -569,7 +569,7 @@ client.on('message', async (message) => {
             embedResponse(`Reproduciendo: [${song.title}](${song.url})`)
         }
         else {
-            if (serverQueue.songs.length === 0) {
+            if (serverQueue.songs.length === 0 || !message.guild.me.voice.channel) {
                 embedResponse('Reiniciando la cola!\nIntente de nuevo!')
                 return queue.delete(message.guild.id)
             } else {
