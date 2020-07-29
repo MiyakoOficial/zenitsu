@@ -262,7 +262,7 @@ client.on('message', async (message) => {
             try {
                 ch.updateOverwrite(id, {
                     SEND_MESSAGES: args[1]
-                }).catch(error => { enviarError(error, message.author) });
+                }).catch(error => { });
             } catch (e) {
                 return;
             };
