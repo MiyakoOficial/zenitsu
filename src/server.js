@@ -648,7 +648,6 @@ client.on('message', async (message) => {
     //fin de stop
 
     //inicio de np
-
     else if (command === 'np') {
         if (!message.member.voice.channel) return embedResponse('Tienes que estar en un canal de voz!').catch(error => { enviarError(error, message.author) });
         if (!message.guild.me.voice.channel) return embedResponse('Wow, creo que no estoy en un canal de voz!').catch(error => { enviarError(error, message.author) });
@@ -659,7 +658,6 @@ client.on('message', async (message) => {
                 .catch(error => { enviarError(error, message.author) });
         }
     }
-
     //fin de np
 
     else {
