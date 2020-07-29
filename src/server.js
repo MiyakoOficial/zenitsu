@@ -551,6 +551,9 @@ client.on('message', async (message) => {
         ).catch(error => { enviarError(error, message.author) });
     }
     //fin de ship
+
+    //inicio de musica
+    //inicio de play
     else if (command === 'play') {
         if (!message.member.voice.channel) return embedResponse('Necesitas estar en un canal de voz!').catch(error => { })
         if (!args[0]) return embedResponse('Escribe algo!').catch(error => { });
@@ -597,6 +600,7 @@ client.on('message', async (message) => {
             }
         }
     }
+    //fin de play
     else {
         let embed = new Discord.MessageEmbed()
             .setThumbnail(`https://cdn.discordapp.com/attachments/688054761706094725/714328885533343764/error.gif`)
@@ -621,7 +625,7 @@ function play(guild, song) {
         .on('finish', () => {
             serverQueue.songs.shift();
             play(guild, serverQueue.songs[0]);
-            serverQueue.textChannel.send(`Reproduciendo: [${song.title}](${song.url})`)
+            embedResponse(`Reproduciendo: [${song[0].title}](${song[0].url})`, serverQueue.textChannel)
         })
         .on('error', error => {
             serverQueue.textChannel.send('Error: ' + error)
@@ -630,6 +634,7 @@ function play(guild, song) {
     dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
 
 }
+//fin de musica
 //?inicio de eventos
 //?inicio mensajes eventos
 
