@@ -136,7 +136,7 @@ client.on('message', async (message) => {
                 .addField('Moderación', `${prefix}clear, ${prefix}voicekick, ${prefix}voicemute, ${prefix}voiceunmute, ${prefix}voicedeaf, ${prefix}voiceundeaf`)
                 .addField('Administración', `${prefix}blockchannels, ${prefix}setprefix/changeprefix,  ${prefix}setlogs/logschannel`)
                 .addField('Diversión', `${prefix}challenge, ${prefix}achievement, ${prefix}ship, ${prefix}supreme, ${prefix}didyoumean, ${prefix}captcha, ${prefix}pornhub`)
-                .addField('Musica', `${prefix}play`)
+                .addField('Musica', `${prefix}play, ${prefix}queue, ${prefix}skip`)
                 .setThumbnail(client.user.displayAvatarURL({ format: 'png', size: 2048 }))
                 .setFooter('Recomendamos que el bot tenga todos los permisos para que no haya problemas!', client.user.displayAvatarURL({ format: 'png', size: 2048 }))
         }).catch(error => { enviarError(error, message.author) });
@@ -605,18 +605,31 @@ client.on('message', async (message) => {
 
     //inicio de queue
     else if (command === 'queue') {
-        if (!message.member.voice.channel) return embedResponse('Tienes que estar en un canal de voz!')
-        if (!serverQueue) return embedResponse('Al parecer no hay ninguna canción reproduciendose!')
-        if (!serverQueue.songs[0]) return embedResponse('Al parecer no hay ninguna canción reproduciendose!')
+        if (!message.member.voice.channel) return embedResponse('Tienes que estar en un canal de voz!').catch(error => { enviarError(error, message.author) });
+        if (!serverQueue) return embedResponse('Al parecer no hay ninguna canción reproduciendose!').catch(error => { enviarError(error, message.author) });
+        if (!serverQueue.songs[0]) return embedResponse('Al parecer no hay ninguna canción reproduciendose!').catch(error => { enviarError(error, message.author) });
         let embed = new Discord.MessageEmbed()
             .setColor(color)
             .setDescription(`
         Canciones en cola:
         ${serverQueue.songs.map(a => `[${a.title}](${a.url}) - ${a.time}`).join('\n')}
         `, { split: true })
-        message.channel.send({ embed: embed })
+        message.channel.send({ embed: embed }).catch(error => { enviarError(error, message.author) });
     }
     //fin de queue
+
+    //inicio de skip
+    else if (command === 'skip') {
+        if (!serverQueue) return embedResponse('Al parecer no hay ninguna canción reproduciendose!')
+        if (!serverQueue.songs[0]) return embedResponse('Al parecer no hay ninguna canción reproduciendose!')
+        if (serverQueue.songs.length === 0) return embedResponse('Nada que saltar por aca!')
+        else {
+            serverQueue.connection.dispatcher.end()
+            return embedResponse('Saltando a la siguiente música!')
+        }
+    }
+    //fin de skip
+
     else {
         let embed = new Discord.MessageEmbed()
             .setThumbnail(`https://cdn.discordapp.com/attachments/688054761706094725/714328885533343764/error.gif`)
