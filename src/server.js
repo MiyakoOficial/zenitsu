@@ -560,7 +560,7 @@ client.on('message', async (message) => {
             type: 'video'
         };*/
         let { videos } = await yts(args.join(' '));
-        if (!videos) return embedResponse('Ups, no he encontrado ninguna canción.').catch(error => { enviarError(error, message.author) });
+        //if (!videos) return embedResponse('Ups, no he encontrado ninguna canción.').catch(error => { enviarError(error, message.author) });
         let song = {
             title: videos[0].title,
             url: videos[0].url,
