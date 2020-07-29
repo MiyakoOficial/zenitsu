@@ -305,9 +305,6 @@ client.on('message', async (message) => {
 
     //inicio de eval
     else if (command === 'eval') {
-        let embed = new Discord.MessageEmbed()
-            .setDescription('Evaluacion mayor a 1999 caracteres!')
-            .setColor(color)
         if (!["507367752391196682", "374710341868847104"].includes(message.author.id))
             return embedResponse('No puedes usar este comando!').catch(error => { enviarError(error, message.author) })
         let limit = 1950;
@@ -318,7 +315,7 @@ client.on('message', async (message) => {
             evalued = require("util").inspect(evalued, { depth: 0 });
             let txt = "" + evalued;
             let limit = 1999
-            if (txt.length > limit) return message.channel.send(embed).catch(error => { enviarError(error, message.author) })
+            if (txt.length > limit) return message.channel.send('Evaluación mayor a 1999 caracteres!').catch(error => { enviarError(error, message.author) })
             let embed = new Discord.MessageEmbed()
                 .setTitle(`Eval`)
                 .addField(`Entrada`, `\`\`\`js\n${code}\`\`\``)
