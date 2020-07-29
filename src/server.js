@@ -582,7 +582,7 @@ client.on('message', async (message) => {
                 let connection = await message.member.voice.channel.join()
                 queueObject.connection = connection;
                 play(message.guild, queueObject.songs[0])
-                console.log(queueObject.songs)
+                //  console.log(queueObject.songs)
             } catch (err) {
                 queue.delete(message.guild.id)
                 return message.channel.send('Error: ' + err)
@@ -637,7 +637,7 @@ function play(guild, song) {
             embedMusic(`Reproduciendo: [${song.title}](${song.url})`, serverQueue.textChannel)
         })
         .on('error', error => {
-            serverQueue.textChannel.send('Error: ' + error)
+            serverQueue.textChannel.send(error)
             queue.delete(guild.id);
         });
     dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
