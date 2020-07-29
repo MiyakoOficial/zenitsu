@@ -608,10 +608,13 @@ client.on('message', async (message) => {
         if (!message.member.voice.channel) return embedResponse('Tienes que estar en un canal de voz!')
         if (!serverQueue) return embedResponse('Al parecer no hay ninguna canción reproduciendose!')
         if (!serverQueue.songs[0]) return embedResponse('Al parecer no hay ninguna canción reproduciendose!')
-        message.channel.send(`
-  Canciones en cola:
-  ${serverQueue.songs.map(a => `[${a.title}][(${a.url})] - ${a.time}`).join('\n')}
-  `, { split: true })
+        let embed = new Discord.MessageEmbed()
+            .setColor(color)
+            .setDescription(`
+        Canciones en cola:
+        ${serverQueue.songs.map(a => `[${a.title}](${a.url}) - ${a.time}`).join('\n')}
+        `, { split: true })
+        message.channel.send({ embed: embed })
     }
     //fin de queue
     else {
