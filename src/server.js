@@ -613,6 +613,15 @@ client.on('message', async (message) => {
 });
 // <-- FUNCION PLAY (REPRODUCIR): -->
 
+function embedMusic(argumentoDeLaDescripcion, opcion) {
+    let canal_a_enviar = opcion
+    return canal_a_enviar.send(new Discord.MessageEmbed()
+        .setDescription(argumentoDeLaDescripcion)
+        .setColor(color)
+        .setTimestamp()
+    ).catch(error => { });
+}
+
 function play(guild, song) {
     const serverQueue = queue.get(guild.id);
     if (!song) {
@@ -625,7 +634,7 @@ function play(guild, song) {
         .on('finish', () => {
             serverQueue.songs.shift();
             play(guild, serverQueue.songs[0]);
-            embedResponse(`Reproduciendo: [${song[0].title}](${song[0].url})`, serverQueue.textChannel)
+            embedMusic(`Reproduciendo: [${song[0].title}](${song[0].url})`, serverQueue.textChannel)
         })
         .on('error', error => {
             serverQueue.textChannel.send('Error: ' + error)
