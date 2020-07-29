@@ -136,6 +136,7 @@ client.on('message', async (message) => {
                 .addField('Moderación', `${prefix}clear, ${prefix}voicekick, ${prefix}voicemute, ${prefix}voiceunmute, ${prefix}voicedeaf, ${prefix}voiceundeaf`)
                 .addField('Administración', `${prefix}blockchannels, ${prefix}setprefix/changeprefix,  ${prefix}setlogs/logschannel`)
                 .addField('Diversión', `${prefix}challenge, ${prefix}achievement, ${prefix}ship, ${prefix}supreme, ${prefix}didyoumean, ${prefix}captcha, ${prefix}pornhub`)
+                .addField('Musica', `${prefix}play`)
                 .setThumbnail(client.user.displayAvatarURL({ format: 'png', size: 2048 }))
                 .setFooter('Recomendamos que el bot tenga todos los permisos para que no haya problemas!', client.user.displayAvatarURL({ format: 'png', size: 2048 }))
         }).catch(error => { enviarError(error, message.author) });
@@ -555,8 +556,8 @@ client.on('message', async (message) => {
     //inicio de musica
     //inicio de play
     else if (command === 'play') {
-        if (!message.member.voice.channel) return embedResponse('Necesitas estar en un canal de voz!').catch(error => { })
-        if (!args[0]) return embedResponse('Escribe algo!').catch(error => { });
+        if (!message.member.voice.channel) return embedResponse('Necesitas estar en un canal de voz!').catch(error => { enviarError(error, message.author) });
+        if (!args[0]) return embedResponse('Escribe algo!').catch(error => { enviarError(error, message.author) });
         /*const opts = {
             maxResults: 1, 
             key: process.env.YOUTUBEKEY,      
@@ -585,18 +586,18 @@ client.on('message', async (message) => {
                 //  console.log(queueObject.songs)
             } catch (err) {
                 queue.delete(message.guild.id)
-                return message.channel.send('Error: ' + err)
+                return message.channel.send('Error: ' + err).catch(error => { enviarError(error, message.author) });
             }
-            embedResponse(`Reproduciendo: [${song.title}](${song.url})`)
+            embedResponse(`Reproduciendo: [${song.title}](${song.url})`).catch(error => { enviarError(error, message.author) });
         }
         else {
             if (serverQueue.songs.length === 0 || !message.guild.me.voice.channel) {
-                embedResponse('Reiniciando la cola!\nIntente de nuevo!')
+                embedResponse('Reiniciando la cola!\nIntente de nuevo!').catch(error => { enviarError(error, message.author) });
                 return queue.delete(message.guild.id)
             } else {
                 serverQueue.songs.push(song)
 
-                embedResponse(`Añadiendo a la cola: [${song.title}](${song.url})`)
+                embedResponse(`Añadiendo a la cola: [${song.title}](${song.url})`).catch(error => { enviarError(error, message.author) });
             }
         }
     }
