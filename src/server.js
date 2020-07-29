@@ -602,6 +602,21 @@ client.on('message', async (message) => {
         }
     }
     //fin de play
+
+    //inicio de queue
+    else if (command === 'queue') {
+        if (!message.member.voice.channel) return embedResponse('Tienes que estar en un canal de voz!')
+        if (!serverQueue) return embedResponse('Al parecer no hay ninguna canción reproduciendose!')
+        if (!serverQueue.songs[0]) return embedResponse('Al parecer no hay ninguna canción reproduciendose!')
+        message.channel.send(serverQueue.songs.map(a => {
+            `
+Canciones en cola de ${message.guild.id}
+
+${a.title} - ${a.time}
+        `
+        }), { split: true })
+    }
+    //fin de queue
     else {
         let embed = new Discord.MessageEmbed()
             .setThumbnail(`https://cdn.discordapp.com/attachments/688054761706094725/714328885533343764/error.gif`)
