@@ -601,7 +601,7 @@ function play(guild, song) {
         })
         .on('error', error => {
             serverQueue.textChannel.send('Error: ' + error)
-            serverQueue.delete()
+            queue.delete(guild.id);
         });
     dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
 
