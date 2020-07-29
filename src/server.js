@@ -630,7 +630,6 @@ function play(guild, song) {
         return;
     }
     // if (serverQueue.songs.length === 0) return serverQueue.textChannel.send('Lista de reproducción acabada.');
-
     const dispatcher = serverQueue.connection.play(ytdl(song.url))
         .on('finish', () => {
             serverQueue.songs.shift();
@@ -643,6 +642,7 @@ function play(guild, song) {
             queue.delete(guild.id);
         });
     dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
+
 }
 //fin de musica
 //?inicio de eventos
