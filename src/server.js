@@ -618,7 +618,7 @@ function play(guild, song) {
     }
     // if (serverQueue.songs.length === 0) return serverQueue.textChannel.send('Lista de reproducción acabada.');
     const dispatcher = serverQueue.connection.play(ytdl(song.url))
-        .on('end', () => {
+        .on('finish', () => {
             serverQueue.songs.shift();
             play(guild, serverQueue.songs[0]);
             serverQueue.textChannel.send(`Reproduciendo: [${song.title}](${song.url})`)
