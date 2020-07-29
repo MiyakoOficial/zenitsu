@@ -569,8 +569,14 @@ client.on('message', async (message) => {
             embedResponse(`Reproduciendo: [${song.title}](${song.url})`)
         }
         else {
-            serverQueue.songs.push(song)
-            embedResponse(`Añadiendo a la cola: [${song.title}](${song.url})`)
+            if (serverQueue.songs.length === 0) {
+                embedResponse('Reiniciando la cola!\nIntente de nuevo!')
+                return queue.delete(message.guild.id)
+            } else {
+                serverQueue.songs.push(song)
+
+                embedResponse(`Añadiendo a la cola: [${song.title}](${song.url})`)
+            }
         }
     }
     else {
