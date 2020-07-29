@@ -630,20 +630,19 @@ function play(guild, song) {
         return;
     }
     // if (serverQueue.songs.length === 0) return serverQueue.textChannel.send('Lista de reproducción acabada.');
-    if (serverQueue && serverQueue.songs[0]) {
-        const dispatcher = serverQueue.connection.play(ytdl(song.url))
-            .on('finish', () => {
-                serverQueue.songs.shift();
-                console.log(serverQueue.songs)
-                play(guild, serverQueue.songs[0]);
-                embedMusic(`Reproduciendo: [${serverQueue.songs[0].title}](${serverQueue.songs[0].url})`, serverQueue.textChannel)
-            })
-            .on('error', error => {
-                serverQueue.textChannel.send(error)
-                queue.delete(guild.id);
-            });
-        dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
-    }
+
+    const dispatcher = serverQueue.connection.play(ytdl(song.url))
+        .on('finish', () => {
+            serverQueue.songs.shift();
+            console.log(serverQueue.songs)
+            play(guild, serverQueue.songs[0]);
+            embedMusic(`Reproduciendo: [${serverQueue.songs[0].title}](${serverQueue.songs[0].url})`, serverQueue.textChannel)
+        })
+        .on('error', error => {
+            serverQueue.textChannel.send(error)
+            queue.delete(guild.id);
+        });
+    dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
 }
 //fin de musica
 //?inicio de eventos
