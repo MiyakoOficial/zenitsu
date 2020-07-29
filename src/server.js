@@ -606,6 +606,7 @@ client.on('message', async (message) => {
     //inicio de queue
     else if (command === 'queue') {
         if (!message.member.voice.channel) return embedResponse('Tienes que estar en un canal de voz!').catch(error => { enviarError(error, message.author) });
+        if (!message.member.voice.channel) return embedResponse('Wow, creo que no estoy en un canal de voz!').catch(error => { enviarError(error, message.author) });
         if (!serverQueue) return embedResponse('Al parecer no hay ninguna canción reproduciendose!').catch(error => { enviarError(error, message.author) });
         if (!serverQueue.songs[0]) return embedResponse('Al parecer no hay ninguna canción reproduciendose!').catch(error => { enviarError(error, message.author) });
         let embed = new Discord.MessageEmbed()
@@ -620,6 +621,8 @@ client.on('message', async (message) => {
 
     //inicio de skip
     else if (command === 'skip') {
+        if (!message.member.voice.channel) return embedResponse('Tienes que estar en un canal de voz!')
+        if (!message.member.voice.channel) return embedResponse('Wow, creo que no estoy en un canal de voz!')
         if (!serverQueue) return embedResponse('Al parecer no hay ninguna canción reproduciendose!')
         if (!serverQueue.songs[0]) return embedResponse('Al parecer no hay ninguna canción reproduciendose!')
         if (serverQueue.songs.length <= 1) return embedResponse('Nada que saltar por aca!')
