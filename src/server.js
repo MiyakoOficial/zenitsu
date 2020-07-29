@@ -585,7 +585,7 @@ client.on('message', async (message) => {
                 queue.delete(message.guild.id)
                 return message.channel.send('Error: ' + err).catch(error => { enviarError(error, message.author) });
             }
-            embedResponse(`Reproduciendo: [${song.title}](${song.url})`).catch(error => { enviarError(error, message.author) });
+            embedResponse(`Reproduciendo: [${song.title}](${song.url}) - ${song.time}`).catch(error => { enviarError(error, message.author) });
         }
         else {
             if (serverQueue.songs.length === 0 || !message.guild.me.voice.channel) {
@@ -594,7 +594,7 @@ client.on('message', async (message) => {
             } else {
                 serverQueue.songs.push(song)
 
-                embedResponse(`Añadiendo a la cola: [${song.title}](${song.url})`).catch(error => { enviarError(error, message.author) });
+                embedResponse(`Añadiendo a la cola: [${song.title}](${song.url}) - ${song.time}`).catch(error => { enviarError(error, message.author) });
             }
         }
     }
