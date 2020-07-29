@@ -635,6 +635,7 @@ function play(guild, song) {
             serverQueue.songs.shift();
             console.log(serverQueue.songs)
             play(guild, serverQueue.songs[0]);
+            if (!serverQueue.songs[0]) return;
             embedMusic(`Reproduciendo: [${serverQueue.songs[0].title}](${serverQueue.songs[0].url})`, serverQueue.textChannel)
         })
         .on('error', error => {
