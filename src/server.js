@@ -608,13 +608,10 @@ client.on('message', async (message) => {
         if (!message.member.voice.channel) return embedResponse('Tienes que estar en un canal de voz!')
         if (!serverQueue) return embedResponse('Al parecer no hay ninguna canción reproduciendose!')
         if (!serverQueue.songs[0]) return embedResponse('Al parecer no hay ninguna canción reproduciendose!')
-        message.channel.send(serverQueue.songs.map(a => {
-            `
-Canciones en cola de ${message.guild.id}
-
-${a.title} - ${a.time}
-        `
-        }), { split: true })
+        message.channel.send(`
+  Canciones en cola:
+  ${serverQueue.songs.map(a => `[${a.title}][(${a.url})] - ${a.time}`).join('\n')}
+  `, { split: true })
     }
     //fin de queue
     else {
