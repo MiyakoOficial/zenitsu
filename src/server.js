@@ -606,7 +606,7 @@ client.on('message', async (message) => {
     //inicio de queue
     else if (command === 'queue') {
         if (!message.member.voice.channel) return embedResponse('Tienes que estar en un canal de voz!').catch(error => { enviarError(error, message.author) });
-        if (!message.member.voice.channel) return embedResponse('Wow, creo que no estoy en un canal de voz!').catch(error => { enviarError(error, message.author) });
+        if (!message.guild.me.voice.channel) return embedResponse('Wow, creo que no estoy en un canal de voz!').catch(error => { enviarError(error, message.author) });
         if (!serverQueue) return embedResponse('Al parecer no hay ninguna canción reproduciendose!').catch(error => { enviarError(error, message.author) });
         if (!serverQueue.songs[0]) return embedResponse('Al parecer no hay ninguna canción reproduciendose!').catch(error => { enviarError(error, message.author) });
         let embed = new Discord.MessageEmbed()
@@ -621,17 +621,31 @@ client.on('message', async (message) => {
 
     //inicio de skip
     else if (command === 'skip') {
-        if (!message.member.voice.channel) return embedResponse('Tienes que estar en un canal de voz!')
-        if (!message.member.voice.channel) return embedResponse('Wow, creo que no estoy en un canal de voz!')
-        if (!serverQueue) return embedResponse('Al parecer no hay ninguna canción reproduciendose!')
-        if (!serverQueue.songs[0]) return embedResponse('Al parecer no hay ninguna canción reproduciendose!')
-        if (serverQueue.songs.length <= 1) return embedResponse('Nada que saltar por aca!')
+        if (!message.member.voice.channel) return embedResponse('Tienes que estar en un canal de voz!').catch(error => { enviarError(error, message.author) });
+        if (!message.guild.me.voice.channel) return embedResponse('Wow, creo que no estoy en un canal de voz!').catch(error => { enviarError(error, message.author) });
+        if (!serverQueue) return embedResponse('Al parecer no hay ninguna canción reproduciendose!').catch(error => { enviarError(error, message.author) });
+        if (!serverQueue.songs[0]) return embedResponse('Al parecer no hay ninguna canción reproduciendose!').catch(error => { enviarError(error, message.author) });
+        if (serverQueue.songs.length <= 1) return embedResponse('Nada que saltar por aca!').catch(error => { enviarError(error, message.author) });
         else {
             serverQueue.connection.dispatcher.end()
-            return embedResponse('Saltando a la siguiente música!')
+            return embedResponse('Saltando a la siguiente música!').catch(error => { enviarError(error, message.author) });
         }
     }
     //fin de skip
+
+    //inicio de stop
+    else if (command === 'stop') {
+        if (!message.member.voice.channel) return embedResponse('Tienes que estar en un canal de voz!').catch(error => { enviarError(error, message.author) });
+        if (!message.guild.me.voice.channel) return embedResponse('Wow, creo que no estoy en un canal de voz!').catch(error => { enviarError(error, message.author) });
+        if (!serverQueue) return embedResponse('Al parecer no hay ninguna canción reproduciendose!').catch(error => { enviarError(error, message.author) });
+        if (!serverQueue.songs[0]) return embedResponse('Al parecer no hay ninguna canción reproduciendose!').catch(error => { enviarError(error, message.author) });
+        else {
+            queue.delete(message.guild.id)
+            message.guild.me.voice.channel.leave()
+            embedResponse('Cola de reproducción detenida')
+        }
+    }
+    //fin de stop
 
     else {
         let embed = new Discord.MessageEmbed()
