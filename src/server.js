@@ -657,6 +657,11 @@ client.on('message', async (message) => {
     }
     //fin de np
 
+    else if (command === 'test') {
+        let { videos } = await yts(args.join(' '))
+        console.log(videos)
+    }
+
     else {
         let embed = new Discord.MessageEmbed()
             .setThumbnail(`https://cdn.discordapp.com/attachments/688054761706094725/714328885533343764/error.gif`)
