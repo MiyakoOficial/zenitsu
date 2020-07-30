@@ -663,8 +663,9 @@ client.on('message', async (message) => {
         else {
             if (isNaN(args.join(' '))) return embedResponse('Pon un numero valido!')
             if (args.join(' ') >= 100 || args.join(' ') <= 1) return embedResponse('Elije un numero del 1 al 100')
-            serverQueue.volume = parseInt(args.join(' '))
+            serverQueue.volume = parseInt(args.join(' '));
             serverQueue.connection.dispatcher.setVolumeLogarithmic(parseInt(args.join(' ')) / 5);
+            embedResponse(`Cambiado a: ${args.join(' ')}%`)
         }
     }
 
