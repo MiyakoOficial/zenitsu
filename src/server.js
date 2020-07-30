@@ -580,7 +580,6 @@ client.on('message', async (message) => {
                 let connection = await message.member.voice.channel.join()
                 queueObject.connection = connection;
                 play(message.guild, queueObject.songs[0])
-                //  console.log(queueObject.songs)
             } catch (err) {
                 queue.delete(message.guild.id)
                 return message.channel.send('Error: ' + err).catch(error => { enviarError(error, message.author) });
