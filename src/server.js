@@ -593,7 +593,6 @@ client.on('message', async (message) => {
                 return queue.delete(message.guild.id)
             } else {
                 serverQueue.songs.push(song)
-
                 embedResponse(`Añadiendo a la cola: [${song.title}](${song.url}) - ${song.time}`).catch(error => { enviarError(error, message.author) });
             }
         }
