@@ -136,7 +136,7 @@ client.on('message', async (message) => {
                 .addField('Moderación', `${prefix}clear, ${prefix}voicekick, ${prefix}voicemute, ${prefix}voiceunmute, ${prefix}voicedeaf, ${prefix}voiceundeaf`)
                 .addField('Administración', `${prefix}blockchannels, ${prefix}setprefix/changeprefix,  ${prefix}setlogs/logschannel`)
                 .addField('Diversión', `${prefix}challenge, ${prefix}achievement, ${prefix}ship, ${prefix}supreme, ${prefix}didyoumean, ${prefix}captcha, ${prefix}pornhub`)
-                .addField('Música', `${prefix}play, ${prefix}queue, ${prefix}skip, ${prefix}stop, ${prefix}np`)
+                .addField('Música', `${prefix}play, ${prefix}queue, ${prefix}skip, ${prefix}stop, ${prefix}np, ${prefix}volume`)
                 .setThumbnail(client.user.displayAvatarURL({ format: 'png', size: 2048 }))
                 .setFooter('Recomendamos que el bot tenga todos los permisos para que no haya problemas!', client.user.displayAvatarURL({ format: 'png', size: 2048 }))
         }).catch(error => { enviarError(error, message.author) });
@@ -657,9 +657,17 @@ client.on('message', async (message) => {
     }
     //fin de np
 
-    else if (command === 'test') {
-        let { videos } = await yts(args.join(' '))
-        console.log(videos)
+    else if (command === 'volume') {
+        if (!message.member.voice.channel) return embedResponse('Tienes que estar en un canal de voz!').catch(error => { enviarError(error, message.author) });
+        if (!message.guild.me.voice.channel) return embedResponse('Wow, creo que no estoy en un canal de voz!').catch(error => { enviarError(error, message.author) });
+        if (!serverQueue) return embedResponse('Al parecer no hay ninguna canción reproduciendose!').catch(error => { enviarError(error, message.author) });
+        if (!serverQueue.songs[0]) return embedResponse('Al parecer no hay ninguna canción reproduciendose!').catch(error => { enviarError(error, message.author) });
+        else {
+            if (isNaN(args.join(' '))) return embedResponse('Pon un numero valido!')
+            if (args.join(' ') >= 100 || args.join(' ') <= 1) return embedResponse('Elije un numero del 1 al 100')
+            serverQueue.volume = parseInt(args.join(' '))
+            serverQueue.connection.dispatcher.setVolumeLogarithmic(parseInt(args.join(' ')) / 5);
+        }
     }
 
     else {
