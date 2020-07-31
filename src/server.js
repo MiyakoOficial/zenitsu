@@ -630,7 +630,7 @@ client.on('message', async (message) => {
         if (!serverQueue.songs[0]) return embedResponse('Al parecer no hay ninguna canción reproduciendose!').catch(error => { enviarError(error, message.author) });
         if (serverQueue.songs.length <= 1) return embedResponse('Nada que saltar por aca!').catch(error => { enviarError(error, message.author) });
         else {
-            if (message.member.voice.channel.id !== message.guild.me.voice.channel.id) return embedResponse('Tienes que estar en el mismo canal de voz para saltar la canción!')
+            if (message.member.voice.channel.id !== message.guild.me.voice.channel.id) return embedResponse('Tienes que estar en el mismo canal de voz para saltar la canción!').catch(error => { enviarError(error, message.author) });
             serverQueue.connection.dispatcher.end()
             return embedResponse('Saltando a la siguiente música!').catch(error => { enviarError(error, message.author) });
         }
@@ -644,7 +644,7 @@ client.on('message', async (message) => {
         if (!serverQueue) return embedResponse('Al parecer no hay ninguna canción reproduciendose!').catch(error => { enviarError(error, message.author) });
         if (!serverQueue.songs[0]) return embedResponse('Al parecer no hay ninguna canción reproduciendose!').catch(error => { enviarError(error, message.author) });
         else {
-            if (message.member.voice.channel.id !== message.guild.me.voice.channel.id) return embedResponse('Tienes que estar en el mismo canal de voz para detener la lista!')
+            if (message.member.voice.channel.id !== message.guild.me.voice.channel.id) return embedResponse('Tienes que estar en el mismo canal de voz para detener la lista!').catch(error => { enviarError(error, message.author) });
 
             queue.delete(message.guild.id)
             message.guild.me.voice.channel.leave()
@@ -660,7 +660,7 @@ client.on('message', async (message) => {
         if (!serverQueue) return embedResponse('Al parecer no hay ninguna canción reproduciendose!').catch(error => { enviarError(error, message.author) });
         if (!serverQueue.songs[0]) return embedResponse('Al parecer no hay ninguna canción reproduciendose!').catch(error => { enviarError(error, message.author) });
         else {
-            if (message.member.voice.channel.id !== message.guild.me.voice.channel.id) return embedResponse('Tienes que estar en el mismo canal de voz para saber la canción que se esta reproduciendo!')
+            if (message.member.voice.channel.id !== message.guild.me.voice.channel.id) return embedResponse('Tienes que estar en el mismo canal de voz para saber la canción que se esta reproduciendo!').catch(error => { enviarError(error, message.author) });
 
             return embedResponse(`Reproduciendo ahora: [${serverQueue.songs[0].title}](${serverQueue.songs[0].url}) - ${serverQueue.songs[0].time}`)
                 .catch(error => { enviarError(error, message.author) });
@@ -674,13 +674,13 @@ client.on('message', async (message) => {
         if (!serverQueue) return embedResponse('Al parecer no hay ninguna canción reproduciendose!').catch(error => { enviarError(error, message.author) });
         if (!serverQueue.songs[0]) return embedResponse('Al parecer no hay ninguna canción reproduciendose!').catch(error => { enviarError(error, message.author) });
         else {
-            if (isNaN(args.join(' '))) return embedResponse('Pon un numero valido!')
-            if (args.join(' ') >= 100 || args.join(' ') <= 1) return embedResponse('Elije un numero del 1 al 100')
-            if (message.member.voice.channel.id !== message.guild.me.voice.channel.id) return embedResponse('Tienes que estar en el mismo canal de voz para cambiar el volumen!')
+            if (isNaN(args.join(' '))) return embedResponse('Pon un numero valido!').catch(error => { enviarError(error, message.author) });
+            if (args.join(' ') >= 100 || args.join(' ') <= 1) return embedResponse('Elije un numero del 1 al 100').catch(error => { enviarError(error, message.author) });
+            if (message.member.voice.channel.id !== message.guild.me.voice.channel.id) return embedResponse('Tienes que estar en el mismo canal de voz para cambiar el volumen!').catch(error => { enviarError(error, message.author) });
 
             serverQueue.volume = parseInt(args.join(' '));
             serverQueue.connection.dispatcher.setVolumeLogarithmic(parseInt(args.join(' ')) / 5);
-            embedResponse(`Cambiado a: ${args.join(' ')}%`)
+            embedResponse(`Cambiado a: ${args.join(' ')}%`).catch(error => { enviarError(error, message.author) });
         }
     }
 
