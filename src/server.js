@@ -591,6 +591,7 @@ client.on('message', async (message) => {
                 embedResponse('Reiniciando la cola!\nIntente de nuevo!').catch(error => { enviarError(error, message.author) });
                 return queue.delete(message.guild.id)
             } else {
+                if (serverQueue.songs.length >= 15) return embedResponse('La cola ya tiene 15 canciones!').catch(error => { enviarError(error, message.author) });
                 serverQueue.songs.push(song)
                 embedResponse(`Añadiendo a la cola: [${song.title}](${song.url}) - ${song.time}`).catch(error => { enviarError(error, message.author) });
             }
@@ -609,6 +610,9 @@ client.on('message', async (message) => {
             .setDescription(`
         Canciones en cola:
         ${serverQueue.songs.map(a => `[${a.title}](${a.url}) - ${a.time}`).join('\n')}
+       
+        
+        Total: ${serverQueue.songs.length} / 15
         `, { split: true })
         message.channel.send({ embed: embed }).catch(error => { enviarError(error, message.author) });
     }
