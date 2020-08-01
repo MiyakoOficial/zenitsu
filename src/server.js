@@ -542,7 +542,7 @@ client.on('message', async (message) => {
         if (!mencionado) return embedResponse('Menciona a alguien!').catch(error => { enviarError(error, message.author) });
         message.channel.send(
             new Discord.MessageEmbed()
-                .setImage(`https://api.alexflipnote.dev/ship?user=${message.author.displayAvatarURL({ format: 'png', size: 2048 })}&user2=${mencionado.displayAvatarURL({ format: 'png', size: 2048 })}",`)
+                .setImage(`https://api.alexflipnote.dev/ship?user=${message.author.displayAvatarURL({ format: 'png', size: 2048 })}&user2=${mencionado.displayAvatarURL({ format: 'png', size: 2048 })}`)
                 .setColor(color)
         ).catch(error => { enviarError(error, message.author) });
     }
