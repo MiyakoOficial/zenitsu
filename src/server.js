@@ -719,7 +719,7 @@ function play(guild, song) {
             //console.log(serverQueue.songs)
             play(guild, serverQueue.songs[0]);
             if (!serverQueue.songs[0]) return;
-            embedMusic(`Reproduciendo: [${serverQueue.songs[0].title}](${serverQueue.songs[0].url} - ${serverQueue.songs[0].time})`, serverQueue.textChannel)
+            embedMusic(`Reproduciendo: [${serverQueue.songs[0].title}](${serverQueue.songs[0].url}) - ${serverQueue.songs[0].time}`, serverQueue.textChannel)
         })
         .on('error', error => {
             serverQueue.textChannel.send(error)
