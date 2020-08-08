@@ -911,10 +911,13 @@ client.on('roleUpdate', async (oldRole, newRole) => {
         if (oldRole.permissions.bitfield === newRole.permissions.bitfield) return;
 
         if (!newRole.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return;
+        let addeds = listaAddeds.length >= 1 ? listaAddeds.join(', ') : '\u200b'
+        let removeds = listaRemoveds.length >= 1 ? listaRemoveds.join(', ') : '\u200b'
+        if (addeds === '\u200b' && removeds === '\u200b') return;
         let embed = new Discord.MessageEmbed()
             .setTitle('• Role Updated')
-            .addField('• Addeds permissions', listaAddeds.length >= 1 ? listaAddeds.join(', ') : '\u200b', true)
-            .addField('• Removeds permissions', listaRemoveds.length >= 1 ? listaRemoveds.join(', ') : '\u200b', true)
+            .addField('• Addeds permissions', addeds, true)
+            .addField('• Removeds permissions', removeds, true)
             .addField('• Role', `${newRole.name}(${newRole.id})`)
             .setTimestamp()
             .setFooter(newRole.guild.name, newRole.guild.iconURL({ format: 'png', size: 2048 }))
