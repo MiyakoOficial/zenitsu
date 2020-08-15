@@ -136,7 +136,7 @@ client.on('message', async (message) => {
                 .addField('Moderación', `${prefix}clear, ${prefix}voicekick, ${prefix}voicemute, ${prefix}voiceunmute, ${prefix}voicedeaf, ${prefix}voiceundeaf`)
                 .addField('Administración', `${prefix}blockchannels, ${prefix}setprefix/changeprefix,  ${prefix}setlogs/logschannel`)
                 .addField('Diversión', `${prefix}challenge, ${prefix}achievement, ${prefix}ship, ${prefix}supreme, ${prefix}didyoumean, ${prefix}captcha, ${prefix}pornhub`)
-                .addField('Música', `${prefix}play, ${prefix}queue, ${prefix}skip, ${prefix}stop, ${prefix}np, ${prefix}volume`)
+                .addField('Música', `${prefix}play/p, ${prefix}queue/q, ${prefix}skip/s, ${prefix}stop, ${prefix}nowplaying/np, ${prefix}volume/v`)
                 .setThumbnail(client.user.displayAvatarURL({ format: 'png', size: 2048 }))
                 .setFooter('Recomendamos que el bot tenga todos los permisos para que no haya problemas!', client.user.displayAvatarURL({ format: 'png', size: 2048 }))
         }).catch(error => { enviarError(error, message.author) });
@@ -550,7 +550,7 @@ client.on('message', async (message) => {
 
     //inicio de musica
     //inicio de play
-    else if (command === 'play') {
+    else if (command === 'play' || command === 'p') {
         if (!message.member.voice.channel) return embedResponse('Necesitas estar en un canal de voz!').catch(error => { enviarError(error, message.author) });
         if (!message.member.voice.channel.permissionsFor(message.client.user).has('CONNECT')) return embedResponse('No puedo unirme a ese canal de voz!').catch(error => { enviarError(error, message.author) });
         if (!args[0]) return embedResponse('Escribe algo!').catch(error => { enviarError(error, message.author) });
@@ -601,7 +601,7 @@ client.on('message', async (message) => {
     //fin de play
 
     //inicio de queue
-    else if (command === 'queue') {
+    else if (command === 'queue' || command === 'q') {
         if (!message.member.voice.channel) return embedResponse('Tienes que estar en un canal de voz!').catch(error => { enviarError(error, message.author) });
         if (!message.guild.me.voice.channel) return embedResponse('Wow, creo que no estoy en un canal de voz!').catch(error => { enviarError(error, message.author) });
         if (!serverQueue) return embedResponse('Al parecer no hay ninguna canción reproduciendose!').catch(error => { enviarError(error, message.author) });
@@ -623,7 +623,7 @@ client.on('message', async (message) => {
     //fin de queue
 
     //inicio de skip
-    else if (command === 'skip') {
+    else if (command === 'skip' || command === 's') {
         if (!message.member.voice.channel) return embedResponse('Tienes que estar en un canal de voz!').catch(error => { enviarError(error, message.author) });
         if (!message.guild.me.voice.channel) return embedResponse('Wow, creo que no estoy en un canal de voz!').catch(error => { enviarError(error, message.author) });
         if (!serverQueue) return embedResponse('Al parecer no hay ninguna canción reproduciendose!').catch(error => { enviarError(error, message.author) });
@@ -654,7 +654,7 @@ client.on('message', async (message) => {
     //fin de stop
 
     //inicio de np
-    else if (command === 'np') {
+    else if (command === 'np' || command === 'nowplaying') {
         if (!message.member.voice.channel) return embedResponse('Tienes que estar en un canal de voz!').catch(error => { enviarError(error, message.author) });
         if (!message.guild.me.voice.channel) return embedResponse('Wow, creo que no estoy en un canal de voz!').catch(error => { enviarError(error, message.author) });
         if (!serverQueue) return embedResponse('Al parecer no hay ninguna canción reproduciendose!').catch(error => { enviarError(error, message.author) });
@@ -668,19 +668,19 @@ client.on('message', async (message) => {
     }
     //fin de np
 
-    else if (command === 'volume') {
+    else if (command === 'volume' || command === 'v') {
         if (!message.member.voice.channel) return embedResponse('Tienes que estar en un canal de voz!').catch(error => { enviarError(error, message.author) });
         if (!message.guild.me.voice.channel) return embedResponse('Wow, creo que no estoy en un canal de voz!').catch(error => { enviarError(error, message.author) });
         if (!serverQueue) return embedResponse('Al parecer no hay ninguna canción reproduciendose!').catch(error => { enviarError(error, message.author) });
         if (!serverQueue.songs[0]) return embedResponse('Al parecer no hay ninguna canción reproduciendose!').catch(error => { enviarError(error, message.author) });
         else {
             if (isNaN(args.join(' '))) return embedResponse('Pon un numero valido!').catch(error => { enviarError(error, message.author) });
-            if (args.join(' ') >= 100 || args.join(' ') <= 1) return embedResponse('Elije un numero del 1 al 100').catch(error => { enviarError(error, message.author) });
+            if (args.join(' ') > 100 || args.join(' ') < 1) return embedResponse('Elije un numero del 1 al 100').catch(error => { enviarError(error, message.author) });
             if (message.member.voice.channel.id !== message.guild.me.voice.channel.id) return embedResponse('Tienes que estar en el mismo canal de voz para cambiar el volumen!').catch(error => { enviarError(error, message.author) });
 
-            serverQueue.volume = parseInt(args.join(' '));
-            serverQueue.connection.dispatcher.setVolumeLogarithmic(parseInt(args.join(' ')) / 5);
-            embedResponse(`Cambiado a: ${args.join(' ')}%`).catch(error => { enviarError(error, message.author) });
+            serverQueue.volume = Math.floor(parseInt(args.join(' ')));
+            serverQueue.connection.dispatcher.setVolumeLogarithmic(Math.floor(parseInt(args.join(' '))) / 5);
+            embedResponse(`Cambiado a: ${Math.floor(parseInt(args.join(' ')))}%`).catch(error => { enviarError(error, message.author) });
         }
     }
 
