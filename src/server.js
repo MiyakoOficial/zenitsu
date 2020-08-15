@@ -691,7 +691,9 @@ client.on('message', async (message) => {
             .setDescription(`<:ohno:721174460073377804> » El comando que escribiste no existe o esta mal escrito!\nPuedes consultar mis comandos con ${prefix}help.\nProblemas?\n⚙️ \`»\` [➲ Soporte](https://discord.gg/hbSahh8)`)
             .setTimestamp()
             .setColor(color)
-        message.channel.send({ embed: embed }).catch(error => { enviarError(error, message.author) });
+        message.channel.send({ embed: embed }).then(msg => {
+            msg.delete({ timeout: 10000 })
+        }).catch(error => { enviarError(error, message.author) });
 
     }
 });
