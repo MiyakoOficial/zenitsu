@@ -1211,12 +1211,17 @@ client.on('guildMemberUpdate', async (oldUser, newUser) => {
 });
 //!fin usuarios eventos
 //!fin de eventos
-/*
+
 client.on('message', async (msg) => {
     if (msg.channel.type === 'dm') return;
     msg.channel.messages.fetch({ limit: 3 }).then(m => {
         let a = m.filter(E => !E.author.bot).array()
         let e = m.filter(E => !E.author.bot).array()
+
+        if (!a[0]) return;
+        if (!a[1]) return;
+        if (!a[2]) return;
+
         if (!a[0].content) return;
         if (!a[1].content) return;
         if (!a[2].content) return;
@@ -1224,7 +1229,7 @@ client.on('message', async (msg) => {
             msg.channel.send(a[2].content.toLowerCase()).catch(error => { enviarError(error, msg.author) });
         }
     })
-})*/
+});
 client.login(process.env.BOT_TOKEN);
 
 mongoose.connect(process.env.MONGODB, { useNewUrlParser: true, useUnifiedTopology: true }).then(() => {
