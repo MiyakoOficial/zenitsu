@@ -712,6 +712,8 @@ client.on('message', async (message) => {
     }
     //fin de np
 
+    //inicio de volume
+
     else if (command === 'volume' || command === 'v') {
         if (!message.member.voice.channel) return embedResponse('Tienes que estar en un canal de voz!').catch(error => { enviarError(error, message.author) });
         if (!message.guild.me.voice.channel) return embedResponse('Wow, creo que no estoy en un canal de voz!').catch(error => { enviarError(error, message.author) });
@@ -727,6 +729,7 @@ client.on('message', async (message) => {
             embedResponse(`Cambiado a: ${Math.floor(parseInt(args.join(' ')))}%`).catch(error => { enviarError(error, message.author) });
         }
     }
+    //fin de volume
 
     else {
         let embed = new Discord.MessageEmbed()
