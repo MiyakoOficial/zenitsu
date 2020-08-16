@@ -399,21 +399,9 @@ client.on('message', async (message) => {
         let channel = message.mentions.channels.first();
         if (!channel) return embedResponse("No has mencionado un canal/Ese canal no existe.").catch(error => { enviarError(error, message.author) })
         if (!message.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(channel.id)) return embedResponse('El canal tiene que ser del Servidor donde estas!').catch(error => { enviarError(error, message.author) })
-        let data = await LogsModel.findOne({ id: message.guild.id });
-        if (!data) {
-            try {
-                const configLogs = new LogsModel({
-                    id: message.guild.id,
-                    channellogs: channel.id
-                });
-                configLogs.save().catch(e => { return enviarError(e, message.author) });
-            } catch { return; }
-        } else {
-            try {
-                data.channellogs = channel.id;
-                data.save().catch(e => { return enviarError(e, message.author) });
-            } catch { return; }
-        }
+
+        client.updateData({ id: message.guild.id }, { channellogs: channel.id }, 'logs')
+
         return embedResponse(`Canal establecido en <#${channel.id}>`).catch(error => { enviarError(error, message.author) })
     }
     //fin de setlogs
@@ -431,10 +419,9 @@ client.on('message', async (message) => {
 
     //inicio de canal
     else if (command === 'canal' || command === 'channel') {
-        await LogsModel.findOne({ id: message.guild.id }, async (err, data) => {
-            if (err) return console.log(err);
+        client.getData({ id: message.guild.id }, 'logs').then((data) => {
 
-            if (!data) return embedResponse("Este servidor no tiene definido un canal de logs!").catch(error => { enviarError(error, message.author) })
+            if (!data || data.channellogs === '') return embedResponse("Este servidor no tiene definido un canal de logs!").catch(error => { enviarError(error, message.author) })
             if (!message.guild.channels.cache.filter(a => a.type === 'text').map(a => a.id).includes(data.channellogs)) return embedResponse('El canal en la base de datos no existe!').catch(error => { enviarError(error, message.author) })
             else return embedResponse(`Logs: <#${data.channellogs}>(${data.channellogs})`).catch(error => { enviarError(error, message.author) })
         });
