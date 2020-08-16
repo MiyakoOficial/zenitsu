@@ -1,6 +1,6 @@
 const { Schema, model } = require('mongoose');
 
-const Snipe = Schema({
+const warns = Schema({
     id: String,
     warnCount: {
         default: 0,
@@ -8,4 +8,4 @@ const Snipe = Schema({
     },
 })
 
-module.exports = model('Snipe', Snipe)
+module.exports = model('Warns', warns)
