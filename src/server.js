@@ -411,9 +411,9 @@ client.on('message', async (message) => {
         if (!message.member.hasPermission("ADMINISTRATOR")) return errorEmbed("No tienes el permiso `ADMINISTRATOR`").catch(error => { enviarError(error, message.author) })
         if (!args[0] || args[0].length >= 4) return embedResponse('El prefix debe tener menos de 3 caracteres!').catch(error => { enviarError(error, message.author) });
 
-        client.updateData({ id: message.guild.id }, { prefix: args[0] }, 'prefix').catch(e => { });
+        await client.updateData({ id: message.guild.id }, { prefix: args[0] }, 'prefix').catch(e => { });
 
-        return embedResponse(`Prefix establecido a ${args[0]}`).catch(error => { enviarError(error, message.author) })
+        return embedResponse(`Prefix establecido a \`${args[0]}\``).catch(error => { enviarError(error, message.author) })
     }
     //fin de setprefix
 
@@ -430,13 +430,14 @@ client.on('message', async (message) => {
 
     //inicio de snipe
     else if (command === 'snipe') {
-        await SnipeModel.findOne({ id: message.channel.id }, async (err, data) => {
+        await client.getData({ id: message.channel.id }, 'snipe').then((data) => {
 
             if (err) return console.log(err);
-            if (!data) return embedResponse("Nada en la base de datos");
+            if (!data || data.snipe === "") return embedResponse("Nada en la base de datos").catch(error => { enviarError(error, message.author) });
             else {
                 let la_data = data.snipe
                 let separador = la_data.split(ayuda)
+                if (!separador[1]) return embedResponse("Nada en la base de datos").catch(error => { enviarError(error, message.author) });
                 let embed = new Discord.MessageEmbed()
                     .addField('Mensaje', separador[0])
                     .addField('Autor', separador[1])
@@ -790,21 +791,7 @@ client.on('messageDelete', async (message) => {
     if (message.channel.type === 'dm') return;
     if (!message.content) return;
 
-    let data = await SnipeModel.findOne({ id: message.channel.id });
-    if (!data) {
-        try {
-            const configLogs = new SnipeModel({
-                id: message.channel.id,
-                snipe: `${message.content}${ayuda}${message.author.tag}`
-            });
-            configLogs.save().catch(e => { return; });
-        } catch { return; }
-    } else {
-        try {
-            data.snipe = `${message.content}${ayuda}<@${message.author.id}>`;
-            data.save().catch(e => { return; });
-        } catch { return; }
-    }
+    await client.updateData({ id: message.channel.id }, { snipe: `${message.content}${ayuda}<@${message.author.id}>` })
 
 });
 client.on('messageDelete', async (message) => {
