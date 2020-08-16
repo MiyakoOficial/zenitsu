@@ -21,7 +21,7 @@ const bien = '<:correcto:721174526930714634>';
 const ayuda = 'elsuperduperincreibleseparadordearraysencaminoxdxd:v:vxdxdestonadieloescribiranuncaxdxdhdsbasudkjbsdjnasiudhaskkdhbdjfasdfilshdvfaciludvshfilahsdvfcliuasdbvfcilukjbsdvfiulKJVIUHJIOSDHADUJohifjbdsofihbsfihjbsdfiohbaiaslhabodhb'
 const queue = new Map()
 const yts = require('yt-search');
-const { promisify } = require('util');
+//const { promisify } = require('util');
 
 (async () => {
 
