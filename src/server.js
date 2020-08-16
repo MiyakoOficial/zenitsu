@@ -693,6 +693,7 @@ client.on('message', async (message) => {
             .setColor(color)
         message.channel.send({ embed: embed }).then(msg => {
             msg.delete({ timeout: 10000 })
+            message.delete({ timeout: 10000 }).catch(a => { })
         }).catch(error => { enviarError(error, message.author) });
 
     }
