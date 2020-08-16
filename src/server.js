@@ -150,12 +150,15 @@ client.on('message', async (message) => {
         ).catch(error => { enviarError(error, message.author) });
     }
     let prefix = 'z!';
-    await PrefixsModel.findOne({ id: message.guild.id }, async (err, data) => {
+    await client.getData({ id: message.guild.id }, 'prefix').then((data) => {
+        prefix = data.prefix || 'z!'
+    })
+    /*await PrefixsModel.findOne({ id: message.guild.id }, async (err, data) => {
         if (err) return console.log(err);
         if (!data) prefix = 'z!'
         else prefix = data.prefix || 'z!'
 
-    });
+    });*/
     const args = message.content.slice(prefix.length).split(/ +/);
     const command = args.shift().toLowerCase();
 
@@ -1275,7 +1278,8 @@ client.on('message', async (msg) => {
         if (!a[0].content) return;
         if (!a[1].content) return;
         if (!a[2].content) return;
-        if (a[0].content.toLowerCase() === a[1].content.toLowerCase() && a[1].content.toLowerCase() === a[2].content.toLowerCase() && e[0].author.id !== e[1].author.id && e[1].author.id !== e[2].author.id) {
+        if (a[0].content.toLowerCase() === a[1].content.toLowerCase() && a[1].content.toLowerCase() === a[2].content.toLowerCase() &&
+            e[0].author.id !== e[1].author.id && e[1].author.id !== e[2].author.id && e[0].author.id !== e[2].author.id) {
             msg.channel.send(a[2].content.toLowerCase()).catch(error => { enviarError(error, msg.author) });
         }
     })
