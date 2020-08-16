@@ -187,7 +187,7 @@ client.on('message', async (message) => {
             embed: new Discord.MessageEmbed()
                 .setColor(color)
                 .addField('Comandos', `${prefix}help, ${prefix}suggest, ${prefix}bugreport, ${prefix}invite`)
-                .addField('Extras', `${prefix}txt, ${prefix}ping, ${prefix}chat, ${prefix}canal/channel, ${prefix}snipe, ${prefix}serverlist`)
+                .addField('Extras', `${prefix}txt, ${prefix}ping, ${prefix}chat, ${prefix}canal/channel, ${prefix}snipe`)
                 .addField('Moderación', `${prefix}clear, ${prefix}voicekick, ${prefix}voicemute, ${prefix}voiceunmute, ${prefix}voicedeaf, ${prefix}voiceundeaf`)
                 .addField('Administración', `${prefix}blockchannels, ${prefix}setprefix/changeprefix,  ${prefix}setlogs/logschannel`)
                 .addField('Diversión', `${prefix}challenge, ${prefix}achievement, ${prefix}ship, ${prefix}supreme, ${prefix}didyoumean, ${prefix}captcha, ${prefix}pornhub`)
@@ -491,18 +491,6 @@ client.on('message', async (message) => {
 
     }
     //fin de clear
-
-    //inicio de serverlist
-    else if (command === 'serverlist') {
-        let servidores = client.guilds.cache.map(a => a.name).join(' **`<=|=>`** ')
-        let embed = new Discord.MessageEmbed()
-            .setTitle('Lista de servidores')
-            .setColor(color)
-            .setDescription(servidores.length >= 1996 ? `${servidores.slice(0, 1996)}...` : `${servidores}`)
-            .setFooter(`Total de servidores: ${client.guilds.cache.size}`)
-        message.channel.send({ embed: embed }).catch(error => { enviarError(error, message.author) });
-    }
-    //fin de serverlist
 
     //inicio de challenge
     else if (command === 'challenge') {
