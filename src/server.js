@@ -432,7 +432,7 @@ client.on('message', async (message) => {
     else if (command === 'snipe') {
         await client.getData({ id: message.channel.id }, 'snipe').then((data) => {
 
-            if (err) return console.log(err);
+            //if (err) return console.log(err);
             if (!data || data.snipe === "") return embedResponse("Nada en la base de datos").catch(error => { enviarError(error, message.author) });
             else {
                 let la_data = data.snipe
