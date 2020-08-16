@@ -423,23 +423,8 @@ client.on('message', async (message) => {
         if (!message.member.hasPermission("ADMINISTRATOR")) return errorEmbed("No tienes el permiso `ADMINISTRATOR`").catch(error => { enviarError(error, message.author) })
         if (!args[0] || args[0].length >= 4) return embedResponse('El prefix debe tener menos de 3 caracteres!').catch(error => { enviarError(error, message.author) });
 
-        let data = await PrefixsModel.findOne({ id: message.guild.id });
-        if (!data) {
-            try {
-                const configLogs = new PrefixsModel({
-                    id: message.guild.id,
-                    prefix: args[0]
-                });
-                configLogs.save().catch(e => { return console.log(e); });
-            } catch { return; }
-        } else {
-            try {
-                data.prefix = args[0];
-                data.save().catch(e => {
-                    return enviarError(e, message.author);
-                });
-            } catch { return; }
-        }
+        client.updateData({ id: message.guild.id }, { prefix: args[0] }, 'prefix').catch(e => { });
+
         return embedResponse(`Prefix establecido a ${args[0]}`).catch(error => { enviarError(error, message.author) })
     }
     //fin de setprefix
