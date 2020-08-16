@@ -419,7 +419,7 @@ client.on('message', async (message) => {
 
     //inicio de canal
     else if (command === 'canal' || command === 'channel') {
-        client.getData({ id: message.guild.id }, 'logs').then((data) => {
+        await client.getData({ id: message.guild.id }, 'logs').then((data) => {
 
             if (!data || data.channellogs === "") return embedResponse("Este servidor no tiene definido un canal de logs!").catch(error => { enviarError(error, message.author) })
             if (!message.guild.channels.cache.filter(a => a.type === 'text').map(a => a.id).includes(data.channellogs)) return embedResponse('El canal en la base de datos no existe!').catch(error => { enviarError(error, message.author) })
