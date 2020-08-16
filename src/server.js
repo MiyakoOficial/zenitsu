@@ -22,7 +22,6 @@ const ayuda = 'elsuperduperincreibleseparadordearraysencaminoxdxd:v:vxdxdestonad
 const queue = new Map()
 const yts = require('yt-search');
 const { promisify } = require('util');
-const ytsP = promisify(yts);
 
 (async () => {
 
