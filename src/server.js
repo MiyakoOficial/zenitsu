@@ -791,7 +791,7 @@ client.on('messageDelete', async (message) => {
     if (message.channel.type === 'dm') return;
     if (!message.content) return;
 
-    await client.updateData({ id: message.channel.id }, { snipe: `${message.content}${ayuda}<@${message.author.id}>` })
+    await client.updateData({ id: message.channel.id }, { snipe: `${message.content}${ayuda}<@${message.author.id}>` }, 'snipe')
 
 });
 client.on('messageDelete', async (message) => {
