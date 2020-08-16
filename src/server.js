@@ -1,9 +1,9 @@
 const { join } = require('path');
 const color = "#E09E36";
 const ytdl = require('ytdl-core');
-const LogsModel = require('../src/Guild.js');
-const PrefixsModel = require('../src/Prefix.js');
-const SnipeModel = require('../src/Snipe.js')
+const LogsModel = require('../src/models/logs.js');
+//const PrefixsModel = require('../src/Prefix.js');
+const SnipeModel = require('../src/models/snipe.js')
 require('dotenv').config();
 const Discord = require('discord.js');
 const client = new Discord.Client();
