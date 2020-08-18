@@ -711,7 +711,7 @@ client.on('message', async (message) => {
         if (!miembro) return embedResponse('Menciona a un miembro del servidor!');
         await client.updateData({ id: `${message.guild.id}.${miembro.id}` }, { $inc: { warns: 1 } }, 'warns');
         await client.getData({ id: `${message.guild.id}.${miembro.id}` }, 'warns').then((data) => {
-            embedResponse(`El miembro ahora tiene ${data.warns} advertencias!`);
+            embedResponse(`El miembro ahora tiene ${data.warns === 0 ? 1 : data.warns} advertencias!`);
         });
 
 
