@@ -185,7 +185,7 @@ client.on('message', async (message) => {
                 .setColor(color)
                 .addField('Comandos', `${prefix}help, ${prefix}suggest, ${prefix}bugreport, ${prefix}invite`)
                 .addField('Extras', `${prefix}txt, ${prefix}ping, ${prefix}chat, ${prefix}canal/channel, ${prefix}snipe`)
-                .addField('Moderación', `${prefix}clear, ${prefix}voicekick, ${prefix}voicemute, ${prefix}voiceunmute, ${prefix}voicedeaf, ${prefix}voiceundeaf`)
+                .addField('Moderación', `${prefix}clear, ${prefix}voicekick, ${prefix}voicemute, ${prefix}voiceunmute, ${prefix}voicedeaf, ${prefix}voiceundeaf, ${prefix}warn, ${prefix}checkwarns, ${prefix}resetwarns`)
                 .addField('Administración', `${prefix}blockchannels, ${prefix}setprefix/changeprefix,  ${prefix}setlogs/logschannel`)
                 .addField('Diversión', `${prefix}challenge, ${prefix}achievement, ${prefix}ship, ${prefix}supreme, ${prefix}didyoumean, ${prefix}captcha, ${prefix}pornhub`)
                 .addField('Música', `${prefix}play/p, ${prefix}queue/q, ${prefix}skip/s, ${prefix}stop, ${prefix}nowplaying/np, ${prefix}volume/v`)
@@ -705,19 +705,62 @@ client.on('message', async (message) => {
     //inicio de warn
 
     else if (command === 'warn') {
-        if (!message.member.hasPermission('KICK_MEMBERS')) return errorEmbed('No tienes el permiso `KICK_MEMBERS`');
+        if (!message.member.hasPermission('KICK_MEMBERS')) return errorEmbed('No tienes el permiso `KICK_MEMBERS`')
+            .catch(error => { enviarError(error, message.author) });
 
         let miembro = message.mentions.members.first();
-        if (!miembro) return embedResponse('Menciona a un miembro del servidor!');
+        let razon = args.slice(1).join(' ') || 'No especificada';
+        if (!miembro) return embedResponse('Menciona a un miembro del servidor!')
+            .catch(error => { enviarError(error, message.author) });
+
+        if (!args[0].match(/\<\@(\!)?[0-9]{18}\>/g)) return embedResponse('La mencion tiene que ser el primer argumento!')
+            .catch(error => { enviarError(error, message.author) });
+
         await client.updateData({ id: `${message.guild.id}.${miembro.id}` }, { $inc: { warns: 1 } }, 'warns');
+
         await client.getData({ id: `${message.guild.id}.${miembro.id}` }, 'warns').then((data) => {
-            embedResponse(`El miembro ahora tiene ${data.warns === 0 ? 1 : data.warns} advertencias!`);
+            embedResponse(`El miembro fue advertido!\nAhora tiene: ${data.warns === 0 ? 1 : data.warns} advertencias.\n\nRazón: ${razon}.`)
+                .catch(error => { enviarError(error, message.author) });
         });
 
 
     }
 
     //fin de warn
+
+    //inicio de checkwarns
+
+    else if (command === 'checkwarns') {
+        if (!message.mentions.members.first()) return embedResponse('Menciona a un miembro del servidor!')
+            .catch(error => { enviarError(error, message.author) });
+
+        client.getData({ id: `${message.guild.id}.${message.mentions.users.first().id}` }, 'warns')
+            .then((data) => {
+                embedResponse(`Tiene ${!data.warns ? 0 : data.warns} advertencias`)
+                    .catch(error => { enviarError(error, message.author) });
+            })
+    }
+
+    //fin de checkwarns
+
+    //inicio de resetwarns
+
+    else if (command === 'resetwarns') {
+
+        if (!message.member.hasPermission('KICK_MEMBERS')) return errorEmbed('No tienes el permiso `KICK_MEMBERS`')
+            .catch(error => { enviarError(error, message.author) });
+
+        if (!message.mentions.members.first()) return embedResponse('Menciona a un miembro del servidor!')
+            .catch(error => { enviarError(error, message.author) });
+
+        client.updateData({ id: `${message.guild.id}.${message.mentions.users.first().id}` }, { warns: 0 }, 'warns')
+
+        embedResponse(`Advertencias reseteadas!`)
+            .catch(error => { enviarError(error, message.author) });
+
+    }
+
+    //fin de resetwarns
 
     else {
         let embed = new Discord.MessageEmbed()
