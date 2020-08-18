@@ -563,6 +563,7 @@ client.on('message', async (message) => {
     //fin de ship
 
     //inicio de musica
+
     //inicio de play
     else if (command === 'play' || command === 'p') {
         if (!message.member.voice.channel) return embedResponse('Necesitas estar en un canal de voz!').catch(error => { enviarError(error, message.author) });
@@ -700,6 +701,23 @@ client.on('message', async (message) => {
         }
     }
     //fin de volume
+
+    //inicio de warn
+
+    else if (command === 'warn') {
+        if (!message.member.hasPermission('KICK_MEMBERS')) return errorEmbed('No tienes el permiso `KICK_MEMBERS`');
+
+        let miembro = message.mentions.members.first();
+        if (!miembro) return embedResponse('Menciona a un miembro del servidor!');
+        await client.updateData({ id: `${message.guild.id}.${miembro.id}` }, { $inc: { warns: 1 } }, 'warns');
+        await client.getData({ id: `${message.guild.id}.${miembro.id}` }, 'warns').then((data) => {
+            embedResponse(`El miembro ahora tiene ${data.warns} advertencias!`);
+        });
+
+
+    }
+
+    //fin de warn
 
     else {
         let embed = new Discord.MessageEmbed()

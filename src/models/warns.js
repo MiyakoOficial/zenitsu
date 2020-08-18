@@ -2,7 +2,7 @@ const { Schema, model } = require('mongoose');
 
 const warns = Schema({
     id: String,
-    warnCount: {
+    warns: {
         default: 0,
         type: Number
     },
