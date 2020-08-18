@@ -456,7 +456,7 @@ client.on('message', async (message) => {
         await message.delete().catch(error => { enviarError(error, message.author) });
         await message.channel.bulkDelete(args[0]).then(d => {
             if (d.size < args[0]) return d.size === 0 ? errorEmbed('Ningun mensaje fue eliminado!').catch(error => { enviarError(error, message.author) }) : embedResponse('Mensajes eliminados: ' + d.size).catch(error => { enviarError(error, message.author) })
-            else return embedResponse('Mensajes eliminados: ' + args[0])
+            else return embedResponse('Mensajes eliminados: ' + d.size)
         }).catch(error => { enviarError(error, message.author) });
 
     }
