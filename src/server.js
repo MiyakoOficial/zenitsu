@@ -589,6 +589,7 @@ client.on('message', async (message) => {
         let { items } = await ytsr(args.join(' '));
         if (!items[0]) return embedResponse('Ups, no he encontrado esa música, intenta de nuevo!').catch(error => { enviarError(error, message.author) });
         if (items[0].type !== 'video') return embedResponse('Ups, hasta el momento solo soporto videos!').catch(error => { enviarError(error, message.author) });
+        if (!items[0].duration) return embedResponse('Acaso estas tratando de reproducir un stream?');
         let song = {
             title: items[0].title,
             url: items[0].link,
