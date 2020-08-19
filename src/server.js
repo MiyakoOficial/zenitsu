@@ -279,7 +279,7 @@ client.on('message', async (message) => {
 
         message.channel.startTyping();
 
-        chatbot.hablar(args).then(respuesta => {
+        chatbot.hablar(args.join(' ')).then(respuesta => {
             message.channel.stopTyping();
 
             message.channel.send(respuesta).catch(error => { enviarError(error, message.author) });
