@@ -855,7 +855,7 @@ client.on('messageDelete', async (message) => {
     if (message.author.bot) return;
     if (message.channel.type === 'dm') return;
     if (!message.content) return;
-    await client.getData({ id: message.guild.id }, 'logs').then((data) => {
+    await client.getData({ id: message.guild.id }, 'logs').then(async (data) => {
 
         const fetchedLogs = await message.guild.fetchAuditLogs({
             limit: 1,
