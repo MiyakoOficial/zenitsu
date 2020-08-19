@@ -871,14 +871,14 @@ client.on('messageDelete', async (message) => {
             }
             else {
                 const { executor } = deletionLog;
-                if (!executor.id === message.author.id) {
-                    texto = `Deleted by: ${executor.tag}(${executor.id})`;
-                    imagen = executor.displayAvatarURL({ format: 'gif', size: 2048 })
-                }
-                else {
-                    texto = `Deleted by ${message.author.tag}(${message.author.id})`;
-                    imagen = message.author.displayAvatarURL({ format: 'gif', size: 2048 });
-                }
+                //if (!executor.id === message.author.id) {
+                texto = `Deleted by: ${executor.tag}(${executor.id})`;
+                imagen = executor.displayAvatarURL({ format: 'png', size: 2048 })
+                // }
+                // else {
+                //    texto = `Deleted by ${message.author.tag}(${message.author.id})`;
+                //    imagen = message.author.displayAvatarURL({ format: 'png', size: 2048 });
+                //}
             }
         }
 
