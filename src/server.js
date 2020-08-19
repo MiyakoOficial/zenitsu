@@ -773,6 +773,8 @@ client.on('message', async (message) => {
 
     //fin de resetwarns
 
+    else if (command === 'stopchat') { }
+
     else {
         let embed = new Discord.MessageEmbed()
             .setThumbnail(`https://cdn.discordapp.com/attachments/688054761706094725/714328885533343764/error.gif`)
