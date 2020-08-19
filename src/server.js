@@ -868,13 +868,8 @@ client.on('messageDelete', async (message) => {
             texto = "Not found"
         }
         else {
-            const { executor, target } = deletionLog;
-            if (target.id === message.author.id) {
-                texto = `Deleted by: ${executor.tag}(${executor.id})`;
-            }
-            else {
-                texto = "Not found"
-            }
+            const { executor } = deletionLog;
+            texto = `Deleted by: ${executor.tag}(${executor.id})`;
         }
 
         if (!data) return;
