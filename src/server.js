@@ -275,15 +275,26 @@ client.on('message', async (message) => {
     //incio de chat
     else if (command === 'chat') {
         const chatbot = require("espchatbotapi");
-        if (!args[0]) return embedResponse("Escribe algo!").catch(error => { enviarError(error, message.author) });
+        // if (!args[0]) return embedResponse("Escribe algo!").catch(error => { enviarError(error, message.author) });
 
-        message.channel.startTyping();
+        //message.channel.startTyping();
+        message.reply('Comenzado!\n\nPara parar usa: <prefix>stopchat');
+        let filter = m => m.author.id === message.author.id;
+        let collector = new Discord.MessageCollector(message.channel, filter)
+        collector.on('collect', (msg, col) => {
+            if (msg.content === prefix + 'stopchat') { collector.stop() }
+            else {
+                chatbot.hablar(msg.content).then(respuesta => {
+                    //  message.channel.stopTyping();
 
-        chatbot.hablar(args.join(' ')).then(respuesta => {
-            message.channel.stopTyping();
+                    message.channel.send(respuesta).catch(error => { enviarError(error, message.author) });
+                }).catch(e => message.channel.send(e));
+            };
 
-            message.channel.send(respuesta).catch(error => { enviarError(error, message.author) });
-        }).catch(e => message.channel.send(e));
+        });
+        collector.on('end', col => {
+            message.channel.send('Terminado!')
+        });
     }
     //fin de chat
 
