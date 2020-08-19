@@ -858,21 +858,28 @@ client.on('messageDelete', async (message) => {
     await client.getData({ id: message.guild.id }, 'logs').then(async (data) => {
 
         const fetchedLogs = await message.guild.fetchAuditLogs({
-            limit: 1,
-            type: 'MESSAGE_DELETE',
+            limit: 1
         });
 
         const deletionLog = fetchedLogs.entries.first();
         let texto;
         let imagen;
-        if (!deletionLog) {
-            texto = "Not found"
-            imagen = 'https://cdn.discordapp.com/attachments/688054761706094725/714328885533343764/error.gif'
-        }
-        else {
-            const { executor } = deletionLog;
-            texto = `Deleted by: ${executor.tag}(${executor.id})`;
-            imagen = executor.displayAvatarURL({ format: 'gif', size: 2048 })
+        if (fetchedLogs.action === 'MESSAGE_DELETE') {
+            if (!deletionLog) {
+                texto = "Not found"
+                imagen = 'https://cdn.discordapp.com/attachments/688054761706094725/714328885533343764/error.gif'
+            }
+            else {
+                const { executor } = deletionLog;
+                if (!executor.id === message.author.id) {
+                    texto = `Deleted by: ${executor.tag}(${executor.id})`;
+                    imagen = executor.displayAvatarURL({ format: 'gif', size: 2048 })
+                }
+                else {
+                    texto = `Deleted by ${message.author.tag}(${message.author.id})`;
+                    imagen = message.author.displayAvatarURL({ format: 'gif', size: 2048 });
+                }
+            }
         }
 
         if (!data) return;
