@@ -279,7 +279,7 @@ client.on('message', async (message) => {
         // if (!args[0]) return embedResponse("Escribe algo!").catch(error => { enviarError(error, message.author) });
 
         //message.channel.startTyping();
-        message.reply('Comenzado!\n\nPara parar usa: <prefix>stopchat');
+        message.reply('Comenzado!\n\nPara parar usa: <prefix>stopchat').catch(error => { enviarError(error, message.author) });
         let filter = m => m.author.id === message.author.id;
         let collector = new Discord.MessageCollector(message.channel, filter)
         collector.on('collect', (msg, col) => {
@@ -289,12 +289,12 @@ client.on('message', async (message) => {
                     //  message.channel.stopTyping();
 
                     message.channel.send(respuesta).catch(error => { enviarError(error, message.author) });
-                }).catch(e => message.channel.send(e));
+                }).catch(e => message.channel.send(e)).catch(error => { enviarError(error, message.author) });
             };
 
         });
         collector.on('end', col => {
-            message.channel.send('Terminado!')
+            message.channel.send('Terminado!').catch(error => { enviarError(error, message.author) })
         });
     }
     //fin de chat
