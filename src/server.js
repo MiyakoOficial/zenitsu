@@ -864,7 +864,7 @@ client.on('messageDelete', async (message) => {
         const deletionLog = fetchedLogs.entries.first();
         let texto;
         let imagen;
-        if (fetchedLogs.action === 'MESSAGE_DELETE') {
+        if (fetchedLogs.action === 72) {
             if (!deletionLog) {
                 texto = "Not found"
                 imagen = 'https://cdn.discordapp.com/attachments/688054761706094725/714328885533343764/error.gif'
