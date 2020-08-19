@@ -1,5 +1,6 @@
 const { join } = require('path');
 const color = "#E09E36";
+const ytsr = require('ytsr');
 const ytdl = require('ytdl-core');
 const LogsModel = require('../src/models/logs.js');
 //const PrefixsModel = require('../src/Prefix.js');
@@ -585,12 +586,13 @@ client.on('message', async (message) => {
             key: process.env.YOUTUBEKEY,      
             type: 'video'
         };*/
-        let { videos } = await yts(args.join(' '));
-        if (!videos[0]) return embedResponse('Ups, no he encontrado esa música, intenta de nuevo!').catch(error => { enviarError(error, message.author) });
+        let { items } = await ytsr(args.join(' '));
+        if (!items[0]) return embedResponse('Ups, no he encontrado esa música, intenta de nuevo!').catch(error => { enviarError(error, message.author) });
+        if (items[0] !== 'video') return embedResponse('Ups, hasta el momento solo soporto videos!').catch(error => { enviarError(error, message.author) });
         let song = {
-            title: videos[0].title,
-            url: videos[0].url,
-            time: videos[0].timestamp
+            title: items[0].title,
+            url: items[0].link,
+            time: items[0].duration
         }
         if (!serverQueue) {
             const queueObject = {
@@ -893,6 +895,10 @@ client.on('messageDelete', async (message) => {
                 //    imagen = message.author.displayAvatarURL({ format: 'png', size: 2048 });
                 //}
             }
+        }
+        else {
+            texto = "Not found"
+            imagen = 'https://cdn.discordapp.com/attachments/688054761706094725/714328885533343764/error.gif'
         }
 
         if (!data) return;
