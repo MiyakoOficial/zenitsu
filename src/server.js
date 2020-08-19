@@ -857,6 +857,26 @@ client.on('messageDelete', async (message) => {
     if (!message.content) return;
     await client.getData({ id: message.guild.id }, 'logs').then((data) => {
 
+        const fetchedLogs = await message.guild.fetchAuditLogs({
+            limit: 1,
+            type: 'MESSAGE_DELETE',
+        });
+
+        const deletionLog = fetchedLogs.entries.first();
+        let texto;
+        if (!deletionLog) {
+            texto = "Not found"
+        }
+        else {
+            const { executor, target } = deletionLog;
+            if (target.id === message.author.id) {
+                texto = `Deleted by: ${executor.tag}(${executor.id})`;
+            }
+            else {
+                texto = "Not found"
+            }
+        }
+
         if (!data) return;
         if (!message.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return;
         let embed = new Discord.MessageEmbed()
@@ -870,6 +890,7 @@ client.on('messageDelete', async (message) => {
             .addField('• Author channel ID', message.channel.id, true)
             .addField('• Author channel mention', `<#${message.channel.id}>`, false)
             .setFooter(message.guild.name, message.guild.iconURL({ format: 'png', size: 2048 }))
+            .setAuthor(texto)
             .setTimestamp()
         return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { return; });
     });
