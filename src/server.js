@@ -888,7 +888,7 @@ client.on('messageDelete', async (message) => {
             .addField('• Author channel ID', message.channel.id, true)
             .addField('• Author channel mention', `<#${message.channel.id}>`, false)
             .setFooter(message.guild.name, message.guild.iconURL({ format: 'png', size: 2048 }))
-            .setAuthor(texto)
+            .setAuthor(texto, imagen)
             .setTimestamp()
         return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { return; });
     });
