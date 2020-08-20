@@ -143,11 +143,12 @@ client.on('message', async (message) => {
 
     function embedResponse(argumentoDeLaDescripcion, opcion) {
         let canal_a_enviar = opcion || message.channel
-        return canal_a_enviar.send(new Discord.MessageEmbed()
-            .setDescription(argumentoDeLaDescripcion)
-            .setColor(color)
-            .setTimestamp()
-        ).catch(error => { enviarError(error, message.author) });
+        return canal_a_enviar.send({
+            embed: new Discord.MessageEmbed()
+                .setDescription(argumentoDeLaDescripcion)
+                .setColor(color)
+                .setTimestamp()
+        }).catch(error => { enviarError(error, message.author) });
     }
     let prefix = 'z!';
     await client.getData({ id: message.guild.id }, 'prefix').then((data) => {
@@ -387,7 +388,7 @@ client.on('message', async (message) => {
                 .addField(`Tipo`, `\`\`\`js\n${asd}\`\`\``.replace("number", "Number").replace("object", "Object").replace("string", "String").replace(undefined, "Undefined").replace("boolean", "Boolean").replace("function", "Function"))
                 .setColor(color)
                 .setTimestamp()
-            message.channel.send(embed).catch(error => { enviarError(error, message.author) })
+            message.channel.send({ embed: embed }).catch(error => { enviarError(error, message.author) })
         } catch (err) {
             message.channel.send(`\`ERROR\` \`\`\`js\n${err}\n\`\`\``).catch(err => console.log(err)).catch(error => { enviarError(error, message.author) });
         };
