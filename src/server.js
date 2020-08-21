@@ -797,11 +797,12 @@ client.on('message', async (message) => {
 
 function embedMusic(argumentoDeLaDescripcion, opcion) {
     let canal_a_enviar = opcion
-    return canal_a_enviar.send(new Discord.MessageEmbed()
-        .setDescription(argumentoDeLaDescripcion)
-        .setColor(color)
-        .setTimestamp()
-    ).catch(error => { });
+    return canal_a_enviar.send({
+        embed: new Discord.MessageEmbed()
+            .setDescription(argumentoDeLaDescripcion)
+            .setColor(color)
+            .setTimestamp()
+    }).catch(error => { });
 }
 
 function play(guild, song) {
