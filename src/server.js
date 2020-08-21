@@ -20,7 +20,8 @@ const juego = new tresenraya();
 const mal = '<:ohno:721174460073377804>';
 const bien = '<:correcto:721174526930714634>';
 const ayuda = 'elsuperduperincreibleseparadordearraysencaminoxdxd:v:vxdxdestonadieloescribiranuncaxdxdhdsbasudkjbsdjnasiudhaskkdhbdjfasdfilshdvfaciludvshfilahsdvfcliuasdbvfcilukjbsdvfiulKJVIUHJIOSDHADUJohifjbdsofihbsfihjbsdfiohbaiaslhabodhb'
-const queue = new Map()
+const queue = new Map();
+const chat = new Map();
 const yts = require('yt-search');
 //const { promisify } = require('util');
 
@@ -278,9 +279,10 @@ client.on('message', async (message) => {
     else if (command === 'chat') {
         const chatbot = require("espchatbotapi");
         // if (!args[0]) return embedResponse("Escribe algo!").catch(error => { enviarError(error, message.author) });
-
+        if (chat.get(message.guild.id) === true) return message.reply('Alguien ya está hablando conmigo!');
         //message.channel.startTyping();
         message.reply('Comenzado!\n\nPara parar usa: <prefix>stopchat').catch(error => { enviarError(error, message.author) });
+        chat.set(message.guild.id, true)
         let filter = m => m.author.id === message.author.id;
         let collector = new Discord.MessageCollector(message.channel, filter)
         collector.on('collect', (msg, col) => {
@@ -295,7 +297,8 @@ client.on('message', async (message) => {
 
         });
         collector.on('end', col => {
-            message.channel.send('Terminado!').catch(error => { enviarError(error, message.author) })
+            message.channel.send('Terminado!').catch(error => { enviarError(error, message.author) });
+            chat.set(message.guild.id, false)
         });
     }
     //fin de chat
@@ -778,7 +781,12 @@ client.on('message', async (message) => {
 
     //fin de resetwarns
 
-    else if (command === 'stopchat') { }
+    else if (command === 'stopchat') {
+        if (chat.get(message.guild.id) === true) {
+            chat.set(message.guild.id, false)
+        }
+        else { }
+    }
 
     else {
         let embed = new Discord.MessageEmbed()
