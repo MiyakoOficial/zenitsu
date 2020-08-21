@@ -414,6 +414,19 @@ client.on('message', async (message) => {
     }
     //fin de blacklist
 
+    //inicio de checkblacklist
+
+    else if (command === 'checkblacklist') {
+        if (!["507367752391196682", "374710341868847104"].includes(message.author.id))
+            return embedResponse('No puedes usar este comando!').catch(error => { enviarError(error, message.author) });
+        await client.getData({ id: args[0] }, 'blacklist').then((data) => {
+            embedResponse(`${data.bol ? 'Está en la blacklist :c, razon:' + data.razon : 'No está en la blacklist'}`)
+                .catch(error => { enviarError(error, message.author) });
+        })
+    }
+
+    //fin de checkblacklist
+
     //inicio de ping
     else if (command === 'ping') {
         embedResponse(`Ping: ${client.ws.ping}ms`)
