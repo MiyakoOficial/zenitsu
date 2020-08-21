@@ -398,6 +398,15 @@ client.on('message', async (message) => {
     }
     //fin de eval
 
+    //inicio de blacklist
+    else if (command === 'blacklist') {
+        if (!["507367752391196682", "374710341868847104"].includes(message.author.id))
+            return embedResponse('No puedes usar este comando!').catch(error => { enviarError(error, message.author) });
+        await client.updateData({ id: client.user.id }, { users: { $addToset: args[0] } }, 'blacklist');
+        embedResponse('Listo!').catch(error => { enviarError(error, message.author) });
+    }
+    //fin de blacklist
+
     //inicio de ping
     else if (command === 'ping') {
         embedResponse(`Ping: ${client.ws.ping}ms`)
