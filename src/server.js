@@ -782,10 +782,7 @@ client.on('message', async (message) => {
     //fin de resetwarns
 
     else if (command === 'stopchat') {
-        if (chat.get(message.guild.id) === true) {
-            chat.set(message.guild.id, false)
-        }
-        else { }
+
     }
 
     else {
