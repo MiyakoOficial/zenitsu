@@ -178,7 +178,7 @@ client.on('message', async (message) => {
     if (!message.content.startsWith(prefix)) return;
     if (message.content.length < prefix.length + 1) return;
     function xd(a) {
-        a.bol
+        return a.bol
     }
     if (xd(await client.getData({ id: message.author.id }, 'blacklist'))) return embedResponse('Wow, al parecer te has portado mal...\n\nQuieres usarme?, pues entra [Aqui](https://discord.gg/hbSahh8)')
 
