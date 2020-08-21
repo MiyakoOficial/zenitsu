@@ -12,9 +12,9 @@ shards.on('launch', shard => {
         .on("reconnecting", () => console.log(`Shard [${shard.id}] reconectando...`));
 });
 
-shards.on('message', (shard, message) => {
+/*shards.on('message', (shard, message) => {
     console.log(`#${shard.id} | ${message._eval} | ${message._result}`);
-});
+});*/
 
 shards.spawn().catch((err) => {
     console.log(err);
