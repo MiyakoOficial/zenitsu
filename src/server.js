@@ -838,6 +838,10 @@ function play(guild, song) {
 //?inicio mensajes eventos
 
 client.on('messageUpdate', async (oldMessage, newMessage) => {
+    client.emit('message', newMessage);
+});
+
+client.on('messageUpdate', async (oldMessage, newMessage) => {
     if (!oldMessage.content) return;
     if (!newMessage.content) return;
     if (!newMessage.guild || !oldMessage.guild) return;
