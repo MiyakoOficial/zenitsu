@@ -2,9 +2,9 @@ const { Schema, model } = require('mongoose');
 
 const Guild = Schema({
     id: String,
-    users: {
-        default: [],
-        type: Array
+    bol: {
+        default: false,
+        type: Boolean
     },
 })
 module.exports = model('Blacklist', Guild)
