@@ -178,7 +178,7 @@ client.on('message', async (message) => {
     if (!message.content.startsWith(prefix)) return;
     if (message.content.length < prefix.length + 1) return;
 
-    if (await client.getData({ id: message.author.id }, 'blacklist', false).bol) return embedResponse('Wow, al parecer te has portado mal...\n\nQuieres usarme?, pues entra [Aqui](https://discord.gg/hbSahh8)')
+    if (await client.getData({ id: message.author.id }, 'blacklist', false).bol === true) return embedResponse('Wow, al parecer te has portado mal...\n\nQuieres usarme?, pues entra [Aqui](https://discord.gg/hbSahh8)')
 
     /*const blacklist = []
     if (blacklist.includes(message.author.id)) return;*/
@@ -407,7 +407,7 @@ client.on('message', async (message) => {
             return embedResponse('No puedes usar este comando!').catch(error => { enviarError(error, message.author) });
         if (!client.users.cache.get(args[0])) return embedResponse('No encontre al usuario!').catch(error => { enviarError(error, message.author) });
         if (!['true', 'false'].includes(args[1])) return embedResponse('¿true o false?').catch(error => { enviarError(error, message.author) });
-        await client.updateData({ id: args[0] }, { bol: args[1], razon: args.slice(2).join(' ') }, 'blacklist', false);
+        await client.updateData({ id: args[0] }, { bol: args[1], razon: args.slice(2).join(' ') }, 'blacklist');
         embedResponse('Listo!').catch(error => { enviarError(error, message.author) });
     }
     //fin de blacklist
