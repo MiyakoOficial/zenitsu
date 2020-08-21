@@ -408,6 +408,7 @@ client.on('message', async (message) => {
     else if (command === 'blacklist') {
         if (!["507367752391196682", "374710341868847104"].includes(message.author.id))
             return embedResponse('No puedes usar este comando!').catch(error => { enviarError(error, message.author) });
+        if (!args[0]) return embedResponse('Escribe la ID de un usuario!').catch(error => { enviarError(error, message.author) });
         if (!client.users.cache.get(args[0])) return embedResponse('No encontre al usuario!').catch(error => { enviarError(error, message.author) });
         if (!['true', 'false'].includes(args[1])) return embedResponse('¿true o false?').catch(error => { enviarError(error, message.author) });
         await client.updateData({ id: args[0] }, { bol: args[1], razon: args.slice(2).join(' ') }, 'blacklist');
@@ -420,6 +421,8 @@ client.on('message', async (message) => {
     else if (command === 'checkblacklist') {
         if (!["507367752391196682", "374710341868847104"].includes(message.author.id))
             return embedResponse('No puedes usar este comando!').catch(error => { enviarError(error, message.author) });
+        if (!args[0]) return embedResponse('Escribe la ID de un usuario!').catch(error => { enviarError(error, message.author) });
+        if (!client.users.cache.get(args[0])) return embedResponse('No encontre al usuario!').catch(error => { enviarError(error, message.author) });
         await client.getData({ id: args[0] }, 'blacklist').then((data) => {
             embedResponse(`${data.bol ? 'Está en la blacklist :c, razon:' + data.razon : 'No está en la blacklist'}`)
                 .catch(error => { enviarError(error, message.author) });
