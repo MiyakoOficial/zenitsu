@@ -6,5 +6,9 @@ const Guild = Schema({
         default: false,
         type: Boolean
     },
+    razon: {
+        default: 'No especificada!',
+        type: 'String'
+    }
 })
 module.exports = model('Blacklist', Guild)
