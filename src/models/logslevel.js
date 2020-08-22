@@ -7,4 +7,4 @@ const Guild = Schema({
         type: String
     },
 })
-module.exports = model('Logs', Guild)
+module.exports = model('canal de xp', Guild)
