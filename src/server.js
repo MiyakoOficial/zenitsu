@@ -177,7 +177,7 @@ client.on('message', async (message) => {
     }
 
     if (!message.content.startsWith(prefix)) {
-        levelFunction(message)
+        await levelFunction(message)
         return;
     }
     if (message.content.length < prefix.length + 1) return;
