@@ -66,27 +66,30 @@ function updateData({ ...search }, { ...settings }, db, saveIfNotExists = true) 
 module.exports = {
     levelFunction: async (message) => {
 
-        let { xp, nivel } = await getData({ id: `${message.guild.id}_${message.author.id}` }, 'niveles');
+        await getData({ id: `${message.guild.id}_${message.author.id}` }, 'niveles').then((data) => {
 
-        let ramdomxp = Math.floor(Math.random() * 14) + 1;
+            let xp = data.xp;
+            let nivel = data.nivel;
 
-        let levelup = 5 * (nivel ** 2) + 50 * nivel + 100;
+            let ramdomxp = Math.floor(Math.random() * 14) + 1;
 
-        if ((xp + randomxp) > levelup) {
+            let levelup = 5 * (nivel ** 2) + 50 * nivel + 100;
 
-            await updateData({ id: `${message.guild.id}_${message.author.id}` }, { xp: 0 }, 'niveles')
-            await updateData({ id: `${message.guild.id}_${message.author.id}` }, { $inc: { nivel: 1 } }, 'niveles')
+            if ((xp + randomxp) > levelup) {
 
-            let embed = new Discord.MessageEmbed()
-                .setDescription(`Subiste al nivel \`${nivel}\``);
-            message.channel.send({ embed: embed })
+                await updateData({ id: `${message.guild.id}_${message.author.id}` }, { xp: 0 }, 'niveles')
+                await updateData({ id: `${message.guild.id}_${message.author.id}` }, { $inc: { nivel: 1 } }, 'niveles')
 
-        }
+                let embed = new Discord.MessageEmbed()
+                    .setDescription(`Subiste al nivel \`${nivel}\``);
+                message.channel.send({ embed: embed })
 
-        else {
-            updateData({ id: `${message.guild.id}_${message.author.id}` }, { $inc: { xp: ramdomxp } }, 'niveles')
-            console.log(`${message.author.tag} ganó ${randomxp}, es nivel: ${nivel}, xp que tiene: ${xp}`)
-        }
+            }
 
+            else {
+                updateData({ id: `${message.guild.id}_${message.author.id}` }, { $inc: { xp: ramdomxp } }, 'niveles')
+                console.log(`${message.author.tag} ganó ${randomxp}, es nivel: ${nivel}, xp que tiene: ${xp}`)
+            }
+        })
     }
 };
