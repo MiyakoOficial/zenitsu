@@ -61,20 +61,12 @@ function updateData({ ...search }, { ...settings }, db, saveIfNotExists = true) 
     })();
 }
 
-function x(e) {
-    e.then(a => { return a.xp })
-}
 
-function l(e) {
-    e.then(a => { return a.nivel })
-}
 
 module.exports = {
     levelFunction: async (message) => {
 
-        let xp = x(await getData({ id: `${message.guild.id}_${message.author.id}` }))
-
-        let nivel = l(await getData({ id: `${message.guild.id}_${message.author.id}` }));
+        let { xp, nivel } = await getData({ id: `${message.guild.id}_${message.author.id}` }, 'niveles');
 
         let ramdomxp = Math.floor(Math.random() * 14) + 1;
 
@@ -92,7 +84,7 @@ module.exports = {
         }
 
         else {
-            updateData({ id: `${message.guild.id}_${message.author.id}` }, { $inc: { xp: ramdomxp } })
+            updateData({ id: `${message.guild.id}_${message.author.id}` }, { $inc: { xp: ramdomxp } }, 'niveles')
             console.log(`${message.author.tag} ganó ${randomxp}, es nivel: ${nivel}, xp que tiene: ${xp}`)
         }
 
