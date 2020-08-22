@@ -1,5 +1,7 @@
 const Discord = require('discord.js')
 
+let client;
+
 module.exports = {
     levelFunction: async (message) => {
 
