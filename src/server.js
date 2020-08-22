@@ -179,11 +179,11 @@ client.on('message', async (message) => {
     if (!message.content.startsWith(prefix)) {
         let { xp, nivel } = await client.getData({ id: `${message.guild.id}_${message.author.id}` }, 'niveles');
 
-        let ramdomxp = Math.floor(Math.random() * 14) + 1;
+        let random = Math.floor(Math.random() * 14) + 1;
 
         let levelup = 5 * (nivel ** 2) + 50 * nivel + 100;
 
-        if ((xp + randomxp) > levelup) {
+        if ((xp + random) > levelup) {
 
             await client.updateData({ id: `${message.guild.id}_${message.author.id}` }, { xp: 0 }, 'niveles')
             await client.updateData({ id: `${message.guild.id}_${message.author.id}` }, { $inc: { nivel: 1 } }, 'niveles')
