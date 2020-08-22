@@ -173,13 +173,10 @@ client.on('message', async (message) => {
 
     let random = Math.floor(Math.random() * 14) + 1;
     if (!message.content.startsWith(prefix)) {
-        let cooldownniveles = new Map()
+        let cooldownniveles = new Map();
 
         if (cooldownniveles.has(`${message.guild.id}_${message.author.id}`)) {
-            let cooldown = cooldownniveles.get(`${message.guild.id}_${message.author.id}`)
-            if (Date.now() < cooldown) {
-                return;
-            }
+            return;
         }
 
         let { xp, nivel } = await client.getData({ id: `${message.guild.id}_${message.author.id}` }, 'niveles');
@@ -187,7 +184,11 @@ client.on('message', async (message) => {
 
         let levelup = 5 * (nivel ** 2) + 50 * nivel + 100;
 
-        cooldownniveles.set(`${message.guild.id}_${message.author.id}`, Date.now() + 10000)
+        cooldownniveles.add(message.guild.id);
+        setTimeout(() => {
+            cooldown.delete(message.author.id);
+        }, ms('10s'));
+
 
         if ((xp + random) > levelup) {
 
@@ -223,14 +224,14 @@ client.on('message', async (message) => {
         message.channel.send({
             embed: new Discord.MessageEmbed()
                 .setColor(color)
-                .addField('Comandos', `${prefix} help, ${prefix} suggest, ${prefix} bugreport, ${prefix} invite`)
-                .addField('Extras', `${prefix} txt, ${prefix} ping, ${prefix} chat, ${prefix} canal / channel, ${prefix} snipe`)
-                .addField('Moderación', `${prefix} clear, ${prefix} voicekick, ${prefix} voicemute, ${prefix} voiceunmute, ${prefix} voicedeaf, ${prefix} voiceundeaf, ${prefix} warn, ${prefix} checkwarns, ${prefix} resetwarns, ${prefix} setwarns`)
-                .addField('Administración', `${prefix} blockchannels, ${prefix} setprefix / changeprefix, ${prefix} setlogs / logschannel`)
-                .addField('Diversión', `${prefix} challenge, ${prefix} achievement, ${prefix} ship, ${prefix} supreme, ${prefix} didyoumean, ${prefix} captcha, ${prefix} pornhub`)
-                .addField('Música', `${prefix} play / p, ${prefix} queue / q, ${prefix} skip / s, ${prefix} stop, ${prefix} nowplaying / np, ${prefix} volume / v`)
-                .addField('Niveles', `${prefix} setxp / setchannelxp, ${prefix} xp / exp`)
-                .addField('Privados', `${prefix} eval, ${prefix} blacklist, ${prefix} checkblacklist`)
+                .addField('Comandos', `${prefix}help, ${prefix}suggest, ${prefix}bugreport, ${prefix}invite`)
+                .addField('Extras', `${prefix}txt, ${prefix}ping, ${prefix}chat, ${prefix}canal/channel, ${prefix}snipe`)
+                .addField('Moderación', `${prefix}clear, ${prefix}voicekick, ${prefix}voicemute, ${prefix}voiceunmute, ${prefix}voicedeaf, ${prefix}voiceundeaf, ${prefix}warn, ${prefix}checkwarns, ${prefix}resetwarns, ${prefix}setwarns`)
+                .addField('Administración', `${prefix}blockchannels, ${prefix} setprefix/changeprefix, ${prefix}setlogs/logschannel`)
+                .addField('Diversión', `${prefix}challenge, ${prefix}achievement, ${prefix}ship, ${prefix}supreme, ${prefix}didyoumean, ${prefix}captcha, ${prefix}pornhub`)
+                .addField('Música', `${prefix}play/p, ${prefix}queue/q, ${prefix}skip/s, ${prefix}stop, ${prefix}nowplaying/np, ${prefix}volume/v`)
+                .addField('Niveles', `${prefix}setxp/setchannelxp, ${prefix}xp/exp`)
+                .addField('Privados', `${prefix}eval, ${prefix}blacklist, ${prefix}checkblacklist`)
                 .setThumbnail(client.user.displayAvatarURL({ format: 'png', size: 2048 }))
                 .setFooter('Recomendamos que el bot tenga todos los permisos para que no haya problemas!', client.user.displayAvatarURL({ format: 'png', size: 2048 }))
         }).catch(error => { enviarError(error, message.author) });
