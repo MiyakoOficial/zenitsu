@@ -187,7 +187,7 @@ client.on('message', async (message) => {
 
         let levelup = 5 * (nivel ** 2) + 50 * nivel + 100;
 
-        cooldownniveles.set(`${message.guild.id}_${message.author.id}`, Date.now() + ms('30s'))
+        cooldownniveles.set(`${message.guild.id}_${message.author.id}`, Date.now() + 10000)
 
         if ((xp + random) > levelup) {
 
