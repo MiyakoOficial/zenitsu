@@ -67,30 +67,29 @@ function updateData({ ...search }, { ...settings }, db, saveIfNotExists = true) 
 module.exports = {
     levelFunction: async (message) => {
 
-        await getData({ id: `${message.guild.id}_${message.author.id}` }, 'niveles').then(async (data) => {
+        let data = await getData({ id: `${message.guild.id}_${message.author.id}` }, 'niveles');
 
-            let xp = 0 || data.xp;
-            let nivel = 0 || data.nivel;
+        let xp = 0 || data.xp;
+        let nivel = 0 || data.nivel;
 
-            let ramdomxp = Math.floor(Math.random() * 14) + 1;
+        let ramdomxp = Math.floor(Math.random() * 14) + 1;
 
-            let levelup = 5 * (nivel ** 2) + 50 * nivel + 100;
+        let levelup = 5 * (nivel ** 2) + 50 * nivel + 100;
 
-            if ((xp + randomxp) > levelup) {
+        if ((xp + randomxp) > levelup) {
 
-                await updateData({ id: `${message.guild.id}_${message.author.id}` }, { xp: 0 }, 'niveles')
-                await updateData({ id: `${message.guild.id}_${message.author.id}` }, { $inc: { nivel: 1 } }, 'niveles')
+            await updateData({ id: `${message.guild.id}_${message.author.id}` }, { xp: 0 }, 'niveles')
+            await updateData({ id: `${message.guild.id}_${message.author.id}` }, { $inc: { nivel: 1 } }, 'niveles')
 
-                let embed = new Discord.MessageEmbed()
-                    .setDescription(`Subiste al nivel \`${nivel}\``);
-                message.channel.send({ embed: embed })
+            let embed = new Discord.MessageEmbed()
+                .setDescription(`Subiste al nivel \`${nivel}\``);
+            message.channel.send({ embed: embed })
 
-            }
+        }
 
-            else {
-                updateData({ id: `${message.guild.id}_${message.author.id}` }, { $inc: { xp: ramdomxp } }, 'niveles')
-                console.log(`${message.author.tag} ganó ${randomxp}, es nivel: ${nivel}, xp que tiene: ${xp}`)
-            }
-        })
+        else {
+            updateData({ id: `${message.guild.id}_${message.author.id}` }, { $inc: { xp: ramdomxp } }, 'niveles')
+            console.log(`${message.author.tag} ganó ${randomxp}, es nivel: ${nivel}, xp que tiene: ${xp}`)
+        }
     }
 };
