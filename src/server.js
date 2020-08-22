@@ -24,6 +24,7 @@ const ayuda = 'elsuperduperincreibleseparadordearraysencaminoxdxd:v:vxdxdestonad
 const queue = new Map();
 const chat = new Map();
 const yts = require('yt-search');
+const ms = require('ms');
 //const { promisify } = require('util');
 
 (async () => {
@@ -178,10 +179,21 @@ client.on('message', async (message) => {
 
     let random = Math.floor(Math.random() * 14) + 1;
     if (!message.content.startsWith(prefix)) {
+        let cooldownniveles = new Map()
+
+        if (cooldownniveles.has(`${message.guild.id}_${message.author.id}`)) {
+            let cooldown = cooldownniveles.get(`${message.guild.id}_${message.author.id}`)
+            if (Date.now() < cooldown) {
+                return;
+            }
+        }
+
         let { xp, nivel } = await client.getData({ id: `${message.guild.id}_${message.author.id}` }, 'niveles');
 
 
         let levelup = 5 * (nivel ** 2) + 50 * nivel + 100;
+
+        cooldownniveles.set(`${message.guild.id}_${message.author.id}`, Date.now() + ms('30s'))
 
         if ((xp + random) > levelup) {
 
@@ -190,13 +202,13 @@ client.on('message', async (message) => {
             let { canal } = await client.getData({ id: message.guild.id }, 'logslevel')
             let channel = client.channels.cache.get(canal) || message.channel;
             //if (!channel) channel = message.channel;
-            embedResponse(`<@${message.author.id}>, subiste al nivel ${nivel + 1}!`, channel).catch(a => { });
+            embedResponse(`<@${message.author.id}>, subiste al nivel ${nivel + 1} !`, channel).catch(a => { });
 
         }
 
         else {
-            client.updateData({ id: `${message.guild.id}_${message.author.id}` }, { $inc: { xp: random } }, 'niveles');
-            //console.log(`${message.author.tag} ganó ${random}, es nivel: ${nivel}, xp que tiene: ${xp}`);
+            client.updateData({ id: `${message.guild.id} _${message.author.id} ` }, { $inc: { xp: random } }, 'niveles');
+            //console.log(`${ message.author.tag } ganó ${ random }, es nivel: ${ nivel }, xp que tiene: ${ xp } `);
         }
         return;
     }
@@ -217,14 +229,14 @@ client.on('message', async (message) => {
         message.channel.send({
             embed: new Discord.MessageEmbed()
                 .setColor(color)
-                .addField('Comandos', `${prefix}help, ${prefix}suggest, ${prefix}bugreport, ${prefix}invite`)
-                .addField('Extras', `${prefix}txt, ${prefix}ping, ${prefix}chat, ${prefix}canal/channel, ${prefix}snipe`)
-                .addField('Moderación', `${prefix}clear, ${prefix}voicekick, ${prefix}voicemute, ${prefix}voiceunmute, ${prefix}voicedeaf, ${prefix}voiceundeaf, ${prefix}warn, ${prefix}checkwarns, ${prefix}resetwarns, ${prefix}setwarns`)
-                .addField('Administración', `${prefix}blockchannels, ${prefix}setprefix/changeprefix,  ${prefix}setlogs/logschannel`)
-                .addField('Diversión', `${prefix}challenge, ${prefix}achievement, ${prefix}ship, ${prefix}supreme, ${prefix}didyoumean, ${prefix}captcha, ${prefix}pornhub`)
-                .addField('Música', `${prefix}play/p, ${prefix}queue/q, ${prefix}skip/s, ${prefix}stop, ${prefix}nowplaying/np, ${prefix}volume/v`)
-                .addField('Niveles', `${prefix}setxp/setchannelxp, ${prefix}xp/exp`)
-                .addField('Privados', `${prefix}eval, ${prefix}blacklist, ${prefix}checkblacklist`)
+                .addField('Comandos', `${prefix} help, ${prefix} suggest, ${prefix} bugreport, ${prefix} invite`)
+                .addField('Extras', `${prefix} txt, ${prefix} ping, ${prefix} chat, ${prefix} canal / channel, ${prefix} snipe`)
+                .addField('Moderación', `${prefix} clear, ${prefix} voicekick, ${prefix} voicemute, ${prefix} voiceunmute, ${prefix} voicedeaf, ${prefix} voiceundeaf, ${prefix} warn, ${prefix} checkwarns, ${prefix} resetwarns, ${prefix} setwarns`)
+                .addField('Administración', `${prefix} blockchannels, ${prefix} setprefix / changeprefix, ${prefix} setlogs / logschannel`)
+                .addField('Diversión', `${prefix} challenge, ${prefix} achievement, ${prefix} ship, ${prefix} supreme, ${prefix} didyoumean, ${prefix} captcha, ${prefix} pornhub`)
+                .addField('Música', `${prefix} play / p, ${prefix} queue / q, ${prefix} skip / s, ${prefix} stop, ${prefix} nowplaying / np, ${prefix} volume / v`)
+                .addField('Niveles', `${prefix} setxp / setchannelxp, ${prefix} xp / exp`)
+                .addField('Privados', `${prefix} eval, ${prefix} blacklist, ${prefix} checkblacklist`)
                 .setThumbnail(client.user.displayAvatarURL({ format: 'png', size: 2048 }))
                 .setFooter('Recomendamos que el bot tenga todos los permisos para que no haya problemas!', client.user.displayAvatarURL({ format: 'png', size: 2048 }))
         }).catch(error => { enviarError(error, message.author) });
@@ -237,7 +249,7 @@ client.on('message', async (message) => {
         let invitacionLink = 'https://discord.gg/hbSahh8';
         let embed = new Discord.MessageEmbed()
             .setThumbnail(client.user.displayAvatarURL({ format: 'png', size: 2048 }))
-            .setDescription(`Link de invitación del bot => [Link](${link})\nLink de invitación al servidor de soporte => [Link](${invitacionLink})`)
+            .setDescription(`Link de invitación del bot => [Link](${link}) \nLink de invitación al servidor de soporte => [Link](${invitacionLink})`)
             .setColor(color)
             .setFooter('Gracias por apoyar!', message.author.displayAvatarURL({ format: 'png', size: 2048 }))
         message.channel.send({ embed: embed }).catch(error => { enviarError(error, message.author) });
