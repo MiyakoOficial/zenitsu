@@ -1,4 +1,5 @@
 const Discord = require('discord.js');
+const mongoose = require('mongoose');
 let { readdir } = require("fs").promises;
 
 let db_files;
