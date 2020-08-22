@@ -822,16 +822,16 @@ client.on('message', async (message) => {
         if (!args[0].match(/\<\@(\!)?[0-9]{18}\>/g)) return embedResponse('La mencion tiene que ser el primer argumento!')
             .catch(error => { enviarError(error, message.author) });
 
-        if (isNaN(args[0])) return embedResponse('El segundo argumento tiene que ser un numero!')
+        if (isNaN(args[1])) return embedResponse('El segundo argumento tiene que ser un numero!')
             .catch(error => { enviarError(error, message.author) });
 
-        if (parseInt(args[0]) < 0) return embedResponse('El segundo argumento debe ser igual o mayor a cero!')
+        if (parseInt(args[1]) < 0) return embedResponse('El segundo argumento debe ser igual o mayor a cero!')
             .catch(error => { enviarError(error, message.author) });
 
-        await client.updateData({ id: `${message.guild.id}.${miembro.id}` }, { warns: parseInt(args[0]) }, 'warns');
+        await client.updateData({ id: `${message.guild.id}.${miembro.id}` }, { warns: parseInt(args[1]) }, 'warns');
 
         //await client.getData({ id: `${message.guild.id}.${miembro.id}` }, 'warns').then((data) => {
-        embedResponse(`Ahora el miembro ${miembro.user.username} tiene ${args[0]} advertencias!`)
+        embedResponse(`Ahora el miembro ${miembro.user.username} tiene ${args[1]} advertencias!`)
             .catch(error => { enviarError(error, message.author) });
         //});
 
