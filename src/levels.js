@@ -1,39 +1,4 @@
-const Discord = require('discord.js')
-
-
-
-module.exports = {
-    levelFunction: async (message) => {
-
-        let { xp, nivel } = await getData({ id: `${message.guild.id}_${message.author.id}` });
-
-        let ramdomxp = Math.floor(Math.random() * 14) + 1;
-
-        let levelup = 5 * (nivel ** 2) + 50 * nivel + 100;
-
-        if ((xp + randomxp) > levelup) {
-
-            await updateData({ id: `${message.guild.id}_${message.author.id}` }, { xp: 0 }, 'niveles')
-            await updateData({ id: `${message.guild.id}_${message.author.id}` }, { $inc: { nivel: 1 } }, 'niveles')
-
-            let embed = new Discord.MessageEmbed()
-                .setDescription(`Subiste al nivel \`${nivel}\``);
-            message.channel.send({ embed: embed })
-
-        }
-
-        else {
-            updateData({ id: `${message.guild.id}_${message.author.id}` }, { $inc: { xp: ramdomxp } })
-            console.log(`${message.author.tag} ganó ${randomxp}, es nivel: ${nivel}, xp que tiene: ${xp}`)
-        }
-
-    }
-};
-
-
-
-
-
+const Discord = require('discord.js');
 
 (async () => {
 
@@ -92,4 +57,33 @@ module.exports = {
             return await data.updateOne(settings);
         })();
     }
+
+    module.exports = {
+        levelFunction: async (message) => {
+
+            let { xp, nivel } = await getData({ id: `${message.guild.id}_${message.author.id}` });
+
+            let ramdomxp = Math.floor(Math.random() * 14) + 1;
+
+            let levelup = 5 * (nivel ** 2) + 50 * nivel + 100;
+
+            if ((xp + randomxp) > levelup) {
+
+                await updateData({ id: `${message.guild.id}_${message.author.id}` }, { xp: 0 }, 'niveles')
+                await updateData({ id: `${message.guild.id}_${message.author.id}` }, { $inc: { nivel: 1 } }, 'niveles')
+
+                let embed = new Discord.MessageEmbed()
+                    .setDescription(`Subiste al nivel \`${nivel}\``);
+                message.channel.send({ embed: embed })
+
+            }
+
+            else {
+                updateData({ id: `${message.guild.id}_${message.author.id}` }, { $inc: { xp: ramdomxp } })
+                console.log(`${message.author.tag} ganó ${randomxp}, es nivel: ${nivel}, xp que tiene: ${xp}`)
+            }
+
+        }
+    };
+
 })();
