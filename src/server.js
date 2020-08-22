@@ -846,9 +846,9 @@ client.on('message', async (message) => {
 
     //inicio de xp
     else if (command === 'xp' || command === 'exp') {
+        let member = message.guild.members.cache.find(a => a.name === args.join(' ')) || message.guild.members.cache.get(args[0]) || message.mentions.members.first() || message.member
         let data = await client.getData({ id: `${message.guild.id}_${member.user.id}` }, 'niveles');
         let levelup = 5 * (data.nivel ** 2) + 50 * data.nivel + 100;
-        let member = message.guild.members.cache.find(a => a.name === args.join(' ')) || message.guild.members.cache.get(args[0]) || message.mentions.members.first() || message.member
 
         let embed = new Discord.MessageEmbed()
             .setDescription(`Nivel: ${!data.nivel ? 0 : data.nivel}\nXp: ${!data.xp ? 0 : data.xp}/${levelup}`)
