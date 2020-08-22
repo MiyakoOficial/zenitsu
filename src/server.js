@@ -35,7 +35,7 @@ const yts = require('yt-search');
     client.getData = async ({ ...search }, db, inexistentSave = true) => {
         if (!search || !db) return;
         if (!available_models.includes(db))
-            return console.log("[-] (getData) Se esperaba una colección existente.");
+            return console.log("[-] (getData) Se esperaba una colección existente, pusiste esta: " + db);
 
         const db_collection = require(`./models/${db}`);
         const data = await db_collection.findOne(search);
@@ -47,7 +47,7 @@ const yts = require('yt-search');
     client.createData = async (data, db) => {
         if (!data || !db) return;
         if (!available_models.includes(db))
-            return console.log("[-] (createData) Se esperaba una colección existente.");
+            return console.log("[-] (createData) Se esperaba una colección existente, pusiste esta: " + db);
 
         const db_collection = require(`./models/${db}`);
         let merged = Object.assign({ _id: mongoose.Types.ObjectId() }, data);
