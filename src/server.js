@@ -865,7 +865,7 @@ client.on('message', async (message) => {
         if (!message.mentions.members.first()) return embedResponse('Menciona a un miembro del servidor!')
             .catch(error => { enviarError(error, message.author) });
 
-        client.updateData({ id: `${message.guild.id}.${message.mentions.users.first().id}` }, { warns: 0 }, 'warns')
+        client.updateData({ id: `${message.guild.id}.${message.mentions.users.first().id}` }, { warns: 0, razon: 'No especificada!' }, 'warns')
 
         embedResponse(`Advertencias reseteadas!`)
             .catch(error => { enviarError(error, message.author) });
