@@ -69,8 +69,8 @@ module.exports = {
 
         await getData({ id: `${message.guild.id}_${message.author.id}` }, 'niveles').then(async (data) => {
 
-            let xp = data.xp;
-            let nivel = data.nivel;
+            let xp = 0 || data.xp;
+            let nivel = 0 || data.nivel;
 
             let ramdomxp = Math.floor(Math.random() * 14) + 1;
 
