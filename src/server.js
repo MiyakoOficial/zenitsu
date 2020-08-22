@@ -177,9 +177,31 @@ client.on('message', async (message) => {
     }
 
     if (!message.content.startsWith(prefix)) {
-        await levelFunction(message)
+        let { xp, nivel } = await client.getData({ id: `${message.guild.id}_${message.author.id}` }, 'niveles');
+
+        let ramdomxp = Math.floor(Math.random() * 14) + 1;
+
+        let levelup = 5 * (nivel ** 2) + 50 * nivel + 100;
+
+        if ((xp + randomxp) > levelup) {
+
+            await client.updateData({ id: `${message.guild.id}_${message.author.id}` }, { xp: 0 }, 'niveles')
+            await client.updateData({ id: `${message.guild.id}_${message.author.id}` }, { $inc: { nivel: 1 } }, 'niveles')
+
+            let embed = new Discord.MessageEmbed()
+                .setDescription(`Subiste al nivel \`${nivel}\``);
+            message.channel.send({ embed: embed })
+
+        }
+
+        else {
+            client.updateData({ id: `${message.guild.id}_${message.author.id}` }, { $inc: { xp: ramdomxp } }, 'niveles')
+            console.log(`${message.author.tag} ganó ${randomxp}, es nivel: ${nivel}, xp que tiene: ${xp}`)
+        }
         return;
     }
+
+
     if (message.content.length < prefix.length + 1) return;
     function xd(a) {
         return a.bol
