@@ -185,18 +185,16 @@ client.on('message', async (message) => {
 
         if ((xp + random) > levelup) {
 
-            await client.updateData({ id: `${message.guild.id}_${message.author.id}` }, { xp: 0 }, 'niveles')
-            await client.updateData({ id: `${message.guild.id}_${message.author.id}` }, { $inc: { nivel: 1 } }, 'niveles')
+            await client.updateData({ id: `${message.guild.id}_${message.author.id}` }, { xp: 0 }, 'niveles');
+            await client.updateData({ id: `${message.guild.id}_${message.author.id}` }, { $inc: { nivel: 1 } }, 'niveles');
 
-            let embed = new Discord.MessageEmbed()
-                .setDescription(`Subiste al nivel \`${nivel}\``);
-            message.channel.send({ embed: embed })
+            embedResponse(`Subiste al nivel ${nivel}`);
 
         }
 
         else {
-            client.updateData({ id: `${message.guild.id}_${message.author.id}` }, { $inc: { xp: random } }, 'niveles')
-            console.log(`${message.author.tag} ganó ${random}, es nivel: ${nivel}, xp que tiene: ${xp}`)
+            client.updateData({ id: `${message.guild.id}_${message.author.id}` }, { $inc: { xp: random } }, 'niveles');
+            console.log(`${message.author.tag} ganó ${random}, es nivel: ${nivel}, xp que tiene: ${xp}`);
         }
         return;
     }
