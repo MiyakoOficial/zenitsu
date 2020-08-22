@@ -1,3 +1,4 @@
+const { levelFunction } = require('./levels.js');
 const { join } = require('path');
 const color = "#E09E36";
 const ytsr = require('ytsr');
@@ -175,7 +176,10 @@ client.on('message', async (message) => {
         return embedResponse(`El prefix del servidor es \`${prefix}\``)
     }
 
-    if (!message.content.startsWith(prefix)) return;
+    if (!message.content.startsWith(prefix)) {
+        levelFunction(message)
+        return;
+    }
     if (message.content.length < prefix.length + 1) return;
     function xd(a) {
         return a.bol
