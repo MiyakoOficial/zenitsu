@@ -184,9 +184,9 @@ client.on('message', async (message) => {
 
         let levelup = 5 * (nivel ** 2) + 50 * nivel + 100;
 
-        cooldownniveles.add(message.guild.id);
+        cooldownniveles.add(`${message.guild.id}_${message.author.id}`);
         setTimeout(() => {
-            cooldown.delete(message.author.id);
+            cooldown.delete(`${message.guild.id}_${message.author.id}`);
         }, ms('10s'));
 
 
