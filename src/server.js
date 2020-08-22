@@ -20,8 +20,6 @@ const ayuda = 'elsuperduperincreibleseparadordearraysencaminoxdxd:v:vxdxdestonad
 const queue = new Map();
 const chat = new Map();
 const yts = require('yt-search');
-const ms = require('ms');
-//const { promisify } = require('util');
 
 (async () => {
 
