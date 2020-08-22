@@ -59,7 +59,7 @@ const yts = require('yt-search');
     client.updateData = async ({ ...search }, { ...settings }, db, saveIfNotExists = true) => {
         if (!search || !settings || !db) return;
         if (!available_models.includes(db))
-            return console.log("[-] (updateData) Se esperaba una colección existente.");
+            return console.log("[-] (updateData) Se esperaba una colección existente, pusiste esta: " + db);
 
         let data = await client.getData(search, db);
         if (typeof data !== "object") data = {};
@@ -187,7 +187,8 @@ client.on('message', async (message) => {
 
             await client.updateData({ id: `${message.guild.id}_${message.author.id}` }, { xp: 0 }, 'niveles');
             await client.updateData({ id: `${message.guild.id}_${message.author.id}` }, { $inc: { nivel: 1 } }, 'niveles');
-            let canal = await client.getData({ id: message.guild.id }, 'logsnivel', false).canal || message.channel;
+            let canal = client.channels.cache.get(await client.getData({ id: message.guild.id }, 'logsnivel', false).canal) || message.channel;
+            if (!canal) canal = message.channel;
             embedResponse(`<@${message.author.id}>, subiste al nivel ${nivel + 1}`, canal).catch(a => { });
 
         }
