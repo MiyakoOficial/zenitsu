@@ -219,7 +219,7 @@ client.on('message', async (message) => {
                 .setColor(color)
                 .addField('Comandos', `${prefix}help, ${prefix}suggest, ${prefix}bugreport, ${prefix}invite`)
                 .addField('Extras', `${prefix}txt, ${prefix}ping, ${prefix}chat, ${prefix}canal/channel, ${prefix}snipe`)
-                .addField('Moderación', `${prefix}clear, ${prefix}voicekick, ${prefix}voicemute, ${prefix}voiceunmute, ${prefix}voicedeaf, ${prefix}voiceundeaf, ${prefix}warn, ${prefix}checkwarns, ${prefix}resetwarns, ${prefix}setwarn`)
+                .addField('Moderación', `${prefix}clear, ${prefix}voicekick, ${prefix}voicemute, ${prefix}voiceunmute, ${prefix}voicedeaf, ${prefix}voiceundeaf, ${prefix}warn, ${prefix}checkwarns, ${prefix}resetwarns, ${prefix}setwarns`)
                 .addField('Administración', `${prefix}blockchannels, ${prefix}setprefix/changeprefix,  ${prefix}setlogs/logschannel`)
                 .addField('Diversión', `${prefix}challenge, ${prefix}achievement, ${prefix}ship, ${prefix}supreme, ${prefix}didyoumean, ${prefix}captcha, ${prefix}pornhub`)
                 .addField('Música', `${prefix}play/p, ${prefix}queue/q, ${prefix}skip/s, ${prefix}stop, ${prefix}nowplaying/np, ${prefix}volume/v`)
@@ -808,9 +808,9 @@ client.on('message', async (message) => {
 
     //fin de warn
 
-    //inicio de setwarn
+    //inicio de setwarns
 
-    else if (command === 'setwarn') {
+    else if (command === 'setwarns') {
         if (!message.member.hasPermission('KICK_MEMBERS')) return errorEmbed('No tienes el permiso `KICK_MEMBERS`')
             .catch(error => { enviarError(error, message.author) });
 
@@ -838,7 +838,7 @@ client.on('message', async (message) => {
 
     }
 
-    //fin de setwarn
+    //fin de setwarns
 
     //inicio de checkwarns
 
