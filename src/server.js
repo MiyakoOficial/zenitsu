@@ -1,11 +1,7 @@
-//const { levelFunction } = require('./levels.js');
 const { join } = require('path');
 const color = "#E09E36";
 const ytsr = require('ytsr');
 const ytdl = require('ytdl-core');
-const LogsModel = require('../src/models/logs.js');
-//const PrefixsModel = require('../src/Prefix.js');
-const SnipeModel = require('../src/models/snipe.js')
 require('dotenv').config();
 const Discord = require('discord.js');
 const client = new Discord.Client();
@@ -14,7 +10,7 @@ const mongoose = require('mongoose');
 client.databaseVersion = mongoose.version;
 client.database = 'mongoose'
 const { info, error } = require('console');
-const mil = require("ms")
+const ms = require("ms")
 const tresenraya = require('tresenraya');
 const express = require('express');
 const juego = new tresenraya();
