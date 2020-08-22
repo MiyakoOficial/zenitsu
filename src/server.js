@@ -843,6 +843,13 @@ client.on('message', async (message) => {
 
     }
 
+    else if (command === 'xp') {
+        let user = message.guild.members.cache.get(args[0]) || message.mentions.users.first() || message.author
+        let data = await client.getData({ id: `${message.guild.id}_${user.id}` }, 'niveles')
+        message.reply(`Nivel: ${!data.nivel ? 0 : data.nivel}`)
+
+    }
+
     else {
         let embed = new Discord.MessageEmbed()
             .setThumbnail(`https://cdn.discordapp.com/attachments/688054761706094725/714328885533343764/error.gif`)
