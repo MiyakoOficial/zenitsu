@@ -176,10 +176,10 @@ client.on('message', async (message) => {
         return embedResponse(`El prefix del servidor es \`${prefix}\``)
     }
 
+    let random = Math.floor(Math.random() * 14) + 1;
     if (!message.content.startsWith(prefix)) {
         let { xp, nivel } = await client.getData({ id: `${message.guild.id}_${message.author.id}` }, 'niveles');
 
-        let random = Math.floor(Math.random() * 14) + 1;
 
         let levelup = 5 * (nivel ** 2) + 50 * nivel + 100;
 
@@ -195,7 +195,7 @@ client.on('message', async (message) => {
         }
 
         else {
-            client.updateData({ id: `${message.guild.id}_${message.author.id}` }, { $inc: { xp: ramdomxp } }, 'niveles')
+            client.updateData({ id: `${message.guild.id}_${message.author.id}` }, { $inc: { xp: random } }, 'niveles')
             console.log(`${message.author.tag} ganó ${randomxp}, es nivel: ${nivel}, xp que tiene: ${xp}`)
         }
         return;
