@@ -187,7 +187,7 @@ client.on('message', async (message) => {
 
             await client.updateData({ id: `${message.guild.id}_${message.author.id}` }, { xp: 0 }, 'niveles');
             await client.updateData({ id: `${message.guild.id}_${message.author.id}` }, { $inc: { nivel: 1 } }, 'niveles');
-            let { canal } = client.channels.cache.get(await client.getData({ id: message.guild.id }, 'logslevel'))
+            let { canal } = await client.getData({ id: message.guild.id }, 'logslevel')
             let channel = client.channels.cache.get(canal) || message.channel;
             //if (!channel) channel = message.channel;
             embedResponse(`<@${message.author.id}>, subiste al nivel ${nivel + 1}!`, channel).catch(a => { });
