@@ -1,11 +1,11 @@
 const Discord = require('discord.js')
 
-let client = 'client';
+
 
 module.exports = {
     levelFunction: async (message) => {
 
-        let { xp, nivel } = await client.getData({ id: `${message.guild.id}_${message.author.id}` });
+        let { xp, nivel } = await getData({ id: `${message.guild.id}_${message.author.id}` });
 
         let ramdomxp = Math.floor(Math.random() * 14) + 1;
 
@@ -13,8 +13,8 @@ module.exports = {
 
         if ((xp + randomxp) > levelup) {
 
-            await client.updateData({ id: `${message.guild.id}_${message.author.id}` }, { xp: 0 }, 'niveles')
-            await client.updateData({ id: `${message.guild.id}_${message.author.id}` }, { $inc: { nivel: 1 } }, 'niveles')
+            await updateData({ id: `${message.guild.id}_${message.author.id}` }, { xp: 0 }, 'niveles')
+            await updateData({ id: `${message.guild.id}_${message.author.id}` }, { $inc: { nivel: 1 } }, 'niveles')
 
             let embed = new Discord.MessageEmbed()
                 .setDescription(`Subiste al nivel \`${nivel}\``);
@@ -23,7 +23,7 @@ module.exports = {
         }
 
         else {
-            client.updateData({ id: `${message.guild.id}_${message.author.id}` }, { $inc: { xp: ramdomxp } })
+            updateData({ id: `${message.guild.id}_${message.author.id}` }, { $inc: { xp: ramdomxp } })
             console.log(`${message.author.tag} ganó ${randomxp}, es nivel: ${nivel}, xp que tiene: ${xp}`)
         }
 
@@ -41,49 +41,55 @@ module.exports = {
     const db_files = await readdir(require("path").join(__dirname, "./models/"));
     const available_models = db_files.map(elem => elem.endsWith("js") ? elem.slice(0, -3) : elem);
 
-    client.getData = async ({ ...search }, db, inexistentSave = true) => {
-        if (!search || !db) return;
-        if (!available_models.includes(db))
-            return console.log("[-] (getData) Se esperaba una colección existente.");
+    function getData({ ...search }, db, inexistentSave = true) {
+        (async () => {
+            if (!search || !db) return;
+            if (!available_models.includes(db))
+                return console.log("[-] (getData) Se esperaba una colección existente.");
 
-        const db_collection = require(`./models/${db}`);
-        const data = await db_collection.findOne(search);
-        if (!data && inexistentSave) await client.createData(search, db);
+            const db_collection = require(`./models/${db}`);
+            const data = await db_collection.findOne(search);
+            if (!data && inexistentSave) await createData(search, db);
 
-        return data || {};
+            return data || {};
+        })();
     }
 
-    client.createData = async (data, db) => {
-        if (!data || !db) return;
-        if (!available_models.includes(db))
-            return console.log("[-] (createData) Se esperaba una colección existente.");
+    function createData(data, db) {
+        (async () => {
+            if (!data || !db) return;
+            if (!available_models.includes(db))
+                return console.log("[-] (createData) Se esperaba una colección existente.");
 
-        const db_collection = require(`./models/${db}`);
-        let merged = Object.assign({ _id: mongoose.Types.ObjectId() }, data);
+            const db_collection = require(`./models/${db}`);
+            let merged = Object.assign({ _id: mongoose.Types.ObjectId() }, data);
 
-        const newData = new db_collection(merged);
-        return newData.save().catch(err => console.log(err));
+            const newData = new db_collection(merged);
+            return newData.save().catch(err => console.log(err));
+        })();
     }
 
-    client.updateData = async ({ ...search }, { ...settings }, db, saveIfNotExists = true) => {
-        if (!search || !settings || !db) return;
-        if (!available_models.includes(db))
-            return console.log("[-] (updateData) Se esperaba una colección existente.");
+    function updateData({ ...search }, { ...settings }, db, saveIfNotExists = true) {
+        (async () => {
+            if (!search || !settings || !db) return;
+            if (!available_models.includes(db))
+                return console.log("[-] (updateData) Se esperaba una colección existente.");
 
-        let data = await client.getData(search, db);
-        if (typeof data !== "object") data = {};
-        if (!Object.keys(data).length) {
-            if (saveIfNotExists)
-                return setTimeout(async () => { await client.updateData(search, settings, db) }, 1000);
-            else
-                return console.log("[-] (updateData) Si quieres actualizar datos aún así no exista el documento, pon como 4to parámetro en la función: true.");
-        }
-
-        for (const key in settings) {
-            if (settings.hasOwnProperty(key)) {
-                if (data[key] !== settings[key]) data[key] = settings[key];
+            let data = await getData(search, db);
+            if (typeof data !== "object") data = {};
+            if (!Object.keys(data).length) {
+                if (saveIfNotExists)
+                    return setTimeout(async () => { await updateData(search, settings, db) }, 1000);
+                else
+                    return console.log("[-] (updateData) Si quieres actualizar datos aún así no exista el documento, pon como 4to parámetro en la función: true.");
             }
-        }
-        return await data.updateOne(settings);
+
+            for (const key in settings) {
+                if (settings.hasOwnProperty(key)) {
+                    if (data[key] !== settings[key]) data[key] = settings[key];
+                }
+            }
+            return await data.updateOne(settings);
+        })();
     }
 })();
