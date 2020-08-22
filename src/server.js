@@ -870,7 +870,7 @@ client.on('message', async (message) => {
         if (!channel) return embedResponse("No has mencionado un canal/Ese canal no existe.").catch(error => { enviarError(error, message.author) })
         if (!message.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(channel.id)) return embedResponse('El canal tiene que ser del Servidor donde estas!').catch(error => { enviarError(error, message.author) })
 
-        await client.updateData({ id: message.guild.id }, { canal: channel.id }, 'logsnivel')
+        await client.updateData({ id: message.guild.id }, { canal: channel.id }, 'logslevel')
 
         return embedResponse(`Canal establecido en <#${channel.id}>`).catch(error => { enviarError(error, message.author) })
     }
