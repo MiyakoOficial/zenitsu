@@ -66,7 +66,7 @@ function updateData({ ...search }, { ...settings }, db, saveIfNotExists = true) 
 module.exports = {
     levelFunction: async (message) => {
 
-        await getData({ id: `${message.guild.id}_${message.author.id}` }, 'niveles').then((data) => {
+        await getData({ id: `${message.guild.id}_${message.author.id}` }, 'niveles').then(async (data) => {
 
             let xp = data.xp;
             let nivel = data.nivel;
