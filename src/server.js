@@ -188,7 +188,7 @@ client.on('message', async (message) => {
             await client.updateData({ id: `${message.guild.id}_${message.author.id}` }, { xp: 0 }, 'niveles');
             await client.updateData({ id: `${message.guild.id}_${message.author.id}` }, { $inc: { nivel: 1 } }, 'niveles');
 
-            embedResponse(`Subiste al nivel ${nivel}`);
+            embedResponse(`<@${message.author.id}>, subiste al nivel ${nivel === 0 ? 1 : nivel}`);
 
         }
 
