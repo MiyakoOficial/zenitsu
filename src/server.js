@@ -187,14 +187,14 @@ client.on('message', async (message) => {
 
             await client.updateData({ id: `${message.guild.id}_${message.author.id}` }, { xp: 0 }, 'niveles');
             await client.updateData({ id: `${message.guild.id}_${message.author.id}` }, { $inc: { nivel: 1 } }, 'niveles');
-
-            embedResponse(`<@${message.author.id}>, subiste al nivel ${nivel + 1}`);
+            let canal = await client.getData({ id: message.guild.id }, 'logsnivel', false).canal || message.channel;
+            embedResponse(`<@${message.author.id}>, subiste al nivel ${nivel + 1}`, canal).catch(a => { });
 
         }
 
         else {
             client.updateData({ id: `${message.guild.id}_${message.author.id}` }, { $inc: { xp: random } }, 'niveles');
-            console.log(`${message.author.tag} ganó ${random}, es nivel: ${nivel}, xp que tiene: ${xp}`);
+            //console.log(`${message.author.tag} ganó ${random}, es nivel: ${nivel}, xp que tiene: ${xp}`);
         }
         return;
     }
@@ -843,12 +843,36 @@ client.on('message', async (message) => {
 
     }
 
-    else if (command === 'xp') {
-        let user = message.guild.members.cache.get(args[0]) || message.mentions.users.first() || message.author
-        let data = await client.getData({ id: `${message.guild.id}_${user.id}` }, 'niveles')
-        message.reply(`Nivel: ${!data.nivel ? 0 : data.nivel}`)
+    //inicio de xp
+    else if (command === 'xp' || command === 'exp') {
+        let levelup = 5 * (nivel ** 2) + 50 * nivel + 100;
+        let member = message.guild.members.cache.find(a => a.name === args.join(' ')) || message.guild.members.cache.get(args[0]) || message.mentions.members.first() || message.member
+        let data = await client.getData({ id: `${message.guild.id}_${member.user.id}` }, 'niveles');
+
+        let embed = new Discord.MessageEmbed()
+            .setDescription(`Nivel: ${!data.nivel ? 0 : data.nivel}\nXp: ${!data.xp ? 0 : data.xp}/${levelup}`)
+            .setColor(color)
+            .setThumbnail(member.user.displayAvatarURL())
+            .setTimestamp()
+        message.channel.send({ embed: embed })
+            .catch(error => { enviarError(error, message.author) });
+
 
     }
+    //fin de xp
+
+    //inicio de setxp
+    if (command === 'setxp') {
+        if (!message.member.hasPermission("ADMINISTRATOR")) return errorEmbed("No tienes el permiso `ADMINISTRATOR`").catch(error => { enviarError(error, message.author) })
+        let channel = message.mentions.channels.first();
+        if (!channel) return embedResponse("No has mencionado un canal/Ese canal no existe.").catch(error => { enviarError(error, message.author) })
+        if (!message.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(channel.id)) return embedResponse('El canal tiene que ser del Servidor donde estas!').catch(error => { enviarError(error, message.author) })
+
+        await client.updateData({ id: message.guild.id }, { canal: channel.id }, 'logslevel')
+
+        return embedResponse(`Canal establecido en <#${channel.id}>`).catch(error => { enviarError(error, message.author) })
+    }
+    //fin de setxp
 
     else {
         let embed = new Discord.MessageEmbed()
