@@ -863,7 +863,7 @@ client.on('message', async (message) => {
     //fin de xp
 
     //inicio de setxp
-    if (command === 'setxp' || command === 'setchannelxp') {
+    else if (command === 'setxp' || command === 'setchannelxp') {
         if (!message.member.hasPermission("ADMINISTRATOR")) return errorEmbed("No tienes el permiso `ADMINISTRATOR`").catch(error => { enviarError(error, message.author) })
         let channel = message.mentions.channels.first();
         if (!channel) return embedResponse("No has mencionado un canal/Ese canal no existe.").catch(error => { enviarError(error, message.author) })
