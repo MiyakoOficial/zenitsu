@@ -176,7 +176,7 @@ client.on('message', async (message) => {
         let cooldownniveles = new Set();
 
         if (cooldownniveles.has(`${message.guild.id}_${message.author.id}`)) {
-            return;
+            return console.log(message.author.tag + ' Cooldown');
         }
 
         let { xp, nivel } = await client.getData({ id: `${message.guild.id}_${message.author.id}` }, 'niveles');
