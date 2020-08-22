@@ -196,7 +196,7 @@ client.on('message', async (message) => {
 
         else {
             client.updateData({ id: `${message.guild.id}_${message.author.id}` }, { $inc: { xp: random } }, 'niveles')
-            console.log(`${message.author.tag} ganó ${randomxp}, es nivel: ${nivel}, xp que tiene: ${xp}`)
+            console.log(`${message.author.tag} ganó ${random}, es nivel: ${nivel}, xp que tiene: ${xp}`)
         }
         return;
     }
