@@ -947,22 +947,22 @@ function play(guild, song) {
         serverQueue.voiceChannel.leave();
         queue.delete(guild.id);
         return;
-    }
-    // if (serverQueue.songs.length === 0) return serverQueue.textChannel.send('Lista de reproducción acabada.');
-    const dispatcher = serverQueue.connection.play(ytdl(song.url))
-        .on('finish', () => {
-            serverQueue.songs.shift();
-            //console.log(serverQueue.songs)
-            play(guild, serverQueue.songs[0]);
-            if (!serverQueue.songs[0]) return;
-            embedMusic(`Reproduciendo: [${serverQueue.songs[0].title}](${serverQueue.songs[0].url}) - ${serverQueue.songs[0].time}`, serverQueue.textChannel)
-        })
-        .on('error', error => {
-            serverQueue.textChannel.send(error)
-            queue.delete(guild.id);
-        });
-    dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
-
+    } try {
+        // if (serverQueue.songs.length === 0) return serverQueue.textChannel.send('Lista de reproducción acabada.');
+        const dispatcher = serverQueue.connection.play(ytdl(song.url))
+            .on('finish', () => {
+                serverQueue.songs.shift();
+                //console.log(serverQueue.songs)
+                play(guild, serverQueue.songs[0]);
+                if (!serverQueue.songs[0]) return;
+                embedMusic(`Reproduciendo: [${serverQueue.songs[0].title}](${serverQueue.songs[0].url}) - ${serverQueue.songs[0].time}`, serverQueue.textChannel)
+            })
+            .on('error', error => {
+                serverQueue.textChannel.send(error)
+                queue.delete(guild.id);
+            });
+        dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
+    } catch (e) { }
 }
 //fin de musica
 //?inicio de eventos
