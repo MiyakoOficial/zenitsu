@@ -205,7 +205,7 @@ client.on('message', async (message) => {
             client.updateData({ id: `${message.guild.id} _${message.author.id} ` }, { $inc: { xp: random } }, 'niveles');
             //console.log(`${ message.author.tag } ganó ${ random }, es nivel: ${ nivel }, xp que tiene: ${ xp } `);
         }
-        return;
+        return console.log('no prefix message')
     }
 
 
