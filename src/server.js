@@ -175,19 +175,19 @@ client.on('message', async (message) => {
     if (!message.content.startsWith(prefix)) {
         let cooldownniveles = new Set();
 
-        if (cooldownniveles.has(`${message.guild.id}_${message.author.id}`)) {
-            return console.log(message.author.tag + ' Cooldown');
-        }
+        /* if (cooldownniveles.has(`${message.guild.id}_${message.author.id}`)) {
+             return console.log(message.author.tag + ' Cooldown');
+         }*/
 
         let { xp, nivel } = await client.getData({ id: `${message.guild.id}_${message.author.id}` }, 'niveles');
 
 
         let levelup = 5 * (nivel ** 2) + 50 * nivel + 100;
 
-        cooldownniveles.add(`${message.guild.id}_${message.author.id}`);
-        setTimeout(() => {
-            cooldownniveles.delete(`${message.guild.id}_${message.author.id}`);
-        }, ms('10s'));
+        /* cooldownniveles.add(`${message.guild.id}_${message.author.id}`);
+         setTimeout(() => {
+             cooldownniveles.delete(`${message.guild.id}_${message.author.id}`);
+         }, ms('10s'));*/
 
 
         if ((xp + random) > levelup) {
