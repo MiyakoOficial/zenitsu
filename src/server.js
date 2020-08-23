@@ -178,34 +178,36 @@ client.on('message', async (message) => {
         if (cooldownniveles.has(guild)) {
             return;//console.log(message.author.tag + ' Cooldown');
         }
-
-        let { xp, nivel } = await client.getData({ id: `${message.guild.id}_${message.author.id}` }, 'niveles');
-
-
-        let levelup = 5 * (nivel ** 2) + 50 * nivel + 100;
-
-        cooldownniveles.add(guild);
-        setTimeout(() => {
-            cooldownniveles.delete(guild);
-        }, ms('10s'));
-
-
-        if ((xp + random) > levelup) {
-
-            await client.updateData({ id: `${message.guild.id}_${message.author.id}` }, { xp: 0 }, 'niveles');
-            await client.updateData({ id: `${message.guild.id}_${message.author.id}` }, { $inc: { nivel: 1 } }, 'niveles');
-            let { canal } = await client.getData({ id: message.guild.id }, 'logslevel')
-            let channel = client.channels.cache.get(canal) || message.channel;
-            //if (!channel) channel = message.channel;
-            embedResponse(`<@${message.author.id}>, subiste al nivel ${nivel + 1} !`, channel).catch(a => { });
-
-        }
-
         else {
-            client.updateData({ id: `${message.guild.id}_${message.author.id}` }, { $inc: { xp: random } }, 'niveles');
-            //console.log(`${ message.author.tag } ganó ${ random }, es nivel: ${ nivel }, xp que tiene: ${ xp } `);
+
+            let { xp, nivel } = await client.getData({ id: `${message.guild.id}_${message.author.id}` }, 'niveles');
+
+
+            let levelup = 5 * (nivel ** 2) + 50 * nivel + 100;
+
+            cooldownniveles.add(guild);
+            setTimeout(() => {
+                cooldownniveles.delete(guild);
+            }, ms('10s'));
+
+
+            if ((xp + random) > levelup) {
+
+                await client.updateData({ id: `${message.guild.id}_${message.author.id}` }, { xp: 0 }, 'niveles');
+                await client.updateData({ id: `${message.guild.id}_${message.author.id}` }, { $inc: { nivel: 1 } }, 'niveles');
+                let { canal } = await client.getData({ id: message.guild.id }, 'logslevel')
+                let channel = client.channels.cache.get(canal) || message.channel;
+                //if (!channel) channel = message.channel;
+                embedResponse(`<@${message.author.id}>, subiste al nivel ${nivel + 1} !`, channel).catch(a => { });
+
+            }
+
+            else {
+                client.updateData({ id: `${message.guild.id}_${message.author.id}` }, { $inc: { xp: random } }, 'niveles');
+                //console.log(`${ message.author.tag } ganó ${ random }, es nivel: ${ nivel }, xp que tiene: ${ xp } `);
+            }
+            return; //console.log('no prefix message')
         }
-        return; //console.log('no prefix message')
     }
 
 
