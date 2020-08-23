@@ -173,9 +173,9 @@ client.on('message', async (message) => {
 
     let random = Math.floor(Math.random() * 14) + 1;
     if (!message.content.startsWith(prefix)) {
-        let cooldownniveles = new Set();
+        let cooldownniveles = new Map();
         let guild = `${message.guild.id}_${message.author.id}`
-        if (cooldownniveles.has(guild)) {
+        if (cooldownniveles.get(guild)) {
             return;//console.log(message.author.tag + ' Cooldown');
         }
         else {
@@ -185,7 +185,7 @@ client.on('message', async (message) => {
 
             let levelup = 5 * (nivel ** 2) + 50 * nivel + 100;
 
-            cooldownniveles.add(guild);
+            cooldownniveles.set(guild, true);
             setTimeout(() => {
                 cooldownniveles.delete(guild);
             }, ms('10s'));
