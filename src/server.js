@@ -205,7 +205,13 @@ client.on('message', async (message) => {
                 let { canal } = await client.getData({ id: message.guild.id }, 'logslevel')
                 let channel = client.channels.cache.get(canal) || message.channel;
                 //if (!channel) channel = message.channel;
-                embedResponse(`<@${message.author.id}>, subiste al nivel ${nivel + 1}!`, channel).catch(a => { });
+                let text = encodeURIComponent(`${message.author.tag}, subiste al nivel ${nivel + 1}!`)
+                let link = `https://api.alexflipnote.dev/supreme?text=${text}`
+                let embed = new Discord.MessageEmbed()
+                    .setColor(color)
+                    .setImage();
+                canal.send({ embed: embed }).catch(a => { });
+                //embedResponse(`<@${message.author.id}>, subiste al nivel ${nivel + 1}!`, channel).catch(a => { });
 
             }
 
