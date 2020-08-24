@@ -965,22 +965,21 @@ client.on('message', async (message) => {
     //fin de setchannelxp
 
     else if (command === 'test') {
-        let plantilla = 'https://diimg.glitch.me/image/diimg1566686024612-68.png';
-        let usuario = message.author;
-        let readPlantilla = await jimp.read(plantilla);
-        let readAvatar = await jimp.read(usuario.displayAvatarURL({ format: 'png' }));
-        readAvatar.resize(100, 110);
-        readPlantilla.composite(readAvatar, 11, 61);
-        let font = await jimp.loadFont(jimp.FONT_SANS_16_BLACK);
-        readPlantilla.print(font, 120, 110, usuario.username);
-        readPlantilla
-            .getBuffer('image/png', function (err, buffer) {
-                if (err) return;
-                message.channel.send({
-                    file: buffer,
-                    name: 'test.png'
-                })
-            })
+        let { createCanvas, loadImage } = require('canvas');
+        const canvas = createCanvas(700, 250);
+        const ctx = canvas.getContext('2d');
+
+        const background = await Canvas.loadImage('https://diimg.glitch.me/image/diimg1566686024612-68.png')
+        ctx.drawImage(brackground, 0, 0, 50, 50)
+
+        const coso = new Discord.MessageAttachment(canvas.toBuffer(), 'test.png');
+        message.reply(coso)
+
+        /*
+        loadImage(message.author.displayAvatarURL({ format: 'png' })).then(img => {
+
+        })*/
+
     }
 
     else {
