@@ -965,6 +965,24 @@ client.on('message', async (message) => {
     //fin de setchannelxp
 
     else if (command === 'test') {
+
+        const applyText = (canvas, text) => {
+            const ctx = canvas.getContext('2d');
+
+            // Declare a base size of the font
+            let fontSize = 70;
+
+            do {
+                // Assign the font to the context and decrement it so it can be measured again
+                ctx.font = `${fontSize -= 10}px sans-serif`;
+                // Compare pixel width of the text to the canvas minus the approximate avatar size
+            } while (ctx.measureText(text).width > canvas.width - 300);
+
+            // Return the result to use in the actual canvas
+            return ctx.font;
+        };
+
+
         let { createCanvas, loadImage } = require('canvas');
         const canvas = createCanvas(700, 250);
         const ctx = canvas.getContext('2d');
@@ -972,6 +990,15 @@ client.on('message', async (message) => {
         const background = await loadImage('https://cdn.discordapp.com/attachments/747570438082658394/747576853275082772/unknown.png')
         ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
 
+        ctx.strokeStyle = '#74037b';
+
+        ctx.strokeRect(0, 0, canvas.width, canvas.height);
+
+        ctx.font = applyText(canvas, member.displayName);
+
+        ctx.fillStyle = '#ff0000';
+
+        ctx.fillText('Test!', canvas.width / 2.5, canvas.height / 1.8);
 
         ctx.beginPath();
         ctx.arc(125, 125, 100, 0, Math.PI * 2, true);
