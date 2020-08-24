@@ -176,7 +176,7 @@ client.on('message', async (message) => {
         return a.bol
     }
 
-    let random = Math.floor(Math.random() * 14) + 1;
+    let random = Math.floor(Math.random() * 24) + 1;
     if (!message.content.startsWith(prefix)) {
 
         if (xd(await client.getData({ id: message.author.id }, 'blacklist'))) return;
@@ -205,7 +205,7 @@ client.on('message', async (message) => {
                 let { canal } = await client.getData({ id: message.guild.id }, 'logslevel')
                 let channel = client.channels.cache.get(canal) || message.channel;
                 //if (!channel) channel = message.channel;
-                embedResponse(`<@${message.author.id}>, subiste al nivel ${nivel + 1} !`, channel).catch(a => { });
+                embedResponse(`<@${message.author.id}>, subiste al nivel ${nivel + 1}!`, channel).catch(a => { });
 
             }
 
