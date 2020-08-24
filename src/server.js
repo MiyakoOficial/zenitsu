@@ -1008,10 +1008,10 @@ client.on('message', async (message) => {
 
         ctx.fillText(text, canvas.width / 2.5, canvas.height / 1.8);
 
-        ctx.beginPath();
+        /*ctx.beginPath();
         ctx.arc(125, 125, 100, 0, Math.PI * 2, true);
         ctx.closePath();
-        ctx.clip();
+        ctx.clip();*/
 
         let avatar = await loadImage(message.author.displayAvatarURL({ format: 'jpg', size: 4096 }))
 
