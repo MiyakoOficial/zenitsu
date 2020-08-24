@@ -968,10 +968,18 @@ client.on('message', async (message) => {
         let { createCanvas, loadImage } = require('canvas');
         const canvas = createCanvas(700, 250);
         const ctx = canvas.getContext('2d');
-        let avatar = await loadImage(message.author.displayAvatarURL({ format: 'jpg' }))
 
         const background = await loadImage('https://cdn.discordapp.com/attachments/747570438082658394/747576853275082772/unknown.png')
         ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
+
+
+        ctx.beginPath();
+        ctx.arc(125, 125, 100, 0, Math.PI * 2, true);
+        ctx.closePath();
+        ctx.clip();
+
+        let avatar = await loadImage(message.author.displayAvatarURL({ format: 'jpg' }))
+
 
         ctx.drawImage(avatar, 25, 0, 200, canvas.height);
 
