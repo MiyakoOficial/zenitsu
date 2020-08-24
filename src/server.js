@@ -172,12 +172,12 @@ client.on('message', async (message) => {
     }
 
     let random = Math.floor(Math.random() * 14) + 1;
+    let cooldownniveles = new Set();
     if (!message.content.startsWith(prefix)) {
-        let cooldownniveles = new Set();
         let guild = `${message.guild.id}_${message.author.id}`;
         //console.log(cooldownniveles)
         if (cooldownniveles.has(guild)) {
-            return
+            return;
         }
         else {
 
@@ -894,7 +894,7 @@ client.on('message', async (message) => {
         let levelup = 5 * (data.nivel ** 2) + 50 * data.nivel + 100;
 
         let embed = new Discord.MessageEmbed()
-            .setDescription(`Nivel: ${!data.nivel ? 0 : data.nivel}\nXp: ${!data.xp ? 0 : data.xp}/${levelup}`)
+            .setDescription(`Nivel: ${!data.nivel ? 0 : data.nivel}\nXp: ${!data.xp ? 0 : data.xp}/${levelup ? levelup : '0'}`)
             .setColor(color)
             .setThumbnail(member.user.displayAvatarURL())
             .setTimestamp()
