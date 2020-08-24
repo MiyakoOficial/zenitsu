@@ -208,7 +208,7 @@ client.on('message', async (message) => {
                 //if (!channel) channel = message.channel;
 
                 let text = encodeURIComponent(`${message.author.tag}, subiste al nivel ${nivel + 1}!`)
-                let link = `https://api.alexflipnote.dev/challenge?text=${text}`
+                let link = `https://api.alexflipnote.dev/challenge?text=${text}&icon=2`
                 let embed = new Discord.MessageEmbed()
                     .setColor(color)
                     .setImage(link);
