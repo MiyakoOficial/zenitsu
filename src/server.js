@@ -1004,7 +1004,7 @@ client.on('message', async (message) => {
        */
         ctx.font = applyText(canvas, text);
 
-        ctx.fillStyle = '#ffffff';
+        ctx.fillStyle = '#000000';
 
         ctx.fillText(text, canvas.width / 2.5, canvas.height / 1.8);
 
