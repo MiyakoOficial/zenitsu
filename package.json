@@ -1,7 +1,7 @@
 {
-    "name": "loggerbot",
+    "name": "zenitsu.",
     "version": "0.0.1",
-    "description": "acerca de? su bot",
+    "description": "discord bot",
     "main": "node ./src/server.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
@@ -43,5 +43,5 @@
         "express"
     ],
     "devDependencies": {},
-    "author": ""
+    "author": "Lil_MARCROCK22"
 }
