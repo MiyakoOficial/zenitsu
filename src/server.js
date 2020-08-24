@@ -127,6 +127,7 @@ client.on('ready', () => {
         );
 });
 let cooldown = new Set()
+let cooldownniveles = new Set();
 client.on('message', async (message) => {
     if (!message.guild) return;
     function errorEmbed(argumentoDeLaDescripcion) {
@@ -172,7 +173,6 @@ client.on('message', async (message) => {
     }
 
     let random = Math.floor(Math.random() * 14) + 1;
-    let cooldownniveles = new Set();
     if (!message.content.startsWith(prefix)) {
         let guild = `${message.guild.id}_${message.author.id}`;
         //console.log(cooldownniveles)
