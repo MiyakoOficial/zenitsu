@@ -964,6 +964,25 @@ client.on('message', async (message) => {
     }
     //fin de setchannelxp
 
+    else if (command === 'test') {
+        let plantilla = 'https://diimg.glitch.me/image/diimg1566686024612-68.png';
+        let usuario = message.author;
+        let readPlantilla = await jimp.read(plantilla);
+        let readAvatar = await jimp.read(usuario.displayAvatarURL());
+        readAvatar.resize(100, 110);
+        readPlantilla.composite(readAvatar, 11, 61);
+        let font = await jimp.loadFont(jimp.FONT_SANS_16_BLACK);
+        readPlantilla.print(font, 120, 110, usuario.username);
+        readPlantilla
+            .getBuffer(jimp.MIME_PNG, function (err, buffer) {
+                if (err) return;
+                message.channel.send({
+                    file: buffer,
+                    name: 'test.png'
+                })
+            })
+    }
+
     else {
         let embed = new Discord.MessageEmbed()
             .setThumbnail(`https://cdn.discordapp.com/attachments/688054761706094725/714328885533343764/error.gif`)
