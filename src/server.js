@@ -968,7 +968,7 @@ client.on('message', async (message) => {
         let plantilla = 'https://diimg.glitch.me/image/diimg1566686024612-68.png';
         let usuario = message.author;
         let readPlantilla = await jimp.read(plantilla);
-        let readAvatar = await jimp.read(usuario.displayAvatarURL());
+        let readAvatar = await jimp.read(usuario.displayAvatarURL({ format: 'png' }));
         readAvatar.resize(100, 110);
         readPlantilla.composite(readAvatar, 11, 61);
         let font = await jimp.loadFont(jimp.FONT_SANS_16_BLACK);
