@@ -987,6 +987,8 @@ client.on('message', async (message) => {
         const canvas = createCanvas(700, 250);
         const ctx = canvas.getContext('2d');
 
+        let text = 'Has subido al nivel 2'
+
         const background = await loadImage('https://cdn.discordapp.com/attachments/747570438082658394/747576853275082772/unknown.png')
         ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
 
@@ -994,11 +996,17 @@ client.on('message', async (message) => {
 
         ctx.strokeRect(0, 0, canvas.width, canvas.height);
 
-        ctx.font = applyText(canvas, message.author.tag);
+        /*       ctx.font = '28px sans-serif';
+       
+               ctx.fillStyle = '#ffffff';
+       
+               ctx.fillText('Has subido al nivel!,', canvas.width / 2.5, canvas.height / 3.5);
+       */
+        ctx.font = applyText(canvas, text);
 
-        ctx.fillStyle = '#ff0000';
+        ctx.fillStyle = '#ffffff';
 
-        ctx.fillText('Test!', canvas.width / 2.5, canvas.height / 1.8);
+        ctx.fillText(text, canvas.width / 2.5, canvas.height / 1.8);
 
         ctx.beginPath();
         ctx.arc(125, 125, 100, 0, Math.PI * 2, true);
