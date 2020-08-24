@@ -969,7 +969,7 @@ client.on('message', async (message) => {
         const canvas = createCanvas(700, 250);
         const ctx = canvas.getContext('2d');
 
-        const background = await loadImage('https://diimg.glitch.me/image/diimg1566686024612-68.png')
+        const background = await loadImage('https://cdn.discordapp.com/attachments/747570438082658394/747576853275082772/unknown.png')
         ctx.drawImage(background, 0, 0, 50, 50)
 
         const coso = new Discord.MessageAttachment(canvas.toBuffer(), 'test.png');
