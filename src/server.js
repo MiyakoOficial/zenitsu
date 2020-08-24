@@ -237,7 +237,7 @@ client.on('message', async (message) => {
                 .addField('Administración', `${prefix}blockchannels, ${prefix} setprefix/changeprefix, ${prefix}setlogs/logschannel`)
                 .addField('Diversión', `${prefix}challenge, ${prefix}achievement, ${prefix}ship, ${prefix}supreme, ${prefix}didyoumean, ${prefix}captcha, ${prefix}pornhub`)
                 .addField('Música', `${prefix}play/p, ${prefix}queue/q, ${prefix}skip/s, ${prefix}stop, ${prefix}nowplaying/np, ${prefix}volume/v`)
-                .addField('Niveles', `${prefix}setxp/setchannelxp, ${prefix}xp/exp`)
+                .addField('Niveles', `${prefix}setchannelxp, ${prefix}setxp, ${prefix}xp/exp`)
                 .addField('Privados', `${prefix}eval, ${prefix}blacklist, ${prefix}checkblacklist`)
                 .setThumbnail(client.user.displayAvatarURL({ format: 'png', size: 2048 }))
                 .setFooter('Recomendamos que el bot tenga todos los permisos para que no haya problemas!', client.user.displayAvatarURL({ format: 'png', size: 2048 }))
@@ -910,8 +910,40 @@ client.on('message', async (message) => {
     }
     //fin de xp
 
-    //inicio de setxp
-    else if (command === 'setxp' || command === 'setchannelxp') {
+    //incio de setxp
+
+    else if (command === 'setxp') {
+        if (!message.member.hasPermission('ADMINISTRATOR')) return errorEmbed('No tienes el permiso `ADMINISTRATOR`')
+            .catch(error => { enviarError(error, message.author) });
+
+        let miembro = message.mentions.members.first();
+        //let razon = args.slice(1).join(' ') || 'No especificada';
+        if (!miembro) return embedResponse('Menciona a un miembro del servidor!')
+            .catch(error => { enviarError(error, message.author) });
+
+        if (!args[0].match(/\<\@(\!)?[0-9]{18}\>/g)) return embedResponse('La mencion tiene que ser el primer argumento!')
+            .catch(error => { enviarError(error, message.author) });
+
+        if (isNaN(args[1])) return embedResponse('El segundo argumento tiene que ser un numero!')
+            .catch(error => { enviarError(error, message.author) });
+
+        if (parseInt(args[1]) < 0) return embedResponse('El segundo argumento debe ser igual o mayor a cero!')
+            .catch(error => { enviarError(error, message.author) });
+
+        await client.updateData({ id: `${message.guild.id}_${miembro.id}` }, { nivel: parseInt(args[1]) }, 'niveles');
+
+        //await client.getData({ id: `${message.guild.id}.${miembro.id}` }, 'warns').then((data) => {
+        embedResponse(`Ahora el miembro ${miembro.user.username} es nivel ${args[1]}!`)
+            .catch(error => { enviarError(error, message.author) });
+        //});
+
+
+    }
+
+    //fin de setxp
+
+    //inicio de setchannelxp
+    else if (command === 'setchannelxp') {
         if (!message.member.hasPermission("ADMINISTRATOR")) return errorEmbed("No tienes el permiso `ADMINISTRATOR`").catch(error => { enviarError(error, message.author) })
         let channel = message.mentions.channels.first();
         if (!channel) return embedResponse("No has mencionado un canal/Ese canal no existe.").catch(error => { enviarError(error, message.author) })
@@ -921,7 +953,7 @@ client.on('message', async (message) => {
 
         return embedResponse(`Canal establecido en <#${channel.id}>`).catch(error => { enviarError(error, message.author) })
     }
-    //fin de setxp
+    //fin de setchannelxp
 
     else {
         let embed = new Discord.MessageEmbed()
