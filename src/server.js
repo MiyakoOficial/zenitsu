@@ -172,8 +172,15 @@ client.on('message', async (message) => {
         return embedResponse(`El prefix del servidor es \`${prefix}\``)
     }
 
+    function xd(a) {
+        return a.bol
+    }
+
     let random = Math.floor(Math.random() * 14) + 1;
     if (!message.content.startsWith(prefix)) {
+
+        if (xd(await client.getData({ id: message.author.id }, 'blacklist'))) return;
+
         let guild = `${message.guild.id}_${message.author.id}`;
         //console.log(cooldownniveles)
         if (cooldownniveles.has(guild)) {
@@ -189,7 +196,7 @@ client.on('message', async (message) => {
             cooldownniveles.add(guild);
             setTimeout(() => {
                 cooldownniveles.delete(guild);
-            }, ms('10s'));
+            }, ms('30s'));
 
             if ((xp + random) > levelup) {
 
@@ -212,9 +219,7 @@ client.on('message', async (message) => {
 
 
     if (message.content.length < prefix.length + 1) return;
-    function xd(a) {
-        return a.bol
-    }
+
     if (xd(await client.getData({ id: message.author.id }, 'blacklist'))) return embedResponse('Wow, al parecer te has portado mal...\n\nQuieres usarme?, pues entra [Aqui](https://discord.gg/hbSahh8)')
 
     /*const blacklist = []
@@ -894,7 +899,7 @@ client.on('message', async (message) => {
         let levelup = 5 * (data.nivel ** 2) + 50 * data.nivel + 100;
 
         let embed = new Discord.MessageEmbed()
-            .setDescription(`Nivel: ${!data.nivel ? 0 : data.nivel}\nXp: ${!data.xp ? 0 : data.xp}/${levelup ? levelup : '0'}`)
+            .setDescription(`Nivel: ${!data.nivel ? 0 : data.nivel}\nXp: ${!data.xp ? 0 : data.xp}/${levelup ? levelup : '100'}`)
             .setColor(color)
             .setThumbnail(member.user.displayAvatarURL())
             .setTimestamp()
