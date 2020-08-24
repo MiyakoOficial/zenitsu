@@ -209,7 +209,7 @@ client.on('message', async (message) => {
                 let link = `https://api.alexflipnote.dev/supreme?text=${text}`
                 let embed = new Discord.MessageEmbed()
                     .setColor(color)
-                    .setImage();
+                    .setImage(link);
                 channel.send({ embed: embed }).catch(a => { });
                 //embedResponse(`<@${message.author.id}>, subiste al nivel ${nivel + 1}!`, channel).catch(a => { });
 
