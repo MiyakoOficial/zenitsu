@@ -1450,6 +1450,12 @@ client.on('channelUpdate', async (oldChannel, newChannel) => {
 //!fin canales eventos
 
 //?inicio usuarios eventos
+
+client.on('guildMemberAdd', async (member) => {
+    if (member.guild.id === '645463565813284865')
+        return member.roles.add('649011203791912981');
+})
+
 client.on('guildMemberUpdate', async (oldUser, newUser) => {
     await client.getData({ id: newUser.guild.id }, 'logs').then((data) => {
 
