@@ -968,9 +968,12 @@ client.on('message', async (message) => {
         let { createCanvas, loadImage } = require('canvas');
         const canvas = createCanvas(700, 250);
         const ctx = canvas.getContext('2d');
+        let avatar = await loadImage(message.author.displayAvatarURL({ format: 'jpg' }))
 
         const background = await loadImage('https://cdn.discordapp.com/attachments/747570438082658394/747576853275082772/unknown.png')
         ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
+
+        ctx.drawImage(avatar, 25, 0, 200, canvas.height);
 
         const coso = new Discord.MessageAttachment(canvas.toBuffer(), 'test.png');
         message.reply(coso)
