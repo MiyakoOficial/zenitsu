@@ -2,6 +2,7 @@ const { join } = require('path');
 const color = "#E09E36";
 const ytsr = require('ytsr');
 const ytdl = require('ytdl-core');
+const jimp = require('jimp');
 require('dotenv').config();
 const Discord = require('discord.js');
 const client = new Discord.Client();
@@ -205,12 +206,27 @@ client.on('message', async (message) => {
                 let { canal } = await client.getData({ id: message.guild.id }, 'logslevel')
                 let channel = client.channels.cache.get(canal) || message.channel;
                 //if (!channel) channel = message.channel;
-                let text = encodeURIComponent(`${message.author.tag}, subiste al nivel ${nivel + 1}!`)
+
+                /*let text = encodeURIComponent(`${message.author.tag}, subiste al nivel ${nivel + 1}!`)
                 let link = `https://api.alexflipnote.dev/supreme?text=${text}`
                 let embed = new Discord.MessageEmbed()
                     .setColor(color)
                     .setImage(link);
-                channel.send({ embed: embed }).catch(a => { });
+                channel.send({ embed: embed }).catch(a => { });*/
+                let fuente = jimp.loadFont(jimp.FONT_SANS_32_BLACK);
+                let fondo = await jimp.read('huskyfondo.jpg')
+                let mask = await jimp.read('test.png')
+
+                jimp.read(message.author.displayAvatarURL()).then(avatar => {
+                    avatar.resize(130, 130)
+                    mask.resize(130, 130)
+                    avatar.mask(mask)
+                    fondo.print(fuente, 170, 175, message.author.tag)
+                    fondo.composite(avatar, 40, 90).write('husky.png')
+                    channel.send({ files: ['husky.png'] })
+
+                })
+
                 //embedResponse(`<@${message.author.id}>, subiste al nivel ${nivel + 1}!`, channel).catch(a => { });
 
             }
