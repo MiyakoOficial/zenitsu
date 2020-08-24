@@ -974,7 +974,7 @@ client.on('message', async (message) => {
         let font = await jimp.loadFont(jimp.FONT_SANS_16_BLACK);
         readPlantilla.print(font, 120, 110, usuario.username);
         readPlantilla
-            .getBuffer(jimp.MIME_PNG, function (err, buffer) {
+            .getBuffer('image/png', function (err, buffer) {
                 if (err) return;
                 message.channel.send({
                     file: buffer,
