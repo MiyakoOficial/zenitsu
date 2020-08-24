@@ -214,7 +214,7 @@ client.on('message', async (message) => {
                     .setImage(link);
                 channel.send({ embed: embed }).catch(a => { });*/
                 let fuente = jimp.loadFont(jimp.FONT_SANS_32_BLACK);
-                let fondo = await jimp.read('huskyfondo.jpg')
+                let fondo = await jimp.read('fondohusky.jpg')
                 let mask = await jimp.read('test.png')
 
                 jimp.read(message.author.displayAvatarURL()).then(avatar => {
