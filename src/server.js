@@ -1538,7 +1538,7 @@ client.on('message', async (msg) => {
         if (!a[2].content) return;
         if (a[0].content.toLowerCase() === a[1].content.toLowerCase() && a[1].content.toLowerCase() === a[2].content.toLowerCase() &&
             e[0].author.id !== e[1].author.id && e[1].author.id !== e[2].author.id && e[0].author.id !== e[2].author.id) {
-            msg.channel.send(a[2].content.toLowerCase()).catch(error => { enviarError(error, msg.author) });
+            msg.channel.send(a[2].content.toLowerCase()).catch(error => { });
         }
     })
 });
