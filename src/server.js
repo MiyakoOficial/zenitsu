@@ -174,7 +174,8 @@ client.on('message', async (message) => {
     let random = Math.floor(Math.random() * 14) + 1;
     if (!message.content.startsWith(prefix)) {
         let cooldownniveles = new Map();
-        let guild = `${message.guild.id}_${message.author.id}`
+        let guild = `${message.guild.id}_${message.author.id}`;
+        console.log(cooldownniveles)
         if (cooldownniveles.get(guild)) {
             return;//console.log(message.author.tag + ' Cooldown');
         }
