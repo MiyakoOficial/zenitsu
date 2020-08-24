@@ -243,7 +243,7 @@ client.on('message', async (message) => {
                 .addField('Administración', `${prefix}blockchannels, ${prefix} setprefix/changeprefix, ${prefix}setlogs/logschannel`)
                 .addField('Diversión', `${prefix}challenge, ${prefix}achievement, ${prefix}ship, ${prefix}supreme, ${prefix}didyoumean, ${prefix}captcha, ${prefix}pornhub`)
                 .addField('Música', `${prefix}play/p, ${prefix}queue/q, ${prefix}skip/s, ${prefix}stop, ${prefix}nowplaying/np, ${prefix}volume/v`)
-                .addField('Niveles', `${prefix}setchannelxp, ${prefix}setxp, ${prefix}xp/exp`)
+                .addField('Niveles', `${prefix}setchannelxp, ${prefix}setlevel, ${prefix}xp/exp`)
                 .addField('Privados', `${prefix}eval, ${prefix}blacklist, ${prefix}checkblacklist`)
                 .setThumbnail(client.user.displayAvatarURL({ format: 'png', size: 2048 }))
                 .setFooter('Recomendamos que el bot tenga todos los permisos para que no haya problemas!', client.user.displayAvatarURL({ format: 'png', size: 2048 }))
@@ -916,9 +916,9 @@ client.on('message', async (message) => {
     }
     //fin de xp
 
-    //incio de setxp
+    //incio de setlevel
 
-    else if (command === 'setxp') {
+    else if (command === 'setlevel') {
         if (!message.member.hasPermission('ADMINISTRATOR')) return errorEmbed('No tienes el permiso `ADMINISTRATOR`')
             .catch(error => { enviarError(error, message.author) });
 
@@ -946,7 +946,7 @@ client.on('message', async (message) => {
 
     }
 
-    //fin de setxp
+    //fin de setlevel
 
     //inicio de setchannelxp
     else if (command === 'setchannelxp') {
