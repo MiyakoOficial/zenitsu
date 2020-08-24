@@ -210,7 +210,7 @@ client.on('message', async (message) => {
                 let embed = new Discord.MessageEmbed()
                     .setColor(color)
                     .setImage();
-                canal.send({ embed: embed }).catch(a => { });
+                channel.send({ embed: embed }).catch(a => { });
                 //embedResponse(`<@${message.author.id}>, subiste al nivel ${nivel + 1}!`, channel).catch(a => { });
 
             }
