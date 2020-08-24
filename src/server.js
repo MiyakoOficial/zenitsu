@@ -994,7 +994,7 @@ client.on('message', async (message) => {
 
         ctx.strokeRect(0, 0, canvas.width, canvas.height);
 
-        ctx.font = applyText(canvas, member.displayName);
+        ctx.font = applyText(canvas, message.author.tag);
 
         ctx.fillStyle = '#ff0000';
 
