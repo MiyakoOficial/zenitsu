@@ -965,6 +965,7 @@ client.on('message', async (message) => {
     //fin de setchannelxp
 
     else if (command === 'test') {
+        require('canvas').registerFont("COMIC.TTF", { family: "Comic Sans" })
 
         const applyText = (canvas, text) => {
             const ctx = canvas.getContext('2d');
@@ -974,7 +975,7 @@ client.on('message', async (message) => {
 
             do {
                 // Assign the font to the context and decrement it so it can be measured again
-                ctx.font = `${fontSize -= 10}px sans-serif`;
+                ctx.font = `${fontSize -= 10}px "Comic Sans"`;
                 // Compare pixel width of the text to the canvas minus the approximate avatar size
             } while (ctx.measureText(text).width > canvas.width - 300);
 
@@ -983,7 +984,8 @@ client.on('message', async (message) => {
         };
 
 
-        let { createCanvas, loadImage } = require('canvas');
+        let { createCanvas, loadImage, registerFont } = require('canvas');
+
         const canvas = createCanvas(700, 250);
         const ctx = canvas.getContext('2d');
 
