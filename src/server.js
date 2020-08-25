@@ -1016,7 +1016,7 @@ client.on('message', async (message) => {
         let avatar = await loadImage(message.author.displayAvatarURL({ format: 'jpg', size: 4096 }))
 
 
-        ctx.drawImage(avatar, 25, canvas.height / 2, 200, 200);
+        ctx.drawImage(avatar, 25, 25, 200, 200);
 
         const coso = new Discord.MessageAttachment(canvas.toBuffer(), 'test.png');
         message.reply(coso)
