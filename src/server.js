@@ -989,7 +989,7 @@ client.on('message', async (message) => {
 
         let text = 'Has subido al nivel 2'
 
-        const background = await loadImage('https://cdn.discordapp.com/attachments/747570438082658394/747576853275082772/unknown.png')
+        const background = await loadImage('https://cdn.discordapp.com/attachments/747570438082658394/747605622064676894/dead_by_daylight_red_dawn_wallpaper_by_tankian_fan-da6jqxv.png')
         ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
 
         ctx.strokeStyle = '#74037b';
