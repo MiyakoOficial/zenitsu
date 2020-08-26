@@ -965,7 +965,28 @@ client.on('message', async (message) => {
     //fin de setchannelxp
 
     else if (command === 'test') {
-        require('canvas').registerFont("COMIC.TTF", { family: "Comic Sans" })
+
+        let usuario = message.mentions.users.first() || message.author
+        const { createCanvas, loadImage, registerFont } = require('canvas');
+
+        registerFont('/app/OpenSansEmoji.ttf', { family: "Open Sans Emoji" })
+        registerFont('/app/Minecrafter.Reg.ttf', { family: "Minecraft" })
+
+        const canvas = createCanvas(700, 100);
+        const ctx = canvas.getContext('2d');
+
+        const background = await loadImage('https://cdn.discordapp.com/attachments/621139895729258528/747968079191081010/challenge.png');
+        ctx.drawImage(background, 0, 0, canvas.width, canvas.height)
+
+        const avatar = await loadImage(usuario.displayAvatarURL({ format: 'png' }))
+
+        /*ctx.beginPath();
+        ctx.arc(100, 50, 70, 0, Math.PI * 2, true);
+        ctx.closePath();
+        ctx.clip();*/
+
+        ctx.drawImage(avatar, 10, 10, 80, 80);
+
 
         const applyText = (canvas, text) => {
             const ctx = canvas.getContext('2d');
@@ -975,50 +996,24 @@ client.on('message', async (message) => {
 
             do {
                 // Assign the font to the context and decrement it so it can be measured again
-                ctx.font = `${fontSize -= 10}px "Comic Sans"`;
+                ctx.font = `${fontSize -= 1}px "Open Sans Emoji"`;
                 // Compare pixel width of the text to the canvas minus the approximate avatar size
-            } while (ctx.measureText(text).width > canvas.width - 300);
+            } while (ctx.measureText(text).width > canvas.width - 100);
 
             // Return the result to use in the actual canvas
             return ctx.font;
         };
 
-
-        let { createCanvas, loadImage, registerFont } = require('canvas');
-
-        const canvas = createCanvas(700, 250);
-        const ctx = canvas.getContext('2d');
-
-        let text = 'Has subido al nivel 2'
-
-        const background = await loadImage('https://cdn.discordapp.com/attachments/747570438082658394/747605622064676894/dead_by_daylight_red_dawn_wallpaper_by_tankian_fan-da6jqxv.png')
-        ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
-
-        ctx.strokeStyle = '#74037b';
-
-        ctx.strokeRect(0, 0, canvas.width, canvas.height);
-
-        /*       ctx.font = '28px sans-serif';
-       
-               ctx.fillStyle = '#ffffff';
-       
-               ctx.fillText('Has subido al nivel!,', canvas.width / 2.5, canvas.height / 3.5);
-       */
-        ctx.font = applyText(canvas, text);
-
-        ctx.fillStyle = '#000000';
-
-        ctx.fillText(text, canvas.width / 2.5, canvas.height / 1.8);
-
-        /*ctx.beginPath();
-        ctx.arc(125, 125, 100, 0, Math.PI * 2, true);
-        ctx.closePath();
-        ctx.clip();*/
-
-        let avatar = await loadImage(message.author.displayAvatarURL({ format: 'jpg', size: 4096 }))
+        let txt = 'Level up!';
+        ctx.fillStyle = "#ea899a";
+        ctx.font = '50px "Minecraft"'
+        ctx.fillText(txt, 95, 55);
 
 
-        ctx.drawImage(avatar, 25, 25, 200, 200);
+        let text = usuario.tag + " has subido al nivel ${nivel}";
+        ctx.font = applyText(canvas, text, 90, 84);
+        ctx.fillStyle = '#FFFFFF';
+        ctx.fillText(text, 95, 83);
 
         const coso = new Discord.MessageAttachment(canvas.toBuffer(), 'test.png');
         message.reply(coso)
