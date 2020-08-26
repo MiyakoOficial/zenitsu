@@ -1078,8 +1078,8 @@ client.on('message', async (message) => {
         const ctx = canvas.getContext('2d');
         const avatar = await Canvas.loadImage(member.user.displayAvatarURL({ format: 'png' }));
 
-        Canvas.registerFont('/app/OpenSansEmoji.ttf', { family: "Open Sans Emoji" })
-        Canvas.registerFont('/app/Minecrafter.Reg.ttf', { family: "Minecraft" })
+        Canvas.registerFont('OpenSansEmoji.ttf', { family: "Open Sans Emoji" })
+        Canvas.registerFont('Minecrafter.Reg.ttf', { family: "Minecraft" })
 
         ctx.drawImage(avatar, 0, 0, 200, 200);
 
