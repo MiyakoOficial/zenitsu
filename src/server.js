@@ -247,14 +247,14 @@ client.on('message', async (message) => {
 
                 let txt = 'Level up!';
                 ctx.fillStyle = "#ea899a";
-                ctx.font = '50px "Minecraft"'
-                ctx.fillText(txt, 95, 55);
+                ctx.font = '40px "Minecraft"'
+                ctx.fillText(txt, 95, 45);
 
 
                 let text = `${usuario.tag} has subido al nivel ${nivel + 1}`;
                 ctx.font = applyText(canvas, text, 90, 84);
                 ctx.fillStyle = '#FFFFFF';
-                ctx.fillText(text, 95, 83);
+                ctx.fillText(text, 95, 80);
 
                 channel.send(new Discord.MessageAttachment(canvas.toBuffer(), 'levelImage.png')).catch(err => { })
 
