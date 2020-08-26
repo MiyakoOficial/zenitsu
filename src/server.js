@@ -240,7 +240,7 @@ client.on('message', async (message) => {
 
                         ctx.font = `${fontSize -= 1}px "Open Sans Emoji"`;
 
-                    } while (ctx.measureText(text).width > canvas.width - 100);
+                    } while (ctx.measureText(text).width > canvas.width - 102);
 
                     return ctx.font;
                 };
