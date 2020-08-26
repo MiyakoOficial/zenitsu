@@ -227,9 +227,7 @@ client.on('message', async (message) => {
                 const background = await loadImage('https://cdn.discordapp.com/attachments/621139895729258528/747968079191081010/challenge.png');
                 ctx.drawImage(background, 0, 0, canvas.width, canvas.height)
 
-                const avatar = await loadImage(usuario.displayAvatarURL({ format: 'png' }))
-
-                ctx.drawImage(avatar, 10, 10, 80, 80);
+                const avatar = await loadImage(usuario.displayAvatarURL({ format: 'png' }));
 
                 const applyText = (canvas, text) => {
                     const ctx = canvas.getContext('2d');
@@ -255,6 +253,15 @@ client.on('message', async (message) => {
                 ctx.font = applyText(canvas, text, 90, 84);
                 ctx.fillStyle = '#FFFFFF';
                 ctx.fillText(text, 95, 80);
+
+                //circulo
+                ctx.beginPath();
+                ctx.arc(50, 50, 40, 0, Math.PI * 2, true);
+                ctx.closePath();
+                ctx.clip();
+                //circulo
+
+                ctx.drawImage(avatar, 10, 10, 80, 80);
 
                 channel.send(new Discord.MessageAttachment(canvas.toBuffer(), 'levelImage.png')).catch(err => { })
 
