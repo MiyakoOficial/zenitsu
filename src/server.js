@@ -2,6 +2,7 @@ const { join } = require('path');
 const color = "#E09E36";
 const ytsr = require('ytsr');
 const ytdl = require('ytdl-core');
+const Canvas = require('canvas');
 const jimp = require('jimp');
 require('dotenv').config();
 const Discord = require('discord.js');
@@ -295,7 +296,7 @@ client.on('message', async (message) => {
                 .addField('Extras', `${prefix}txt, ${prefix}ping, ${prefix}chat, ${prefix}canal/channel, ${prefix}snipe`)
                 .addField('Moderación', `${prefix}clear, ${prefix}voicekick, ${prefix}voicemute, ${prefix}voiceunmute, ${prefix}voicedeaf, ${prefix}voiceundeaf, ${prefix}warn, ${prefix}checkwarns, ${prefix}resetwarns, ${prefix}setwarns`)
                 .addField('Administración', `${prefix}blockchannels, ${prefix} setprefix/changeprefix, ${prefix}setlogs/logschannel`)
-                .addField('Diversión', `${prefix}challenge, ${prefix}achievement, ${prefix}ship, ${prefix}supreme, ${prefix}didyoumean, ${prefix}captcha, ${prefix}pornhub`)
+                .addField('Diversión', `${prefix}challenge, ${prefix}achievement, ${prefix}ship, ${prefix}supreme, ${prefix}didyoumean, ${prefix}captcha, ${prefix}pornhub, ${prefix}xd`)
                 .addField('Música', `${prefix}play/p, ${prefix}queue/q, ${prefix}skip/s, ${prefix}stop, ${prefix}nowplaying/np, ${prefix}volume/v`)
                 .addField('Niveles', `${prefix}setchannelxp, ${prefix}setlevel, ${prefix}xp/exp`)
                 .addField('Privados', `${prefix}eval, ${prefix}blacklist, ${prefix}checkblacklist`)
@@ -1067,6 +1068,29 @@ client.on('message', async (message) => {
         return embedResponse('No hay nada que probar por ahora!')
 
     }
+
+    //inicio de xd
+    else if (command === 'xd') {
+
+        let member = message.mentions.members.first() || message.guild.members.resolve(args[0]) || message.guild.members.cache.find(a => a.user.username === args.join(' ')) || message.guild.members.cache.find(a => a.user.tag === args.join(' ')) || message.guild.members.cache.find(a => a.displayName === args.join(' ')) || message.member;
+
+        const canvas = Canvas.createCanvas(200, 200);
+        const ctx = canvas.getContext('2d');
+        const avatar = await Canvas.loadImage(member.user.displayAvatarURL({ format: 'png' }));
+
+        Canvas.registerFont('/app/OpenSansEmoji.ttf', { family: "Open Sans Emoji" })
+        Canvas.registerFont('/app/Minecrafter.Reg.ttf', { family: "Minecraft" })
+
+        ctx.drawImage(avatar, 0, 0, 200, 200);
+
+        ctx.font = '50px "Open Sans Emoji"'
+
+        ctx.fillText('._.XD', 50, 180);
+
+        let resultado = new Discord.MessageAttachment(canvas.toBuffer(), 'xd.png');
+        message.channel.send(resultado).catch(err => { enviarError(err, message.author) });
+    }
+    //fin de xd
 
     else {
         let embed = new Discord.MessageEmbed()
