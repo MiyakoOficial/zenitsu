@@ -189,7 +189,7 @@ client.on('message', async (message) => {
         }
         else {
 
-            let { xp, nivel } = await client.getData({ id: `${message.guild.id}_${message.author.id}` }, 'niveles');
+            let { xp, nivel } = await client.getData({ idGuild: `${message.guild.id}`, idMember: `${message.author.id}` }, 'niveles');
 
 
             let levelup = 5 * (nivel ** 2) + 50 * nivel + 100;
@@ -201,8 +201,8 @@ client.on('message', async (message) => {
 
             if ((xp + random) > levelup) {
 
-                await client.updateData({ id: `${message.guild.id}_${message.author.id}` }, { xp: 0 }, 'niveles');
-                await client.updateData({ id: `${message.guild.id}_${message.author.id}` }, { $inc: { nivel: 1 } }, 'niveles');
+                await client.updateData({ idGuild: `${message.guild.id}`, idMember: `${message.author.id}` }, { xp: 0 }, 'niveles');
+                await client.updateData({ idGuild: `${message.guild.id}`, idMember: `${message.author.id}` }, { $inc: { nivel: 1 } }, 'niveles');
                 let { canal } = await client.getData({ id: message.guild.id }, 'logslevel')
                 let channel = client.channels.cache.get(canal) || message.channel;
                 //if (!channel) channel = message.channel;
@@ -263,7 +263,7 @@ client.on('message', async (message) => {
             }
 
             else {
-                client.updateData({ id: `${message.guild.id}_${message.author.id}` }, { $inc: { xp: random } }, 'niveles');
+                client.updateData({ idGuild: `${message.guild.id}`, idMember: `${message.author.id}` }, { $inc: { xp: random } }, 'niveles');
                 //console.log(`${ message.author.tag } ganó ${ random }, es nivel: ${ nivel }, xp que tiene: ${ xp } `);
             }
             return; //console.log('no prefix message')
@@ -948,7 +948,7 @@ client.on('message', async (message) => {
     //inicio de xp
     else if (command === 'xp' || command === 'exp') {
         let member = message.guild.members.cache.find(a => a.user.username === args.join(' ')) || message.guild.members.cache.find(a => a.user.tag === args.join(' ')) || message.guild.members.cache.find(a => a.displayName === args.join(' ')) || message.guild.members.cache.get(args[0]) || message.mentions.members.first() || message.member
-        let data = await client.getData({ id: `${message.guild.id}_${member.user.id}` }, 'niveles');
+        let data = await client.getData({ idGuild: `${message.guild.id}`, idMember: `${member.user.id}` }, 'niveles');
         let levelup = 5 * (data.nivel ** 2) + 50 * data.nivel + 100;
 
         let embed = new Discord.MessageEmbed()
@@ -983,7 +983,7 @@ client.on('message', async (message) => {
         if (parseInt(args[1]) < 0) return embedResponse('El segundo argumento debe ser igual o mayor a cero!')
             .catch(error => { enviarError(error, message.author) });
 
-        await client.updateData({ id: `${message.guild.id}_${miembro.id}` }, { nivel: parseInt(args[1]) }, 'niveles');
+        await client.updateData({ idGuild: `${message.guild.id}`, idMember: `${miembro.user.id}` }, { nivel: parseInt(args[1]) }, 'niveles');
 
         //await client.getData({ id: `${message.guild.id}.${miembro.id}` }, 'warns').then((data) => {
         embedResponse(`Ahora el miembro ${miembro.user.username} es nivel ${args[1]}!`)

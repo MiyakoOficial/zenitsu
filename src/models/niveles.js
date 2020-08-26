@@ -1,7 +1,8 @@
 const { Schema, model } = require('mongoose');
 
 const Guild = Schema({
-    id: String,
+    idGuild: String,
+    idMember: String,
     xp: {
         default: 0,
         type: Number
