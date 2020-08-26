@@ -541,7 +541,7 @@ client.on('message', async (message) => {
 
         await client.updateData({ id: message.guild.id }, { channellogs: channel.id }, 'logs')
 
-        return embedResponse(`Canal establecido en <#${channel.id}>`).catch(error => { enviarError(error, message.author) })
+        return embedResponse(`Canal establecido en: <#${channel.id}>`).catch(error => { enviarError(error, message.author) })
     }
     //fin de setlogs
 
@@ -1004,7 +1004,7 @@ client.on('message', async (message) => {
 
         await client.updateData({ id: message.guild.id }, { canal: channel.id }, 'logslevel')
 
-        return embedResponse(`Canal establecido en <#${channel.id}>`).catch(error => { enviarError(error, message.author) })
+        return embedResponse(`Canal establecido en: <#${channel.id}>`).catch(error => { enviarError(error, message.author) })
     }
     //fin de setchannelxp
 
