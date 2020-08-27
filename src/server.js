@@ -1041,17 +1041,17 @@ client.on('message', async (message) => {
     else if (command === 'rank') {
 
         let objeto = [];
-        let lista = message.guild.members.cache.array();
+        let lista = message.guild.members.cache.array().slice(0, 10);
 
         for (var i = 0; i < lista.length; i++) {
             let { xp, nivel } = await client.getData({ idGuild: message.guild.id, idMember: lista[i].user.id }, 'niveles');
             objeto.push({ member: lista[i].user, xp: xp, nivel: nivel });
         };
         let resultado = objeto.sort((a, b) => a.nivel - b.nivel).map(a => {
-            return `${client.users.cache.get(a.member.id).tag} - ${a.nivel}`
+            return `${client.users.cache.get(a.member.id).tag} - ${!a.nivel ? 0 : a.nivel}`
         })
 
-        embedResponse(resultado.slice(0, 10).join('\n')).catch(err => { enviarError(err, message.author) })
+        embedResponse(resultado.join('\n')).catch(err => { enviarError(err, message.author) })
     }
     //fin de rank
 
