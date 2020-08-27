@@ -293,10 +293,10 @@ client.on('message', async (message) => {
             embed: new Discord.MessageEmbed()
                 .setColor(color)
                 .addField('Comandos', `${prefix}help, ${prefix}suggest, ${prefix}bugreport, ${prefix}invite`)
-                .addField('Extras', `${prefix}txt, ${prefix}ping, ${prefix}chat, ${prefix}canal/channel, ${prefix}snipe`)
+                .addField('Extras', `${prefix}txt, ${prefix}ping, ${prefix}canal/channel, ${prefix}snipe`)
                 .addField('Moderación', `${prefix}clear, ${prefix}voicekick, ${prefix}voicemute, ${prefix}voiceunmute, ${prefix}voicedeaf, ${prefix}voiceundeaf, ${prefix}warn, ${prefix}checkwarns, ${prefix}resetwarns, ${prefix}setwarns`)
                 .addField('Administración', `${prefix}blockchannels, ${prefix} setprefix/changeprefix, ${prefix}setlogs/logschannel`)
-                .addField('Diversión', `${prefix}challenge, ${prefix}achievement, ${prefix}ship, ${prefix}supreme, ${prefix}didyoumean, ${prefix}captcha, ${prefix}pornhub, ${prefix}xd, ${prefix}voicechat`)
+                .addField('Diversión', `${prefix}challenge, ${prefix}achievement, ${prefix}ship, ${prefix}supreme, ${prefix}didyoumean, ${prefix}captcha, ${prefix}drake, ${prefix}xd, ${prefix}voicechat, ${prefix}chat`)
                 .addField('Música', `${prefix}play/p, ${prefix}queue/q, ${prefix}skip/s, ${prefix}stop, ${prefix}nowplaying/np, ${prefix}volume/v`)
                 .addField('Niveles', `${prefix}setchannelxp, ${prefix}setlevel, ${prefix}xp/exp`)
                 .addField('Privados', `${prefix}eval, ${prefix}blacklist, ${prefix}checkblacklist`)
@@ -733,23 +733,22 @@ client.on('message', async (message) => {
 
     //fin de didyoumean
 
-    //inicio de pornhub
-    ///pornhub?text=text&text2=text"
-    else if (command === 'pornhub') {
+    //inicio de drake
+    else if (command === 'drake') {
         let argumento = args.join(' ').split(' ,|, ')
         let txt = encodeURIComponent(argumento[0]);
         let texto = encodeURIComponent(argumento[1])
-        let link = `https://api.alexflipnote.dev/pornhub?text=${txt}&text2=${texto}`;
-        if (!argumento[1]) return embedResponse('Ejemplo de uso:\n```js\n' + prefix + 'pornhub Hola ,|, Adios```').catch(error => { enviarError(error, message.author) });
-        if (txt.length >= 45) return embedResponse('El primer argumento debe tener menos de `45`').catch(error => { enviarError(error, message.author) });
-        if (texto.length >= 40) return embedResponse('El segundo argumento debe tener menos de `40`').catch(error => { enviarError(error, message.author) });
+        let link = `https://api.alexflipnote.dev/drake?top=${txt}&bottom=${texto}`;
+        if (!argumento[1]) return embedResponse('Ejemplo de uso:\n```js\n' + prefix + 'drake Hola ,|, Adios```').catch(error => { enviarError(error, message.author) });
+        if (txt.length >= 60) return embedResponse('El primer argumento debe tener menos de `60`').catch(error => { enviarError(error, message.author) });
+        if (texto.length >= 60) return embedResponse('El segundo argumento debe tener menos de `60`').catch(error => { enviarError(error, message.author) });
         let embed = new Discord.MessageEmbed()
             .setImage(link)
             .setColor(color)
         message.channel.send({ embed: embed }).catch(error => { enviarError(error, message.author) });
     }
 
-    //fin de pornhub
+    //fin de drake
 
     //inicio de ship
     else if (command === 'ship') {
