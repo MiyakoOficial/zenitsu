@@ -239,7 +239,7 @@ client.on('message', async (message) => {
 
                         ctx.font = `${fontSize -= 1}px "Open Sans Emoji"`;
 
-                    } while (ctx.measureText(text).width > canvas.width - 103);
+                    } while (ctx.measureText(text).width > canvas.width - 105);
 
                     return ctx.font;
                 };
@@ -250,7 +250,7 @@ client.on('message', async (message) => {
                 ctx.fillText(txt, 95, 45);
 
 
-                let text = `${usuario.tag} has subido al nivel ${nivel + 1}`;
+                let text = `${usuario.tag} has subido al nivel ${nivel + 1}!`;
                 ctx.font = applyText(canvas, text, 90, 84);
                 ctx.fillStyle = '#FFFFFF';
                 ctx.fillText(text, 95, 80);
