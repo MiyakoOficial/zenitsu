@@ -296,7 +296,7 @@ client.on('message', async (message) => {
                 .addField('Extras', `${prefix}txt, ${prefix}ping, ${prefix}chat, ${prefix}canal/channel, ${prefix}snipe`)
                 .addField('Moderación', `${prefix}clear, ${prefix}voicekick, ${prefix}voicemute, ${prefix}voiceunmute, ${prefix}voicedeaf, ${prefix}voiceundeaf, ${prefix}warn, ${prefix}checkwarns, ${prefix}resetwarns, ${prefix}setwarns`)
                 .addField('Administración', `${prefix}blockchannels, ${prefix} setprefix/changeprefix, ${prefix}setlogs/logschannel`)
-                .addField('Diversión', `${prefix}challenge, ${prefix}achievement, ${prefix}ship, ${prefix}supreme, ${prefix}didyoumean, ${prefix}captcha, ${prefix}pornhub, ${prefix}xd`)
+                .addField('Diversión', `${prefix}challenge, ${prefix}achievement, ${prefix}ship, ${prefix}supreme, ${prefix}didyoumean, ${prefix}captcha, ${prefix}pornhub, ${prefix}xd, ${prefix}voicechat`)
                 .addField('Música', `${prefix}play/p, ${prefix}queue/q, ${prefix}skip/s, ${prefix}stop, ${prefix}nowplaying/np, ${prefix}volume/v`)
                 .addField('Niveles', `${prefix}setchannelxp, ${prefix}setlevel, ${prefix}xp/exp`)
                 .addField('Privados', `${prefix}eval, ${prefix}blacklist, ${prefix}checkblacklist`)
@@ -420,6 +420,10 @@ client.on('message', async (message) => {
         // if (!args[0]) return embedResponse("Escribe algo!").catch(error => { enviarError(error, message.author) });
         if (chat.get(message.guild.id) === true) return message.reply('Alguien ya está hablando conmigo!');
 
+        if (!message.member.voice.channel) return message.reply('Necesitas estar en un canal de voz!').catch(error => { enviarError(error, message.author) });
+        if (!message.member.voice.channel.permissionsFor(message.client.user).has('CONNECT')) return message.reply('No puedo unirme a ese canal de voz!').catch(error => { enviarError(error, message.author) });
+        if (!message.member.voice.channel.permissionsFor(message.client.user).has('SPEAK')) return message.reply('No puedo hablar en ese canal de voz!').catch(error => { enviarError(error, message.author) });
+
         message.reply('Comenzado!\n\nPara parar usa: <prefix>stopchat').catch(error => { enviarError(error, message.author) });
         chat.set(message.guild.id, true)
         let filter = m => m.author.id === message.author.id;
@@ -427,7 +431,10 @@ client.on('message', async (message) => {
         collector.on('collect', (msg, col) => {
             if (msg.content === prefix + 'stopchat') { collector.stop() }
             else {
-                chatbot.hablar(msg.content).then(respuesta => {
+                if (!message.member.voice.channel) {
+                    collector.stop()
+                    return message.reply('Reiniciando chat!').catch(error => { enviarError(error, message.author) })
+                } chatbot.hablar(msg.content).then(respuesta => {
                     let txt = `http://translate.google.com/translate_tts?ie=UTF-8&total=1&idx=0&textlen=64&client=tw-ob&q=${respuesta}&tl=es`;
 
                     connection.play(txt)
