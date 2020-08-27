@@ -1054,7 +1054,7 @@ client.on('message', async (message) => {
             }
         })
 
-        embedResponse(resultado.slice(0, 10).join('\n'))
+        embedResponse(resultado.slice(0, 10).join('\n')).catch(err => { enviarError(err, message.author) })
     }
     //fin de rank
 
