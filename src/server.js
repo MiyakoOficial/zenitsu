@@ -411,6 +411,43 @@ client.on('message', async (message) => {
     }
     //fin de chat
 
+    //inicio de voicechat
+
+    if (command === 'voicechat') {
+        //else if (command === 'chat') {
+        let connection = await message.member.voice.channel.join();
+        const chatbot = require("espchatbotapi");
+        // if (!args[0]) return embedResponse("Escribe algo!").catch(error => { enviarError(error, message.author) });
+        if (chat.get(message.guild.id) === true) return message.reply('Alguien ya está hablando conmigo!');
+
+        message.reply('Comenzado!\n\nPara parar usa: <prefix>stopchat').catch(error => { enviarError(error, message.author) });
+        chat.set(message.guild.id, true)
+        let filter = m => m.author.id === message.author.id;
+        let collector = new Discord.MessageCollector(message.channel, filter)
+        collector.on('collect', (msg, col) => {
+            if (msg.content === prefix + 'stopchat') { collector.stop() }
+            else {
+                chatbot.hablar(msg.content).then(respuesta => {
+                    let txt = `http://translate.google.com/translate_tts?ie=UTF-8&total=1&idx=0&textlen=64&client=tw-ob&q=${respuesta}&tl=es`;
+
+                    connection.play(txt)
+
+                }).catch(error => { enviarError(error, message.author) });
+            };
+
+        });
+        collector.on('end', col => {
+            message.channel.send('Terminado!').catch(error => { enviarError(error, message.author) });
+            chat.set(message.guild.id, false)
+            try {
+                message.guild.me.voice.channel.leave()
+            } catch (e) { }
+        });
+        //}
+    }
+
+    //fin de voicechat
+
     //!inicio de blockchannels
     else if (command === 'blockchannels') {
         if (!message.member.hasPermission('ADMINISTRATOR')) return errorEmbed('No tienes el permiso `ADMINISTRATOR`.').catch(error => { enviarError(error, message.author) });
