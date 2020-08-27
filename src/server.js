@@ -1045,14 +1045,10 @@ client.on('message', async (message) => {
 
         for (var i = 0; i < lista.length; i++) {
             let { xp, nivel } = await client.getData({ idGuild: message.guild.id, idMember: lista[i].user.id }, 'niveles');
-            objeto.push({ member: lista[i], xp: xp, nivel: nivel });
+            objeto.push({ member: lista[i].user, xp: xp, nivel: nivel });
         };
         let resultado = objeto.sort((a, b) => a.nivel - b.nivel).map(a => {
-            if (!client.users.cache.get(a.member.user.id))
-                return;
-            else {
-                return `${client.users.cache.get(a.member.user.id).tag} - ${a.nivel}`
-            }
+            return `${client.users.cache.get(a.member.id).tag} - ${a.nivel}`
         })
 
         embedResponse(resultado.slice(0, 10).join('\n')).catch(err => { enviarError(err, message.author) })
