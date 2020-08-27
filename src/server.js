@@ -413,7 +413,7 @@ client.on('message', async (message) => {
 
     //inicio de voicechat
 
-    if (command === 'voicechat') {
+    else if (command === 'voicechat') {
         //else if (command === 'chat') {
         let connection = await message.member.voice.channel.join();
         const chatbot = require("espchatbotapi");
