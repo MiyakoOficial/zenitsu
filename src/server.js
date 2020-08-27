@@ -460,6 +460,7 @@ client.on('message', async (message) => {
                     let txt = `http://translate.google.com/translate_tts?ie=UTF-8&total=1&idx=0&textlen=64&client=tw-ob&q=${respuesta}&tl=es`;
 
                     connection.play(txt)
+                    message.reply(`${client.user.tag} dice: ${respuesta}`).catch(err => { enviarError(err, message.author) })
 
                 }).catch(error => { enviarError(error, message.author) });
             };
@@ -1044,13 +1045,13 @@ client.on('message', async (message) => {
 
         for (var i = 0; i < lista.length; i++) {
             let { xp, nivel } = await client.getData({ idGuild: message.guild.id, idMember: lista[i].user.id }, 'niveles');
-            objeto.push({ idMember: lista[i].user, xp: xp, nivel: nivel });
+            objeto.push({ member: lista[i].user, xp: xp, nivel: nivel });
         };
         let resultado = objeto.sort((a, b) => a.nivel - b.nivel).map(a => {
-            if (!client.users.cache.get(a.idMember))
+            if (!client.users.cache.get(a.member.user.id))
                 return;
             else {
-                return `${client.users.cache.get(a.idMember).tag} - ${a.nivel}`
+                return `${client.users.cache.get(a.member.user.id).tag} - ${a.nivel}`
             }
         })
 
