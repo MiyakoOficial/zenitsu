@@ -1020,7 +1020,7 @@ client.on('message', async (message) => {
         let levelup = 5 * (data.nivel ** 2) + 50 * data.nivel + 100;
 
         let embed = new Discord.MessageEmbed()
-            .setDescription(`Nivel: ${!data.nivel ? 0 : data.nivel}\nXp: ${!data.xp ? 0 : data.xp}/${levelup ? levelup : '100'}\nRank: ${rank(member) ? rank(member)[1].ranking + 1 : 'Sin resultados'}`)
+            .setDescription(`Nivel: ${!data.nivel ? 0 : data.nivel}\nXp: ${!data.xp ? 0 : data.xp}/${levelup ? levelup : '100'}\nRank: ${rank(member)[1] ? rank(member)[1].ranking + 1 : 'Sin resultados'}`)
             .setColor(color)
             .setThumbnail(member.user.displayAvatarURL())
             .setTimestamp()
@@ -1036,6 +1036,10 @@ client.on('message', async (message) => {
 
         let mapeo = require('./models/niveles.js').find({ idGuild: message.guild.id }).sort({ level: -1 }).limit(10).exec((err, data) => {
             data.map(a => {
+                if (!data.idMember || !client.users.cache.get(data.idMember)) { }
+                else {
+                    return `${client.users.cache.get(data.idMember).tag} - ${data.nivel}`
+                }
             })
         });
         embedResponse(mapeo)
