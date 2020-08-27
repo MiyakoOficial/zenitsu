@@ -1044,7 +1044,7 @@ client.on('message', async (message) => {
 
         for (var i = 0; i < lista.length; i++) {
             let { xp, nivel } = await client.getData({ idGuild: message.guild.id, idMember: lista[i].user.id }, 'niveles');
-            objeto.push({ user: lista[i].user, xp: xp, nivel: nivel });
+            objeto.push({ idMember: lista[i].user, xp: xp, nivel: nivel });
         };
         let resultado = objeto.sort((a, b) => a.nivel - b.nivel).map(a => {
             if (!client.users.cache.get(a.idMember))
