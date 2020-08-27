@@ -1039,15 +1039,22 @@ client.on('message', async (message) => {
     //inicio de rank
     else if (command === 'rank') {
 
-        let mapeo = await require('./models/niveles.js').find({ idGuild: message.guild.id }).sort({ level: -1 }).limit(10).exec((err, data) => {
-            data.map(a => {
-                if (!data.idMember || !client.users.cache.get(data.idMember)) { }
-                else {
-                    return `${client.users.cache.get(data.idMember).tag} - ${data.nivel}`
-                }
-            })
-        });
-        embedResponse(mapeo.join('\n'))
+        let objeto = [];
+        let lista = message.guild.members.cache.array();
+
+        for (var i = 0; i < lista.length; i++) {
+            let { xp, nivel } = await client.getData({ idGuild: message.guild.id, idMember: lista[i].user.id }, 'niveles');
+            objeto.push({ user: lista[i].user, xp: xp, nivel: nivel });
+        };
+        let resultado = objeto.sort((a, b) => a.nivel - b.nivel).map(a => {
+            if (!client.users.cache.get(a.idMember))
+                return;
+            else {
+                return `${client.users.cache.get(a.idMember).tag} - ${a.nivel}`
+            }
+        })
+
+        embedResponse(resultado.slice(0, 10).join('\n'))
     }
     //fin de rank
 
