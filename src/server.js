@@ -283,6 +283,17 @@ client.on('message', async (message) => {
 
     if (xd(await client.getData({ id: message.author.id }, 'blacklist'))) return embedResponse('Wow, al parecer te has portado mal...\n\nQuieres usarme?, pues entra [Aqui](https://discord.gg/hbSahh8)')
 
+
+    function rank(member) {
+        let ranking = await(require('./models/niveles.js')).aggregate([{ $match: { idGuild: message.guild.id } },
+        { "$sort": { "xp": -1 } },
+        { "$group": { "_id": false, "users": { "$push": { "idMember": "$idMember" } } } },
+        { "$unwind": { "path": "$users", "includeArrayIndex": "ranking" } },
+        { "$match": { "users.idMember": member.user.id } }
+        ]);
+        return Object.entries(ranking)[0]
+    }
+
     /*const blacklist = []
     if (blacklist.includes(message.author.id)) return;*/
 
@@ -1009,7 +1020,7 @@ client.on('message', async (message) => {
         let levelup = 5 * (data.nivel ** 2) + 50 * data.nivel + 100;
 
         let embed = new Discord.MessageEmbed()
-            .setDescription(`Nivel: ${!data.nivel ? 0 : data.nivel}\nXp: ${!data.xp ? 0 : data.xp}/${levelup ? levelup : '100'}`)
+            .setDescription(`Nivel: ${!data.nivel ? 0 : data.nivel}\nXp: ${!data.xp ? 0 : data.xp}/${levelup ? levelup : '100'}\nRank: ${rank(member) ? rank(member)[1].ranking + 1 : 'Sin resultados'}`)
             .setColor(color)
             .setThumbnail(member.user.displayAvatarURL())
             .setTimestamp()
