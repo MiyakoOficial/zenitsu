@@ -1041,7 +1041,8 @@ client.on('message', async (message) => {
     else if (command === 'rank') {
 
         let objeto = [];
-        let lista = message.guild.members.cache.array()
+
+        let lista = message.guild.members.cache.array();
 
         for (var i = 0; i < lista.length; i++) {
             let { xp, nivel } = await client.getData({ idGuild: message.guild.id, idMember: lista[i].user.id }, 'niveles');
