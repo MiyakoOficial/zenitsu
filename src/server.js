@@ -284,7 +284,7 @@ client.on('message', async (message) => {
     if (xd(await client.getData({ id: message.author.id }, 'blacklist'))) return embedResponse('Wow, al parecer te has portado mal...\n\nQuieres usarme?, pues entra [Aqui](https://discord.gg/hbSahh8)')
 
 
-    function rank(member) {
+    let rank = (member) => {
         let ranking = await(require('./models/niveles.js')).aggregate([{ $match: { idGuild: message.guild.id } },
         { "$sort": { "xp": -1 } },
         { "$group": { "_id": false, "users": { "$push": { "idMember": "$idMember" } } } },
@@ -1030,6 +1030,12 @@ client.on('message', async (message) => {
 
     }
     //fin de xp
+
+    //inicio de rank
+    else if (command === 'rank') {
+
+    }
+    //fin de rank
 
     //incio de setlevel
 
