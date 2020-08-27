@@ -292,7 +292,7 @@ client.on('message', async (message) => {
         { "$match": { "users.idMember": member.user.id } }
         ]);
         if (Object.entries(ranking)[0]) {
-            return Object.entries(ranking[0][1].ranking)
+            return Object.entries(ranking)[0][1].ranking
         }
         else {
             return null;
