@@ -1025,7 +1025,7 @@ client.on('message', async (message) => {
         let levelup = 5 * (data.nivel ** 2) + 50 * data.nivel + 100;
 
         let embed = new Discord.MessageEmbed()
-            .setDescription(`Nivel: ${!data.nivel ? 0 : data.nivel}\nXp: ${!data.xp ? 0 : data.xp}/${levelup ? levelup : '100'}\nRank: ${rank(member) === null ? 'Sin resultados' : rank(member) + 1} - ${rank(member)} `)
+            .setDescription(`Nivel: ${!data.nivel ? 0 : data.nivel}\nXp: ${!data.xp ? 0 : data.xp}/${levelup ? levelup : '100'}\nRank: ${await rank(member) === null ? 'Sin resultados' : await rank(member) + 1} - ${await rank(member)} `)
             .setColor(color)
             .setThumbnail(member.user.displayAvatarURL())
             .setTimestamp()
@@ -1037,7 +1037,7 @@ client.on('message', async (message) => {
     //fin de xp
 
     //inicio de rank
-    else if (command === 'rank') {
+    /*else if (command === 'rank') {
 
         let mapeo = require('./models/niveles.js').find({ idGuild: message.guild.id }).sort({ level: -1 }).limit(10).exec((err, data) => {
             data.map(a => {
@@ -1048,7 +1048,7 @@ client.on('message', async (message) => {
             })
         });
         embedResponse(mapeo)
-    }
+    }*/
     //fin de rank
 
     //incio de setlevel
