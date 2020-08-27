@@ -1047,7 +1047,7 @@ client.on('message', async (message) => {
             let { xp, nivel } = await client.getData({ idGuild: message.guild.id, idMember: lista[i].user.id }, 'niveles');
             objeto.push({ member: lista[i].user, xp: xp, nivel: nivel });
         };
-        let resultado = objeto.sort((a, b) => a.nivel - b.nivel).map(a => {
+        let resultado = objeto.sort((a, b) => b.nivel - a.nivel).map(a => {
             return `${client.users.cache.get(a.member.id).tag} - ${!a.nivel ? 0 : a.nivel}`
         })
 
