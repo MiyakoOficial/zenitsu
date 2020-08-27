@@ -1037,7 +1037,7 @@ client.on('message', async (message) => {
     //fin de xp
 
     //inicio de rank
-    /*else if (command === 'rank') {
+    else if (command === 'rank') {
 
         let mapeo = require('./models/niveles.js').find({ idGuild: message.guild.id }).sort({ level: -1 }).limit(10).exec((err, data) => {
             data.map(a => {
@@ -1047,8 +1047,8 @@ client.on('message', async (message) => {
                 }
             })
         });
-        embedResponse(mapeo)
-    }*/
+        embedResponse(mapeo.join('\n'))
+    }
     //fin de rank
 
     //incio de setlevel
