@@ -1041,7 +1041,7 @@ client.on('message', async (message) => {
     else if (command === 'rank') {
 
         let objeto = [];
-        let lista = message.guild.members.cache.array().slice(0, 10);
+        let lista = message.guild.members.cache.array()
 
         for (var i = 0; i < lista.length; i++) {
             let { xp, nivel } = await client.getData({ idGuild: message.guild.id, idMember: lista[i].user.id }, 'niveles');
@@ -1051,7 +1051,7 @@ client.on('message', async (message) => {
             return `${client.users.cache.get(a.member.id).tag} - ${!a.nivel ? 0 : a.nivel}`
         })
 
-        embedResponse(resultado.join('\n')).catch(err => { enviarError(err, message.author) })
+        embedResponse(resultado.slice(0, 10).join('\n')).catch(err => { enviarError(err, message.author) })
     }
     //fin de rank
 
