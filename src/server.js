@@ -284,8 +284,8 @@ client.on('message', async (message) => {
     if (xd(await client.getData({ id: message.author.id }, 'blacklist'))) return embedResponse('Wow, al parecer te has portado mal...\n\nQuieres usarme?, pues entra [Aqui](https://discord.gg/hbSahh8)')
 
 
-    let rank = (member) => {
-        let ranking = await(require('./models/niveles.js')).aggregate([{ $match: { idGuild: message.guild.id } },
+    let rank = async (member) => {
+        let ranking = await (require('./models/niveles.js')).aggregate([{ $match: { idGuild: message.guild.id } },
         { "$sort": { "xp": -1 } },
         { "$group": { "_id": false, "users": { "$push": { "idMember": "$idMember" } } } },
         { "$unwind": { "path": "$users", "includeArrayIndex": "ranking" } },
@@ -1034,6 +1034,11 @@ client.on('message', async (message) => {
     //inicio de rank
     else if (command === 'rank') {
 
+        let mapeo = require('./models/niveles.js').find({ idGuild: message.guild.id }).sort({ level: -1 }).limit(10).exec((err, data) => {
+            data.map(a => {
+            })
+        });
+        embedResponse(mapeo)
     }
     //fin de rank
 
