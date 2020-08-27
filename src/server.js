@@ -1039,7 +1039,7 @@ client.on('message', async (message) => {
     //inicio de rank
     else if (command === 'rank') {
 
-        let mapeo = require('./models/niveles.js').find({ idGuild: message.guild.id }).sort({ level: -1 }).limit(10).exec((err, data) => {
+        let mapeo = await require('./models/niveles.js').find({ idGuild: message.guild.id }).sort({ level: -1 }).limit(10).exec((err, data) => {
             data.map(a => {
                 if (!data.idMember || !client.users.cache.get(data.idMember)) { }
                 else {
