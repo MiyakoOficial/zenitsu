@@ -1020,7 +1020,7 @@ client.on('message', async (message) => {
         let levelup = 5 * (data.nivel ** 2) + 50 * data.nivel + 100;
 
         let embed = new Discord.MessageEmbed()
-            .setDescription(`Nivel: ${!data.nivel ? 0 : data.nivel}\nXp: ${!data.xp ? 0 : data.xp}/${levelup ? levelup : '100'}\nRank: ${!rank(member)[1] ? 'Sin resultados' : rank(member).ranking + 1} - ${await rank(member)} `)
+            .setDescription(`Nivel: ${!data.nivel ? 0 : data.nivel}\nXp: ${!data.xp ? 0 : data.xp}/${levelup ? levelup : '100'}\nRank: ${!await rank(member)[1] ? 'Sin resultados' : await rank(member)[1].ranking + 1} - ${await rank(member)} `)
             .setColor(color)
             .setThumbnail(member.user.displayAvatarURL())
             .setTimestamp()
