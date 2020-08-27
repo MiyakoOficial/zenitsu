@@ -431,9 +431,15 @@ client.on('message', async (message) => {
         collector.on('collect', (msg, col) => {
             if (msg.content === prefix + 'stopchat') { collector.stop() }
             else {
-                if (!message.member.voice.channel) {
+                if (!message.member.voice.channel || !message.guild.me.voice.channel) {
                     collector.stop()
                     return message.reply('Reiniciando chat!').catch(error => { enviarError(error, message.author) })
+                }
+                else {
+                    if (message.member.voice.channel.id !== message.guild.me.voice.channel.id) {
+                        collector.stop()
+                        return message.reply('Reiniciando chat!').catch(error => { enviarError(error, message.author) })
+                    }
                 } chatbot.hablar(msg.content).then(respuesta => {
                     let txt = `http://translate.google.com/translate_tts?ie=UTF-8&total=1&idx=0&textlen=64&client=tw-ob&q=${respuesta}&tl=es`;
 
