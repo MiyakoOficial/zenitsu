@@ -1178,7 +1178,7 @@ client.on('message', async (message) => {
             .setColor(color)
             .setDescription(`
             Ayuda de mongoose: [${getUser(client, '398485728172179477').username}]
-            Dependencias: \`\`\`js\n${dep}\`\`\`
+            Dependencias: \`\`\`json\n${dep}\`\`\`
             \`\`\`Extras: {
                 ${getUser(client, '393382613047574530').username}],
                 ${getUser(client, '577000793094488085').username}   
