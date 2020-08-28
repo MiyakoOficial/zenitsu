@@ -1051,7 +1051,7 @@ client.on('message', async (message) => {
 
                 let comparando = `${i + 1} | ${!client.users.cache.get(v.idMember) ? 'Miembro desconocido!' : client.users.cache.get(v.idMember).tag} - ${!v.nivel ? 0 : v.nivel}`
 
-                if (comparando.length < 4)
+                if (!comparando)
                     return 'Pagina inexistente!';
                 else
                     return comparando;
