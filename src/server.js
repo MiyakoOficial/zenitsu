@@ -431,15 +431,15 @@ client.on('message', async (message) => {
     //inicio de voicechat
 
     else if (command === 'voicechat') {
-        //else if (command === 'chat') {
-        let connection = await message.member.voice.channel.join();
+
         const chatbot = require("espchatbotapi");
-        // if (!args[0]) return embedResponse("Escribe algo!").catch(error => { enviarError(error, message.author) });
         if (chat.get(message.guild.id) === true) return message.reply('Alguien ya está hablando conmigo!');
 
         if (!message.member.voice.channel) return message.reply('Necesitas estar en un canal de voz!').catch(error => { enviarError(error, message.author) });
         if (!message.member.voice.channel.permissionsFor(message.client.user).has('CONNECT')) return message.reply('No puedo unirme a ese canal de voz!').catch(error => { enviarError(error, message.author) });
         if (!message.member.voice.channel.permissionsFor(message.client.user).has('SPEAK')) return message.reply('No puedo hablar en ese canal de voz!').catch(error => { enviarError(error, message.author) });
+
+        let connection = await message.member.voice.channel.join();
 
         message.reply('Comenzado!\n\nPara parar usa: <prefix>stopchat').catch(error => { enviarError(error, message.author) });
         chat.set(message.guild.id, true)
