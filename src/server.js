@@ -1177,12 +1177,12 @@ client.on('message', async (message) => {
         let embed = new Discord.MessageEmbed()
             .setColor(color)
             .setDescription(`
-            Ayuda de mongoose: [${getUser('398485728172179477')}](${getUser('398485728172179477').displayAvatarURL()})
+            Ayuda de mongoose: [${getUser(client, '398485728172179477')}](${getUser(client, '398485728172179477').displayAvatarURL()})
             Dependencias: \`\`\`js\n${dep}\`\`\`
 
             Extras: {
-                [${getUser('393382613047574530').username}](${getUser('393382613047574530').displayAvatarURL()}),
-                [${getUser('577000793094488085').username}](${getUser('577000793094488085').displayAvatarURL()})    
+                [${getUser(client, '393382613047574530').username}](${getUser(client, '393382613047574530').displayAvatarURL()}),
+                [${getUser(client, '577000793094488085').username}](${getUser(client, '577000793094488085').displayAvatarURL()})    
             }
             `, { split: true })
             .setFooter('Gracias por todo!', client.users.cache.get('507367752391196682').displayAvatarURL())
