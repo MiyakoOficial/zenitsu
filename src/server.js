@@ -1040,30 +1040,17 @@ client.on('message', async (message) => {
     //inicio de rank
     else if (command === 'rank') {
 
-        /* let objeto = [];
- 
-         let lista = message.guild.members.cache.array();
- 
-         for (var i = 0; i < lista.length; i++) {
-             let { xp, nivel } = await client.getData({ idGuild: message.guild.id, idMember: lista[i].user.id }, 'niveles');
-             objeto.push({ member: lista[i].user, xp: xp, nivel: nivel });
-         };
-         let resultado = objeto.sort((a, b) => b.nivel - a.nivel).map(a => {
-             return `${client.users.cache.get(a.member.id).tag} - ${!a.nivel ? 0 : a.nivel}`
-         })
- 
-         embedResponse(resultado.slice(0, 10).join('\n')).catch(err => { enviarError(err, message.author) })*/
-
+        let seleccion = parseInt(args[0]) || 1
 
         await require('./models/niveles.js').find({ idGuild: message.guild.id }).limit(150).sort({ nivel: -1 }).exec(async (err, res) => {
             if (err) return console.log(err);
             if (res.length === 0) return embedResponse("No hay datos...").catch(err => { enviarError(err, message.author) });
-            //console.log(res);
-            for (let i = 0, k = 10; i < 10; i += 10, k += 10) {
-                let pagina = res.slice(i, k);
-                embedResponse(pagina.map((v, i) => `${i + 1} | ${!client.users.cache.get(v.idMember) ? 'Miembro desconocido!' : client.users.cache.get(v.idMember).tag} - ${!v.nivel ? 0 : v.nivel}`)).catch(err => { enviarError(err, message.author) });
-            };
+
+            let pagina = res.slice(10 * (seleccion - 1), 10 * seleccion);
+            embedResponse(pagina.map((v, i) => `${i + 1} | ${!client.users.cache.get(v.idMember) ? 'Miembro desconocido!' : client.users.cache.get(v.idMember).tag} - ${!v.nivel ? 0 : v.nivel}`)).catch(err => { enviarError(err, message.author) });
+
         });
+
     }
     //fin de rank
 
