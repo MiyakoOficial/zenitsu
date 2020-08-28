@@ -288,7 +288,7 @@ client.on('message', async (message) => {
 
     let rank = async (member) => {
         let ranking = await (require('./models/niveles.js')).aggregate([{ $match: { idGuild: message.guild.id } },
-        { "$sort": { "xp": -1 } },
+        { "$sort": { "nivel": -1 } },
         { "$group": { "_id": false, "users": { "$push": { "idMember": "$idMember" } } } },
         { "$unwind": { "path": "$users", "includeArrayIndex": "ranking" } },
         { "$match": { "users.idMember": member.user.id } }
