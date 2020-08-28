@@ -1,5 +1,5 @@
 const { join } = require('path');
-const { capitalize } = require('./functions.js')
+const { capitalize, rModel } = require('./functions.js')
 const color = "#E09E36";
 const ytsr = require('ytsr');
 const ytdl = require('ytdl-core');
