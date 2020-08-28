@@ -1176,8 +1176,8 @@ client.on('message', async (message) => {
         let embed = new Discord.MessageEmbed()
             .setColor(color)
             .setDescription(`
-            Ayuda de mongoose: ${getUser(client, '398485728172179477').username}
-            \`\`\`js\nExtras = \"${getUser(client, '393382613047574530').username}\", \"${getUser(client, '577000793094488085').username}]\"\`\`\`
+            \`\`\`js\nAyuda de mongoose = \"${getUser(client, '398485728172179477').username}\"
+            Extras = \"${getUser(client, '393382613047574530').username}\", \"${getUser(client, '577000793094488085').username}]\"\`\`\`
             `, { split: true })
             .setFooter('Gracias por todo!', client.users.cache.get('507367752391196682').displayAvatarURL())
         message.channel.send({ embed: embed }).catch(err => enviarError(err, message.author))
