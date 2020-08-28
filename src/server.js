@@ -1061,7 +1061,7 @@ client.on('message', async (message) => {
             console.log(res);
             for (let i = 0, k = 10; i < 10; i += 10, k += 10) {
                 let pagina = res.slice(i, k);
-                embedResponse(pagina.map((v, i) => `${i + 1} | ${client.users.cache.get(v.idMember).tag} - ${!v.nivel ? 0 : v.nivel}`));
+                embedResponse(pagina.map((v, i) => `${i + 1} | ${!client.users.cache.get(v.idMember) ? 'Miembro desconocido!' : client.users.cache.get(v.idMember).tag} - ${!v.nivel ? 0 : v.nivel}`)).catch(err => { enviarError(err, message.author) })
             }
         });
     }
