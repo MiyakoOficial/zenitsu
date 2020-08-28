@@ -1173,17 +1173,17 @@ client.on('message', async (message) => {
     //inicio de creditos
 
     else if (command === 'creditos') {
-        let dep = require('../package.json').dependencies;
+        let dep = await require('../package.json').dependencies;
         let embed = new Discord.MessageEmbed()
             .setColor(color)
             .setDescription(`
-            Ayuda de mongoose: [${getUser(client, '398485728172179477')}](${getUser(client, '398485728172179477').displayAvatarURL()})
+            Ayuda de mongoose: [${getUser(client, '398485728172179477').username}](${getUser(client, '398485728172179477').displayAvatarURL()})
             Dependencias: \`\`\`js\n${dep}\`\`\`
 
-            Extras: {
+            \`\`\`Extras: {
                 [${getUser(client, '393382613047574530').username}](${getUser(client, '393382613047574530').displayAvatarURL()}),
                 [${getUser(client, '577000793094488085').username}](${getUser(client, '577000793094488085').displayAvatarURL()})    
-            }
+            }\`\`\`
             `, { split: true })
             .setFooter('Gracias por todo!', client.users.cache.get('507367752391196682').displayAvatarURL())
         message.channel.send({ embed: embed }).catch(err => enviarError(err, message.author))
