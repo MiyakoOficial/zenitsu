@@ -1057,12 +1057,12 @@ client.on('message', async (message) => {
 
         await require('./models/niveles.js').find({ idGuild: message.guild.id }).limit(150).sort({ nivel: -1 }).exec(async (err, res) => {
             if (err) return console.log(err);
-            if (res.length === 0) return message.channel.send("No hay datos...");
-            console.log(res);
+            if (res.length === 0) return embedResponse("No hay datos...").catch(err => { enviarError(err, message.author) });
+            //console.log(res);
             for (let i = 0, k = 10; i < 10; i += 10, k += 10) {
                 let pagina = res.slice(i, k);
-                embedResponse(pagina.map((v, i) => `${i + 1} | ${!client.users.cache.get(v.idMember) ? 'Miembro desconocido!' : client.users.cache.get(v.idMember).tag} - ${!v.nivel ? 0 : v.nivel}`)).catch(err => { enviarError(err, message.author) })
-            }
+                embedResponse(pagina.map((v, i) => `${i + 1} | ${!client.users.cache.get(v.idMember) ? 'Miembro desconocido!' : client.users.cache.get(v.idMember).tag} - ${!v.nivel ? 0 : v.nivel}`)).catch(err => { enviarError(err, message.author) });
+            };
         });
     }
     //fin de rank
