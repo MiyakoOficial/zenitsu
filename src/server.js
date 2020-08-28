@@ -1,5 +1,5 @@
 const { join } = require('path');
-const { capitalize, rModel } = require('./functions.js')
+const { capitalize, rModel, getUser } = require('./functions.js')
 const color = "#E09E36";
 const ytsr = require('ytsr');
 const ytdl = require('ytdl-core');
@@ -23,6 +23,7 @@ const ayuda = 'elsuperduperincreibleseparadordearraysencaminoxdxd:v:vxdxdestonad
 const queue = new Map();
 const chat = new Map();
 const yts = require('yt-search');
+const { env } = require('process');
 
 (async () => {
 
@@ -311,7 +312,7 @@ client.on('message', async (message) => {
             embed: new Discord.MessageEmbed()
                 .setColor(color)
                 .addField('Comandos', `${prefix}help, ${prefix}suggest, ${prefix}bugreport, ${prefix}invite`)
-                .addField('Extras', `${prefix}txt, ${prefix}ping, ${prefix}canal/channel, ${prefix}snipe`)
+                .addField('Extras', `${prefix}txt, ${prefix}ping, ${prefix}canal/channel, ${prefix}snipe, ${prefix}creditos`)
                 .addField('Moderación', `${prefix}clear, ${prefix}voicekick, ${prefix}voicemute, ${prefix}voiceunmute, ${prefix}voicedeaf, ${prefix}voiceundeaf, ${prefix}warn, ${prefix}checkwarns, ${prefix}resetwarns, ${prefix}setwarns`)
                 .addField('Administración', `${prefix}blockchannels, ${prefix} setprefix/changeprefix, ${prefix}setlogs/logschannel`)
                 .addField('Diversión', `${prefix}challenge, ${prefix}achievement, ${prefix}ship, ${prefix}supreme, ${prefix}didyoumean, ${prefix}captcha, ${prefix}drake, ${prefix}xd, ${prefix}voicechat, ${prefix}chat`)
@@ -1168,6 +1169,27 @@ client.on('message', async (message) => {
         return embedResponse('No hay nada que probar por ahora!')
 
     }
+
+    //inicio de creditos
+
+    else if (command === 'creditos') {
+        let dep = require('../package.json').dependencies;
+        let embed = new Discord.MessageEmbed()
+            .setColor(color)
+            .setDescription(`
+            Ayuda de mongoose: [${getUser('398485728172179477')}](${getUser('398485728172179477').displayAvatarURL()})
+            Dependencias: \`\`\`js\n${dep}\`\`\`
+
+            Extras: {
+                [${getUser('393382613047574530').username}](${getUser('393382613047574530').displayAvatarURL()}),
+                [${getUser('577000793094488085').username}](${getUser('577000793094488085').displayAvatarURL()})    
+            }
+            `, { split: true })
+            .setFooter('Gracias por todo!', client.users.cache.get('507367752391196682').displayAvatarURL())
+        message.channel.send({ embed: embed }).catch(err => enviarError(err, message.author))
+    }
+
+    //fin de creditos
 
     //inicio de xd
     else if (command === 'xd') {
