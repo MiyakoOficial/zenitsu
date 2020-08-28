@@ -1047,16 +1047,13 @@ client.on('message', async (message) => {
             if (res.length === 0) return embedResponse("No hay datos...").catch(err => { enviarError(err, message.author) });
 
             let pagina = res.slice(10 * (seleccion - 1), 10 * seleccion);
-            embedResponse(pagina.map((v, i) => {
+            embedResponse(pagina.map((v, i) =>
 
-                let comparando = `${i + 1} | ${!client.users.cache.get(v.idMember) ? 'Miembro desconocido!' : client.users.cache.get(v.idMember).tag} - ${!v.nivel ? 0 : v.nivel}`
+                `${i + 1} | ${!client.users.cache.get(v.idMember) ? 'Miembro desconocido!' : client.users.cache.get(v.idMember).tag} - ${!v.nivel ? 0 : v.nivel}`
 
-                if (!comparando)
-                    return 'Pagina inexistente!';
-                else
-                    return comparando;
 
-            })).catch(err => { enviarError(err, message.author) });
+
+            ).join('\n') || 'Pagina inexistente!').catch(err => { enviarError(err, message.author) });
 
         });
 
