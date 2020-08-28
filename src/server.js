@@ -1058,7 +1058,7 @@ client.on('message', async (message) => {
 
                     ).join('\n') || 'Pagina inexistente!'
                 )
-                .setTimestamp
+                .setTimestamp()
                 .setFooter(`Pagina actual: ${seleccion === 0 ? 1 : seleccion}`)
                 .setColor(color)
 
