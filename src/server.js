@@ -1,4 +1,5 @@
 const { join } = require('path');
+const { capitalize } = require('./functions.js')
 const color = "#E09E36";
 const ytsr = require('ytsr');
 const ytdl = require('ytdl-core');
@@ -1775,7 +1776,3 @@ mongoose.connect(process.env.MONGODB, { useNewUrlParser: true, useUnifiedTopolog
 }).catch((err) => {
     console.log(`[Error]: No se puede conectar a la base de datos de Mongodb. Error: ${err}`);
 });
-
-function capitalize(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
-};
