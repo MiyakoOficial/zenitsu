@@ -134,11 +134,12 @@ let cooldownniveles = new Set();
 client.on('message', async (message) => {
     if (!message.guild) return;
     function errorEmbed(argumentoDeLaDescripcion) {
-        return message.channel.send(new Discord.MessageEmbed()
-            .setDescription(`¡<:ohno:721174460073377804> => \`Error\`: ${argumentoDeLaDescripcion}!`)
-            .setColor(color)
-            .setTimestamp()
-        ).catch(error => { enviarError(error, message.author) });
+        return message.channel.send({
+            embed: new Discord.MessageEmbed()
+                .setDescription(`¡<:ohno:721174460073377804> => \`Error\`: ${argumentoDeLaDescripcion}!`)
+                .setColor(color)
+                .setTimestamp()
+        }).catch(error => { enviarError(error, message.author) });
     }
 
 
