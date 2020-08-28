@@ -1048,7 +1048,7 @@ client.on('message', async (message) => {
 
             let pagina = res.slice(10 * (seleccion - 1), 10 * seleccion);
 
-            let embed = Discord.MessageEmbed()
+            let embed = new Discord.MessageEmbed()
                 .setDescription(
                     pagina.map((v, i) =>
 
