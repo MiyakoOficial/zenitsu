@@ -1173,12 +1173,12 @@ client.on('message', async (message) => {
     //inicio de creditos
 
     else if (command === 'creditos') {
-        let dep = await require('../package.json').dependencies;
+        let { dependencies } = require('../package.json');
         let embed = new Discord.MessageEmbed()
             .setColor(color)
             .setDescription(`
             Ayuda de mongoose: [${getUser(client, '398485728172179477').username}]
-            Dependencias: \`\`\`json\n${dep}\`\`\`
+            Dependencias: \`\`\`json\n${dependencies}\`\`\`
             \`\`\`Extras: {
                 ${getUser(client, '393382613047574530').username}],
                 ${getUser(client, '577000793094488085').username}   
