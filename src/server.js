@@ -1040,14 +1040,14 @@ client.on('message', async (message) => {
     //inicio de rank
     else if (command === 'rank') {
 
-        let seleccion = parseInt(args[0]) || 1
+        let seleccion = parseInt(args[0]) || 1;
 
         await require('./models/niveles.js').find({ idGuild: message.guild.id }).limit(150).sort({ nivel: -1 }).exec(async (err, res) => {
             if (err) return console.log(err);
             if (res.length === 0) return embedResponse("No hay datos...").catch(err => { enviarError(err, message.author) });
 
             let pagina = res.slice(10 * (seleccion - 1), 10 * seleccion);
-            embedResponse(pagina.map((v, i) => `${i + 1} | ${!client.users.cache.get(v.idMember) ? 'Miembro desconocido!' : client.users.cache.get(v.idMember).tag} - ${!v.nivel ? 0 : v.nivel}`)).catch(err => { enviarError(err, message.author) });
+            embedResponse(pagina.map((v, i) => `${i + 1} | ${!client.users.cache.get(v.idMember) ? 'Miembro desconocido!' : client.users.cache.get(v.idMember).tag} - ${!v.nivel ? 0 : v.nivel}` || 'Pagina inexistente!')).catch(err => { enviarError(err, message.author) });
 
         });
 
