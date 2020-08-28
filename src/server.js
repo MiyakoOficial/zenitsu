@@ -1040,19 +1040,30 @@ client.on('message', async (message) => {
     //inicio de rank
     else if (command === 'rank') {
 
-        let objeto = [];
+        /* let objeto = [];
+ 
+         let lista = message.guild.members.cache.array();
+ 
+         for (var i = 0; i < lista.length; i++) {
+             let { xp, nivel } = await client.getData({ idGuild: message.guild.id, idMember: lista[i].user.id }, 'niveles');
+             objeto.push({ member: lista[i].user, xp: xp, nivel: nivel });
+         };
+         let resultado = objeto.sort((a, b) => b.nivel - a.nivel).map(a => {
+             return `${client.users.cache.get(a.member.id).tag} - ${!a.nivel ? 0 : a.nivel}`
+         })
+ 
+         embedResponse(resultado.slice(0, 10).join('\n')).catch(err => { enviarError(err, message.author) })*/
 
-        let lista = message.guild.members.cache.array();
 
-        for (var i = 0; i < lista.length; i++) {
-            let { xp, nivel } = await client.getData({ idGuild: message.guild.id, idMember: lista[i].user.id }, 'niveles');
-            objeto.push({ member: lista[i].user, xp: xp, nivel: nivel });
-        };
-        let resultado = objeto.sort((a, b) => b.nivel - a.nivel).map(a => {
-            return `${client.users.cache.get(a.member.id).tag} - ${!a.nivel ? 0 : a.nivel}`
-        })
-
-        embedResponse(resultado.slice(0, 10).join('\n')).catch(err => { enviarError(err, message.author) })
+        await require('./models/niveles.js').find({ idGuild: message.guild.id }).limit(150).sort({ nivel: -1 }).exec(async (err, res) => {
+            if (err) return console.log(err);
+            if (res.length === 0) return message.channel.send("No hay datos...");
+            console.log(res);
+            for (let i = 0, k = 10; i < 10; i += 10, k += 10) {
+                let pagina = res.slice(i, k);
+                embedResponse(pagina.map((v, i) => `${i + 1} | ${client.users.cache.get(v.idMember).tag} - ${!v.nivel ? 0 : v.nivel}`));
+            }
+        });
     }
     //fin de rank
 
