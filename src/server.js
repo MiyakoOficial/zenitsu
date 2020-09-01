@@ -1141,7 +1141,7 @@ client.on('message', async (message) => {
             return message.reply('Enviado!')
         }
         else {
-            let { test } = await client.getData({ id: 'test' }, 'niveles');
+            let { test } = await client.getData({ id: 'chat' }, 'test');
 
             message.reply(`
             \`\`\`\n${test}\n\`\`\`
