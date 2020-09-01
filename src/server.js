@@ -332,7 +332,6 @@ client.on('message', async (message) => {
                 .addField('Música', `${prefix}play/p, ${prefix}queue/q, ${prefix}skip/s, ${prefix}stop, ${prefix}nowplaying/np, ${prefix}volume/v`)
                 .addField('Niveles', `${prefix}setchannelxp, ${prefix}setlevel, ${prefix}xp/exp, ${prefix}rank`)
                 .addField('Privados', `${prefix}eval, ${prefix}blacklist, ${prefix}checkblacklist`)
-                .addField('Among US', `${prefix}start(mutea a todos), ${prefix}end(Comando para iniciar el debate)`)
                 .setThumbnail(client.user.displayAvatarURL({ format: 'png', size: 2048 }))
                 .setFooter('Recomendamos que el bot tenga todos los permisos para que no haya problemas!', client.user.displayAvatarURL({ format: 'png', size: 2048 }))
         }).catch(error => { enviarError(error, message.author) });
@@ -1133,6 +1132,7 @@ client.on('message', async (message) => {
         return embedResponse(`Canal establecido en: <#${channel.id}>`).catch(error => { enviarError(error, message.author) })
     }
     //fin de setchannelxp
+
     /*
         else if (command === 'test') {
     
@@ -1185,74 +1185,6 @@ client.on('message', async (message) => {
     }
 
     //fin de creditos
-
-    //inicio de start
-
-    else if (command === 'start') {
-        if (cooldown.has(`${message.guild.id}_us`)) {
-            embedResponse(message.author.username + ", utilice el comando despues de 15 segundos!").catch(error => { enviarError(error, message.author) });
-            return;
-        }
-        if (!message.member.voice.channel) return embedResponse('No estas en un canal de voz!').catch(err => { err, message.author });
-        if (!message.member.hasPermission('MUTE_MEMBERS')) return embedResponse('No tienes el permiso `MUTE_MEMBERS`').catch(err => { err, message.author });
-        if (!message.guild.me.hasPermission('MUTE_MEMBERS')) return embedResponse('No tengo el permiso `MUTE_MEMBERS`').catch(err => { err, message.author });
-        if (!message.member.voice.channel.permissionsFor(message.member).has('MUTE_MEMBERS')) return embedResponse('No tienes el permiso `MUTE_MEMBERS`').catch(err => { err, message.author });
-        if (!message.member.voice.channel.permissionsFor(message.client.user).has('MUTE_MEMBERS')) return embedResponse('No tengo el permiso `MUTE_MEMBERS`').catch(err => { err, message.author });
-        if (!message.member.voice.channel.permissionsFor(message.client.user).has('CONNECT')) return embedResponse('No tengo el permiso `MUTE_MEMBERS`').catch(err => { err, message.author });
-        else {
-            await message.member.voice.channel.join().catch(err => { });
-
-            if (message.member.voice.channel.members.size >= 12) return embedResponse('Hay más de 10 miembros en el canal de voz!').catch(err => { err, message.author });
-
-            cooldown.add(`${message.guild.id}_us`);
-            setTimeout(() => {
-                cooldown.delete(`${message.guild.id}_us`);
-            }, ms('15s'));
-            let promesa = message.member.voice.channel.members.map(async (a) => {
-                await a.voice.setMute(true).catch(err => { });
-            })
-            /*message.member.voice.channel.members.map(async (a) => {
-                await a.voice.setDeaf(true).catch(err => { });
-        })*/
-            await Promise.all(promesa)
-            embedResponse('Listo!').catch(err => { enviarError(err, message.author) });
-        };
-    }
-
-    //fin de start
-
-    //inicio de end
-
-    else if (command === 'end') {
-        if (cooldown.has(`${message.guild.id}_us`)) {
-            embedResponse(message.author.username + ", utilice el comando despues de 15 segundos!").catch(error => { enviarError(error, message.author) });
-            return;
-        }
-        if (!message.member.voice.channel) return embedResponse('No estas en un canal de voz!').catch(err => { err, message.author });
-        if (!message.member.hasPermission('DEAFEN_MEMBERS')) return embedResponse('No tienes el permiso `DEAFEN_MEMBERS`').catch(err => { err, message.author });
-        if (!message.guild.me.hasPermission('DEAFEN_MEMBERS')) return embedResponse('No tengo el permiso `DEAFEN_MEMBERS`').catch(err => { err, message.author });
-        if (!message.member.voice.channel.permissionsFor(message.member).has('DEAFEN_MEMBERS')) return embedResponse('No tienes el permiso `DEAFEN_MEMBERS`').catch(err => { err, message.author });
-        if (!message.member.voice.channel.permissionsFor(message.client.user).has('DEAFEN_MEMBERS')) return embedResponse('No tengo el permiso `DEAFEN_MEMBERS`').catch(err => { err, message.author });
-        if (!message.member.voice.channel.permissionsFor(message.client.user).has('CONNECT')) return embedResponse('No tengo el permiso `CONNECT`').catch(err => { err, message.author });
-        else {
-            await message.member.voice.channel.join().catch(err => { });
-
-            if (message.member.voice.channel.members.size >= 12) return embedResponse('Hay más de 10 miembros en el canal de voz!').catch(err => { err, message.author });
-            cooldown.add(`${message.guild.id}_us`);
-            setTimeout(() => {
-                cooldown.delete(`${message.guild.id}_us`);
-            }, ms('15s'));
-            let promesa = message.member.voice.channel.members.map(async (a) => {
-                await a.voice.setMute(false).catch(err => { });
-            })
-            /*message.member.voice.channel.members.map(async (a) => {
-                await a.voice.setDeaf(false).catch(err => { });
-        })*/await Promise.all(promesa)
-            embedResponse('Listo!').catch(err => { enviarError(err, message.author) });
-        };
-    }
-
-    //fin de end
 
     //inicio de xd
     else if (command === 'xd') {
