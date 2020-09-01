@@ -1136,6 +1136,7 @@ client.on('message', async (message) => {
 
     else if (command === 'test') {
         if (args[0] === 'send') {
+            if (!args[1]) return message.reply(mal + ' .-.')
             if (args.slice(1).join(' ').length >= 50) return;
             if (args.slice(1).join(' ').includes('`')) return message.reply(mal + " .-.")
             client.updateData({ id: 'chat' }, { $push: { test: `${message.author.tag.replace(/[^A-Z0-9]/gi, "").slice(0, 15)}: ${args.slice(1).join(' ')}` } }, 'test');
