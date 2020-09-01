@@ -661,6 +661,9 @@ client.on('message', async (message) => {
 
     //inicio de snipe
     else if (command === 'snipe') {
+
+        let canal = message.mentions.channels.first() || message.channel;
+
         await client.getData({ id: message.channel.id }, 'snipe').then((data) => {
 
 
