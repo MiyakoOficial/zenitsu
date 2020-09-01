@@ -1136,14 +1136,23 @@ client.on('message', async (message) => {
 
     else if (command === 'test') {
         if (args[0] === 'send') {
-            if (!args[1]) return message.reply(mal + ' .-.')
-            if (args.slice(1).join(' ').length >= 50) return;
-            if (args.slice(1).join(' ').includes('`')) return message.reply(mal + " .-.")
+            if (!args[1]) return message.reply(mal + ' .-.');
+            if (!args[1].replace(/[^A-Z0-9]/gi, "")) return message.reply(mal + ' .-.');
+            if (args.slice(1).join(' ').length >= 50) return message.reply(mal + ' .-.');
+            if (args.slice(1).join(' ').includes('`')) return message.reply(mal + " .-.");
             client.updateData({ id: 'chat' }, { $push: { test: `${message.author.tag.replace(/[^A-Z0-9]/gi, "").slice(0, 15)}: ${args.slice(1).join(' ')}` } }, 'test');
             return message.reply('Enviado!')
         }
         else {
             let { test } = await client.getData({ id: 'chat' }, 'test');
+
+            if (!test) return message.reply('Error!');
+
+            while (test.length >= 10) {
+
+                client.updateData({ id: 'chat' }, { $pop: { test: -1 } }, 'test')
+
+            }
 
             message.reply(`
             \`\`\`\n${test.join('\n')}\n\`\`\`
