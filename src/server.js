@@ -286,6 +286,16 @@ client.on('message', async (message) => {
 
     if (xd(await client.getData({ id: message.author.id }, 'blacklist'))) return embedResponse('Wow, al parecer te has portado mal...\n\nQuieres usarme?, pues entra [Aqui](https://discord.gg/hbSahh8)')
 
+    let getRank = async (member) => {
+
+        await rModel('niveles').find({ idGuild: message.guild.id }).sort({ nivel: -1 }).exec(async (err, res) => {
+
+            let listRes = res.map(a => a.idMember);
+
+            return listRes.findIndex(a => member.user.id) + 1;
+
+        });
+    };
 
     let rank = async (member) => {
         let ranking = await (require('./models/niveles.js')).aggregate([{ $match: { idGuild: message.guild.id } },
