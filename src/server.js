@@ -1133,45 +1133,45 @@ client.on('message', async (message) => {
         return embedResponse(`Canal establecido en: <#${channel.id}>`).catch(error => { enviarError(error, message.author) })
     }
     //fin de setchannelxp
-
-    else if (command === 'test') {
-
-        if (cooldown.has(`${message.guild.id}_chat`)) {
-            return message.reply('Tas en cooldown de 15s');
-        }
-        else {
-            cooldown.add(`${message.guild.id}_chat`)
-            setTimeout(() => {
-                cooldown.delete(`${message.guild.id}_chat`)
-            }, ms('15s'))
-        };
-
-        if (args[0] === 'send') {
-            if (!args[1]) return message.reply(mal + ' mensaje 1');
-            if (args.slice(1).join(' ').replace(/[^A-Z0-9]/gi, "") === "") return message.reply(mal + ' mensaje 2');
-            if (args.slice(1).join(' ').replace(/[^A-Z0-9]/gi).length >= 50) return message.reply(mal + ' mensaje 3');
-            if (args.slice(1).join(' ').includes('`')) return message.reply(mal + " mensaje 4");
-            client.updateData({ id: 'chat' }, { $push: { test: `${message.author.tag.replace(/[^A-Z0-9]/gi, "").slice(0, 15)}: ${args.slice(1).join(' ')}` } }, 'test');
-            return message.reply('Enviado!')
-        }
-        else {
-            let { test } = await client.getData({ id: 'chat' }, 'test');
-
-            if (!test) return message.reply('Error!');
-
-            while (test.length >= 10) {
-
-                client.updateData({ id: 'chat' }, { $pop: { test: -1 } }, 'test')
-
+    /*
+        else if (command === 'test') {
+    
+            if (cooldown.has(`${message.guild.id}_chat`)) {
+                return message.reply('Tas en cooldown de 15s');
             }
-
-            message.reply(`
-            \`\`\`\n${test.join('\n')}\n\`\`\`
-            `, { split: true })
+            else {
+                cooldown.add(`${message.guild.id}_chat`)
+                setTimeout(() => {
+                    cooldown.delete(`${message.guild.id}_chat`)
+                }, ms('15s'))
+            };
+    
+            if (args[0] === 'send') {
+                if (!args[1]) return message.reply(mal + ' mensaje 1');
+                if (args.slice(1).join(' ').replace(/[^A-Z0-9]/gi, "") === "") return message.reply(mal + ' mensaje 2');
+                if (args.slice(1).join(' ').replace(/[^A-Z0-9]/gi).length >= 50) return message.reply(mal + ' mensaje 3');
+                if (args.slice(1).join(' ').includes('`')) return message.reply(mal + " mensaje 4");
+                client.updateData({ id: 'chat' }, { $push: { test: `${message.author.tag.replace(/[^A-Z0-9]/gi, "").slice(0, 15)}: ${args.slice(1).join(' ')}` } }, 'test');
+                return message.reply('Enviado!')
+            }
+            else {
+                let { test } = await client.getData({ id: 'chat' }, 'test');
+    
+                if (!test) return message.reply('Error!');
+    
+                while (test.length >= 10) {
+    
+                    client.updateData({ id: 'chat' }, { $pop: { test: -1 } }, 'test')
+    
+                }
+    
+                message.reply(`
+                \`\`\`\n${test.join('\n')}\n\`\`\`
+                `, { split: true })
+            }
+    
         }
-
-    }
-
+    */
     //inicio de creditos
 
     else if (command === 'creditos') {
