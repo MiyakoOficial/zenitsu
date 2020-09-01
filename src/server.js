@@ -288,14 +288,16 @@ client.on('message', async (message) => {
 
     let getRank = async (member) => {
 
-        let { listRes } = await rModel('niveles').find({ idGuild: message.guild.id }).sort({ nivel: -1 }).exec(async (err, res) => {
+        return new Promise((resolve, reject) => {
+            await rModel('niveles').find({ idGuild: message.guild.id }).sort({ nivel: -1 }).exec(async (err, res) => {
 
-            let listRes = res.map(a => a.idMember);
+                let results = res.map(a => a.idMember)
 
-            return listRes
+                resolve(results.findIndex(a => a === member.user.id) + 1);
 
+            });
         });
-        return listRes.findIndex(a => a === member.user.id) + 1
+
     };
 
     let rank = async (member) => {
