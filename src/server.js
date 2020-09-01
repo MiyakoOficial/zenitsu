@@ -1137,7 +1137,7 @@ client.on('message', async (message) => {
     else if (command === 'test') {
 
         if (cooldown.has(`${message.guild.id}_chat`)) {
-            message.reply('Tas en cooldown de 15s');
+            return message.reply('Tas en cooldown de 15s');
         }
         else {
             cooldown.add(`${message.guild.id}_chat`)
