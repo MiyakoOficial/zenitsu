@@ -1135,55 +1135,18 @@ client.on('message', async (message) => {
     //fin de setchannelxp
 
     else if (command === 'test') {
-        /*
-                let usuario = message.mentions.users.first() || message.author
-                const { createCanvas, loadImage, registerFont } = require('canvas');
-        
-                registerFont('/app/OpenSansEmoji.ttf', { family: "Open Sans Emoji" })
-                registerFont('/app/Minecrafter.Reg.ttf', { family: "Minecraft" })
-        
-                const canvas = createCanvas(700, 100);
-                const ctx = canvas.getContext('2d');
-        
-                const background = await loadImage('https://cdn.discordapp.com/attachments/621139895729258528/747968079191081010/challenge.png');
-                ctx.drawImage(background, 0, 0, canvas.width, canvas.height)
-        
-                const avatar = await loadImage(usuario.displayAvatarURL({ format: 'png' }))
-        
-                ctx.drawImage(avatar, 10, 10, 80, 80);
-        
-        
-                const applyText = (canvas, text) => {
-                    const ctx = canvas.getContext('2d');
-        
-                    // Declare a base size of the font
-                    let fontSize = 70;
-        
-                    do {
-                        // Assign the font to the context and decrement it so it can be measured again
-                        ctx.font = `${fontSize -= 1}px "Open Sans Emoji"`;
-                        // Compare pixel width of the text to the canvas minus the approximate avatar size
-                    } while (ctx.measureText(text).width > canvas.width - 100);
-        
-                    // Return the result to use in the actual canvas
-                    return ctx.font;
-                };
-        
-                let txt = 'Level up!';
-                ctx.fillStyle = "#ea899a";
-                ctx.font = '50px "Minecraft"'
-                ctx.fillText(txt, 95, 55);
-        
-        
-                let text = usuario.tag + " has subido al nivel ${nivel}";
-                ctx.font = applyText(canvas, text, 90, 84);
-                ctx.fillStyle = '#FFFFFF';
-                ctx.fillText(text, 95, 83);
-        
-                const coso = new Discord.MessageAttachment(canvas.toBuffer(), 'test.png');
-                message.reply(coso)
-        */
-        return embedResponse('No hay nada que probar por ahora!')
+        if (args[0] === 'send') {
+            if (args.slice(1).join(' ').length >= 50) return;
+            client.updateData({ id: 'chat' }, { $push: { test: `${message.author.tag.slice(0, 15)}: ${args.slice(1).join(' ')}` } }, 'test');
+            return message.reply('Enviado!')
+        }
+        else {
+            let { test } = await client.getData({ id: 'test' }, 'niveles');
+
+            message.reply(`
+            \`\`\`\n${test}\n\`\`\`
+            `, { split: true })
+        }
 
     }
 
