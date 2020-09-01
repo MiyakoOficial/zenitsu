@@ -1855,7 +1855,7 @@ client.on('message', async (msg) => {
     //`[Link of the message](https://discordapp.com/channels/${newMessage.guild.id}/${newMessage.channel.id}/${newMessage.id})`
     let res = args[0];
     let splited = res.split('/')
-    if (msg.channel.messages.fetch(splited[5])) {
+    if (msg.channel.messages.fetch(splited[5]).then(a => a.id)) {
         msg.channel.send('Fetched: ' + await msg.channel.messages.fetch(splited[6]).then(a => a.content))
     }
 
