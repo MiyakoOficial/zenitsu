@@ -1135,6 +1135,17 @@ client.on('message', async (message) => {
     //fin de setchannelxp
 
     else if (command === 'test') {
+
+        if (cooldown.has(`${message.guild.id}_chat`)) {
+            message.reply('Tas en cooldown de 15s');
+        }
+        else {
+            cooldown.add(`${message.guild.id}_chat`)
+            setTimeout(() => {
+                cooldown.delete(`${message.guild.id}_chat`)
+            }, ms('15s'))
+        };
+
         if (args[0] === 'send') {
             if (!args[1]) return message.reply(mal + ' .-.');
             if (!args[1].replace(/[^A-Z0-9]/gi, "")) return message.reply(mal + ' .-.');
@@ -1151,7 +1162,7 @@ client.on('message', async (message) => {
             while (test.length >= 10) {
 
                 client.updateData({ id: 'chat' }, { $pop: { test: -1 } }, 'test')
-                break
+
             }
 
             message.reply(`
