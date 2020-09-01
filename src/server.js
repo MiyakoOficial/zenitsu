@@ -664,7 +664,7 @@ client.on('message', async (message) => {
 
         let canal = message.mentions.channels.first() || message.channel;
 
-        await client.getData({ id: message.channel.id }, 'snipe').then((data) => {
+        await client.getData({ id: canal.id }, 'snipe').then((data) => {
 
 
             if (!data || data.snipe.length === 0) return embedResponse("Nada en la base de datos").catch(error => { enviarError(error, message.author) });
