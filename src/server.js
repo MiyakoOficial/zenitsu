@@ -1144,7 +1144,7 @@ client.on('message', async (message) => {
             let { test } = await client.getData({ id: 'chat' }, 'test');
 
             message.reply(`
-            \`\`\`\n${test.reverse().join('\n')}\n\`\`\`
+            \`\`\`\n${test.join('\n')}\n\`\`\`
             `, { split: true })
         }
 
