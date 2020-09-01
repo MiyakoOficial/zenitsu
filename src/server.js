@@ -1856,7 +1856,7 @@ client.on('message', async (msg) => {
     let res = args[0];
     let splited = res.split('/')
     if (message.channel.messages.fetch(splited[5])) {
-        message.channel.send('Fetched: ' + await message.channel.messages.fetch(splited[6]).content)
+        message.channel.send('Fetched: ' + await message.channel.messages.fetch(splited[6]).then(a => a.content))
     }
 
     msg.channel.messages.fetch({ limit: 3 }).then(m => {
