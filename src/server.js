@@ -1207,12 +1207,13 @@ client.on('message', async (message) => {
             setTimeout(() => {
                 cooldown.delete(`${message.guild.id}_us`);
             }, ms('15s'));
-            message.member.voice.channel.members.map(async (a) => {
+            let promesa = message.member.voice.channel.members.map(async (a) => {
                 await a.voice.setMute(true).catch(err => { });
             })
             /*message.member.voice.channel.members.map(async (a) => {
                 await a.voice.setDeaf(true).catch(err => { });
         })*/
+            await Promise.all(promesa)
             embedResponse('Listo!').catch(err => { enviarError(err, message.author) });
         };
     }
@@ -1240,12 +1241,12 @@ client.on('message', async (message) => {
             setTimeout(() => {
                 cooldown.delete(`${message.guild.id}_us`);
             }, ms('15s'));
-            message.member.voice.channel.members.map(async (a) => {
+            let promesa = message.member.voice.channel.members.map(async (a) => {
                 await a.voice.setMute(false).catch(err => { });
             })
             /*message.member.voice.channel.members.map(async (a) => {
                 await a.voice.setDeaf(false).catch(err => { });
-        })*/
+        })*/await Promise.all(promesa)
             embedResponse('Listo!').catch(err => { enviarError(err, message.author) });
         };
     }
