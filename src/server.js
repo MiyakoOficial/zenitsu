@@ -319,7 +319,7 @@ client.on('message', async (message) => {
                 .addField('Música', `${prefix}play/p, ${prefix}queue/q, ${prefix}skip/s, ${prefix}stop, ${prefix}nowplaying/np, ${prefix}volume/v`)
                 .addField('Niveles', `${prefix}setchannelxp, ${prefix}setlevel, ${prefix}xp/exp, ${prefix}rank`)
                 .addField('Privados', `${prefix}eval, ${prefix}blacklist, ${prefix}checkblacklist`)
-                .addField('Among US', `${prefix}start(mutea y ensordece a todos), ${prefix}end(Comando para iniciar el debate)`)
+                .addField('Among US', `${prefix}start(mutea a todos), ${prefix}end(Comando para iniciar el debate)`)
                 .setThumbnail(client.user.displayAvatarURL({ format: 'png', size: 2048 }))
                 .setFooter('Recomendamos que el bot tenga todos los permisos para que no haya problemas!', client.user.displayAvatarURL({ format: 'png', size: 2048 }))
         }).catch(error => { enviarError(error, message.author) });
@@ -1210,9 +1210,9 @@ client.on('message', async (message) => {
             message.member.voice.channel.members.map(async (a) => {
                 await a.voice.setMute(true).catch(err => { });
             })
-            message.member.voice.channel.members.map(async (a) => {
+            /*message.member.voice.channel.members.map(async (a) => {
                 await a.voice.setDeaf(true).catch(err => { });
-            })
+        })*/
             embedResponse('Listo!').catch(err => { enviarError(err, message.author) });
         };
     }
@@ -1243,9 +1243,9 @@ client.on('message', async (message) => {
             message.member.voice.channel.members.map(async (a) => {
                 await a.voice.setMute(false).catch(err => { });
             })
-            message.member.voice.channel.members.map(async (a) => {
+            /*message.member.voice.channel.members.map(async (a) => {
                 await a.voice.setDeaf(false).catch(err => { });
-            })
+        })*/
             embedResponse('Listo!').catch(err => { enviarError(err, message.author) });
         };
     }
