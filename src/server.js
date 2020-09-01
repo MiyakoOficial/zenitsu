@@ -1151,7 +1151,7 @@ client.on('message', async (message) => {
             while (test.length >= 10) {
 
                 client.updateData({ id: 'chat' }, { $pop: { test: -1 } }, 'test')
-
+                break
             }
 
             message.reply(`
