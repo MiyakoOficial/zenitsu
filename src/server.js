@@ -1851,12 +1851,12 @@ client.on('guildMemberUpdate', async (oldUser, newUser) => {
 client.on('message', async (msg) => {
     if (msg.channel.type === 'dm') return;
 
-    let args = message.content.split(' ');
-    `[Link of the message](https://discordapp.com/channels/${newMessage.guild.id}/${newMessage.channel.id}/${newMessage.id})`
+    let args = msg.content.split(' ');
+    //`[Link of the message](https://discordapp.com/channels/${newMessage.guild.id}/${newMessage.channel.id}/${newMessage.id})`
     let res = args[0];
     let splited = res.split('/')
-    if (message.channel.messages.fetch(splited[5])) {
-        message.channel.send('Fetched: ' + await message.channel.messages.fetch(splited[6]).then(a => a.content))
+    if (msg.channel.messages.fetch(splited[5])) {
+        msg.channel.send('Fetched: ' + await msg.channel.messages.fetch(splited[6]).then(a => a.content))
     }
 
     msg.channel.messages.fetch({ limit: 3 }).then(m => {
