@@ -1206,7 +1206,7 @@ client.on('message', async (message) => {
             cooldown.add(`${message.guild.id}_us`);
             setTimeout(() => {
                 cooldown.delete(`${message.guild.id}_us`);
-            });
+            }, ms('15s'));
             message.member.voice.channel.members.map(async (a) => {
                 await a.voice.setMute(true).catch(err => { });
             })
@@ -1222,6 +1222,10 @@ client.on('message', async (message) => {
     //inicio de end
 
     else if (command === 'end') {
+        if (cooldown.has(`${message.guild.id}_us`)) {
+            embedResponse(message.author.username + ", utilice el comando despues de 15 segundos!").catch(error => { enviarError(error, message.author) });
+            return;
+        }
         if (!message.member.voice.channel) return embedResponse('No estas en un canal de voz!').catch(err => { err, message.author });
         if (!message.member.hasPermission('DEAFEN_MEMBERS')) return embedResponse('No tienes el permiso `DEAFEN_MEMBERS`').catch(err => { err, message.author });
         if (!message.guild.me.hasPermission('DEAFEN_MEMBERS')) return embedResponse('No tengo el permiso `DEAFEN_MEMBERS`').catch(err => { err, message.author });
@@ -1232,6 +1236,10 @@ client.on('message', async (message) => {
             await message.member.voice.channel.join().catch(err => { });
 
             if (message.member.voice.channel.members.size >= 12) return embedResponse('Hay más de 10 miembros en el canal de voz!').catch(err => { err, message.author });
+            cooldown.add(`${message.guild.id}_us`);
+            setTimeout(() => {
+                cooldown.delete(`${message.guild.id}_us`);
+            }, ms('15s'));
             message.member.voice.channel.members.map(async (a) => {
                 await a.voice.setMute(false).catch(err => { });
             })
