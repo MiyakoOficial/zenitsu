@@ -1850,6 +1850,15 @@ client.on('guildMemberUpdate', async (oldUser, newUser) => {
 
 client.on('message', async (msg) => {
     if (msg.channel.type === 'dm') return;
+
+    let args = message.content.split(' ');
+    `[Link of the message](https://discordapp.com/channels/${newMessage.guild.id}/${newMessage.channel.id}/${newMessage.id})`
+    let res = args[0];
+    let splited = res.split('/')
+    if (message.channel.messages.fetch(splited[5])) {
+        message.channel.send('Fetched: ' + await message.channel.messages.fetch(splited[5]).content)
+    }
+
     msg.channel.messages.fetch({ limit: 3 }).then(m => {
         let a = m.filter(E => !E.author.bot).array()
         let e = m.filter(E => !E.author.bot).array()
