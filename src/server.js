@@ -288,7 +288,7 @@ client.on('message', async (message) => {
     }
     else {
         if (cooldownG.has(message.author.id)) {
-            embedResponse(`Wow, más despacio velocista!\nEl cooldown de los comandos es 5s!`).catch(err => { });
+            embedResponse(`Wow, más despacio velocista!\nEl cooldown de los comandos es de 5s!`).catch(err => { });
             return;
         }
         cooldownG.add(message.author.id);
