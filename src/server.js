@@ -1257,6 +1257,13 @@ function play(guild, song) {
 //?inicio mensajes eventos
 
 client.on('messageUpdate', async (oldMessage, newMessage) => {
+    if (!oldMessage.content) return;
+    if (!newMessage.content) return;
+    if (!newMessage.guild || !oldMessage.guild) return;
+    if (newMessage.author.bot) return;
+    if (newMessage.channel.type === 'dm') return;
+    if (newMessage.content === oldMessage.content) return;
+
     client.emit('message', newMessage);
 });
 
@@ -1351,6 +1358,7 @@ client.on('messageDelete', async (message) => {
         return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { return; });
     });
 });
+/*
 //!fin mensajes eventos
 //?inicio de roles eventos
 
@@ -1762,7 +1770,7 @@ client.on('guildMemberUpdate', async (oldUser, newUser) => {
 });
 //!fin usuarios eventos
 //!fin de eventos
-
+*/
 client.on('message', async (msg) => {
     if (msg.channel.type === 'dm') return;
 
