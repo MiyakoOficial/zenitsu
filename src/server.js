@@ -1318,28 +1318,32 @@ client.on('messageDelete', async (message) => {
         const deletionLog = fetchedLogs.entries.first();
         let texto;
         let imagen;
-        if (deletionLog.action === "MESSAGE_DELETE") {
-            if (!deletionLog) {
-                texto = "Not found"
-                imagen = 'https://cdn.discordapp.com/attachments/688054761706094725/714328885533343764/error.gif'
+        if (message.guild.me.hasPermission('VIEW_AUDIT_LOG')) {
+            if (deletionLog.action === "MESSAGE_DELETE") {
+                if (!deletionLog) {
+                    texto = "Not found";
+                    imagen = 'https://cdn.discordapp.com/attachments/688054761706094725/714328885533343764/error.gif';
+                }
+                else {
+                    const { executor } = deletionLog;
+                    //if (!executor.id === message.author.id) {
+                    texto = `Deleted by: ${executor.tag}(${executor.id})`;
+                    imagen = executor.displayAvatarURL({ format: 'png', size: 2048 });
+                    // }
+                    // else {
+                    //    texto = `Deleted by ${message.author.tag}(${message.author.id})`;
+                    //    imagen = message.author.displayAvatarURL({ format: 'png', size: 2048 });
+                    //}
+                };
             }
             else {
-                const { executor } = deletionLog;
-                //if (!executor.id === message.author.id) {
-                texto = `Deleted by: ${executor.tag}(${executor.id})`;
-                imagen = executor.displayAvatarURL({ format: 'png', size: 2048 })
-                // }
-                // else {
-                //    texto = `Deleted by ${message.author.tag}(${message.author.id})`;
-                //    imagen = message.author.displayAvatarURL({ format: 'png', size: 2048 });
-                //}
-            }
-        }
-        else {
-            texto = "Not found"
-            imagen = 'https://cdn.discordapp.com/attachments/688054761706094725/714328885533343764/error.gif'
-        }
-
+                texto = "Not found";
+                imagen = 'https://cdn.discordapp.com/attachments/688054761706094725/714328885533343764/error.gif';
+            };
+        } else {
+            texto = "Not found";
+            imagen = 'https://cdn.discordapp.com/attachments/688054761706094725/714328885533343764/error.gif';
+        };
         if (!data) return;
         if (!message.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return;
         let embed = new Discord.MessageEmbed()
