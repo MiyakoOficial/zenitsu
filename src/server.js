@@ -131,6 +131,7 @@ client.on('ready', () => {
         );
 });
 let cooldown = new Set()
+let cooldownG = new Set()
 let cooldownniveles = new Set();
 client.on('message', async (message) => {
     if (!message.guild) return;
@@ -282,44 +283,38 @@ client.on('message', async (message) => {
     }
 
 
-    if (message.content.length < prefix.length + 1) return;
+    if (message.content.length < prefix.length + 1) {
+        return;
+    }
+    else {
+        if (cooldownG.has(message.author.id)) {
+            embedResponse(`Wow, más despacio velocista!\nEl cooldown de los comandos es 5s!`).catch(err => { });
+            return;
+        }
+        cooldownG.add(message.author.id);
+        setTimeout(() => {
+            cooldownG.delete(message.author.id);
+        }, ms('5s'));
+    };
 
-    if (xd(await client.getData({ id: message.author.id }, 'blacklist'))) return embedResponse('Wow, al parecer te has portado mal...\n\nQuieres usarme?, pues entra [Aqui](https://discord.gg/hbSahh8)')
+    if (xd(await client.getData({ id: message.author.id }, 'blacklist'))) return embedResponse('Wow, al parecer te has portado mal...\n\nQuieres usarme?, pues entra [Aqui](https://discord.gg/hbSahh8)');
 
     let getRank = async (member) => {
 
         return new Promise((resolve, reject) => {
             rModel('niveles').find({ idGuild: message.guild.id }).sort({ nivel: -1 }).exec(async (err, res) => {
 
-                let results = res.map(a => a.idMember)
+                let results = res.map(a => a.idMember);
 
                 resolve(results.findIndex(a => a === member.user.id) + 1);
 
             });
         });
-
     };
-
-    let rank = async (member) => {
-        let ranking = await (require('./models/niveles.js')).aggregate([{ $match: { idGuild: message.guild.id } },
-        { "$sort": { "nivel": -1 } },
-        { "$group": { "_id": false, "users": { "$push": { "idMember": "$idMember" } } } },
-        { "$unwind": { "path": "$users", "includeArrayIndex": "ranking" } },
-        { "$match": { "users.idMember": member.user.id } }
-        ]);
-        if (Object.entries(ranking)[0]) {
-            return Object.entries(ranking)[0][1].ranking
-        }
-        else {
-            return null;
-        }
-    }
-
-    /*const blacklist = []
-    if (blacklist.includes(message.author.id)) return;*/
 
     //inicio de help
     const serverQueue = queue.get(message.guild.id)
+
     if (command === 'help') {
         message.channel.send({
             embed: new Discord.MessageEmbed()
