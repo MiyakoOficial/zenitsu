@@ -1149,7 +1149,7 @@ client.on('message', async (message) => {
 
         if (args[0] === 'send') {
 
-            let check = /[^A-Z0-9\s\!\@\#\$\%\^\&\*\(\)\_\+\=\[\]\"\'\;\.\,\\\:\ñ\|\~\/]/gi;
+            let check = /[^A-Z0-9\s\!\@\#\$\%\^\&\*\(\)\_\+\=\[\]\"\'\;\.\,\\\:\ñ\|\~\/\<\>]/gi;
 
             let regex = args.slice(1).join(' ').match(check);
 
@@ -1162,8 +1162,6 @@ client.on('message', async (message) => {
             if (regex) return message.reply(mal + ' mensaje 2');
 
             if (txt.length >= 50) return message.reply(mal + ' mensaje 3');
-
-            if (txt.includes('`')) return message.reply(mal + " mensaje 4");
 
             client.updateData({ id: 'chat' }, {
                 $push: {
