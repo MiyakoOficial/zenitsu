@@ -1132,7 +1132,7 @@ client.on('message', async (message) => {
     }
     //fin de setchannelxp
 
-    else if (command === 'test') {
+    /*else if (command === 'test') {
         if (cooldown.has(`chat`)) {
             return message.reply('Tas en cooldown de 3s');
         }
@@ -1167,7 +1167,7 @@ client.on('message', async (message) => {
                    `, { split: true })
         }
 
-    }
+    }*/
 
     //inicio de creditos
 
