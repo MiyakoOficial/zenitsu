@@ -1168,7 +1168,7 @@ client.on('message', async (message) => {
                 embedResponse(`Este comando no permite invitaciones por obvias razones!`).catch(err => { enviarError(err, message.author) });
                 return message.delete({ timeout: 1000 });
             }
-            if (txt.length > 55) return embedResponse(`La longitud del texto debe ser menor a 55!`).catch(err => { enviarError(err, message.author) });
+            if (txt.length > 40) return embedResponse(`La longitud del texto debe ser menor a 40!`).catch(err => { enviarError(err, message.author) });
 
             client.updateData({ id: 'chat' }, {
                 $push: {
