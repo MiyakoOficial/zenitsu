@@ -910,7 +910,6 @@ client.on('message', async (message) => {
         if (!serverQueue.songs[0]) return embedResponse('Al parecer no hay ninguna canción reproduciendose!').catch(error => { enviarError(error, message.author) });
         else {
             if (message.member.voice.channel.id !== message.guild.me.voice.channel.id) return embedResponse('Tienes que estar en el mismo canal de voz para detener la lista!').catch(error => { enviarError(error, message.author) });
-
             queue.delete(message.guild.id)
             message.guild.me.voice.channel.leave()
             embedResponse('Cola de reproducción detenida')
@@ -942,7 +941,7 @@ client.on('message', async (message) => {
         if (!serverQueue.songs[0]) return embedResponse('Al parecer no hay ninguna canción reproduciendose!').catch(error => { enviarError(error, message.author) });
         else {
             if (isNaN(args.join(' '))) return embedResponse('Pon un numero valido!').catch(error => { enviarError(error, message.author) });
-            if (args.join(' ') > 100 || args.join(' ') < 1) return embedResponse('Elije un numero del 1 al 100').catch(error => { enviarError(error, message.author) });
+            if (parseInt(args.join(' ')) > 100 || args.join(' ') < 1) return embedResponse('Elije un numero del 1 al 100').catch(error => { enviarError(error, message.author) });
             if (message.member.voice.channel.id !== message.guild.me.voice.channel.id) return embedResponse('Tienes que estar en el mismo canal de voz para cambiar el volumen!').catch(error => { enviarError(error, message.author) });
 
             serverQueue.volume = Math.floor(parseInt(args.join(' ')));
@@ -957,7 +956,6 @@ client.on('message', async (message) => {
     else if (command === 'warn') {
         if (!message.member.hasPermission('KICK_MEMBERS')) return errorEmbed('No tienes el permiso `KICK_MEMBERS`')
             .catch(error => { enviarError(error, message.author) });
-
         let miembro = message.mentions.members.first();
         let razon = args.slice(1).join(' ') || 'No especificada';
         if (!miembro) return embedResponse('Menciona a un miembro del servidor!')
@@ -973,7 +971,6 @@ client.on('message', async (message) => {
                 .catch(error => { enviarError(error, message.author) });
         });
 
-
     }
 
     //fin de warn
@@ -985,7 +982,7 @@ client.on('message', async (message) => {
             .catch(error => { enviarError(error, message.author) });
 
         let miembro = message.mentions.members.first();
-        //let razon = args.slice(1).join(' ') || 'No especificada';
+
         if (!miembro) return embedResponse('Menciona a un miembro del servidor!')
             .catch(error => { enviarError(error, message.author) });
 
@@ -1000,10 +997,8 @@ client.on('message', async (message) => {
 
         await client.updateData({ id: `${message.guild.id}_${miembro.id}` }, { warns: parseInt(args[1]) }, 'warns');
 
-        //await client.getData({ id: `${message.guild.id}.${miembro.id}` }, 'warns').then((data) => {
         embedResponse(`Ahora el miembro ${miembro.user.username} tiene ${args[1]} advertencias!`)
             .catch(error => { enviarError(error, message.author) });
-        //});
 
 
     }
@@ -1061,7 +1056,6 @@ client.on('message', async (message) => {
             .setTimestamp()
         message.channel.send({ embed: embed })
             .catch(error => { enviarError(error, message.author) });
-
 
     }
     //fin de xp
@@ -1135,10 +1129,8 @@ client.on('message', async (message) => {
         if (!message.member.hasPermission("ADMINISTRATOR")) return errorEmbed("No tienes el permiso `ADMINISTRATOR`").catch(error => { enviarError(error, message.author) })
         let channel = message.mentions.channels.first();
         if (!channel) return embedResponse("No has mencionado un canal/Ese canal no existe.").catch(error => { enviarError(error, message.author) })
-        if (!message.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(channel.id)) return embedResponse('El canal tiene que ser del Servidor donde estas!').catch(error => { enviarError(error, message.author) })
-
+        if (!message.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(channel.id)) return embedResponse('El canal tiene que ser del Servidor donde estas!').catch(error => { enviarError(error, message.author) });
         await client.updateData({ id: message.guild.id }, { canal: channel.id }, 'logslevel')
-
         return embedResponse(`Canal establecido en: <#${channel.id}>`).catch(error => { enviarError(error, message.author) })
     }
     //fin de setchannelxp
@@ -1275,23 +1267,12 @@ client.on('messageUpdate', async (oldMessage, newMessage) => {
     if (!oldMessage.content) return;
     if (!newMessage.content) return;
     if (!newMessage.guild || !oldMessage.guild) return;
-    if (newMessage.author.bot) return;
-    if (newMessage.channel.type === 'dm') return;
-    if (newMessage.content === oldMessage.content) return;
-
-    client.emit('message', newMessage);
-});
-
-client.on('messageUpdate', async (oldMessage, newMessage) => {
-    if (!oldMessage.content) return;
-    if (!newMessage.content) return;
-    if (!newMessage.guild || !oldMessage.guild) return;
     await client.getData({ id: newMessage.guild.id }, 'logs').then((data) => {
-
-        if (!data) return;
         if (newMessage.author.bot) return;
         if (newMessage.channel.type === 'dm') return;
         if (newMessage.content === oldMessage.content) return;
+        client.emit('message', newMessage);
+        if (!data) return;
         if (!newMessage.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return;
         let embed = new Discord.MessageEmbed()
             .setColor(color)
@@ -1307,7 +1288,6 @@ client.on('messageUpdate', async (oldMessage, newMessage) => {
             .addField('• Author channel mention', `<#${newMessage.channel.id}>`, false)
             .setFooter(newMessage.guild.name, newMessage.guild.iconURL({ format: 'png', size: 2048 }))
             .setTimestamp()
-
         return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { return; });
     });
 });
@@ -1316,14 +1296,8 @@ client.on('messageDelete', async (message) => {
     if (message.author.bot) return;
     if (message.channel.type === 'dm') return;
     if (!message.content) return;
-
     await client.updateData({ id: message.channel.id }, { snipe: `${message.content}${ayuda}<@${message.author.id}>` }, 'snipe')
 
-});
-client.on('messageDelete', async (message) => {
-    if (message.author.bot) return;
-    if (message.channel.type === 'dm') return;
-    if (!message.content) return;
     await client.getData({ id: message.guild.id }, 'logs').then(async (data) => {
 
         const fetchedLogs = await message.guild.fetchAuditLogs({
@@ -1791,24 +1765,19 @@ client.on('guildMemberUpdate', async (oldUser, newUser) => {
 //!fin de eventos
 */
 client.on('message', async (msg) => {
-    if (msg.channel.type === 'dm') return;
+    if (message.channel.type !== 'text') return;
 
     msg.channel.messages.fetch({ limit: 3 }).then(m => {
-        let a = m.filter(E => !E.author.bot).array()
-        let e = m.filter(E => !E.author.bot).array()
+        let a = m.filter(E => !E.author.bot && E.content).array();
+        let e = m.filter(E => !E.author.bot && E.content).array();
 
-        if (!a[0]) return;
-        if (!a[1]) return;
         if (!a[2]) return;
 
-        if (!a[0].content) return;
-        if (!a[1].content) return;
-        if (!a[2].content) return;
         if (a[0].content.toLowerCase() === a[1].content.toLowerCase() && a[1].content.toLowerCase() === a[2].content.toLowerCase() &&
             e[0].author.id !== e[1].author.id && e[1].author.id !== e[2].author.id && e[0].author.id !== e[2].author.id) {
-            msg.channel.send(a[2].content.toLowerCase()).catch(error => { });
-        }
-    })
+            msg.channel.send(a[2].content).catch(error => { });
+        };
+    });
 });
 client.login(process.env.BOT_TOKEN);
 
