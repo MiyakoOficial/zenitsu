@@ -1765,8 +1765,8 @@ client.on('message', async (msg) => {
     if (message.channel.type !== 'text') return;
 
     msg.channel.messages.fetch({ limit: 3 }).then(m => {
-        let a = m.filter(E => !E.author.bot && E.content).array();
-        let e = m.filter(E => !E.author.bot && E.content).array();
+        let a = [...m.values()].filter(E => !E.author.bot && E.content)
+        let e = [...m.values()].filter(E => !E.author.bot && E.content)
 
         if (!a[2]) return;
 
