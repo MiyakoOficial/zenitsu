@@ -328,7 +328,7 @@ client.on('message', async (message) => {
                 .addField('Extras', `${prefix}txt, ${prefix}ping, ${prefix}canal/channel, ${prefix}snipe, ${prefix}creditos`)
                 .addField('Moderación', `${prefix}clear, ${prefix}voicekick, ${prefix}voicemute, ${prefix}voiceunmute, ${prefix}voicedeaf, ${prefix}voiceundeaf, ${prefix}warn, ${prefix}checkwarns, ${prefix}resetwarns, ${prefix}setwarns`)
                 .addField('Administración', `${prefix}blockchannels, ${prefix} setprefix/changeprefix, ${prefix}setlogs/logschannel`)
-                .addField('Diversión', `${prefix}challenge, ${prefix}achievement, ${prefix}ship, ${prefix}supreme, ${prefix}didyoumean, ${prefix}captcha, ${prefix}drake, ${prefix}xd, ${prefix}voicechat, ${prefix}chat`)
+                .addField('Diversión', `${prefix}challenge, ${prefix}achievement, ${prefix}ship, ${prefix}supreme, ${prefix}didyoumean, ${prefix}captcha, ${prefix}drake, ${prefix}xd, ${prefix}voicechat, ${prefix}chat, ${prefix}gchat`)
                 .addField('Música', `${prefix}play/p, ${prefix}queue/q, ${prefix}skip/s, ${prefix}stop, ${prefix}nowplaying/np, ${prefix}volume/v`)
                 .addField('Niveles', `${prefix}setchannelxp, ${prefix}setlevel, ${prefix}xp/exp, ${prefix}rank`)
                 .addField('Privados', `${prefix}eval, ${prefix}blacklist, ${prefix}checkblacklist`)
@@ -1132,18 +1132,21 @@ client.on('message', async (message) => {
     }
     //fin de setchannelxp
 
-    else if (command === 'test') {
+    //inicio de gchat
+    else if (command === 'gchat') {
 
         if (cooldown.has(`chat`)) {
-            return message.reply('Tas en cooldown de 3s');
+
+            return embedResponse(mal + " Este comando tiene un cooldown de 3s global!").catch(err => { enviarError(err, message.author) });
+
         }
 
         else {
 
-            cooldown.add(`chat`)
+            cooldown.add(`chat`);
             setTimeout(() => {
-                cooldown.delete(`chat`)
-            }, ms('3s'))
+                cooldown.delete(`chat`);
+            }, ms('3s'));
 
         };
 
@@ -1155,17 +1158,17 @@ client.on('message', async (message) => {
 
             let member = message.member;
 
-            if (!args[1]) return message.reply(mal + ' mensaje 1');
+            if (!args[1]) return embedResponse(`Escribe algo!`).catch(err => { enviarError(err, message.author) });
 
             let txt = args.slice(1).join(' ');
 
-            if (regex) return message.reply(mal + ' mensaje 2');
+            if (regex) return embedResponse(`Este comando no permite caracteres especiales!\nSi quieres sugerir un caracter especial pon z!suggest <caracter>.`).catch(err => { enviarError(err, message.author) });
 
             if (txt.includes('discord.gg/')) {
-                message.reply(mal + ' mensaje 4')
+                embedResponse(`Este comando no permite invitaciones por obvias razones!`).catch(err => { enviarError(err, message.author) });
                 return message.delete({ timeout: 1000 });
             }
-            if (txt.length >= 50) return message.reply(mal + ' mensaje 3');
+            if (txt.length > 55) return message.reply(`La longitud del texto debe ser menor a 55!`).catch(err => { enviarError(err, message.author) });
 
             client.updateData({ id: 'chat' }, {
                 $push: {
@@ -1175,7 +1178,7 @@ client.on('message', async (message) => {
 
             }, 'test');
 
-            return message.reply('Enviado!');
+            return embedResponse('Mensaje enviado!').catch(err => { enviarError(err, message.author) });
         }
 
         else {
@@ -1184,13 +1187,18 @@ client.on('message', async (message) => {
             if (!test) return message.reply('Error!');
 
             test = test.reverse().slice(0, 10).reverse();
-
-            message.reply(`
-                   \`\`\`\n${test.join('\n')}\n\`\`\`
-                   `, { split: true });
+            let embed = new Discord.MessageEmbed()
+                .setColor(color)
+                .setTimestamp()
+                .setDescription(`
+                \`\`\`\n${test.join('\n')}\`\`\`
+                `, { split: true }
+                )
+            message.channel.send({ embed: embed }).catch(err => { enviarError(err, message.author) });
         };
 
     }
+    //fin de gchat
 
     //inicio de creditos
 
