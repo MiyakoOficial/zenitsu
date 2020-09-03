@@ -1248,6 +1248,10 @@ client.on('message', async (message) => {
         if (!canalVoz.name === 'Among Us') return embedResponse('Tienes que estar en el canal llamado: `Among Us`')
             .catch(err => { enviarError(err, message.author) });
 
+        if (!message.guild.me.hasPermission('MANAGE_CHANNELS') || !message.member.voice.channel.permissionsFor(message.client.user).has("MANAGE_CHANNELS")) return embedResponse('Tengo que tener el permiso `MANAGE_CHANNELS`!')
+            .catch(err => { enviarError(err, message.author) });
+
+
         if (canalVoz.userLimit < 11) {
             canalVoz.edit({ userLimit: 11 }).catch(err => { })
         }
@@ -1280,6 +1284,9 @@ client.on('message', async (message) => {
         if (!canalVoz) return embedResponse('Tienes que estar en un canal de voz!').catch(err => { enviarError(err, message.author) });
 
         if (!canalVoz.name === 'Among Us') return embedResponse('Tienes que estar en el canal llamado: `Among Us`')
+            .catch(err => { enviarError(err, message.author) });
+
+        if (!message.guild.me.hasPermission('MANAGE_CHANNELS') || !message.member.voice.channel.permissionsFor(message.client.user).has("MANAGE_CHANNELS")) return embedResponse('Tengo que tener el permiso `MANAGE_CHANNELS`!')
             .catch(err => { enviarError(err, message.author) });
 
         if (canalVoz.userLimit < 11) {
