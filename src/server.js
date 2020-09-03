@@ -1132,43 +1132,42 @@ client.on('message', async (message) => {
     }
     //fin de setchannelxp
 
-    /*   else if (command === 'test') {
-   
-           if (cooldown.has(`${message.guild.id}_chat`)) {
-               return message.reply('Tas en cooldown de 15s');
-           }
-           else {
-               cooldown.add(`${message.guild.id}_chat`)
-               setTimeout(() => {
-                   cooldown.delete(`${message.guild.id}_chat`)
-               }, ms('15s'))
-           };
-   
-           if (args[0] === 'send') {
-               if (!args[1]) return message.reply(mal + ' mensaje 1');
-               if (args.slice(1).join(' ').replace(/[^A-Z0-9]/gi, "") === "") return message.reply(mal + ' mensaje 2');
-               if (args.slice(1).join(' ').replace(/[^A-Z0-9]/gi).length >= 50) return message.reply(mal + ' mensaje 3');
-               if (args.slice(1).join(' ').includes('`')) return message.reply(mal + " mensaje 4");
-               client.updateData({ id: 'chat' }, { $push: { test: `${message.author.username.match(/[^A-Z0-9]/gi) ? 'Usuario desconocido' : message.author.username.slice(0, 20)}#${message.author.discriminator}: ${args.slice(1).join(' ')}` } }, 'test');
-               return message.reply('Enviado!')
-           }
-           else {
-               let { test } = await client.getData({ id: 'chat' }, 'test');
-   
-               if (!test) return message.reply('Error!');
-   
-               while (test.length >= 10) {
-   
-                   client.updateData({ id: 'chat' }, { $pop: { test: -1 } }, 'test')
-   
-               }
-   
-               message.reply(`
+    else if (command === 'test') {
+        if (cooldown.has(`chat`)) {
+            return message.reply('Tas en cooldown de 3s');
+        }
+        else {
+            cooldown.add(`chat`)
+            setTimeout(() => {
+                cooldown.delete(`chat`)
+            }, ms('3s'))
+        };
+
+        if (args[0] === 'send') {
+            if (!args[1]) return message.reply(mal + ' mensaje 1');
+            if (args.slice(1).join(' ').replace(/[^A-Z0-9]/gi, "") === "") return message.reply(mal + ' mensaje 2');
+            if (args.slice(1).join(' ').replace(/[^A-Z0-9]/gi).length >= 50) return message.reply(mal + ' mensaje 3');
+            if (args.slice(1).join(' ').includes('`')) return message.reply(mal + " mensaje 4");
+            client.updateData({ id: 'chat' }, { $push: { test: `${message.author.username.match(/[^A-Z0-9]/gi) ? 'Usuario desconocido' : message.author.username.slice(0, 20)}#${message.author.discriminator}: ${args.slice(1).join(' ')}` } }, 'test');
+            return message.reply('Enviado!')
+        }
+        else {
+            let { test } = await client.getData({ id: 'chat' }, 'test');
+
+            if (!test) return message.reply('Error!');
+
+            while (test.length >= 10) {
+
+                client.updateData({ id: 'chat' }, { $pop: { test: -1 } }, 'test')
+
+            }
+
+            message.reply(`
                    \`\`\`\n${test.join('\n')}\n\`\`\`
                    `, { split: true })
-           }
-   
-       }*/
+        }
+
+    }
 
     //inicio de creditos
 
