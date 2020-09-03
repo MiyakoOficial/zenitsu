@@ -1169,7 +1169,7 @@ client.on('message', async (message) => {
                 return message.delete({ timeout: 1000 });
             }
 
-            let formula = (message.author.tag.length + txt.length) - 60
+            let formula = 60 - (message.author.tag.length + txt.length)
 
             if (formula < 0) return embedResponse(`La longitud del texto debe ser menor a ${60 - `${message.author.tag}: `.length}!`).catch(err => { enviarError(err, message.author) });
 
