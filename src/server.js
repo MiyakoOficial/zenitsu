@@ -1239,6 +1239,26 @@ client.on('message', async (message) => {
     }
     //fin de xd
 
+    else if (command === 'start') {
+
+        let canalVoz = message.member.voice.channel
+
+        if (!canal) return;
+        let rol = message.guild.roles.cache.find(a => a.name === 'Among US manager');
+        if (!message.member.roles.cache.has(rol.id)) return;
+        if (!message.guild.me.hasPermission('MUTE_MEMBERS')) return;
+
+        let p = canal.members.cache.map(a => {
+            a.voice.setMute(true);
+        });
+
+        await Promise.all(p);
+
+        embedResponse('Listo!')
+
+
+    }
+
     else {
         let embed = new Discord.MessageEmbed()
             .setThumbnail(`https://cdn.discordapp.com/attachments/688054761706094725/714328885533343764/error.gif`)
