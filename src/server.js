@@ -1239,22 +1239,47 @@ client.on('message', async (message) => {
     }
     //fin de xd
 
-    else if (command === 'start') {
+    else if (command === 'amongmute') {
 
-        let canalVoz = message.member.voice.channel
+        let canalVoz = message.member.voice.channel;
 
-        if (!canalVoz) return;
-        let rol = message.guild.roles.cache.find(a => a.name === 'Among US manager');
-        if (!message.member.roles.cache.has(rol.id)) return;
-        if (!message.guild.me.hasPermission('MUTE_MEMBERS') || !message.member.voice.channel.permissionsFor(message.client.user).has("MUTE_MEMBERS")) return;
+        if (!canalVoz) return embedResponse('Tienes que estar en un canal de voz!')
+
+        let rol = message.guild.roles.cache.find(a => a.name === 'Among Us manager');
+
+        if (!message.member.roles.cache.has(rol.id)) return embedResponse('Tienes que tener el rol llamado: `' + rol.name + '`!');
+
+        if (!message.guild.me.hasPermission('MUTE_MEMBERS') || !message.member.voice.channel.permissionsFor(message.client.user).has("MUTE_MEMBERS")) return embedResponse('Tengo que tener el permiso `MUTE_MEMBERS`!');
 
         let p = canalVoz.members.map(a => {
-            a.voice.setMute(true);
+            a.voice.setMute(true).catch(err => { })
         });
 
         await Promise.all(p);
 
-        embedResponse('Listo!');
+        embedResponse('Listo!').then(msg => msg.delete({ timeout: 5000 }));
+    }
+
+
+    else if (command === 'amongunmute') {
+
+        let canalVoz = message.member.voice.channel;
+
+        if (!canalVoz) return embedResponse('Tienes que estar en un canal de voz!')
+
+        let rol = message.guild.roles.cache.find(a => a.name === 'Among Us manager');
+
+        if (!message.member.roles.cache.has(rol.id)) return embedResponse('Tienes que tener el rol llamado: `' + rol.name + '`!');
+
+        if (!message.guild.me.hasPermission('MUTE_MEMBERS') || !message.member.voice.channel.permissionsFor(message.client.user).has("MUTE_MEMBERS")) return embedResponse('Tengo que tener el permiso `MUTE_MEMBERS`!');
+
+        let p = canalVoz.members.map(a => {
+            a.voice.setMute(false).catch(err => { })
+        });
+
+        await Promise.all(p);
+
+        embedResponse('Listo!').then(msg => msg.delete({ timeout: 5000 }));
     }
 
     else {
