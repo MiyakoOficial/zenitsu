@@ -1762,7 +1762,7 @@ client.on('guildMemberUpdate', async (oldUser, newUser) => {
 //!fin de eventos
 */
 client.on('message', async (msg) => {
-    if (message.channel.type !== 'text') return;
+    if (msg.channel.type !== 'text') return;
 
     msg.channel.messages.fetch({ limit: 3 }).then(m => {
         let a = [...m.values()].filter(E => !E.author.bot && E.content)
