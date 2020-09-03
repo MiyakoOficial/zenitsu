@@ -1245,6 +1245,13 @@ client.on('message', async (message) => {
 
         if (!canalVoz) return embedResponse('Tienes que estar en un canal de voz!').catch(err => { enviarError(err, message.author) });
 
+        if (!canalVoz.name === 'Among Us') return embedResponse('Tienes que estar en el canal llamado: `Among Us`')
+            .catch(err => { enviarError(err, message.author) });
+
+        if (canalVoz.userLimit < 11) {
+            canalVoz.edit({ userLimit: 11 }).catch(err => { })
+        }
+
         let rol = message.guild.roles.cache.find(a => a.name === 'Among Us manager');
 
         if (!rol) {
@@ -1275,7 +1282,7 @@ client.on('message', async (message) => {
         if (!canalVoz.name === 'Among Us') return embedResponse('Tienes que estar en el canal llamado: `Among Us`')
             .catch(err => { enviarError(err, message.author) });
 
-        if (canalVoz < 11) {
+        if (canalVoz.userLimit < 11) {
             canalVoz.edit({ userLimit: 11 }).catch(err => { })
         }
 
