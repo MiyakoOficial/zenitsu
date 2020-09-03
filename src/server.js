@@ -118,7 +118,6 @@ client.on('ready', () => {
         .addField('Canales', client.channels.cache.size, true)
         .addField('Base de datos', client.database, true)
         .addField('Version de database', client.databaseVersion, true)
-        .addField('Among Us', `${prefix}amongmute, ${prefix}amongunmute`)
         .setTimestamp()
         .setThumbnail(client.user.displayAvatarURL({ format: 'png', size: 2048 }))
         .setFooter(client.users.cache.get('507367752391196682').tag, client.users.cache.get('507367752391196682').displayAvatarURL({ format: 'png', size: 2048 }));
@@ -333,6 +332,7 @@ client.on('message', async (message) => {
                 .addField('Música', `${prefix}play/p, ${prefix}queue/q, ${prefix}skip/s, ${prefix}stop, ${prefix}nowplaying/np, ${prefix}volume/v`)
                 .addField('Niveles', `${prefix}setchannelxp, ${prefix}setlevel, ${prefix}xp/exp, ${prefix}rank`)
                 .addField('Privados', `${prefix}eval, ${prefix}blacklist, ${prefix}checkblacklist`)
+                .addField('Among Us', `${prefix}amongmute, ${prefix}amongunmute`)
                 .setThumbnail(client.user.displayAvatarURL({ format: 'png', size: 2048 }))
                 .setTimestamp()
                 .setFooter('Recomendamos que el bot tenga todos los permisos para que no haya problemas!', client.user.displayAvatarURL({ format: 'png', size: 2048 }))
