@@ -288,7 +288,12 @@ client.on('message', async (message) => {
     }
     else {
         if (cooldownG.has(message.author.id)) {
-            embedResponse(`Wow, más despacio velocista!\nEl cooldown de los comandos es de 5s!`).catch(err => { });
+            let embed = new Discord.MessageEmbed()
+                .setDescription(`Wow, más despacio velocista!\nEl cooldown de los comandos es de 5s!`)
+                .setThumbnail('https://media1.tenor.com/images/dcc0245798b90b4172a06be002620030/tenor.gif?itemid=14757407')
+                .setColor(color)
+                .setTimestamp()
+            message.channel.send({ embed: embed }).catch(err => { });
             return;
         }
         cooldownG.add(message.author.id);
@@ -328,6 +333,7 @@ client.on('message', async (message) => {
                 .addField('Niveles', `${prefix}setchannelxp, ${prefix}setlevel, ${prefix}xp/exp, ${prefix}rank`)
                 .addField('Privados', `${prefix}eval, ${prefix}blacklist, ${prefix}checkblacklist`)
                 .setThumbnail(client.user.displayAvatarURL({ format: 'png', size: 2048 }))
+                .setTimestamp()
                 .setFooter('Recomendamos que el bot tenga todos los permisos para que no haya problemas!', client.user.displayAvatarURL({ format: 'png', size: 2048 }))
         }).catch(error => { enviarError(error, message.author) });
     }
@@ -342,6 +348,7 @@ client.on('message', async (message) => {
             .setDescription(`Link de invitación del bot => [Link](${link}) \nLink de invitación al servidor de soporte => [Link](${invitacionLink})`)
             .setColor(color)
             .setFooter('Gracias por apoyar!', message.author.displayAvatarURL({ format: 'png', size: 2048 }))
+            .setTimestamp()
         message.channel.send({ embed: embed }).catch(error => { enviarError(error, message.author) });
     }
     //fin de invite
@@ -704,6 +711,7 @@ client.on('message', async (message) => {
         let embed = new Discord.MessageEmbed()
             .setImage(link)
             .setColor(color)
+            .setTimestamp()
         message.channel.send({ embed: embed }).catch(error => { enviarError(error, message.author) })
     }
     //fin de challenge
@@ -717,6 +725,7 @@ client.on('message', async (message) => {
         let embed = new Discord.MessageEmbed()
             .setImage(link)
             .setColor(color)
+            .setTimestamp()
         message.channel.send({ embed: embed }).catch(error => { enviarError(error, message.author) })
     }
     //fin de achievement
@@ -730,6 +739,7 @@ client.on('message', async (message) => {
         let embed = new Discord.MessageEmbed()
             .setImage(link)
             .setColor(color)
+            .setTimestamp()
         message.channel.send({ embed: embed }).catch(error => { enviarError(error, message.author) })
     }
     //fin de supreme
@@ -743,6 +753,7 @@ client.on('message', async (message) => {
         let embed = new Discord.MessageEmbed()
             .setImage(link)
             .setColor(color)
+            .setTimestamp()
         message.channel.send({ embed: embed }).catch(error => { enviarError(error, message.author) })
     }
     //fin de captcha
@@ -759,6 +770,7 @@ client.on('message', async (message) => {
         let embed = new Discord.MessageEmbed()
             .setImage(link)
             .setColor(color)
+            .setTimestamp()
         message.channel.send({ embed: embed }).catch(error => { enviarError(error, message.author) });
     }
 
@@ -775,6 +787,7 @@ client.on('message', async (message) => {
         if (texto.length >= 60) return embedResponse('El segundo argumento debe tener menos de `60`').catch(error => { enviarError(error, message.author) });
         let embed = new Discord.MessageEmbed()
             .setImage(link)
+            .setTimestamp()
             .setColor(color)
         message.channel.send({ embed: embed }).catch(error => { enviarError(error, message.author) });
     }
@@ -787,6 +800,7 @@ client.on('message', async (message) => {
         if (!mencionado) return embedResponse('Menciona a alguien!').catch(error => { enviarError(error, message.author) });
         message.channel.send(
             new Discord.MessageEmbed()
+                .setTimestamp()
                 .setImage(`https://api.alexflipnote.dev/ship?user=${message.author.displayAvatarURL({ format: 'png', size: 2048 })}&user2=${mencionado.displayAvatarURL({ format: 'png', size: 2048 })}`)
                 .setColor(color)
                 .setDescription(`Hmm, creo que se quieren un ${Math.floor(Math.random() * 99) + 1}%\n\n¿Eso es amor?`)
@@ -860,6 +874,7 @@ client.on('message', async (message) => {
 
         let embed = new Discord.MessageEmbed()
             .setColor(color)
+            .setTimestamp()
             .setDescription(`
         Canciones en cola:
 
@@ -1175,6 +1190,7 @@ client.on('message', async (message) => {
             \`\`\`js\nconst Ayuda_de_mongoose_y_funciones = \"${getUser(client, '398485728172179477').username}\"\nconst Extras = [\"${getUser(client, '393382613047574530').username}\", \"${getUser(client, '577000793094488085').username}\"]\`\`\`
             `, { split: true })
             .setFooter('Gracias por todo!', client.users.cache.get('507367752391196682').displayAvatarURL())
+            .setTimestamp()
         message.channel.send({ embed: embed }).catch(err => enviarError(err, message.author))
     }
 
