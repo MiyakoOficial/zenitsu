@@ -1150,7 +1150,7 @@ client.on('message', async (message) => {
         if (args[0] === 'send') {
             let regex = args.slice(1).join(' ').match(/[^A-Z0-9]/gi);
 
-            let user = message.author
+            let member = message.member;
 
             if (!args[1]) return message.reply(mal + ' mensaje 1');
 
@@ -1165,7 +1165,7 @@ client.on('message', async (message) => {
             client.updateData({ id: 'chat' }, {
                 $push: {
                     test:
-                        `${user.username.match(/[^A-Z0-9]/gi) ? 'Usuario desconocido' : user.username.slice(0, 20)}#${user.discriminator}: ${txt}`
+                        `${member.user.username.match(/[^A-Z0-9]/gi) ? 'Usuario' : member.user.username.slice(0, 20)}#${member.user.discriminator}: ${txt}`
                 }
 
             }, 'test');
