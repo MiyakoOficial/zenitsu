@@ -1246,9 +1246,9 @@ client.on('message', async (message) => {
         if (!canalVoz) return;
         let rol = message.guild.roles.cache.find(a => a.name === 'Among US manager');
         if (!message.member.roles.cache.has(rol.id)) return;
-        if (!message.guild.me.hasPermission('MUTE_MEMBERS')) return;
+        if (!message.guild.me.hasPermission('MUTE_MEMBERS') || !message.member.voice.channel.permissionsFor(message.client.user).has("MUTE_MEMBERS")) return;
 
-        let p = canalVoz.members.cache.map(a => {
+        let p = canalVoz.members.map(a => {
             a.voice.setMute(true);
         });
 
