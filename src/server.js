@@ -1243,13 +1243,18 @@ client.on('message', async (message) => {
 
         let canalVoz = message.member.voice.channel;
 
-        if (!canalVoz) return embedResponse('Tienes que estar en un canal de voz!')
+        if (!canalVoz) return embedResponse('Tienes que estar en un canal de voz!').catch(err => { enviarError(err, message.author) });
 
         let rol = message.guild.roles.cache.find(a => a.name === 'Among Us manager');
 
-        if (!rol || !message.member.roles.cache.has(rol.id)) return embedResponse('Tienes que tener el rol llamado: `' + rol.name + '`!');
+        if (!rol) {
+            message.guild.roles.create({ data: { name: 'Among Us manager' } }).catch(err => { });
+        }
 
-        if (!message.guild.me.hasPermission('MUTE_MEMBERS') || !message.member.voice.channel.permissionsFor(message.client.user).has("MUTE_MEMBERS")) return embedResponse('Tengo que tener el permiso `MUTE_MEMBERS`!');
+        if (!rol || !message.member.roles.cache.has(rol.id)) return embedResponse('Tienes que tener el rol llamado: `' + rol.name + '`!').catch(err => { enviarError(err, message.author) });
+
+        if (!message.guild.me.hasPermission('MUTE_MEMBERS') || !message.member.voice.channel.permissionsFor(message.client.user).has("MUTE_MEMBERS")) return embedResponse('Tengo que tener el permiso `MUTE_MEMBERS`!')
+            .catch(err => { enviarError(err, message.author) });
 
         let p = canalVoz.members.map(a => {
             a.voice.setMute(true).catch(err => { })
@@ -1257,7 +1262,7 @@ client.on('message', async (message) => {
 
         await Promise.all(p);
 
-        embedResponse('Listo!').then(msg => msg.delete({ timeout: 5000 }));
+        embedResponse('Listo!').then(msg => msg.delete({ timeout: 5000 })).catch(err => { enviarError(err, message.author) });;
     }
     //fin de amongmute
     //inicio de amongunmute
@@ -1265,13 +1270,22 @@ client.on('message', async (message) => {
 
         let canalVoz = message.member.voice.channel;
 
-        if (!canalVoz) return embedResponse('Tienes que estar en un canal de voz!')
+        if (!canalVoz) return embedResponse('Tienes que estar en un canal de voz!').catch(err => { enviarError(err, message.author) });
+
+        if (!canalVoz.name === 'Among Us') return embedResponse('Tienes que estar en el canal llamado: `Among Us`')
+            .catch(err => { enviarError(err, message.author) });
+
+        if (canalVoz < 11) {
+            canalVoz.edit({ userLimit: 11 }).catch(err => { })
+        }
 
         let rol = message.guild.roles.cache.find(a => a.name === 'Among Us manager');
 
-        if (!rol || !message.member.roles.cache.has(rol.id)) return embedResponse('Tienes que tener el rol llamado: `' + rol.name + '`!');
+        if (!rol || !message.member.roles.cache.has(rol.id)) return embedResponse('Tienes que tener el rol llamado: `' + rol.name + '`!')
+            .catch(err => { enviarError(err, message.author) });
 
-        if (!message.guild.me.hasPermission('MUTE_MEMBERS') || !message.member.voice.channel.permissionsFor(message.client.user).has("MUTE_MEMBERS")) return embedResponse('Tengo que tener el permiso `MUTE_MEMBERS`!');
+        if (!message.guild.me.hasPermission('MUTE_MEMBERS') || !message.member.voice.channel.permissionsFor(message.client.user).has("MUTE_MEMBERS")) return embedResponse('Tengo que tener el permiso `MUTE_MEMBERS`!')
+            .catch(err => { enviarError(err, message.author) });
 
         let p = canalVoz.members.map(a => {
             a.voice.setMute(false).catch(err => { })
@@ -1279,7 +1293,8 @@ client.on('message', async (message) => {
 
         await Promise.all(p);
 
-        embedResponse('Listo!').then(msg => msg.delete({ timeout: 5000 }));
+        embedResponse('Listo!').then(msg => msg.delete({ timeout: 5000 }))
+            .catch(err => { enviarError(err, message.author) });
     }
     //fin de amongunmute
     else {
