@@ -1184,7 +1184,7 @@ client.on('message', async (message) => {
         else {
             let { test } = await client.getData({ id: 'chat' }, 'test');
 
-            if (!test) return message.reply('Error!');
+            if (!test || test.length === 0) return embedResponse('Al parecer no hay ningun mensaje...');
 
             test = test.reverse().slice(0, 10).reverse();
             let embed = new Discord.MessageEmbed()
