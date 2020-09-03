@@ -118,6 +118,7 @@ client.on('ready', () => {
         .addField('Canales', client.channels.cache.size, true)
         .addField('Base de datos', client.database, true)
         .addField('Version de database', client.databaseVersion, true)
+        .addField('Among Us', `${prefix}amongmute, ${prefix}amongunmute`)
         .setTimestamp()
         .setThumbnail(client.user.displayAvatarURL({ format: 'png', size: 2048 }))
         .setFooter(client.users.cache.get('507367752391196682').tag, client.users.cache.get('507367752391196682').displayAvatarURL({ format: 'png', size: 2048 }));
