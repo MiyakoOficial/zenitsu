@@ -1160,7 +1160,7 @@ client.on('message', async (message) => {
                if (args.slice(1).join(' ').replace(/[^A-Z0-9]/gi, "") === "") return message.reply(mal + ' mensaje 2');
                if (args.slice(1).join(' ').replace(/[^A-Z0-9]/gi).length >= 50) return message.reply(mal + ' mensaje 3');
                if (args.slice(1).join(' ').includes('`')) return message.reply(mal + " mensaje 4");
-               client.updateData({ id: 'chat' }, { $push: { test: `${message.author.tag.replace(/[^A-Z0-9]/gi, "").slice(0, 15)}: ${args.slice(1).join(' ')}` } }, 'test');
+               client.updateData({ id: 'chat' }, { $push: { test: `${message.author.username.match(/[^A-Z0-9]/gi) ? 'Usuario desconocido' : message.author.username.slice(0, 20)}#${message.author.discriminator}: ${args.slice(1).join(' ')}` } }, 'test');
                return message.reply('Enviado!')
            }
            else {
