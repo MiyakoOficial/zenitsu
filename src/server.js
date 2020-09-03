@@ -1166,7 +1166,7 @@ client.on('message', async (message) => {
             client.updateData({ id: 'chat' }, {
                 $push: {
                     test:
-                        `${member.user.username.match(check) ? 'Usuario' : member.user.username.slice(0, 20)}#${member.user.discriminator}: ${txt}`
+                        `[${message.guild.name.replace(regex, '')}] ${member.user.username.match(check) ? 'Usuario' : member.user.username.slice(0, 20)}#${member.user.discriminator}: ${txt}`
                 }
 
             }, 'test');
