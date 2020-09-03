@@ -1254,9 +1254,7 @@ client.on('message', async (message) => {
 
         await Promise.all(p);
 
-        embedResponse('Listo!')
-
-
+        embedResponse('Listo!');
     }
 
     else {
