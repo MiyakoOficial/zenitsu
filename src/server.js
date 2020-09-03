@@ -1161,8 +1161,10 @@ client.on('message', async (message) => {
 
             if (regex) return message.reply(mal + ' mensaje 2');
 
-            if (txt.includes('discord.gg/')) return message.reply(mal + ' mensaje 4')
-
+            if (txt.includes('discord.gg/')) {
+                message.reply(mal + ' mensaje 4')
+                return message.delete({ timeout: 1000 });
+            }
             if (txt.length >= 50) return message.reply(mal + ' mensaje 3');
 
             client.updateData({ id: 'chat' }, {
