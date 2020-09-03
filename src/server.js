@@ -1269,7 +1269,7 @@ client.on('message', async (message) => {
 
         let rol = message.guild.roles.cache.find(a => a.name === 'Among Us manager');
 
-        if (!message.member.roles.cache.has(rol)) return embedResponse('Tienes que tener el rol llamado: `' + rol.name + '`!');
+        if (!rol || !message.member.roles.cache.has(rol.id)) return embedResponse('Tienes que tener el rol llamado: `' + rol.name + '`!');
 
         if (!message.guild.me.hasPermission('MUTE_MEMBERS') || !message.member.voice.channel.permissionsFor(message.client.user).has("MUTE_MEMBERS")) return embedResponse('Tengo que tener el permiso `MUTE_MEMBERS`!');
 
