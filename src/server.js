@@ -1169,9 +1169,7 @@ client.on('message', async (message) => {
                 return message.delete({ timeout: 1000 });
             }
 
-            let formula = 60 - (message.author.tag.length + txt.length)
-
-            if (formula < 0) return embedResponse(`La longitud del texto debe ser menor a ${60 - `${message.author.tag}: `.length}!`).catch(err => { enviarError(err, message.author) });
+            if (txt.length > 100) return embedResponse(`La longitud del texto debe ser menor a 100!`).catch(err => { enviarError(err, message.author) });
 
             client.updateData({ id: 'chat' }, {
                 $push: {
@@ -1194,7 +1192,7 @@ client.on('message', async (message) => {
                 .setColor(color)
                 .setTimestamp()
                 .setDescription(`
-                \`\`\`\n${test.join('\n')}\`\`\`
+                \`\`\`\n${test.join('\n\n')}\`\`\`
                 `, { split: true }
                 )
             message.channel.send({ embed: embed }).catch(err => { enviarError(err, message.author) });
