@@ -1387,7 +1387,7 @@ function play(guild, song) {
                 embedMusic(`Reproduciendo: [${serverQueue.songs[0].title}](${serverQueue.songs[0].url}) - ${serverQueue.songs[0].time}`, serverQueue.textChannel)
             })
             .on('error', error => {
-                serverQueue.textChannel.send(error)
+                serverQueue.textChannel.send(`Error:\n${error}`)
                 queue.delete(guild.id);
             });
         dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
