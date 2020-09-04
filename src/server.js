@@ -630,6 +630,28 @@ client.on('message', async (message) => {
     }
     //fin de accept
 
+    //inicio de deny
+    else if (command === 'deny') {
+        if (!["507367752391196682", "374710341868847104"].includes(message.author.id))
+            return embedResponse('No puedes usar este comando!').catch(error => { enviarError(error, message.author) });
+        if (!args[0]) return embedResponse('Escribe una ID valida').catch(error => { enviarError(error, message.author) });
+        if (!args[1]) return embedResponse('Escribe algo!').catch(error => { enviarError(error, message.author) });
+
+        if (await messageS(args[0]) === false) return embedResponse('No he encontrado ese mensaje!').catch(error => { enviarError(error, message.author) });
+        else {
+            client.channels.cache.get('727948582556270682').messages.fetch(args[0]).then(a => {
+                a.edit(a.embeds[0]
+                    .addField('Denegado!', args.slice(1).join(' '))
+                    .setColor('RED'))
+                    .catch(error => { enviarError(error, message.author) });
+
+                a.react('721174526930714634').catch(error => { enviarError(error, message.author) });
+            });
+            embedResponse('Sugerencia denegada!').catch(error => { enviarError(error, message.author) });
+        }
+    }
+    //fin de deny
+
     //inicio de checkblacklist
 
     else if (command === 'checkblacklist') {
