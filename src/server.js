@@ -24,6 +24,7 @@ const queue = new Map();
 const chat = new Map();
 const yts = require('yt-search');
 const { env } = require('process');
+const { EventEmitter } = require('events');
 
 (async () => {
 
@@ -1263,9 +1264,12 @@ client.on('message', async (message) => {
             message.guild.roles.create({ data: { name: 'Among Us manager' } }).catch(err => { });
         }
 
-        if (!rol || !message.member.roles.cache.has(rol.id)) return embedResponse('Tienes que tener el rol llamado: `' + rol.name + '`!').catch(err => { enviarError(err, message.author) });
+        if (!rol || !message.member.roles.cache.has(rol.id)) return embedResponse('Tienes que tener el rol llamado: `Among Us manager`!').catch(err => { enviarError(err, message.author) });
 
         if (!message.guild.me.hasPermission('MUTE_MEMBERS') || !message.member.voice.channel.permissionsFor(message.client.user).has("MUTE_MEMBERS")) return embedResponse('Tengo que tener el permiso `MUTE_MEMBERS`!')
+            .catch(err => { enviarError(err, message.author) });
+
+        if (canalVoz.members.size > 15) return embedResponse('Hay más de 15 miembros en el canal!')
             .catch(err => { enviarError(err, message.author) });
 
         let p = canalVoz.members.map(a => {
@@ -1296,10 +1300,13 @@ client.on('message', async (message) => {
 
         let rol = message.guild.roles.cache.find(a => a.name === 'Among Us manager');
 
-        if (!rol || !message.member.roles.cache.has(rol.id)) return embedResponse('Tienes que tener el rol llamado: `' + rol.name + '`!')
+        if (!rol || !message.member.roles.cache.has(rol.id)) return embedResponse('Tienes que tener el rol llamado: `Among Us manager`!')
             .catch(err => { enviarError(err, message.author) });
 
         if (!message.guild.me.hasPermission('MUTE_MEMBERS') || !message.member.voice.channel.permissionsFor(message.client.user).has("MUTE_MEMBERS")) return embedResponse('Tengo que tener el permiso `MUTE_MEMBERS`!')
+            .catch(err => { enviarError(err, message.author) });
+
+        if (canalVoz.members.size > 15) return embedResponse('Hay más de 15 miembros en el canal!')
             .catch(err => { enviarError(err, message.author) });
 
         let p = canalVoz.members.map(a => {
