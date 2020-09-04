@@ -645,7 +645,7 @@ client.on('message', async (message) => {
                     .setColor('RED'))
                     .catch(error => { enviarError(error, message.author) });
 
-                a.react('721174526930714634').catch(error => { enviarError(error, message.author) });
+                a.react('721174460073377804').catch(error => { enviarError(error, message.author) });
             });
             embedResponse('Sugerencia denegada!').catch(error => { enviarError(error, message.author) });
         }
