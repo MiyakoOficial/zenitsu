@@ -983,6 +983,8 @@ client.on('message', async (message) => {
 
         await client.updateData({ id: `${message.guild.id}_${miembro.id}` }, { $inc: { warns: 1 } }, 'warns');
 
+        await client.updateData({ id: `${message.guild.id}_${miembro.id}` }, { razon: razon }, 'warns');
+
         await client.getData({ id: `${message.guild.id}_${miembro.id}` }, 'warns').then((data) => {
             embedResponse(`El miembro fue advertido!\nAhora tiene: ${data.warns === 0 ? 1 : data.warns} advertencias.\n\nRazón: ${razon}.`)
                 .catch(error => { enviarError(error, message.author) });
