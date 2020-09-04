@@ -1343,7 +1343,7 @@ client.on('message', async (message) => {
 
         embedResponse('Listo!').then(msg => {
             msg.delete({ timeout: 5000 })
-            message.delete({ timeout: 5000 }).catch(err => { });
+            //message.delete({ timeout: 5000 }).catch(err => { });
         }).catch(err => { enviarError(err, message.author) });
     }
     //fin de muteall
@@ -1384,7 +1384,7 @@ client.on('message', async (message) => {
 
         embedResponse('Listo!').then(msg => {
             msg.delete({ timeout: 5000 })
-            message.delete({ timeout: 5000 }).catch(err => { });
+            //message.delete({ timeout: 5000 }).catch(err => { });
         }).catch(err => { enviarError(err, message.author) });
     }
     //fin de unmuteall
