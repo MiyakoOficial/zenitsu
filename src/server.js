@@ -333,7 +333,7 @@ client.on('message', async (message) => {
                 .addField('Música', `${prefix}play/p, ${prefix}queue/q, ${prefix}skip/s, ${prefix}stop, ${prefix}nowplaying/np, ${prefix}volume/v`)
                 .addField('Niveles', `${prefix}setchannelxp, ${prefix}setlevel, ${prefix}xp/exp, ${prefix}rank`)
                 .addField('Privados', `${prefix}eval, ${prefix}blacklist, ${prefix}checkblacklist`)
-                .addField('Among Us', `${prefix}amongmute, ${prefix}amongunmute`)
+                .addField('Among Us', `${prefix}muteall, ${prefix}unmuteall`)
                 .setThumbnail(client.user.displayAvatarURL({ format: 'png', size: 2048 }))
                 .setTimestamp()
                 .setFooter('Recomendamos que el bot tenga todos los permisos para que no haya problemas!', client.user.displayAvatarURL({ format: 'png', size: 2048 }))
@@ -1304,8 +1304,8 @@ client.on('message', async (message) => {
     }
     //fin de xd
 
-    //inicio de amongmute
-    else if (command === 'amongmute') {
+    //inicio de muteall
+    else if (command === 'muteall') {
 
         let canalVoz = message.member.voice.channel;
 
@@ -1346,10 +1346,10 @@ client.on('message', async (message) => {
             message.delete({ timeout: 5000 }).catch(err => { });
         }).catch(err => { enviarError(err, message.author) });
     }
-    //fin de amongmute
+    //fin de muteall
 
-    //inicio de amongunmute
-    else if (command === 'amongunmute') {
+    //inicio de unmuteall
+    else if (command === 'unmuteall') {
 
         let canalVoz = message.member.voice.channel;
 
@@ -1387,7 +1387,7 @@ client.on('message', async (message) => {
             message.delete({ timeout: 5000 }).catch(err => { });
         }).catch(err => { enviarError(err, message.author) });
     }
-    //fin de amongunmute
+    //fin de unmuteall
 
     else {
         let embed = new Discord.MessageEmbed()
