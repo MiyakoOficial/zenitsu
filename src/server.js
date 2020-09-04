@@ -607,7 +607,7 @@ client.on('message', async (message) => {
     //fin de blacklist
 
     //inicio de accept
-    else if (command === 'accept') {
+    /*else if (command === 'accept') {
         if (!["507367752391196682", "374710341868847104"].includes(message.author.id))
             return embedResponse('No puedes usar este comando!').catch(error => { enviarError(error, message.author) });
         if (!args[0]) return embedResponse('Escribe una ID valida').catch(error => { enviarError(error, message.author) });
@@ -626,7 +626,7 @@ client.on('message', async (message) => {
             });
             embedResponse('Sugerencia aceptada!').catch(error => { enviarError(error, message.author) });
         }
-    }
+    }*/
     //fin de accept
 
     //inicio de checkblacklist
