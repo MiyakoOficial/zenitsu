@@ -1418,8 +1418,6 @@ client.on('messageUpdate', async (oldMessage, newMessage) => {
 });
 
 client.on('messageDelete', async (message) => {
-    let texto;
-    let imagen;
     if (message.author.bot) return;
     if (message.channel.type === 'dm') return;
     if (!message.content) return;
@@ -1427,38 +1425,6 @@ client.on('messageDelete', async (message) => {
 
     await client.getData({ id: message.guild.id }, 'logs').then(async (data) => {
 
-        if (message.guild.me.hasPermission('VIEW_AUDIT_LOG')) {
-            const fetchedLogs = await message.guild.fetchAuditLogs({
-                limit: 1
-            });
-
-            const deletionLog = fetchedLogs.entries.first();
-
-            if (deletionLog.action === "MESSAGE_DELETE") {
-                if (!deletionLog) {
-                    texto = "Not found";
-                    imagen = 'https://cdn.discordapp.com/attachments/688054761706094725/714328885533343764/error.gif';
-                }
-                else {
-                    const { executor } = deletionLog;
-                    //if (!executor.id === message.author.id) {
-                    texto = `Deleted by: ${executor.tag}(${executor.id})`;
-                    imagen = executor.displayAvatarURL({ format: 'png', size: 2048 });
-                    // }
-                    // else {
-                    //    texto = `Deleted by ${message.author.tag}(${message.author.id})`;
-                    //    imagen = message.author.displayAvatarURL({ format: 'png', size: 2048 });
-                    //}
-                };
-            }
-            else {
-                texto = "Not found";
-                imagen = 'https://cdn.discordapp.com/attachments/688054761706094725/714328885533343764/error.gif';
-            };
-        } else {
-            texto = "Not found";
-            imagen = 'https://cdn.discordapp.com/attachments/688054761706094725/714328885533343764/error.gif';
-        };
         if (!data) return;
         if (!message.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return;
         let embed = new Discord.MessageEmbed()
@@ -1472,7 +1438,6 @@ client.on('messageDelete', async (message) => {
             .addField('• Author channel ID', message.channel.id, true)
             .addField('• Author channel mention', `<#${message.channel.id}>`, false)
             .setFooter(message.guild.name, message.guild.iconURL({ format: 'png', size: 2048 }))
-            .setAuthor(texto, imagen)
             .setTimestamp()
         return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { return; });
     });
