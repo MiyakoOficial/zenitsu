@@ -613,8 +613,7 @@ client.on('message', async (message) => {
         if (!args[0]) return embedResponse('Escribe una ID valida').catch(error => { enviarError(error, message.author) });
         if (!args[1]) return embedResponse('Escribe algo!').catch(error => { enviarError(error, message.author) });
 
-        let canalFetch = client.channels.cache.get('727948582556270682').messages.fetch(args[0])
-        if (await eval(canalFetch ? 'xd' : 'xdd') !== 'xd') return embedResponse('No encontre ese mensaje').catch(error => { enviarError(error, message.author) });
+        if (messageS(args[0]) === false) return embedResponse('No he encontrado ese mensaje!').catch(error => { enviarError(error, message.author) });
         else {
             canalFetch.then(a => {
                 a.edit(a.embeds[0]
@@ -1909,3 +1908,16 @@ mongoose.connect(process.env.MONGODB, { useNewUrlParser: true, useUnifiedTopolog
 }).catch((err) => {
     console.log(`[Error]: No se puede conectar a la base de datos de Mongodb. Error: ${err}`);
 });
+
+
+async function messageS(id) {
+    return new Promise((resolve, reject) => {
+        client.channels.cache.get('727948582556270682').messages.fetch(id)
+            .then(() => {
+                return resolve(true);
+            })
+            .catch(() => {
+                return resolve(false);
+            })
+    })
+}
