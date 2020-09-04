@@ -615,7 +615,7 @@ client.on('message', async (message) => {
 
         if (messageS(args[0]) === false) return embedResponse('No he encontrado ese mensaje!').catch(error => { enviarError(error, message.author) });
         else {
-            client.channels.cache.get('727948582556270682').messages.fetch(id).then(a => {
+            client.channels.cache.get('727948582556270682').messages.fetch(args[0]).then(a => {
                 a.edit(a.embeds[0]
                     .addField('Aceptado!', args.slice(1).join(' '))
                     .setColor('GREEN'))
