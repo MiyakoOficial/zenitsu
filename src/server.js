@@ -653,7 +653,6 @@ client.on('message', async (message) => {
     //fin de deny
 
     //inicio de checkblacklist
-
     else if (command === 'checkblacklist') {
         if (!["507367752391196682", "374710341868847104"].includes(message.author.id))
             return embedResponse('No puedes usar este comando!').catch(error => { enviarError(error, message.author) });
@@ -664,7 +663,6 @@ client.on('message', async (message) => {
                 .catch(error => { enviarError(error, message.author) });
         })
     }
-
     //fin de checkblacklist
 
     //inicio de ping
