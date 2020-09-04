@@ -6,6 +6,10 @@ const warns = Schema({
         default: 0,
         type: Number
     },
+    razon: {
+        default: '',
+        type: String
+    }
 })
 
 module.exports = model('Warns', warns)

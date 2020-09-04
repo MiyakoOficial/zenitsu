@@ -1257,6 +1257,7 @@ client.on('message', async (message) => {
         message.channel.send(resultado).catch(err => { enviarError(err, message.author) });
     }
     //fin de xd
+
     //inicio de amongmute
     else if (command === 'amongmute') {
 
@@ -1269,7 +1270,6 @@ client.on('message', async (message) => {
 
         if (!message.guild.me.hasPermission('MANAGE_CHANNELS') || !message.member.voice.channel.permissionsFor(message.client.user).has("MANAGE_CHANNELS")) return embedResponse('Tengo que tener el permiso `MANAGE_CHANNELS`!')
             .catch(err => { enviarError(err, message.author) });
-
 
         if (canalVoz.userLimit < 11) {
             canalVoz.edit({ userLimit: 11 }).catch(err => { })
@@ -1297,10 +1297,11 @@ client.on('message', async (message) => {
 
         embedResponse('Listo!').then(msg => {
             msg.delete({ timeout: 5000 })
-            message.delete({ timeout: 5000 });
+            message.delete({ timeout: 5000 }).catch(err => { });
         }).catch(err => { enviarError(err, message.author) });
     }
     //fin de amongmute
+
     //inicio de amongunmute
     else if (command === 'amongunmute') {
 
@@ -1337,10 +1338,11 @@ client.on('message', async (message) => {
 
         embedResponse('Listo!').then(msg => {
             msg.delete({ timeout: 5000 })
-            message.delete({ timeout: 5000 });
+            message.delete({ timeout: 5000 }).catch(err => { });
         }).catch(err => { enviarError(err, message.author) });
     }
     //fin de amongunmute
+
     else {
         let embed = new Discord.MessageEmbed()
             .setThumbnail(`https://cdn.discordapp.com/attachments/688054761706094725/714328885533343764/error.gif`)
