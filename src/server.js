@@ -1186,6 +1186,8 @@ client.on('message', async (message) => {
                 return message.delete({ timeout: 1000 });
             }
 
+            if (txt.includes('`')) return embedResponse(`Este comando no permite el acento grave!`).catch(err => { enviarError(err, message.author) });
+
             if (txt.length > 100) return embedResponse(`La longitud del texto debe ser menor a 100!`).catch(err => { enviarError(err, message.author) });
 
             client.updateData({ id: 'chat' }, {
