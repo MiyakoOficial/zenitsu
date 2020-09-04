@@ -613,8 +613,8 @@ client.on('message', async (message) => {
         if (!args[0]) return embedResponse('Escribe una ID valida').catch(error => { enviarError(error, message.author) });
         if (!args[1]) return embedResponse('Escribe algo!').catch(error => { enviarError(error, message.author) });
 
-        let canalFetch = await client.channels.cache.get('727948582556270682').messages.fetch(args[0])
-        if (!canalFetch.then(a => a)) return embedResponse('No encontre ese mensaje').catch(error => { enviarError(error, message.author) });
+        let canalFetch = client.channels.cache.get('727948582556270682').messages.fetch(args[0])
+        if (!canalFetch) return embedResponse('No encontre ese mensaje').catch(error => { enviarError(error, message.author) });
         else {
             canalFetch.then(a => {
                 a.edit(a.embeds[0]
