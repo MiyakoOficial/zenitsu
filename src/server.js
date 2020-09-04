@@ -1394,6 +1394,8 @@ client.on('messageUpdate', async (oldMessage, newMessage) => {
 });
 
 client.on('messageDelete', async (message) => {
+    let texto;
+    let imagen;
     if (message.author.bot) return;
     if (message.channel.type === 'dm') return;
     if (!message.content) return;
@@ -1407,8 +1409,6 @@ client.on('messageDelete', async (message) => {
             });
 
             const deletionLog = fetchedLogs.entries.first();
-            let texto;
-            let imagen;
 
             if (deletionLog.action === "MESSAGE_DELETE") {
                 if (!deletionLog) {
