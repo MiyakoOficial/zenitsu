@@ -1295,7 +1295,10 @@ client.on('message', async (message) => {
 
         await Promise.all(p);
 
-        embedResponse('Listo!').then(msg => msg.delete({ timeout: 5000 })).catch(err => { enviarError(err, message.author) });;
+        embedResponse('Listo!').then(msg => {
+            msg.delete({ timeout: 5000 })
+            message.delete({ timeout: 5000 });
+        }).catch(err => { enviarError(err, message.author) });
     }
     //fin de amongmute
     //inicio de amongunmute
