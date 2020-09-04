@@ -328,7 +328,7 @@ client.on('message', async (message) => {
                 .addField('Comandos', `${prefix}help, ${prefix}suggest, ${prefix}bugreport, ${prefix}invite`)
                 .addField('Extras', `${prefix}txt, ${prefix}ping, ${prefix}canal/channel, ${prefix}snipe, ${prefix}creditos`)
                 .addField('Moderación', `${prefix}clear, ${prefix}voicekick, ${prefix}voicemute, ${prefix}voiceunmute, ${prefix}voicedeaf, ${prefix}voiceundeaf, ${prefix}warn, ${prefix}checkwarns, ${prefix}resetwarns, ${prefix}setwarns`)
-                .addField('Administración', `${prefix}blockchannels, ${prefix} setprefix/changeprefix, ${prefix}setlogs/logschannel`)
+                .addField('Administración', `${prefix}blockchannels, ${prefix}setprefix/changeprefix, ${prefix}setlogs/logschannel`)
                 .addField('Diversión', `${prefix}challenge, ${prefix}achievement, ${prefix}ship, ${prefix}supreme, ${prefix}didyoumean, ${prefix}captcha, ${prefix}drake, ${prefix}xd, ${prefix}voicechat, ${prefix}chat, ${prefix}gchat`)
                 .addField('Música', `${prefix}play/p, ${prefix}queue/q, ${prefix}skip/s, ${prefix}stop, ${prefix}nowplaying/np, ${prefix}volume/v`)
                 .addField('Niveles', `${prefix}setchannelxp, ${prefix}setlevel, ${prefix}xp/exp, ${prefix}rank`)
@@ -653,12 +653,27 @@ client.on('message', async (message) => {
 
     //inicio de canal
     else if (command === 'canal' || command === 'channel') {
-        await client.getData({ id: message.guild.id }, 'logs').then((data) => {
+        let { canal } = await client.getData({ id: message.guild.id }, 'logslevel');
+        let { channellogs } = await client.getData({ id: message.guild.id }, 'logs');
 
-            if (!data || data.channellogs.length === 0) return embedResponse("Este servidor no tiene definido un canal de logs!").catch(error => { enviarError(error, message.author) })
-            if (!message.guild.channels.cache.filter(a => a.type === 'text').map(a => a.id).includes(data.channellogs)) return embedResponse('El canal en la base de datos no existe!').catch(error => { enviarError(error, message.author) })
-            else return embedResponse(`Logs: <#${data.channellogs}>(${data.channellogs})`).catch(error => { enviarError(error, message.author) })
-        });
+        let canal1 = channellogs || channellogs.length <= 1 ? `<#${channellogs}>(${channellogs})` : 'No establecido!';
+        let canal2 = canal || canal.length <= 1 ? `<#${canal}>(${canal})` : 'No establecido!';
+
+        if (!message.guild.channels.cache.filter(a => a.type === 'text').map(a => a.id).includes(channellogs)) {
+            canal1 = 'Canal no encontrado!'
+        }
+
+        if (!message.guild.channels.cache.filter(a => a.type === 'text').map(a => a.id).includes(canal)) {
+            canal2 = 'Canal no encontrado!'
+        }
+
+        let embed = new Discord.MessageEmbed()
+            .setColor(color)
+            .setTimestamp()
+            .addField('Canal XP', canal2)
+            .addField('Canal de logs', canal1)
+
+        message.channel.send({ embed: embed });
     }
     //fin de canal
 
