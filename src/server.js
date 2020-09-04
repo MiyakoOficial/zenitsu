@@ -1339,7 +1339,7 @@ client.on('message', async (message) => {
             a.voice.setMute(true).catch(err => { })
         });
 
-        embedResponse('<a:cargando:360209976012308494> En proceso!').then(msg => {
+        embedResponse('<a:cargando:650442822083674112> En proceso!').then(msg => {
             msg.delete({ timeout: 5000 })
             //message.delete({ timeout: 5000 }).catch(err => { });
         }).catch(err => { enviarError(err, message.author) });
@@ -1385,7 +1385,7 @@ client.on('message', async (message) => {
             a.voice.setMute(false).catch(err => { })
         });
 
-        embedResponse('<a:cargando:360209976012308494> En proceso!').then(msg => {
+        embedResponse('<a:cargando:650442822083674112> En proceso!').then(msg => {
             msg.delete({ timeout: 5000 })
             //message.delete({ timeout: 5000 }).catch(err => { });
         }).catch(err => { enviarError(err, message.author) });
