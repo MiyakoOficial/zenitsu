@@ -546,9 +546,11 @@ client.on('message', async (message) => {
     //inicio de suggest
     else if (command === 'suggest') {
         if (!args[0]) return embedResponse('Escribe algo!').catch(error => { enviarError(error, message.author) })
-        embedResponse(`${message.author.tag} ha sugerido:\n${args.join(' ')}`, client.channels.cache.get('727948582556270682')).then(a => {
-            embedResponse('Sugerencia enviada!').catch(error => { enviarError(error, message.author) })
-        });
+        let embed = new Discord.MessageEmbed()
+            .setColor(color)
+            .setTimestamp()
+            .addField(message.author.tag, args.join(' '))
+        client.channels.cache.get('727948582556270682').send({ embed: embed })
     }
     //fin suggest
 
