@@ -1401,14 +1401,15 @@ client.on('messageDelete', async (message) => {
 
     await client.getData({ id: message.guild.id }, 'logs').then(async (data) => {
 
-        const fetchedLogs = await message.guild.fetchAuditLogs({
-            limit: 1
-        });
-
-        const deletionLog = fetchedLogs.entries.first();
-        let texto;
-        let imagen;
         if (message.guild.me.hasPermission('VIEW_AUDIT_LOG')) {
+            const fetchedLogs = await message.guild.fetchAuditLogs({
+                limit: 1
+            });
+
+            const deletionLog = fetchedLogs.entries.first();
+            let texto;
+            let imagen;
+
             if (deletionLog.action === "MESSAGE_DELETE") {
                 if (!deletionLog) {
                     texto = "Not found";
