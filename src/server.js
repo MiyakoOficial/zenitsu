@@ -606,6 +606,29 @@ client.on('message', async (message) => {
     }
     //fin de blacklist
 
+    //inicio de accept
+    else if (command === 'accept') {
+        if (!["507367752391196682", "374710341868847104"].includes(message.author.id))
+            return embedResponse('No puedes usar este comando!').catch(error => { enviarError(error, message.author) });
+        if (!args[0]) return embedResponse('Escribe una ID valida').catch(error => { enviarError(error, message.author) });
+        if (!args[1]) return embedResponse('Escribe algo!').catch(error => { enviarError(error, message.author) });
+
+        let canalFetch = client.channels.cache.get('727948582556270682').messages.fetch(args[0])
+        if (!canalFetch) return embedResponse('No encontre ese mensaje').catch(error => { enviarError(error, message.author) });
+        else {
+            canalFetch.then(a => {
+                a.edit(a.embeds[0]
+                    .addField('Aceptado!', args.slice(1).join(' '))
+                    .setColor('GREEN'))
+                    .catch(error => { enviarError(error, message.author) });
+
+                a.react('721174526930714634').catch(error => { enviarError(error, message.author) });
+            });
+            embedResponse('Sugerencia aceptada!').catch(error => { enviarError(error, message.author) });
+        }
+    }
+    //fin de accept
+
     //inicio de checkblacklist
 
     else if (command === 'checkblacklist') {
@@ -1244,7 +1267,7 @@ client.on('message', async (message) => {
 
         const canvas = Canvas.createCanvas(200, 200);
         const ctx = canvas.getContext('2d');
-        const avatar = await Canvas.loadImage(member.user.displayAvatarURL({ format: 'png' }));
+        const avatar = await Canvas.loadImage(member.user.displayAvatarURL({ format: 'png', size: 2048 }));
 
         Canvas.registerFont('OpenSansEmoji.ttf', { family: "Open Sans Emoji" })
         Canvas.registerFont('Minecrafter.Reg.ttf', { family: "Minecraft" })
