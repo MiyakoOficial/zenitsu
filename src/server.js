@@ -1169,7 +1169,7 @@ client.on('message', async (message) => {
 
         if (args[0] === 'send') {
 
-            let check = /[^A-Z0-9\s\!\@\#\$\%\^\&\*\(\)\_\+\=\[\]\"\'\;\.\,\\\:\ñ\|\~\/\<\>]/gi;
+            let check = /[^A-Z0-9\s\!\@\#\$\%\^\&\*\(\)\_\+\=\[\]\"\'\;\.\,\\\:\ñ\|\~\/\<\>(\uD800-\uDBFF][\uDC00-\uDFFF)]/gi;
 
             let regex = args.slice(1).join(' ').match(check);
 
