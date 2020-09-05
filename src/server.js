@@ -80,7 +80,8 @@ const { EventEmitter } = require('events');
 })();
 
 
-/*function duration(s) {
+function duration(segundos) {
+    var s = parseInt(segundos) * 1000
     var ms = s % 1000;
     s = (s - ms) / 1000;
     var secs = s % 60;
@@ -96,7 +97,7 @@ const { EventEmitter } = require('events');
     } else {
         return hrs + " h " + mins + " m " + secs + " s";
     }
-}*/
+}
 
 client.on('ready', () => {
     console.log(`${client.user.tag} está listo!`)
@@ -884,14 +885,25 @@ client.on('message', async (message) => {
             key: process.env.YOUTUBEKEY,      
             type: 'video'
         };*/
-        let { items } = await ytsr(args.join(' '));
-        if (!items[0]) return embedResponse('Ups, no he encontrado esa música, intenta de nuevo!').catch(error => { enviarError(error, message.author) });
-        if (items[0].type !== 'video') return embedResponse('Ups, hasta el momento solo soporto videos!').catch(error => { enviarError(error, message.author) });
-        if (!items[0].duration) return embedResponse('Acaso estas tratando de reproducir un stream?').catch(error => { enviarError(error, message.author) });
+        //let { items } = await ytsr(args.join(' '));
+
+        const opts = {
+            maxResults: 1,
+            key: process.env.YOUTUBEKEY,
+            type: "video"
+        };
+
+        const { results } = await search(args.join(' '), opts);
+        const songURL = results[0].link;
+        const songInfo = await ytdl.getInfo(songURL);
+
+        if (!results[0]) return embedResponse('Ups, no he encontrado esa música, intenta de nuevo!').catch(error => { enviarError(error, message.author) });
+
         let song = {
-            title: items[0].title,
-            url: items[0].link,
-            time: items[0].duration
+            title: songInfo.title,
+            url: songInfo.video_url,
+            time: duration(songInfo.length_seconds),
+            author: message.author
         }
         if (!serverQueue) {
             const queueObject = {
