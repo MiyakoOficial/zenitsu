@@ -2180,13 +2180,15 @@ client.on('messageReactionAdd', async (reaction, user) => {
         });
 
         embedResponse('<a:cargando:650442822083674112> En proceso!').then(msg => {
-            msg.delete({ timeout: 5000 })
-            //message.delete({ timeout: 5000 }).catch(err => { });
-        }).catch(err => { });
-        await Promise.all(p);
+            //msg.delete({ timeout: 5000 })
+            let embed = new Discord.MessageEmbed()
+                .setColor(color)
+                .setTimestamp()
+                .setDescription('Listo!')
 
-        embedResponse('Listo!').then(msg => {
-            msg.delete({ timeout: 5000 })
+            await Promise.all(p);
+
+            msg.edit({ embed: embed }).then(a => { a.delete({ timeout: 5000 }) })
             //message.delete({ timeout: 5000 }).catch(err => { });
         }).catch(err => { });
         //mute
@@ -2224,16 +2226,19 @@ client.on('messageReactionAdd', async (reaction, user) => {
         });
 
         embedResponse('<a:cargando:650442822083674112> En proceso!').then(msg => {
-            msg.delete({ timeout: 5000 })
-            //message.delete({ timeout: 5000 }).catch(err => { });
-        }).catch(err => { });
-        await Promise.all(p);
+            //msg.delete({ timeout: 5000 })
+            let embed = new Discord.MessageEmbed()
+                .setColor(color)
+                .setTimestamp()
+                .setDescription('Listo!')
 
-        embedResponse('Listo!').then(msg => {
-            msg.delete({ timeout: 5000 })
+            await Promise.all(p);
+
+            msg.edit({ embed: embed }).then(a => { a.delete({ timeout: 5000 }) })
             //message.delete({ timeout: 5000 }).catch(err => { });
         }).catch(err => { });
-        //unmute
+
+
         await reaction.users.remove(user).catch(a => { })
     }
 
