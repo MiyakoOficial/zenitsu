@@ -2123,7 +2123,7 @@ client.on('messageReactionAdd', (reaction, user) => {
 
     let role = guild.roles.cache.find(a => a.name === 'Among Us manager')
 
-    if (!role || member.roles.cache.has(role.id)) return;
+    if (!role || !member.roles.cache.has(role.id)) return;
 
     if (message.id !== idMessage) return console.log('No es igual')
     else { console.log('ES igual') }
