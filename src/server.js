@@ -2101,3 +2101,31 @@ async function messageS(id) {
             })
     })
 }
+
+client.on('messageReactionAdd', (reaction, user) => {
+    if (!reaction.message.channel.guild) return;
+    if (user.bot) return;
+    let message = reaction.message;
+    let guild = message.guild;
+    let channel = message.channel;
+    let emoji = reaction.emoji;
+    let member = guild.member(user);
+
+    let { idMessage } = client.getData({ id: guild.id }, 'muteid');
+
+    if (!idMessage || idMessage === 'id') {
+        return;
+    }
+    else {
+
+        if (emoji === client.emojis.cache.get('712634779836612648')) {
+            console.log(':v')
+        }
+
+        if (emoji === client.emojis.cache.get('712676290750054481')) {
+            console.log('xd')
+        }
+
+    }
+
+});
