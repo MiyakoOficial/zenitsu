@@ -2106,7 +2106,7 @@ async function messageS(id) {
     })
 }
 
-client.on('messageReactionAdd', (reaction, user) => {
+client.on('messageReactionAdd', async (reaction, user) => {
     console.log('xd')
     if (!reaction.message.channel.guild) return;
     if (user.bot) return;
@@ -2119,7 +2119,7 @@ client.on('messageReactionAdd', (reaction, user) => {
 
     //if (!emoji.id) return;
 
-    let { idMessage } = client.getData({ id: guild.id }, 'muteid');
+    let { idMessage } = await client.getData({ id: guild.id }, 'muteid');
 
     if (!idMessage || idMessage === 'id') return;
 
