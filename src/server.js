@@ -1313,7 +1313,7 @@ client.on('message', async (message) => {
 
         if (!canalVoz) return embedResponse('Tienes que estar en un canal de voz!').catch(err => { enviarError(err, message.author) });
 
-        if (!canalVoz.name.startsWith('Among Us')) return embedResponse('Tienes que estar en el canal llamado: `Among Us`')
+        if (!canalVoz.name.includes('Among Us')) return embedResponse('Tienes que estar en el canal llamado: `Among Us`')
             .catch(err => { enviarError(err, message.author) });
 
         if (!message.guild.me.hasPermission('MANAGE_CHANNELS') || !message.member.voice.channel.permissionsFor(message.client.user).has("MANAGE_CHANNELS")) return embedResponse('Tengo que tener el permiso `MANAGE_CHANNELS`!')
@@ -1381,7 +1381,7 @@ client.on('message', async (message) => {
 
         if (!canalVoz) return embedResponse('Tienes que estar en un canal de voz!').catch(err => { enviarError(err, message.author) });
 
-        if (!canalVoz.name.startsWith('Among Us')) return embedResponse('Tienes que estar en el canal llamado: `Among Us`')
+        if (!canalVoz.name.includes('Among Us')) return embedResponse('Tienes que estar en el canal llamado: `Among Us`')
             .catch(err => { enviarError(err, message.author) });
 
         if (!message.guild.me.hasPermission('MANAGE_CHANNELS') || !message.member.voice.channel.permissionsFor(message.client.user).has("MANAGE_CHANNELS")) return embedResponse('Tengo que tener el permiso `MANAGE_CHANNELS`!')
@@ -1981,7 +1981,7 @@ client.on('message', async (m) => {
 
             if (!canalVoz) return embedResponse('Tienes que estar en un canal de voz!').catch(err => { enviarError(err, message.author) });
 
-            if (!canalVoz.name.startsWith('Among Us')) return embedResponse('Tienes que estar en el canal llamado: `Among Us`')
+            if (!canalVoz.name.includes('Among Us')) return embedResponse('Tienes que estar en el canal llamado: `Among Us`')
                 .catch(err => { enviarError(err, message.author) });
 
             if (!message.guild.me.hasPermission('MANAGE_CHANNELS') || !message.member.voice.channel.permissionsFor(message.client.user).has("MANAGE_CHANNELS")) return embedResponse('Tengo que tener el permiso `MANAGE_CHANNELS`!')
@@ -2042,7 +2042,7 @@ client.on('message', async (m) => {
 
             if (!canalVoz) return embedResponse('Tienes que estar en un canal de voz!').catch(err => { enviarError(err, message.author) });
 
-            if (!canalVoz.name.startsWith('Among Us')) return embedResponse('Tienes que estar en el canal llamado: `Among Us`')
+            if (!canalVoz.name.includes('Among Us')) return embedResponse('Tienes que estar en el canal llamado: `Among Us`')
                 .catch(err => { enviarError(err, message.author) });
 
             if (!message.guild.me.hasPermission('MANAGE_CHANNELS') || !message.member.voice.channel.permissionsFor(message.client.user).has("MANAGE_CHANNELS")) return embedResponse('Tengo que tener el permiso `MANAGE_CHANNELS`!')
@@ -2178,7 +2178,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
 
         if (!canalVoz) return embedResponse('Tienes que estar en un canal de voz!').catch(err => { });
 
-        if (!canalVoz.name.startsWith('Among Us')) return embedResponse('Tienes que estar en el canal llamado: `Among Us`')
+        if (!canalVoz.name.includes('Among Us')) return embedResponse('Tienes que estar en el canal llamado: `Among Us`')
             .catch(err => { });
 
         if (!message.guild.me.hasPermission('MANAGE_CHANNELS') || !member.voice.channel.permissionsFor(client.user).has("MANAGE_CHANNELS")) return embedResponse('Tengo que tener el permiso `MANAGE_CHANNELS`!')
@@ -2236,7 +2236,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
 
         if (!canalVoz) return embedResponse('Tienes que estar en un canal de voz!').catch(err => { });
 
-        if (!canalVoz.name.startsWith('Among Us')) return embedResponse('Tienes que estar en el canal llamado: `Among Us`')
+        if (!canalVoz.name.includes('Among Us')) return embedResponse('Tienes que estar en el canal llamado: `Among Us`')
             .catch(err => { });
 
         if (!message.guild.me.hasPermission('MANAGE_CHANNELS') || !member.voice.channel.permissionsFor(client.user).has("MANAGE_CHANNELS")) return embedResponse('Tengo que tener el permiso `MANAGE_CHANNELS`!')
