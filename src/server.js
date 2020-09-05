@@ -1445,6 +1445,7 @@ function embedMusic(argumentoDeLaDescripcion, opcion) {
         embed: new Discord.MessageEmbed()
             .setDescription(argumentoDeLaDescripcion)
             .setColor(color)
+            .setImage('https://cdn.discordapp.com/attachments/632098744262721564/633640689955110912/nitro.gif')
             .setTimestamp()
     }).catch(error => { });
 }
