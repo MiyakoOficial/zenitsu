@@ -2147,6 +2147,8 @@ client.on('messageReactionAdd', async (reaction, user) => {
 
     if (!message.id === idMessage) return;
 
+    console.log(member.voice.channel)
+
     if (emoji.id === '712634779836612648') {
         let canalVoz = member.voice.channel;
 
