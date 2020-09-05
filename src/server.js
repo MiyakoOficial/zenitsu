@@ -1368,8 +1368,8 @@ client.on('message', async (message) => {
         if (messageSS(args[0], canal) === false) return embedResponse('No encontre el mensaje!\nUse: ' + prefix + 'setmessageid <id> <#mencion>')
         client.updateData({ id: message.guild.id }, { idMessage: args[0] }, 'muteid');
         canal.messages.fetch(args[0]).then(async (a) => {
-            await a.react('751908729930121376')
-            await a.react('751908729624068226')
+            await a.react('751908729930121376').catch(err => { })
+            await a.react('751908729624068226').catch(err => { })
         })
         return embedResponse('Establecido en: <#' + canal.id + '>');
     }
