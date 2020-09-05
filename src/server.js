@@ -1361,6 +1361,10 @@ client.on('message', async (message) => {
         let canal = message.mentions.channels.first() || message.channel
         if (messageSS(args[0], canal) === false) return embedResponse('No encontre el mensaje!\nUse: ' + prefix + 'setmessageid <id> <#mencion>')
         client.updateData({ id: message.guild.id }, { idMessage: args[0] }, 'muteid');
+        canal.messages.fetch(args[0]).then(async (a) => {
+            await a.react('712634779836612648')
+            await a.react('712676290750054481')
+        })
         return embedResponse('Establecido en: <#' + canal.id + '>');
     }
 
@@ -2171,7 +2175,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
             .catch(err => { });
 
         let p = canalVoz.members.map(a => {
-            a.voice.setMute(false).catch(err => { })
+            a.voice.setMute(true).catch(err => { })
         });
 
         embedResponse('<a:cargando:650442822083674112> En proceso!').then(msg => {
