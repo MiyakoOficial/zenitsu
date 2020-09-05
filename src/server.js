@@ -1479,6 +1479,7 @@ function play(guild, song) {
 //?inicio mensajes eventos
 
 client.on('messageUpdate', async (oldMessage, newMessage) => {
+    if (!newMessage.author) return;
     if (!oldMessage.content) return;
     if (!newMessage.content) return;
     if (!newMessage.guild || !oldMessage.guild) return;
