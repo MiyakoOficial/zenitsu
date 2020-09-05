@@ -2125,7 +2125,8 @@ client.on('messageReactionAdd', (reaction, user) => {
 
     if (!role || member.roles.cache.has(role.id)) return;
 
-    if (message.id !== idMessage) return;
+    if (message.id !== idMessage) return console.log('No es igual')
+    else { console.log('ES igual') }
 
     if (emoji.id === '712634779836612648') {
         //mute
