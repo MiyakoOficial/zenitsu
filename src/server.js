@@ -895,8 +895,10 @@ client.on('message', async (message) => {
 
         const { results } = await search(args.join(' '), opts);
         const songURL = results[0].link;
-        const songInfo = await ytdl.getInfo(songURL);
-
+        let songInfo;
+        try {
+            songInfo = await ytdl.getInfo(songURL);
+        } catch (e) { embedResponse(e).catch(err => { enviarError(err, message.author) }) }
         if (!results[0]) return embedResponse('Ups, no he encontrado esa música, intenta de nuevo!').catch(error => { enviarError(error, message.author) });
 
         let song = {
@@ -915,6 +917,7 @@ client.on('message', async (message) => {
             }
             queue.set(message.guild.id, queueObject)
             queueObject.songs.push(song)
+
             try {
                 let connection = await message.member.voice.channel.join()
                 queueObject.connection = connection;
@@ -925,6 +928,7 @@ client.on('message', async (message) => {
             }
             embedResponse(`Reproduciendo: [${song.title}](${song.url}) - ${song.time}`).catch(error => { enviarError(error, message.author) });
         }
+
         else {
             if (serverQueue.songs.length === 0 || !message.guild.me.voice.channel) {
                 embedResponse('Reiniciando la cola!\nIntente de nuevo!').catch(error => { enviarError(error, message.author) });
