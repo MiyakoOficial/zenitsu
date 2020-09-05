@@ -1340,17 +1340,19 @@ client.on('message', async (message) => {
             a.voice.setMute(true).catch(err => { })
         });
 
-        embedResponse('<a:cargando:650442822083674112> En proceso!').then(msg => {
-            msg.delete({ timeout: 5000 })
-            //message.delete({ timeout: 5000 }).catch(err => { });
-        }).catch(err => { enviarError(err, message.author) });
+        embedResponse('<a:cargando:650442822083674112> En proceso!').then(async (msg) => {
+            //msg.delete({ timeout: 5000 })
+            let embed = new Discord.MessageEmbed()
+                .setColor(color)
+                .setTimestamp()
+                .setDescription('Listo!')
 
-        await Promise.all(p);
+            await Promise.all(p);
 
-        embedResponse('Listo!').then(msg => {
-            msg.delete({ timeout: 5000 })
+            msg.edit({ embed: embed }).then(a => { a.delete({ timeout: 5000 }) })
             //message.delete({ timeout: 5000 }).catch(err => { });
-        }).catch(err => { enviarError(err, message.author) });
+        }).catch(err => { });
+
     }
     //fin de muteall
 
@@ -1399,16 +1401,19 @@ client.on('message', async (message) => {
             a.voice.setMute(false).catch(err => { })
         });
 
-        embedResponse('<a:cargando:650442822083674112> En proceso!').then(msg => {
-            msg.delete({ timeout: 5000 })
-            //message.delete({ timeout: 5000 }).catch(err => { });
-        }).catch(err => { enviarError(err, message.author) });
-        await Promise.all(p);
+        embedResponse('<a:cargando:650442822083674112> En proceso!').then(async (msg) => {
+            //msg.delete({ timeout: 5000 })
+            let embed = new Discord.MessageEmbed()
+                .setColor(color)
+                .setTimestamp()
+                .setDescription('Listo!')
 
-        embedResponse('Listo!').then(msg => {
-            msg.delete({ timeout: 5000 })
+            await Promise.all(p);
+
+            msg.edit({ embed: embed }).then(a => { a.delete({ timeout: 5000 }) })
             //message.delete({ timeout: 5000 }).catch(err => { });
-        }).catch(err => { enviarError(err, message.author) });
+        }).catch(err => { });
+
     }
     //fin de unmuteall
 
