@@ -2179,7 +2179,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
             a.voice.setMute(true).catch(err => { })
         });
 
-        embedResponse('<a:cargando:650442822083674112> En proceso!').then(msg => {
+        embedResponse('<a:cargando:650442822083674112> En proceso!').then(async (msg) => {
             //msg.delete({ timeout: 5000 })
             let embed = new Discord.MessageEmbed()
                 .setColor(color)
@@ -2225,7 +2225,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
             a.voice.setMute(false).catch(err => { })
         });
 
-        embedResponse('<a:cargando:650442822083674112> En proceso!').then(msg => {
+        embedResponse('<a:cargando:650442822083674112> En proceso!').then(async (msg) => {
             //msg.delete({ timeout: 5000 })
             let embed = new Discord.MessageEmbed()
                 .setColor(color)
