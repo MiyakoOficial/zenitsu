@@ -2111,14 +2111,16 @@ client.on('messageReactionAdd', (reaction, user) => {
     let emoji = reaction.emoji;
     let member = guild.member(user);
 
-    if (!emoji.id) return;
+    //if (!emoji.id) return;
 
     let { idMessage } = client.getData({ id: guild.id }, 'muteid');
 
+    console.log(emoji)
+
     /*if (!idMessage || idMessage === 'id') {
         return;
-    }*/
-    if (true) {
+    }
+    else {
 
         if (emoji.id === '712634779836612648') {
             console.log(':v')
@@ -2128,6 +2130,6 @@ client.on('messageReactionAdd', (reaction, user) => {
             console.log('xd')
         }
 
-    }
+    }*/
 
 });
