@@ -2188,7 +2188,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
             //message.delete({ timeout: 5000 }).catch(err => { });
         }).catch(err => { });
         //mute
-        reaction.remove(user).catch(a => { })
+        await reaction.remove(user).catch(a => { })
     }
 
     if (emoji.id === '712676290750054481') {
@@ -2232,7 +2232,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
             //message.delete({ timeout: 5000 }).catch(err => { });
         }).catch(err => { });
         //unmute
-        reaction.remove(user).catch(a => { })
+        await reaction.remove(user).catch(a => { })
     }
 
 
