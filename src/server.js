@@ -2033,6 +2033,17 @@ client.on('message', async (m) => {
         //fin de unmuteall
         return;
     }
+
+    function embedResponse(argumentoDeLaDescripcion, opcion) {
+        let canal_a_enviar = opcion || message.channel
+        return canal_a_enviar.send({
+            embed: new Discord.MessageEmbed()
+                .setDescription(argumentoDeLaDescripcion)
+                .setColor(color)
+                .setTimestamp()
+        }).catch(error => { enviarError(error, message.author) });
+    }
+
 })
 
 client.login(process.env.BOT_TOKEN);
