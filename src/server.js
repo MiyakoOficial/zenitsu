@@ -1354,8 +1354,14 @@ client.on('message', async (message) => {
     }
     //fin de muteall
 
-    else if (command === 'testcmd') {
+    else if (command === 'setmessageid') {
+        let rol = message.guild.roles.cache.find(a => a.name === 'Among Us manager');
+        if (!rol || !message.member.roles.cache.has(rol.id)) return embedResponse('Tienes que tener el rol `Among Us manager`')
+        if (!args[0]) return embedResponse('Ponga una ID valida de mensaje!');
+        let canal = message.mentions.channels.first() || message.channel
+        if (messageSS(args[0], canal) === false) return embedResponse('No encontre el mensaje!\nUse: ' + prefix + 'setmessageid <id> <#mencion>')
         client.updateData({ id: message.guild.id }, { idMessage: args[0] }, 'muteid');
+        return embedResponse('Establecido en: <#' + canal.id + '>');
     }
 
     //inicio de unmuteall
@@ -2106,6 +2112,18 @@ async function messageS(id) {
     })
 }
 
+async function messageSS(id, canal) {
+    return new Promise((resolve, reject) => {
+        canal.messages.fetch(id)
+            .then(() => {
+                return resolve(true);
+            })
+            .catch(() => {
+                return resolve(false);
+            })
+    })
+}
+
 client.on('messageReactionAdd', async (reaction, user) => {
     //console.log('xd')
     if (!reaction.message.channel.guild) return;
@@ -2115,34 +2133,104 @@ client.on('messageReactionAdd', async (reaction, user) => {
     let channel = message.channel;
     let emoji = reaction.emoji;
     let member = guild.member(user);
-    user.send('xd')
-    console.log('xd')
-
-    //if (!emoji.id) return;
 
     let { idMessage } = await client.getData({ id: guild.id }, 'muteid');
 
     if (!idMessage || idMessage === 'id') return;
 
-    console.log('xd')
-
     let role = guild.roles.cache.find(a => a.name === 'Among Us manager')
 
     if (!role || !member.roles.cache.has(role.id)) return;
-
-    console.log('xd')
 
     if (message.id !== idMessage) return console.log('No es igual')
     else { console.log('ES igual') }
 
     if (emoji.id === '712634779836612648') {
+        let canalVoz = member.voice.channel;
+
+        if (!canalVoz) return embedResponse('Tienes que estar en un canal de voz!').catch(err => { });
+
+        if (!canalVoz.name === 'Among Us') return embedResponse('Tienes que estar en el canal llamado: `Among Us`').catch(a => { })
+            .catch(err => { });
+
+        if (!message.guild.me.hasPermission('MANAGE_CHANNELS') || !message.member.voice.channel.permissionsFor(message.client.user).has("MANAGE_CHANNELS")) return embedResponse('Tengo que tener el permiso `MANAGE_CHANNELS`!').catch(a => { })
+            .catch(err => { });
+
+        if (canalVoz.userLimit < 11) {
+            canalVoz.edit({ userLimit: 11 }).catch(err => { })
+        }
+
+        let rol = message.guild.roles.cache.find(a => a.name === 'Among Us manager');
+
+        if (!rol || !message.member.roles.cache.has(rol.id)) return embedResponse('Tienes que tener el rol llamado: `Among Us manager`!').catch(a => { })
+            .catch(err => { });
+
+        if (!message.guild.me.hasPermission('MUTE_MEMBERS') || !message.member.voice.channel.permissionsFor(message.client.user).has("MUTE_MEMBERS")) return embedResponse('Tengo que tener el permiso `MUTE_MEMBERS`!').catch(a => { })
+            .catch(err => { });
+
+        if (canalVoz.members.size > 15) return embedResponse('Hay más de 15 miembros en el canal!')
+            .catch(err => { });
+
+        let p = canalVoz.members.map(a => {
+            a.voice.setMute(true).catch(err => { })
+        });
+
+        embedResponse('<a:cargando:650442822083674112> En proceso!').then(msg => {
+            msg.delete({ timeout: 5000 })
+            //message.delete({ timeout: 5000 }).catch(err => { });
+        }).catch(err => { });
+        await Promise.all(p);
+
+        embedResponse('Listo!').then(msg => {
+            msg.delete({ timeout: 5000 })
+            //message.delete({ timeout: 5000 }).catch(err => { });
+        }).catch(err => { });
         //mute
         reaction.remove(user)
     }
 
     if (emoji.id === '712676290750054481') {
+        let canalVoz = member.voice.channel;
+
+        if (!canalVoz) return embedResponse('Tienes que estar en un canal de voz!').catch(err => { });
+
+        if (!canalVoz.name === 'Among Us') return embedResponse('Tienes que estar en el canal llamado: `Among Us`').catch(a => { })
+            .catch(err => { });
+
+        if (!message.guild.me.hasPermission('MANAGE_CHANNELS') || !message.member.voice.channel.permissionsFor(message.client.user).has("MANAGE_CHANNELS")) return embedResponse('Tengo que tener el permiso `MANAGE_CHANNELS`!').catch(a => { })
+            .catch(err => { });
+
+        if (canalVoz.userLimit < 11) {
+            canalVoz.edit({ userLimit: 11 }).catch(err => { })
+        }
+
+        let rol = message.guild.roles.cache.find(a => a.name === 'Among Us manager');
+
+        if (!rol || !message.member.roles.cache.has(rol.id)) return embedResponse('Tienes que tener el rol llamado: `Among Us manager`!').catch(a => { })
+            .catch(err => { });
+
+        if (!message.guild.me.hasPermission('MUTE_MEMBERS') || !message.member.voice.channel.permissionsFor(message.client.user).has("MUTE_MEMBERS")) return embedResponse('Tengo que tener el permiso `MUTE_MEMBERS`!').catch(a => { })
+            .catch(err => { });
+
+        if (canalVoz.members.size > 15) return embedResponse('Hay más de 15 miembros en el canal!')
+            .catch(err => { });
+
+        let p = canalVoz.members.map(a => {
+            a.voice.setMute(false).catch(err => { })
+        });
+
+        embedResponse('<a:cargando:650442822083674112> En proceso!').then(msg => {
+            msg.delete({ timeout: 5000 })
+            //message.delete({ timeout: 5000 }).catch(err => { });
+        }).catch(err => { });
+        await Promise.all(p);
+
+        embedResponse('Listo!').then(msg => {
+            msg.delete({ timeout: 5000 })
+            //message.delete({ timeout: 5000 }).catch(err => { });
+        }).catch(err => { });
         //unmute
-        reaction.remove(user)
+        reaction.remove(user).catch(a => { })
     }
 
 
