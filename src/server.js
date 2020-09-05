@@ -2107,7 +2107,7 @@ async function messageS(id) {
 }
 
 client.on('messageReactionAdd', async (reaction, user) => {
-    console.log('xd')
+    //console.log('xd')
     if (!reaction.message.channel.guild) return;
     if (user.bot) return;
     let message = reaction.message;
@@ -2115,6 +2115,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
     let channel = message.channel;
     let emoji = reaction.emoji;
     let member = guild.member(user);
+    user.send('xd')
     console.log('xd')
 
     //if (!emoji.id) return;
