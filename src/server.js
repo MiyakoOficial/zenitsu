@@ -90,12 +90,12 @@ function duration(segundos) {
     var hrs = (s - mins) / 60;
     if (hrs <= 0) {
         if (mins <= 0) {
-            return secs + " s";
+            return secs;
         } else {
-            return mins + " m " + secs + " s";
+            return mins + "L" + secs;
         }
     } else {
-        return hrs + " h " + mins + " m " + secs + " s";
+        return hrs + ":" + mins + ":" + secs;
     }
 }
 
