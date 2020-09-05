@@ -1918,7 +1918,7 @@ client.on('guildMemberUpdate', async (oldUser, newUser) => {
 //!fin usuarios eventos
 //!fin de eventos
 */
-client.on('message', async (msg) => {
+/*client.on('message', async (msg) => {
     if (msg.channel.type !== 'text') return;
 
     msg.channel.messages.fetch({ limit: 3 }).then(m => {
@@ -1932,10 +1932,11 @@ client.on('message', async (msg) => {
             msg.channel.send(a[2].content).catch(error => { });
         };
     });
-});
+});*/
 
 client.on('message', async (m) => {
     let message = m;
+    let msg = m;
     if (message.channel.name === 'among-us-manager') {
 
         //inicio de muteall
@@ -2032,6 +2033,19 @@ client.on('message', async (m) => {
         }
         //fin de unmuteall
         return;
+    } else {
+        if (msg.channel.type !== 'text') return;
+        msg.channel.messages.fetch({ limit: 3 }).then(m => {
+            let a = [...m.values()].filter(E => !E.author.bot && E.content)
+            let e = [...m.values()].filter(E => !E.author.bot && E.content)
+
+            if (!a[2]) return;
+
+            if (a[0].content.toLowerCase() === a[1].content.toLowerCase() && a[1].content.toLowerCase() === a[2].content.toLowerCase() &&
+                e[0].author.id !== e[1].author.id && e[1].author.id !== e[2].author.id && e[0].author.id !== e[2].author.id) {
+                msg.channel.send(a[2].content).catch(error => { });
+            };
+        });
     }
 
     function embedResponse(argumentoDeLaDescripcion, opcion) {
@@ -2043,6 +2057,7 @@ client.on('message', async (m) => {
                 .setTimestamp()
         }).catch(error => { enviarError(error, message.author) });
     }
+
 
 })
 
