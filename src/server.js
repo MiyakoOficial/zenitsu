@@ -1352,7 +1352,7 @@ client.on('message', async (message) => {
 
             await Promise.all(p);
 
-            msg.edit({ embed: embed }).then(a => { a.delete({ timeout: 5000 }) })
+            msg.edit({ embed: embed }).then(a => { a.delete({ timeout: 5000 }) }).catch(err => { })
             //message.delete({ timeout: 5000 }).catch(err => { });
         }).catch(err => { });
 
@@ -1417,7 +1417,7 @@ client.on('message', async (message) => {
 
             await Promise.all(p);
 
-            msg.edit({ embed: embed }).then(a => { a.delete({ timeout: 5000 }) })
+            msg.edit({ embed: embed }).then(a => { a.delete({ timeout: 5000 }) }).catch(err => { })
             //message.delete({ timeout: 5000 }).catch(err => { });
         }).catch(err => { });
 
@@ -2217,7 +2217,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
 
             await Promise.all(p);
 
-            msg.edit({ embed: embed }).then(a => { a.delete({ timeout: 5000 }) })
+            msg.edit({ embed: embed }).then(a => { a.delete({ timeout: 5000 }) }).catch(err => { })
             //message.delete({ timeout: 5000 }).catch(err => { });
         }).catch(err => { });
         //mute
@@ -2276,7 +2276,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
 
             await Promise.all(p);
 
-            msg.edit({ embed: embed }).then(a => { a.delete({ timeout: 5000 }) })
+            msg.edit({ embed: embed }).then(a => { a.delete({ timeout: 5000 }) }).catch(err => { })
             //message.delete({ timeout: 5000 }).catch(err => { });
         }).catch(err => { });
 
