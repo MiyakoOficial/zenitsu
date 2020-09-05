@@ -2032,7 +2032,7 @@ client.on('message', async (m) => {
             }).catch(err => { enviarError(err, message.author) });
         }
         //fin de unmuteall
-        return;
+        //return;
     } else {
         if (msg.channel.type !== 'text') return;
         msg.channel.messages.fetch({ limit: 3 }).then(m => {
