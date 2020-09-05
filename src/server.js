@@ -1506,7 +1506,8 @@ client.on('messageUpdate', async (oldMessage, newMessage) => {
 });
 
 client.on('messageDelete', async (message) => {
-    if (!message) return
+    if (!message) return;
+    if (!message.author) return;
     if (message.author.bot) return;
     if (message.channel.type === 'dm') return;
     if (!message.content) return;
