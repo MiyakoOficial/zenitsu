@@ -2193,7 +2193,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
         await reaction.remove(user).catch(a => { })
     }
 
-    if (emoji.id === '712676290750054481') {
+    else if (emoji.id === '712676290750054481') {
         let canalVoz = member.voice.channel;
 
         if (!canalVoz) return embedResponse('Tienes que estar en un canal de voz!').catch(err => { });
