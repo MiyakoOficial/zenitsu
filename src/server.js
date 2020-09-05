@@ -1940,12 +1940,12 @@ client.on('message', async (m) => {
     let msg = m;
     if (message.channel.name === 'among-us-manager') {
 
-        if (cooldownAmong.has(m.author.id)) {
-            return embedResponse('Estas en cooldown de 5s!')
-        }
-
         //inicio de muteall
         if (message.content === 'muteall') {
+
+            if (cooldownAmong.has(m.author.id)) {
+                return embedResponse('Estas en cooldown de 5s!')
+            }
 
             let canalVoz = message.member.voice.channel;
 
@@ -1990,11 +1990,21 @@ client.on('message', async (m) => {
                 msg.delete({ timeout: 5000 })
                 //message.delete({ timeout: 5000 }).catch(err => { });
             }).catch(err => { enviarError(err, message.author) });
+
+            cooldownAmong.add(m.author.id);
+            setTimeout(() => {
+                cooldownAmong.delete(m.author.id);
+            }, ms('5s'));
+
         }
         //fin de muteall
 
         //inicio de unmuteall
         if (message.content === 'unmuteall') {
+
+            if (cooldownAmong.has(m.author.id)) {
+                return embedResponse('Estas en cooldown de 5s!')
+            }
 
             let canalVoz = message.member.voice.channel;
 
@@ -2035,12 +2045,14 @@ client.on('message', async (m) => {
                 msg.delete({ timeout: 5000 })
                 //message.delete({ timeout: 5000 }).catch(err => { });
             }).catch(err => { enviarError(err, message.author) });
+
+            cooldownAmong.add(m.author.id);
+            setTimeout(() => {
+                cooldownAmong.delete(m.author.id);
+            }, ms('5s'));
+
         }
         //fin de unmuteall
-        cooldownAmong.add(m.author.id);
-        setTimeout(() => {
-            cooldownAmong.delete(m.author.id);
-        }, ms('5s'));
     } else {
         if (msg.channel.type !== 'text') return;
         msg.channel.messages.fetch({ limit: 3 }).then(m => {
