@@ -1375,7 +1375,6 @@ client.on('message', async (message) => {
             .catch(err => { enviarError(err, message.author) });
 
         if (!message.guild.me.hasPermission('MANAGE_CHANNELS') || !message.member.voice.channel.permissionsFor(message.client.user).has("MANAGE_CHANNELS")) return embedResponse('Tengo que tener el permiso `MANAGE_CHANNELS`!')
-            .catch(err => { enviarError(err, message.author) });
 
         if (canalVoz.userLimit < 11) {
             canalVoz.edit({ userLimit: 11 }).catch(err => { })
@@ -2194,10 +2193,10 @@ client.on('messageReactionAdd', async (reaction, user) => {
 
         if (!canalVoz) return embedResponse('Tienes que estar en un canal de voz!').catch(err => { });
 
-        if (!canalVoz.name === 'Among Us') return embedResponse('Tienes que estar en el canal llamado: `Among Us`').catch(a => { })
+        if (!canalVoz.name === 'Among Us') return embedResponse('Tienes que estar en el canal llamado: `Among Us`')
             .catch(err => { });
 
-        if (!message.guild.me.hasPermission('MANAGE_CHANNELS') || !message.member.voice.channel.permissionsFor(message.client.user).has("MANAGE_CHANNELS")) return embedResponse('Tengo que tener el permiso `MANAGE_CHANNELS`!').catch(a => { })
+        if (!message.guild.me.hasPermission('MANAGE_CHANNELS') || !message.member.voice.channel.permissionsFor(message.client.user).has("MANAGE_CHANNELS")) return embedResponse('Tengo que tener el permiso `MANAGE_CHANNELS`!')
             .catch(err => { });
 
         if (canalVoz.userLimit < 11) {
@@ -2206,10 +2205,10 @@ client.on('messageReactionAdd', async (reaction, user) => {
 
         let rol = message.guild.roles.cache.find(a => a.name === 'Among Us manager');
 
-        if (!rol || !message.member.roles.cache.has(rol.id)) return embedResponse('Tienes que tener el rol llamado: `Among Us manager`!').catch(a => { })
+        if (!rol || !message.member.roles.cache.has(rol.id)) return embedResponse('Tienes que tener el rol llamado: `Among Us manager`!')
             .catch(err => { });
 
-        if (!message.guild.me.hasPermission('MUTE_MEMBERS') || !message.member.voice.channel.permissionsFor(message.client.user).has("MUTE_MEMBERS")) return embedResponse('Tengo que tener el permiso `MUTE_MEMBERS`!').catch(a => { })
+        if (!message.guild.me.hasPermission('MUTE_MEMBERS') || !message.member.voice.channel.permissionsFor(message.client.user).has("MUTE_MEMBERS")) return embedResponse('Tengo que tener el permiso `MUTE_MEMBERS`!')
             .catch(err => { });
 
         if (canalVoz.members.size > 15) return embedResponse('Hay más de 15 miembros en el canal!')
@@ -2234,5 +2233,11 @@ client.on('messageReactionAdd', async (reaction, user) => {
     }
 
 
-
+    function embedResponse(d) {
+        let embed = new Discord.MessageEmbed()
+            .setDescription(d)
+            .setTimestamp()
+            .setColor(color)
+        message.channel.send({ embed: embed })
+    }
 });
