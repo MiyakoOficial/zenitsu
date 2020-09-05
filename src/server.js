@@ -7,7 +7,7 @@ const Canvas = require('canvas');
 const jimp = require('jimp');
 require('dotenv').config();
 const Discord = require('discord.js');
-const client = new Discord.Client();
+const client = new Discord.Client({ partials: ["MESSAGE", "REACTION"] });
 const search = require('youtube-search')
 const mongoose = require('mongoose');
 client.databaseVersion = mongoose.version;
