@@ -2238,6 +2238,6 @@ client.on('messageReactionAdd', async (reaction, user) => {
             .setDescription(d)
             .setTimestamp()
             .setColor(color)
-        message.channel.send({ embed: embed })
+        return message.channel.send({ embed: embed })
     }
 });
