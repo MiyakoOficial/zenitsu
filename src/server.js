@@ -2145,8 +2145,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
 
     if (!role || !member.roles.cache.has(role.id)) return;
 
-    if (message.id !== idMessage) return console.log('No es igual')
-    else { console.log('ES igual') }
+    if (message.id === idMessage) return;
 
     if (emoji.id === '712634779836612648') {
         let canalVoz = member.voice.channel;
