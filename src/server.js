@@ -2107,6 +2107,7 @@ async function messageS(id) {
 }
 
 client.on('messageReactionAdd', (reaction, user) => {
+    console.log('xd')
     if (!reaction.message.channel.guild) return;
     if (user.bot) return;
     let message = reaction.message;
@@ -2114,6 +2115,7 @@ client.on('messageReactionAdd', (reaction, user) => {
     let channel = message.channel;
     let emoji = reaction.emoji;
     let member = guild.member(user);
+    console.log('xd')
 
     //if (!emoji.id) return;
 
@@ -2121,9 +2123,13 @@ client.on('messageReactionAdd', (reaction, user) => {
 
     if (!idMessage || idMessage === 'id') return;
 
+    console.log('xd')
+
     let role = guild.roles.cache.find(a => a.name === 'Among Us manager')
 
     if (!role || !member.roles.cache.has(role.id)) return;
+
+    console.log('xd')
 
     if (message.id !== idMessage) return console.log('No es igual')
     else { console.log('ES igual') }
