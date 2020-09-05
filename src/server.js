@@ -1933,11 +1933,14 @@ client.on('guildMemberUpdate', async (oldUser, newUser) => {
         };
     });
 });*/
-
+let cooldownAmong = new Set()
 client.on('message', async (m) => {
     if (m.author.bot) return;
     let message = m;
     let msg = m;
+    if (cooldownAmong.has(m.author.id)) {
+        return embedResponse('Estas en cooldown de 5s!')
+    }
     if (message.channel.name === 'among-us-manager') {
 
         //inicio de muteall
@@ -2033,7 +2036,10 @@ client.on('message', async (m) => {
             }).catch(err => { enviarError(err, message.author) });
         }
         //fin de unmuteall
-        //return;
+        cooldownAmong.add(m.author.id);
+        setTimeout(() => {
+            cooldownAmong.delete(m.author.id);
+        }, ms('5s'));
     } else {
         if (msg.channel.type !== 'text') return;
         msg.channel.messages.fetch({ limit: 3 }).then(m => {
