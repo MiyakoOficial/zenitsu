@@ -1997,17 +1997,19 @@ client.on('message', async (m) => {
                 a.voice.setMute(true).catch(err => { })
             });
 
-            embedResponse('<a:cargando:650442822083674112> En proceso!').then(msg => {
-                msg.delete({ timeout: 5000 })
-                //message.delete({ timeout: 5000 }).catch(err => { });
-            }).catch(err => { enviarError(err, message.author) });
+            embedResponse('<a:cargando:650442822083674112> En proceso!').then(async (msg) => {
+                //msg.delete({ timeout: 5000 })
+                let embed = new Discord.MessageEmbed()
+                    .setColor(color)
+                    .setTimestamp()
+                    .setDescription('Listo!')
 
-            await Promise.all(p);
+                await Promise.all(p);
 
-            embedResponse('Listo!').then(msg => {
-                msg.delete({ timeout: 5000 })
+                msg.edit({ embed: embed }).then(a => { a.delete({ timeout: 5000 }) })
                 //message.delete({ timeout: 5000 }).catch(err => { });
-            }).catch(err => { enviarError(err, message.author) });
+            }).catch(err => { });
+
 
             cooldownAmong.add(m.author.id);
             setTimeout(() => {
@@ -2052,17 +2054,19 @@ client.on('message', async (m) => {
             let p = canalVoz.members.map(a => {
                 a.voice.setMute(false).catch(err => { })
             });
+            embedResponse('<a:cargando:650442822083674112> En proceso!').then(async (msg) => {
+                //msg.delete({ timeout: 5000 })
+                let embed = new Discord.MessageEmbed()
+                    .setColor(color)
+                    .setTimestamp()
+                    .setDescription('Listo!')
 
-            embedResponse('<a:cargando:650442822083674112> En proceso!').then(msg => {
-                msg.delete({ timeout: 5000 })
-                //message.delete({ timeout: 5000 }).catch(err => { });
-            }).catch(err => { enviarError(err, message.author) });
-            await Promise.all(p);
+                await Promise.all(p);
 
-            embedResponse('Listo!').then(msg => {
-                msg.delete({ timeout: 5000 })
+                msg.edit({ embed: embed }).then(a => { a.delete({ timeout: 5000 }) })
                 //message.delete({ timeout: 5000 }).catch(err => { });
-            }).catch(err => { enviarError(err, message.author) });
+            }).catch(err => { });
+
 
             cooldownAmong.add(m.author.id);
             setTimeout(() => {
@@ -2132,6 +2136,8 @@ async function messageSS(id, canal) {
     })
 }
 
+let cooldownR = new Set()
+
 client.on('messageReactionAdd', async (reaction, user) => {
     //console.log('xd')
     if (!reaction.message.channel.guild) return;
@@ -2155,6 +2161,11 @@ client.on('messageReactionAdd', async (reaction, user) => {
     //console.log(member.voice.channel)
 
     if (emoji.id === '712634779836612648') {
+
+        if (cooldownR.has(user.id)) {
+            return embedResponse('Estas en cooldown de 5s!').catch(a => { })
+        }
+
         let canalVoz = member.voice.channel;
 
         if (!canalVoz) return embedResponse('Tienes que estar en un canal de voz!').catch(err => { });
@@ -2184,6 +2195,11 @@ client.on('messageReactionAdd', async (reaction, user) => {
             a.voice.setMute(true).catch(err => { })
         });
 
+        cooldownR.add(user.id);
+        setTimeout(() => {
+            cooldownR.delete(user.id)
+        }, ms('5s'))
+
         embedResponse('<a:cargando:650442822083674112> En proceso!').then(async (msg) => {
             //msg.delete({ timeout: 5000 })
             let embed = new Discord.MessageEmbed()
@@ -2201,6 +2217,10 @@ client.on('messageReactionAdd', async (reaction, user) => {
     }
 
     else if (emoji.id === '712676290750054481') {
+
+        if (cooldownR.has(user.id)) {
+            return embedResponse('Estas en cooldown de 5s!').catch(a => { })
+        }
         let canalVoz = member.voice.channel;
 
         if (!canalVoz) return embedResponse('Tienes que estar en un canal de voz!').catch(err => { });
@@ -2229,6 +2249,12 @@ client.on('messageReactionAdd', async (reaction, user) => {
         let p = canalVoz.members.map(a => {
             a.voice.setMute(false).catch(err => { })
         });
+
+        cooldownR.add(user.id);
+        setTimeout(() => {
+            cooldownR.delete(user.id)
+        }, ms('5s'))
+
 
         embedResponse('<a:cargando:650442822083674112> En proceso!').then(async (msg) => {
             //msg.delete({ timeout: 5000 })
