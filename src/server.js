@@ -2154,7 +2154,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
 
         if (!canalVoz) return embedResponse('Tienes que estar en un canal de voz!').catch(err => { });
 
-        if (!canalVoz.name === 'Among Us') return embedResponse('Tienes que estar en el canal llamado: `Among Us`')
+        if (canalVoz.name !== 'Among Us') return embedResponse('Tienes que estar en el canal llamado: `Among Us`')
             .catch(err => { });
 
         if (!message.guild.me.hasPermission('MANAGE_CHANNELS') || !member.voice.channel.permissionsFor(client.user).has("MANAGE_CHANNELS")) return embedResponse('Tengo que tener el permiso `MANAGE_CHANNELS`!')
@@ -2198,7 +2198,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
 
         if (!canalVoz) return embedResponse('Tienes que estar en un canal de voz!').catch(err => { });
 
-        if (!canalVoz.name === 'Among Us') return embedResponse('Tienes que estar en el canal llamado: `Among Us`')
+        if (canalVoz.name !== 'Among Us') return embedResponse('Tienes que estar en el canal llamado: `Among Us`')
             .catch(err => { });
 
         if (!message.guild.me.hasPermission('MANAGE_CHANNELS') || !member.voice.channel.permissionsFor(client.user).has("MANAGE_CHANNELS")) return embedResponse('Tengo que tener el permiso `MANAGE_CHANNELS`!')
