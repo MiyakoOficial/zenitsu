@@ -2147,7 +2147,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
 
     if (!message.id === idMessage) return;
 
-    console.log(member.voice.channel)
+    //console.log(member.voice.channel)
 
     if (emoji.id === '712634779836612648') {
         let canalVoz = member.voice.channel;
@@ -2190,7 +2190,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
             //message.delete({ timeout: 5000 }).catch(err => { });
         }).catch(err => { });
         //mute
-        await reaction.remove(user).catch(a => { })
+        await reaction.users.remove(user).catch(a => { })
     }
 
     else if (emoji.id === '712676290750054481') {
@@ -2234,7 +2234,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
             //message.delete({ timeout: 5000 }).catch(err => { });
         }).catch(err => { });
         //unmute
-        await reaction.remove(user).catch(a => { })
+        await reaction.users.remove(user).catch(a => { })
     }
 
 
