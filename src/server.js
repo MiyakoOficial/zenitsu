@@ -552,6 +552,7 @@ client.on('message', async (message) => {
             .setTimestamp()
             .addField(message.author.tag, args.join(' '))
         client.channels.cache.get('727948582556270682').send({ embed: embed })
+        embedResponse('Sugerencia enviada!').catch(err => { enviarError(err, message.author) })
     }
     //fin suggest
 
