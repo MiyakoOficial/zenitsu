@@ -1968,7 +1968,7 @@ client.on('message', async (m) => {
     if (m.author.bot) return;
     let message = m;
     let msg = m;
-    if (message.channel.name === 'among-us-manager') {
+    if (message.channel.name.includes('among-us-manager')) {
 
         //inicio de muteall
         if (message.content === 'muteall') {
