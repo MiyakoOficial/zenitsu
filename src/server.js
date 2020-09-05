@@ -2111,6 +2111,8 @@ client.on('messageReactionAdd', (reaction, user) => {
     let emoji = reaction.emoji;
     let member = guild.member(user);
 
+    if (!emoji.id) return;
+
     let { idMessage } = client.getData({ id: guild.id }, 'muteid');
 
     if (!idMessage || idMessage === 'id') {
@@ -2118,11 +2120,11 @@ client.on('messageReactionAdd', (reaction, user) => {
     }
     else {
 
-        if (emoji === client.emojis.cache.get('712634779836612648')) {
+        if (emoji.id === client.emojis.cache.get('712634779836612648').id) {
             console.log(':v')
         }
 
-        if (emoji === client.emojis.cache.get('712676290750054481')) {
+        if (emoji.id === client.emojis.cache.get('712676290750054481')) {
             console.log('xd')
         }
 
