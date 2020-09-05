@@ -2125,14 +2125,16 @@ client.on('messageReactionAdd', (reaction, user) => {
 
     if (!role || member.roles.cache.has(role.id)) return;
 
+    if (message.id !== idMessage) return;
+
     if (emoji.id === '712634779836612648') {
         //mute
-        reaction.remove(message.author)
+        reaction.remove(user)
     }
 
     if (emoji.id === '712676290750054481') {
         //unmute
-        reaction.remove(message.author)
+        reaction.remove(user)
     }
 
 
