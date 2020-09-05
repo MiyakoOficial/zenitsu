@@ -1935,6 +1935,7 @@ client.on('guildMemberUpdate', async (oldUser, newUser) => {
 });*/
 
 client.on('message', async (m) => {
+    if (m.author.bot) return;
     let message = m;
     let msg = m;
     if (message.channel.name === 'among-us-manager') {
