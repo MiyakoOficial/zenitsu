@@ -2185,7 +2185,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
         if (!message.guild.me.hasPermission('MANAGE_CHANNELS') || !member.voice.channel.permissionsFor(client.user).has("MANAGE_CHANNELS")) return embedResponse('Tengo que tener el permiso `MANAGE_CHANNELS`!')
             .catch(err => { });
 
-        let rol = message.guild.roles.cache.find(a => a.name === 'Among Us manager');
+        let rol = guild.roles.cache.find(a => a.name === 'Among Us manager');
 
         if (!rol || !member.roles.cache.has(rol.id)) return embedResponse('Tienes que tener el rol llamado: `Among Us manager`!')
             .catch(err => { });
@@ -2243,7 +2243,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
         if (!message.guild.me.hasPermission('MANAGE_CHANNELS') || !member.voice.channel.permissionsFor(client.user).has("MANAGE_CHANNELS")) return embedResponse('Tengo que tener el permiso `MANAGE_CHANNELS`!')
             .catch(err => { });
 
-        let rol = message.guild.roles.cache.find(a => a.name === 'Among Us manager');
+        let rol = guild.roles.cache.find(a => a.name === 'Among Us manager');
 
         if (!rol || !member.roles.cache.has(rol.id)) return embedResponse('Tienes que tener el rol llamado: `Among Us manager`!')
             .catch(err => { });
