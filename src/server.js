@@ -2115,10 +2115,10 @@ client.on('messageReactionAdd', (reaction, user) => {
 
     let { idMessage } = client.getData({ id: guild.id }, 'muteid');
 
-    if (!idMessage || idMessage === 'id') {
+    /*if (!idMessage || idMessage === 'id') {
         return;
-    }
-    else {
+    }*/
+    if (true) {
 
         if (emoji.id === '712634779836612648') {
             console.log(':v')
