@@ -1368,8 +1368,8 @@ client.on('message', async (message) => {
         if (messageSS(args[0], canal) === false) return embedResponse('No encontre el mensaje!\nUse: ' + prefix + 'setmessageid <id> <#mencion>')
         client.updateData({ id: message.guild.id }, { idMessage: args[0] }, 'muteid');
         canal.messages.fetch(args[0]).then(async (a) => {
-            await a.react('712634779836612648')
-            await a.react('712676290750054481')
+            await a.react('751908729930121376')
+            await a.react('751908729624068226')
         })
         return embedResponse('Establecido en: <#' + canal.id + '>');
     }
@@ -2168,7 +2168,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
 
     //console.log(member.voice.channel)
 
-    if (emoji.id === '712634779836612648') {
+    if (emoji.id === '751908729930121376') {
 
         if (cooldownR.has(user.id)) {
             return embedResponse('Estas en cooldown de 5s!').catch(a => { })
@@ -2227,7 +2227,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
         await reaction.users.remove(user).catch(a => { })
     }
 
-    else if (emoji.id === '712676290750054481') {
+    else if (emoji.id === '751908729624068226') {
 
         if (cooldownR.has(user.id)) {
             return embedResponse('Estas en cooldown de 5s!').catch(a => { })
