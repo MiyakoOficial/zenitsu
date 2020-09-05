@@ -2161,8 +2161,6 @@ client.on('messageReactionAdd', async (reaction, user) => {
 
     if (!idMessage || idMessage === 'id') return;
 
-    let role = guild.roles.cache.find(a => a.name === 'Among Us manager')
-
     if (!message.id === idMessage) return;
 
     //console.log(member.voice.channel)
