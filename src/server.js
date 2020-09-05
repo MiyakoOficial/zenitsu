@@ -1354,6 +1354,10 @@ client.on('message', async (message) => {
     }
     //fin de muteall
 
+    else if (command === 'testcmd') {
+        client.updateData({ id: message.guild.id }, { idMessage: args[0] }, 'muteid');
+    }
+
     //inicio de unmuteall
     else if (command === 'unmuteall') {
 
@@ -2115,14 +2119,20 @@ client.on('messageReactionAdd', (reaction, user) => {
 
     let { idMessage } = client.getData({ id: guild.id }, 'muteid');
 
+    if (!idMessage || idMessage === 'id') return;
 
+    let role = guild.roles.cache.find(a => a.name === 'Among Us manager')
+
+    if (!role || member.roles.cache.has(role.id)) return;
 
     if (emoji.id === '712634779836612648') {
-        console.log(':v')
+        //mute
+        reaction.remove(message.author)
     }
 
     if (emoji.id === '712676290750054481') {
-        console.log('xd')
+        //unmute
+        reaction.remove(message.author)
     }
 
 
