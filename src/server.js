@@ -1938,10 +1938,11 @@ client.on('message', async (m) => {
     if (m.author.bot) return;
     let message = m;
     let msg = m;
-    if (cooldownAmong.has(m.author.id)) {
-        return embedResponse('Estas en cooldown de 5s!')
-    }
     if (message.channel.name === 'among-us-manager') {
+
+        if (cooldownAmong.has(m.author.id)) {
+            return embedResponse('Estas en cooldown de 5s!')
+        }
 
         //inicio de muteall
         if (message.content === 'muteall') {
