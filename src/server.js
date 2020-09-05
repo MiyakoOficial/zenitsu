@@ -2293,6 +2293,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
             .setDescription(d)
             .setTimestamp()
             .setColor(color)
-        return message.channel.send({ embed: embed })
+        return user.send({ embed: embed })
+            .catch(err => { })
     }
 });
