@@ -2120,11 +2120,11 @@ client.on('messageReactionAdd', (reaction, user) => {
     }
     else {
 
-        if (emoji.id === client.emojis.cache.get('712634779836612648').id) {
+        if (emoji.id === '712634779836612648') {
             console.log(':v')
         }
 
-        if (emoji.id === client.emojis.cache.get('712676290750054481')) {
+        if (emoji.id === '712676290750054481') {
             console.log('xd')
         }
 
