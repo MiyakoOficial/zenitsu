@@ -1200,17 +1200,17 @@ client.on('message', async (message) => {
     //inicio de gchat
     else if (command === 'gchat') {
 
-        if (cooldown.has(`chat`)) {
+        if (cooldown.has(`${message.guild.id}_gchat`)) {
 
-            return embedResponse(mal + " Este comando tiene un cooldown de 3s global!").catch(err => { enviarError(err, message.author) });
+            return embedResponse(mal + " Este comando tiene un cooldown de 3s global!(Por servidor)").catch(err => { enviarError(err, message.author) });
 
         }
 
         else {
 
-            cooldown.add(`chat`);
+            cooldown.add(`${message.guild.id}_gchat`);
             setTimeout(() => {
-                cooldown.delete(`chat`);
+                cooldown.delete(`${message.guild.id}_gchat`);
             }, ms('3s'));
 
         };
