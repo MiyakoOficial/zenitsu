@@ -899,7 +899,7 @@ client.on('message', async (message) => {
             });
         });
 
-        const songURL = results.link;
+        const songURL = result.link;
         let songInfo;
         try {
             songInfo = await ytdl.getInfo(songURL);
