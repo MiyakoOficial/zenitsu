@@ -2365,7 +2365,7 @@ function among(mensaje, member, canalVoz, canalText, bol) {
         message.guild.roles.create({ data: { name: 'Among Us manager' } }).catch(err => { });
     }
 
-    if (!rol || !message.member.roles.cache.has(rol.id)) return embedResponse('Tienes que tener el rol llamado: `Among Us manager`!', canalText)
+    if (!rol || !member.roles.cache.has(rol.id)) return embedResponse('Tienes que tener el rol llamado: `Among Us manager`!', canalText)
         .catch(err => { });
 
     if (!message.guild.me.hasPermission('MUTE_MEMBERS') || !member.voice.channel.permissionsFor(client.user).has("MUTE_MEMBERS")) return embedResponse('Tengo que tener el permiso `MUTE_MEMBERS`!', canalText)
