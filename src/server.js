@@ -2332,7 +2332,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
             //message.delete({ timeout: 5000 }).catch(err => { });
         }).catch(err => { });
 */
-        await among(member, canalVoz, user, true)
+        await among(user, canalVoz, user, true)
         await reaction.users.remove(user).catch(a => { })
     }
 
