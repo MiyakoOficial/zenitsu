@@ -893,7 +893,7 @@ client.on('message', async (message) => {
             type: "video"
         };
 
-        let result = new Promise(async (resolve, reject)=> {
+        let result = await new Promise(async (resolve, reject) => {
             await search(args.join(' '), opts, function (err, results) {
                 resolve(results[0]);
             });
