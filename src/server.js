@@ -889,15 +889,11 @@ client.on('message', async (message) => {
 
         const opts = {
             maxResults: 1,
-            key: process.env.YOUTUBEKEY,
+            key: process.env.APIKEY,
             type: "video"
         };
 
-        let result = await new Promise(async (resolve, reject) => {
-            await search(args.join(' '), opts, function (err, results) {
-                resolve(results[0]);
-            });
-        });
+        let result = await search(args.join(' '), opts)[0]
 
         const songURL = result.link;
         let songInfo;
