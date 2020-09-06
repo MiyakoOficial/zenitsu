@@ -931,7 +931,7 @@ client.on('message', async (message) => {
                 queue.delete(message.guild.id)
                 return message.channel.send('Error: ' + err).catch(error => { enviarError(error, message.author) });
             }
-            embedResponse(`Reproduciendo: [${song.title}](${song.url}) - ${song.time}`).catch(error => { enviarError(error, message.author) });
+            embedResponse(`Reproduciendo: [${song.title}](${song.url}) - ${song.time} - ${song.author.toString()}`).catch(error => { enviarError(error, message.author) });
         }
 
         else {
@@ -942,7 +942,7 @@ client.on('message', async (message) => {
                 if (message.member.voice.channel.id !== message.guild.me.voice.channel.id) return embedResponse('Tienes que estar en el mismo canal de voz para agregar una canción!').catch(error => { enviarError(error, message.author) });
                 if (serverQueue.songs.length >= 15) return embedResponse('La cola ya tiene 15 canciones!').catch(error => { enviarError(error, message.author) });
                 serverQueue.songs.push(song)
-                embedResponse(`Añadiendo a la cola: [${song.title}](${song.url}) - ${song.time}`).catch(error => { enviarError(error, message.author) });
+                embedResponse(`Añadiendo a la cola: [${song.title}](${song.url}) - ${song.time} - ${song.author.toString()}`).catch(error => { enviarError(error, message.author) });
             }
         }
         //debugger
@@ -963,7 +963,7 @@ client.on('message', async (message) => {
             .setDescription(`
         Canciones en cola:
 
-        ${serverQueue.songs.map(a => `[${a.title}](${a.url}) - ${a.time}`).join('\n')}
+        ${serverQueue.songs.map(a => `[${a.title}](${a.url}) - ${a.time} - ${a.author.toString()}`).join('\n')}
        
         
         Total: ${serverQueue.songs.length} / 15
@@ -1011,7 +1011,7 @@ client.on('message', async (message) => {
         else {
             if (message.member.voice.channel.id !== message.guild.me.voice.channel.id) return embedResponse('Tienes que estar en el mismo canal de voz para saber la canción que se esta reproduciendo!').catch(error => { enviarError(error, message.author) });
 
-            return embedResponse(`Reproduciendo ahora: [${serverQueue.songs[0].title}](${serverQueue.songs[0].url}) - ${serverQueue.songs[0].time}`)
+            return embedResponse(`Reproduciendo ahora: [${serverQueue.songs[0].title}](${serverQueue.songs[0].url}) - ${serverQueue.songs[0].time} - ${serverQueue.songs[0].author.toString()}`)
                 .catch(error => { enviarError(error, message.author) });
         }
     }
@@ -1487,7 +1487,7 @@ function play(guild, song) {
                 //console.log(serverQueue.songs)
                 play(guild, serverQueue.songs[0]);
                 if (!serverQueue.songs[0]) return;
-                embedMusic(`Reproduciendo: [${serverQueue.songs[0].title}](${serverQueue.songs[0].url}) - ${serverQueue.songs[0].time}`, serverQueue.textChannel)
+                embedMusic(`Reproduciendo: [${serverQueue.songs[0].title}](${serverQueue.songs[0].url}) - ${serverQueue.songs[0].time} - ${serverQueue.songs[0].author.toString()}`, serverQueue.textChannel)
             })
             .on('error', error => {
                 serverQueue.textChannel.send(`Error:\n${error}`)
