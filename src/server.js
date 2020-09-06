@@ -940,6 +940,7 @@ client.on('message', async (message) => {
                 embedResponse(`Añadiendo a la cola: [${song.title}](${song.url}) - ${song.time}`).catch(error => { enviarError(error, message.author) });
             }
         }
+        //debugger
     }
     //fin de play
 
