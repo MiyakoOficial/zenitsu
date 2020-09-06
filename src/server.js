@@ -2269,7 +2269,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
             //message.delete({ timeout: 5000 }).catch(err => { });
         }).catch(err => { });*/
         //mute
-        await among(member, canalVoz, user, true)
+        await among(reaction.message, canalVoz, user, true)
         await reaction.users.remove(user).catch(a => { })
     }
 
