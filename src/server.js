@@ -907,9 +907,9 @@ client.on('message', async (message) => {
         if (!result || !songInfo) return embedResponse('Ups, no he encontrado esa música, intenta de nuevo!').catch(error => { enviarError(error, message.author) });
 
         let song = {
-            title: songInfo.title,
-            url: songInfo.video_url,
-            time: duration(songInfo.length_seconds),
+            title: songInfo.videoDetails.title,
+            url: songInfo.videoDetails.video_url,
+            time: duration(songInfo.videoDetails.lengthSeconds),
             author: message.author
         }
         if (!serverQueue) {
