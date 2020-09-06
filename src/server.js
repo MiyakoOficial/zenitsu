@@ -2212,62 +2212,62 @@ client.on('messageReactionAdd', async (reaction, user) => {
 
     if (emoji.id === '751908729624068226') {
 
-        /* if (cooldownR.has(user.id)) {
-             return embedResponse('Estas en cooldown de 5s!').catch(a => { })
-         }
- 
-         let canalVoz = member.voice.channel;
- 
-         if (!canalVoz) return embedResponse('Tienes que estar en un canal de voz!').catch(err => { });
- 
-         if (!canalVoz.name.includes('Among Us')) return embedResponse('Tienes que estar en el canal llamado: `Among Us`')
-             .catch(err => { });
- 
-         if (!message.guild.me.hasPermission('MANAGE_CHANNELS') || !member.voice.channel.permissionsFor(client.user).has("MANAGE_CHANNELS")) return embedResponse('Tengo que tener el permiso `MANAGE_CHANNELS`!')
-             .catch(err => { });
- 
-         let rol = guild.roles.cache.find(a => a.name === 'Among Us manager');
- 
-         if (!rol || !member.roles.cache.has(rol.id)) return embedResponse('Tienes que tener el rol llamado: `Among Us manager`!')
-             .catch(err => { });
- 
-         if (!message.guild.me.hasPermission('MUTE_MEMBERS') || !member.voice.channel.permissionsFor(client.user).has("MUTE_MEMBERS")) return embedResponse('Tengo que tener el permiso `MUTE_MEMBERS`!')
-             .catch(err => { });
- 
-         if (!message.guild.me.hasPermission('MANAGE_MESSAGES') || !member.voice.channel.permissionsFor(client.user).has("MANAGE_MESSAGES")) return embedResponse('Tengo que tener el permiso `MANAGE_MESSAGES`!')
-             .catch(err => { });
- 
-         if (canalVoz.userLimit < 10) {
-             canalVoz.edit({ userLimit: 10 }).catch(err => { })
-         }
-         else {
-             canalVoz.edit({ userLimit: 10 }).catch(err => { })
-         }
- 
-         if (canalVoz.members.size > 15) return embedResponse('Hay más de 15 miembros en el canal!')
-             .catch(err => { });
- 
-         let p = canalVoz.members.map(a => {
-             a.voice.setMute(true).catch(err => { })
-         });
- 
-         cooldownR.add(user.id);
-         setTimeout(() => {
-             cooldownR.delete(user.id)
-         }, ms('5s'))
- 
-         embedResponse('<a:cargando:650442822083674112> En proceso!').then(async (msg) => {
-             //msg.delete({ timeout: 5000 })
-             let embed = new Discord.MessageEmbed()
-                 .setColor(color)
-                 .setTimestamp()
-                 .setDescription('Listo!')
- 
-             await Promise.all(p);
- 
-             msg.edit({ embed: embed }).then(a => { a.delete({ timeout: 5000 }) }).catch(err => { })
-             //message.delete({ timeout: 5000 }).catch(err => { });
-         }).catch(err => { });*/
+        if (cooldownR.has(user.id)) {
+            return embedResponse('Estas en cooldown de 5s!').catch(a => { })
+        }
+
+        /*let canalVoz = member.voice.channel;
+     
+        if (!canalVoz) return embedResponse('Tienes que estar en un canal de voz!').catch(err => { });
+     
+        if (!canalVoz.name.includes('Among Us')) return embedResponse('Tienes que estar en el canal llamado: `Among Us`')
+            .catch(err => { });
+     
+        if (!message.guild.me.hasPermission('MANAGE_CHANNELS') || !member.voice.channel.permissionsFor(client.user).has("MANAGE_CHANNELS")) return embedResponse('Tengo que tener el permiso `MANAGE_CHANNELS`!')
+            .catch(err => { });
+     
+        let rol = guild.roles.cache.find(a => a.name === 'Among Us manager');
+     
+        if (!rol || !member.roles.cache.has(rol.id)) return embedResponse('Tienes que tener el rol llamado: `Among Us manager`!')
+            .catch(err => { });
+     
+        if (!message.guild.me.hasPermission('MUTE_MEMBERS') || !member.voice.channel.permissionsFor(client.user).has("MUTE_MEMBERS")) return embedResponse('Tengo que tener el permiso `MUTE_MEMBERS`!')
+            .catch(err => { });
+     
+        if (!message.guild.me.hasPermission('MANAGE_MESSAGES') || !member.voice.channel.permissionsFor(client.user).has("MANAGE_MESSAGES")) return embedResponse('Tengo que tener el permiso `MANAGE_MESSAGES`!')
+            .catch(err => { });
+     
+        if (canalVoz.userLimit < 10) {
+            canalVoz.edit({ userLimit: 10 }).catch(err => { })
+        }
+        else {
+            canalVoz.edit({ userLimit: 10 }).catch(err => { })
+        }
+     
+        if (canalVoz.members.size > 15) return embedResponse('Hay más de 15 miembros en el canal!')
+            .catch(err => { });
+     
+        let p = canalVoz.members.map(a => {
+            a.voice.setMute(true).catch(err => { })
+        });
+     
+        cooldownR.add(user.id);
+        setTimeout(() => {
+            cooldownR.delete(user.id)
+        }, ms('5s'))*/
+
+        /*embedResponse('<a:cargando:650442822083674112> En proceso!').then(async (msg) => {
+            //msg.delete({ timeout: 5000 })
+            let embed = new Discord.MessageEmbed()
+                .setColor(color)
+                .setTimestamp()
+                .setDescription('Listo!')
+     
+            await Promise.all(p);
+     
+            msg.edit({ embed: embed }).then(a => { a.delete({ timeout: 5000 }) }).catch(err => { })
+            //message.delete({ timeout: 5000 }).catch(err => { });
+        }).catch(err => { });*/
         //mute
         await among(member, canalVoz, user, true)
         await reaction.users.remove(user).catch(a => { })
@@ -2275,63 +2275,63 @@ client.on('messageReactionAdd', async (reaction, user) => {
 
     else if (emoji.id === '751908729930121376') {
 
-        /*if (cooldownR.has(user.id)) {
+        if (cooldownR.has(user.id)) {
             return embedResponse('Estas en cooldown de 5s!').catch(a => { })
         }
         let canalVoz = member.voice.channel;
-
-        if (!canalVoz) return embedResponse('Tienes que estar en un canal de voz!').catch(err => { });
-
-        if (!canalVoz.name.includes('Among Us')) return embedResponse('Tienes que estar en el canal llamado: `Among Us`')
-            .catch(err => { });
-
-        if (!message.guild.me.hasPermission('MANAGE_CHANNELS') || !member.voice.channel.permissionsFor(client.user).has("MANAGE_CHANNELS")) return embedResponse('Tengo que tener el permiso `MANAGE_CHANNELS`!')
-            .catch(err => { });
-
-        let rol = guild.roles.cache.find(a => a.name === 'Among Us manager');
-
-        if (!rol || !member.roles.cache.has(rol.id)) return embedResponse('Tienes que tener el rol llamado: `Among Us manager`!')
-            .catch(err => { });
-
-        if (!message.guild.me.hasPermission('MUTE_MEMBERS') || !member.voice.channel.permissionsFor(client.user).has("MUTE_MEMBERS")) return embedResponse('Tengo que tener el permiso `MUTE_MEMBERS`!')
-            .catch(err => { });
-
-        if (!message.guild.me.hasPermission('MANAGE_MESSAGES') || !member.voice.channel.permissionsFor(client.user).has("MANAGE_MESSAGES")) return embedResponse('Tengo que tener el permiso `MANAGE_MESSAGES`!')
-            .catch(err => { });
-
-        if (canalVoz.userLimit < 10) {
-            canalVoz.edit({ userLimit: 10 }).catch(err => { })
-        }
-        else {
-            canalVoz.edit({ userLimit: 10 }).catch(err => { })
-        }
-
-        if (canalVoz.members.size > 15) return embedResponse('Hay más de 15 miembros en el canal!')
-            .catch(err => { });
-
-        let p = canalVoz.members.map(a => {
-            a.voice.setMute(false).catch(err => { })
-        });
-
+        /*
+            if (!canalVoz) return embedResponse('Tienes que estar en un canal de voz!').catch(err => { });
+        
+            if (!canalVoz.name.includes('Among Us')) return embedResponse('Tienes que estar en el canal llamado: `Among Us`')
+                .catch(err => { });
+        
+            if (!message.guild.me.hasPermission('MANAGE_CHANNELS') || !member.voice.channel.permissionsFor(client.user).has("MANAGE_CHANNELS")) return embedResponse('Tengo que tener el permiso `MANAGE_CHANNELS`!')
+                .catch(err => { });
+        
+            let rol = guild.roles.cache.find(a => a.name === 'Among Us manager');
+        
+            if (!rol || !member.roles.cache.has(rol.id)) return embedResponse('Tienes que tener el rol llamado: `Among Us manager`!')
+                .catch(err => { });
+        
+            if (!message.guild.me.hasPermission('MUTE_MEMBERS') || !member.voice.channel.permissionsFor(client.user).has("MUTE_MEMBERS")) return embedResponse('Tengo que tener el permiso `MUTE_MEMBERS`!')
+                .catch(err => { });
+        
+            if (!message.guild.me.hasPermission('MANAGE_MESSAGES') || !member.voice.channel.permissionsFor(client.user).has("MANAGE_MESSAGES")) return embedResponse('Tengo que tener el permiso `MANAGE_MESSAGES`!')
+                .catch(err => { });
+        
+            if (canalVoz.userLimit < 10) {
+                canalVoz.edit({ userLimit: 10 }).catch(err => { })
+            }
+            else {
+                canalVoz.edit({ userLimit: 10 }).catch(err => { })
+            }
+        
+            if (canalVoz.members.size > 15) return embedResponse('Hay más de 15 miembros en el canal!')
+                .catch(err => { });
+        
+            let p = canalVoz.members.map(a => {
+                a.voice.setMute(false).catch(err => { })
+            });
+        */
         cooldownR.add(user.id);
         setTimeout(() => {
             cooldownR.delete(user.id)
         }, ms('5s'))
 
 
-        embedResponse('<a:cargando:650442822083674112> En proceso!').then(async (msg) => {
+        /*embedResponse('<a:cargando:650442822083674112> En proceso!').then(async (msg) => {
             //msg.delete({ timeout: 5000 })
             let embed = new Discord.MessageEmbed()
                 .setColor(color)
                 .setTimestamp()
                 .setDescription('Listo!')
-
+    
             await Promise.all(p);
-
+    
             msg.edit({ embed: embed }).then(a => { a.delete({ timeout: 5000 }) }).catch(err => { })
             //message.delete({ timeout: 5000 }).catch(err => { });
         }).catch(err => { });
-*/
+    */
         await among(user, canalVoz, user, true)
         await reaction.users.remove(user).catch(a => { })
     }
