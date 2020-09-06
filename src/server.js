@@ -1355,8 +1355,8 @@ client.on('message', async (message) => {
         if (!message.guild.me.hasPermission('MANAGE_MESSAGES') || !message.member.voice.channel.permissionsFor(client.user).has("MANAGE_MESSAGES")) return embedResponse('Tengo que tener el permiso `MANAGE_MESSAGES`!')
             .catch(err => { enviarError(err, message.author) });
 
-        if (canalVoz.userLimit < 11) {
-            canalVoz.edit({ userLimit: 11 }).catch(err => { })
+        if (canalVoz.userLimit < 10) {
+            canalVoz.edit({ userLimit: 10 }).catch(err => { })
         }
 
         if (canalVoz.members.size > 15) return embedResponse('Hay más de 15 miembros en el canal!')
@@ -1420,8 +1420,8 @@ client.on('message', async (message) => {
         if (!message.guild.me.hasPermission('MANAGE_MESSAGES') || !message.member.voice.channel.permissionsFor(client.user).has("MANAGE_MESSAGES")) return embedResponse('Tengo que tener el permiso `MANAGE_MESSAGES`!')
             .catch(err => { enviarError(err, message.author) });
 
-        if (canalVoz.userLimit < 11) {
-            canalVoz.edit({ userLimit: 11 }).catch(err => { })
+        if (canalVoz.userLimit < 10) {
+            canalVoz.edit({ userLimit: 10 }).catch(err => { })
         }
 
         if (canalVoz.members.size > 15) return embedResponse('Hay más de 15 miembros en el canal!')
@@ -2009,8 +2009,8 @@ client.on('message', async (m) => {
             if (!message.guild.me.hasPermission('MANAGE_CHANNELS') || !message.member.voice.channel.permissionsFor(message.client.user).has("MANAGE_CHANNELS")) return embedResponse('Tengo que tener el permiso `MANAGE_CHANNELS`!')
                 .catch(err => { enviarError(err, message.author) });
 
-            if (canalVoz.userLimit < 11) {
-                canalVoz.edit({ userLimit: 11 }).catch(err => { })
+            if (canalVoz.userLimit < 10) {
+                canalVoz.edit({ userLimit: 10 }).catch(err => { })
             }
 
             let rol = message.guild.roles.cache.find(a => a.name === 'Among Us manager');
@@ -2070,8 +2070,8 @@ client.on('message', async (m) => {
             if (!message.guild.me.hasPermission('MANAGE_CHANNELS') || !message.member.voice.channel.permissionsFor(message.client.user).has("MANAGE_CHANNELS")) return embedResponse('Tengo que tener el permiso `MANAGE_CHANNELS`!')
                 .catch(err => { enviarError(err, message.author) });
 
-            if (canalVoz.userLimit < 11) {
-                canalVoz.edit({ userLimit: 11 }).catch(err => { })
+            if (canalVoz.userLimit < 10) {
+                canalVoz.edit({ userLimit: 10 }).catch(err => { })
             }
 
             let rol = message.guild.roles.cache.find(a => a.name === 'Among Us manager');
@@ -2217,8 +2217,8 @@ client.on('messageReactionAdd', async (reaction, user) => {
         if (!message.guild.me.hasPermission('MANAGE_MESSAGES') || !member.voice.channel.permissionsFor(client.user).has("MANAGE_MESSAGES")) return embedResponse('Tengo que tener el permiso `MANAGE_MESSAGES`!')
             .catch(err => { });
 
-        if (canalVoz.userLimit < 11) {
-            canalVoz.edit({ userLimit: 11 }).catch(err => { })
+        if (canalVoz.userLimit < 10) {
+            canalVoz.edit({ userLimit: 10 }).catch(err => { })
         }
 
         if (canalVoz.members.size > 15) return embedResponse('Hay más de 15 miembros en el canal!')
@@ -2275,8 +2275,8 @@ client.on('messageReactionAdd', async (reaction, user) => {
         if (!message.guild.me.hasPermission('MANAGE_MESSAGES') || !member.voice.channel.permissionsFor(client.user).has("MANAGE_MESSAGES")) return embedResponse('Tengo que tener el permiso `MANAGE_MESSAGES`!')
             .catch(err => { });
 
-        if (canalVoz.userLimit < 11) {
-            canalVoz.edit({ userLimit: 11 }).catch(err => { })
+        if (canalVoz.userLimit < 10) {
+            canalVoz.edit({ userLimit: 10 }).catch(err => { })
         }
 
         if (canalVoz.members.size > 15) return embedResponse('Hay más de 15 miembros en el canal!')
