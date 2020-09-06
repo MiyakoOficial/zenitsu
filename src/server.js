@@ -2269,7 +2269,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
             //message.delete({ timeout: 5000 }).catch(err => { });
         }).catch(err => { });*/
         //mute
-        await among(reaction.message, member, canalVoz, user, true)
+        await among(reaction.message, member, canalVoz, user, false)
         await reaction.users.remove(user).catch(a => { })
     }
 
@@ -2388,7 +2388,7 @@ function among(mensaje, member, canalVoz, canalText, bol) {
         a.voice.setMute(bol).catch(err => { })
     });
 
-    embedResponse('<a:cargando:650442822083674112> En proceso!').then(async (msg) => {
+    embedResponse('<a:cargando:650442822083674112> En proceso!', canalText).then(async (msg) => {
         //msg.delete({ timeout: 5000 })
         let embed = new Discord.MessageEmbed()
             .setColor(color)
