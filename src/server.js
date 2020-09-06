@@ -1908,7 +1908,7 @@ client.on('message', async (m) => {
     if (message.channel.name.includes('among-us-manager')) {
 
         //inicio de muteall
-        if (message.content === 'muteall') {
+        if (message.content.toLowerCase() === 'muteall') {
 
             if (cooldownAmong.has(message.author.id)) {
                 return embedResponse('Estas en cooldown de 5s!').catch(err => { })
@@ -1927,7 +1927,7 @@ client.on('message', async (m) => {
         //fin de muteall
 
         //inicio de unmuteall
-        if (message.content === 'unmuteall') {
+        if (message.content.toLowerCase() === 'unmuteall') {
 
             if (cooldownAmong.has(message.author.id)) {
                 return embedResponse('Estas en cooldown de 5s!').catch(err => { })
