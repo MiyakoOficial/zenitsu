@@ -904,7 +904,7 @@ client.on('message', async (message) => {
         try {
             songInfo = await ytdl.getInfo(songURL);
         } catch (e) { embedResponse(e).catch(err => { enviarError(err, message.author) }) }
-        if (!results[0]) return embedResponse('Ups, no he encontrado esa música, intenta de nuevo!').catch(error => { enviarError(error, message.author) });
+        if (!result) return embedResponse('Ups, no he encontrado esa música, intenta de nuevo!').catch(error => { enviarError(error, message.author) });
 
         let song = {
             title: songInfo.title,
