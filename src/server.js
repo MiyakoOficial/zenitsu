@@ -2269,7 +2269,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
             //message.delete({ timeout: 5000 }).catch(err => { });
         }).catch(err => { });*/
         //mute
-        await among(reaction.message, canalVoz, user, true)
+        await among(reaction.message, member, canalVoz, user, true)
         await reaction.users.remove(user).catch(a => { })
     }
 
@@ -2332,7 +2332,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
             //message.delete({ timeout: 5000 }).catch(err => { });
         }).catch(err => { });
     */
-        await among(reaction.message, canalVoz, user, true)
+        await among(reaction.message, member, canalVoz, user, true)
         await reaction.users.remove(user).catch(a => { })
     }
 
@@ -2347,7 +2347,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
     }
 });
 
-function among(mensaje, canalVoz, canalText, bol) {
+function among(mensaje, member, canalVoz, canalText, bol) {
     let message = mensaje;
 
     if (!canalVoz) return embedResponse('Tienes que estar en un canal de voz!', canalText)
@@ -2356,7 +2356,7 @@ function among(mensaje, canalVoz, canalText, bol) {
     if (!canalVoz.name.includes('Among Us')) return embedResponse('Tienes que estar en el canal llamado: `Among Us`', canalText)
         .catch(err => { });
 
-    if (!message.guild.me.hasPermission('MANAGE_CHANNELS') || !message.member.voice.channel.permissionsFor(message.client.user).has("MANAGE_CHANNELS")) return embedResponse('Tengo que tener el permiso `MANAGE_CHANNELS`!', canalText)
+    if (!message.guild.me.hasPermission('MANAGE_CHANNELS') || !member.voice.channel.permissionsFor(client.user).has("MANAGE_CHANNELS")) return embedResponse('Tengo que tener el permiso `MANAGE_CHANNELS`!', canalText)
         .catch(err => { });
 
     let rol = message.guild.roles.cache.find(a => a.name === 'Among Us manager');
@@ -2368,10 +2368,10 @@ function among(mensaje, canalVoz, canalText, bol) {
     if (!rol || !message.member.roles.cache.has(rol.id)) return embedResponse('Tienes que tener el rol llamado: `Among Us manager`!', canalText)
         .catch(err => { });
 
-    if (!message.guild.me.hasPermission('MUTE_MEMBERS') || !message.member.voice.channel.permissionsFor(message.client.user).has("MUTE_MEMBERS")) return embedResponse('Tengo que tener el permiso `MUTE_MEMBERS`!', canalText)
+    if (!message.guild.me.hasPermission('MUTE_MEMBERS') || !member.voice.channel.permissionsFor(client.user).has("MUTE_MEMBERS")) return embedResponse('Tengo que tener el permiso `MUTE_MEMBERS`!', canalText)
         .catch(err => { });
 
-    if (!message.guild.me.hasPermission('MANAGE_MESSAGES') || !message.member.voice.channel.permissionsFor(message.client.user).has("MANAGE_MESSAGES")) return embedResponse('Tengo que tener el permiso `MANAGE_MESSAGES`!', canalText)
+    if (!message.guild.me.hasPermission('MANAGE_MESSAGES') || !member.voice.channel.permissionsFor(client.user).has("MANAGE_MESSAGES")) return embedResponse('Tengo que tener el permiso `MANAGE_MESSAGES`!', canalText)
         .catch(err => { });
 
     if (canalVoz.userLimit < 10) {
