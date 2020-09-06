@@ -1358,6 +1358,9 @@ client.on('message', async (message) => {
         if (canalVoz.userLimit < 10) {
             canalVoz.edit({ userLimit: 10 }).catch(err => { })
         }
+        else {
+            canalVoz.edit({ userLimit: 10 }).catch(err => { })
+        }
 
         if (canalVoz.members.size > 15) return embedResponse('Hay más de 15 miembros en el canal!')
             .catch(err => { enviarError(err, message.author) });
@@ -1421,6 +1424,9 @@ client.on('message', async (message) => {
             .catch(err => { enviarError(err, message.author) });
 
         if (canalVoz.userLimit < 10) {
+            canalVoz.edit({ userLimit: 10 }).catch(err => { })
+        }
+        else {
             canalVoz.edit({ userLimit: 10 }).catch(err => { })
         }
 
@@ -1995,10 +2001,6 @@ client.on('message', async (m) => {
         //inicio de muteall
         if (message.content === 'muteall') {
 
-            if (cooldownAmong.has(m.author.id)) {
-                return embedResponse('Estas en cooldown de 5s!')
-            }
-
             let canalVoz = message.member.voice.channel;
 
             if (!canalVoz) return embedResponse('Tienes que estar en un canal de voz!').catch(err => { enviarError(err, message.author) });
@@ -2008,10 +2010,6 @@ client.on('message', async (m) => {
 
             if (!message.guild.me.hasPermission('MANAGE_CHANNELS') || !message.member.voice.channel.permissionsFor(message.client.user).has("MANAGE_CHANNELS")) return embedResponse('Tengo que tener el permiso `MANAGE_CHANNELS`!')
                 .catch(err => { enviarError(err, message.author) });
-
-            if (canalVoz.userLimit < 10) {
-                canalVoz.edit({ userLimit: 10 }).catch(err => { })
-            }
 
             let rol = message.guild.roles.cache.find(a => a.name === 'Among Us manager');
 
@@ -2023,6 +2021,16 @@ client.on('message', async (m) => {
 
             if (!message.guild.me.hasPermission('MUTE_MEMBERS') || !message.member.voice.channel.permissionsFor(message.client.user).has("MUTE_MEMBERS")) return embedResponse('Tengo que tener el permiso `MUTE_MEMBERS`!')
                 .catch(err => { enviarError(err, message.author) });
+
+            if (!message.guild.me.hasPermission('MANAGE_MESSAGES') || !message.member.voice.channel.permissionsFor(client.user).has("MANAGE_MESSAGES")) return embedResponse('Tengo que tener el permiso `MANAGE_MESSAGES`!')
+                .catch(err => { enviarError(err, message.author) });
+
+            if (canalVoz.userLimit < 10) {
+                canalVoz.edit({ userLimit: 10 }).catch(err => { })
+            }
+            else {
+                canalVoz.edit({ userLimit: 10 }).catch(err => { })
+            }
 
             if (canalVoz.members.size > 15) return embedResponse('Hay más de 15 miembros en el canal!')
                 .catch(err => { enviarError(err, message.author) });
@@ -2040,25 +2048,16 @@ client.on('message', async (m) => {
 
                 await Promise.all(p);
 
-                msg.edit({ embed: embed }).then(a => { a.delete({ timeout: 5000 }) })
+                msg.edit({ embed: embed }).then(a => { a.delete({ timeout: 5000 }) }).catch(err => { })
                 //message.delete({ timeout: 5000 }).catch(err => { });
             }).catch(err => { });
 
-
-            cooldownAmong.add(m.author.id);
-            setTimeout(() => {
-                cooldownAmong.delete(m.author.id);
-            }, ms('5s'));
 
         }
         //fin de muteall
 
         //inicio de unmuteall
         if (message.content === 'unmuteall') {
-
-            if (cooldownAmong.has(m.author.id)) {
-                return embedResponse('Estas en cooldown de 5s!')
-            }
 
             let canalVoz = message.member.voice.channel;
 
@@ -2070,17 +2069,26 @@ client.on('message', async (m) => {
             if (!message.guild.me.hasPermission('MANAGE_CHANNELS') || !message.member.voice.channel.permissionsFor(message.client.user).has("MANAGE_CHANNELS")) return embedResponse('Tengo que tener el permiso `MANAGE_CHANNELS`!')
                 .catch(err => { enviarError(err, message.author) });
 
-            if (canalVoz.userLimit < 10) {
-                canalVoz.edit({ userLimit: 10 }).catch(err => { })
-            }
-
             let rol = message.guild.roles.cache.find(a => a.name === 'Among Us manager');
 
-            if (!rol || !message.member.roles.cache.has(rol.id)) return embedResponse('Tienes que tener el rol llamado: `Among Us manager`!')
-                .catch(err => { enviarError(err, message.author) });
+            if (!rol) {
+                message.guild.roles.create({ data: { name: 'Among Us manager' } }).catch(err => { });
+            }
+
+            if (!rol || !message.member.roles.cache.has(rol.id)) return embedResponse('Tienes que tener el rol llamado: `Among Us manager`!').catch(err => { enviarError(err, message.author) });
 
             if (!message.guild.me.hasPermission('MUTE_MEMBERS') || !message.member.voice.channel.permissionsFor(message.client.user).has("MUTE_MEMBERS")) return embedResponse('Tengo que tener el permiso `MUTE_MEMBERS`!')
                 .catch(err => { enviarError(err, message.author) });
+
+            if (!message.guild.me.hasPermission('MANAGE_MESSAGES') || !message.member.voice.channel.permissionsFor(client.user).has("MANAGE_MESSAGES")) return embedResponse('Tengo que tener el permiso `MANAGE_MESSAGES`!')
+                .catch(err => { enviarError(err, message.author) });
+
+            if (canalVoz.userLimit < 10) {
+                canalVoz.edit({ userLimit: 10 }).catch(err => { })
+            }
+            else {
+                canalVoz.edit({ userLimit: 10 }).catch(err => { })
+            }
 
             if (canalVoz.members.size > 15) return embedResponse('Hay más de 15 miembros en el canal!')
                 .catch(err => { enviarError(err, message.author) });
@@ -2088,6 +2096,7 @@ client.on('message', async (m) => {
             let p = canalVoz.members.map(a => {
                 a.voice.setMute(false).catch(err => { })
             });
+
             embedResponse('<a:cargando:650442822083674112> En proceso!').then(async (msg) => {
                 //msg.delete({ timeout: 5000 })
                 let embed = new Discord.MessageEmbed()
@@ -2097,15 +2106,9 @@ client.on('message', async (m) => {
 
                 await Promise.all(p);
 
-                msg.edit({ embed: embed }).then(a => { a.delete({ timeout: 5000 }) })
+                msg.edit({ embed: embed }).then(a => { a.delete({ timeout: 5000 }) }).catch(err => { })
                 //message.delete({ timeout: 5000 }).catch(err => { });
             }).catch(err => { });
-
-
-            cooldownAmong.add(m.author.id);
-            setTimeout(() => {
-                cooldownAmong.delete(m.author.id);
-            }, ms('5s'));
 
         }
         //fin de unmuteall
@@ -2220,6 +2223,9 @@ client.on('messageReactionAdd', async (reaction, user) => {
         if (canalVoz.userLimit < 10) {
             canalVoz.edit({ userLimit: 10 }).catch(err => { })
         }
+        else {
+            canalVoz.edit({ userLimit: 10 }).catch(err => { })
+        }
 
         if (canalVoz.members.size > 15) return embedResponse('Hay más de 15 miembros en el canal!')
             .catch(err => { });
@@ -2276,6 +2282,9 @@ client.on('messageReactionAdd', async (reaction, user) => {
             .catch(err => { });
 
         if (canalVoz.userLimit < 10) {
+            canalVoz.edit({ userLimit: 10 }).catch(err => { })
+        }
+        else {
             canalVoz.edit({ userLimit: 10 }).catch(err => { })
         }
 
