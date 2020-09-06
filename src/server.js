@@ -2254,7 +2254,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
         cooldownR.add(user.id);
         setTimeout(() => {
             cooldownR.delete(user.id)
-        }, ms('5s')) * /
+        }, ms('5s'))
 
         /*embedResponse('<a:cargando:650442822083674112> En proceso!').then(async (msg) => {
             //msg.delete({ timeout: 5000 })
