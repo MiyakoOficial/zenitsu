@@ -2059,15 +2059,6 @@ client.on('messageReactionAdd', async (reaction, user) => {
         await reaction.users.remove(user).catch(a => { })
     }
 
-
-    function embedResponse(d) {
-        let embed = new Discord.MessageEmbed()
-            .setDescription(d)
-            .setTimestamp()
-            .setColor(color)
-        return user.send({ embed: embed })
-            .catch(err => { })
-    }
 });
 
 function among(mensaje, member, canalVoz, canalText, bol) {
