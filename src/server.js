@@ -758,7 +758,7 @@ client.on('message', async (message) => {
         if (isNaN(args[0])) return embedResponse('' + mal + ' Escribe un numero!').catch(error => { enviarError(error, message.author) })
         if (args[0] >= 100 || args[0] === 0) return embedResponse('Un numero del 1 al 99').catch(error => { enviarError(error, message.author) });
         await message.delete().catch(error => { enviarError(error, message.author) });
-        await message.channel.bulkDelete(args[0]).then(d => {
+        await message.channel.bulkDelete(args[0], true).then(d => {
             if (d.size < args[0]) return d.size === 0 ? errorEmbed('Ningun mensaje fue eliminado!').catch(error => { enviarError(error, message.author) }) : embedResponse('Mensajes eliminados: ' + d.size).catch(error => { enviarError(error, message.author) })
             else return embedResponse('Mensajes eliminados: ' + d.size)
         }).catch(error => { enviarError(error, message.author) });
