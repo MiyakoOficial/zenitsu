@@ -1911,7 +1911,7 @@ client.on('message', async (m) => {
         if (message.content === 'muteall') {
 
             if (cooldownAmong.has(message.author.id)) {
-                embedResponse('Estas en cooldown de 5s!').catch(err => { })
+                return embedResponse('Estas en cooldown de 5s!').catch(err => { })
             }
 
             let canalVoz = message.member.voice.channel;
@@ -1930,7 +1930,7 @@ client.on('message', async (m) => {
         if (message.content === 'unmuteall') {
 
             if (cooldownAmong.has(message.author.id)) {
-                embedResponse('Estas en cooldown de 5s!').catch(err => { })
+                return embedResponse('Estas en cooldown de 5s!').catch(err => { })
             }
 
             let canalVoz = message.member.voice.channel;
