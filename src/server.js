@@ -1333,7 +1333,7 @@ client.on('message', async (message) => {
 
         let canalVoz = message.member.voice.channel;
 
-        await among(message, message.member, canalVoz, message.channel, true).catch(err => { })
+        await among(message, message.member, canalVoz, message.channel, true)//.catch(err => { })
 
     }
     //fin de muteall
@@ -1357,7 +1357,7 @@ client.on('message', async (message) => {
 
         let canalVoz = message.member.voice.channel;
 
-        await among(message, message.member, canalVoz, message.channel, false).catch(err => { })
+        await among(message, message.member, canalVoz, message.channel, false)//.catch(err => { })
 
     }
     //fin de unmuteall
@@ -1916,7 +1916,7 @@ client.on('message', async (m) => {
 
             let canalVoz = message.member.voice.channel;
 
-            await among(message, message.member, canalVoz, message.channel, true).catch(err => { })
+            await among(message, message.member, canalVoz, message.channel, true)//.catch(err => { })
 
             cooldownAmong.add(message.author.id);
             setTimeout(() => {
@@ -1935,7 +1935,7 @@ client.on('message', async (m) => {
 
             let canalVoz = message.member.voice.channel;
 
-            await among(message, message.member, canalVoz, message.channel, false).catch(err => { })
+            await among(message, message.member, canalVoz, message.channel, false)//.catch(err => { })
 
             cooldownAmong.add(message.author.id);
             setTimeout(() => {
@@ -2039,7 +2039,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
         }, ms('5s'))
 
         //unmute
-        await among(reaction.message, member, canalVoz, user, false).catch(err => { })
+        await among(reaction.message, member, canalVoz, user, false)//.catch(err => { })
         await reaction.users.remove(user).catch(a => { })
     }
 
@@ -2055,7 +2055,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
             cooldownR.delete(user.id)
         }, ms('5s'))
         //mute
-        await among(reaction.message, member, canalVoz, user, true).catch(err => { })
+        await among(reaction.message, member, canalVoz, user, true)//.catch(err => { })
         await reaction.users.remove(user).catch(a => { })
     }
 
