@@ -893,8 +893,13 @@ client.on('message', async (message) => {
             type: "video"
         };
 
-        const { results } = await search(args.join(' '), opts);
-        const songURL = results[0].link;
+        let result = new Promise(async (resolve, reject)=> {
+            await search(args.join(' '), opts, function (err, results) {
+                resolve(results[0]);
+            });
+        });
+
+        const songURL = results.link;
         let songInfo;
         try {
             songInfo = await ytdl.getInfo(songURL);
