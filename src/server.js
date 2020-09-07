@@ -912,7 +912,8 @@ client.on('message', async (message) => {
             title: songInfo.videoDetails.title,
             url: songInfo.videoDetails.video_url,
             time: duration(songInfo.videoDetails.lengthSeconds),
-            author: message.author
+            author: message.author,
+            tiempo: parseInt(songInfo.videoDetails.lengthSeconds)
         }
         if (!serverQueue) {
             const queueObject = {
@@ -958,7 +959,7 @@ client.on('message', async (message) => {
         if (!serverQueue) return embedResponse('Al parecer no hay ninguna canción reproduciendose!').catch(error => { enviarError(error, message.author) });
         if (!serverQueue.songs[0]) return embedResponse('Al parecer no hay ninguna canción reproduciendose!').catch(error => { enviarError(error, message.author) });
         if (message.member.voice.channel.id !== message.guild.me.voice.channel.id) return embedResponse('Tienes que estar en el mismo canal de voz para saber la lista!').catch(error => { enviarError(error, message.author) });
-
+        let x = serverQueue.songs.map(a => a.tiempo).reduce((a, b) => a + b);
         let embed = new Discord.MessageEmbed()
             .setColor(color)
             .setTimestamp()
@@ -968,7 +969,7 @@ client.on('message', async (message) => {
         ${serverQueue.songs.map(a => `[${a.title}](${a.url}) - ${a.time} - ${a.author.toString()}`).join('\n')}
        
         
-        Total: ${serverQueue.songs.length} / 15
+        Total: ${serverQueue.songs.length} / 15\nTotal: ${x}
         `, { split: true })
         message.channel.send({ embed: embed }).catch(error => { enviarError(error, message.author) });
     }
