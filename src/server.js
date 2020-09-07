@@ -2054,7 +2054,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
     if (emoji.id === '751908729930121376') {
 
         if (cooldownR.has(user.id)) {
-            return embedResponse('Estas en cooldown de 5s!').catch(a => { })
+            return response('Estas en cooldown de 5s!', user).catch(a => { })
         }
 
         let canalVoz = member.voice.channel;
@@ -2072,7 +2072,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
     else if (emoji.id === '751908729624068226') {
 
         if (cooldownR.has(user.id)) {
-            return embedResponse('Estas en cooldown de 5s!').catch(a => { })
+            return response('Estas en cooldown de 5s!', user).catch(a => { })
         }
         let canalVoz = member.voice.channel;
 
