@@ -88,6 +88,14 @@ function duration(segundos) {
     s = (s - secs) / 60;
     var mins = s % 60;
     var hrs = (s - mins) / 60;
+    if (`${secs}`.length === 1) {
+        secs = `0${secs}`;
+    }
+
+    if (`${mins}`.length === 1) {
+        mins = `0${mins}`;
+    }
+
     if (hrs <= 0) {
         if (mins <= 0) {
             return 0 + ':' + secs;
@@ -969,7 +977,7 @@ client.on('message', async (message) => {
         ${serverQueue.songs.map(a => `[${a.title}](${a.url}) - ${a.time} - ${a.author.toString()}`).join('\n')}
        
         
-        Total: ${serverQueue.songs.length} / 15\nTotal: ${x}
+        Total: ${serverQueue.songs.length} / 15\nTotal: ${duration(x)}
         `, { split: true })
         message.channel.send({ embed: embed }).catch(error => { enviarError(error, message.author) });
     }
