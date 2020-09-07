@@ -1109,18 +1109,6 @@ client.on('message', async (message) => {
 
     //fin de checkwarns
 
-    else if (command === 'detectinvites') {
-        let x = message.guild.members.cache.filter(a => {
-            if (!a.user.presence.activities[0]) return;
-            else {
-                if (a.user.presence.activities[0].type === 'CUSTOM_STATUS') {
-                    return a.user.id
-                }
-            }
-        })
-        message.reply(x.map(a => a))
-    }
-
     //inicio de resetwarns
 
     else if (command === 'resetwarns') {
