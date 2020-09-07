@@ -759,8 +759,10 @@ client.on('message', async (message) => {
         if (args[0] >= 100 || args[0] === 0) return embedResponse('Un numero del 1 al 99').catch(error => { enviarError(error, message.author) });
         await message.delete().catch(error => { enviarError(error, message.author) });
         await message.channel.bulkDelete(args[0], true).then(d => {
-            if (d.size < args[0]) return d.size === 0 ? errorEmbed('Ningun mensaje fue eliminado!').catch(error => { enviarError(error, message.author) }) : embedResponse('Mensajes eliminados: ' + d.size).catch(error => { enviarError(error, message.author) })
+            if (d.size < args[0]) return d.size === 0 ? errorEmbed('Ningun mensaje fue eliminado!').catch(error => { enviarError(error, message.author) }) : embedResponse('Mensajes eliminados: ' + d.size)
+                .catch(error => { enviarError(error, message.author) })
             else return embedResponse('Mensajes eliminados: ' + d.size)
+                .catch(err => { enviarError(error, message.author) })
         }).catch(error => { enviarError(error, message.author) });
 
     }
@@ -2064,13 +2066,13 @@ client.on('messageReactionAdd', async (reaction, user) => {
 function among(mensaje, member, canalVoz, canalText, bol) {
     let message = mensaje;
 
-    if (!canalVoz) return embedResponse('Tienes que estar en un canal de voz!', canalText)
+    if (!canalVoz) return response('Tienes que estar en un canal de voz!', canalText)
         .catch(err => { });
 
-    if (!canalVoz.name.includes('Among Us')) return embedResponse('Tienes que estar en el canal llamado: `Among Us`', canalText)
+    if (!canalVoz.name.includes('Among Us')) return response('Tienes que estar en el canal llamado: `Among Us`', canalText)
         .catch(err => { });
 
-    if (!message.guild.me.hasPermission('MANAGE_CHANNELS') || !member.voice.channel.permissionsFor(client.user).has("MANAGE_CHANNELS")) return embedResponse('Tengo que tener el permiso `MANAGE_CHANNELS`!', canalText)
+    if (!message.guild.me.hasPermission('MANAGE_CHANNELS') || !member.voice.channel.permissionsFor(client.user).has("MANAGE_CHANNELS")) return response('Tengo que tener el permiso `MANAGE_CHANNELS`!', canalText)
         .catch(err => { });
 
     let rol = message.guild.roles.cache.find(a => a.name === 'Among Us manager');
@@ -2079,13 +2081,13 @@ function among(mensaje, member, canalVoz, canalText, bol) {
         message.guild.roles.create({ data: { name: 'Among Us manager' } }).catch(err => { });
     }
 
-    if (!rol || !member.roles.cache.has(rol.id)) return embedResponse('Tienes que tener el rol llamado: `Among Us manager`!', canalText)
+    if (!rol || !member.roles.cache.has(rol.id)) return response('Tienes que tener el rol llamado: `Among Us manager`!', canalText)
         .catch(err => { });
 
-    if (!message.guild.me.hasPermission('MUTE_MEMBERS') || !member.voice.channel.permissionsFor(client.user).has("MUTE_MEMBERS")) return embedResponse('Tengo que tener el permiso `MUTE_MEMBERS`!', canalText)
+    if (!message.guild.me.hasPermission('MUTE_MEMBERS') || !member.voice.channel.permissionsFor(client.user).has("MUTE_MEMBERS")) return response('Tengo que tener el permiso `MUTE_MEMBERS`!', canalText)
         .catch(err => { });
 
-    if (!message.guild.me.hasPermission('MANAGE_MESSAGES') || !member.voice.channel.permissionsFor(client.user).has("MANAGE_MESSAGES")) return embedResponse('Tengo que tener el permiso `MANAGE_MESSAGES`!', canalText)
+    if (!message.guild.me.hasPermission('MANAGE_MESSAGES') || !member.voice.channel.permissionsFor(client.user).has("MANAGE_MESSAGES")) return response('Tengo que tener el permiso `MANAGE_MESSAGES`!', canalText)
         .catch(err => { });
 
     if (canalVoz.userLimit < 10) {
@@ -2095,14 +2097,14 @@ function among(mensaje, member, canalVoz, canalText, bol) {
         canalVoz.edit({ userLimit: 10 }).catch(err => { })
     }
 
-    if (canalVoz.members.size > 15) return embedResponse('Hay más de 15 miembros en el canal!', canalText)
+    if (canalVoz.members.size > 15) return response('Hay más de 15 miembros en el canal!', canalText)
         .catch(err => { });
 
     let p = canalVoz.members.map(a => {
         a.voice.setMute(bol).catch(err => { })
     });
 
-    embedResponse('<a:cargando:650442822083674112> En proceso!', canalText).then(async (msg) => {
+    response('<a:cargando:650442822083674112> En proceso!', canalText).then(async (msg) => {
         //msg.delete({ timeout: 5000 })
         let embed = new Discord.MessageEmbed()
             .setColor(color)
@@ -2115,10 +2117,9 @@ function among(mensaje, member, canalVoz, canalText, bol) {
         //message.delete({ timeout: 5000 }).catch(err => { });
     }).catch(err => { });
 
-
 }
 
-function embedResponse(d, c) {
+function response(d, c) {
     let embed = new Discord.MessageEmbed()
         .setTimestamp()
         .setDescription(d)
