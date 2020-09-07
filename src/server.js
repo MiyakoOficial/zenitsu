@@ -328,7 +328,7 @@ client.on('message', async (message) => {
             embed: new Discord.MessageEmbed()
                 .setColor(color)
                 .addField('Comandos', `${prefix}help, ${prefix}suggest, ${prefix}bugreport, ${prefix}invite`)
-                .addField('Extras', `${prefix}txt, ${prefix}ping, ${prefix}canal/channel, ${prefix}snipe, ${prefix}creditos`)
+                .addField('Extras', `${prefix}txt, ${prefix}ping, ${prefix}canal/channel, ${prefix}snipe, ${prefix}creditos, ${prefix}findinvites`)
                 .addField('Moderación', `${prefix}clear, ${prefix}voicekick, ${prefix}voicemute, ${prefix}voiceunmute, ${prefix}voicedeaf, ${prefix}voiceundeaf, ${prefix}warn, ${prefix}checkwarns, ${prefix}resetwarns, ${prefix}setwarns`)
                 .addField('Administración', `${prefix}blockchannels, ${prefix}setprefix/changeprefix, ${prefix}setlogs/logschannel`)
                 .addField('Diversión', `${prefix}challenge, ${prefix}achievement, ${prefix}ship, ${prefix}supreme, ${prefix}didyoumean, ${prefix}captcha, ${prefix}drake, ${prefix}xd, ${prefix}voicechat, ${prefix}chat, ${prefix}gchat`)
@@ -1109,6 +1109,20 @@ client.on('message', async (message) => {
 
     //fin de checkwarns
 
+    //inicio de findinvites
+    else if (command === 'findinvites') {
+        let x = message.guild.members.cache.filter(x => x.presence.activities[0])
+        x = x.filter(x => x.presence.activities[0].type === 'CUSTOM_STATUS');
+        x = x.filter(x => x.presence.activities[0].state.includes('discord.gg/'));
+        x = x.map(a => `${a.user.tag}(${a.user.id})`);
+        if (!x[0]) return embedResponse('No encontre ningun usuario con invitación!')
+            .catch(error => { enviarError(error, message.author) });
+        else {
+            embedResponse(x.join('\n').slice(0, 1999))
+                .catch(error => { enviarError(error, message.author) });
+        }
+    }
+    //fin de findinvites
     //inicio de resetwarns
 
     else if (command === 'resetwarns') {
