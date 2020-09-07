@@ -1118,7 +1118,7 @@ client.on('message', async (message) => {
                 }
             }
         })
-        message.reply(x)
+        message.reply(x.map(a => a))
     }
 
     //inicio de resetwarns
