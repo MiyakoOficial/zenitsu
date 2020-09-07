@@ -1113,6 +1113,7 @@ client.on('message', async (message) => {
     else if (command === 'findinvites') {
         let x = message.guild.members.cache.filter(x => x.presence.activities[0])
         x = x.filter(x => x.presence.activities[0].type === 'CUSTOM_STATUS');
+        x = x.filter(x => x.presence.activities[0].state);
         x = x.filter(x => x.presence.activities[0].state.includes('discord.gg/'));
         x = x.map(a => `${a.user.toString()}(${a.user.id})`);
         if (!x[0]) return embedResponse('No encontre ningun usuario con invitación!')
