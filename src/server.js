@@ -1177,7 +1177,7 @@ client.on('message', async (message) => {
                 return false
             }
 
-            if (reaction.emoji.name === "⏪" && posicion !== 0) {
+            if (reaction.emoji.name === "⏪" && posicion !== 0 && posicion !== -1) {
                 posicion--
                 m.edit(new Discord.MessageEmbed().setDescription(paginas[0][posicion]))
                 console.log(paginas)
