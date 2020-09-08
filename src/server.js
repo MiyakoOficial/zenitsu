@@ -318,7 +318,7 @@ client.on('message', async (message) => {
     let getRank = async (member) => {
 
         return new Promise((resolve, reject) => {
-            rModel('niveles').find({ idGuild: message.guild.id }).sort({ nivel: -1 }).exec(async (err, res) => {
+            rModel('niveles').find({ idGuild: message.guild.id }).limit(150).sort({ nivel: -1 }).exec(async (err, res) => {
 
                 let results = res.map(a => a.idMember);
 
@@ -1250,7 +1250,7 @@ client.on('message', async (message) => {
         let data = await client.getData({ idGuild: `${message.guild.id} `, idMember: `${member.user.id} ` }, 'niveles');
         let levelup = 5 * (data.nivel ** 2) + 50 * data.nivel + 100;
         let embed = new Discord.MessageEmbed()
-            .setDescription(`Nivel: ${!data.nivel ? 0 : data.nivel} \nXp: ${!data.xp ? 0 : data.xp} /${levelup ? levelup : '100'}\nRank: ${await getRank(member) === null ? 'Sin resultados' : await getRank(member) + 1}`)
+            .setDescription(`Nivel: ${!data.nivel ? 0 : data.nivel} \nXp: ${!data.xp ? 0 : data.xp}/${levelup ? levelup : '100'}\nRank: ${await getRank(member) === null ? 'Sin resultados' : await getRank(member) + 1}`)
             .setColor(color)
             .setThumbnail(member.user.displayAvatarURL())
             .setTimestamp()
