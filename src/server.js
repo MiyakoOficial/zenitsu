@@ -1249,7 +1249,7 @@ client.on('message', async (message) => {
     //inicio de xp
     else if (command === 'xp' || command === 'exp') {
         let member = message.guild.members.cache.find(a => a.user.username === args.join(' ')) || message.guild.members.cache.find(a => a.user.tag === args.join(' ')) || message.guild.members.cache.find(a => a.displayName === args.join(' ')) || message.guild.members.cache.get(args[0]) || message.mentions.members.first() || message.member
-        let { nivel, xp } = await client.getData({ idGuild: `${message.guild.id} `, idMember: `${member.user.id}` }, 'niveles');
+        let { nivel, xp } = await client.getData({ idGuild: `${message.guild.id}`, idMember: `${member.user.id}` }, 'niveles');
         let levelup = 5 * (nivel ** 2) + 50 * nivel + 100;
         console.log(xp, nivel);
         let embed = new Discord.MessageEmbed()
