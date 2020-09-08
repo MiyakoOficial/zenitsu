@@ -951,12 +951,10 @@ client.on('message', async (message) => {
                 return queue.delete(message.guild.id)
             } else {
                 if (message.member.voice.channel.id !== message.guild.me.voice.channel.id) return embedResponse('Tienes que estar en el mismo canal de voz para agregar una canción!').catch(error => { enviarError(error, message.author) });
-                if (serverQueue.songs.length >= 15) return embedResponse('La cola ya tiene 15 canciones!').catch(error => { enviarError(error, message.author) });
                 serverQueue.songs.push(song)
                 embedResponse(`Añadiendo a la cola: [${song.title}](${song.url}) - ${song.time} - ${song.author.toString()}`).catch(error => { enviarError(error, message.author) });
             }
         }
-        //debugger
     }
     //fin de play
 
@@ -968,17 +966,31 @@ client.on('message', async (message) => {
         if (!serverQueue.songs[0]) return embedResponse('Al parecer no hay ninguna canción reproduciendose!').catch(error => { enviarError(error, message.author) });
         if (message.member.voice.channel.id !== message.guild.me.voice.channel.id) return embedResponse('Tienes que estar en el mismo canal de voz para saber la lista!').catch(error => { enviarError(error, message.author) });
         let x = serverQueue.songs.map(a => a.tiempo).reduce((a, b) => a + b);
+
+        let cancionesSeparadas = [];
+
+        function seleccion() {
+            let arg = args[0] || 1;
+            if (arg < 0) return 1;
+            else {
+                return parseInt(arg) || 1;
+            }
+        }
+
+        for (let i = 0; i < serverQueue.songs.length; i += 10) {
+            cancionesSeparadas.push(serverQueue.songs.slice(i, i + 10));
+        }
+
         let embed = new Discord.MessageEmbed()
             .setColor(color)
             .setTimestamp()
             .setDescription(`
         Canciones en cola:
 
-        ${serverQueue.songs.map(a => `[${a.title}](${a.url}) - ${a.time} - ${a.author.toString()}`).join('\n')}
-       
-        
-        Total: ${serverQueue.songs.length} / 15\nTotal: ${duration(x)}
-        `, { split: true })
+        ${cancionesSeparadas[seleccion() - 1].map(a => `[${a.title}](${a.url}) - ${a.time} - ${a.author.toString()}`).join('\n') || 'Pagina inexistente!'}
+
+    Total de canciones: ${serverQueue.songs.length} | Tiempo total: ${duration(x)}
+    `, { split: true })
         message.channel.send({ embed: embed }).catch(error => { enviarError(error, message.author) });
     }
     //fin de queue
@@ -1022,7 +1034,7 @@ client.on('message', async (message) => {
         else {
             if (message.member.voice.channel.id !== message.guild.me.voice.channel.id) return embedResponse('Tienes que estar en el mismo canal de voz para saber la canción que se esta reproduciendo!').catch(error => { enviarError(error, message.author) });
 
-            return embedResponse(`Reproduciendo ahora: [${serverQueue.songs[0].title}](${serverQueue.songs[0].url}) - ${serverQueue.songs[0].time} - ${serverQueue.songs[0].author.toString()}`)
+            return embedResponse(`Reproduciendo ahora: [${serverQueue.songs[0].title}](${serverQueue.songs[0].url}) - ${serverQueue.songs[0].time} - ${serverQueue.songs[0].author.toString()} `)
                 .catch(error => { enviarError(error, message.author) });
         }
     }
@@ -1042,7 +1054,7 @@ client.on('message', async (message) => {
 
             serverQueue.volume = Math.floor(parseInt(args.join(' ')));
             serverQueue.connection.dispatcher.setVolumeLogarithmic(Math.floor(parseInt(args.join(' '))) / 5);
-            embedResponse(`Cambiado a: ${Math.floor(parseInt(args.join(' ')))}%`).catch(error => { enviarError(error, message.author) });
+            embedResponse(`Cambiado a: ${Math.floor(parseInt(args.join(' ')))}% `).catch(error => { enviarError(error, message.author) });
         }
     }
     //fin de volume
@@ -1060,11 +1072,11 @@ client.on('message', async (message) => {
         if (!args[0].match(/\<\@(\!)?[0-9]{18}\>/g)) return embedResponse('La mencion tiene que ser el primer argumento!')
             .catch(error => { enviarError(error, message.author) });
 
-        await client.updateData({ id: `${message.guild.id}_${miembro.id}` }, { $inc: { warns: 1 } }, 'warns');
+        await client.updateData({ id: `${message.guild.id} _${miembro.id} ` }, { $inc: { warns: 1 } }, 'warns');
 
-        await client.updateData({ id: `${message.guild.id}_${miembro.id}` }, { razon: razon }, 'warns');
+        await client.updateData({ id: `${message.guild.id} _${miembro.id} ` }, { razon: razon }, 'warns');
 
-        await client.getData({ id: `${message.guild.id}_${miembro.id}` }, 'warns').then((data) => {
+        await client.getData({ id: `${message.guild.id} _${miembro.id} ` }, 'warns').then((data) => {
             embedResponse(`El miembro fue advertido!\nAhora tiene: ${data.warns === 0 ? 1 : data.warns} advertencias.\n\nRazón: ${razon}.`)
                 .catch(error => { enviarError(error, message.author) });
         });
@@ -1093,7 +1105,7 @@ client.on('message', async (message) => {
         if (parseInt(args[1]) < 0) return embedResponse('El segundo argumento debe ser igual o mayor a cero!')
             .catch(error => { enviarError(error, message.author) });
 
-        await client.updateData({ id: `${message.guild.id}_${miembro.id}` }, { warns: parseInt(args[1]) }, 'warns');
+        await client.updateData({ id: `${message.guild.id} _${miembro.id} ` }, { warns: parseInt(args[1]) }, 'warns');
 
         embedResponse(`Ahora el miembro ${miembro.user.username} tiene ${args[1]} advertencias!`)
             .catch(error => { enviarError(error, message.author) });
@@ -1109,9 +1121,9 @@ client.on('message', async (message) => {
         if (!message.mentions.members.first()) return embedResponse('Menciona a un miembro del servidor!')
             .catch(error => { enviarError(error, message.author) });
 
-        client.getData({ id: `${message.guild.id}_${message.mentions.users.first().id}` }, 'warns')
+        client.getData({ id: `${message.guild.id} _${message.mentions.users.first().id} ` }, 'warns')
             .then((data) => {
-                embedResponse(`Tiene ${!data.warns ? 0 : data.warns} advertencias\n\nUltima razón: ${!data.razon ? 'No especificada!' : data.razon}`)
+                embedResponse(`Tiene ${!data.warns ? 0 : data.warns} advertencias\n\nUltima razón: ${!data.razon ? 'No especificada!' : data.razon} `)
                     .catch(error => { enviarError(error, message.author) });
             })
     }
@@ -1124,7 +1136,7 @@ client.on('message', async (message) => {
             .filter(x => x.presence.activities[0].type === 'CUSTOM_STATUS')
             .filter(x => x.presence.activities[0].state)
             .filter(x => x.presence.activities[0].state.includes('discord.gg/'))
-            .map(a => `${a.user.toString()}(${a.user.id})`);
+            .map(a => `${a.user.toString()} (${a.user.id})`);
         if (!x[0]) return embedResponse('No encontre ningun usuario con invitación!')
             .catch(error => { enviarError(error, message.author) });
         else {
@@ -1143,7 +1155,7 @@ client.on('message', async (message) => {
         if (!message.mentions.members.first()) return embedResponse('Menciona a un miembro del servidor!')
             .catch(error => { enviarError(error, message.author) });
 
-        client.updateData({ id: `${message.guild.id}_${message.mentions.users.first().id}` }, { warns: 0, razon: 'No especificada!' }, 'warns')
+        client.updateData({ id: `${message.guild.id} _${message.mentions.users.first().id} ` }, { warns: 0, razon: 'No especificada!' }, 'warns')
 
         embedResponse(`Advertencias reseteadas!`)
             .catch(error => { enviarError(error, message.author) });
@@ -1159,10 +1171,10 @@ client.on('message', async (message) => {
     //inicio de xp
     else if (command === 'xp' || command === 'exp') {
         let member = message.guild.members.cache.find(a => a.user.username === args.join(' ')) || message.guild.members.cache.find(a => a.user.tag === args.join(' ')) || message.guild.members.cache.find(a => a.displayName === args.join(' ')) || message.guild.members.cache.get(args[0]) || message.mentions.members.first() || message.member
-        let data = await client.getData({ idGuild: `${message.guild.id}`, idMember: `${member.user.id}` }, 'niveles');
+        let data = await client.getData({ idGuild: `${message.guild.id} `, idMember: `${member.user.id} ` }, 'niveles');
         let levelup = 5 * (data.nivel ** 2) + 50 * data.nivel + 100;
         let embed = new Discord.MessageEmbed()
-            .setDescription(`Nivel: ${!data.nivel ? 0 : data.nivel}\nXp: ${!data.xp ? 0 : data.xp}/${levelup ? levelup : '100'}\nRank: ${await getRank(member) === null ? 'Sin resultados' : await getRank(member) + 1}`)
+            .setDescription(`Nivel: ${!data.nivel ? 0 : data.nivel} \nXp: ${!data.xp ? 0 : data.xp} /${levelup ? levelup : '100'}\nRank: ${await getRank(member) === null ? 'Sin resultados' : await getRank(member) + 1}`)
             .setColor(color)
             .setThumbnail(member.user.displayAvatarURL())
             .setTimestamp()
