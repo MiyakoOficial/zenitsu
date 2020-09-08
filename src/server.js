@@ -1036,7 +1036,7 @@ client.on('message', async (message) => {
 
             return embedResponse(`Reproduciendo ahora: [${serverQueue.songs[0].title}](${serverQueue.songs[0].url}) - ${serverQueue.songs[0].time} - ${serverQueue.songs[0].author.toString()}\n${duration(Math.trunc(serverQueue.connection.dispatcher.streamTime / 1000))} / ${serverQueue.songs[0].time}`)
                 .catch(error => { enviarError(error, message.author) });
-        }
+        };
     }
     //fin de np
 
