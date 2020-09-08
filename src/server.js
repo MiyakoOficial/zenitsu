@@ -1183,7 +1183,7 @@ client.on('message', async (message) => {
                 console.log(paginas)
             }
 
-            if (reaction.emoji.name === "⏩" && posicion !== paginas[0].length && paginas[0][posicion]) {
+            if (reaction.emoji.name === "⏩" && posicion !== paginas[0].length && paginas[0][posicion + 1]) {
                 posicion++
                 m.edit(new Discord.MessageEmbed().setDescription(paginas[0][posicion]))
                 console.log(paginas)
