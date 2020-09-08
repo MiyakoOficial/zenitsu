@@ -1179,7 +1179,7 @@ client.on('message', async (message) => {
 
             if (reaction.emoji.name === "⏪" && posicion !== 0) {
                 posicion--
-                m.edit([posicion].join('\n'))
+                m.edit(paginas[posicion].join('\n'))
             }
 
             if (reaction.emoji.name === "⏩" && posicion !== 5) {
