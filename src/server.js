@@ -1179,12 +1179,14 @@ client.on('message', async (message) => {
 
             if (reaction.emoji.name === "⏪" && posicion !== 0) {
                 posicion--
-                m.edit(paginas[posicion].join('\n'))
+                //m.edit(paginas[posicion].join('\n'))
+                console.log(paginas)
             }
 
             if (reaction.emoji.name === "⏩" && posicion !== 5) {
                 posicion++
-                m.edit(paginas[posicion].join('\n'))
+                //m.edit(paginas[posicion].join('\n'))
+                console.log(paginas)
             }
 
             reaction.remove(user).catch(() => { })
