@@ -1160,7 +1160,7 @@ client.on('message', async (message) => {
         if (!paginas[0]) return embedResponse('No encontre ningun usuario con invitación!')
             .catch(error => { enviarError(error, message.author) });
 
-        let posicion = 0;
+        let posicion = -1;
 
         let inicio = new Discord.MessageEmbed()
             .setDescription('inicio');
