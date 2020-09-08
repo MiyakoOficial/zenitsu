@@ -1249,10 +1249,10 @@ client.on('message', async (message) => {
     //inicio de xp
     else if (command === 'xp' || command === 'exp') {
         let member = message.guild.members.cache.find(a => a.user.username === args.join(' ')) || message.guild.members.cache.find(a => a.user.tag === args.join(' ')) || message.guild.members.cache.find(a => a.displayName === args.join(' ')) || message.guild.members.cache.get(args[0]) || message.mentions.members.first() || message.member
-        let data = await client.getData({ idGuild: `${message.guild.id} `, idMember: `${member.user.id} ` }, 'niveles');
+        let { nivel, xp } = await client.getData({ idGuild: `${message.guild.id} `, idMember: `${member.user.id} ` }, 'niveles');
         let levelup = 5 * (data.nivel ** 2) + 50 * data.nivel + 100;
         let embed = new Discord.MessageEmbed()
-            .setDescription(`Nivel: ${!data.nivel ? 0 : data.nivel} \nXp: ${!data.xp ? 0 : data.xp}/${levelup ? levelup : '100'}\nRank: ${await getRank(member) === null ? 'Sin resultados' : await getRank(member) + 1}`)
+            .setDescription(`Nivel: ${!nivel ? 0 : nivel} \nXp: ${!xp ? 0 : xp}/${levelup ? levelup : '100'}\nRank: ${await getRank(member) === null ? 'Sin resultados' : await getRank(member) + 1}`)
             .setColor(color)
             .setThumbnail(member.user.displayAvatarURL())
             .setTimestamp()
