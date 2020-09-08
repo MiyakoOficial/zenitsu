@@ -989,7 +989,7 @@ client.on('message', async (message) => {
 
         ${cancionesSeparadas[seleccion() - 1].map(a => `[${a.title}](${a.url}) - ${a.time} - ${a.author.toString()}`).join('\n') || 'Pagina inexistente!'}
 
-    Total de canciones: ${serverQueue.songs.length} | Tiempo total: ${duration(x)}
+    Total de canciones: ${serverQueue.songs.length} | Tiempo total: ${duration(x)} | Pagina ${seleccion()} / ${cancionesSeparadas.length}
     `, { split: true })
         message.channel.send({ embed: embed }).catch(error => { enviarError(error, message.author) });
     }
