@@ -987,7 +987,7 @@ client.on('message', async (message) => {
             .setDescription(`
         Canciones en cola:
 
-        ${cancionesSeparadas[seleccion() - 1].map(a => `[${a.title}](${a.url}) - ${a.time} - ${a.author.toString()}`).join('\n') || 'Pagina inexistente!'}
+        ${cancionesSeparadas[seleccion() - 1].map((a, num) => `#${num + 1} [${a.title}](${a.url}) - ${a.time} - ${a.author.toString()}`).join('\n') || 'Pagina inexistente!'}
 
     Total de canciones: ${serverQueue.songs.length} | Tiempo total: ${duration(x)} | Pagina ${seleccion()} / ${cancionesSeparadas.length}
     `, { split: true })
