@@ -1142,9 +1142,10 @@ client.on('message', async (message) => {
 
     //fin de checkwarns
 
-    else if (command === 'testpriv') {
+    //inicio de findinvites
+    else if (command === 'findinvites') {
 
-        let paginas = []
+        let paginas = [];
         let x = message.guild.members.cache.filter(x => x.presence.activities[0])
             .filter(x => x.presence.activities[0].type === 'CUSTOM_STATUS')
             .filter(x => x.presence.activities[0].state)
@@ -1152,10 +1153,13 @@ client.on('message', async (message) => {
             .map(a => `${a.user.toString()} (${a.user.id})`);
 
 
-        for (let i = 0; i < x.length; i += 4) {
-            paginas.push(x.slice(i, i + 4));
+        for (let i = 0; i < x.length; i += 10) {
+            paginas.push(x.slice(i, i + 10));
         }
 
+
+        if (!message.guild.me.hasPermission('MANAGE_MESSAGES') || !message.channel.permissionsFor(message.client.user).has('MANAGE_MESSAGES'))
+            return embedResponse('No tengo el permiso `MANAGE_MESSAGES`!').catch(error => { enviarError(error, message.author) });
 
         if (!paginas[0]) return embedResponse('No encontre ningun usuario con invitación!')
             .catch(error => { enviarError(error, message.author) });
@@ -1163,45 +1167,45 @@ client.on('message', async (message) => {
         let posicion = -1;
 
         let inicio = new Discord.MessageEmbed()
-            .setDescription('inicio');
+            .setDescription('Listo, puedes comenzar a reaccionar!')
+            .setColor(color)
+            .setTimestamp();
 
-        let m = await message.channel.send({ embed: inicio });
+        let m = await message.channel.send({ embed: inicio }).catch(error => { enviarError(error, message.author) });
 
-        await m.react("⏪")
-        await m.react("⏩")
+        await m.react("⏪").catch(error => { enviarError(error, message.author) });
+        await m.react("⏩").catch(error => { enviarError(error, message.author) });;
 
         m.awaitReactions((reaction, user) => {
             if (user.bot) return;
             if (message.author.id !== user.id) {
-                reaction.remove(user.id).catch(() => { })
-                return false
+                reaction.users.remove(user.id).catch(error => { enviarError(error, message.author) });
+                return false;
             }
 
             if (reaction.emoji.name === "⏪" && paginas[posicion - 1]) {
-                m.edit(new Discord.MessageEmbed().setDescription(paginas[posicion - 1].join('\n')))
+                m.edit(new Discord.MessageEmbed().setDescription(paginas[posicion - 1].join('\n')).setColor(color).setTimestamp()).catch(error => { enviarError(error, message.author) });
                 //console.log(paginas)
                 posicion--
             }
 
             if (reaction.emoji.name === "⏩" && paginas[posicion + 1]) {
-                m.edit(new Discord.MessageEmbed().setDescription(paginas[posicion + 1].join('\n')))
+                m.edit(new Discord.MessageEmbed().setDescription(paginas[posicion + 1].join('\n')).setColor(color).setTimestamp()).catch(error => { enviarError(error, message.author) });
                 //console.log(paginas)
                 posicion++
             }
 
-            reaction.users.remove(user).catch(() => { })
+            reaction.users.remove(user).catch(error => { enviarError(error, message.author) });
             return true
         }, { max: 30000, time: 200000 }).then(c => {
 
             m.delete().catch(e => {
-                message.channel.send("mensaje xd")
+                embedResponse("Terminado!").catch(error => { enviarError(error, message.author) });
             })
 
-        })//fin del await reactions
+        })
     }
-
-    //inicio de findinvites
-    else if (command === 'findinvites') {
+    /*else if (command === 'findinvites') {
         let paginas = []
         let x = message.guild.members.cache.filter(x => x.presence.activities[0])
             .filter(x => x.presence.activities[0].type === 'CUSTOM_STATUS')
@@ -1221,7 +1225,7 @@ client.on('message', async (message) => {
             embedResponse(x.join('\n').slice(0, 1999))
                 .catch(error => { enviarError(error, message.author) });
         }
-    }
+    }*/
     //fin de findinvites
     //inicio de resetwarns
 
