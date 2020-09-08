@@ -1251,6 +1251,7 @@ client.on('message', async (message) => {
         let member = message.guild.members.cache.find(a => a.user.username === args.join(' ')) || message.guild.members.cache.find(a => a.user.tag === args.join(' ')) || message.guild.members.cache.find(a => a.displayName === args.join(' ')) || message.guild.members.cache.get(args[0]) || message.mentions.members.first() || message.member
         let { nivel, xp } = await client.getData({ idGuild: `${message.guild.id} `, idMember: `${member.user.id} ` }, 'niveles');
         let levelup = 5 * (nivel ** 2) + 50 * nivel + 100;
+        console.log(xp, level)
         let embed = new Discord.MessageEmbed()
             .setDescription(`Nivel: ${nivel ? nivel : 0} \nXp: ${xp ? xp : 0}/${levelup ? levelup : '100'}\nRank: ${await getRank(member) === null ? 'Sin resultados' : await getRank(member) + 1}`)
             .setColor(color)
