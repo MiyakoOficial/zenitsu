@@ -1152,8 +1152,8 @@ client.on('message', async (message) => {
             .map(a => `${a.user.toString()} (${a.user.id})`);
 
 
-        for (let i = 0; i < x.length; i += 10) {
-            paginas.push(x.slice(i, i + 10));
+        for (let i = 0; i < x.length; i += 4) {
+            paginas.push(x.slice(i, i + 4));
         }
 
 
