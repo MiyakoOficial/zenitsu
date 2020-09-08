@@ -976,22 +976,33 @@ client.on('message', async (message) => {
                 return parseInt(arg) || 1;
             }
         }
+        let s;
 
         for (let i = 0; i < serverQueue.songs.length; i += 10) {
             cancionesSeparadas.push(serverQueue.songs.slice(i, i + 10));
         }
 
-        let embed = new Discord.MessageEmbed()
-            .setColor(color)
-            .setTimestamp()
-            .setDescription(`
+        if (!cancionesSeparadas[seleccion() - 1]) {
+            let embed1 = new Discord.MessageEmbed()
+                .setColor(color)
+                .setTimestamp()
+                .setDescription('Pagina inexistente!')
+            s = embed1
+        } else {
+
+            let embed2 = new Discord.MessageEmbed()
+                .setColor(color)
+                .setTimestamp()
+                .setDescription(`
         Canciones en cola:
 
-        ${cancionesSeparadas[seleccion() - 1] ? cancionesSeparadas[seleccion() - 1].map((a, num) => `#${num + 1} [${a.title}](${a.url}) - ${a.time} - ${a.author.toString()}`).join('\n') || 'Pagina inexistente!' : 'Pagina inexistente!'}
+        ${cancionesSeparadas[seleccion() - 1].map((a, num) => `#${num + 1} [${a.title}](${a.url}) - ${a.time} - ${a.author.toString()}`).join('\n')}
 
     Total de canciones: ${serverQueue.songs.length} | Tiempo total: ${duration(x)} | Pagina ${seleccion()} / ${cancionesSeparadas.length}
     `, { split: true })
-        message.channel.send({ embed: embed }).catch(error => { enviarError(error, message.author) });
+            s = embed2
+        }
+        message.channel.send({ embed: s }).catch(error => { enviarError(error, message.author) });
     }
     //fin de queue
 
