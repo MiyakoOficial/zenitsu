@@ -987,7 +987,7 @@ client.on('message', async (message) => {
                 .setColor(color)
                 .setTimestamp()
                 .setDescription('Pagina inexistente!')
-                .setFooter(`Pagina actual: ${seleccion}`)
+                .setFooter(`Pagina actual: ${seleccion()}`)
             s = embed1
         } else {
 
