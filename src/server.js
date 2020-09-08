@@ -1142,13 +1142,77 @@ client.on('message', async (message) => {
 
     //fin de checkwarns
 
-    //inicio de findinvites
-    else if (command === 'findinvites') {
+    else if (command === 'testpriv') {
+
+        let paginas = []
         let x = message.guild.members.cache.filter(x => x.presence.activities[0])
             .filter(x => x.presence.activities[0].type === 'CUSTOM_STATUS')
             .filter(x => x.presence.activities[0].state)
             .filter(x => x.presence.activities[0].state.includes('discord.gg/'))
             .map(a => `${a.user.toString()} (${a.user.id})`);
+
+
+        for (let i = 0; i < x.length; i += 10) {
+            paginas.push(x.slice(i, i + 10));
+        }
+
+
+        if (!x[0]) return embedResponse('No encontre ningun usuario con invitación!')
+            .catch(error => { enviarError(error, message.author) });
+
+        let posicion = 0;
+
+        let inicio = new Discord.MessageEmbed()
+            .setDescription('inicio');
+
+        let m = await message.channel.send({ embed: inicio });
+
+        await m.react("⏪")
+        await m.react("⏩")
+
+        m.awaitReactions((reaction, user) => {
+            if (user.bot) return;
+            if (message.author.id !== user.id) {
+                reaction.remove(user.id).catch(() => { })
+                return false
+            }
+
+            if (reaction.emoji.name === "⏪" && posicion !== 0) {
+                posicion--
+                m.edit([posicion].join('\n'))
+            }
+
+            if (reaction.emoji.name === "⏩" && posicion !== 5) {
+                posicion++
+                m.edit(paginas[posicion].join('\n'))
+            }
+
+            reaction.remove(user).catch(() => { })
+            return true
+        }, { max: 30000, time: 200000 }).then(c => {
+
+            m.delete().catch(e => {
+                message.channel.send("mensaje xd")
+            })
+
+        })//fin del await reactions
+    }
+
+    //inicio de findinvites
+    else if (command === 'findinvites') {
+        let paginas = []
+        let x = message.guild.members.cache.filter(x => x.presence.activities[0])
+            .filter(x => x.presence.activities[0].type === 'CUSTOM_STATUS')
+            .filter(x => x.presence.activities[0].state)
+            .filter(x => x.presence.activities[0].state.includes('discord.gg/'))
+            .map(a => `${a.user.toString()} (${a.user.id})`);
+
+
+        for (let i = 0; i < x.length; i += 10) {
+            paginas.push(x.slice(i, i + 10));
+        }
+
+
         if (!x[0]) return embedResponse('No encontre ningun usuario con invitación!')
             .catch(error => { enviarError(error, message.author) });
         else {
