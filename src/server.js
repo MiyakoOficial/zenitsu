@@ -1157,7 +1157,7 @@ client.on('message', async (message) => {
         }
 
 
-        if (!x[0]) return embedResponse('No encontre ningun usuario con invitación!')
+        if (!paginas[0]) return embedResponse('No encontre ningun usuario con invitación!')
             .catch(error => { enviarError(error, message.author) });
 
         let posicion = 0;
