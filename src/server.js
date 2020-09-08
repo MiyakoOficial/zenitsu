@@ -1179,13 +1179,13 @@ client.on('message', async (message) => {
 
             if (reaction.emoji.name === "⏪" && paginas[posicion - 1]) {
                 m.edit(new Discord.MessageEmbed().setDescription(paginas[posicion - 1].join('\n')))
-                console.log(paginas)
+                //console.log(paginas)
                 posicion--
             }
 
             if (reaction.emoji.name === "⏩" && paginas[posicion + 1]) {
                 m.edit(new Discord.MessageEmbed().setDescription(paginas[posicion + 1].join('\n')))
-                console.log(paginas)
+                //console.log(paginas)
                 posicion++
             }
 
