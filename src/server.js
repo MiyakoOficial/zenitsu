@@ -342,7 +342,7 @@ client.on('message', async (message) => {
                 .addField('Diversión', `${prefix}challenge, ${prefix}achievement, ${prefix}ship, ${prefix}supreme, ${prefix}didyoumean, ${prefix}captcha, ${prefix}drake, ${prefix}xd, ${prefix}voicechat, ${prefix}chat, ${prefix}gchat`)
                 .addField('Música', `${prefix}play/p, ${prefix}queue/q, ${prefix}skip/s, ${prefix}stop, ${prefix}nowplaying/np, ${prefix}volume/v`)
                 .addField('Niveles', `${prefix}setchannelxp, ${prefix}setlevel, ${prefix}xp/exp, ${prefix}rank`)
-                .addField('Privados', `${prefix}eval, ${prefix}blacklist, ${prefix}checkblacklist`)
+                .addField('Privados', `${prefix}eval, ${prefix}blacklist, ${prefix}checkblacklist, ${prefix}deny, ${prefix}accept`)
                 .addField('Among Us', `${prefix}muteall, ${prefix}unmuteall, ${prefix}setmessageid`)
                 .setThumbnail(client.user.displayAvatarURL({ format: 'png', size: 2048 }))
                 .setTimestamp()
@@ -364,6 +364,15 @@ client.on('message', async (message) => {
         message.channel.send({ embed: embed }).catch(error => { enviarError(error, message.author) });
     }
     //fin de invite
+
+    else if (command === 'edits') {
+        let canal = message.mentions.channels.first() || message.channel;
+        if (!args[0]) return embedResponse('Pon una ID valida!');
+        if (!messageSS(args[0], canal)) return embedResponse('No encontre ese mensaje!');
+        else {
+            console.trace(await canal.messages.fetch(args[0]))
+        }
+    }
 
     //inicio de voicekick
     else if (command === 'voicekick') {
