@@ -365,14 +365,23 @@ client.on('message', async (message) => {
     }
     //fin de invite
 
+    //inicio de edits
     else if (command === 'edits') {
         let canal = message.mentions.channels.first() || message.channel;
         if (!args[0]) return embedResponse('Pon una ID valida!');
         if (!messageSS(args[0], canal)) return embedResponse('No encontre ese mensaje!');
         else {
-            console.trace(await canal.messages.fetch(args[0]))
+            let fetch = await canal.messages.fetch(args[0])
+            //console.trace(await canal.messages.fetch(args[0]))
+            if (!fetch._edits) return embedResponse('Este mensaje nunca fue editado!')
+            else {
+
+                embedResponse(fetch._edits.sort().join('\n'))
+
+            }
         }
     }
+    //fin de edits
 
     //inicio de voicekick
     else if (command === 'voicekick') {
