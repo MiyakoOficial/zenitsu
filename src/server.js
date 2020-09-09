@@ -1145,17 +1145,19 @@ client.on('message', async (message) => {
     //inicio de findinvites
     else if (command === 'findinvites') {
 
-        let paginas = [];
-        let x = message.guild.members.cache.filter(x => x.presence.activities[0])
+
+        let x = message.guild.members.cache
+            .filter(x => x.presence.activities[0])
             .filter(x => x.presence.activities[0].type === 'CUSTOM_STATUS')
             .filter(x => x.presence.activities[0].state)
             .filter(x => x.presence.activities[0].state.includes('discord.gg/'))
             .map(a => `${a.user.toString()} (${a.user.id})`);
 
+        let paginas = funcionPagina(x, 10);
 
-        for (let i = 0; i < x.length; i += 10) {
+        /*for (let i = 0; i < x.length; i += 10) {
             paginas.push(x.slice(i, i + 10));
-        }
+        }*/
 
 
         if (!message.guild.me.hasPermission('MANAGE_MESSAGES') || !message.channel.permissionsFor(message.client.user).has('MANAGE_MESSAGES'))
@@ -2244,4 +2246,16 @@ function response(d, c) {
         .setDescription(d)
         .setColor(color)
     return c.send({ embed: embed })
+};
+
+//let array = ['hola', 'holaxd', 'hola como estas?', ':v', 'xd'];
+
+//let resultado = funcionPagina(array, 2)
+function funcionPagina(elArray, num) {
+    let pagina = [];
+    for (let i = 0; i < elArray.length; i += num) {
+        pagina.push(elArray.slice(i, i + num))
+    }
+    return pagina;
 }
+//return resultado[0]; // ['hola', 'holaxd']
