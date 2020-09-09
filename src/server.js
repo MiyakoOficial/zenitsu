@@ -1046,7 +1046,13 @@ client.on('message', async (message) => {
         else {
             if (message.member.voice.channel.id !== message.guild.me.voice.channel.id) return embedResponse('Tienes que estar en el mismo canal de voz para saber la canción que se esta reproduciendo!').catch(error => { enviarError(error, message.author) });
 
-            return embedResponse(`Reproduciendo ahora: [${serverQueue.songs[0].title}](${serverQueue.songs[0].url}) - ${serverQueue.songs[0].time} - ${serverQueue.songs[0].author.toString()}\n${duration(Math.trunc(serverQueue.connection.dispatcher.streamTime / 1000))} / ${serverQueue.songs[0].time}`)
+            let embed = new Discord.MessageEmbed()
+                .setColor(color)
+                .setTimestamp()
+                .setAuthor(`Reproduciendo ahora:`, 'https://media.tenor.com/images/84a791e6d9f96e3d203efc9041ba379d/tenor.gif')
+                .setDescription(`Reproduciendo ahora: [${serverQueue.songs[0].title}](${serverQueue.songs[0].url}) - ${serverQueue.songs[0].author.toString()}`)
+                .setFooter(`${duration(Math.trunc(serverQueue.connection.dispatcher.streamTime / 1000))} / ${serverQueue.songs[0].time}`)
+            return message.channel.send({ embed: embed })
                 .catch(error => { enviarError(error, message.author) });
         };
     }
