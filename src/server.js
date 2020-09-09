@@ -371,14 +371,15 @@ client.on('message', async (message) => {
         if (!args[0]) return embedResponse('Pon una ID valida!');
         if (!messageSS(args[0], canal)) return embedResponse('No encontre ese mensaje!');
         else {
-            let fetch = await canal.messages.fetch(args[0])
-            //console.trace(await canal.messages.fetch(args[0]))
-            if (!fetch._edits) return embedResponse('Este mensaje nunca fue editado!')
-            else {
+            let fetch = await canal.messages.fetch(args[0]).then(m => {
+                //console.trace(await canal.messages.fetch(args[0]))
+                if (!m._edits) return embedResponse('Este mensaje nunca fue editado!')
+                else {
 
-                embedResponse(fetch._edits.sort().join('\n'))
+                    embedResponse(m._edits.sort().join('\n'))
 
-            }
+                }
+            })
         }
     }
     //fin de edits
@@ -1239,13 +1240,13 @@ client.on('message', async (message) => {
             .filter(x => x.presence.activities[0].state)
             .filter(x => x.presence.activities[0].state.includes('discord.gg/'))
             .map(a => `${a.user.toString()} (${a.user.id})`);
-
-
+    
+    
         for (let i = 0; i < x.length; i += 10) {
             paginas.push(x.slice(i, i + 10));
         }
-
-
+    
+    
         if (!x[0]) return embedResponse('No encontre ningun usuario con invitación!')
             .catch(error => { enviarError(error, message.author) });
         else {
