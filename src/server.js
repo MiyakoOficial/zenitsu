@@ -1050,7 +1050,7 @@ client.on('message', async (message) => {
                 .setColor(color)
                 .setTimestamp()
                 .setAuthor(`Reproduciendo ahora:`, 'https://media.tenor.com/images/84a791e6d9f96e3d203efc9041ba379d/tenor.gif')
-                .setDescription(`Reproduciendo ahora: [${serverQueue.songs[0].title}](${serverQueue.songs[0].url}) - ${serverQueue.songs[0].author.toString()}`)
+                .setDescription(`[${serverQueue.songs[0].title}](${serverQueue.songs[0].url}) - ${serverQueue.songs[0].author.toString()}`)
                 .setFooter(`${duration(Math.trunc(serverQueue.connection.dispatcher.streamTime / 1000))} / ${serverQueue.songs[0].time}`)
             return message.channel.send({ embed: embed })
                 .catch(error => { enviarError(error, message.author) });
