@@ -371,7 +371,7 @@ client.on('message', async (message) => {
         if (!args[0]) return embedResponse('Pon una ID valida!');
         if (!messageSS(args[0], canal)) return embedResponse('No encontre ese mensaje!');
         else {
-            let fetch = await canal.messages.fetch(args[0]).then(m => {
+            await canal.messages.cache.get(args[0]).then(m => {
                 //console.trace(await canal.messages.fetch(args[0]))
                 if (!m._edits) return embedResponse('Este mensaje nunca fue editado!')
                 else {
