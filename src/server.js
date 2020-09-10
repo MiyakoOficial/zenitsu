@@ -369,7 +369,7 @@ client.on('message', async (message) => {
     else if (command === 'edits') {
         let canal = message.mentions.channels.first() || message.channel;
         if (!args[0]) return embedResponse('Pon una ID valida!');
-        if (!await canal.messages.fetch(args[0])) return embedResponse('No encontré ese mensaje!');
+        if (!messageSS(args[0], canal)) return embedResponse('No encontré ese mensaje!');
         else {
             let m = await canal.messages.fetch(args[0])
             //console.trace(await canal.messages.fetch(args[0]))
