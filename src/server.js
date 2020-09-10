@@ -2190,7 +2190,7 @@ async function messageS(id) {
 
 async function messageSS(id, canal) {
     return new Promise((resolve, reject) => {
-        canal.messages.fetch(id)
+        canal.messages.fetch(id, true)
             .then(() => {
                 return resolve(true);
             })
