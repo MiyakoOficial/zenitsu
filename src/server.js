@@ -376,7 +376,7 @@ client.on('message', async (message) => {
             let me = await canal.messages.fetch(args[0], true);
             if (true === false) return;
             else {
-                let paginas = funcionPagina(me._edits, 1)
+                let paginas = funcionPagina(me.edits, 1)
 
                 if (!message.guild.me.hasPermission('MANAGE_MESSAGES') || !message.channel.permissionsFor(message.client.user).has('MANAGE_MESSAGES'))
                     return embedResponse('No tengo el permiso `MANAGE_MESSAGES`!').catch(error => { enviarError(error, message.author) });
