@@ -373,7 +373,7 @@ client.on('message', async (message) => {
         else {
             let m = await canal.messages.fetch(args[0])
             //console.trace(await canal.messages.fetch(args[0]))
-            if (!m._edits.sort()[0] || m._edits.length == 0) return embedResponse('Este mensaje nunca fue editado!')
+            if (!m._edits) return embedResponse('Este mensaje nunca fue editado!')
             else {
 
                 embedResponse(m._edits.sort().join('\n'))
