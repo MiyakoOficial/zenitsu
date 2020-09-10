@@ -397,13 +397,13 @@ client.on('message', async (message) => {
                 return false;
             }
 
-            if (reaction.emoji.name === "⏪" && paginas[posicion - 1]) {
+            if (reaction.emoji.name === "⏪" && paginas[posicion - 2]) {
                 m.edit(new Discord.MessageEmbed().setDescription(paginas[posicion].join('\n')).setColor(color).setTimestamp()).catch(error => { enviarError(error, message.author) });
                 //console.log(paginas)
                 posicion--
             }
 
-            if (reaction.emoji.name === "⏩" && paginas[posicion + 1]) {
+            if (reaction.emoji.name === "⏩" && paginas[posicion + 2]) {
                 m.edit(new Discord.MessageEmbed().setDescription(paginas[posicion + 1].join('\n')).setColor(color).setTimestamp()).catch(error => { enviarError(error, message.author) });
                 //console.log(paginas)
                 posicion++
