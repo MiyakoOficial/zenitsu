@@ -366,59 +366,59 @@ client.on('message', async (message) => {
     //fin de invite
 
     //inicio de edits
-    else if (command === 'edits') {
-
-        let me = { edits: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }
-
-        let paginas = funcionPagina(me.edits, 1)
-
-        if (!message.guild.me.hasPermission('MANAGE_MESSAGES') || !message.channel.permissionsFor(message.client.user).has('MANAGE_MESSAGES'))
-            return embedResponse('No tengo el permiso `MANAGE_MESSAGES`!').catch(error => { enviarError(error, message.author) });
-
-        if (!paginas[0]) return embedResponse('Este mensaje nunca fue editado!')
-            .catch(error => { enviarError(error, message.author) });
-
-        let posicion = -1;
-
-        let inicio = new Discord.MessageEmbed()
-            .setDescription('Listo, puedes comenzar a reaccionar!')
-            .setColor(color)
-            .setTimestamp();
-
-        let m = await message.channel.send({ embed: inicio }).catch(error => { enviarError(error, message.author) });
-
-        await m.react("⏪").catch(error => { enviarError(error, message.author) });
-        await m.react("⏩").catch(error => { enviarError(error, message.author) });;
-
-        m.awaitReactions((reaction, user) => {
-            if (user.bot) return;
-            if (message.author.id !== user.id) {
-                reaction.users.remove(user.id).catch(error => { enviarError(error, message.author) });
-                return false;
-            }
-
-            if (reaction.emoji.name === "⏪" && paginas[posicion - 2]) {
-                m.edit(new Discord.MessageEmbed().setDescription(paginas[posicion].join('\n')).setColor(color).setTimestamp()).catch(error => { enviarError(error, message.author) });
-                //console.log(paginas)
-                posicion--
-            }
-
-            if (reaction.emoji.name === "⏩" && paginas[posicion + 2]) {
-                m.edit(new Discord.MessageEmbed().setDescription(paginas[posicion + 1].join('\n')).setColor(color).setTimestamp()).catch(error => { enviarError(error, message.author) });
-                //console.log(paginas)
-                posicion++
-            }
-
-            reaction.users.remove(user).catch(error => { enviarError(error, message.author) });
-            return true
-        }, { max: 30000, time: 200000 }).then(c => {
-
-            m.delete().catch(e => {
-                embedResponse("Terminado!").catch(error => { enviarError(error, message.author) });
-            })
-
-        })
-    }
+    /* else if (command === 'edits') {
+ 
+         let me = { edits: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }
+ 
+         let paginas = funcionPagina(me.edits, 1)
+ 
+         if (!message.guild.me.hasPermission('MANAGE_MESSAGES') || !message.channel.permissionsFor(message.client.user).has('MANAGE_MESSAGES'))
+             return embedResponse('No tengo el permiso `MANAGE_MESSAGES`!').catch(error => { enviarError(error, message.author) });
+ 
+         if (!paginas[0]) return embedResponse('Este mensaje nunca fue editado!')
+             .catch(error => { enviarError(error, message.author) });
+ 
+         let posicion = -1;
+ 
+         let inicio = new Discord.MessageEmbed()
+             .setDescription('Listo, puedes comenzar a reaccionar!')
+             .setColor(color)
+             .setTimestamp();
+ 
+         let m = await message.channel.send({ embed: inicio }).catch(error => { enviarError(error, message.author) });
+ 
+         await m.react("⏪").catch(error => { enviarError(error, message.author) });
+         await m.react("⏩").catch(error => { enviarError(error, message.author) });;
+ 
+         m.awaitReactions((reaction, user) => {
+             if (user.bot) return;
+             if (message.author.id !== user.id) {
+                 reaction.users.remove(user.id).catch(error => { enviarError(error, message.author) });
+                 return false;
+             }
+ 
+             if (reaction.emoji.name === "⏪" && paginas[posicion - 1]) {
+                 m.edit(new Discord.MessageEmbed().setDescription(paginas[posicion].join('\n')).setColor(color).setTimestamp()).catch(error => { enviarError(error, message.author) });
+                 //console.log(paginas)
+                 posicion--
+             }
+ 
+             if (reaction.emoji.name === "⏩" && paginas[posicion + 2]) {
+                 m.edit(new Discord.MessageEmbed().setDescription(paginas[posicion + 1].join('\n')).setColor(color).setTimestamp()).catch(error => { enviarError(error, message.author) });
+                 //console.log(paginas)
+                 posicion++
+             }
+ 
+             reaction.users.remove(user).catch(error => { enviarError(error, message.author) });
+             return true
+         }, { max: 30000, time: 200000 }).then(c => {
+ 
+             m.delete().catch(e => {
+                 embedResponse("Terminado!").catch(error => { enviarError(error, message.author) });
+             })
+ 
+         })
+     }*/
     //fin de edits
 
     //inicio de voicekick
