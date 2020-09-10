@@ -404,7 +404,7 @@ client.on('message', async (message) => {
                     }
 
                     if (reaction.emoji.name === "⏪" && paginas[posicion - 1]) {
-                        m.edit(new Discord.MessageEmbed().setDescription(paginas[posicion - 1].join('\n')).setColor(color).setTimestamp()).catch(error => { enviarError(error, message.author) });
+                        m.edit(new Discord.MessageEmbed().setDescription(paginas[posicion].join('\n')).setColor(color).setTimestamp()).catch(error => { enviarError(error, message.author) });
                         //console.log(paginas)
                         posicion--
                     }
