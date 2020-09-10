@@ -374,8 +374,7 @@ client.on('message', async (message) => {
             .catch(error => { enviarError(error, message.author) });
         else {
             let m = await canal.messages.fetch(args[0], true);
-            if (!m._edits || m._edits.length == 0) return embedResponse('Este mensaje nunca fue editado!')
-                .catch(error => { enviarError(error, message.author) });
+            if (true === false) return;
             else {
                 let paginas = funcionPagina(m._edits, 1)
 
