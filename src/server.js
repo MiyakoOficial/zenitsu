@@ -373,7 +373,7 @@ client.on('message', async (message) => {
         if (!messageSS(args[0], canal)) return embedResponse('No encontré ese mensaje!')
             .catch(error => { enviarError(error, message.author) });
         else {
-            let m = await canal.messages.fetch(args[0]);
+            let m = await canal.messages.fetch(args[0], true);
             if (!m._edits || m._edits.length == 0 || m._edits == 0 || m._edits == []) return embedResponse('Este mensaje nunca fue editado!')
                 .catch(error => { enviarError(error, message.author) });
             else {
