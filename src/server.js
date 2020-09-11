@@ -1437,7 +1437,7 @@ client.on('message', async (message) => {
             let max = parseInt(args[1])
 
             if (!args[0] || !['public', 'private'].includes(args[0].toLowerCase()))
-                return embedResponse('Selecciona entre `private` o `public`');
+                return embedResponse('Selecciona entre `private` o `public`.\nEjemplo de uso <prefix>createchat private 15');
 
             if (!max || max < 2)
                 return embedResponse('Pon un numero mayor a 1!');
@@ -1510,6 +1510,39 @@ client.on('message', async (message) => {
 
             embedResponse('Ahora usa z!setchat ' + args[0]);
 
+        }
+    }
+
+    else if (command === 'invitechat') {
+        if (!['507367752391196682', '402291352282464259'].includes(message.author.id))
+            return;
+        else {
+
+            if (!args[0])
+                return embedResponse('Ejemplo de uso: `<prefix>invitechat user_id token_chat`');
+
+            let chatG = await client.getData({ token: args[1] }, 'chat', false);
+
+            let { type, bans, joinable, admins } = chatG;
+
+            let check = await rModel('chat').findOne({ token: args[1] });
+
+            if (!check)
+                return embedResponse('Token invalido!');
+
+            if (!admins.includes(message.author.id)) {
+                return embedResponse('No puedes invitar a nadie sin ser admin!')
+            }
+
+            if (bans.includes(args[0]))
+                return embedResponse('Ese usuario está baneado, usa <prefix>unbanchat user_id token_chat');
+
+            if (!client.users.cache.get(args[0]))
+                return embedResponse('No he encontrado a ese usuario!')
+
+            await client.updateData({ token: args[1] }, { $push: { joinable: args[0] } }, 'chat');
+
+            return embedResponse(`Has invitado a \`${client.users.cache.get(args[0]).tag}\`!`);
         }
     }
 
