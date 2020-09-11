@@ -1411,7 +1411,7 @@ client.on('message', async (message) => {
             return;
 
         else {
-            let { token, chat } = await client.getData({ id: message.author.id }, 'chat');
+            let { token } = await client.getData({ id: message.author.id }, 'chat');
             if (!token || token == 'none') return message.reply(token + 'xd')
             else {
                 if (!chat || chat == 0) return message.reply('xd');
