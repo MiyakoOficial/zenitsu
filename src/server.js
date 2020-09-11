@@ -1420,6 +1420,21 @@ client.on('message', async (message) => {
         }
 
     }
+
+    else if (command === 'createchat') {
+        if (!['507367752391196682', '402291352282464259'].includes(message.author.id))
+            return;
+
+        else {
+
+            await client.createData({ token: `${Date.now()}` }, 'chat');
+
+            message.reply(await client.getData({ token: `${Date.now()}` }, 'chat'));
+
+        }
+
+    }
+
     //fin de gchat
 
     //inicio de creditos
