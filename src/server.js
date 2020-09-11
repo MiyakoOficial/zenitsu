@@ -1414,7 +1414,10 @@ client.on('message', async (message) => {
             let { token } = await client.getData({ id: message.author.id }, 'chat');
             if (!token || token == 'none') return message.reply(token + 'xd')
             else {
-                message.reply(`Aqui tiene su token ${token}`)
+                let { chat } = await client.getData({ id: message.author.id }, 'chat');
+                if (!chat || chat == 0) return message.reply('xd');
+
+                message.reply(`Aqui tiene su chat: ${chat.reverse().slice(0, 10).reverse().join('\n')}`);
             }
 
         }
@@ -1426,10 +1429,12 @@ client.on('message', async (message) => {
             return;
 
         else {
-            let tok = Date.now()
+
+            let tok = Date.now();
+
             await client.createData({ token: `${tok}` }, 'chat');
 
-            message.reply(`Token: ${tok}`)
+            embedResponse(`Token: ${tok}`);
 
         }
 
