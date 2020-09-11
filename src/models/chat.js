@@ -25,7 +25,11 @@ const Guild = Schema({
     max: {
         type: Number,
         default: 10
-    }
+    },
+
+    joinable: Array,
+
+    bans: Array
 
 });
 module.exports = model('gchat', Guild)

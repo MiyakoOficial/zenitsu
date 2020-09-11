@@ -1412,10 +1412,13 @@ client.on('message', async (message) => {
 
         else {
             let { tokenChat } = await client.getData({ id: message.author.id }, 'usuario');
-            if (!tokenChat || tokenChat == 'none') return message.reply(tokenChat + 'xd')
+            if (!tokenChat || tokenChat == 'none') return message.reply(`Token inexistente!`)
+
             else {
+
                 let { chat } = await client.getData({ token: tokenChat }, 'chat');
-                if (!chat || chat == 0) return message.reply('xd');
+
+                if (!chat || chat == 0) return message.reply(`El chat está vacio!`);
 
                 message.reply(`Aqui tiene su chat: ${chat.reverse().slice(0, 10).reverse().join('\n')}`);
             }
@@ -1430,11 +1433,36 @@ client.on('message', async (message) => {
 
         else {
 
+            let max = parseInt(args[1])
+
+            if (!args[0] || !['public', 'private'].includes(args[0].toLowerCase()))
+                return embedResponse('Selecciona entre `private` o `public`');
+
+            if (!max || max < 2)
+                return embedResponse('Pon un numero mayor a 1!');
+
+            if (!max || max > 21)
+                return embedResponse('Pon un numero menor a 21!');
+
+            let { grupos } = await client.getData({ id: message.author.id }, 'usuario');
+
+            if (grupos >= 10) return embedResponse('Has superado el limite de grupos, si quieres borra uno y crea otro!');
+
             let tok = Date.now();
 
-            await client.createData({ token: `${tok}` }, 'chat');
+            await client.createData({ token: `${tok}`, owner: message.author.id, }, 'chat');
 
-            embedResponse(`Token: ${tok}`);
+            await client.updateData({ token: `${tok}` }, { $push: { admins: message.author.id } }, 'chat');
+
+            await client.updateData({ token: `${tok}` }, { $push: { users: message.author.id } }, 'chat');
+
+            await client.updateData({ token: `${tok}` }, { type: args[0] }, 'chat');
+
+            await client.updateData({ token: `${tok}` }, { max: parseInt(args[1]) }, 'chat');
+
+            await client.updateData({ id: message.author.id }, { $inc: { grupos: 1 } }, 'usuario');
+
+            await embedResponse(`Token: ${tok}`);
 
         }
 
