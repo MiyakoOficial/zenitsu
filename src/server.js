@@ -1437,7 +1437,7 @@ client.on('message', async (message) => {
             let max = parseInt(args[1])
 
             if (!args[0] || !['public', 'private'].includes(args[0].toLowerCase()))
-                return embedResponse('Selecciona entre `private` o `public`.\nEjemplo de uso <prefix>createchat private 15');
+                return embedResponse('Selecciona entre `private` o `public`.\nEjemplo de uso: <prefix>createchat private 15');
 
             if (!max || max < 2)
                 return embedResponse('Pon un numero mayor a 1!');
