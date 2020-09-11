@@ -6,4 +6,4 @@ const Guild = Schema({
     grupos: { type: Number, default: 0 }
 
 });
-module.exports = model('Chat', Guild)
+module.exports = model('usuariosChat', Guild)
