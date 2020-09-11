@@ -28,4 +28,4 @@ const Guild = Schema({
     }
 
 });
-module.exports = model('Chat', Guild)
+module.exports = model('gchat', Guild)
