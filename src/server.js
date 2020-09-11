@@ -1426,10 +1426,10 @@ client.on('message', async (message) => {
             return;
 
         else {
+            let tok = Date.now()
+            await client.createData({ token: `${tok}` }, 'chat');
 
-            await client.createData({ token: `${Date.now()}` }, 'chat');
-
-            message.reply(await client.getData({ token: `${Date.now()}` }, 'chat'));
+            message.reply(`Token: ${tok}`)
 
         }
 
