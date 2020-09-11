@@ -1497,6 +1497,9 @@ client.on('message', async (message) => {
                     return embedResponse('No te puedes unir, es un chat privado y no te han invitado!')
             }
 
+            if (users.includes(message.author.id))
+                return embedResponse('Ya estas en el chat!');
+
             if (bans.includes(message.author.id))
                 return embedResponse('Estas baneado del chat!');
 
@@ -1507,6 +1510,38 @@ client.on('message', async (message) => {
 
             embedResponse('Ahora usa z!setchat ' + args[0]);
 
+        }
+    }
+
+    else if (command === 'setchat') {
+
+        if (!['507367752391196682', '402291352282464259'].includes(message.author.id))
+            return;
+        else {
+
+            if (!args[0])
+                return embedResponse('Escribe un token de chat!');
+
+            let chatG = await client.getData({ token: args[0] }, 'chat', false);
+
+            let { type, bans, joinable } = chatG;
+
+            let check = await rModel('chat').findOne({ token: args[0] });
+
+            if (!check)
+                return embedResponse('Token invalido!');
+
+            if (type === 'private') {
+                if (!joinable.includes(message.author.id))
+                    return embedResponse('No te puedes unir, es un chat privado y no te han invitado!')
+            }
+
+            if (bans.includes(message.author.id))
+                return embedResponse('Estas baneado del chat!');
+
+            await client.updateData({ id: message.author.id }, { tokenChat: args[0] }, 'usuario');
+
+            return embedResponse('Chat establecido!\nToken: ' + args[0]);
         }
     }
 
