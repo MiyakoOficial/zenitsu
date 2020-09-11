@@ -1591,6 +1591,7 @@ client.on('message', async (message) => {
                 return embedResponse('Estas baneado del chat!');
 
             await client.updateData({ id: message.author.id }, { tokenChat: `${args[0]}` }, 'usuario');
+            await client.updateData({ token: args[0] }, { $addToSet: { users: message.author.id } }, 'chat');
 
             return embedResponse('Chat establecido!\nToken: ' + args[0]);
         }
