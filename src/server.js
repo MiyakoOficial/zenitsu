@@ -1590,7 +1590,7 @@ client.on('message', async (message) => {
             if (bans.includes(message.author.id))
                 return embedResponse('Estas baneado del chat!');
 
-            await client.updateData({ id: message.author.id }, { tokenChat: args[0] }, 'usuario');
+            await client.updateData({ id: message.author.id }, { tokenChat: `${args[0]}` }, 'usuario');
 
             return embedResponse('Chat establecido!\nToken: ' + args[0]);
         }
