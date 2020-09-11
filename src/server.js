@@ -25,6 +25,7 @@ const chat = new Map();
 const yts = require('yt-search');
 const { env } = require('process');
 const { EventEmitter } = require('events');
+const { baseModelName } = require('./models/chat.js');
 
 (async () => {
 
@@ -67,7 +68,7 @@ const { EventEmitter } = require('events');
             if (saveIfNotExists)
                 return setTimeout(async () => { await client.updateData(search, settings, db) }, 1000);
             else
-                return console.log("[-] (updateData) Si quieres actualizar datos aún así no exista el documento, pon como 4to parámetro en la función: true.");
+                return null; /*console.log("[-] (updateData) Si quieres actualizar datos aún así no exista el documento, pon como 4to parámetro en la función: true.");*/
         }
 
         for (const key in settings) {
@@ -1446,7 +1447,8 @@ client.on('message', async (message) => {
 
             let { grupos } = await client.getData({ id: message.author.id }, 'usuario');
 
-            if (grupos >= 10) return embedResponse('Has superado el limite de grupos, si quieres borra uno y crea otro!');
+            if (grupos >= 10)
+                return embedResponse('Has superado el limite de grupos, si quieres borra uno y crea otro!');
 
             let tok = Date.now();
 
@@ -1471,6 +1473,41 @@ client.on('message', async (message) => {
     else if (command == 'send') {
         message.channel.send(`Enviado: ${args.slice(1).join(' ')}`)
         return client.updateData({ token: args[0] }, { $push: { chat: args.join(' ') } }, 'chat')
+    }
+
+    else if (command === 'joinchat') {
+        if (!['507367752391196682', '402291352282464259'].includes(message.author.id))
+            return;
+        else {
+
+            if (!args[0])
+                return embedResponse('Escribe un token de chat!');
+
+            let chatG = await client.getData({ token: args[0] }, 'chat', false)
+
+            let { type, users, bans, max, joinable } = chatG;
+
+            let check = await rModel('chat').findOne({ token: args[0] });
+
+            if (!check)
+                return embedResponse('Token invalido!');
+
+            if (type === 'private') {
+                if (!joinable.includes(message.author.id))
+                    return embedResponse('No te puedes unir, es un chat privado y no te han invitado!')
+            }
+
+            if (bans.includes(message.author.id))
+                return embedResponse('Estas baneado del chat!');
+
+            if (users.length >= max)
+                return embedResponse('El chat está lleno!')
+
+            client.updateData({ token: args[0] }, { $inc: { users: 1 } }, 'chat');
+
+            embedResponse('Ahora usa z!joinchat ' + args[0]);
+
+        }
     }
 
     //fin de gchat
