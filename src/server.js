@@ -1412,7 +1412,7 @@ client.on('message', async (message) => {
 
         else {
             let { token } = client.getData({ id: message.author.id }, 'chat');
-            if (!token || token == 'none') return message.reply(token + 'xd')
+            if (token == 'none') return message.reply(token + 'xd')
 
         }
 
