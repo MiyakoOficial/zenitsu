@@ -339,7 +339,7 @@ client.on('message', async (message) => {
                 .addField('Extras', `${prefix}txt, ${prefix}ping, ${prefix}canal/channel, ${prefix}snipe, ${prefix}creditos`)
                 .addField('Moderación', `${prefix}clear, ${prefix}voicekick, ${prefix}voicemute, ${prefix}voiceunmute, ${prefix}voicedeaf, ${prefix}voiceundeaf, ${prefix}warn, ${prefix}checkwarns, ${prefix}resetwarns, ${prefix}setwarns, ${prefix}findinvites`)
                 .addField('Administración', `${prefix}blockchannels, ${prefix}setprefix/changeprefix, ${prefix}setlogs/logschannel`)
-                .addField('Diversión', `${prefix}challenge, ${prefix}achievement, ${prefix}ship, ${prefix}supreme, ${prefix}didyoumean, ${prefix}captcha, ${prefix}drake, ${prefix}xd, ${prefix}voicechat, ${prefix}chat, ${prefix}gchat`)
+                .addField('Diversión', `${prefix}challenge, ${prefix}achievement, ${prefix}ship, ${prefix}supreme, ${prefix}didyoumean, ${prefix}captcha, ${prefix}drake, ${prefix}xd, ${prefix}voicechat(fuera de servicio), ${prefix}chat(fuera de servicio), ${prefix}gchat`)
                 .addField('Música', `${prefix}play/p, ${prefix}queue/q, ${prefix}skip/s, ${prefix}stop, ${prefix}nowplaying/np, ${prefix}volume/v`)
                 .addField('Niveles', `${prefix}setchannelxp, ${prefix}setlevel, ${prefix}xp/exp, ${prefix}rank`)
                 .addField('Privados', `${prefix}eval, ${prefix}blacklist, ${prefix}checkblacklist, ${prefix}deny, ${prefix}accept`)
@@ -486,7 +486,7 @@ client.on('message', async (message) => {
     //fin de voiceundeaf
 
     //incio de chat
-    else if (command === 'chat') {
+    /*else if (command === 'chat') {
         const chatbot = require("espchatbotapi");
         // if (!args[0]) return embedResponse("Escribe algo!").catch(error => { enviarError(error, message.author) });
         if (chat.get(message.guild.id) === true) return message.reply('Alguien ya está hablando conmigo!');
@@ -563,7 +563,7 @@ client.on('message', async (message) => {
     }
 
     //fin de voicechat
-
+*/
     //!inicio de blockchannels
     else if (command === 'blockchannels') {
         if (!message.member.hasPermission('ADMINISTRATOR')) return errorEmbed('No tienes el permiso `ADMINISTRATOR`.').catch(error => { enviarError(error, message.author) });
@@ -1407,71 +1407,14 @@ client.on('message', async (message) => {
 
     //inicio de gchat
     else if (command === 'gchat') {
-
-        if (cooldown.has(`${message.guild.id}_gchat`)) {
-
-            return embedResponse(mal + " Este comando tiene un cooldown de 3s global!(Por servidor)").catch(err => { enviarError(err, message.author) });
-
-        }
+        if (!['507367752391196682', '402291352282464259'].includes(message.author.id))
+            return;
 
         else {
+            let { token } = client.getData({ id: message.author.id }, 'chat');
+            if (!token || token == 'none') return message.reply(token + 'xd')
 
-            cooldown.add(`${message.guild.id}_gchat`);
-            setTimeout(() => {
-                cooldown.delete(`${message.guild.id}_gchat`);
-            }, ms('3s'));
-
-        };
-
-        if (args[0] === 'send') {
-
-            let check = /[^A-Z0-9\s\!\@\#\$\%\^\&\*\(\)\_\+\=\[\]\"\'\;\.\,\\\:\ñ\|\~\/\<\>(\uD800-\uDBFF][\uDC00-\uDFFF)]/gi;
-
-            let regex = args.slice(1).join(' ').match(check);
-
-            let member = message.member;
-
-            if (!args[1]) return embedResponse(`Escribe algo!`).catch(err => { enviarError(err, message.author) });
-
-            let txt = args.slice(1).join(' ');
-
-            if (regex) return embedResponse(`Este comando no permite caracteres especiales!\nSi quieres sugerir un caracter especial pon z!suggest <caracter>.`).catch(err => { enviarError(err, message.author) });
-
-            if (txt.includes('discord.gg/')) {
-                embedResponse(`Este comando no permite invitaciones por obvias razones!`).catch(err => { enviarError(err, message.author) });
-                return message.delete({ timeout: 1000 });
-            }
-
-            if (txt.includes('`')) return embedResponse(`Este comando no permite el acento grave!`).catch(err => { enviarError(err, message.author) });
-
-            if (txt.length > 80) return embedResponse(`La longitud del texto debe ser menor a 80!`).catch(err => { enviarError(err, message.author) });
-
-            client.updateData({ id: 'chat' }, {
-                $push: {
-                    test:
-                        `${member.user.username.match(check) ? 'Usuario' : member.user.username.slice(0, 20)}#${member.user.discriminator}: ${txt}`
-                }
-
-            }, 'test');
-
-            return embedResponse('Mensaje enviado!').catch(err => { enviarError(err, message.author) });
         }
-
-        else {
-            let { test } = await client.getData({ id: 'chat' }, 'test');
-
-            if (!test || test.length === 0) return embedResponse('Al parecer no hay ningun mensaje...');
-
-            test = test.reverse().slice(0, 10).reverse();
-            let embed = new Discord.MessageEmbed()
-                .setColor(color)
-                .setTimestamp()
-                .setDescription(`
-                \`\`\`\n${test.join('\n\n')}\`\`\`
-                `, { split: true }
-                )
-            message.channel.send({ embed: embed }).catch(err => { enviarError(err, message.author) });
-        };
 
     }
     //fin de gchat
@@ -2322,3 +2265,69 @@ function funcionPagina(elArray, num) {
     return pagina;
 }
 //return resultado[0]; // ['hola', 'holaxd']
+
+/*if (cooldown.has(`${message.guild.id}_gchat`)) {
+
+    return embedResponse(mal + " Este comando tiene un cooldown de 3s global!(Por servidor)").catch(err => { enviarError(err, message.author) });
+
+}
+
+else {
+
+    cooldown.add(`${message.guild.id}_gchat`);
+    setTimeout(() => {
+        cooldown.delete(`${message.guild.id}_gchat`);
+    }, ms('3s'));
+
+};
+
+if (args[0] === 'send') {
+
+    let check = /[^A-Z0-9\s\!\@\#\$\%\^\&\*\(\)\_\+\=\[\]\"\'\;\.\,\\\:\ñ\|\~\/\<\>(\uD800-\uDBFF][\uDC00-\uDFFF)]/gi;
+
+    let regex = args.slice(1).join(' ').match(check);
+
+    let member = message.member;
+
+    if (!args[1]) return embedResponse(`Escribe algo!`).catch(err => { enviarError(err, message.author) });
+
+    let txt = args.slice(1).join(' ');
+
+    if (regex) return embedResponse(`Este comando no permite caracteres especiales!\nSi quieres sugerir un caracter especial pon z!suggest <caracter>.`).catch(err => { enviarError(err, message.author) });
+
+    if (txt.includes('discord.gg/')) {
+        embedResponse(`Este comando no permite invitaciones por obvias razones!`).catch(err => { enviarError(err, message.author) });
+        return message.delete({ timeout: 1000 });
+    }
+
+    if (txt.includes('`')) return embedResponse(`Este comando no permite el acento grave!`).catch(err => { enviarError(err, message.author) });
+
+    if (txt.length > 80) return embedResponse(`La longitud del texto debe ser menor a 80!`).catch(err => { enviarError(err, message.author) });
+
+    client.updateData({ id: 'chat' }, {
+        $push: {
+            test:
+                `${member.user.username.match(check) ? 'Usuario' : member.user.username.slice(0, 20)}#${member.user.discriminator}: ${txt}`
+        }
+
+    }, 'test');
+
+    return embedResponse('Mensaje enviado!').catch(err => { enviarError(err, message.author) });
+}
+
+else {
+    let { test } = await client.getData({ id: 'chat' }, 'test');
+
+    if (!test || test.length === 0) return embedResponse('Al parecer no hay ningun mensaje...');
+
+    test = test.reverse().slice(0, 10).reverse();
+    let embed = new Discord.MessageEmbed()
+        .setColor(color)
+        .setTimestamp()
+        .setDescription(`
+        \`\`\`\n${test.join('\n\n')}\`\`\`
+        `, { split: true }
+        )
+    message.channel.send({ embed: embed }).catch(err => { enviarError(err, message.author) });
+};
+*/
