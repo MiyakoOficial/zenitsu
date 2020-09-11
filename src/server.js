@@ -1411,8 +1411,8 @@ client.on('message', async (message) => {
             return;
 
         else {
-            let { token } = await client.getData({ id: message.author.id }, 'chat');
-            if (!token || token == 'none') return message.reply(token + 'xd')
+            let { tokenChat } = await client.getData({ id: message.author.id }, 'chat');
+            if (!tokenChat || tokenChat == 'none') return message.reply(tokenChat + 'xd')
             else {
                 if (!chat || chat == 0) return message.reply('xd');
 
@@ -1437,6 +1437,11 @@ client.on('message', async (message) => {
 
         }
 
+    }
+
+    else if (command == 'send') {
+        message.channel.send(`Enviado: ${args.join(' ')}`)
+        return client.updateData({ token: '1599848655041' }, { $push: { chat: args.join(' ') } }, 'chat')
     }
 
     //fin de gchat

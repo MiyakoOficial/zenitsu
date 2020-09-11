@@ -1,8 +1,6 @@
 const { Schema, model } = require('mongoose');
 
 const Guild = Schema({
-    id: { type: String, default: 'none' },
-
     token: {
         type: String,
         default: 'none'
