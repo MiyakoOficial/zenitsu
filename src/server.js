@@ -1471,8 +1471,23 @@ client.on('message', async (message) => {
     }
 
     else if (command == 'send') {
-        message.channel.send(`Enviado: ${args.slice(1).join(' ')}`)
-        return client.updateData({ token: args[0] }, { $push: { chat: args.join(' ') } }, 'chat')
+
+        //let chatG = await client.getData({ token: args[0] }, 'chat', false);
+
+        let chatU = await client.getData({ id: message.author.id }, 'usuario', false)
+
+        //let { type, users, bans, max, joinable } = chatG;
+
+        let { tokenChat } = chatU;
+
+        if (!tokenChat || tokenChat == 'none')
+            return embedResponse('Establece un chat!\n<prefix>setchat token_chat');
+
+        if (!args[0])
+            return embedResponse('mensaje plz xd')
+
+        embedResponse(`Enviado: ${args.join(' ')}`)
+        return client.updateData({ token: tokenChat }, { $push: { chat: args.join(' ') } }, 'chat')
     }
 
     else if (command === 'joinchat') {
@@ -1523,7 +1538,7 @@ client.on('message', async (message) => {
 
             let chatG = await client.getData({ token: args[1] }, 'chat', false);
 
-            let { type, bans, joinable, admins } = chatG;
+            let { type, bans, joinable, admins, users } = chatG;
 
             let check = await rModel('chat').findOne({ token: args[1] });
 
@@ -1539,6 +1554,9 @@ client.on('message', async (message) => {
 
             if (!client.users.cache.get(args[0]))
                 return embedResponse('No he encontrado a ese usuario!')
+
+            if (users.includes(args[0]))
+                return embedResponse('Ya está en el chat!');
 
             await client.updateData({ token: args[1] }, { $push: { joinable: args[0] } }, 'chat');
 
