@@ -1440,8 +1440,8 @@ client.on('message', async (message) => {
     }
 
     else if (command == 'send') {
-        message.channel.send(`Enviado: ${args.join(' ')}`)
-        return client.updateData({ token: '1599848655041' }, { $push: { chat: args.join(' ') } }, 'chat')
+        message.channel.send(`Enviado: ${args.slice(1).join(' ')}`)
+        return client.updateData({ token: args[0] }, { $push: { chat: args.join(' ') } }, 'chat')
     }
 
     //fin de gchat
