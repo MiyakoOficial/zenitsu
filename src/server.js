@@ -1458,6 +1458,8 @@ client.on('message', async (message) => {
 
             await client.updateData({ token: `${tok}` }, { $push: { users: message.author.id } }, 'chat');
 
+            await client.updateData({ token: `${tok}` }, { $push: { joinable: message.author.id } }, 'chat');
+
             await client.updateData({ token: `${tok}` }, { type: args[0].trim() }, 'chat');
 
             await client.updateData({ token: `${tok}` }, { max: parseInt(args[1]) }, 'chat');
