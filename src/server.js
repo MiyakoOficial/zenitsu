@@ -1503,9 +1503,9 @@ client.on('message', async (message) => {
             if (users.length >= max)
                 return embedResponse('El chat está lleno!')
 
-            client.updateData({ token: args[0] }, { $push: { users: 1 } }, 'chat');
+            client.updateData({ token: args[0] }, { $addToSet: { users: message.author.id } }, 'chat');
 
-            embedResponse('Ahora usa z!joinchat ' + args[0]);
+            embedResponse('Ahora usa z!setchat ' + args[0]);
 
         }
     }
