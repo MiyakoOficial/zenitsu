@@ -1503,7 +1503,7 @@ client.on('message', async (message) => {
             if (users.length >= max)
                 return embedResponse('El chat está lleno!')
 
-            client.updateData({ token: args[0] }, { $inc: { users: 1 } }, 'chat');
+            client.updateData({ token: args[0] }, { $push: { users: 1 } }, 'chat');
 
             embedResponse('Ahora usa z!joinchat ' + args[0]);
 
