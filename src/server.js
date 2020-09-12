@@ -1644,7 +1644,7 @@ client.on('message', async (message) => {
                 return embedResponse(`El usuario es administrador!`);
         }
 
-        if (args[0] == owner)
+        if (args[0] == owner || args[0] == message.author.id)
             return embedResponse('No te puedes banear!');
 
         if (bans.includes(args[0]))
@@ -1684,8 +1684,8 @@ client.on('message', async (message) => {
         if (!admins.includes(message.author.id))
             return embedResponse('Solos los admins pueden desbanear!')
 
-        if (args[0] == owner)
-            return embedResponse('No te puedes desbanear!');
+        if (args[0] == owner || args[0] == message.author.id)
+            return embedResponse('No te puedes banear!');
 
         if (!bans.includes(args[0]))
             return embedResponse('El usuario ya estaba desbaneado!');
