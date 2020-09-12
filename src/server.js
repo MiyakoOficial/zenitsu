@@ -1,4 +1,4 @@
-const { join } = require('path');
+const { join, parse } = require('path');
 const { capitalize, rModel, getUser } = require('./functions.js')
 const color = "#E09E36";
 const ytsr = require('ytsr');
@@ -340,10 +340,11 @@ client.on('message', async (message) => {
                 .addField('Extras', `${prefix}txt, ${prefix}ping, ${prefix}canal/channel, ${prefix}snipe, ${prefix}creditos`)
                 .addField('Moderación', `${prefix}clear, ${prefix}voicekick, ${prefix}voicemute, ${prefix}voiceunmute, ${prefix}voicedeaf, ${prefix}voiceundeaf, ${prefix}warn, ${prefix}checkwarns, ${prefix}resetwarns, ${prefix}setwarns, ${prefix}findinvites`)
                 .addField('Administración', `${prefix}blockchannels, ${prefix}setprefix/changeprefix, ${prefix}setlogs/logschannel`)
-                .addField('Diversión', `${prefix}challenge, ${prefix}achievement, ${prefix}ship, ${prefix}supreme, ${prefix}didyoumean, ${prefix}captcha, ${prefix}drake, ${prefix}xd, ${prefix}voicechat(fuera de servicio), ${prefix}chat(fuera de servicio), ${prefix}gchat`)
+                .addField('Diversión', `${prefix}challenge, ${prefix}achievement, ${prefix}ship, ${prefix}supreme, ${prefix}didyoumean, ${prefix}captcha, ${prefix}drake, ${prefix}xd`)
                 .addField('Música', `${prefix}play/p, ${prefix}queue/q, ${prefix}skip/s, ${prefix}stop, ${prefix}nowplaying/np, ${prefix}volume/v`)
                 .addField('Niveles', `${prefix}setchannelxp, ${prefix}setlevel, ${prefix}xp/exp, ${prefix}rank`)
                 .addField('Privados', `${prefix}eval, ${prefix}blacklist, ${prefix}checkblacklist, ${prefix}deny, ${prefix}accept`)
+                .addField(`Nuevo: Chat`, `${prefix}createchat, ${prefix}chat, ${prefix}deletechat, ${prefix}infochat, ${prefix}setadmin, ${prefix}unsetadmin, ${prefix}banchat, ${prefix}unbanchat, ${prefix}editchat, ${prefix}publiclist, ${prefix}sendchat, ${prefix}userchats, ${prefix}invitechat, ${prefix}setchat`)
                 .addField('Among Us', `${prefix}muteall, ${prefix}unmuteall, ${prefix}setmessageid`)
                 .setThumbnail(client.user.displayAvatarURL({ format: 'png', size: 2048 }))
                 .setTimestamp()
@@ -1768,7 +1769,16 @@ client.on('message', async (message) => {
     else if (command === 'publiclist') {
         if (!['507367752391196682', '402291352282464259', '374710341868847104'].includes(message.author.id))
             return;
-        embedResponse(`${(await getPublicList(message)).join(' ')}`);
+
+        let seleccion = parseInt(args[0]) || 1;
+
+        if (seleccion < 1) {
+            seleccion = 1
+        }
+
+        let paginas = funcionPagina((await getPublicList(message)), 5)
+
+        embedResponse(paginas[seleccion - 1].join('\n'));
     }
 
     else if (command == 'sendchat') {
@@ -1838,22 +1848,6 @@ client.on('message', async (message) => {
                 return embedResponse('No tienes ningun chat creado!');
 
             return embedResponse('Tokens:\n' + grupos.join('\n'))
-        }
-    }
-
-    else if (command === 'listchats') {
-        if (!['507367752391196682', '402291352282464259', '374710341868847104'].includes(message.author.id))
-            return;
-        else {
-
-            let listU = await client.getData({ id: message.author.id }, 'usuario');
-
-            let { undidos } = listU;
-
-            if (!undidos || undidos == 0)
-                return embedResponse('No te has unido a ningun chat!');
-
-            return embedResponse('Tokens:\n' + undidos.join('\n'))
         }
     }
 
