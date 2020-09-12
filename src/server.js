@@ -1813,14 +1813,6 @@ client.on('message', async (message) => {
             return embedResponse("Pagina inexistente!")
                 .catch(error => { enviarError(error, message.author) });
 
-        let embed = new Discord.MessageEmbed()
-            .setColor(color)
-            .setTimestamp()
-        var i = 0
-        for (let x of paginas) {
-            embed.addField(paginas[seleccion - 1].split(ayuda)[0], paginas[seleccion - 1].split(ayuda)[1])
-        }
-
         embedResponse(paginas[seleccion - 1].join('\n'))
             .catch(error => { enviarError(error, message.author) });
     }
