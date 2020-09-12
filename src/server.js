@@ -1690,7 +1690,7 @@ client.on('message', async (message) => {
 
         await client.updateData({ token: args[1] }, { $pull: { bans: `${args[0]}` } }, 'chat');
 
-        embedResponse(`Has baneado a ${user.tag} del chat!`)
+        embedResponse(`Has desbaneado a ${user.tag} del chat!`)
 
 
     }
@@ -1883,7 +1883,7 @@ client.on('message', async (message) => {
                 return embedResponse('No he encontrado a ese usuario!')
 
             if (joinable.includes(args[0]))
-                return embedResponse('Ya lo haz invitado al chat!');
+                return embedResponse('Ya lo has invitado al chat!');
 
             if (users.includes(args[0]))
                 return embedResponse('Ya está en el chat!');
