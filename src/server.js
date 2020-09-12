@@ -1424,8 +1424,13 @@ client.on('message', async (message) => {
 
             else {
 
-                let { chat } = await client.getData({ token: tokenChat }, 'chat');
+                let { chat, bans } = await client.getData({ token: tokenChat }, 'chat');
 
+                if (bans.includes(message.author.id)) {
+                    await client.updateData({ id: message.author.id }, { tokenChat: 'none' }, 'usuario');
+
+                    return embedResponse({ embed: embed.setFooter('Oh oh, parece que estas baneado del chat!') })
+                }
                 if (!chat || chat == 0) return message.channel.send({ embed: embed.setFooter('El chat está vacio, se el primero en hablar!') });
 
                 return embedResponse(`\`\`\`ini\n${chat.reverse().slice(0, 10).reverse().join('\n')}\`\`\``);
