@@ -1446,10 +1446,10 @@ client.on('message', async (message) => {
                 return embedResponse('Pon un numero menor a 21!');
 
             let { grupos } = await client.getData({ id: message.author.id }, 'usuario');
-
-            if (grupos.length >= 10)
-                return embedResponse('Has superado el limite de grupos, si quieres borra uno y crea otro!');
-
+            if (grupos) {
+                if (grupos.length >= 10)
+                    return embedResponse('Has superado el limite de grupos, si quieres borra uno y crea otro!');
+            }
             let tok = Date.now();
 
             await client.createData({ token: `${tok}`, owner: message.author.id, }, 'chat');
