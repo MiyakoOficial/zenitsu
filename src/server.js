@@ -2633,14 +2633,14 @@ else {
 };
 */
 
-async function getPublicList() {
+async function getPublicList(message) {
 
     let arrayList = [];
     let datos = await rModel('chat').find({ type: 'public' });
 
     for (let x of datos) {
 
-        arrayList.push(`${x.token} - ${x.users.length}/${x.max}`)
+        arrayList.push(`${x.token} - ${x.users.length}/${x.max}${x.admins.includes(message.author.id) ? '[ADMIN]' : '\u200b'}`);
 
     }
 
