@@ -1502,6 +1502,8 @@ client.on('message', async (message) => {
 
             if (!grupos || grupos == 0)
                 return embedResponse('No tienes ningun chat creado!');
+
+            return embedResponse('Tokens:\n' + grupos.join('\n'))
         }
     }
 
