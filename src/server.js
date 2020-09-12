@@ -1447,7 +1447,7 @@ client.on('message', async (message) => {
 
             let { grupos } = await client.getData({ id: message.author.id }, 'usuario');
 
-            if (grupos >= 10)
+            if (grupos.length >= 10)
                 return embedResponse('Has superado el limite de grupos, si quieres borra uno y crea otro!');
 
             let tok = Date.now();
