@@ -1863,6 +1863,9 @@ client.on('message', async (message) => {
             if (!client.users.cache.get(args[0]))
                 return embedResponse('No he encontrado a ese usuario!')
 
+            if (joinable.includes(args[0]))
+                return embedResponse('Ya lo haz invitado al chat!');
+
             if (users.includes(args[0]))
                 return embedResponse('Ya está en el chat!');
 
