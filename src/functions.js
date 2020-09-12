@@ -10,8 +10,30 @@ function getUser(client, id) {
     return client.users.cache.get(id) ? client.users.cache.get(id) : 'User unknown';
 }
 
+function Hora() {
+    fecha = new Date()
+    hora = fecha.getHours()
+    minutos = fecha.getMinutes()
+    segundos = fecha.getSeconds()
+
+    if (hora < 10) {
+        hora = `0${hora}`
+    }
+    if (minutos < 10) {
+        minutos = `0${minutos}`
+    }
+    if (segundos < 10) {
+        segundos = `0${segundos}`
+    }
+
+    return `${hora} : ${minutos} : ${segundos}`
+}
+
+Hora()
+
 module.exports = {
     capitalize,
     rModel,
-    getUser
+    getUser,
+    Hora
 }

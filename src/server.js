@@ -1,5 +1,5 @@
 const { join, parse } = require('path');
-const { capitalize, rModel, getUser } = require('./functions.js')
+const { capitalize, rModel, getUser, Hora } = require('./functions.js')
 const color = "#E09E36";
 const ytsr = require('ytsr');
 const ytdl = require('ytdl-core');
@@ -1772,8 +1772,6 @@ client.on('message', async (message) => {
 
         let check = /[^A-Z0-9\s\!\@\#\$\%\^\&\*\(\)\_\+\=\[\]\"\'\;\.\,\\\:\ñ\|\~\/\<\>(\uD800-\uDBFF][\uDC00-\uDFFF)]/gi;
 
-
-
         let chatU = await client.getData({ id: message.author.id }, 'usuario');
 
         let embed = new Discord.MessageEmbed()
@@ -1810,6 +1808,9 @@ client.on('message', async (message) => {
         if (regex)
             return embedResponse('Este comando no permite caracteres especiales!');
 
+        if (args.join(' ').length >= 131)
+            return embedResponse('El limite del texto es 130 letras!')
+
         if (regexTag) {
             res = '[EspecialUser#' + message.author.discriminator + ']';
         }
@@ -1818,7 +1819,7 @@ client.on('message', async (message) => {
         }
 
         embedResponse(`Enviado: ${args.join(' ')}`)
-        return client.updateData({ token: tokenChat }, { $push: { chat: `${res}: ${args.join(' ')} ` } }, 'chat')
+        return client.updateData({ token: tokenChat }, { $push: { chat: `[${Hora()}]${res}: ${args.join(' ')} ` } }, 'chat')
     }
 
     else if (command === 'userchats') {
