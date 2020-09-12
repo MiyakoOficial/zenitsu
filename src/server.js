@@ -1410,18 +1410,24 @@ client.on('message', async (message) => {
     else if (command === 'gchat') {
         if (!['507367752391196682', '402291352282464259'].includes(message.author.id))
             return;
-
         else {
+
+            let embed = new Discord.MessageEmbed()
+                .setAuthor('No hay nada aq- Oh, mira a wumpus!')
+                .setImage('https://i.imgur.com/YCORRwg.png')
+                .setColor(color)
+                .setFooter('Usa <prefix>setchat token_chat para ver un chat existente!')
+
             let { tokenChat } = await client.getData({ id: message.author.id }, 'usuario');
-            if (!tokenChat || tokenChat == 'none') return message.reply(`Token inexistente!`)
+            if (!tokenChat || tokenChat == 'none') return message.channel.send({ embed: embed })
 
             else {
 
                 let { chat } = await client.getData({ token: tokenChat }, 'chat');
 
-                if (!chat || chat == 0) return message.reply(`El chat está vacio!`);
+                if (!chat || chat == 0) return message.channel.send({ embed: embed });
 
-                embedResponse(`\`\`\`ini\n${chat.reverse().slice(0, 10).reverse().join('\n')}\`\`\``);
+                return embedResponse(`\`\`\`ini\n${chat.reverse().slice(0, 10).reverse().join('\n')}\`\`\``);
             }
 
         }
