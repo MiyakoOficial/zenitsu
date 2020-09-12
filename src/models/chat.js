@@ -1,7 +1,18 @@
+const { strike } = require('ffmpeg-static');
 const { Schema, model } = require('mongoose');
 
 const Guild = Schema({
     token: {
+        type: String,
+        default: 'none'
+    },
+
+    description: {
+        type: String,
+        default: 'none'
+    },
+
+    name: {
         type: String,
         default: 'none'
     },

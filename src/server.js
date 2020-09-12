@@ -1464,7 +1464,7 @@ client.on('message', async (message) => {
 
             await client.updateData({ token: `${tok}` }, { max: parseInt(args[1]) }, 'chat');
 
-            await client.updateData({ id: message.author.id }, { $inc: { grupos: 1 } }, 'usuario');
+            await client.updateData({ id: message.author.id }, { $push: { grupos: `${tok}` } }, 'usuario');
 
             await embedResponse(`Token: ${tok}`);
 
@@ -1472,13 +1472,12 @@ client.on('message', async (message) => {
 
     }
 
-    else if (command == 'send') {
+    else if (command == 'sendchat') {
 
-        //let chatG = await client.getData({ token: args[0] }, 'chat', false);
+        if (!['507367752391196682', '402291352282464259'].includes(message.author.id))
+            return;
 
         let chatU = await client.getData({ id: message.author.id }, 'usuario', false)
-
-        //let { type, users, bans, max, joinable } = chatG;
 
         let { tokenChat } = chatU;
 
@@ -1486,47 +1485,23 @@ client.on('message', async (message) => {
             return embedResponse('Establece un chat!\n<prefix>setchat token_chat');
 
         if (!args[0])
-            return embedResponse('mensaje plz xd')
+            return embedResponse('Ejemplo de uso: <prefix>sendchat Hola gente!')
 
         embedResponse(`Enviado: ${args.join(' ')}`)
         return client.updateData({ token: tokenChat }, { $push: { chat: args.join(' ') } }, 'chat')
     }
 
-    else if (command === 'joinchat') {
+    else if (command === 'userchats') {
         if (!['507367752391196682', '402291352282464259'].includes(message.author.id))
             return;
         else {
 
-            if (!args[0])
-                return embedResponse('Escribe un token de chat!');
+            let listU = await client.getData({ id: message.author.id }, 'usuario', false);
 
-            let chatG = await client.getData({ token: args[0] }, 'chat', false)
+            let { grupos } = listU;
 
-            let { type, users, bans, max, joinable } = chatG;
-
-            let check = await rModel('chat').findOne({ token: args[0] });
-
-            if (!check)
-                return embedResponse('Token invalido!');
-
-            if (type === 'private') {
-                if (!joinable.includes(message.author.id))
-                    return embedResponse('No te puedes unir, es un chat privado y no te han invitado!')
-            }
-
-            if (users.includes(message.author.id))
-                return embedResponse('Ya estas en el chat!');
-
-            if (bans.includes(message.author.id))
-                return embedResponse('Estas baneado del chat!');
-
-            if (users.length >= max)
-                return embedResponse('El chat está lleno!')
-
-            client.updateData({ token: args[0] }, { $addToSet: { users: message.author.id } }, 'chat');
-
-            embedResponse('Ahora usa z!setchat ' + args[0]);
-
+            if (!grupos || grupos == 0)
+                return embedResponse('No tienes ningun chat creado!');
         }
     }
 
@@ -1535,34 +1510,8 @@ client.on('message', async (message) => {
             return;
         else {
 
-            if (!args[0])
-                return embedResponse('Ejemplo de uso: `<prefix>invitechat user_id token_chat`');
 
-            let chatG = await client.getData({ token: args[1] }, 'chat', false);
 
-            let { type, bans, joinable, admins, users } = chatG;
-
-            let check = await rModel('chat').findOne({ token: args[1] });
-
-            if (!check)
-                return embedResponse('Token invalido!');
-
-            if (!admins.includes(message.author.id)) {
-                return embedResponse('No puedes invitar a nadie sin ser admin!')
-            }
-
-            if (bans.includes(args[0]))
-                return embedResponse('Ese usuario está baneado, usa <prefix>unbanchat user_id token_chat');
-
-            if (!client.users.cache.get(args[0]))
-                return embedResponse('No he encontrado a ese usuario!')
-
-            if (users.includes(args[0]))
-                return embedResponse('Ya está en el chat!');
-
-            await client.updateData({ token: args[1] }, { $push: { joinable: args[0] } }, 'chat');
-
-            return embedResponse(`Has invitado a \`${client.users.cache.get(args[0]).tag}\`!`);
         }
     }
 
