@@ -1770,8 +1770,7 @@ client.on('message', async (message) => {
 
         let check = /[^A-Z0-9\s\!\@\#\$\%\^\&\*\(\)\_\+\=\[\]\"\'\;\.\,\\\:\ñ\|\~\/\<\>(\uD800-\uDBFF][\uDC00-\uDFFF)]/gi;
 
-        if (!['507367752391196682', '402291352282464259', '374710341868847104'].includes(message.author.id))
-            return;
+
 
         let chatU = await client.getData({ id: message.author.id }, 'usuario');
 
@@ -1821,92 +1820,88 @@ client.on('message', async (message) => {
     }
 
     else if (command === 'userchats') {
-        if (!['507367752391196682', '402291352282464259', '374710341868847104'].includes(message.author.id))
-            return;
-        else {
 
-            let listU = await client.getData({ id: message.author.id }, 'usuario');
 
-            let { grupos } = listU;
 
-            if (!grupos || grupos == 0)
-                return embedResponse('No tienes ningun chat creado!');
+        let listU = await client.getData({ id: message.author.id }, 'usuario');
 
-            return embedResponse('Tokens:\n' + grupos.join('\n'))
-        }
+        let { grupos } = listU;
+
+        if (!grupos || grupos == 0)
+            return embedResponse('No tienes ningun chat creado!');
+
+        return embedResponse('Tokens:\n' + grupos.join('\n'))
+
     }
 
     else if (command === 'invitechat') {
-        if (!['507367752391196682', '402291352282464259', '374710341868847104'].includes(message.author.id))
-            return;
-        else {
 
-            if (!args[0])
-                return embedResponse('Ejemplo de uso: `<prefix> invitechat user_id token_chat`');
 
-            let check = await rModel('chat').findOne({ token: args[1] });
 
-            if (!check)
-                return embedResponse('Token invalido!');
+        if (!args[0])
+            return embedResponse('Ejemplo de uso: `<prefix> invitechat user_id token_chat`');
 
-            let chatG = await client.getData({ token: args[1] }, 'chat');
+        let check = await rModel('chat').findOne({ token: args[1] });
 
-            let { type, bans, joinable, admins, users } = chatG;
+        if (!check)
+            return embedResponse('Token invalido!');
 
-            if (!admins.includes(message.author.id)) {
-                return embedResponse('No puedes invitar a nadie sin ser admin!')
-            }
+        let chatG = await client.getData({ token: args[1] }, 'chat');
 
-            if (bans.includes(args[0]))
-                return embedResponse('Ese usuario está baneado, usa <prefix>unbanchat user_id token_chat!');
+        let { type, bans, joinable, admins, users } = chatG;
 
-            if (!client.users.cache.get(args[0]))
-                return embedResponse('No he encontrado a ese usuario!')
-
-            if (joinable.includes(args[0]))
-                return embedResponse('Ya lo has invitado al chat!');
-
-            if (users.includes(args[0]))
-                return embedResponse('Ya está en el chat!');
-
-            await client.updateData({ token: args[1] }, { $addToSet: { joinable: args[0] } }, 'chat');
-
-            return embedResponse(`Has invitado a \`${client.users.cache.get(args[0]).tag}\`!`);
-
+        if (!admins.includes(message.author.id)) {
+            return embedResponse('No puedes invitar a nadie sin ser admin!')
         }
+
+        if (bans.includes(args[0]))
+            return embedResponse('Ese usuario está baneado, usa <prefix>unbanchat user_id token_chat!');
+
+        if (!client.users.cache.get(args[0]))
+            return embedResponse('No he encontrado a ese usuario!')
+
+        if (joinable.includes(args[0]))
+            return embedResponse('Ya lo has invitado al chat!');
+
+        if (users.includes(args[0]))
+            return embedResponse('Ya está en el chat!');
+
+        await client.updateData({ token: args[1] }, { $addToSet: { joinable: args[0] } }, 'chat');
+
+        return embedResponse(`Has invitado a \`${client.users.cache.get(args[0]).tag}\`!`);
+
+
     }
 
     else if (command === 'setchat') {
 
-        if (!['507367752391196682', '402291352282464259', '374710341868847104'].includes(message.author.id))
-            return;
-        else {
 
-            if (!args[0])
-                return embedResponse('Escribe un token de chat!');
 
-            let check = await rModel('chat').findOne({ token: args[0] });
+        if (!args[0])
+            return embedResponse('Escribe un token de chat!');
 
-            if (!check)
-                return embedResponse('Token invalido!');
+        let check = await rModel('chat').findOne({ token: args[0] });
 
-            let chatG = await client.getData({ token: args[0] }, 'chat');
+        if (!check)
+            return embedResponse('Token invalido!');
 
-            let { type, bans, joinable } = chatG;
+        let chatG = await client.getData({ token: args[0] }, 'chat');
 
-            if (type === 'private') {
-                if (!joinable.includes(message.author.id))
-                    return embedResponse('No te puedes unir, es un chat privado y no te han invitado!')
-            }
+        let { type, bans, joinable } = chatG;
 
-            if (bans.includes(message.author.id))
-                return embedResponse('Estas baneado del chat!');
-
-            await client.updateData({ id: message.author.id }, { tokenChat: `${args[0]}` }, 'usuario');
-            await client.updateData({ token: args[0] }, { $addToSet: { users: message.author.id } }, 'chat');
-
-            return embedResponse('Chat establecido!\nToken: ' + args[0]);
+        if (type === 'private') {
+            if (!joinable.includes(message.author.id))
+                return embedResponse('No te puedes unir, es un chat privado y no te han invitado!')
         }
+
+        if (bans.includes(message.author.id))
+            return embedResponse('Estas baneado del chat!');
+
+        await client.updateData({ id: message.author.id }, { tokenChat: `${args[0]}` }, 'usuario');
+        await client.updateData({ token: args[0] }, { $addToSet: { users: message.author.id } }, 'chat');
+
+        return embedResponse('Chat establecido!\nToken: ' + args[0]);
+
     }
 
     //fin de gchat
