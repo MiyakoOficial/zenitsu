@@ -2633,10 +2633,18 @@ else {
 };
 */
 
+async function getPublicList() {
 
-function getPublicList() {
+    let arrayList = [];
+    let datos = await rModel('chat').find({ type: 'public' });
 
+    for (let x of datos) {
 
+        arrayList.push(`${x.token} - ${x.users.length}/${x.max}`)
+
+    }
+
+    return arrayList;
 
 }
 
