@@ -1591,6 +1591,22 @@ client.on('message', async (message) => {
         }
     }
 
+    else if (command === 'listchats') {
+        if (!['507367752391196682', '402291352282464259'].includes(message.author.id))
+            return;
+        else {
+
+            let listU = await client.getData({ id: message.author.id }, 'usuario');
+
+            let { undidos } = listU;
+
+            if (!undidos || undidos == 0)
+                return embedResponse('No te has unido a ningun chat!');
+
+            return embedResponse('Tokens:\n' + undidos.join('\n'))
+        }
+    }
+
     else if (command === 'invitechat') {
         if (!['507367752391196682', '402291352282464259'].includes(message.author.id))
             return;
