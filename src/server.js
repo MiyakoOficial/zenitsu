@@ -1456,8 +1456,8 @@ client.on('message', async (message) => {
             if (!max || max < 2)
                 return embedResponse('Pon un numero mayor a 1!');
 
-            if (!max || max > 21)
-                return embedResponse('Pon un numero menor a 21!');
+            if (!max || max > 51)
+                return embedResponse('Pon un numero menor a 51!');
 
             let { grupos } = await client.getData({ id: message.author.id }, 'usuario');
             if (grupos) {
