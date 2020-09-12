@@ -2632,3 +2632,36 @@ else {
     message.channel.send({ embed: embed }).catch(err => { enviarError(err, message.author) });
 };
 */
+
+
+function getPublicList() {
+
+
+
+}
+
+async function deleteChatByToken(tokenHere) {
+
+    let { users } = await client.getData({ token: tokenHere }, 'chat');
+
+    for (let x of users) {
+
+        try {
+
+            await client.updateData({ id: x }, { $pull: { grupos: tokenHere } }, 'usuario');
+
+        } catch (err) { }
+
+    }
+
+    try {
+
+        rModel('chat').deleteOne({
+            token: tokenHere
+        }).exec();
+
+    } catch (err) { }
+
+    return true;
+
+}
