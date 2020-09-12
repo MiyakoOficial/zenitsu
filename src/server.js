@@ -1409,88 +1409,84 @@ client.on('message', async (message) => {
 
     //inicio de gchat
     else if (command === 'chat') {
-        if (!['507367752391196682', '402291352282464259', '374710341868847104'].includes(message.author.id))
-            return;
+
+
+        let embed = new Discord.MessageEmbed()
+            .setAuthor('No hay nada aq- Oh, mira a wumpus!')
+            .setImage('https://i.imgur.com/YCORRwg.png')
+            .setColor(color)
+            .setFooter('Usa <prefix>setchat token_chat para ver un chat existente!')
+            .setTimestamp()
+
+        let { tokenChat } = await client.getData({ id: message.author.id }, 'usuario');
+        if (!tokenChat || tokenChat == 'none') return message.channel.send({ embed: embed })
+
         else {
 
-            let embed = new Discord.MessageEmbed()
-                .setAuthor('No hay nada aq- Oh, mira a wumpus!')
-                .setImage('https://i.imgur.com/YCORRwg.png')
-                .setColor(color)
-                .setFooter('Usa <prefix>setchat token_chat para ver un chat existente!')
-                .setTimestamp()
-
-            let { tokenChat } = await client.getData({ id: message.author.id }, 'usuario');
-            if (!tokenChat || tokenChat == 'none') return message.channel.send({ embed: embed })
-
-            else {
-
-                let { chat, bans } = await client.getData({ token: tokenChat }, 'chat');
+            let { chat, bans } = await client.getData({ token: tokenChat }, 'chat');
 
 
-                if (bans && bans.includes(message.author.id)) {
-                    await client.updateData({ id: message.author.id }, { tokenChat: 'none' }, 'usuario');
+            if (bans && bans.includes(message.author.id)) {
+                await client.updateData({ id: message.author.id }, { tokenChat: 'none' }, 'usuario');
 
-                    return embedResponse({ embed: embed.setFooter('Oh oh, parece que estas baneado del chat!') })
-                }
-
-                if (!chat || chat == 0) return message.channel.send({ embed: embed.setFooter('El chat está vacio, se el primero en hablar!') });
-
-                return embedResponse(`\`\`\`ini\n${chat.reverse().slice(0, 10).reverse().join('\n')}\`\`\``);
+                return embedResponse({ embed: embed.setFooter('Oh oh, parece que estas baneado del chat!') })
             }
 
+            if (!chat || chat == 0) return message.channel.send({ embed: embed.setFooter('El chat está vacio, se el primero en hablar!') });
+
+            return embedResponse(`\`\`\`ini\n${chat.reverse().slice(0, 10).reverse().join('\n')}\`\`\``);
         }
+
+
 
     }
 
     else if (command === 'createchat') {
-        if (!['507367752391196682', '402291352282464259', '374710341868847104'].includes(message.author.id))
-            return;
 
-        else {
 
-            let max = parseInt(args[1])
 
-            if (!args[0] || !['public', 'private'].includes(args[0].toLowerCase()))
-                return embedResponse('Selecciona entre `private` o `public`.\nEjemplo de uso: <prefix>createchat private 15');
 
-            if (!max || max < 2)
-                return embedResponse('Pon un numero mayor a 1!');
+        let max = parseInt(args[1])
 
-            if (!max || max > 51)
-                return embedResponse('Pon un numero menor a 51!');
+        if (!args[0] || !['public', 'private'].includes(args[0].toLowerCase()))
+            return embedResponse('Selecciona entre `private` o `public`.\nEjemplo de uso: <prefix>createchat private 15');
 
-            let { grupos } = await client.getData({ id: message.author.id }, 'usuario');
-            if (grupos) {
-                if (grupos.length >= 10)
-                    return embedResponse('Has superado el limite de grupos, si quieres borra uno y crea otro!');
-            }
-            let tok = Date.now();
+        if (!max || max < 2)
+            return embedResponse('Pon un numero mayor a 1!');
 
-            await client.createData({ token: `${tok}`, owner: message.author.id, }, 'chat');
+        if (!max || max > 51)
+            return embedResponse('Pon un numero menor a 51!');
 
-            await client.updateData({ token: `${tok}` }, { $addToSet: { admins: message.author.id } }, 'chat');
-
-            await client.updateData({ token: `${tok}` }, { $addToSet: { users: message.author.id } }, 'chat');
-
-            await client.updateData({ token: `${tok}` }, { $addToSet: { joinable: message.author.id } }, 'chat');
-
-            await client.updateData({ token: `${tok}` }, { type: args[0].trim() }, 'chat');
-
-            await client.updateData({ token: `${tok}` }, { max: parseInt(args[1]) }, 'chat');
-
-            await client.updateData({ id: message.author.id }, { $addToSet: { grupos: `${tok}` } }, 'usuario');
-
-            await embedResponse(`Token: ${tok}`);
-
+        let { grupos } = await client.getData({ id: message.author.id }, 'usuario');
+        if (grupos) {
+            if (grupos.length >= 10)
+                return embedResponse('Has superado el limite de grupos, si quieres borra uno y crea otro!');
         }
+        let tok = Date.now();
+
+        await client.createData({ token: `${tok}`, owner: message.author.id, }, 'chat');
+
+        await client.updateData({ token: `${tok}` }, { $addToSet: { admins: message.author.id } }, 'chat');
+
+        await client.updateData({ token: `${tok}` }, { $addToSet: { users: message.author.id } }, 'chat');
+
+        await client.updateData({ token: `${tok}` }, { $addToSet: { joinable: message.author.id } }, 'chat');
+
+        await client.updateData({ token: `${tok}` }, { type: args[0].trim() }, 'chat');
+
+        await client.updateData({ token: `${tok}` }, { max: parseInt(args[1]) }, 'chat');
+
+        await client.updateData({ id: message.author.id }, { $addToSet: { grupos: `${tok}` } }, 'usuario');
+
+        await embedResponse(`Token: ${tok}`);
+
+
 
     }
 
     else if (command === 'deletechat') {
 
-        if (!['507367752391196682', '402291352282464259', '374710341868847104'].includes(message.author.id))
-            return;
+
 
         if (!args[0])
             return embedResponse('Ejemplo de uso: <prefix>deletechat token_chat');
@@ -1513,8 +1509,7 @@ client.on('message', async (message) => {
 
     else if (command === 'infochat') {
 
-        if (!['507367752391196682', '402291352282464259', '374710341868847104'].includes(message.author.id))
-            return;
+
 
         if (!args[0])
             return embedResponse('Ejemplo de uso: <prefix>infochat token_chat');
@@ -1546,8 +1541,6 @@ client.on('message', async (message) => {
     }
 
     else if (command === 'setadmin') {
-        if (!['507367752391196682', '402291352282464259', '374710341868847104'].includes(message.author.id))
-            return;
 
         if (!args[0] || !args[1])
             return embedResponse('Ejemplo de uso: <prefix>setadmin user_id token_chat');
@@ -1580,8 +1573,7 @@ client.on('message', async (message) => {
     }
 
     else if (command === 'unsetadmin') {
-        if (!['507367752391196682', '402291352282464259', '374710341868847104'].includes(message.author.id))
-            return;
+
 
         if (!args[0] || !args[1])
             return embedResponse('Ejemplo de uso: <prefix>unsetadmin user_id token_chat');
@@ -1617,8 +1609,7 @@ client.on('message', async (message) => {
     }
 
     else if (command === 'banchat') {
-        if (!['507367752391196682', '402291352282464259', '374710341868847104'].includes(message.author.id))
-            return;
+
 
         if (!args[0] || !args[1])
             return embedResponse('Ejemplo de uso: <prefix>banchat user_id token_chat');
@@ -1662,8 +1653,6 @@ client.on('message', async (message) => {
     }
 
     else if (command === 'unbanchat') {
-        if (!['507367752391196682', '402291352282464259', '374710341868847104'].includes(message.author.id))
-            return;
 
         if (!args[0] || !args[1])
             return embedResponse('Ejemplo de uso: <prefix>unbanchat user_id token_chat');
@@ -1699,77 +1688,73 @@ client.on('message', async (message) => {
     }
 
     else if (command === 'editchat') {
-        if (!['507367752391196682', '402291352282464259', '374710341868847104'].includes(message.author.id))
-            return;
+
+
+
+        let check = /[^A-Z0-9\s\!\@\#\$\%\^\&\*\(\)\_\+\=\[\]\"\'\;\.\,\\\:\ñ\|\~\/\<\>(\uD800-\uDBFF][\uDC00-\uDFFF)]/gi;
+
+        if (!args[0])
+            return embedResponse('Escribe que quieres cambiar!\nEjemplo de uso: <prefix>editchat token_chat name(description o maxusers) new_name(description o maxusers)');
+
+        let checkM = await rModel('chat').findOne({ token: args[0] });
+
+        let chatG = await client.getData({ token: args[0] }, 'chat');
+
+        let { type, bans, joinable, admins, owner } = chatG;
+
+        if (!checkM)
+            return embedResponse('Token invalido!');
+
+        if (args[1] === 'name') {
+            if (owner !== message.author.id)
+                return embedResponse('No puedes cambiar el nombre del chat!');
+
+            if (!args[2] || args.slice(2).length >= 21)
+                return embedResponse('Elije un nombre con un nombre menor o igual a 20 caracteres!')
+
+            let regex = args.slice(2).join(' ').match(check);
+
+            if (regex)
+                return embedResponse('Ese nombre tiene caracteres no permitidos!');
+
+            embedResponse(`Nombre cambiado a: ${args.slice(2).join(' ')}`)
+            return await client.updateData({ token: `${args[0]}` }, { name: args.slice(2).join(' ') }, 'chat');
+
+        }
+        else if (args[1] === 'description') {
+            if (owner !== message.author.id)
+                return embedResponse('No puedes cambiar el nombre del chat!');
+
+            if (!args[2] || args.slice(2).length >= 51)
+                return embedResponse('Elije una descripción con un nombre menor o igual a 50 caracteres!')
+
+            let regex = args.slice(2).join(' ').match(check);
+
+            if (regex)
+                return embedResponse('Esa descripción tiene caracteres no permitidos!');
+
+            embedResponse(`Descripción cambiada a: ${args.slice(2).join(' ')}`)
+            return await client.updateData({ token: `${args[0]}` }, { description: args.slice(2).join(' ') }, 'chat');
+        }
+
+        else if (args[1] === 'maxusers') {
+            if (owner !== message.author.id)
+                return embedResponse('No puedes cambiar el nombre del chat!');
+
+            if (!parseInt(args[2]) || parseInt(args[2]) >= 51)
+                return embedResponse('Elije un maximo de usuarios menor o igual a 50!')
+
+            embedResponse(`Maximo cambiado a: ${args[2]}`)
+            return await client.updateData({ token: `${args[0]}` }, { max: args[2] }, 'chat');
+        }
 
         else {
-            let check = /[^A-Z0-9\s\!\@\#\$\%\^\&\*\(\)\_\+\=\[\]\"\'\;\.\,\\\:\ñ\|\~\/\<\>(\uD800-\uDBFF][\uDC00-\uDFFF)]/gi;
-
-            if (!args[0])
-                return embedResponse('Escribe que quieres cambiar!\nEjemplo de uso: <prefix>editchat token_chat name(description o maxusers) new_name(description o maxusers)');
-
-            let checkM = await rModel('chat').findOne({ token: args[0] });
-
-            let chatG = await client.getData({ token: args[0] }, 'chat');
-
-            let { type, bans, joinable, admins, owner } = chatG;
-
-            if (!checkM)
-                return embedResponse('Token invalido!');
-
-            if (args[1] === 'name') {
-                if (owner !== message.author.id)
-                    return embedResponse('No puedes cambiar el nombre del chat!');
-
-                if (!args[2] || args.slice(2).length >= 21)
-                    return embedResponse('Elije un nombre con un nombre menor o igual a 20 caracteres!')
-
-                let regex = args.slice(2).join(' ').match(check);
-
-                if (regex)
-                    return embedResponse('Ese nombre tiene caracteres no permitidos!');
-
-                embedResponse(`Nombre cambiado a: ${args.slice(2).join(' ')}`)
-                return await client.updateData({ token: `${args[0]}` }, { name: args.slice(2).join(' ') }, 'chat');
-
-            }
-            else if (args[1] === 'description') {
-                if (owner !== message.author.id)
-                    return embedResponse('No puedes cambiar el nombre del chat!');
-
-                if (!args[2] || args.slice(2).length >= 51)
-                    return embedResponse('Elije una descripción con un nombre menor o igual a 50 caracteres!')
-
-                let regex = args.slice(2).join(' ').match(check);
-
-                if (regex)
-                    return embedResponse('Esa descripción tiene caracteres no permitidos!');
-
-                embedResponse(`Descripción cambiada a: ${args.slice(2).join(' ')}`)
-                return await client.updateData({ token: `${args[0]}` }, { description: args.slice(2).join(' ') }, 'chat');
-            }
-
-            else if (args[1] === 'maxusers') {
-                if (owner !== message.author.id)
-                    return embedResponse('No puedes cambiar el nombre del chat!');
-
-                if (!parseInt(args[2]) || parseInt(args[2]) >= 51)
-                    return embedResponse('Elije un maximo de usuarios menor o igual a 50!')
-
-                embedResponse(`Maximo cambiado a: ${args[2]}`)
-                return await client.updateData({ token: `${args[0]}` }, { max: args[2] }, 'chat');
-            }
-
-            else {
-                return embedResponse('Elije una opción entre `name`, `description` o `maxusers`!')
-            }
+            return embedResponse('Elije una opción entre `name`, `description` o `maxusers`!')
         }
+
     }
 
     else if (command === 'publiclist') {
-        if (!['507367752391196682', '402291352282464259', '374710341868847104'].includes(message.author.id))
-            return;
-
         let seleccion = parseInt(args[0]) || 1;
 
         if (seleccion < 1) {
