@@ -1648,7 +1648,10 @@ client.on('message', async (message) => {
         if (bans.includes(args[0]))
             return embedResponse('El usuario ya estaba baneado!');
 
-        await client.updateData({ token: args[1] }, { $addToSet: { bans: `${args[0]}` } }, 'chat')
+        await client.updateData({ token: `${args[1]}` }, { $addToSet: { bans: `${args[0]}` } }, 'chat');
+        await client.updateData({ token: `${args[1]}` }, { $pull: { users: `${args[0]}` } }, 'chat');
+        await client.updateData({ token: `${args[1]}` }, { $pull: { joinable: `${args[0]}` } }, 'chat');
+        await client.updateData({ token: `${args[1]}` }, { $pull: { admins: `${args[0]}` } }, 'chat');
 
         embedResponse(`Has baneado a ${user.tag} del chat!`);
 
@@ -1758,6 +1761,12 @@ client.on('message', async (message) => {
                 return embedResponse('Elije una opción entre `name`, `description` o `maxusers`!')
             }
         }
+    }
+
+    else if (command === 'publiclist') {
+        if (!['507367752391196682', '402291352282464259'].includes(message.author.id))
+            return;
+        embedResponse(`${(await getPublicList(message)).join(' ')}`);
     }
 
     else if (command == 'sendchat') {
