@@ -1537,6 +1537,156 @@ client.on('message', async (message) => {
 
     }
 
+    else if (command === 'setadmin') {
+        if (!['507367752391196682', '402291352282464259'].includes(message.author.id))
+            return;
+
+        if (!args[0] || !args[1])
+            return embedResponse('Ejemplo de uso: <prefix>setadmin user_id token_chat');
+
+        let user = client.users.cache.get(args[0]);
+
+        if (!user)
+            return embedResponse('No he encontrado ese usuario!');
+
+        let checkM = await rModel('chat').findOne({ token: args[1] });
+
+        if (!checkM)
+            return embedResponse('Token inexistente!');
+
+        let chatG = await client.getData({ token: args[1] }, 'chat');
+
+        let { type, bans, joinable, admins, owner, users, max, token, description, name } = chatG;
+
+        if (owner !== message.author.id)
+            return embedResponse('Solo el creador del chat puede agregar un admin!');
+
+        if (admins.includes(args[0]))
+            return embedResponse(`El usuario ya era administrador!`)
+
+        await client.updateData({ token: args[1] }, { $addToSet: { admins: `${args[0]}` } }, 'chat')
+
+        embedResponse(`Has añadido a ${user.tag} como administrador del chat!`)
+
+
+    }
+
+    else if (command === 'unsetadmin') {
+        if (!['507367752391196682', '402291352282464259'].includes(message.author.id))
+            return;
+
+        if (!args[0] || !args[1])
+            return embedResponse('Ejemplo de uso: <prefix>unsetadmin user_id token_chat');
+
+        let user = client.users.cache.get(args[0]);
+
+        if (!user)
+            return embedResponse('No he encontrado ese usuario!');
+
+        let checkM = await rModel('chat').findOne({ token: args[1] });
+
+        if (!checkM)
+            return embedResponse('Token inexistente!');
+
+        let chatG = await client.getData({ token: args[1] }, 'chat');
+
+        let { type, bans, joinable, admins, owner, users, max, token, description, name } = chatG;
+
+        if (owner !== message.author.id)
+            return embedResponse('Solo el creador del chat puede eliminar un admin!');
+
+        if (!admins.includes(args[0]))
+            return embedResponse(`El usuario no era administrador!`);
+
+        if (args[0] == owner)
+            return embedResponse('No te puedes eliminar como admin!')
+
+        await client.updateData({ token: args[1] }, { $pull: { admins: `${args[0]}` } }, 'chat')
+
+        embedResponse(`Has eliminado a ${user.tag} como administrador del chat!`)
+
+
+    }
+
+    else if (command === 'banchat') {
+        if (!['507367752391196682', '402291352282464259'].includes(message.author.id))
+            return;
+
+        if (!args[0] || !args[1])
+            return embedResponse('Ejemplo de uso: <prefix>banchat user_id token_chat');
+
+        let user = client.users.cache.get(args[0]);
+
+        if (!user)
+            return embedResponse('No he encontrado ese usuario!');
+
+        let checkM = await rModel('chat').findOne({ token: args[1] });
+
+        if (!checkM)
+            return embedResponse('Token inexistente!');
+
+        let chatG = await client.getData({ token: args[1] }, 'chat');
+
+        let { type, bans, joinable, admins, owner, users, max, token, description, name } = chatG;
+
+        if (!admins.includes(message.author.id))
+            return embedResponse('Solos los admins pueden banear!')
+
+        if (admins.includes(args[0])) {
+            if (owner !== message.author.id)
+                return embedResponse(`El usuario es administrador!`);
+        }
+
+        if (args[0] == owner)
+            return embedResponse('No te puedes banear!');
+
+        if (bans.includes(args[0]))
+            return embedResponse('El usuario ya estaba baneado!');
+
+        await client.updateData({ token: args[1] }, { $addToSet: { bans: `${args[0]}` } }, 'chat')
+
+        embedResponse(`Has baneado a ${user.tag} del chat!`);
+
+
+    }
+
+    else if (command === 'unbanchat') {
+        if (!['507367752391196682', '402291352282464259'].includes(message.author.id))
+            return;
+
+        if (!args[0] || !args[1])
+            return embedResponse('Ejemplo de uso: <prefix>unbanchat user_id token_chat');
+
+        let user = client.users.cache.get(args[0]);
+
+        if (!user)
+            return embedResponse('No he encontrado ese usuario!');
+
+        let checkM = await rModel('chat').findOne({ token: args[1] });
+
+        if (!checkM)
+            return embedResponse('Token inexistente!');
+
+        let chatG = await client.getData({ token: args[1] }, 'chat');
+
+        let { type, bans, joinable, admins, owner, users, max, token, description, name } = chatG;
+
+        if (!admins.includes(message.author.id))
+            return embedResponse('Solos los admins pueden desbanear!')
+
+        if (args[0] == owner)
+            return embedResponse('No te puedes desbanear!');
+
+        if (!bans.includes(args[0]))
+            return embedResponse('El usuario ya estaba desbaneado!');
+
+        await client.updateData({ token: args[1] }, { $pull: { bans: `${args[0]}` } }, 'chat');
+
+        embedResponse(`Has baneado a ${user.tag} del chat!`)
+
+
+    }
+
     else if (command === 'editchat') {
         if (!['507367752391196682', '402291352282464259'].includes(message.author.id))
             return;
@@ -1678,7 +1828,7 @@ client.on('message', async (message) => {
         else {
 
             if (!args[0])
-                return embedResponse('Ejemplo de uso: `< prefix > invitechat user_id token_chat`');
+                return embedResponse('Ejemplo de uso: `<prefix> invitechat user_id token_chat`');
 
             let check = await rModel('chat').findOne({ token: args[1] });
 
