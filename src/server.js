@@ -1762,6 +1762,8 @@ client.on('message', async (message) => {
         }
 
         let paginas = funcionPagina((await getPublicList(message)), 5)
+        if (!paginas[seleccion - 1])
+            return embedResponse("Pagina inexistente!");
 
         embedResponse(paginas[seleccion - 1].join('\n'));
     }
