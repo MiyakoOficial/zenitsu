@@ -1408,7 +1408,7 @@ client.on('message', async (message) => {
 
     //inicio de gchat
     else if (command === 'chat') {
-        if (!['507367752391196682', '402291352282464259'].includes(message.author.id))
+        if (!['507367752391196682', '402291352282464259', '374710341868847104'].includes(message.author.id))
             return;
         else {
 
@@ -1441,7 +1441,7 @@ client.on('message', async (message) => {
     }
 
     else if (command === 'createchat') {
-        if (!['507367752391196682', '402291352282464259'].includes(message.author.id))
+        if (!['507367752391196682', '402291352282464259', '374710341868847104'].includes(message.author.id))
             return;
 
         else {
@@ -1486,7 +1486,7 @@ client.on('message', async (message) => {
 
     else if (command === 'deletechat') {
 
-        if (!['507367752391196682', '402291352282464259'].includes(message.author.id))
+        if (!['507367752391196682', '402291352282464259', '374710341868847104'].includes(message.author.id))
             return;
 
         if (!args[0])
@@ -1510,7 +1510,7 @@ client.on('message', async (message) => {
 
     else if (command === 'infochat') {
 
-        if (!['507367752391196682', '402291352282464259'].includes(message.author.id))
+        if (!['507367752391196682', '402291352282464259', '374710341868847104'].includes(message.author.id))
             return;
 
         if (!args[0])
@@ -1543,7 +1543,7 @@ client.on('message', async (message) => {
     }
 
     else if (command === 'setadmin') {
-        if (!['507367752391196682', '402291352282464259'].includes(message.author.id))
+        if (!['507367752391196682', '402291352282464259', '374710341868847104'].includes(message.author.id))
             return;
 
         if (!args[0] || !args[1])
@@ -1577,7 +1577,7 @@ client.on('message', async (message) => {
     }
 
     else if (command === 'unsetadmin') {
-        if (!['507367752391196682', '402291352282464259'].includes(message.author.id))
+        if (!['507367752391196682', '402291352282464259', '374710341868847104'].includes(message.author.id))
             return;
 
         if (!args[0] || !args[1])
@@ -1614,7 +1614,7 @@ client.on('message', async (message) => {
     }
 
     else if (command === 'banchat') {
-        if (!['507367752391196682', '402291352282464259'].includes(message.author.id))
+        if (!['507367752391196682', '402291352282464259', '374710341868847104'].includes(message.author.id))
             return;
 
         if (!args[0] || !args[1])
@@ -1659,7 +1659,7 @@ client.on('message', async (message) => {
     }
 
     else if (command === 'unbanchat') {
-        if (!['507367752391196682', '402291352282464259'].includes(message.author.id))
+        if (!['507367752391196682', '402291352282464259', '374710341868847104'].includes(message.author.id))
             return;
 
         if (!args[0] || !args[1])
@@ -1696,7 +1696,7 @@ client.on('message', async (message) => {
     }
 
     else if (command === 'editchat') {
-        if (!['507367752391196682', '402291352282464259'].includes(message.author.id))
+        if (!['507367752391196682', '402291352282464259', '374710341868847104'].includes(message.author.id))
             return;
 
         else {
@@ -1764,7 +1764,7 @@ client.on('message', async (message) => {
     }
 
     else if (command === 'publiclist') {
-        if (!['507367752391196682', '402291352282464259'].includes(message.author.id))
+        if (!['507367752391196682', '402291352282464259', '374710341868847104'].includes(message.author.id))
             return;
         embedResponse(`${(await getPublicList(message)).join(' ')}`);
     }
@@ -1773,7 +1773,7 @@ client.on('message', async (message) => {
 
         let check = /[^A-Z0-9\s\!\@\#\$\%\^\&\*\(\)\_\+\=\[\]\"\'\;\.\,\\\:\ñ\|\~\/\<\>(\uD800-\uDBFF][\uDC00-\uDFFF)]/gi;
 
-        if (!['507367752391196682', '402291352282464259'].includes(message.author.id))
+        if (!['507367752391196682', '402291352282464259', '374710341868847104'].includes(message.author.id))
             return;
 
         let chatU = await client.getData({ id: message.author.id }, 'usuario');
@@ -1805,7 +1805,7 @@ client.on('message', async (message) => {
     }
 
     else if (command === 'userchats') {
-        if (!['507367752391196682', '402291352282464259'].includes(message.author.id))
+        if (!['507367752391196682', '402291352282464259', '374710341868847104'].includes(message.author.id))
             return;
         else {
 
@@ -1821,7 +1821,7 @@ client.on('message', async (message) => {
     }
 
     else if (command === 'listchats') {
-        if (!['507367752391196682', '402291352282464259'].includes(message.author.id))
+        if (!['507367752391196682', '402291352282464259', '374710341868847104'].includes(message.author.id))
             return;
         else {
 
@@ -1837,7 +1837,7 @@ client.on('message', async (message) => {
     }
 
     else if (command === 'invitechat') {
-        if (!['507367752391196682', '402291352282464259'].includes(message.author.id))
+        if (!['507367752391196682', '402291352282464259', '374710341868847104'].includes(message.author.id))
             return;
         else {
 
@@ -1875,7 +1875,7 @@ client.on('message', async (message) => {
 
     else if (command === 'setchat') {
 
-        if (!['507367752391196682', '402291352282464259'].includes(message.author.id))
+        if (!['507367752391196682', '402291352282464259', '374710341868847104'].includes(message.author.id))
             return;
         else {
 
