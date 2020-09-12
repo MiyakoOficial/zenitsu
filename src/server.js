@@ -1480,15 +1480,15 @@ client.on('message', async (message) => {
             let check = /[^A-Z0-9\s\!\@\#\$\%\^\&\*\(\)\_\+\=\[\]\"\'\;\.\,\\\:\ñ\|\~\/\<\>(\uD800-\uDBFF][\uDC00-\uDFFF)]/gi;
 
             if (!args[0])
-                return embedResponse('Escribe que quieres cambiar!\nEjemplo de uso: <prefix>editchat token_chat name(o description) new_name(o description)');
+                return embedResponse('Escribe que quieres cambiar!\nEjemplo de uso: <prefix>editchat token_chat name(description o maxusers) new_name(description o maxusers)');
 
             let chatG = await client.getData({ token: args[0] }, 'chat', false);
 
             let { type, bans, joinable, admins, owner } = chatG;
 
-            let check = await rModel('chat').findOne({ token: args[0] });
+            let checkM = await rModel('chat').findOne({ token: args[0] });
 
-            if (!check)
+            if (!checkM)
                 return embedResponse('Token invalido!');
 
             if (args[1] === 'name') {
@@ -1503,7 +1503,7 @@ client.on('message', async (message) => {
                 if (regex)
                     return embedResponse('Ese nombre tiene caracteres no permitidos!');
 
-                embedResponse(`Nombre cambiado a ${args.slice(2).join(' ')}`)
+                embedResponse(`Nombre cambiado a: ${args.slice(2).join(' ')}`)
                 return await client.updateData({ token: `${args[0]}` }, { name: args.slice(2).join(' ') }, 'chat');
 
             }
@@ -1519,12 +1519,23 @@ client.on('message', async (message) => {
                 if (regex)
                     return embedResponse('Esa descripción tiene caracteres no permitidos!');
 
-                embedResponse(`Nombre cambiado a ${args.slice(2).join(' ')}`)
+                embedResponse(`Descripción cambiada a: ${args.slice(2).join(' ')}`)
                 return await client.updateData({ token: `${args[0]}` }, { description: args.slice(2).join(' ') }, 'chat');
             }
 
+            else if (args[1] === 'maxusers') {
+                if (owner !== message.author.id)
+                    return embedResponse('No puedes cambiar el nombre del chat!');
+
+                if (!parseInt(args[2]) || parseInt(args[2]) >= 51)
+                    return embedResponse('Elije un maximo de usuarios menor o igual a 50!')
+
+                embedResponse(`Maximo cambiado a: ${args[2]}`)
+                return await client.updateData({ token: `${args[0]}` }, { max: args[2] }, 'chat');
+            }
+
             else {
-                return embedResponse('Elije una opción entre `name` o `description`!')
+                return embedResponse('Elije una opción entre `name`, `description` o `maxusers`!')
             }
         }
     }
