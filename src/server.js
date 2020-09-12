@@ -1495,7 +1495,7 @@ client.on('message', async (message) => {
                 if (owner !== message.author.id)
                     return embedResponse('No puedes cambiar el nombre del chat!');
 
-                if (!args[2] || args.slice(2).length <= 21)
+                if (!args[2] || args.slice(2).length >= 21)
                     return embedResponse('Elije un nombre con un nombre menor o igual a 20 caracteres!')
 
                 let regex = args.slice(2).join(' ').match(check);
@@ -1511,7 +1511,7 @@ client.on('message', async (message) => {
                 if (owner !== message.author.id)
                     return embedResponse('No puedes cambiar el nombre del chat!');
 
-                if (!args[2] || args.slice(2).length <= 51)
+                if (!args[2] || args.slice(2).length >= 51)
                     return embedResponse('Elije una descripción con un nombre menor o igual a 50 caracteres!')
 
                 let regex = args.slice(2).join(' ').match(check);
