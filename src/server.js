@@ -1580,7 +1580,34 @@ client.on('message', async (message) => {
             return;
         else {
 
+            if (!args[0])
+                return embedResponse('Ejemplo de uso: `<prefix>invitechat user_id token_chat`');
 
+            let chatG = await client.getData({ token: args[1] }, 'chat', false);
+
+            let { type, bans, joinable, admins, users } = chatG;
+
+            let check = await rModel('chat').findOne({ token: args[1] });
+
+            if (!check)
+                return embedResponse('Token invalido!');
+
+            if (!admins.includes(message.author.id)) {
+                return embedResponse('No puedes invitar a nadie sin ser admin!')
+            }
+
+            if (bans.includes(args[0]))
+                return embedResponse('Ese usuario está baneado, usa <prefix>unbanchat user_id token_chat!');
+
+            if (!client.users.cache.get(args[0]))
+                return embedResponse('No he encontrado a ese usuario!')
+
+            if (users.includes(args[0]))
+                return embedResponse('Ya está en el chat!');
+
+            await client.updateData({ token: args[1] }, { $push: { joinable: args[0] } }, 'chat');
+
+            return embedResponse(`Has invitado a \`${client.users.cache.get(args[0]).tag}\`!`);
 
         }
     }
