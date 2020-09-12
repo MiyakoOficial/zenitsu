@@ -1787,6 +1787,11 @@ client.on('message', async (message) => {
 
         let { tokenChat } = chatU;
 
+        let xCheck = await rModel('chat').findOne({ token: tokenChat });
+
+        if (!xCheck)
+            return embedResponse("El chat que tienes establecido no existe!")
+
         let { bans } = await client.getData({ token: tokenChat }, 'chat')
 
         if (!tokenChat || tokenChat == 'none')
