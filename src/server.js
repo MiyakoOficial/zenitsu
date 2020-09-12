@@ -1485,7 +1485,7 @@ client.on('message', async (message) => {
             return;
 
         if (!args[0])
-            return embedResponse('Escribe que quieres cambiar!\nEjemplo de uso: <prefix>editchat token_chat name(description o maxusers) new_name(description o maxusers)');
+            return embedResponse('Ejemplo de uso: <prefix>infochat token_chat');
 
         let checkM = await rModel('chat').findOne({ token: args[0] });
 
