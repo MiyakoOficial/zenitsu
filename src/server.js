@@ -797,7 +797,7 @@ client.on('message', async (message) => {
         await client.getData({ id: canal.id }, 'snipe').then((data) => {
 
 
-            if (!data || data.snipe.length === 0) return embedResponse("Nada en la base de datos").catch(error => { enviarError(error, message.author) });
+            if (!data || !data.snipe || data.snipe.length === 0) return embedResponse("Nada en la base de datos").catch(error => { enviarError(error, message.author) });
             else {
                 let la_data = data.snipe
                 let separador = la_data.split(ayuda)
