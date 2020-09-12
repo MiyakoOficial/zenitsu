@@ -1420,6 +1420,7 @@ client.on('message', async (message) => {
 
         let { tokenChat } = await client.getData({ id: message.author.id }, 'usuario');
         if (!tokenChat || tokenChat == 'none') return message.channel.send({ embed: embed })
+            .catch(error => { enviarError(error, message.author) })
 
         else {
 
@@ -1430,9 +1431,11 @@ client.on('message', async (message) => {
                 await client.updateData({ id: message.author.id }, { tokenChat: 'none' }, 'usuario');
 
                 return embedResponse({ embed: embed.setFooter('Oh oh, parece que estas baneado del chat!') })
+                    .catch(error => { enviarError(error, message.author) })
             }
 
-            if (!chat || chat == 0) return message.channel.send({ embed: embed.setFooter('El chat está vacio, se el primero en hablar!') });
+            if (!chat || chat == 0) return message.channel.send({ embed: embed.setFooter('El chat está vacio, se el primero en hablar!') })
+                .catch(error => { enviarError(error, message.author) })
 
             return embedResponse(`\`\`\`ini\n${chat.reverse().slice(0, 10).reverse().join('\n')}\`\`\``);
         }
@@ -1443,24 +1446,25 @@ client.on('message', async (message) => {
 
     else if (command === 'createchat') {
 
-
-
-
         let max = parseInt(args[1])
 
         if (!args[0] || !['public', 'private'].includes(args[0].toLowerCase()))
-            return embedResponse('Selecciona entre `private` o `public`.\nEjemplo de uso: <prefix>createchat private 15');
+            return embedResponse('Selecciona entre `private` o `public`.\nEjemplo de uso: <prefix>createchat private 15')
+                .catch(error => { enviarError(error, message.author) })
 
         if (!max || max < 2)
-            return embedResponse('Pon un numero mayor a 1!');
+            return embedResponse('Pon un numero mayor a 1!')
+                .catch(error => { enviarError(error, message.author) });
 
         if (!max || max > 51)
-            return embedResponse('Pon un numero menor a 51!');
+            return embedResponse('Pon un numero menor a 51!')
+                .catch(error => { enviarError(error, message.author) });
 
         let { grupos } = await client.getData({ id: message.author.id }, 'usuario');
         if (grupos) {
             if (grupos.length >= 10)
-                return embedResponse('Has superado el limite de grupos, si quieres borra uno y crea otro!');
+                return embedResponse('Has superado el limite de grupos, si quieres borra uno y crea otro!')
+                    .catch(error => { enviarError(error, message.author) })
         }
         let tok = Date.now();
 
@@ -1478,7 +1482,8 @@ client.on('message', async (message) => {
 
         await client.updateData({ id: message.author.id }, { $addToSet: { grupos: `${tok}` } }, 'usuario');
 
-        await embedResponse(`Token: ${tok}`);
+        await embedResponse(`Token: ${tok}`)
+            .catch(error => { enviarError(error, message.author) })
 
 
 
@@ -1486,38 +1491,39 @@ client.on('message', async (message) => {
 
     else if (command === 'deletechat') {
 
-
-
         if (!args[0])
-            return embedResponse('Ejemplo de uso: <prefix>deletechat token_chat');
+            return embedResponse('Ejemplo de uso: <prefix>deletechat token_chat')
+                .catch(error => { enviarError(error, message.author) })
 
         let checkM = await rModel('chat').findOne({ token: args[0] });
 
         if (!checkM)
-            return embedResponse('Token inexistente!');
+            return embedResponse('Token inexistente!')
+                .catch(error => { enviarError(error, message.author) })
 
         let chatG = await client.getData({ token: args[0] }, 'chat');
 
         let { type, bans, joinable, admins, owner, users, max, token, description, name } = chatG;
 
         if (owner !== message.author.id)
-            return embedResponse('No puedes borrar este chat, solo el creador puede!');
+            return embedResponse('No puedes borrar este chat, solo el creador puede!')
+                .catch(error => { enviarError(error, message.author) })
 
-        embedResponse('Chat borrado!')
+        embedResponse('Chat borrado!').catch(error => { enviarError(error, message.author) })
         await deleteChatByToken(args[0]);
     }
 
     else if (command === 'infochat') {
 
-
-
         if (!args[0])
-            return embedResponse('Ejemplo de uso: <prefix>infochat token_chat');
+            return embedResponse('Ejemplo de uso: <prefix>infochat token_chat')
+                .catch(error => { enviarError(error, message.author) })
 
         let checkM = await rModel('chat').findOne({ token: args[0] });
 
         if (!checkM)
-            return embedResponse('Token inexistente!');
+            return embedResponse('Token inexistente!')
+                .catch(error => { enviarError(error, message.author) })
 
         let chatG = await client.getData({ token: args[0] }, 'chat');
 
@@ -1536,93 +1542,108 @@ client.on('message', async (message) => {
             .addField(`Token`, token, true)
             .addField(`Name`, name, true)
             .addField(`Description`, description, true)
-        message.channel.send({ embed: embed });
+        message.channel.send({ embed: embed })
+            .catch(error => { enviarError(error, message.author) })
 
     }
 
     else if (command === 'setadmin') {
 
         if (!args[0] || !args[1])
-            return embedResponse('Ejemplo de uso: <prefix>setadmin user_id token_chat');
+            return embedResponse('Ejemplo de uso: <prefix>setadmin user_id token_chat')
+                .catch(error => { enviarError(error, message.author) })
 
         let user = client.users.cache.get(args[0]);
 
         if (!user)
-            return embedResponse('No he encontrado ese usuario!');
+            return embedResponse('No he encontrado ese usuario!')
+                .catch(error => { enviarError(error, message.author) })
 
         let checkM = await rModel('chat').findOne({ token: args[1] });
 
         if (!checkM)
-            return embedResponse('Token inexistente!');
+            return embedResponse('Token inexistente!')
+                .catch(error => { enviarError(error, message.author) })
 
         let chatG = await client.getData({ token: args[1] }, 'chat');
 
         let { type, bans, joinable, admins, owner, users, max, token, description, name } = chatG;
 
         if (owner !== message.author.id)
-            return embedResponse('Solo el creador del chat puede agregar un admin!');
+            return embedResponse('Solo el creador del chat puede agregar un admin!')
+                .catch(error => { enviarError(error, message.author) })
 
         if (admins.includes(args[0]))
             return embedResponse(`El usuario ya era administrador!`)
+                .catch(error => { enviarError(error, message.author) })
 
         await client.updateData({ token: args[1] }, { $addToSet: { admins: `${args[0]}` } }, 'chat')
 
         embedResponse(`Has añadido a ${user.tag} como administrador del chat!`)
+            .catch(error => { enviarError(error, message.author) })
 
 
     }
 
     else if (command === 'unsetadmin') {
 
-
         if (!args[0] || !args[1])
-            return embedResponse('Ejemplo de uso: <prefix>unsetadmin user_id token_chat');
+            return embedResponse('Ejemplo de uso: <prefix>unsetadmin user_id token_chat')
+                .catch(error => { enviarError(error, message.author) });
 
         let user = client.users.cache.get(args[0]);
 
         if (!user)
-            return embedResponse('No he encontrado ese usuario!');
+            return embedResponse('No he encontrado ese usuario!')
+                .catch(error => { enviarError(error, message.author) });
 
         let checkM = await rModel('chat').findOne({ token: args[1] });
 
         if (!checkM)
-            return embedResponse('Token inexistente!');
+            return embedResponse('Token inexistente!')
+                .catch(error => { enviarError(error, message.author) });
 
         let chatG = await client.getData({ token: args[1] }, 'chat');
 
         let { type, bans, joinable, admins, owner, users, max, token, description, name } = chatG;
 
         if (owner !== message.author.id)
-            return embedResponse('Solo el creador del chat puede eliminar un admin!');
+            return embedResponse('Solo el creador del chat puede eliminar un admin!')
+                .catch(error => { enviarError(error, message.author) });
 
         if (!admins.includes(args[0]))
-            return embedResponse(`El usuario no era administrador!`);
+            return embedResponse(`El usuario no era administrador!`)
+                .catch(error => { enviarError(error, message.author) });
 
         if (args[0] == owner)
             return embedResponse('No te puedes eliminar como admin!')
+                .catch(error => { enviarError(error, message.author) });
 
         await client.updateData({ token: args[1] }, { $pull: { admins: `${args[0]}` } }, 'chat')
 
         embedResponse(`Has eliminado a ${user.tag} como administrador del chat!`)
+            .catch(error => { enviarError(error, message.author) });
 
 
     }
 
     else if (command === 'banchat') {
 
-
         if (!args[0] || !args[1])
-            return embedResponse('Ejemplo de uso: <prefix>banchat user_id token_chat');
+            return embedResponse('Ejemplo de uso: <prefix>banchat user_id token_chat')
+                .catch(error => { enviarError(error, message.author) })
 
         let user = client.users.cache.get(args[0]);
 
         if (!user)
-            return embedResponse('No he encontrado ese usuario!');
+            return embedResponse('No he encontrado ese usuario!')
+                .catch(error => { enviarError(error, message.author) })
 
         let checkM = await rModel('chat').findOne({ token: args[1] });
 
         if (!checkM)
-            return embedResponse('Token inexistente!');
+            return embedResponse('Token inexistente!')
+                .catch(error => { enviarError(error, message.author) })
 
         let chatG = await client.getData({ token: args[1] }, 'chat');
 
@@ -1630,24 +1651,29 @@ client.on('message', async (message) => {
 
         if (!admins.includes(message.author.id))
             return embedResponse('Solos los admins pueden banear!')
+                .catch(error => { enviarError(error, message.author) })
 
         if (admins.includes(args[0])) {
             if (owner !== message.author.id)
-                return embedResponse(`El usuario es administrador!`);
+                return embedResponse(`El usuario es administrador!`)
+                    .catch(error => { enviarError(error, message.author) })
         }
 
         if (args[0] == owner || args[0] == message.author.id)
-            return embedResponse('No te puedes banear!');
+            return embedResponse('No te puedes banear!')
+                .catch(error => { enviarError(error, message.author) })
 
         if (bans.includes(args[0]))
-            return embedResponse('El usuario ya estaba baneado!');
+            return embedResponse('El usuario ya estaba baneado!')
+                .catch(error => { enviarError(error, message.author) })
 
         await client.updateData({ token: `${args[1]}` }, { $addToSet: { bans: `${args[0]}` } }, 'chat');
         await client.updateData({ token: `${args[1]}` }, { $pull: { users: `${args[0]}` } }, 'chat');
         await client.updateData({ token: `${args[1]}` }, { $pull: { joinable: `${args[0]}` } }, 'chat');
         await client.updateData({ token: `${args[1]}` }, { $pull: { admins: `${args[0]}` } }, 'chat');
 
-        embedResponse(`Has baneado a ${user.tag} del chat!`);
+        embedResponse(`Has baneado a ${user.tag} del chat!`)
+            .catch(error => { enviarError(error, message.author) })
 
 
     }
@@ -1655,17 +1681,20 @@ client.on('message', async (message) => {
     else if (command === 'unbanchat') {
 
         if (!args[0] || !args[1])
-            return embedResponse('Ejemplo de uso: <prefix>unbanchat user_id token_chat');
+            return embedResponse('Ejemplo de uso: <prefix>unbanchat user_id token_chat')
+                .catch(error => { enviarError(error, message.author) })
 
         let user = client.users.cache.get(args[0]);
 
         if (!user)
-            return embedResponse('No he encontrado ese usuario!');
+            return embedResponse('No he encontrado ese usuario!')
+                .catch(error => { enviarError(error, message.author) })
 
         let checkM = await rModel('chat').findOne({ token: args[1] });
 
         if (!checkM)
-            return embedResponse('Token inexistente!');
+            return embedResponse('Token inexistente!')
+                .catch(error => { enviarError(error, message.author) })
 
         let chatG = await client.getData({ token: args[1] }, 'chat');
 
@@ -1673,16 +1702,20 @@ client.on('message', async (message) => {
 
         if (!admins.includes(message.author.id))
             return embedResponse('Solos los admins pueden desbanear!')
+                .catch(error => { enviarError(error, message.author) })
 
         if (args[0] == owner || args[0] == message.author.id)
-            return embedResponse('No te puedes banear!');
+            return embedResponse('No te puedes banear!')
+                .catch(error => { enviarError(error, message.author) })
 
         if (!bans.includes(args[0]))
-            return embedResponse('El usuario ya estaba desbaneado!');
+            return embedResponse('El usuario ya estaba desbaneado!')
+                .catch(error => { enviarError(error, message.author) })
 
         await client.updateData({ token: args[1] }, { $pull: { bans: `${args[0]}` } }, 'chat');
 
         embedResponse(`Has desbaneado a ${user.tag} del chat!`)
+            .catch(error => { enviarError(error, message.author) })
 
 
     }
@@ -1694,8 +1727,8 @@ client.on('message', async (message) => {
         let check = /[^A-Z0-9\s\!\@\#\$\%\^\&\*\(\)\_\+\=\[\]\"\'\;\.\,\\\:\ñ\|\~\/\<\>(\uD800-\uDBFF][\uDC00-\uDFFF)]/gi;
 
         if (!args[0])
-            return embedResponse('Escribe que quieres cambiar!\nEjemplo de uso: <prefix>editchat token_chat name(description o maxusers) new_name(description o maxusers)');
-
+            return embedResponse('Escribe que quieres cambiar!\nEjemplo de uso: <prefix>editchat token_chat name(description o maxusers) new_name(description o maxusers)')
+                .catch(error => { enviarError(error, message.author) })
         let checkM = await rModel('chat').findOne({ token: args[0] });
 
         let chatG = await client.getData({ token: args[0] }, 'chat');
@@ -1703,53 +1736,67 @@ client.on('message', async (message) => {
         let { type, bans, joinable, admins, owner } = chatG;
 
         if (!checkM)
-            return embedResponse('Token invalido!');
+            return embedResponse('Token invalido!')
+                .catch(error => { enviarError(error, message.author) });
 
         if (args[1] === 'name') {
             if (owner !== message.author.id)
-                return embedResponse('No puedes cambiar el nombre del chat!');
+                return embedResponse('No puedes cambiar el nombre del chat!')
+                    .catch(error => { enviarError(error, message.author) })
 
             if (!args[2] || args.slice(2).length >= 21)
                 return embedResponse('Elije un nombre con un nombre menor o igual a 20 caracteres!')
+                    .catch(error => { enviarError(error, message.author) })
 
             let regex = args.slice(2).join(' ').match(check);
 
             if (regex)
-                return embedResponse('Ese nombre tiene caracteres no permitidos!');
+                return embedResponse('Ese nombre tiene caracteres no permitidos!')
+                    .catch(error => { enviarError(error, message.author) });
 
             embedResponse(`Nombre cambiado a: ${args.slice(2).join(' ')}`)
+                .catch(error => { enviarError(error, message.author) })
             return await client.updateData({ token: `${args[0]}` }, { name: args.slice(2).join(' ') }, 'chat');
 
         }
         else if (args[1] === 'description') {
             if (owner !== message.author.id)
-                return embedResponse('No puedes cambiar el nombre del chat!');
+                return embedResponse('No puedes cambiar el nombre del chat!')
+                    .catch(error => { enviarError(error, message.author) })
 
             if (!args[2] || args.slice(2).length >= 51)
                 return embedResponse('Elije una descripción con un nombre menor o igual a 50 caracteres!')
+                    .catch(error => { enviarError(error, message.author) })
 
             let regex = args.slice(2).join(' ').match(check);
 
             if (regex)
-                return embedResponse('Esa descripción tiene caracteres no permitidos!');
+                return embedResponse('Esa descripción tiene caracteres no permitidos!')
+                    .catch(error => { enviarError(error, message.author) });
 
             embedResponse(`Descripción cambiada a: ${args.slice(2).join(' ')}`)
+                .catch(error => { enviarError(error, message.author) })
             return await client.updateData({ token: `${args[0]}` }, { description: args.slice(2).join(' ') }, 'chat');
         }
 
         else if (args[1] === 'maxusers') {
             if (owner !== message.author.id)
-                return embedResponse('No puedes cambiar el nombre del chat!');
+                return embedResponse('No puedes cambiar el nombre del chat!')
+                    .catch(error => { enviarError(error, message.author) });
 
             if (!parseInt(args[2]) || parseInt(args[2]) >= 51)
                 return embedResponse('Elije un maximo de usuarios menor o igual a 50!')
+                    .catch(error => { enviarError(error, message.author) })
 
             embedResponse(`Maximo cambiado a: ${args[2]}`)
+                .catch(error => { enviarError(error, message.author) });
+
             return await client.updateData({ token: `${args[0]}` }, { max: args[2] }, 'chat');
         }
 
         else {
             return embedResponse('Elije una opción entre `name`, `description` o `maxusers`!')
+                .catch(error => { enviarError(error, message.author) })
         }
 
     }
@@ -1763,9 +1810,11 @@ client.on('message', async (message) => {
 
         let paginas = funcionPagina((await getPublicList(message)), 5)
         if (!paginas[seleccion - 1])
-            return embedResponse("Pagina inexistente!");
+            return embedResponse("Pagina inexistente!")
+                .catch(error => { enviarError(error, message.author) });
 
-        embedResponse(paginas[seleccion - 1].join('\n'));
+        embedResponse(paginas[seleccion - 1].join('\n'))
+            .catch(error => { enviarError(error, message.author) });
     }
 
     else if (command == 'sendchat') {
@@ -1787,29 +1836,35 @@ client.on('message', async (message) => {
 
         if (!xCheck)
             return embedResponse("El chat que tienes establecido no existe!")
+                .catch(error => { enviarError(error, message.author) })
 
         let { bans } = await client.getData({ token: tokenChat }, 'chat')
 
         if (!tokenChat || tokenChat == 'none')
-            return embedResponse('Establece un chat!\n<prefix>setchat token_chat');
+            return embedResponse('Establece un chat!\n<prefix>setchat token_chat')
+                .catch(error => { enviarError(error, message.author) });
 
         if (bans.includes(message.author.id)) {
             client.updateData({ id: message.author.id }, { tokenChat: 'none' }, 'usuario');
 
             return message.channel.send({ embed: embed.setFooter('Oh oh, parece que estas baneado!') })
+                .catch(error => { enviarError(error, message.author) })
         }
         if (!args[0])
             return embedResponse('Ejemplo de uso: <prefix>sendchat Hola gente!')
+                .catch(error => { enviarError(error, message.author) })
 
         let regex = args.join(' ').match(check);
 
         let regexTag = args.join(' ').match(check);
 
         if (regex)
-            return embedResponse('Este comando no permite caracteres especiales!');
+            return embedResponse('Este comando no permite caracteres especiales!')
+                .catch(error => { enviarError(error, message.author) });
 
         if (args.join(' ').length >= 131)
             return embedResponse('El limite del texto es 130 letras!')
+                .catch(error => { enviarError(error, message.author) })
 
         if (regexTag) {
             res = '[EspecialUser#' + message.author.discriminator + ']';
@@ -1819,35 +1874,36 @@ client.on('message', async (message) => {
         }
 
         embedResponse(`Enviado: ${args.join(' ')}`)
-        return client.updateData({ token: tokenChat }, { $push: { chat: `[${Hora()}]${res}: ${args.join(' ')} ` } }, 'chat')
+            .catch(error => { enviarError(error, message.author) })
+        return client.updateData({ token: tokenChat }, { $push: { chat: `[${Hora()}]${res}: ${args.join(' ')} ` } }, 'chat');
     }
 
     else if (command === 'userchats') {
-
-
 
         let listU = await client.getData({ id: message.author.id }, 'usuario');
 
         let { grupos } = listU;
 
         if (!grupos || grupos == 0)
-            return embedResponse('No tienes ningun chat creado!');
+            return embedResponse('No tienes ningun chat creado!')
+                .catch(error => { enviarError(error, message.author) });
 
         return embedResponse('Tokens:\n' + grupos.join('\n'))
+            .catch(error => { enviarError(error, message.author) })
 
     }
 
     else if (command === 'invitechat') {
 
-
-
         if (!args[0])
-            return embedResponse('Ejemplo de uso: `<prefix> invitechat user_id token_chat`');
+            return embedResponse('Ejemplo de uso: `<prefix> invitechat user_id token_chat`')
+                .catch(error => { enviarError(error, message.author) });
 
         let check = await rModel('chat').findOne({ token: args[1] });
 
         if (!check)
-            return embedResponse('Token invalido!');
+            return embedResponse('Token invalido!')
+                .catch(error => { enviarError(error, message.author) });
 
         let chatG = await client.getData({ token: args[1] }, 'chat');
 
@@ -1855,38 +1911,43 @@ client.on('message', async (message) => {
 
         if (!admins.includes(message.author.id)) {
             return embedResponse('No puedes invitar a nadie sin ser admin!')
+                .catch(error => { enviarError(error, message.author) })
         }
 
         if (bans.includes(args[0]))
-            return embedResponse('Ese usuario está baneado, usa <prefix>unbanchat user_id token_chat!');
+            return embedResponse('Ese usuario está baneado, usa <prefix>unbanchat user_id token_chat!')
+                .catch(error => { enviarError(error, message.author) });
 
         if (!client.users.cache.get(args[0]))
             return embedResponse('No he encontrado a ese usuario!')
+                .catch(error => { enviarError(error, message.author) })
 
         if (joinable.includes(args[0]))
-            return embedResponse('Ya lo has invitado al chat!');
+            return embedResponse('Ya lo has invitado al chat!')
+                .catch(error => { enviarError(error, message.author) });
 
         if (users.includes(args[0]))
-            return embedResponse('Ya está en el chat!');
+            return embedResponse('Ya está en el chat!')
+                .catch(error => { enviarError(error, message.author) });
 
         await client.updateData({ token: args[1] }, { $addToSet: { joinable: args[0] } }, 'chat');
 
-        return embedResponse(`Has invitado a \`${client.users.cache.get(args[0]).tag}\`!`);
-
+        return embedResponse(`Has invitado a \`${client.users.cache.get(args[0]).tag}\`!`)
+            .catch(error => { enviarError(error, message.author) });
 
     }
 
     else if (command === 'setchat') {
 
-
-
         if (!args[0])
-            return embedResponse('Escribe un token de chat!');
+            return embedResponse('Escribe un token de chat!')
+                .catch(error => { enviarError(error, message.author) });
 
         let check = await rModel('chat').findOne({ token: args[0] });
 
         if (!check)
-            return embedResponse('Token invalido!');
+            return embedResponse('Token invalido!')
+                .catch(error => { enviarError(error, message.author) });
 
         let chatG = await client.getData({ token: args[0] }, 'chat');
 
@@ -1895,15 +1956,17 @@ client.on('message', async (message) => {
         if (type === 'private') {
             if (!joinable.includes(message.author.id))
                 return embedResponse('No te puedes unir, es un chat privado y no te han invitado!')
+                    .catch(error => { enviarError(error, message.author) })
         }
 
         if (bans.includes(message.author.id))
-            return embedResponse('Estas baneado del chat!');
+            return embedResponse('Estas baneado del chat!').catch(error => { enviarError(error, message.author) })
 
         await client.updateData({ id: message.author.id }, { tokenChat: `${args[0]}` }, 'usuario');
         await client.updateData({ token: args[0] }, { $addToSet: { users: message.author.id } }, 'chat');
 
-        return embedResponse('Chat establecido!\nToken: ' + args[0]);
+        return embedResponse('Chat establecido!\nToken: ' + args[0])
+            .catch(error => { enviarError(error, message.author) });
 
     }
 
