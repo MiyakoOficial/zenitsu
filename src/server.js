@@ -1479,6 +1479,30 @@ client.on('message', async (message) => {
 
     }
 
+    else if (command === 'deletechat') {
+
+        if (!['507367752391196682', '402291352282464259'].includes(message.author.id))
+            return;
+
+        if (!args[0])
+            return embedResponse('Ejemplo de uso: <prefix>deletechat token_chat');
+
+        let checkM = await rModel('chat').findOne({ token: args[0] });
+
+        if (!checkM)
+            return embedResponse('Token inexistente!');
+
+        let chatG = await client.getData({ token: args[0] }, 'chat');
+
+        let { type, bans, joinable, admins, owner, users, max, token, description, name } = chatG;
+
+        if (owner !== message.author.id)
+            return embedResponse('No puedes borrar este chat, solo el creador puede!');
+
+        embedResponse('Chat borrado!')
+        await deleteChatByToken(args[0]);
+    }
+
     else if (command === 'infochat') {
 
         if (!['507367752391196682', '402291352282464259'].includes(message.author.id))
