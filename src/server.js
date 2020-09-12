@@ -1778,11 +1778,25 @@ client.on('message', async (message) => {
 
         let chatU = await client.getData({ id: message.author.id }, 'usuario');
 
+        let embed = new Discord.MessageEmbed()
+            .setAuthor('No hay nada aq- Oh, mira a wumpus!')
+            .setImage('https://i.imgur.com/YCORRwg.png')
+            .setColor(color)
+            .setFooter('Usa <prefix>setchat token_chat para ver un chat existente!')
+            .setTimestamp()
+
         let { tokenChat } = chatU;
+
+        let { bans } = await client.getData({ token: tokenChat }, 'chat')
 
         if (!tokenChat || tokenChat == 'none')
             return embedResponse('Establece un chat!\n<prefix>setchat token_chat');
 
+        if (bans.includes(message.author.id)) {
+            client.updateData({ id: message.author.id }, { tokenChat: 'none' }, 'usuario');
+
+            return message.channel.send({ embed: embed.setFooter('Oh oh, parece que estas baneado!') })
+        }
         if (!args[0])
             return embedResponse('Ejemplo de uso: <prefix>sendchat Hola gente!')
 
