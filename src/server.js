@@ -1407,7 +1407,7 @@ client.on('message', async (message) => {
     //fin de setchannelxp
 
     //inicio de gchat
-    else if (command === 'gchat') {
+    else if (command === 'chat') {
         if (!['507367752391196682', '402291352282464259'].includes(message.author.id))
             return;
         else {
@@ -1417,6 +1417,7 @@ client.on('message', async (message) => {
                 .setImage('https://i.imgur.com/YCORRwg.png')
                 .setColor(color)
                 .setFooter('Usa <prefix>setchat token_chat para ver un chat existente!')
+                .setTimestamp()
 
             let { tokenChat } = await client.getData({ id: message.author.id }, 'usuario');
             if (!tokenChat || tokenChat == 'none') return message.channel.send({ embed: embed })
@@ -1425,7 +1426,7 @@ client.on('message', async (message) => {
 
                 let { chat } = await client.getData({ token: tokenChat }, 'chat');
 
-                if (!chat || chat == 0) return message.channel.send({ embed: embed });
+                if (!chat || chat == 0) return message.channel.send({ embed: embed.setFooter('El chat está vacio, se el primero en hablar!') });
 
                 return embedResponse(`\`\`\`ini\n${chat.reverse().slice(0, 10).reverse().join('\n')}\`\`\``);
             }
@@ -1460,21 +1461,55 @@ client.on('message', async (message) => {
 
             await client.createData({ token: `${tok}`, owner: message.author.id, }, 'chat');
 
-            await client.updateData({ token: `${tok}` }, { $push: { admins: message.author.id } }, 'chat');
+            await client.updateData({ token: `${tok}` }, { $addToSet: { admins: message.author.id } }, 'chat');
 
-            await client.updateData({ token: `${tok}` }, { $push: { users: message.author.id } }, 'chat');
+            await client.updateData({ token: `${tok}` }, { $addToSet: { users: message.author.id } }, 'chat');
 
-            await client.updateData({ token: `${tok}` }, { $push: { joinable: message.author.id } }, 'chat');
+            await client.updateData({ token: `${tok}` }, { $addToSet: { joinable: message.author.id } }, 'chat');
 
             await client.updateData({ token: `${tok}` }, { type: args[0].trim() }, 'chat');
 
             await client.updateData({ token: `${tok}` }, { max: parseInt(args[1]) }, 'chat');
 
-            await client.updateData({ id: message.author.id }, { $push: { grupos: `${tok}` } }, 'usuario');
+            await client.updateData({ id: message.author.id }, { $addToSet: { grupos: `${tok}` } }, 'usuario');
 
             await embedResponse(`Token: ${tok}`);
 
         }
+
+    }
+
+    else if (command === 'infochat') {
+
+        if (!['507367752391196682', '402291352282464259'].includes(message.author.id))
+            return;
+
+        if (!args[0])
+            return embedResponse('Escribe que quieres cambiar!\nEjemplo de uso: <prefix>editchat token_chat name(description o maxusers) new_name(description o maxusers)');
+
+        let checkM = await rModel('chat').findOne({ token: args[0] });
+
+        if (!checkM)
+            return embedResponse('Token inexistente!');
+
+        let chatG = await client.getData({ token: args[0] }, 'chat');
+
+        let { type, bans, joinable, admins, owner, users, max, token, description, name } = chatG;
+
+        let embed = new Discord.MessageEmbed()
+            .setColor(color)
+            .setTimestamp()
+            .addField('Type', type, true)
+            .addField('Bans(num)', bans.length, true)
+            .addField('Joinable(num)', joinable.length, true)
+            .addField('Admins(num)', admins.length, true)
+            .addField('Owner', `<@${owner}>`, true)
+            .addField(`Users(num)`, users.length, true)
+            .addField(`Max(num)`, max, true)
+            .addField(`Token`, token, true)
+            .addField(`Name`, name, true)
+            .addField(`Description`, description, true)
+        message.channel.send({ embed: embed });
 
     }
 
@@ -1643,7 +1678,7 @@ client.on('message', async (message) => {
             if (users.includes(args[0]))
                 return embedResponse('Ya está en el chat!');
 
-            await client.updateData({ token: args[1] }, { $push: { joinable: args[0] } }, 'chat');
+            await client.updateData({ token: args[1] }, { $addToSet: { joinable: args[0] } }, 'chat');
 
             return embedResponse(`Has invitado a \`${client.users.cache.get(args[0]).tag}\`!`);
 
