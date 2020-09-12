@@ -1421,7 +1421,7 @@ client.on('message', async (message) => {
 
                 if (!chat || chat == 0) return message.reply(`El chat está vacio!`);
 
-                message.reply(`Aqui tiene su chat: ${chat.reverse().slice(0, 10).reverse().join('\n')}`);
+                embedResponse(`\`\`\`ini\n${chat.reverse().slice(0, 10).reverse().join('\n')}\`\`\``);
             }
 
         }
@@ -1482,11 +1482,11 @@ client.on('message', async (message) => {
             if (!args[0])
                 return embedResponse('Escribe que quieres cambiar!\nEjemplo de uso: <prefix>editchat token_chat name(description o maxusers) new_name(description o maxusers)');
 
-            let chatG = await client.getData({ token: args[0] }, 'chat', false);
+            let checkM = await rModel('chat').findOne({ token: args[0] });
+
+            let chatG = await client.getData({ token: args[0] }, 'chat');
 
             let { type, bans, joinable, admins, owner } = chatG;
-
-            let checkM = await rModel('chat').findOne({ token: args[0] });
 
             if (!checkM)
                 return embedResponse('Token invalido!');
@@ -1542,10 +1542,12 @@ client.on('message', async (message) => {
 
     else if (command == 'sendchat') {
 
+        let check = /[^A-Z0-9\s\!\@\#\$\%\^\&\*\(\)\_\+\=\[\]\"\'\;\.\,\\\:\ñ\|\~\/\<\>(\uD800-\uDBFF][\uDC00-\uDFFF)]/gi;
+
         if (!['507367752391196682', '402291352282464259'].includes(message.author.id))
             return;
 
-        let chatU = await client.getData({ id: message.author.id }, 'usuario', false)
+        let chatU = await client.getData({ id: message.author.id }, 'usuario');
 
         let { tokenChat } = chatU;
 
@@ -1555,8 +1557,22 @@ client.on('message', async (message) => {
         if (!args[0])
             return embedResponse('Ejemplo de uso: <prefix>sendchat Hola gente!')
 
+        let regex = args.join(' ').match(check);
+
+        let regexTag = args.join(' ').match(check);
+
+        if (regex)
+            return embedResponse('Este comando no permite caracteres especiales!');
+
+        if (regexTag) {
+            res = '[EspecialUser#' + message.author.discriminator + ']';
+        }
+        else {
+            res = "[" + message.author.tag + "]";
+        }
+
         embedResponse(`Enviado: ${args.join(' ')}`)
-        return client.updateData({ token: tokenChat }, { $push: { chat: args.join(' ') } }, 'chat')
+        return client.updateData({ token: tokenChat }, { $push: { chat: `${res}: ${args.join(' ')} ` } }, 'chat')
     }
 
     else if (command === 'userchats') {
@@ -1564,7 +1580,7 @@ client.on('message', async (message) => {
             return;
         else {
 
-            let listU = await client.getData({ id: message.author.id }, 'usuario', false);
+            let listU = await client.getData({ id: message.author.id }, 'usuario');
 
             let { grupos } = listU;
 
@@ -1581,16 +1597,16 @@ client.on('message', async (message) => {
         else {
 
             if (!args[0])
-                return embedResponse('Ejemplo de uso: `<prefix>invitechat user_id token_chat`');
-
-            let chatG = await client.getData({ token: args[1] }, 'chat', false);
-
-            let { type, bans, joinable, admins, users } = chatG;
+                return embedResponse('Ejemplo de uso: `< prefix > invitechat user_id token_chat`');
 
             let check = await rModel('chat').findOne({ token: args[1] });
 
             if (!check)
                 return embedResponse('Token invalido!');
+
+            let chatG = await client.getData({ token: args[1] }, 'chat');
+
+            let { type, bans, joinable, admins, users } = chatG;
 
             if (!admins.includes(message.author.id)) {
                 return embedResponse('No puedes invitar a nadie sin ser admin!')
@@ -1621,14 +1637,14 @@ client.on('message', async (message) => {
             if (!args[0])
                 return embedResponse('Escribe un token de chat!');
 
-            let chatG = await client.getData({ token: args[0] }, 'chat', false);
-
-            let { type, bans, joinable } = chatG;
-
             let check = await rModel('chat').findOne({ token: args[0] });
 
             if (!check)
                 return embedResponse('Token invalido!');
+
+            let chatG = await client.getData({ token: args[0] }, 'chat');
+
+            let { type, bans, joinable } = chatG;
 
             if (type === 'private') {
                 if (!joinable.includes(message.author.id))
