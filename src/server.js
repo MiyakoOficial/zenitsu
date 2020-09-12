@@ -1808,10 +1808,18 @@ client.on('message', async (message) => {
             seleccion = 1
         }
 
-        let paginas = funcionPagina((await getPublicList(message)), 5)
+        let paginas = funcionPagina((await resGetPublicList(message)), 5)
         if (!paginas[seleccion - 1])
             return embedResponse("Pagina inexistente!")
                 .catch(error => { enviarError(error, message.author) });
+
+        let embed = new Discord.MessageEmbed()
+            .setColor(color)
+            .setTimestamp()
+        var i = 0
+        for (let x of paginas) {
+            embed.addField(paginas[seleccion - 1].split(ayuda)[0], paginas[seleccion - 1].split(ayuda)[1])
+        }
 
         embedResponse(paginas[seleccion - 1].join('\n'))
             .catch(error => { enviarError(error, message.author) });
@@ -2884,7 +2892,6 @@ else {
     message.channel.send({ embed: embed }).catch(err => { enviarError(err, message.author) });
 };
 */
-
 async function getPublicList(message) {
 
     let arrayList = [];
@@ -2892,14 +2899,22 @@ async function getPublicList(message) {
 
     for (let x of datos) {
 
-        arrayList.push(`${x.token} - ${x.users.length}/${x.max}${x.admins.includes(message.author.id) ? '[ADMIN]' : '\u200b'}`);
+        arrayList.push({ name: x.name, token: x.token, usersLength: x.users.length, max: x.max });
 
     }
 
-    return arrayList;
+    return arrayList.sort((a, b) => b.usersLength - a.usersLength);
 
 }
+async function resGetPublicList(message) {
+    let datos = await getPublicList(message);
+    let datos2 = [];
 
+    for (let x of datos) {
+        datos2.push(`${x.name}${ayuda}${x.token} - ${x.usersLength}/${x.max}`)
+    }
+    return datos2
+}
 async function deleteChatByToken(tokenHere) {
 
     let { users } = await client.getData({ token: tokenHere }, 'chat');
