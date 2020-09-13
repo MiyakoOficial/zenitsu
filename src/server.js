@@ -1808,7 +1808,7 @@ client.on('message', async (message) => {
             seleccion = 1
         }
 
-        let paginas = funcionPagina((await resGetPublicList(message)), 5)
+        let paginas = funcionPagina((await getPublicList(message)), 5)
         if (!paginas[seleccion - 1])
             return embedResponse("Pagina inexistente!")
                 .catch(error => { enviarError(error, message.author) });
