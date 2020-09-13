@@ -1461,7 +1461,8 @@ client.on('message', async (message) => {
                 .setDescription(`\`\`\`ini\n${chat.reverse().slice(0, 10).reverse().join('\n')}\`\`\``)
                 .setFooter(`Token actual: ${tokenChat}`)
 
-            return message.channel.send({ embed: embed1 });
+            return message.channel.send({ embed: embed1 })
+                .catch(error => { enviarError(error, message.author) });
         }
 
 
