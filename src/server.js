@@ -2891,22 +2891,14 @@ async function getPublicList(message) {
 
     for (let x of datos) {
 
-        arrayList.push({ name: x.name, token: x.token, usersLength: x.users.length, max: x.max });
+        arrayList.push(`${x.token} - ${x.users.length}/${x.max}`);
 
     }
 
-    return arrayList.sort((a, b) => b.usersLength - a.usersLength);
+    return arrayList;
 
 }
-async function resGetPublicList(message) {
-    let datos = await getPublicList(message);
-    let datos2 = [];
 
-    for (let x of datos) {
-        datos2.push(`${x.name}${ayuda}${x.token} - ${x.usersLength}/${x.max}`)
-    }
-    return datos2
-}
 async function deleteChatByToken(tokenHere) {
 
     let { users } = await client.getData({ token: tokenHere }, 'chat');
