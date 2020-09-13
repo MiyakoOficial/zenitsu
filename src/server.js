@@ -2795,8 +2795,8 @@ function among(mensaje, member, canalVoz, canalText, bol) {
     if (canalVoz.members.size > 15) return response('Hay más de 15 miembros en el canal!', canalText)
         .catch(err => { });
 
-    let p = canalVoz.members.forEach(a => {
-        return a.voice.setMute(bol).catch(err => { })
+    let p = canalVoz.members.map(a => {
+        a.voice.setMute(bol).catch(err => { })
     });
 
     response('<a:cargando:650442822083674112> En proceso!', canalText).then(async (msg) => {
