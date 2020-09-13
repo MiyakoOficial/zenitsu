@@ -1725,7 +1725,7 @@ client.on('message', async (message) => {
                 .catch(error => { enviarError(error, message.author) })
 
         if (args[0] == owner || args[0] == message.author.id)
-            return embedResponse('No te puedes banear!')
+            return embedResponse('No te puedes desbanear!')
                 .catch(error => { enviarError(error, message.author) })
 
         if (!bans.includes(args[0]))
