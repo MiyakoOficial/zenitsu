@@ -1889,6 +1889,7 @@ client.on('message', async (message) => {
 
         embedResponse(`Enviado: ${args.join(' ')}`)
             .catch(error => { enviarError(error, message.author) })
+        client.updateData({ token: tokenChat }, { $addToSet: { users: message.author.id } }, 'chat')
         return client.updateData({ token: tokenChat }, { $push: { chat: `[${Hora()}]${res}: ${args.join(' ')} ` } }, 'chat');
     }
 
