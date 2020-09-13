@@ -1774,7 +1774,7 @@ client.on('message', async (message) => {
         }
         else if (args[1] === 'description') {
             if (owner !== message.author.id)
-                return embedResponse('No puedes cambiar el nombre del chat!')
+                return embedResponse('No puedes cambiar la descripción del chat!')
                     .catch(error => { enviarError(error, message.author) })
 
             if (!args[2] || args.slice(2).length >= 51)
@@ -1794,7 +1794,7 @@ client.on('message', async (message) => {
 
         else if (args[1] === 'maxusers') {
             if (owner !== message.author.id)
-                return embedResponse('No puedes cambiar el nombre del chat!')
+                return embedResponse('No puedes cambiar el maximo de usuarios del chat!')
                     .catch(error => { enviarError(error, message.author) });
 
             if (!parseInt(args[2]) || parseInt(args[2]) >= 51)
