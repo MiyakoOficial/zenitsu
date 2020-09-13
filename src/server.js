@@ -1689,8 +1689,8 @@ client.on('message', async (message) => {
         await client.updateData({ token: `${args[1]}` }, { $pull: { users: `${args[0]}` } }, 'chat');
         await client.updateData({ token: `${args[1]}` }, { $pull: { joinable: `${args[0]}` } }, 'chat');
         await client.updateData({ token: `${args[1]}` }, { $pull: { admins: `${args[0]}` } }, 'chat');
-        await client.updateData({ id: `${args[0]}` }, { $pull: { unidos: `${args[1]}` } }, 'usuarios');
-        await client.updateData({ id: `${args[0]}` }, { token: `none` }, 'usuarios');
+        await client.updateData({ id: `${args[0]}` }, { $pull: { unidos: `${args[1]}` } }, 'usuario');
+        await client.updateData({ id: `${args[0]}` }, { token: `none` }, 'usuario');
 
         embedResponse(`Has baneado a ${user.tag} del chat!`)
             .catch(error => { enviarError(error, message.author) })
