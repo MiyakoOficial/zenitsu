@@ -2013,7 +2013,7 @@ client.on('message', async (message) => {
 
         let chatG = await client.getData({ token: args[0] }, 'chat');
 
-        let { type, bans, joinable, owner } = chatG;
+        let { type, bans, joinable, owner, users } = chatG;
 
         if (type === 'private') {
             if (!joinable.includes(message.author.id))
