@@ -301,7 +301,7 @@ client.on('message', async (message) => {
     else {
         if (cooldownG.has(message.author.id)) {
             let embed = new Discord.MessageEmbed()
-                .setDescription(`Wow, más despacio velocista!\nEl cooldown de los comandos es de 5s!`)
+                .setDescription(`Wow, más despacio velocista!\nEl cooldown de los comandos es de 3s!`)
                 .setThumbnail('https://media1.tenor.com/images/dcc0245798b90b4172a06be002620030/tenor.gif?itemid=14757407')
                 .setColor(color)
                 .setTimestamp()
@@ -311,7 +311,7 @@ client.on('message', async (message) => {
         cooldownG.add(message.author.id);
         setTimeout(() => {
             cooldownG.delete(message.author.id);
-        }, ms('5s'));
+        }, ms('3s'));
 
     };
 
@@ -2670,7 +2670,7 @@ client.on('message', async (m) => {
         if (message.content.toLowerCase() === 'muteall') {
 
             if (cooldownAmong.has(message.author.id)) {
-                return embedResponse('Estas en cooldown de 5s!').catch(err => { })
+                return embedResponse('Estas en cooldown de 3s!').catch(err => { })
             }
 
             let canalVoz = message.member.voice.channel;
@@ -2680,7 +2680,7 @@ client.on('message', async (m) => {
             cooldownAmong.add(message.author.id);
             setTimeout(() => {
                 cooldownAmong.delete(message.author.id);
-            }, 5000);
+            }, 3000);
 
         }
         //fin de muteall
@@ -2689,7 +2689,7 @@ client.on('message', async (m) => {
         if (message.content.toLowerCase() === 'unmuteall') {
 
             if (cooldownAmong.has(message.author.id)) {
-                return embedResponse('Estas en cooldown de 5s!').catch(err => { })
+                return embedResponse('Estas en cooldown de 2s!').catch(err => { })
             }
 
             let canalVoz = message.member.voice.channel;
@@ -2699,7 +2699,7 @@ client.on('message', async (m) => {
             cooldownAmong.add(message.author.id);
             setTimeout(() => {
                 cooldownAmong.delete(message.author.id);
-            }, 5000);
+            }, 3000);
 
         }
         //fin de unmuteall
@@ -2787,7 +2787,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
     if (emoji.id === '751908729930121376') {
 
         if (cooldownR.has(user.id)) {
-            return response('Estas en cooldown de 5s!', user).catch(a => { })
+            return response('Estas en cooldown de 3s!', user).catch(a => { })
         }
 
         let canalVoz = member.voice.channel;
@@ -2795,7 +2795,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
         cooldownR.add(user.id);
         setTimeout(() => {
             cooldownR.delete(user.id)
-        }, ms('5s'))
+        }, ms('3s'))
 
         //unmute
         await among(reaction.message, member, canalVoz, user, false)//.catch(err => { })
@@ -2805,14 +2805,14 @@ client.on('messageReactionAdd', async (reaction, user) => {
     else if (emoji.id === '751908729624068226') {
 
         if (cooldownR.has(user.id)) {
-            return response('Estas en cooldown de 5s!', user).catch(a => { })
+            return response('Estas en cooldown de 3s!', user).catch(a => { })
         }
         let canalVoz = member.voice.channel;
 
         cooldownR.add(user.id);
         setTimeout(() => {
             cooldownR.delete(user.id)
-        }, ms('5s'))
+        }, ms('3s'))
         //mute
         await among(reaction.message, member, canalVoz, user, true)//.catch(err => { })
         await reaction.users.remove(user).catch(a => { })
