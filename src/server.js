@@ -1685,6 +1685,7 @@ client.on('message', async (message) => {
         await client.updateData({ token: `${args[1]}` }, { $pull: { users: `${args[0]}` } }, 'chat');
         await client.updateData({ token: `${args[1]}` }, { $pull: { joinable: `${args[0]}` } }, 'chat');
         await client.updateData({ token: `${args[1]}` }, { $pull: { admins: `${args[0]}` } }, 'chat');
+        await client.updateData({ id: `${args[0]}` }, { $pull: { unidos: `${args[1]}` } }, 'usuarios');
 
         embedResponse(`Has baneado a ${user.tag} del chat!`)
             .catch(error => { enviarError(error, message.author) })
@@ -1735,8 +1736,6 @@ client.on('message', async (message) => {
     }
 
     else if (command === 'editchat') {
-
-
 
         let check = /[^A-Z0-9\s\!\@\#\$\%\^\&\*\(\)\_\+\=\[\]\"\'\;\.\,\\\:\ñ\|\~\/\<\>(\uD800-\uDBFF][\uDC00-\uDFFF)]/gi;
 
@@ -1846,6 +1845,10 @@ client.on('message', async (message) => {
 
         let { tokenChat } = chatU;
 
+        if (!tokenChat || tokenChat == 'none')
+            return embedResponse('Establece un chat!\n<prefix>setchat token_chat')
+                .catch(error => { enviarError(error, message.author) });
+
         let xCheck = await rModel('chat').findOne({ token: tokenChat });
 
         if (!xCheck)
@@ -1854,9 +1857,6 @@ client.on('message', async (message) => {
 
         let { bans } = await client.getData({ token: tokenChat }, 'chat')
 
-        if (!tokenChat || tokenChat == 'none')
-            return embedResponse('Establece un chat!\n<prefix>setchat token_chat')
-                .catch(error => { enviarError(error, message.author) });
 
         if (bans.includes(message.author.id)) {
             client.updateData({ id: message.author.id }, { tokenChat: 'none' }, 'usuario');
@@ -1889,7 +1889,8 @@ client.on('message', async (message) => {
 
         embedResponse(`Enviado: ${args.join(' ')}`)
             .catch(error => { enviarError(error, message.author) })
-        client.updateData({ token: tokenChat }, { $addToSet: { users: message.author.id } }, 'chat')
+        await client.updateData({ token: tokenChat }, { $addToSet: { users: message.author.id } }, 'chat')
+        await client.updateData({ id: message.author.id }, { $addToSet: { unidos: args[0] } }, 'usuario');
         return client.updateData({ token: tokenChat }, { $push: { chat: `[${Hora()}]${res}: ${args.join(' ')} ` } }, 'chat');
     }
 
@@ -1904,6 +1905,32 @@ client.on('message', async (message) => {
                 .catch(error => { enviarError(error, message.author) });
 
         return embedResponse('Tokens:\n' + grupos.join('\n'))
+            .catch(error => { enviarError(error, message.author) })
+
+    }
+
+    else if (command === 'listchats') {
+
+        let seleccion = parseInt(args[0]) || 1;
+
+        if (seleccion < 1) {
+            seleccion = 1
+        }
+        let listU = await client.getData({ id: message.author.id }, 'usuario');
+
+        let { unidos } = listU;
+
+        if (!unidos || unidos == 0)
+            return embedResponse('No te has unido a ningun chat!')
+                .catch(error => { enviarError(error, message.author) });
+
+        let paginas = funcionPagina(unidos, 5)
+
+        if (!paginas[seleccion - 1])
+            return embedResponse('Pagina inexistente!')
+                .catch(error => { enviarError(error, message.author) });
+
+        return embedResponse('Tokens:\n' + paginas[seleccion - 1].join('\n'))
             .catch(error => { enviarError(error, message.author) })
 
     }
@@ -1974,13 +2001,46 @@ client.on('message', async (message) => {
                     .catch(error => { enviarError(error, message.author) })
         }
 
-        if (bans.includes(message.author.id))
-            return embedResponse('Estas baneado del chat!').catch(error => { enviarError(error, message.author) })
+        if (bans.includes(message.author.id)) {
+            client.updateData({ id: message.author.id }, { tokenChat: 'none' }, 'usuario');
+
+            return message.channel.send({ embed: embed.setFooter('Oh oh, parece que estas baneado!') })
+                .catch(error => { enviarError(error, message.author) })
+        }
 
         await client.updateData({ id: message.author.id }, { tokenChat: `${args[0]}` }, 'usuario');
         await client.updateData({ token: args[0] }, { $addToSet: { users: message.author.id } }, 'chat');
+        await client.updateData({ id: message.author.id }, { $addToSet: { unidos: args[0] } }, 'usuario');
 
         return embedResponse('Chat establecido!\nToken: ' + args[0])
+            .catch(error => { enviarError(error, message.author) });
+
+    }
+
+    else if (command === 'leavechat') {
+
+        if (!args[0])
+            return embedResponse('Escribe un token de chat!')
+                .catch(error => { enviarError(error, message.author) });
+
+        let check = await rModel('chat').findOne({ token: args[0] });
+
+        if (!check)
+            return embedResponse('Token invalido!')
+                .catch(error => { enviarError(error, message.author) });
+
+        let chatG = await client.getData({ token: args[0] }, 'chat');
+
+        let { type, bans, joinable, users } = chatG;
+
+        if (!users.includes(message.author.id))
+            return embedResponse('No estas en el chat!').catch(error => { enviarError(error, message.author) })
+
+        await client.updateData({ id: message.author.id }, { tokenChat: `none` }, 'usuario');
+        await client.updateData({ token: args[0] }, { $pull: { users: message.author.id } }, 'chat');
+        await client.updateData({ id: message.author.id }, { $pull: { unidos: args[0] } }, 'usuario');
+
+        return embedResponse('Has dejado el chat: ' + args[0])
             .catch(error => { enviarError(error, message.author) });
 
     }
