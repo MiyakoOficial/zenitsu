@@ -1455,13 +1455,13 @@ client.on('message', async (message) => {
             if (!chat || chat == 0) return message.channel.send({ embed: embed.setFooter('El chat está vacio, se el primero en hablar!') })
                 .catch(error => { enviarError(error, message.author) })
 
-            let embed = new Discord.MessageEmbed()
+            let embed1 = new Discord.MessageEmbed()
                 .setColor(color)
                 .setTimestamp()
                 .setDescription(`\`\`\`ini\n${chat.reverse().slice(0, 10).reverse().join('\n')}\`\`\``)
                 .setFooter(`Token actual: ${tokenChat}`)
 
-            return message.channel.send({ embed: embed });
+            return message.channel.send({ embed: embed1 });
         }
 
 
