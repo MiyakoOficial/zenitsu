@@ -1982,6 +1982,13 @@ client.on('message', async (message) => {
 
     else if (command === 'setchat') {
 
+        let embed = new Discord.MessageEmbed()
+            .setAuthor('No hay nada aq- Oh, mira a wumpus!')
+            .setImage('https://i.imgur.com/YCORRwg.png')
+            .setColor(color)
+            .setFooter('Usa <prefix>setchat token_chat para ver un chat existente!')
+            .setTimestamp()
+
         if (!args[0])
             return embedResponse('Escribe un token de chat!')
                 .catch(error => { enviarError(error, message.author) });
