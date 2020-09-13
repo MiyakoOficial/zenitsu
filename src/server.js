@@ -338,7 +338,7 @@ client.on('message', async (message) => {
             let embed = new Discord.MessageEmbed()
                 .setTimestamp()
                 .setColor(color)
-                .setAuthor('Cosas basicas para apreder!')
+                .setAuthor('Cosas basicas para aprender!')
                 .setDescription(`createchat < public | private > num(maximo de usuarios en el chat)\n
                 Si es privado tienes que invitar a los usuarios: invitechat user_id token_chat(el token se te dara al crearlo)\n
                 Si es público solo diles el token y ellos tiene que hacer setchat token_chat.\n
