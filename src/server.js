@@ -1858,7 +1858,7 @@ client.on('message', async (message) => {
 
         let regexTag = args.join(' ').match(check);
 
-        if (regex)
+        if (regex || args.join(' ').includes('`'))
             return embedResponse('Este comando no permite caracteres especiales!')
                 .catch(error => { enviarError(error, message.author) });
 
