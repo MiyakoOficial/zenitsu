@@ -2030,9 +2030,9 @@ client.on('message', async (message) => {
 
         if (!users.includes(message.author.id)) {
             let res;
-            let check = /[^A-Z0-9\s\!\@\#\$\%\^\&\*\(\)\_\+\=\[\]\"\'\;\.\,\\\:\ñ\|\~\/\<\>(\uD800-\uDBFF][\uDC00-\uDFFF)]/gi;
+            let checkR = /[^A-Z0-9\s\!\@\#\$\%\^\&\*\(\)\_\+\=\[\]\"\'\;\.\,\\\:\ñ\|\~\/\<\>(\uD800-\uDBFF][\uDC00-\uDFFF)]/gi;
 
-            if (message.author.tag.match(check) || message.content.includes('`')) {
+            if (message.author.tag.match(checkR) || message.content.includes('`')) {
                 res = `[EspecialUser#${message.author.discriminator}]`;
             }
             else {
