@@ -334,6 +334,19 @@ client.on('message', async (message) => {
     const serverQueue = queue.get(message.guild.id)
 
     if (command === 'help') {
+        if (args[0] === 'chat') {
+            let embed = new Discord.MessageEmbed()
+                .setTimestamp()
+                .setColor(color)
+                .setAuthor('Cosas basicas para apreder!')
+                .setDescription(`createchat < public | private > num(maximo de usuarios en el chat)\n
+                Si es privado tienes que invitar a los usuarios: invitechat user_id token_chat(el token se te dara al crearlo)\n
+                Si es público solo diles el token y ellos tiene que hacer setchat token_chat.\n
+                Si quieres ponerle un nombre usa: editchat name Nuevo nombre, lo mismo con la descripción(description) o el limite de usuarios(maxusers)`)
+            message.channel.send({ embed: embed })
+                .catch(error => { enviarError(error, message.author) });
+        }
+
         message.channel.send({
             embed: new Discord.MessageEmbed()
                 .setColor(color)
