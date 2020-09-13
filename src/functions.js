@@ -26,7 +26,7 @@ function Hora() {
         segundos = `0${segundos}`
     }
 
-    return `${hora} : ${minutos} : ${segundos}`
+    return `${hora}:${minutos}:${segundos}`
 }
 
 Hora()
