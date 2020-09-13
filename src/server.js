@@ -2038,7 +2038,7 @@ client.on('message', async (message) => {
             else {
                 res = `[${message.author.tag}]`;
             }
-            await client.updateData({ token: args[0] }, { $push: { chat: `[LOGS]${res} se ha undido al chat!` } }, 'chat');
+            await client.updateData({ token: args[0] }, { $push: { chat: `[LOGS]${res} se ha unido al chat!` } }, 'chat');
         }
 
         await client.updateData({ id: message.author.id }, { tokenChat: `${args[0]}` }, 'usuario');
