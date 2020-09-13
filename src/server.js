@@ -1486,6 +1486,16 @@ client.on('message', async (message) => {
         }
         let tok = Date.now();
 
+        let res;
+        let check = /[^A-Z0-9\s\!\@\#\$\%\^\&\*\(\)\_\+\=\[\]\"\'\;\.\,\\\:\ñ\|\~\/\<\>(\uD800-\uDBFF][\uDC00-\uDFFF)]/gi;
+
+        if (message.author.tag.match(check) || message.content.includes('`')) {
+            res = `[EspecialUser#${message.author.discriminator}]`;
+        }
+        else {
+            res = `[${message.author.tag}]`;
+        }
+
         await client.createData({ token: `${tok}`, owner: message.author.id, }, 'chat');
 
         await client.updateData({ token: `${tok}` }, { $addToSet: { admins: message.author.id } }, 'chat');
@@ -1497,6 +1507,8 @@ client.on('message', async (message) => {
         await client.updateData({ token: `${tok}` }, { type: args[0].trim() }, 'chat');
 
         await client.updateData({ token: `${tok}` }, { max: parseInt(args[1]) }, 'chat');
+
+        await client.updateData({ token: `${tok}` }, { chat: `${res} ha creado el chat!` }, 'chat');
 
         await client.updateData({ id: message.author.id }, { $addToSet: { grupos: `${tok}` } }, 'usuario');
 
@@ -2016,11 +2028,25 @@ client.on('message', async (message) => {
                 .catch(error => { enviarError(error, message.author) })
         }
 
+        if (!users.includes(message.author.id)) {
+            let res;
+            let check = /[^A-Z0-9\s\!\@\#\$\%\^\&\*\(\)\_\+\=\[\]\"\'\;\.\,\\\:\ñ\|\~\/\<\>(\uD800-\uDBFF][\uDC00-\uDFFF)]/gi;
+
+            if (message.author.tag.match(check) || message.content.includes('`')) {
+                res = `[EspecialUser#${message.author.discriminator}]`;
+            }
+            else {
+                res = `[${message.author.tag}]`;
+            }
+            await client.updateData({ token: args[0] }, { $push: { chat: `${res} se ha undido al chat!` } }, 'chat');
+        }
+
         await client.updateData({ id: message.author.id }, { tokenChat: `${args[0]}` }, 'usuario');
         await client.updateData({ token: args[0] }, { $addToSet: { users: message.author.id } }, 'chat');
         if (owner !== message.author.id) {
             await client.updateData({ id: message.author.id }, { $addToSet: { unidos: args[0] } }, 'usuario');
         }
+
         return embedResponse('Chat establecido!\nToken: ' + args[0])
             .catch(error => { enviarError(error, message.author) });
 
@@ -2053,6 +2079,16 @@ client.on('message', async (message) => {
         await client.updateData({ token: args[0] }, { $pull: { admins: message.author.id } }, 'chat');
         await client.updateData({ id: message.author.id }, { $pull: { unidos: args[0] } }, 'usuario');
         await client.updateData({ token: args[0] }, { $pull: { joinable: message.author.id } }, 'chat');
+        let res;
+        let check = /[^A-Z0-9\s\!\@\#\$\%\^\&\*\(\)\_\+\=\[\]\"\'\;\.\,\\\:\ñ\|\~\/\<\>(\uD800-\uDBFF][\uDC00-\uDFFF)]/gi;
+
+        if (message.author.tag.match(check) || message.content.includes('`')) {
+            res = `[EspecialUser#${message.author.discriminator}]`;
+        }
+        else {
+            res = `[${message.author.tag}]`;
+        }
+        await client.updateData({ token: args[0] }, { $push: { chat: `${res} ha dejado el chat!` } }, 'chat');
 
         return embedResponse('Has dejado el chat: ' + args[0])
             .catch(error => { enviarError(error, message.author) });
