@@ -819,7 +819,7 @@ client.on('message', async (message) => {
                 if (!separador[1]) return embedResponse("Nada en la base de datos").catch(error => { enviarError(error, message.author) });
                 let embed = new Discord.MessageEmbed()
                     .addField('Mensaje', separador[0])
-                    .addField('Autor', separador[1])
+                    .addField('Autor', separador[1].slice(0, 1024))
                     .setColor(color)
                     .setTimestamp()
                     .setTitle('Snipe')
@@ -2795,7 +2795,7 @@ function among(mensaje, member, canalVoz, canalText, bol) {
     if (canalVoz.members.size > 15) return response('Hay más de 15 miembros en el canal!', canalText)
         .catch(err => { });
 
-    let p = canalVoz.members.map(a => {
+    let p = canalVoz.members.forEach(a => {
         a.voice.setMute(bol).catch(err => { })
     });
 
