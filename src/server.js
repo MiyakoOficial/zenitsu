@@ -343,7 +343,7 @@ client.on('message', async (message) => {
                 Si es privado tienes que invitar a los usuarios: invitechat user_id token_chat(el token se te dara al crearlo)\n
                 Si es público solo diles el token y ellos tiene que hacer setchat token_chat.\n
                 Si quieres ponerle un nombre usa: editchat name Nuevo nombre, lo mismo con la descripción(description) o el limite de usuarios(maxusers)`)
-            message.channel.send({ embed: embed })
+            return message.channel.send({ embed: embed })
                 .catch(error => { enviarError(error, message.author) });
         }
 
