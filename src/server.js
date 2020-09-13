@@ -1896,16 +1896,20 @@ client.on('message', async (message) => {
 
     else if (command === 'userchats') {
 
-        let listU = await client.getData({ id: message.author.id }, 'usuario');
+        let seleccion = parseInt(args[0]) || 1;
 
-        let { grupos } = listU;
+        if (seleccion < 1) {
+            seleccion = 1
+        }
 
-        if (!grupos || grupos == 0)
-            return embedResponse('No tienes ningun chat creado!')
+        let paginas = funcionPagina((await getListUserOwner(message)), 5);
+
+        if (!paginas[seleccion - 1])
+            return embedResponse("Pagina inexistente!")
                 .catch(error => { enviarError(error, message.author) });
 
-        return embedResponse('Tokens:\n' + grupos.join('\n'))
-            .catch(error => { enviarError(error, message.author) })
+        embedResponse(paginas[seleccion - 1].join('\n'))
+            .catch(error => { enviarError(error, message.author) });
 
     }
 
@@ -1916,22 +1920,15 @@ client.on('message', async (message) => {
         if (seleccion < 1) {
             seleccion = 1
         }
-        let listU = await client.getData({ id: message.author.id }, 'usuario');
 
-        let { unidos } = listU;
-
-        if (!unidos || unidos == 0)
-            return embedResponse('No te has unido a ningun chat!')
-                .catch(error => { enviarError(error, message.author) });
-
-        let paginas = funcionPagina(unidos, 5)
+        let paginas = funcionPagina((await getListUser(message)), 5);
 
         if (!paginas[seleccion - 1])
-            return embedResponse('Pagina inexistente!')
+            return embedResponse("Pagina inexistente!")
                 .catch(error => { enviarError(error, message.author) });
 
-        return embedResponse('Tokens:\n' + paginas[seleccion - 1].join('\n'))
-            .catch(error => { enviarError(error, message.author) })
+        embedResponse(paginas[seleccion - 1].join('\n'))
+            .catch(error => { enviarError(error, message.author) });
 
     }
 
@@ -2966,7 +2963,41 @@ async function getPublicList(message) {
 
     for (let x of datos) {
 
-        arrayList.push(`${x.name} - ${x.token} - ${x.users.length}/${x.max}`);
+        arrayList.push(`${x.name} - ${x.token} - ${x.users.length}/${x.max}${x.admins.includes(message.author.id) ? '[ADMIN]' : '\u200b'}`);
+
+    }
+
+    return arrayList;
+
+}
+
+async function getListUser(message) {
+
+    let arrayList = [];
+    let data = await rModel('chat').find();
+
+    let datos = data.filter(a => a.users.includes(message.author.id));
+
+    for (let x of datos) {
+
+        arrayList.push(`${x.name} - ${x.token} - ${x.users.length}/${x.max}${x.admins.includes(message.author.id) ? '[ADMIN]' : '\u200b'}`);
+
+    }
+
+    return arrayList;
+
+}
+
+async function getListUserOwner(message) {
+
+    let arrayList = [];
+    let data = await rModel('chat').find();
+
+    let datos = data.filter(a => a.owner === message.author.id);
+
+    for (let x of datos) {
+
+        arrayList.push(`${x.name} - ${x.token} - ${x.users.length}/${x.max}${x.admins.includes(message.author.id) ? '[ADMIN]' : '\u200b'}`);
 
     }
 
