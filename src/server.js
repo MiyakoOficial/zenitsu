@@ -1889,8 +1889,7 @@ client.on('message', async (message) => {
 
         embedResponse(`Enviado: ${args.join(' ')}`)
             .catch(error => { enviarError(error, message.author) })
-        await client.updateData({ token: tokenChat }, { $addToSet: { users: message.author.id } }, 'chat')
-        await client.updateData({ id: message.author.id }, { $addToSet: { unidos: tokenChat } }, 'usuario');
+        await client.updateData({ token: tokenChat }, { $addToSet: { users: message.author.id } }, 'chat');
         return client.updateData({ token: tokenChat }, { $push: { chat: `[${Hora()}]${res}: ${args.join(' ')}` } }, 'chat');
     }
 
@@ -1990,7 +1989,7 @@ client.on('message', async (message) => {
 
         let chatG = await client.getData({ token: args[0] }, 'chat');
 
-        let { type, bans, joinable } = chatG;
+        let { type, bans, joinable, owner } = chatG;
 
         if (type === 'private') {
             if (!joinable.includes(message.author.id))
@@ -2007,8 +2006,9 @@ client.on('message', async (message) => {
 
         await client.updateData({ id: message.author.id }, { tokenChat: `${args[0]}` }, 'usuario');
         await client.updateData({ token: args[0] }, { $addToSet: { users: message.author.id } }, 'chat');
-        await client.updateData({ id: message.author.id }, { $addToSet: { unidos: args[0] } }, 'usuario');
-
+        if (owner !== message.author.id) {
+            await client.updateData({ id: message.author.id }, { $addToSet: { unidos: args[0] } }, 'usuario');
+        }
         return embedResponse('Chat establecido!\nToken: ' + args[0])
             .catch(error => { enviarError(error, message.author) });
 
