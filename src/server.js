@@ -191,13 +191,13 @@ client.on('message', async (message) => {
     }
 
     function xd(a) {
-        return a.bol
+        return { bol: a.bol, razon: a.razon }
     }
 
     let random = Math.floor(Math.random() * 24) + 1;
     if (!message.content.startsWith(prefix)) {
 
-        if (xd(await client.getData({ id: message.author.id }, 'blacklist'))) return;
+        if (xd(await client.getData({ id: message.author.id }, 'blacklist')).bol) return;
 
         let guild = `${message.guild.id}_${message.author.id}`;
         //console.log(cooldownniveles)
@@ -314,8 +314,8 @@ client.on('message', async (message) => {
         }, ms('3s'));
 
     };
-
-    if (xd(await client.getData({ id: message.author.id }, 'blacklist'))) return embedResponse('Wow, al parecer te has portado mal...\n\nQuieres usarme?, pues entra [Aqui](https://discord.gg/hbSahh8)');
+    let kkblacklist = xd(await client.getData({ id: message.author.id }, 'blacklist'))
+    if (kkblacklist.bol) return embedResponse('Wow, al parecer te has portado mal...\nRazon: ' + kkblacklist.razon + '\nQuieres usarme?, pues entra [Aqui](https://discord.gg/hbSahh8)');
 
     let getRank = async (member) => {
 
