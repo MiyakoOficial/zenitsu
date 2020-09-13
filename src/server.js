@@ -1887,7 +1887,7 @@ client.on('message', async (message) => {
 
         let regex = args.join(' ').match(check);
 
-        let regexTag = args.join(' ').match(check);
+        let regexTag = message.author.tag.match(check);
 
         if (regex || args.join(' ').includes('`'))
             return embedResponse('Este comando no permite caracteres especiales!')
