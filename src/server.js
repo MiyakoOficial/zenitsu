@@ -1437,6 +1437,10 @@ client.on('message', async (message) => {
             .catch(error => { enviarError(error, message.author) })
 
         else {
+            let check = await rModel('chat').findOne({ token: tokenChat });
+            if (!check)
+                return embedResponse('El token establecido no existe!')
+                    .catch(error => { enviarError(error, message.author) })
 
             let { chat, bans } = await client.getData({ token: tokenChat }, 'chat');
 
@@ -1686,6 +1690,7 @@ client.on('message', async (message) => {
         await client.updateData({ token: `${args[1]}` }, { $pull: { joinable: `${args[0]}` } }, 'chat');
         await client.updateData({ token: `${args[1]}` }, { $pull: { admins: `${args[0]}` } }, 'chat');
         await client.updateData({ id: `${args[0]}` }, { $pull: { unidos: `${args[1]}` } }, 'usuarios');
+        await client.updateData({ id: `${args[0]}` }, { token: `none` }, 'usuarios');
 
         embedResponse(`Has baneado a ${user.tag} del chat!`)
             .catch(error => { enviarError(error, message.author) })
@@ -1830,7 +1835,7 @@ client.on('message', async (message) => {
             .catch(error => { enviarError(error, message.author) });
     }
 
-    else if (command == 'sendchat') {
+    else if (command === 'sendchat') {
 
         let check = /[^A-Z0-9\s\!\@\#\$\%\^\&\*\(\)\_\+\=\[\]\"\'\;\.\,\\\:\ñ\|\~\/\<\>(\uD800-\uDBFF][\uDC00-\uDFFF)]/gi;
 
