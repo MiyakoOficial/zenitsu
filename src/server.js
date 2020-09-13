@@ -1426,7 +1426,7 @@ client.on('message', async (message) => {
 
 
         let embed = new Discord.MessageEmbed()
-            .setAuthor('No hay nada aq- Oh, mira a wumpus!')
+            .setAuthor('No hay nada aq... Oh, mira a wumpus!')
             .setImage('https://i.imgur.com/YCORRwg.png')
             .setColor(color)
             .setFooter('Usa <prefix>setchat token_chat para ver un chat existente!')
@@ -1860,7 +1860,7 @@ client.on('message', async (message) => {
         let chatU = await client.getData({ id: message.author.id }, 'usuario');
 
         let embed = new Discord.MessageEmbed()
-            .setAuthor('No hay nada aq- Oh, mira a wumpus!')
+            .setAuthor('No hay nada aq... Oh, mira a wumpus!')
             .setImage('https://i.imgur.com/YCORRwg.png')
             .setColor(color)
             .setFooter('Usa <prefix>setchat token_chat para ver un chat existente!')
@@ -2001,7 +2001,7 @@ client.on('message', async (message) => {
     else if (command === 'setchat') {
 
         let embed = new Discord.MessageEmbed()
-            .setAuthor('No hay nada aq- Oh, mira a wumpus!')
+            .setAuthor('No hay nada aq... Oh, mira a wumpus!')
             .setImage('https://i.imgur.com/YCORRwg.png')
             .setColor(color)
             .setFooter('Usa <prefix>setchat token_chat para ver un chat existente!')
