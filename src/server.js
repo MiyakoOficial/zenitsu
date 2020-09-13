@@ -1764,7 +1764,7 @@ client.on('message', async (message) => {
 
             let regex = args.slice(2).join(' ').match(check);
 
-            if (regex)
+            if (regex || args.slice(2).join(' ').includes('`'))
                 return embedResponse('Ese nombre tiene caracteres no permitidos!')
                     .catch(error => { enviarError(error, message.author) });
 
@@ -1784,7 +1784,7 @@ client.on('message', async (message) => {
 
             let regex = args.slice(2).join(' ').match(check);
 
-            if (regex)
+            if (regex || args.slice(2).join(' ').includes('`'))
                 return embedResponse('Esa descripción tiene caracteres no permitidos!')
                     .catch(error => { enviarError(error, message.author) });
 
@@ -2906,7 +2906,7 @@ async function getPublicList(message) {
 
     for (let x of datos) {
 
-        arrayList.push(`${x.token} - ${x.users.length}/${x.max}`);
+        arrayList.push(`${x.name} - ${x.token} - ${x.users.length}/${x.max}`);
 
     }
 
