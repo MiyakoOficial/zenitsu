@@ -1508,7 +1508,7 @@ client.on('message', async (message) => {
 
         await client.updateData({ token: `${tok}` }, { max: parseInt(args[1]) }, 'chat');
 
-        await client.updateData({ token: `${tok}` }, { chat: `${res} ha creado el chat!` }, 'chat');
+        await client.updateData({ token: `${tok}` }, { chat: `[LOGS]${res} ha creado el chat!` }, 'chat');
 
         await client.updateData({ id: message.author.id }, { $addToSet: { grupos: `${tok}` } }, 'usuario');
 
@@ -2038,7 +2038,7 @@ client.on('message', async (message) => {
             else {
                 res = `[${message.author.tag}]`;
             }
-            await client.updateData({ token: args[0] }, { $push: { chat: `${res} se ha undido al chat!` } }, 'chat');
+            await client.updateData({ token: args[0] }, { $push: { chat: `[LOGS]${res} se ha undido al chat!` } }, 'chat');
         }
 
         await client.updateData({ id: message.author.id }, { tokenChat: `${args[0]}` }, 'usuario');
@@ -2088,7 +2088,7 @@ client.on('message', async (message) => {
         else {
             res = `[${message.author.tag}]`;
         }
-        await client.updateData({ token: args[0] }, { $push: { chat: `${res} ha dejado el chat!` } }, 'chat');
+        await client.updateData({ token: args[0] }, { $push: { chat: `[LOGS]${res} ha dejado el chat!` } }, 'chat');
 
         return embedResponse('Has dejado el chat: ' + args[0])
             .catch(error => { enviarError(error, message.author) });
