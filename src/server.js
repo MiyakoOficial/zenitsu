@@ -2796,7 +2796,7 @@ function among(mensaje, member, canalVoz, canalText, bol) {
         .catch(err => { });
 
     let p = canalVoz.members.forEach(a => {
-        a.voice.setMute(bol).catch(err => { })
+        return a.voice.setMute(bol).catch(err => { })
     });
 
     response('<a:cargando:650442822083674112> En proceso!', canalText).then(async (msg) => {
