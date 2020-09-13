@@ -1,6 +1,5 @@
 const { join, parse } = require('path');
 const { capitalize, rModel, getUser, Hora } = require('./functions.js')
-const color = "#E09E36";
 const ytsr = require('ytsr');
 const ytdl = require('ytdl-core');
 const Canvas = require('canvas');
@@ -8,6 +7,8 @@ const jimp = require('jimp');
 require('dotenv').config();
 const Discord = require('discord.js');
 const client = new Discord.Client({ partials: ["MESSAGE", "REACTION"] });
+client.color = '#E09E36';
+let { color } = client
 const search = require('youtube-search')
 const mongoose = require('mongoose');
 client.databaseVersion = mongoose.version;
