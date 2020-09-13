@@ -1890,8 +1890,8 @@ client.on('message', async (message) => {
         embedResponse(`Enviado: ${args.join(' ')}`)
             .catch(error => { enviarError(error, message.author) })
         await client.updateData({ token: tokenChat }, { $addToSet: { users: message.author.id } }, 'chat')
-        await client.updateData({ id: message.author.id }, { $addToSet: { unidos: args[0] } }, 'usuario');
-        return client.updateData({ token: tokenChat }, { $push: { chat: `[${Hora()}]${res}: ${args.join(' ')} ` } }, 'chat');
+        await client.updateData({ id: message.author.id }, { $addToSet: { unidos: tokenChat } }, 'usuario');
+        return client.updateData({ token: tokenChat }, { $push: { chat: `[${Hora()}]${res}: ${args.join(' ')}` } }, 'chat');
     }
 
     else if (command === 'userchats') {
