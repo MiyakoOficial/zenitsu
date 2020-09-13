@@ -2033,7 +2033,6 @@ client.on('message', async (message) => {
         if (!users.includes(message.author.id))
             return embedResponse('No estas en el chat!').catch(error => { enviarError(error, message.author) })
 
-
         if (owner === message.author.id)
             return embedResponse('No puedes abandonar el chat, borrala!').catch(error => { enviarError(error, message.author) })
 
@@ -3020,6 +3019,8 @@ async function deleteChatByToken(tokenHere) {
         try {
 
             await client.updateData({ id: x }, { $pull: { grupos: tokenHere } }, 'usuario');
+
+            await client.updateData({ id: x }, { $pull: { unidos: tokenHere } }, 'usuario');
 
         } catch (err) { }
 
