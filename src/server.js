@@ -1448,7 +1448,7 @@ client.on('message', async (message) => {
             if (bans && bans.includes(message.author.id)) {
                 await client.updateData({ id: message.author.id }, { tokenChat: 'none' }, 'usuario');
 
-                return embedResponse({ embed: embed.setFooter('Oh oh, parece que estas baneado del chat!') })
+                return message.channel.send({ embed: embed.setFooter('Oh oh, parece que estas baneado del chat!') })
                     .catch(error => { enviarError(error, message.author) })
             }
 
