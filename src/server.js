@@ -358,7 +358,7 @@ client.on('message', async (message) => {
                 .addField('Música', `${prefix}play/p, ${prefix}queue/q, ${prefix}skip/s, ${prefix}stop, ${prefix}nowplaying/np, ${prefix}volume/v`)
                 .addField('Niveles', `${prefix}setchannelxp, ${prefix}setlevel, ${prefix}xp/exp, ${prefix}rank`)
                 .addField('Privados', `${prefix}eval, ${prefix}blacklist, ${prefix}checkblacklist, ${prefix}deny, ${prefix}accept`)
-                .addField(`Nuevo: Chat`, `${prefix}createchat, ${prefix}chat, ${prefix}deletechat, ${prefix}infochat, ${prefix}setadmin, ${prefix}unsetadmin, ${prefix}banchat, ${prefix}unbanchat, ${prefix}editchat, ${prefix}publiclist, ${prefix}sendchat, ${prefix}userchats, ${prefix}invitechat, ${prefix}setchat`)
+                .addField(`Nuevo: Chat`, `${prefix}createchat, ${prefix}chat, ${prefix}deletechat, ${prefix}infochat, ${prefix}setadmin, ${prefix}unsetadmin, ${prefix}banchat, ${prefix}unbanchat, ${prefix}editchat, ${prefix}publiclist, ${prefix}sendchat, ${prefix}userchats, ${prefix}invitechat, ${prefix}setchat, ${prefix}listchats, ${prefix}leavechat`)
                 .addField('Among Us', `${prefix}muteall, ${prefix}unmuteall, ${prefix}setmessageid`)
                 .setThumbnail(client.user.displayAvatarURL({ format: 'png', size: 2048 }))
                 .setTimestamp()
@@ -2028,14 +2028,20 @@ client.on('message', async (message) => {
 
         let chatG = await client.getData({ token: args[0] }, 'chat');
 
-        let { type, bans, joinable, users } = chatG;
+        let { type, bans, joinable, users, owner } = chatG;
 
         if (!users.includes(message.author.id))
             return embedResponse('No estas en el chat!').catch(error => { enviarError(error, message.author) })
 
+
+        if (owner === message.author.id)
+            return embedResponse('No puedes abandonar el chat, borrala!').catch(error => { enviarError(error, message.author) })
+
         await client.updateData({ id: message.author.id }, { tokenChat: `none` }, 'usuario');
         await client.updateData({ token: args[0] }, { $pull: { users: message.author.id } }, 'chat');
+        await client.updateData({ token: args[0] }, { $pull: { admins: message.author.id } }, 'chat');
         await client.updateData({ id: message.author.id }, { $pull: { unidos: args[0] } }, 'usuario');
+        await client.updateData({ token: args[0] }, { $pull: { joinable: message.author.id } }, 'chat');
 
         return embedResponse('Has dejado el chat: ' + args[0])
             .catch(error => { enviarError(error, message.author) });
