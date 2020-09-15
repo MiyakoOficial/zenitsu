@@ -602,13 +602,11 @@ client.on('message', async (message) => {
             cooldown.delete(message.author.id);
         }, 300000); //5 minutos
         canales.forEach(ch => {
-            try {
-                ch.updateOverwrite(id, {
-                    SEND_MESSAGES: args[1]
-                }).catch(error => { });
-            } catch (e) {
-                return;
-            };
+
+            ch.updateOverwrite(id, {
+                SEND_MESSAGES: args[1]
+            }).catch(error => { });
+
         });
     }
     //!fin de blockchannels
