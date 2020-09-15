@@ -601,8 +601,9 @@ client.on('message', async (message) => {
         setTimeout(() => {
             cooldown.delete(message.author.id);
         }, 300000); //5 minutos
-        canales.forEach(ch => {
-            ch.updateOverwrite(id, {
+        canales.forEach(async (ch) => {
+
+            await ch.updateOverwrite(id, {
                 SEND_MESSAGES: args[1]
             }).catch(error => { });
 
