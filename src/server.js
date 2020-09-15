@@ -592,10 +592,34 @@ client.on('message', async (message) => {
         if (!id) return embedResponse('Menciona un rol o usuario!\nEjemplo:\n' + prefix + 'blockchannels <mencion de rol o user> <true | false | null>').catch(error => { enviarError(error, message.author) });
         id = id.id
         let canales = message.guild.channels.cache.filter(a => a.type === 'text');
-        if (canales.size >= 101) return errorEmbed('Este servidor tiene más de 100 canales de texto!').catch(error => { enviarError(error, message.author) })
+        if (canales.size >= 101) return embedResponse('Este servidor tiene más de 100 canales de texto!').catch(error => { enviarError(error, message.author) })
         if (!args[1]) return embedResponse('Ejemplo:\n' + prefix + 'blockchannels <mencion de rol o user> <true | false | null>').catch(error => { enviarError(error, message.author) })
-        if (!message.guild.roles.cache.get(id) && !message.guild.members.cache.get(id)) return errorEmbed('Error en encontrar la ID de usuario/rol').catch(error => { enviarError(error, message.author) });
-        if (!['true', 'false', 'null'].includes(args[1])) return errorEmbed('Escoge entre true, false, null').catch(error => { enviarError(error, message.author) });
+        if (!message.guild.roles.cache.get(id) && !message.guild.members.cache.get(id)) return embedResponse('Error en encontrar la ID de usuario/rol').catch(error => { enviarError(error, message.author) });
+        if (!['true', 'false', 'null'].includes(args[1])) return embedResponse('Escoge entre true, false, null').catch(error => { enviarError(error, message.author) });
+        let bolChose;
+
+        switch (args[1]) {
+
+            case 'true':
+                bolChose = true
+                break;
+
+            case 'false':
+                bolChose = false
+                break;
+
+            case 'null':
+                bolChose = null
+                break;
+
+            default:
+                bolChose = 'none';
+                break
+
+        }
+
+        if (bolChose === 'none') return embedResponse('Escoge entre true, false, null').catch(error => { enviarError(error, message.author) });
+
         message.channel.send(`Editando canales...`).catch(error => { enviarError(error, message.author) });
         cooldown.add(message.guild.id);
         setTimeout(() => {
@@ -604,7 +628,7 @@ client.on('message', async (message) => {
         canales.forEach(async (ch) => {
 
             await ch.updateOverwrite(id, {
-                SEND_MESSAGES: args[1]
+                SEND_MESSAGES: bolChose
             }).catch(error => { });
 
         });
