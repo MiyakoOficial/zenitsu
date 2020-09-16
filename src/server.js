@@ -349,7 +349,7 @@ client.on('message', async (message) => {
             embed: new Discord.MessageEmbed()
                 .setColor(color)
                 .addField('Bot', `${prefix}help, ${prefix}suggest, ${prefix}bugreport, ${prefix}invite, ${prefix}creditos, ${prefix}ping`)
-                .addField('Utiles', `${prefix}txt, ${prefix}canal/channel, ${prefix}snipe`)
+                .addField('Utiles', `${prefix}txt, ${prefix}canal/channel, ${prefix}snipe, ${prefix}shortlink`)
                 .addField('Moderación', `${prefix}clear, ${prefix}warn, ${prefix}checkwarns, ${prefix}resetwarns, ${prefix}setwarns, ${prefix}findinvites`)
                 .addField('Administración', `${prefix}editchannels, ${prefix}setprefix/changeprefix, ${prefix}setlogs/logschannel`)
                 .addField('Diversión', `${prefix}challenge, ${prefix}achievement, ${prefix}ship, ${prefix}supreme, ${prefix}didyoumean, ${prefix}captcha, ${prefix}drake, ${prefix}xd`)
@@ -442,6 +442,17 @@ client.on('message', async (message) => {
         embedResponse(`${message.author.tag} ha reportado el siguente \"bug\":\n${args.join(' ')}`, client.channels.cache.get('725053091522805787')).then(a => {
             embedResponse('Reporte enviado!').catch(error => { enviarError(error, message.author) })
         })
+    }
+
+    else if (command === 'shortlink') {
+        const shorten = require('isgd');
+        if (!args[0]) return embedResponse('Uso:\n`shortlink <link>').catch(error => { enviarError(error, message.author) });
+
+        if (args[0]) {
+            shorten.shorten(args[0], function (res) {
+                embedResponse(`Resultado:\n${res}`).catch(error => { enviarError(error, message.author) })
+            })
+        }
     }
 
     //fin de bugreport
