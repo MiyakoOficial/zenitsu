@@ -1238,7 +1238,10 @@ client.on('message', async (message) => {
         if (isNaN(args[1])) return embedResponse('El segundo argumento tiene que ser un numero!')
             .catch(error => { enviarError(error, message.author) });
 
-        if (parseInt(args[1]) < 0) return embedResponse('El segundo argumento debe ser igual o mayor a cero!')
+        if (parseInt(args[1]) < 0) return embedResponse('El segundo argumento debe ser igual o mayor a 0!')
+            .catch(error => { enviarError(error, message.author) });
+
+        if (parseInt(args[1]) > 500) return embedResponse('El segundo argumento debe ser igual o menor a 500!')
             .catch(error => { enviarError(error, message.author) });
 
         await client.updateData({ idGuild: `${message.guild.id}`, idMember: `${miembro.user.id}` }, { nivel: parseInt(args[1]) }, 'niveles');
