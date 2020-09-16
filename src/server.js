@@ -802,23 +802,33 @@ client.on('message', async (message) => {
     else if (command === 'canal' || command === 'channel') {
         let { canal } = await client.getData({ id: message.guild.id }, 'logslevel');
         let { channellogs } = await client.getData({ id: message.guild.id }, 'logs');
-
-        let canal1 = channellogs || channellogs.length <= 1 ? `<#${channellogs}>(${channellogs})` : 'No establecido!';
-        let canal2 = canal || canal.length <= 1 ? `<#${canal}>(${canal})` : 'No establecido!';
-
+        let canal1
+        let canal2;
+        if (!canal || canal.length < 5) {
+            canal1 = 'No establecido!';
+        }
+        else {
+            canal1 = canal || !canal.length <= 1 ? `<#${canal}>(${canal})` : 'No establecido!';
+        }
+        if (!channellogs || channellogs.length < 5) {
+            canal2 = 'No establecido!';
+        }
+        else {
+            canal2 = channellogs || !channellogs.length <= 1 ? `<#${channellogs}>(${channellogs})` : 'No establecido!';
+        }
         if (!message.guild.channels.cache.filter(a => a.type === 'text').map(a => a.id).includes(channellogs)) {
-            canal1 = 'Canal no encontrado!'
+            canal2 = 'Canal no encontrado!'
         }
 
         if (!message.guild.channels.cache.filter(a => a.type === 'text').map(a => a.id).includes(canal)) {
-            canal2 = 'Canal no encontrado!'
+            canal1 = 'Canal no encontrado!'
         }
 
         let embed = new Discord.MessageEmbed()
             .setColor(color)
             .setTimestamp()
-            .addField('Canal XP', canal2)
-            .addField('Canal de logs', canal1)
+            .addField('Canal XP', canal1)
+            .addField('Canal de logs', canal2)
 
         message.channel.send({ embed: embed });
     }
