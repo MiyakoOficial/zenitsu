@@ -447,6 +447,7 @@ client.on('message', async (message) => {
     else if (command === 'shortlink') {
         const shorten = require('isgd');
         if (!args[0]) return embedResponse('Correct use:\n`shortlink <link>').catch(error => { enviarError(error, message.author) });
+        if (args[0].includes('discord.gg/')) return embedResponse('You can\'t put a invite in the command!').catch(error => { enviarError(error, message.author) });
 
         if (args[0]) {
             shorten.shorten(args[0], function (res) {
