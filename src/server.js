@@ -196,10 +196,10 @@ client.on('message', async (message) => {
     let emojiFinded = message.guild.emojis.cache.find(a => a.name === message.content.slice(2)) || client.emojis.cache.find(a => a.name === message.content.slice(2));
     //console.log(emojiFinded)
     if (message.content.slice(0, 2) === ': ' && emojiFinded)
-        return message.channel.send(emojiFinded.toString())
+        return message.channel.send(emojiFinded.toString()).catch(e => { enviarError(err, message.author) })
 
     if (message.content === `<@${client.user.id}>` || message.content === `<@!${client.user.id}>`) {
-        return embedResponse(`El prefix del servidor es \`${prefix}\``)
+        return embedResponse(`El prefix del servidor es \`${prefix}\``).catch(e => { enviarError(err, message.author) })
     }
 
     function xd(a) {
