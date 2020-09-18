@@ -193,9 +193,9 @@ client.on('message', async (message) => {
 
     if (message.author.bot) return;
 
-    let emojiFinded = client.emojis.cache.find(a => a.name === message.content.slice(2));
+    let emojiFinded = message.guild.emojis.cache.find(a => a.name === message.content.slice(2)) || client.emojis.cache.find(a => a.name === message.content.slice(2));
     //console.log(emojiFinded)
-    if (message.content.slice(0, 1) === ':' && client.emojis.cache.find(a => a.name === message.content.slice(2)))
+    if (message.content.slice(0, 2) === ': ' && emojiFinded)
         return message.channel.send(emojiFinded.toString())
 
     if (message.content === `<@${client.user.id}>` || message.content === `<@!${client.user.id}>`) {
