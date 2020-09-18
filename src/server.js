@@ -193,6 +193,11 @@ client.on('message', async (message) => {
 
     if (message.author.bot) return;
 
+    let emojiFinded = client.emojis.cache.find(a => a.name === args[0]);
+
+    if (message.content.split(' ')[0] === ':' && client.emojis.cache.find(a => a.name === args[0]))
+        return message.channel.send(`<${emojiFinded.animated ? 'a' : '\u200b'}:${emojiFinded.name}:${emojiFinded.id}>`)
+
     if (message.content === `<@${client.user.id}>` || message.content === `<@!${client.user.id}>`) {
         return embedResponse(`El prefix del servidor es \`${prefix}\``)
     }
