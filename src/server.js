@@ -193,7 +193,7 @@ client.on('message', async (message) => {
 
     if (message.author.bot) return;
 
-    let emojiFinded = client.emojis.cache.find(a => a.name === args[0]);
+    let emojiFinded = client.emojis.cache.find(a => a.name === message.content.split(' ')[1]);
 
     if (message.content.split(' ')[0] === ':' && client.emojis.cache.find(a => a.name === args[0]))
         return message.channel.send(`<${emojiFinded.animated ? 'a' : '\u200b'}:${emojiFinded.name}:${emojiFinded.id}>`)
