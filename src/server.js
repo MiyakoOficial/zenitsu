@@ -442,6 +442,8 @@ client.on('message', async (message) => {
         }, 300000); //5 minutos
         canales.forEach(async (ch) => {
 
+            await Discord.Util.delayFor(300)
+
             await ch.updateOverwrite(id, {
                 SEND_MESSAGES: bolChose
             }).catch(error => { });
