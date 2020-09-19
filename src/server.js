@@ -486,8 +486,8 @@ client.on('message', async (message) => {
 
     //inicio de txt
     else if (command === 'txt') {
-        if (!message.member.hasPermission('ATTACH_FILES')) return errorEmbed('No tienes el permiso `ATTACH_FILES`').catch(error => { enviarError(error, message.author) });
-        if (!message.guild.me.hasPermission('ATTACH_FILES')) return errorEmbed('No tengo el permiso `ATTACH_FILES`').catch(error => { enviarError(error, message.author) });
+        if (!message.channel.permissionsFor(message.author).has('ATTACH_FILES')) return errorEmbed('No tienes el permiso `ATTACH_FILES`').catch(error => { enviarError(error, message.author) });
+        if (!message.channel.permissionsFor(message.client.user).has('ATTACH_FILES')) return errorEmbed('No tengo el permiso `ATTACH_FILES`').catch(error => { enviarError(error, message.author) });
         if (!args[0]) return embedResponse('Escribe algo!').catch(error => { enviarError(error, message.author) })
         message.channel.send({
             files: [{
