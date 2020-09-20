@@ -31,9 +31,14 @@ function Hora() {
     return `${hora}:${minutos}:${segundos}`
 };
 
+function random(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+};
+
 module.exports = {
     capitalize,
     rModel,
     getUser,
-    Hora
+    Hora,
+    random
 };

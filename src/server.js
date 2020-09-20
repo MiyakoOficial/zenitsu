@@ -1,5 +1,5 @@
 const { join, parse } = require('path');
-const { capitalize, rModel, getUser, Hora } = require('./functions.js')
+const { capitalize, rModel, getUser, Hora, random } = require('./functions.js')
 const ytsr = require('ytsr');
 const ytdl = require('ytdl-core');
 const Canvas = require('canvas');
@@ -2037,6 +2037,21 @@ client.on('message', async (message) => {
 
     }
     //fin de unmuteall
+
+    else if (command === 'sangre') {
+        if (message.guild.id !== '757067889550557205')
+            return;
+        let res = `🩸${random(10, 90)}%`;
+        embedResponse(res).catch(err => { enviarError(err, message.author) });
+    }
+
+    else if (command === 'sintomas') {
+        if (message.guild.id !== '757067889550557205')
+            return;
+        let arraySick = ['dolor de estomago', 'dolor de cabeza', 'disparo en el torax', 'ojo apuñalado', 'pierna rota', 'brazo roto', 'craneo roto', 'pie roto', 'disparo en la pierna', 'diarrea', 'mareo'];
+        let res = arraySick[Math.floor(Math.random() * arraySick.length)];
+        embedResponse(`Sintoma: ${res}`).catch(err => { enviarError(err, message.author) });
+    }
 
     else {
         let embed = new Discord.MessageEmbed()
