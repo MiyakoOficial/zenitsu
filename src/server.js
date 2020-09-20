@@ -2057,7 +2057,7 @@ client.on('message', async (message) => {
     else if (command === 'reanimador') {
         if (message.guild.id !== '757067889550557205')
             return;
-        let arraySick = ['El paciente revivió', 'El paciento murió'];
+        let arraySick = ['El paciente revivió', 'El paciente murió'];
         let res = arraySick[Math.floor(Math.random() * arraySick.length)];
         embedResponse(`${capitalize(res)}`).catch(err => { enviarError(err, message.author) });
     }
