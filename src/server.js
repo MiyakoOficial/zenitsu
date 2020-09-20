@@ -850,7 +850,7 @@ client.on('message', async (message) => {
         let song = {
             title: songInfo.videoDetails.title,
             url: songInfo.videoDetails.video_url,
-            time: duration(songInfo.videoDetails.lengthSeconds),
+            time: `LIVE`,
             author: message.author,
             tiempo: parseInt(songInfo.videoDetails.lengthSeconds)
         }
@@ -2050,7 +2050,7 @@ client.on('message', async (message) => {
             return;
         let arraySick = ['dolor de estomago', 'dolor de cabeza', 'disparo en el torax', 'ojo apuñalado', 'pierna rota', 'brazo roto', 'craneo roto', 'pie roto', 'disparo en la pierna', 'diarrea', 'mareo'];
         let res = arraySick[Math.floor(Math.random() * arraySick.length)];
-        embedResponse(`Sintoma: ${res}`).catch(err => { enviarError(err, message.author) });
+        embedResponse(`Sintoma: ${capitalize(res)}`).catch(err => { enviarError(err, message.author) });
     }
 
     else {
