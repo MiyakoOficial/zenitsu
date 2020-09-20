@@ -206,7 +206,7 @@ client.on('message', async (message) => {
         return { bol: a.bol, razon: a.razon }
     }
 
-    let random = Math.floor(Math.random() * 24) + 1;
+    let Random = Math.floor(Math.random() * 24) + 1;
     if (!message.content.startsWith(prefix)) {
 
         if (xd(await client.getData({ id: message.author.id }, 'blacklist')).bol) return;
@@ -228,7 +228,7 @@ client.on('message', async (message) => {
                 cooldownniveles.delete(guild);
             }, ms('30s'));
 
-            if ((xp + random) > levelup) {
+            if ((xp + Random) > levelup) {
 
                 await client.updateData({ idGuild: `${message.guild.id}`, idMember: `${message.author.id}` }, { xp: 0 }, 'niveles');
                 await client.updateData({ idGuild: `${message.guild.id}`, idMember: `${message.author.id}` }, { $inc: { nivel: 1 } }, 'niveles');
@@ -299,7 +299,7 @@ client.on('message', async (message) => {
             }
 
             else {
-                client.updateData({ idGuild: `${message.guild.id}`, idMember: `${message.author.id}` }, { $inc: { xp: random } }, 'niveles');
+                client.updateData({ idGuild: `${message.guild.id}`, idMember: `${message.author.id}` }, { $inc: { xp: Random } }, 'niveles');
                 //console.log(`${ message.author.tag } ganó ${ random }, es nivel: ${ nivel }, xp que tiene: ${ xp } `);
             }
             return; //console.log('no prefix message')
