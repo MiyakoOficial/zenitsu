@@ -2045,7 +2045,7 @@ client.on('message', async (message) => {
         embedResponse(res).catch(err => { enviarError(err, message.author) });
     }
 
-    else if (command === 'sintomas') {
+    else if (command === 'sintoma') {
         if (message.guild.id !== '757067889550557205')
             return;
         let arraySick = ['dolor de estomago', 'dolor de cabeza', 'disparo en el torax', 'ojo apuñalado', 'pierna rota', 'brazo roto', 'craneo roto', 'pie roto', 'disparo en la pierna', 'diarrea', 'mareo'];
