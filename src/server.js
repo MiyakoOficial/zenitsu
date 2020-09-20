@@ -2053,6 +2053,16 @@ client.on('message', async (message) => {
         embedResponse(`Sintoma: ${capitalize(res)}`).catch(err => { enviarError(err, message.author) });
     }
 
+
+    else if (command === 'reanimador') {
+        if (message.guild.id !== '757067889550557205')
+            return;
+        let arraySick = ['El paciente revivio', 'El paciento murió'];
+        let res = arraySick[Math.floor(Math.random() * arraySick.length)];
+        embedResponse(`${capitalize(res)}`).catch(err => { enviarError(err, message.author) });
+    }
+
+
     else {
         let embed = new Discord.MessageEmbed()
             .setThumbnail(`https://cdn.discordapp.com/attachments/688054761706094725/714328885533343764/error.gif`)
