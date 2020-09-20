@@ -2041,7 +2041,7 @@ client.on('message', async (message) => {
     else if (command === 'sangre') {
         if (message.guild.id !== '757067889550557205')
             return;
-        let res = `🩸${random(10, 90)}%`;
+        let res = `Total de sangre restante: 🩸${random(10, 90)}%`;
         embedResponse(res).catch(err => { enviarError(err, message.author) });
     }
 
