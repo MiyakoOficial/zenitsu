@@ -677,7 +677,7 @@ client.on('message', async (message) => {
                 let separador = la_data.split(ayuda)
                 if (!separador || !separador[1]) return embedResponse("Nada en la base de datos").catch(error => { enviarError(error, message.author) });
                 let embed = new Discord.MessageEmbed()
-                    .addField('Message', separador[0].slice(0, 1024).includes('discord.gg/') ? `Invite found!` : separador[0].slice(0, 1024))
+                    .addField('Message', separador[0].slice(0, 1024).includes('discord.gg/') ? `The message has an invite!` : separador[0].slice(0, 1024))
                     .addField('Author', separador[1])
                     .setColor(color)
                     .setTimestamp()
