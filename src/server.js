@@ -675,10 +675,10 @@ client.on('message', async (message) => {
             else {
                 let la_data = data.snipe
                 let separador = la_data.split(ayuda)
-                if (!separador[1]) return embedResponse("Nada en la base de datos").catch(error => { enviarError(error, message.author) });
+                if (!separador || !separador[1]) return embedResponse("Nada en la base de datos").catch(error => { enviarError(error, message.author) });
                 let embed = new Discord.MessageEmbed()
-                    .addField('Mensaje', separador[0])
-                    .addField('Autor', separador[1].slice(0, 1024))
+                    .addField('Message', separador[0].slice(0, 1024).includes('discord.gg/') ? `Invite found!` : separador[0].slice(0, 1024))
+                    .addField('Author', separador[1])
                     .setColor(color)
                     .setTimestamp()
                     .setTitle('Snipe')
