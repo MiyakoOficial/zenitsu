@@ -1200,7 +1200,7 @@ client.on('message', async (message) => {
         let embed = new Discord.MessageEmbed()
             .setDescription(`Nivel: ${nivel ? nivel : 0} \nXp: ${xp ? xp : 0}/${levelup ? levelup : '100'}\nRank: ${await getRank(member) === null ? 'Sin resultados' : await getRank(member)}`)
             .setColor(color)
-            .setThumbnail(member.user.displayAvatarURL())
+            .setThumbnail(member.user.displayAvatarURL({ dinamic: true }))
             .setTimestamp()
         message.channel.send({ embed: embed })
             .catch(error => { enviarError(error, message.author) });
