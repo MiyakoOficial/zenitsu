@@ -25,6 +25,7 @@ const yts = require('yt-search');
 const { env } = require('process');
 const { EventEmitter } = require('events');
 const { baseModelName } = require('./models/chat.js');
+const { type } = require('os');
 
 (async () => {
 
@@ -1304,7 +1305,7 @@ client.on('message', async (message) => {
                 return embedResponse('El token establecido no existe!')
                     .catch(error => { enviarError(error, message.author) })
 
-            let { chat, bans } = await client.getData({ token: tokenChat }, 'chat');
+            let { chat, bans, type } = await client.getData({ token: tokenChat }, 'chat');
 
 
             if (bans && bans.includes(message.author.id)) {
@@ -1321,7 +1322,7 @@ client.on('message', async (message) => {
                 .setColor(color)
                 .setTimestamp()
                 .setDescription(`\`\`\`ini\n${chat.reverse().slice(0, 10).reverse().join('\n')}\`\`\``)
-                .setFooter(`Token actual: ${tokenChat}`)
+                .setFooter(`Token actual: ${tokenChat}, Tipo de chat: ${type}`)
 
             return message.channel.send({ embed: embed1 })
                 .catch(error => { enviarError(error, message.author) });
@@ -1712,7 +1713,7 @@ client.on('message', async (message) => {
             return embedResponse("Pagina inexistente!")
                 .catch(error => { enviarError(error, message.author) });
 
-        embedResponse(paginas[seleccion - 1].join('\n'))
+        embedResponse(paginas[seleccion - 1].join('\n') + "\n\nPagina: " + seleccion + "/" + paginas.length)
             .catch(error => { enviarError(error, message.author) });
     }
 
@@ -1793,7 +1794,7 @@ client.on('message', async (message) => {
             return embedResponse("Pagina inexistente!")
                 .catch(error => { enviarError(error, message.author) });
 
-        embedResponse(paginas[seleccion - 1].join('\n'))
+        embedResponse(paginas[seleccion - 1].join('\n') + "\n\nPagina: " + seleccion + "/" + paginas.length)
             .catch(error => { enviarError(error, message.author) });
 
     }
@@ -1812,7 +1813,7 @@ client.on('message', async (message) => {
             return embedResponse("Pagina inexistente!")
                 .catch(error => { enviarError(error, message.author) });
 
-        embedResponse(paginas[seleccion - 1].join('\n'))
+        embedResponse(paginas[seleccion - 1].join('\n') + "\n\nPagina: " + seleccion + "/" + paginas.length)
             .catch(error => { enviarError(error, message.author) });
 
     }
