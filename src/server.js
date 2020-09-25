@@ -22,10 +22,6 @@ const ayuda = 'elsuperduperincreibleseparadordearraysencaminoxdxd:v:vxdxdestonad
 const queue = new Map();
 const chat = new Map();
 const yts = require('yt-search');
-const { env } = require('process');
-const { EventEmitter } = require('events');
-const { baseModelName } = require('./models/chat.js');
-const { type } = require('os');
 
 (async () => {
 
