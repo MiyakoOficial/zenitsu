@@ -300,7 +300,7 @@ client.on('message', async (message) => {
             }
 
             else {
-                client.updateData({ idGuild: `${message.guild.id}`, idMember: `${message.author.id}` }, { $inc: { xp: Random } }, 'niveles');
+                await client.updateData({ idGuild: `${message.guild.id}`, idMember: `${message.author.id}` }, { $inc: { xp: Random } }, 'niveles');
                 //console.log(`${ message.author.tag } ganó ${ random }, es nivel: ${ nivel }, xp que tiene: ${ xp } `);
             }
             return; //console.log('no prefix message')
@@ -363,7 +363,7 @@ client.on('message', async (message) => {
         message.channel.send({
             embed: new Discord.MessageEmbed()
                 .setColor(color)
-                .addField('Bot', `${prefix}help, ${prefix}suggest, ${prefix}bugreport, ${prefix}invite, ${prefix}creditos, ${prefix}ping`)
+                .addField('Bot', `${prefix}help, ${prefix}suggest, ${prefix}bugreport, ${prefix}invite, ${prefix}ping`)
                 .addField('Utiles', `${prefix}txt, ${prefix}canal/channel, ${prefix}snipe, ${prefix}shortlink`)
                 .addField('Moderación', `${prefix}clear, ${prefix}warn, ${prefix}checkwarns, ${prefix}resetwarns, ${prefix}setwarns, ${prefix}findinvites`)
                 .addField('Administración', `${prefix}editchannels, ${prefix}setprefix/changeprefix, ${prefix}setlogs/logschannel`)
@@ -1178,7 +1178,7 @@ client.on('message', async (message) => {
         if (!message.mentions.members.first()) return embedResponse('Menciona a un miembro del servidor!')
             .catch(error => { enviarError(error, message.author) });
 
-        client.updateData({ id: `${message.guild.id} _${message.mentions.users.first().id} ` }, { warns: 0, razon: 'No especificada!' }, 'warns')
+        await client.updateData({ id: `${message.guild.id} _${message.mentions.users.first().id} ` }, { warns: 0, razon: 'No especificada!' }, 'warns')
 
         embedResponse(`Advertencias reseteadas!`)
             .catch(error => { enviarError(error, message.author) });
@@ -1378,7 +1378,7 @@ client.on('message', async (message) => {
 
         await client.updateData({ token: `${tok}` }, { max: parseInt(args[1]) }, 'chat');
 
-        await client.updateData({ token: `${tok}` }, { chat: `[LOGS]${res} ha creado el chat!` }, 'chat');
+        await client.updateData({ token: `${tok}` }, { $pull: { chat: `[LOGS]${res} ha creado el chat!` } }, 'chat');
 
         await client.updateData({ id: message.author.id }, { $addToSet: { grupos: `${tok}` } }, 'usuario');
 
@@ -1559,9 +1559,12 @@ client.on('message', async (message) => {
                     .catch(error => { enviarError(error, message.author) })
         }
 
-        if (args[0] == owner || args[0] == message.author.id)
+        if (args[0] == message.author.id)
             return embedResponse('No te puedes banear!')
                 .catch(error => { enviarError(error, message.author) })
+
+        if (args[0] == owner)
+            return embedResponse('No puedes banear al creador!')
 
         if (bans.includes(args[0]))
             return embedResponse('El usuario ya estaba baneado!')
@@ -1746,7 +1749,7 @@ client.on('message', async (message) => {
 
 
         if (bans.includes(message.author.id)) {
-            client.updateData({ id: message.author.id }, { tokenChat: 'none' }, 'usuario');
+            await client.updateData({ id: message.author.id }, { tokenChat: 'none' }, 'usuario');
 
             return message.channel.send({ embed: embed.setFooter('Oh oh, parece que estas baneado!') })
                 .catch(error => { enviarError(error, message.author) })
@@ -1774,10 +1777,11 @@ client.on('message', async (message) => {
             res = "[" + message.author.tag + "]";
         }
 
-        embedResponse(`Enviado: ${args.join(' ')}`)
-            .catch(error => { enviarError(error, message.author) })
         await client.updateData({ token: tokenChat }, { $addToSet: { users: message.author.id } }, 'chat');
-        return client.updateData({ token: tokenChat }, { $push: { chat: `[${Hora()}]${res}: ${args.join(' ')}` } }, 'chat');
+        await client.updateData({ token: tokenChat }, { $push: { chat: `[${Hora()}]${res}: ${args.join(' ')}` } }, 'chat');
+
+        return embedResponse(`Enviado: ${args.join(' ')}`)
+            .catch(error => { enviarError(error, message.author) });
     }
 
     else if (command === 'userchats') {
@@ -1892,7 +1896,7 @@ client.on('message', async (message) => {
         }
 
         if (bans.includes(message.author.id)) {
-            client.updateData({ id: message.author.id }, { tokenChat: 'none' }, 'usuario');
+            await client.updateData({ id: message.author.id }, { tokenChat: 'none' }, 'usuario');
 
             return message.channel.send({ embed: embed.setFooter('Oh oh, parece que estas baneado!') })
                 .catch(error => { enviarError(error, message.author) })
@@ -1968,18 +1972,18 @@ client.on('message', async (message) => {
     //fin de gchat
 
     //inicio de creditos
-
-    else if (command === 'creditos') {
-        let embed = new Discord.MessageEmbed()
-            .setColor(color)
-            .setDescription(`
-            \`\`\`js\nconst Ayuda_de_mongoose_y_funciones = \"${getUser(client, '398485728172179477').username}\"\nconst Extras = [\"${getUser(client, '393382613047574530').username}\", \"${getUser(client, '577000793094488085').username}\"]\`\`\`
-            `, { split: true })
-            .setFooter('Gracias por todo!', client.users.cache.get('507367752391196682').displayAvatarURL())
-            .setTimestamp()
-        message.channel.send({ embed: embed }).catch(err => enviarError(err, message.author))
-    }
-
+    /*
+        else if (command === 'creditos') {
+            let embed = new Discord.MessageEmbed()
+                .setColor(color)
+                .setDescription(`
+                \`\`\`js\nconst Ayuda_de_mongoose_y_funciones = \"${getUser(client, '398485728172179477').username}\"\nconst Extras = [\"${getUser(client, '393382613047574530').username}\", \"${getUser(client, '577000793094488085').username}\"]\`\`\`
+                `, { split: true })
+                .setFooter('Gracias por todo!', client.users.cache.get('507367752391196682').displayAvatarURL())
+                .setTimestamp()
+            message.channel.send({ embed: embed }).catch(err => enviarError(err, message.author))
+        }
+    */
     //fin de creditos
 
     //inicio de xd
@@ -2021,7 +2025,7 @@ client.on('message', async (message) => {
         if (!args[0]) return embedResponse('Ponga una ID valida de mensaje!');
         let canal = message.mentions.channels.first() || message.channel
         if (messageSS(args[0], canal) === false) return embedResponse('No encontre el mensaje!\nUse: ' + prefix + 'setmessageid <id> <#mencion>')
-        client.updateData({ id: message.guild.id }, { idMessage: args[0] }, 'muteid');
+        await client.updateData({ id: message.guild.id }, { idMessage: args[0] }, 'muteid');
         canal.messages.fetch(args[0]).then(async (a) => {
             await a.react('751908729930121376').catch(err => { })
             await a.react('751908729624068226').catch(err => { })
