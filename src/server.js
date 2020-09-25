@@ -1378,7 +1378,7 @@ client.on('message', async (message) => {
 
         await client.updateData({ token: `${tok}` }, { max: parseInt(args[1]) }, 'chat');
 
-        await client.updateData({ token: `${tok}` }, { $pull: { chat: `[LOGS]${res} ha creado el chat!` } }, 'chat');
+        await client.updateData({ token: `${tok}` }, { chat: `[LOGS]${res} ha creado el chat!` }, 'chat');
 
         await client.updateData({ id: message.author.id }, { $addToSet: { grupos: `${tok}` } }, 'usuario');
 
