@@ -151,14 +151,14 @@ let cooldownG = new Set()
 let cooldownniveles = new Set();
 client.on('message', async (message) => {
     if (!message.guild) return;
-    function embedResponse(argumentoDeLaDescripcion) {
+    /*function embedResponse(argumentoDeLaDescripcion) {
         return message.channel.send({
             embed: new Discord.MessageEmbed()
                 .setDescription(`¡<:ohno:721174460073377804> => \`Error\`: ${argumentoDeLaDescripcion}!`)
                 .setColor(color)
                 .setTimestamp()
         })
-    }
+    }*/
 
 
     function embedResponse(argumentoDeLaDescripcion, opcion) {
