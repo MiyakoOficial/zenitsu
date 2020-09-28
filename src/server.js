@@ -1016,14 +1016,17 @@ client.on('message', async (message) => {
         if (!miembro) return embedResponse('Menciona a un miembro del servidor!')
             .catch(error => { enviarError(error, message.author) });
 
+        if (miembro.roles.highest.comparePositionTo(message.member.roles.highest) > 0)
+            return embedResponse('No puedes advertir a este usuario!')
+
         if (!args[0].match(/\<\@(\!)?[0-9]{18}\>/g)) return embedResponse('La mencion tiene que ser el primer argumento!')
             .catch(error => { enviarError(error, message.author) });
 
-        await client.updateData({ id: `${message.guild.id} _${miembro.id} ` }, { $inc: { warns: 1 } }, 'warns');
+        await client.updateData({ id: `${message.guild.id}_${miembro.id}` }, { $inc: { warns: 1 } }, 'warns');
 
-        await client.updateData({ id: `${message.guild.id} _${miembro.id} ` }, { razon: razon }, 'warns');
+        await client.updateData({ id: `${message.guild.id}_${miembro.id}` }, { razon: razon }, 'warns');
 
-        await client.getData({ id: `${message.guild.id} _${miembro.id} ` }, 'warns').then((data) => {
+        await client.getData({ id: `${message.guild.id}_${miembro.id}` }, 'warns').then((data) => {
             embedResponse(`El miembro fue advertido!\nAhora tiene: ${data.warns === 0 ? 1 : data.warns} advertencias.\n\nRazón: ${razon}.`)
                 .catch(error => { enviarError(error, message.author) });
         });
@@ -1052,7 +1055,7 @@ client.on('message', async (message) => {
         if (parseInt(args[1]) < 0) return embedResponse('El segundo argumento debe ser igual o mayor a cero!')
             .catch(error => { enviarError(error, message.author) });
 
-        await client.updateData({ id: `${message.guild.id} _${miembro.id} ` }, { warns: parseInt(args[1]) }, 'warns');
+        await client.updateData({ id: `${message.guild.id}_${miembro.id}` }, { warns: parseInt(args[1]) }, 'warns');
 
         embedResponse(`Ahora el miembro ${miembro.user.username} tiene ${args[1]} advertencias!`)
             .catch(error => { enviarError(error, message.author) });
@@ -1068,9 +1071,9 @@ client.on('message', async (message) => {
         if (!message.mentions.members.first()) return embedResponse('Menciona a un miembro del servidor!')
             .catch(error => { enviarError(error, message.author) });
 
-        client.getData({ id: `${message.guild.id} _${message.mentions.users.first().id} ` }, 'warns')
+        client.getData({ id: `${message.guild.id}_${message.mentions.users.first().id}` }, 'warns')
             .then((data) => {
-                embedResponse(`Tiene ${!data.warns ? 0 : data.warns} advertencias\n\nUltima razón: ${!data.razon ? 'No especificada!' : data.razon} `)
+                embedResponse(`Tiene ${!data.warns ? 0 : data.warns} advertencias\n\nUltima razón: ${!data.razon ? 'No especificada!' : data.razon}`)
                     .catch(error => { enviarError(error, message.author) });
             })
     }
@@ -1174,7 +1177,7 @@ client.on('message', async (message) => {
         if (!message.mentions.members.first()) return embedResponse('Menciona a un miembro del servidor!')
             .catch(error => { enviarError(error, message.author) });
 
-        await client.updateData({ id: `${message.guild.id} _${message.mentions.users.first().id} ` }, { warns: 0, razon: 'No especificada!' }, 'warns')
+        await client.updateData({ id: `${message.guild.id}_${message.mentions.users.first().id}` }, { warns: 0, razon: 'No especificada!' }, 'warns')
 
         embedResponse(`Advertencias reseteadas!`)
             .catch(error => { enviarError(error, message.author) });
