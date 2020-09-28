@@ -1046,6 +1046,9 @@ client.on('message', async (message) => {
         if (!miembro) return embedResponse('Menciona a un miembro del servidor!')
             .catch(error => { enviarError(error, message.author) });
 
+        if (miembro.roles.highest.comparePositionTo(message.member.roles.highest) > 0)
+            return embedResponse('No puedes advertir a este usuario!')
+
         if (!args[0].match(/\<\@(\!)?[0-9]{18}\>/g)) return embedResponse('La mencion tiene que ser el primer argumento!')
             .catch(error => { enviarError(error, message.author) });
 
