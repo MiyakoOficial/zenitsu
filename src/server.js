@@ -168,7 +168,7 @@ client.on('message', async (message) => {
                 .setDescription(argumentoDeLaDescripcion)
                 .setColor(color)
                 .setTimestamp()
-        })
+        }).catch(e => { })
     }
     let prefix = 'z!';
     await client.getData({ id: message.guild.id }, 'prefix').then((data) => {
