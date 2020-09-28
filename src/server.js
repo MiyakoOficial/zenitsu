@@ -151,13 +151,13 @@ let cooldownG = new Set()
 let cooldownniveles = new Set();
 client.on('message', async (message) => {
     if (!message.guild) return;
-    function errorEmbed(argumentoDeLaDescripcion) {
+    function embedResponse(argumentoDeLaDescripcion) {
         return message.channel.send({
             embed: new Discord.MessageEmbed()
                 .setDescription(`¡<:ohno:721174460073377804> => \`Error\`: ${argumentoDeLaDescripcion}!`)
                 .setColor(color)
                 .setTimestamp()
-        }).catch(error => { enviarError(error, message.author) });
+        })
     }
 
 
@@ -168,7 +168,7 @@ client.on('message', async (message) => {
                 .setDescription(argumentoDeLaDescripcion)
                 .setColor(color)
                 .setTimestamp()
-        }).catch(error => { enviarError(error, message.author) });
+        })
     }
     let prefix = 'z!';
     await client.getData({ id: message.guild.id }, 'prefix').then((data) => {
@@ -178,25 +178,25 @@ client.on('message', async (message) => {
     const args = message.content.slice(prefix.length).split(/ +/);
     const command = args.shift().toLowerCase();
 
-    function enviarError(elErrorAca, usuario) {
+    /*function enviarError(elErrorAca, usuario) {
         let embed = new Discord.MessageEmbed()
             .setTimestamp()
             .setDescription(elErrorAca)
             .setFooter(`Comando usado: ${command}`)
             .setColor(color)
         usuario.send({ embed: embed })
-            .catch(error => { });
-    }
+
+    }*/
 
     if (message.author.bot) return;
 
     let emojiFinded = message.guild.emojis.cache.find(a => a.name === message.content.slice(2)) || client.emojis.cache.find(a => a.name === message.content.slice(2));
     //console.log(emojiFinded)
     if (message.content.slice(0, 2) === ': ' && emojiFinded)
-        return message.channel.send(emojiFinded.toString()).catch(e => { enviarError(err, message.author) })
+        return message.channel.send(emojiFinded.toString())
 
     if (message.content === `<@${client.user.id}>` || message.content === `<@!${client.user.id}>`) {
-        return embedResponse(`El prefix del servidor es \`${prefix}\``).catch(e => { enviarError(err, message.author) })
+        return embedResponse(`El prefix del servidor es \`${prefix}\``)
     }
 
     function xd(a) {
@@ -289,7 +289,7 @@ client.on('message', async (message) => {
 
                 ctx.drawImage(avatar, 10, 10, 80, 80);
 
-                channel.send(new Discord.MessageAttachment(canvas.toBuffer(), 'levelImage.png')).catch(err => { })
+                channel.send(new Discord.MessageAttachment(canvas.toBuffer(), 'levelImage.png'))
 
                 //embedResponse(`<@${message.author.id}>, subiste al nivel ${nivel + 1}!`, channel).catch(a => { });
 
@@ -303,6 +303,8 @@ client.on('message', async (message) => {
         }
     }
 
+    if (!message.channel.permissionsFor(message.client.user).has('SEND_MESSAGES') || !message.channel.permissionsFor(message.client.user).has('EMBED_LINKS'))
+        return;
 
     if (message.content.length < prefix.length + 1) {
         return;
@@ -314,7 +316,7 @@ client.on('message', async (message) => {
                 .setThumbnail('https://media1.tenor.com/images/dcc0245798b90b4172a06be002620030/tenor.gif?itemid=14757407')
                 .setColor(color)
                 .setTimestamp()
-            message.channel.send({ embed: embed }).catch(err => { });
+            message.channel.send({ embed: embed });
             return;
         }
         cooldownG.add(message.author.id);
@@ -353,7 +355,7 @@ client.on('message', async (message) => {
                 Si es público solo diles el token y ellos tienen que hacer setchat token_chat.\n
                 Si quieres ponerle un nombre usa: editchat name Nuevo nombre, lo mismo con la descripción(description) o el limite de usuarios(maxusers)`)
             return message.channel.send({ embed: embed })
-                .catch(error => { enviarError(error, message.author) });
+
         }
         //${prefix}voicekick, ${prefix}voicemute, ${prefix}voiceunmute, ${prefix}voicedeaf, ${prefix}voiceundeaf, 
         message.channel.send({
@@ -372,7 +374,7 @@ client.on('message', async (message) => {
                 .setThumbnail(client.user.displayAvatarURL({ format: 'png', size: 2048 }))
                 .setTimestamp()
                 .setFooter('Recomendamos que el bot tenga todos los permisos para que no haya problemas!', client.user.displayAvatarURL({ format: 'png', size: 2048 }))
-        }).catch(error => { enviarError(error, message.author) });
+        })
     }
     //fin de help
 
@@ -386,28 +388,28 @@ client.on('message', async (message) => {
             .setColor(color)
             .setFooter('Gracias por apoyar!', message.author.displayAvatarURL({ format: 'png', size: 2048 }))
             .setTimestamp()
-        message.channel.send({ embed: embed }).catch(error => { enviarError(error, message.author) });
+        message.channel.send({ embed: embed })
     }
     //fin de invite
 
     //!inicio de editchannels
     else if (command === 'editchannels') {
-        if (!message.member.hasPermission('ADMINISTRATOR')) return errorEmbed('No tienes el permiso `ADMINISTRATOR`.').catch(error => { enviarError(error, message.author) });
-        if (!message.member.hasPermission('MANAGE_CHANNELS')) return errorEmbed('No tienes el permiso `MANAGE_CHANNELS`.').catch(error => { enviarError(error, message.author) });
-        if (!message.guild.me.hasPermission('ADMINISTRATOR')) return errorEmbed('No tengo el permiso `ADMINISTRATOR`.').catch(error => { enviarError(error, message.author) });
-        if (!message.guild.me.hasPermission('MANAGE_CHANNELS')) return errorEmbed('No tengo el permiso `MANAGE_CHANNELS`.').catch(error => { enviarError(error, message.author) });
+        if (!message.member.hasPermission('ADMINISTRATOR')) return embedResponse('No tienes el permiso `ADMINISTRATOR`.')
+        if (!message.member.hasPermission('MANAGE_CHANNELS')) return embedResponse('No tienes el permiso `MANAGE_CHANNELS`.')
+        if (!message.guild.me.hasPermission('ADMINISTRATOR')) return embedResponse('No tengo el permiso `ADMINISTRATOR`.')
+        if (!message.guild.me.hasPermission('MANAGE_CHANNELS')) return embedResponse('No tengo el permiso `MANAGE_CHANNELS`.')
         if (cooldown.has(message.guild.id)) {
-            embedResponse(message.author.username + ", utilice el comando despues de 5 minutos!").catch(error => { enviarError(error, message.author) });
+            embedResponse(message.author.username + ", utilice el comando despues de 5 minutos!")
             return;
         }
         let id = message.mentions.roles.first() || message.mentions.users.first()
-        if (!id) return embedResponse('Menciona un rol o usuario!\nEjemplo:\n' + prefix + 'editchannels <mencion de rol o user> <true | false | null>').catch(error => { enviarError(error, message.author) });
+        if (!id) return embedResponse('Menciona un rol o usuario!\nEjemplo:\n' + prefix + 'editchannels <mencion de rol o user> <true | false | null>')
         id = id.id
         let canales = message.guild.channels.cache.filter(a => a.type === 'text');
-        if (canales.size >= 101) return embedResponse('Este servidor tiene más de 100 canales de texto!').catch(error => { enviarError(error, message.author) })
-        if (!args[1]) return embedResponse('Ejemplo:\n' + prefix + 'editchannels <mencion de rol o user> <true | false | null>').catch(error => { enviarError(error, message.author) })
-        if (!message.guild.roles.cache.get(id) && !message.guild.members.cache.get(id)) return embedResponse('Error en encontrar la ID de usuario/rol').catch(error => { enviarError(error, message.author) });
-        if (!['true', 'false', 'null'].includes(args[1])) return embedResponse('Escoge entre true, false, null').catch(error => { enviarError(error, message.author) });
+        if (canales.size >= 101) return embedResponse('Este servidor tiene más de 100 canales de texto!')
+        if (!args[1]) return embedResponse('Ejemplo:\n' + prefix + 'editchannels <mencion de rol o user> <true | false | null>')
+        if (!message.guild.roles.cache.get(id) && !message.guild.members.cache.get(id)) return embedResponse('Error en encontrar la ID de usuario/rol')
+        if (!['true', 'false', 'null'].includes(args[1])) return embedResponse('Escoge entre true, false, null')
         let bolChose;
 
         switch (args[1]) {
@@ -430,9 +432,9 @@ client.on('message', async (message) => {
 
         }
 
-        if (bolChose === 'none') return embedResponse('Escoge entre true, false, null').catch(error => { enviarError(error, message.author) });
+        if (bolChose === 'none') return embedResponse('Escoge entre true, false, null')
 
-        message.channel.send(`Editando canales...`).catch(error => { enviarError(error, message.author) });
+        message.channel.send(`Editando canales...`)
         cooldown.add(message.guild.id);
         setTimeout(() => {
             cooldown.delete(message.author.id);
@@ -443,7 +445,7 @@ client.on('message', async (message) => {
 
             await ch.updateOverwrite(id, {
                 SEND_MESSAGES: bolChose
-            }).catch(error => { });
+            })
 
         });
     }
@@ -451,20 +453,20 @@ client.on('message', async (message) => {
 
     //inicio bugreport
     else if (command === 'bugreport') {
-        if (!args[0]) return embedResponse('Escribe algo!').catch(error => { enviarError(error, message.author) })
+        if (!args[0]) return embedResponse('Escribe algo!')
         embedResponse(`${message.author.tag} ha reportado el siguente \"bug\":\n${args.join(' ')}`, client.channels.cache.get('725053091522805787')).then(a => {
-            embedResponse('Reporte enviado!').catch(error => { enviarError(error, message.author) })
+            embedResponse('Reporte enviado!')
         })
     }
 
     else if (command === 'shortlink') {
         const shorten = require('isgd');
-        if (!args[0]) return embedResponse('Correct use:\n`shortlink <link>').catch(error => { enviarError(error, message.author) });
-        if (args[0].includes('discord.gg/')) return embedResponse('You can\'t put a invite in the command!').catch(error => { enviarError(error, message.author) });
+        if (!args[0]) return embedResponse('Correct use:\n`shortlink <link>')
+        if (args[0].includes('discord.gg/')) return embedResponse('You can\'t put a invite in the command!')
 
         if (args[0]) {
             shorten.shorten(args[0], function (res) {
-                embedResponse(`Result:\n${res}`).catch(error => { enviarError(error, message.author) })
+                embedResponse(`Result:\n${res}`)
             })
         }
     }
@@ -473,34 +475,34 @@ client.on('message', async (message) => {
 
     //inicio de suggest
     else if (command === 'suggest') {
-        if (!args[0]) return embedResponse('Escribe algo!').catch(error => { enviarError(error, message.author) })
+        if (!args[0]) return embedResponse('Escribe algo!')
         let embed = new Discord.MessageEmbed()
             .setColor(color)
             .setTimestamp()
             .addField(message.author.tag, args.join(' '))
         client.channels.cache.get('727948582556270682').send({ embed: embed })
-        embedResponse('Sugerencia enviada!').catch(err => { enviarError(err, message.author) })
+        embedResponse('Sugerencia enviada!')
     }
     //fin suggest
 
     //inicio de txt
     else if (command === 'txt') {
-        if (!message.channel.permissionsFor(message.author).has('ATTACH_FILES')) return errorEmbed('No tienes el permiso `ATTACH_FILES`').catch(error => { enviarError(error, message.author) });
-        if (!message.channel.permissionsFor(message.client.user).has('ATTACH_FILES')) return errorEmbed('No tengo el permiso `ATTACH_FILES`').catch(error => { enviarError(error, message.author) });
-        if (!args[0]) return embedResponse('Escribe algo!').catch(error => { enviarError(error, message.author) })
+        if (!message.channel.permissionsFor(message.author).has('ATTACH_FILES')) return embedResponse('No tienes el permiso `ATTACH_FILES`')
+        if (!message.channel.permissionsFor(message.client.user).has('ATTACH_FILES')) return embedResponse('No tengo el permiso `ATTACH_FILES`')
+        if (!args[0]) return embedResponse('Escribe algo!')
         message.channel.send({
             files: [{
                 attachment: Buffer.from(args.join(' ')),
                 name: "Text.txt"
             }]
-        }).catch(error => { enviarError(error, message.author) })
+        })
     }
     //fin de txt
 
     //inicio de eval
     else if (command === 'eval') {
         if (!["507367752391196682", "374710341868847104"].includes(message.author.id))
-            return embedResponse('No puedes usar este comando!').catch(error => { enviarError(error, message.author) })
+            return embedResponse('No puedes usar este comando!')
         let limit = 1950;
         try {
             let code = args.join(" ");
@@ -509,7 +511,7 @@ client.on('message', async (message) => {
             evalued = require("util").inspect(evalued, { depth: 0 });
             let txt = "" + evalued;
             let limit = 1999
-            if (txt.length > limit) return message.channel.send('Evaluación mayor a 1999 caracteres!').catch(error => { enviarError(error, message.author) })
+            if (txt.length > limit) return message.channel.send('Evaluación mayor a 1999 caracteres!')
             let embed = new Discord.MessageEmbed()
                 .setTitle(`Eval`)
                 .addField(`Entrada`, `\`\`\`js\n${code}\`\`\``)
@@ -517,9 +519,9 @@ client.on('message', async (message) => {
                 .addField(`Tipo`, `\`\`\`js\n${asd}\`\`\``.replace("number", "Number").replace("object", "Object").replace("string", "String").replace(undefined, "Undefined").replace("boolean", "Boolean").replace("function", "Function"))
                 .setColor(color)
                 .setTimestamp()
-            message.channel.send({ embed: embed }).catch(error => { enviarError(error, message.author) })
+            message.channel.send({ embed: embed })
         } catch (err) {
-            message.channel.send(`\`ERROR\` \`\`\`js\n${err}\n\`\`\``).catch(err => console.log(err)).catch(error => { enviarError(error, message.author) });
+            message.channel.send(`\`ERROR\` \`\`\`js\n${err}\n\`\`\``)
         };
     }
     //fin de eval
@@ -527,34 +529,34 @@ client.on('message', async (message) => {
     //inicio de blacklist
     else if (command === 'blacklist') {
         if (!["507367752391196682", "374710341868847104"].includes(message.author.id))
-            return embedResponse('No puedes usar este comando!').catch(error => { enviarError(error, message.author) });
+            return embedResponse('No puedes usar este comando!')
         let razon = args.slice(2).join(' ') || 'No especificada!'
-        if (!args[0]) return embedResponse('Escribe la ID de un usuario!').catch(error => { enviarError(error, message.author) });
-        if (!client.users.cache.get(args[0])) return embedResponse('No encontre al usuario!').catch(error => { enviarError(error, message.author) });
-        if (!['true', 'false'].includes(args[1])) return embedResponse('¿true o false?').catch(error => { enviarError(error, message.author) });
+        if (!args[0]) return embedResponse('Escribe la ID de un usuario!')
+        if (!client.users.cache.get(args[0])) return embedResponse('No encontre al usuario!')
+        if (!['true', 'false'].includes(args[1])) return embedResponse('¿true o false?')
         await client.updateData({ id: args[0] }, { bol: args[1], razon: razon }, 'blacklist');
-        embedResponse('Listo!').catch(error => { enviarError(error, message.author) });
+        embedResponse('Listo!')
     }
     //fin de blacklist
 
     //inicio de accept
     else if (command === 'accept') {
         if (!["507367752391196682", "374710341868847104"].includes(message.author.id))
-            return embedResponse('No puedes usar este comando!').catch(error => { enviarError(error, message.author) });
-        if (!args[0]) return embedResponse('Escribe una ID valida').catch(error => { enviarError(error, message.author) });
-        if (!args[1]) return embedResponse('Escribe algo!').catch(error => { enviarError(error, message.author) });
+            return embedResponse('No puedes usar este comando!')
+        if (!args[0]) return embedResponse('Escribe una ID valida')
+        if (!args[1]) return embedResponse('Escribe algo!')
 
-        if (await messageS(args[0]) === false) return embedResponse('No he encontrado ese mensaje!').catch(error => { enviarError(error, message.author) });
+        if (await messageS(args[0]) === false) return embedResponse('No he encontrado ese mensaje!')
         else {
             client.channels.cache.get('727948582556270682').messages.fetch(args[0]).then(a => {
                 a.edit(a.embeds[0]
                     .addField('Aceptado!', args.slice(1).join(' '))
                     .setColor('GREEN'))
-                    .catch(error => { enviarError(error, message.author) });
 
-                a.react('721174526930714634').catch(error => { enviarError(error, message.author) });
+
+                a.react('721174526930714634')
             });
-            embedResponse('Sugerencia aceptada!').catch(error => { enviarError(error, message.author) });
+            embedResponse('Sugerencia aceptada!')
         }
     }
     //fin de accept
@@ -562,21 +564,21 @@ client.on('message', async (message) => {
     //inicio de deny
     else if (command === 'deny') {
         if (!["507367752391196682", "374710341868847104"].includes(message.author.id))
-            return embedResponse('No puedes usar este comando!').catch(error => { enviarError(error, message.author) });
-        if (!args[0]) return embedResponse('Escribe una ID valida').catch(error => { enviarError(error, message.author) });
-        if (!args[1]) return embedResponse('Escribe algo!').catch(error => { enviarError(error, message.author) });
+            return embedResponse('No puedes usar este comando!')
+        if (!args[0]) return embedResponse('Escribe una ID valida')
+        if (!args[1]) return embedResponse('Escribe algo!')
 
-        if (await messageS(args[0]) === false) return embedResponse('No he encontrado ese mensaje!').catch(error => { enviarError(error, message.author) });
+        if (await messageS(args[0]) === false) return embedResponse('No he encontrado ese mensaje!')
         else {
             client.channels.cache.get('727948582556270682').messages.fetch(args[0]).then(a => {
                 a.edit(a.embeds[0]
                     .addField('Denegado!', args.slice(1).join(' '))
                     .setColor('RED'))
-                    .catch(error => { enviarError(error, message.author) });
 
-                a.react('721174460073377804').catch(error => { enviarError(error, message.author) });
+
+                a.react('721174460073377804')
             });
-            embedResponse('Sugerencia denegada!').catch(error => { enviarError(error, message.author) });
+            embedResponse('Sugerencia denegada!')
         }
     }
     //fin de deny
@@ -584,12 +586,12 @@ client.on('message', async (message) => {
     //inicio de checkblacklist
     else if (command === 'checkblacklist') {
         if (!["507367752391196682", "374710341868847104"].includes(message.author.id))
-            return embedResponse('No puedes usar este comando!').catch(error => { enviarError(error, message.author) });
-        if (!args[0]) return embedResponse('Escribe la ID de un usuario!').catch(error => { enviarError(error, message.author) });
-        if (!client.users.cache.get(args[0])) return embedResponse('No encontre al usuario!').catch(error => { enviarError(error, message.author) });
+            return embedResponse('No puedes usar este comando!')
+        if (!args[0]) return embedResponse('Escribe la ID de un usuario!')
+        if (!client.users.cache.get(args[0])) return embedResponse('No encontre al usuario!')
         await client.getData({ id: args[0] }, 'blacklist').then((data) => {
             embedResponse(`${data.bol ? 'Está en la blacklist :c\nRazón: ' + data.razon : 'No está en la blacklist'}`)
-                .catch(error => { enviarError(error, message.author) });
+
         })
     }
     //fin de checkblacklist
@@ -602,25 +604,25 @@ client.on('message', async (message) => {
 
     //comienzo de setlogs
     else if (command === 'setlogs' || command === 'logschannel') {
-        if (!message.member.hasPermission("ADMINISTRATOR")) return errorEmbed("No tienes el permiso `ADMINISTRATOR`").catch(error => { enviarError(error, message.author) })
+        if (!message.member.hasPermission("ADMINISTRATOR")) return embedResponse("No tienes el permiso `ADMINISTRATOR`")
         let channel = message.mentions.channels.first();
-        if (!channel) return embedResponse("No has mencionado un canal/Ese canal no existe.").catch(error => { enviarError(error, message.author) })
-        if (!message.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(channel.id)) return embedResponse('El canal tiene que ser del Servidor donde estas!').catch(error => { enviarError(error, message.author) })
+        if (!channel) return embedResponse("No has mencionado un canal/Ese canal no existe.")
+        if (!message.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(channel.id)) return embedResponse('El canal tiene que ser del Servidor donde estas!')
 
         await client.updateData({ id: message.guild.id }, { channellogs: channel.id }, 'logs')
 
-        return embedResponse(`Canal establecido en: <#${channel.id}>`).catch(error => { enviarError(error, message.author) })
+        return embedResponse(`Canal establecido en: <#${channel.id}>`)
     }
     //fin de setlogs
 
     //inicio de setprefix
     else if (command === 'setprefix' || command === 'changeprefix') {
-        if (!message.member.hasPermission("ADMINISTRATOR")) return errorEmbed("No tienes el permiso `ADMINISTRATOR`").catch(error => { enviarError(error, message.author) })
-        if (!args[0] || args[0].length >= 4) return embedResponse('El prefix debe tener menos de 3 caracteres!').catch(error => { enviarError(error, message.author) });
+        if (!message.member.hasPermission("ADMINISTRATOR")) return embedResponse("No tienes el permiso `ADMINISTRATOR`")
+        if (!args[0] || args[0].length >= 4) return embedResponse('El prefix debe tener menos de 3 caracteres!')
 
         await client.updateData({ id: message.guild.id }, { prefix: args[0] }, 'prefix').catch(e => { });
 
-        return embedResponse(`Prefix establecido a \`${args[0]}\``).catch(error => { enviarError(error, message.author) })
+        return embedResponse(`Prefix establecido a \`${args[0]}\``)
     }
     //fin de setprefix
 
@@ -668,11 +670,11 @@ client.on('message', async (message) => {
         await client.getData({ id: canal.id }, 'snipe').then((data) => {
 
 
-            if (!data || !data.snipe || data.snipe.length === 0) return embedResponse("Nada en la base de datos").catch(error => { enviarError(error, message.author) });
+            if (!data || !data.snipe || data.snipe.length === 0) return embedResponse("Nada en la base de datos")
             else {
                 let la_data = data.snipe
                 let separador = la_data.split(ayuda)
-                if (!separador || !separador[1]) return embedResponse("Nada en la base de datos").catch(error => { enviarError(error, message.author) });
+                if (!separador || !separador[1]) return embedResponse("Nada en la base de datos")
                 let embed = new Discord.MessageEmbed()
                     .addField('Message', separador[0].slice(0, 1024).includes('discord.gg/') ? `The message has an invite!` : separador[0].slice(0, 1024))
                     .addField('Author', separador[1])
@@ -680,7 +682,7 @@ client.on('message', async (message) => {
                     .setTimestamp()
                     .setTitle('Snipe')
                     .setThumbnail('https://media1.tenor.com/images/8c3e8a0a3c7b0afc22624c9278be6a89/tenor.gif?itemid=5489827')
-                return message.channel.send({ embed: embed }).catch(error => { enviarError(error, message.author) });
+                return message.channel.send({ embed: embed })
             }
         });
     }
@@ -688,18 +690,18 @@ client.on('message', async (message) => {
 
     //inicio de clear
     else if (command === 'clear') {
-        if (!message.member.hasPermission('MANAGE_MESSAGES')) return errorEmbed('No tienes el permiso `MANAGE_MESSAGES`!').catch(error => { enviarError(error, message.author) });
-        if (!message.guild.me.hasPermission('MANAGE_MESSAGES')) return errorEmbed('No tengo el permiso `MANAGE_MESSAGES`').catch(error => { enviarError(error, message.author) });
-        if (!args[0]) return embedResponse('Escribe un numero!').catch(error => { enviarError(error, message.author) });
-        if (isNaN(args[0])) return embedResponse('' + mal + ' Escribe un numero!').catch(error => { enviarError(error, message.author) })
-        if (args[0] >= 100 || args[0] === 0) return embedResponse('Un numero del 1 al 99').catch(error => { enviarError(error, message.author) });
-        await message.delete().catch(error => { enviarError(error, message.author) });
+        if (!message.member.hasPermission('MANAGE_MESSAGES')) return embedResponse('No tienes el permiso `MANAGE_MESSAGES`!')
+        if (!message.guild.me.hasPermission('MANAGE_MESSAGES')) return embedResponse('No tengo el permiso `MANAGE_MESSAGES`')
+        if (!args[0]) return embedResponse('Escribe un numero!')
+        if (isNaN(args[0])) return embedResponse('' + mal + ' Escribe un numero!')
+        if (args[0] >= 100 || args[0] === 0) return embedResponse('Un numero del 1 al 99')
+        await message.delete()
         await message.channel.bulkDelete(args[0], true).then(d => {
-            if (d.size < args[0]) return d.size === 0 ? errorEmbed('Ningun mensaje fue eliminado!').catch(error => { enviarError(error, message.author) }) : embedResponse('Mensajes eliminados: ' + d.size)
-                .catch(error => { enviarError(error, message.author) })
+            if (d.size < args[0]) return d.size === 0 ? embedResponse('Ningun mensaje fue eliminado!') : embedResponse('Mensajes eliminados: ' + d.size)
+
             else return embedResponse('Mensajes eliminados: ' + d.size)
-                .catch(err => { enviarError(error, message.author) })
-        }).catch(error => { enviarError(error, message.author) });
+
+        })
 
     }
     //fin de clear
@@ -709,12 +711,12 @@ client.on('message', async (message) => {
         let argumento = args.join(' ')
         let txt = encodeURIComponent(argumento);
         let link = `https://api.alexflipnote.dev/challenge?text=${txt}`;
-        if (!argumento) return embedResponse('Escribe algo!').catch(error => { enviarError(error, message.author) })
+        if (!argumento) return embedResponse('Escribe algo!')
         let embed = new Discord.MessageEmbed()
             .setImage(link)
             .setColor(color)
             .setTimestamp()
-        message.channel.send({ embed: embed }).catch(error => { enviarError(error, message.author) })
+        message.channel.send({ embed: embed })
     }
     //fin de challenge
 
@@ -723,12 +725,12 @@ client.on('message', async (message) => {
         let argumento = args.join(' ')
         let txt = encodeURIComponent(argumento);
         let link = `https://api.alexflipnote.dev/achievement?text=${txt}`;
-        if (!argumento) return embedResponse('Escribe algo!').catch(error => { enviarError(error, message.author) })
+        if (!argumento) return embedResponse('Escribe algo!')
         let embed = new Discord.MessageEmbed()
             .setImage(link)
             .setColor(color)
             .setTimestamp()
-        message.channel.send({ embed: embed }).catch(error => { enviarError(error, message.author) })
+        message.channel.send({ embed: embed })
     }
     //fin de achievement
 
@@ -737,12 +739,12 @@ client.on('message', async (message) => {
         let argumento = args.join(' ');
         let txt = encodeURIComponent(argumento);
         let link = `https://api.alexflipnote.dev/supreme?text=${txt}`;
-        if (!argumento) return embedResponse('Escribe algo!').catch(error => { enviarError(error, message.author) })
+        if (!argumento) return embedResponse('Escribe algo!')
         let embed = new Discord.MessageEmbed()
             .setImage(link)
             .setColor(color)
             .setTimestamp()
-        message.channel.send({ embed: embed }).catch(error => { enviarError(error, message.author) })
+        message.channel.send({ embed: embed })
     }
     //fin de supreme
 
@@ -751,12 +753,12 @@ client.on('message', async (message) => {
         let argumento = args.join(' ')
         let txt = encodeURIComponent(argumento);
         let link = `https://api.alexflipnote.dev/captcha?text=${txt}`;
-        if (!argumento) return embedResponse('Escribe algo!').catch(error => { enviarError(error, message.author) })
+        if (!argumento) return embedResponse('Escribe algo!')
         let embed = new Discord.MessageEmbed()
             .setImage(link)
             .setColor(color)
             .setTimestamp()
-        message.channel.send({ embed: embed }).catch(error => { enviarError(error, message.author) })
+        message.channel.send({ embed: embed })
     }
     //fin de captcha
 
@@ -766,14 +768,14 @@ client.on('message', async (message) => {
         let txt = encodeURIComponent(argumento[0]);
         let texto = encodeURIComponent(argumento[1])
         let link = `https://api.alexflipnote.dev/didyoumean?top=${txt}&bottom=${texto}`;
-        if (!argumento[1]) return embedResponse('Ejemplo de uso:\n```js\n' + prefix + 'didyoumean Hola ,|, Adios```').catch(error => { enviarError(error, message.author) });
-        if (txt.length >= 45) return embedResponse('El primer argumento debe tener menos de `45`').catch(error => { enviarError(error, message.author) });
-        if (texto.length >= 40) return embedResponse('El segundo argumento debe tener menos de `40`').catch(error => { enviarError(error, message.author) });
+        if (!argumento[1]) return embedResponse('Ejemplo de uso:\n```js\n' + prefix + 'didyoumean Hola ,|, Adios```')
+        if (txt.length >= 45) return embedResponse('El primer argumento debe tener menos de `45`')
+        if (texto.length >= 40) return embedResponse('El segundo argumento debe tener menos de `40`')
         let embed = new Discord.MessageEmbed()
             .setImage(link)
             .setColor(color)
             .setTimestamp()
-        message.channel.send({ embed: embed }).catch(error => { enviarError(error, message.author) });
+        message.channel.send({ embed: embed })
     }
 
     //fin de didyoumean
@@ -784,14 +786,14 @@ client.on('message', async (message) => {
         let txt = encodeURIComponent(argumento[0]);
         let texto = encodeURIComponent(argumento[1])
         let link = `https://api.alexflipnote.dev/drake?top=${txt}&bottom=${texto}`;
-        if (!argumento[1]) return embedResponse('Ejemplo de uso:\n```js\n' + prefix + 'drake Hola ,|, Adios```').catch(error => { enviarError(error, message.author) });
-        if (txt.length >= 60) return embedResponse('El primer argumento debe tener menos de `60`').catch(error => { enviarError(error, message.author) });
-        if (texto.length >= 60) return embedResponse('El segundo argumento debe tener menos de `60`').catch(error => { enviarError(error, message.author) });
+        if (!argumento[1]) return embedResponse('Ejemplo de uso:\n```js\n' + prefix + 'drake Hola ,|, Adios```')
+        if (txt.length >= 60) return embedResponse('El primer argumento debe tener menos de `60`')
+        if (texto.length >= 60) return embedResponse('El segundo argumento debe tener menos de `60`')
         let embed = new Discord.MessageEmbed()
             .setImage(link)
             .setTimestamp()
             .setColor(color)
-        message.channel.send({ embed: embed }).catch(error => { enviarError(error, message.author) });
+        message.channel.send({ embed: embed })
     }
 
     //fin de drake
@@ -799,14 +801,14 @@ client.on('message', async (message) => {
     //inicio de ship
     else if (command === 'ship') {
         let mencionado = message.mentions.users.first()
-        if (!mencionado) return embedResponse('Menciona a alguien!').catch(error => { enviarError(error, message.author) });
+        if (!mencionado) return embedResponse('Menciona a alguien!')
         message.channel.send(
             new Discord.MessageEmbed()
                 .setTimestamp()
                 .setImage(`https://api.alexflipnote.dev/ship?user=${message.author.displayAvatarURL({ format: 'png', size: 2048 })}&user2=${mencionado.displayAvatarURL({ format: 'png', size: 2048 })}`)
                 .setColor(color)
                 .setDescription(`Hmm, creo que se quieren un ${Math.floor(Math.random() * 99) + 1}%\n\n¿Eso es amor?`)
-        ).catch(error => { enviarError(error, message.author) });
+        )
     }
     //fin de ship
 
@@ -814,10 +816,10 @@ client.on('message', async (message) => {
 
     //inicio de play
     else if (command === 'play' || command === 'p') {
-        if (!message.member.voice.channel) return embedResponse('Necesitas estar en un canal de voz!').catch(error => { enviarError(error, message.author) });
-        if (!message.member.voice.channel.permissionsFor(message.client.user).has('CONNECT')) return embedResponse('No puedo unirme a ese canal de voz!').catch(error => { enviarError(error, message.author) });
-        if (!message.member.voice.channel.permissionsFor(message.client.user).has('SPEAK')) return embedResponse('No puedo hablar en ese canal de voz!').catch(error => { enviarError(error, message.author) });
-        if (!args[0]) return embedResponse('Escribe algo!').catch(error => { enviarError(error, message.author) });
+        if (!message.member.voice.channel) return embedResponse('Necesitas estar en un canal de voz!')
+        if (!message.member.voice.channel.permissionsFor(message.client.user).has('CONNECT')) return embedResponse('No puedo unirme a ese canal de voz!')
+        if (!message.member.voice.channel.permissionsFor(message.client.user).has('SPEAK')) return embedResponse('No puedo hablar en ese canal de voz!')
+        if (!args[0]) return embedResponse('Escribe algo!')
         /*const opts = {
             maxResults: 1, 
             key: process.env.YOUTUBEKEY,      
@@ -841,8 +843,8 @@ client.on('message', async (message) => {
         let songInfo;
         try {
             songInfo = await ytdl.getInfo(songURL);
-        } catch (e) { embedResponse(e).catch(err => { enviarError(err, message.author) }) }
-        if (!result || !songInfo) return embedResponse('Ups, no he encontrado esa música, intenta de nuevo!').catch(error => { enviarError(error, message.author) });
+        } catch (e) { embedResponse(e) }
+        if (!result || !songInfo) return embedResponse('Ups, no he encontrado esa música, intenta de nuevo!')
 
         let song = {
             title: songInfo.videoDetails.title,
@@ -868,19 +870,19 @@ client.on('message', async (message) => {
                 play(message.guild, queueObject.songs[0])
             } catch (err) {
                 queue.delete(message.guild.id)
-                return message.channel.send('Error: ' + err).catch(error => { enviarError(error, message.author) });
+                return message.channel.send('Error: ' + err)
             }
-            embedResponse(`Reproduciendo: [${song.title}](${song.url}) - ${song.time} - ${song.author.toString()}`).catch(error => { enviarError(error, message.author) });
+            embedResponse(`Reproduciendo: [${song.title}](${song.url}) - ${song.time} - ${song.author.toString()}`)
         }
 
         else {
             if (serverQueue.songs.length === 0 || !message.guild.me.voice.channel) {
-                embedResponse('Reiniciando la cola!\nIntente de nuevo!').catch(error => { enviarError(error, message.author) });
+                embedResponse('Reiniciando la cola!\nIntente de nuevo!')
                 return queue.delete(message.guild.id)
             } else {
-                if (message.member.voice.channel.id !== message.guild.me.voice.channel.id) return embedResponse('Tienes que estar en el mismo canal de voz para agregar una canción!').catch(error => { enviarError(error, message.author) });
+                if (message.member.voice.channel.id !== message.guild.me.voice.channel.id) return embedResponse('Tienes que estar en el mismo canal de voz para agregar una canción!')
                 serverQueue.songs.push(song)
-                embedResponse(`Añadiendo a la cola: [${song.title}](${song.url}) - ${song.time} - ${song.author.toString()}`).catch(error => { enviarError(error, message.author) });
+                embedResponse(`Añadiendo a la cola: [${song.title}](${song.url}) - ${song.time} - ${song.author.toString()}`)
             }
         }
     }
@@ -888,11 +890,11 @@ client.on('message', async (message) => {
 
     //inicio de queue
     else if (command === 'queue' || command === 'q') {
-        if (!message.member.voice.channel) return embedResponse('Tienes que estar en un canal de voz!').catch(error => { enviarError(error, message.author) });
-        if (!message.guild.me.voice.channel) return embedResponse('Wow, creo que no estoy en un canal de voz!').catch(error => { enviarError(error, message.author) });
-        if (!serverQueue) return embedResponse('Al parecer no hay ninguna canción reproduciendose!').catch(error => { enviarError(error, message.author) });
-        if (!serverQueue.songs[0]) return embedResponse('Al parecer no hay ninguna canción reproduciendose!').catch(error => { enviarError(error, message.author) });
-        if (message.member.voice.channel.id !== message.guild.me.voice.channel.id) return embedResponse('Tienes que estar en el mismo canal de voz para saber la lista!').catch(error => { enviarError(error, message.author) });
+        if (!message.member.voice.channel) return embedResponse('Tienes que estar en un canal de voz!')
+        if (!message.guild.me.voice.channel) return embedResponse('Wow, creo que no estoy en un canal de voz!')
+        if (!serverQueue) return embedResponse('Al parecer no hay ninguna canción reproduciendose!')
+        if (!serverQueue.songs[0]) return embedResponse('Al parecer no hay ninguna canción reproduciendose!')
+        if (message.member.voice.channel.id !== message.guild.me.voice.channel.id) return embedResponse('Tienes que estar en el mismo canal de voz para saber la lista!')
         let x = serverQueue.songs.map(a => a.tiempo).reduce((a, b) => a + b);
 
         let cancionesSeparadas = [];
@@ -931,33 +933,33 @@ client.on('message', async (message) => {
     `, { split: true })
             s = embed2
         }
-        message.channel.send({ embed: s }).catch(error => { enviarError(error, message.author) });
+        message.channel.send({ embed: s })
     }
     //fin de queue
 
     //inicio de skip
     else if (command === 'skip' || command === 's') {
-        if (!message.member.voice.channel) return embedResponse('Tienes que estar en un canal de voz!').catch(error => { enviarError(error, message.author) });
-        if (!message.guild.me.voice.channel) return embedResponse('Wow, creo que no estoy en un canal de voz!').catch(error => { enviarError(error, message.author) });
-        if (!serverQueue) return embedResponse('Al parecer no hay ninguna canción reproduciendose!').catch(error => { enviarError(error, message.author) });
-        if (!serverQueue.songs[0]) return embedResponse('Al parecer no hay ninguna canción reproduciendose!').catch(error => { enviarError(error, message.author) });
-        if (serverQueue.songs.length <= 1) return embedResponse('Nada que saltar por aca!').catch(error => { enviarError(error, message.author) });
+        if (!message.member.voice.channel) return embedResponse('Tienes que estar en un canal de voz!')
+        if (!message.guild.me.voice.channel) return embedResponse('Wow, creo que no estoy en un canal de voz!')
+        if (!serverQueue) return embedResponse('Al parecer no hay ninguna canción reproduciendose!')
+        if (!serverQueue.songs[0]) return embedResponse('Al parecer no hay ninguna canción reproduciendose!')
+        if (serverQueue.songs.length <= 1) return embedResponse('Nada que saltar por aca!')
         else {
-            if (message.member.voice.channel.id !== message.guild.me.voice.channel.id) return embedResponse('Tienes que estar en el mismo canal de voz para saltar la canción!').catch(error => { enviarError(error, message.author) });
+            if (message.member.voice.channel.id !== message.guild.me.voice.channel.id) return embedResponse('Tienes que estar en el mismo canal de voz para saltar la canción!')
             serverQueue.connection.dispatcher.end()
-            return embedResponse('Saltando a la siguiente música!').catch(error => { enviarError(error, message.author) });
+            return embedResponse('Saltando a la siguiente música!')
         }
     }
     //fin de skip
 
     //inicio de stop
     else if (command === 'stop') {
-        if (!message.member.voice.channel) return embedResponse('Tienes que estar en un canal de voz!').catch(error => { enviarError(error, message.author) });
-        if (!message.guild.me.voice.channel) return embedResponse('Wow, creo que no estoy en un canal de voz!').catch(error => { enviarError(error, message.author) });
-        if (!serverQueue) return embedResponse('Al parecer no hay ninguna canción reproduciendose!').catch(error => { enviarError(error, message.author) });
-        if (!serverQueue.songs[0]) return embedResponse('Al parecer no hay ninguna canción reproduciendose!').catch(error => { enviarError(error, message.author) });
+        if (!message.member.voice.channel) return embedResponse('Tienes que estar en un canal de voz!')
+        if (!message.guild.me.voice.channel) return embedResponse('Wow, creo que no estoy en un canal de voz!')
+        if (!serverQueue) return embedResponse('Al parecer no hay ninguna canción reproduciendose!')
+        if (!serverQueue.songs[0]) return embedResponse('Al parecer no hay ninguna canción reproduciendose!')
         else {
-            if (message.member.voice.channel.id !== message.guild.me.voice.channel.id) return embedResponse('Tienes que estar en el mismo canal de voz para detener la lista!').catch(error => { enviarError(error, message.author) });
+            if (message.member.voice.channel.id !== message.guild.me.voice.channel.id) return embedResponse('Tienes que estar en el mismo canal de voz para detener la lista!')
             queue.delete(message.guild.id)
             message.guild.me.voice.channel.leave()
             embedResponse('Cola de reproducción detenida')
@@ -967,12 +969,12 @@ client.on('message', async (message) => {
 
     //inicio de np
     else if (command === 'np' || command === 'nowplaying') {
-        if (!message.member.voice.channel) return embedResponse('Tienes que estar en un canal de voz!').catch(error => { enviarError(error, message.author) });
-        if (!message.guild.me.voice.channel) return embedResponse('Wow, creo que no estoy en un canal de voz!').catch(error => { enviarError(error, message.author) });
-        if (!serverQueue) return embedResponse('Al parecer no hay ninguna canción reproduciendose!').catch(error => { enviarError(error, message.author) });
-        if (!serverQueue.songs[0]) return embedResponse('Al parecer no hay ninguna canción reproduciendose!').catch(error => { enviarError(error, message.author) });
+        if (!message.member.voice.channel) return embedResponse('Tienes que estar en un canal de voz!')
+        if (!message.guild.me.voice.channel) return embedResponse('Wow, creo que no estoy en un canal de voz!')
+        if (!serverQueue) return embedResponse('Al parecer no hay ninguna canción reproduciendose!')
+        if (!serverQueue.songs[0]) return embedResponse('Al parecer no hay ninguna canción reproduciendose!')
         else {
-            if (message.member.voice.channel.id !== message.guild.me.voice.channel.id) return embedResponse('Tienes que estar en el mismo canal de voz para saber la canción que se esta reproduciendo!').catch(error => { enviarError(error, message.author) });
+            if (message.member.voice.channel.id !== message.guild.me.voice.channel.id) return embedResponse('Tienes que estar en el mismo canal de voz para saber la canción que se esta reproduciendo!')
 
             let embed = new Discord.MessageEmbed()
                 .setColor(color)
@@ -982,7 +984,7 @@ client.on('message', async (message) => {
                 .setDescription(`[${serverQueue.songs[0].title}](${serverQueue.songs[0].url}) - ${serverQueue.songs[0].author.toString()}`)
                 .setFooter(`${duration(Math.trunc(serverQueue.connection.dispatcher.streamTime / 1000))} / ${serverQueue.songs[0].time}`)
             return message.channel.send({ embed: embed })
-                .catch(error => { enviarError(error, message.author) });
+
         };
     }
     //fin de np
@@ -990,18 +992,18 @@ client.on('message', async (message) => {
     //inicio de volume
 
     else if (command === 'volume' || command === 'v') {
-        if (!message.member.voice.channel) return embedResponse('Tienes que estar en un canal de voz!').catch(error => { enviarError(error, message.author) });
-        if (!message.guild.me.voice.channel) return embedResponse('Wow, creo que no estoy en un canal de voz!').catch(error => { enviarError(error, message.author) });
-        if (!serverQueue) return embedResponse('Al parecer no hay ninguna canción reproduciendose!').catch(error => { enviarError(error, message.author) });
-        if (!serverQueue.songs[0]) return embedResponse('Al parecer no hay ninguna canción reproduciendose!').catch(error => { enviarError(error, message.author) });
+        if (!message.member.voice.channel) return embedResponse('Tienes que estar en un canal de voz!')
+        if (!message.guild.me.voice.channel) return embedResponse('Wow, creo que no estoy en un canal de voz!')
+        if (!serverQueue) return embedResponse('Al parecer no hay ninguna canción reproduciendose!')
+        if (!serverQueue.songs[0]) return embedResponse('Al parecer no hay ninguna canción reproduciendose!')
         else {
-            if (isNaN(args.join(' '))) return embedResponse('Pon un numero valido!').catch(error => { enviarError(error, message.author) });
-            if (parseInt(args.join(' ')) > 100 || args.join(' ') < 1) return embedResponse('Elije un numero del 1 al 100').catch(error => { enviarError(error, message.author) });
-            if (message.member.voice.channel.id !== message.guild.me.voice.channel.id) return embedResponse('Tienes que estar en el mismo canal de voz para cambiar el volumen!').catch(error => { enviarError(error, message.author) });
+            if (isNaN(args.join(' '))) return embedResponse('Pon un numero valido!')
+            if (parseInt(args.join(' ')) > 100 || args.join(' ') < 1) return embedResponse('Elije un numero del 1 al 100')
+            if (message.member.voice.channel.id !== message.guild.me.voice.channel.id) return embedResponse('Tienes que estar en el mismo canal de voz para cambiar el volumen!')
 
             serverQueue.volume = Math.floor(parseInt(args.join(' ')));
             serverQueue.connection.dispatcher.setVolumeLogarithmic(Math.floor(parseInt(args.join(' '))) / 5);
-            embedResponse(`Cambiado a: ${Math.floor(parseInt(args.join(' ')))}% `).catch(error => { enviarError(error, message.author) });
+            embedResponse(`Cambiado a: ${Math.floor(parseInt(args.join(' ')))}% `)
         }
     }
     //fin de volume
@@ -1009,18 +1011,18 @@ client.on('message', async (message) => {
     //inicio de warn
 
     else if (command === 'warn') {
-        if (!message.member.hasPermission('KICK_MEMBERS')) return errorEmbed('No tienes el permiso `KICK_MEMBERS`')
-            .catch(error => { enviarError(error, message.author) });
+        if (!message.member.hasPermission('KICK_MEMBERS')) return embedResponse('No tienes el permiso `KICK_MEMBERS`')
+
         let miembro = message.mentions.members.first();
         let razon = args.slice(1).join(' ') || 'No especificada';
         if (!miembro) return embedResponse('Menciona a un miembro del servidor!')
-            .catch(error => { enviarError(error, message.author) });
+
 
         if (miembro.roles.highest.comparePositionTo(message.member.roles.highest) > 0)
             return embedResponse('No puedes advertir a este usuario!')
 
         if (!args[0].match(/\<\@(\!)?[0-9]{18}\>/g)) return embedResponse('La mencion tiene que ser el primer argumento!')
-            .catch(error => { enviarError(error, message.author) });
+
 
         await client.updateData({ id: `${message.guild.id}_${miembro.id}` }, { $inc: { warns: 1 } }, 'warns');
 
@@ -1028,7 +1030,7 @@ client.on('message', async (message) => {
 
         await client.getData({ id: `${message.guild.id}_${miembro.id}` }, 'warns').then((data) => {
             embedResponse(`El miembro fue advertido!\nAhora tiene: ${data.warns === 0 ? 1 : data.warns} advertencias.\n\nRazón: ${razon}.`)
-                .catch(error => { enviarError(error, message.author) });
+
         });
 
     }
@@ -1038,30 +1040,30 @@ client.on('message', async (message) => {
     //inicio de setwarns
 
     else if (command === 'setwarns') {
-        if (!message.member.hasPermission('KICK_MEMBERS')) return errorEmbed('No tienes el permiso `KICK_MEMBERS`')
-            .catch(error => { enviarError(error, message.author) });
+        if (!message.member.hasPermission('KICK_MEMBERS')) return embedResponse('No tienes el permiso `KICK_MEMBERS`')
+
 
         let miembro = message.mentions.members.first();
 
         if (!miembro) return embedResponse('Menciona a un miembro del servidor!')
-            .catch(error => { enviarError(error, message.author) });
+
 
         if (miembro.roles.highest.comparePositionTo(message.member.roles.highest) > 0)
             return embedResponse('No puedes advertir a este usuario!')
 
         if (!args[0].match(/\<\@(\!)?[0-9]{18}\>/g)) return embedResponse('La mencion tiene que ser el primer argumento!')
-            .catch(error => { enviarError(error, message.author) });
+
 
         if (isNaN(args[1])) return embedResponse('El segundo argumento tiene que ser un numero!')
-            .catch(error => { enviarError(error, message.author) });
+
 
         if (parseInt(args[1]) < 0) return embedResponse('El segundo argumento debe ser igual o mayor a cero!')
-            .catch(error => { enviarError(error, message.author) });
+
 
         await client.updateData({ id: `${message.guild.id}_${miembro.id}` }, { warns: parseInt(args[1]) }, 'warns');
 
         embedResponse(`Ahora el miembro ${miembro.user.username} tiene ${args[1]} advertencias!`)
-            .catch(error => { enviarError(error, message.author) });
+
 
 
     }
@@ -1072,12 +1074,12 @@ client.on('message', async (message) => {
 
     else if (command === 'checkwarns') {
         if (!message.mentions.members.first()) return embedResponse('Menciona a un miembro del servidor!')
-            .catch(error => { enviarError(error, message.author) });
+
 
         client.getData({ id: `${message.guild.id}_${message.mentions.users.first().id}` }, 'warns')
             .then((data) => {
                 embedResponse(`Tiene ${!data.warns ? 0 : data.warns} advertencias\n\nUltima razón: ${!data.razon ? 'No especificada!' : data.razon}`)
-                    .catch(error => { enviarError(error, message.author) });
+
             })
     }
 
@@ -1101,11 +1103,11 @@ client.on('message', async (message) => {
         }*/
 
 
-        if (!message.guild.me.hasPermission('MANAGE_MESSAGES') || !message.channel.permissionsFor(message.client.user).has('MANAGE_MESSAGES'))
-            return embedResponse('No tengo el permiso `MANAGE_MESSAGES`!').catch(error => { enviarError(error, message.author) });
+        if (!message.channel.permissionsFor(message.client.user).has('ADD_REACTIONS') || !message.channel.permissionsFor(message.client.user).has('MANAGE_MESSAGES'))
+            return embedResponse('No tengo el permiso los suficientes permisos!\nPermisos necesarios: ADD_REACTIONS, MANAGE_MESSAGES')
 
         if (!paginas[0]) return embedResponse('No encontre ningun usuario con invitación!')
-            .catch(error => { enviarError(error, message.author) });
+
 
         let posicion = -1;
 
@@ -1114,36 +1116,36 @@ client.on('message', async (message) => {
             .setColor(color)
             .setTimestamp();
 
-        let m = await message.channel.send({ embed: inicio }).catch(error => { enviarError(error, message.author) });
+        let m = await message.channel.send({ embed: inicio })
 
-        await m.react("⏪").catch(error => { enviarError(error, message.author) });
-        await m.react("⏩").catch(error => { enviarError(error, message.author) });;
+        await m.react("⏪")
+        await m.react("⏩");
 
         m.awaitReactions((reaction, user) => {
             if (user.bot) return;
             if (message.author.id !== user.id) {
-                reaction.users.remove(user.id).catch(error => { enviarError(error, message.author) });
+                reaction.users.remove(user.id)
                 return false;
             }
 
             if (reaction.emoji.name === "⏪" && paginas[posicion - 1]) {
-                m.edit(new Discord.MessageEmbed().setDescription(paginas[posicion - 1].join('\n')).setColor(color).setTimestamp()).catch(error => { enviarError(error, message.author) });
+                m.edit(new Discord.MessageEmbed().setDescription(paginas[posicion - 1].join('\n')).setColor(color).setTimestamp())
                 //console.log(paginas)
                 posicion--
             }
 
             if (reaction.emoji.name === "⏩" && paginas[posicion + 1]) {
-                m.edit(new Discord.MessageEmbed().setDescription(paginas[posicion + 1].join('\n')).setColor(color).setTimestamp()).catch(error => { enviarError(error, message.author) });
+                m.edit(new Discord.MessageEmbed().setDescription(paginas[posicion + 1].join('\n')).setColor(color).setTimestamp())
                 //console.log(paginas)
                 posicion++
             }
 
-            reaction.users.remove(user).catch(error => { enviarError(error, message.author) });
+            reaction.users.remove(user)
             return true
         }, { max: 30000, time: 200000 }).then(c => {
 
             m.delete().catch(e => {
-                embedResponse("Terminado!").catch(error => { enviarError(error, message.author) });
+                embedResponse("Terminado!")
             })
 
         })
@@ -1163,10 +1165,10 @@ client.on('message', async (message) => {
     
     
         if (!x[0]) return embedResponse('No encontre ningun usuario con invitación!')
-            .catch(error => { enviarError(error, message.author) });
+            
         else {
             embedResponse(x.join('\n').slice(0, 1999))
-                .catch(error => { enviarError(error, message.author) });
+                
         }
     }*/
     //fin de findinvites
@@ -1174,16 +1176,16 @@ client.on('message', async (message) => {
 
     else if (command === 'resetwarns') {
 
-        if (!message.member.hasPermission('KICK_MEMBERS')) return errorEmbed('No tienes el permiso `KICK_MEMBERS`')
-            .catch(error => { enviarError(error, message.author) });
+        if (!message.member.hasPermission('KICK_MEMBERS')) return embedResponse('No tienes el permiso `KICK_MEMBERS`')
+
 
         if (!message.mentions.members.first()) return embedResponse('Menciona a un miembro del servidor!')
-            .catch(error => { enviarError(error, message.author) });
+
 
         await client.updateData({ id: `${message.guild.id}_${message.mentions.users.first().id}` }, { warns: 0, razon: 'No especificada!' }, 'warns')
 
         embedResponse(`Advertencias reseteadas!`)
-            .catch(error => { enviarError(error, message.author) });
+
 
     }
 
@@ -1205,7 +1207,7 @@ client.on('message', async (message) => {
             .setThumbnail(member.user.displayAvatarURL({ dynamic: true }))
             .setTimestamp()
         message.channel.send({ embed: embed })
-            .catch(error => { enviarError(error, message.author) });
+
 
     }
     //fin de xp
@@ -1217,7 +1219,7 @@ client.on('message', async (message) => {
 
         await require('./models/niveles.js').find({ idGuild: message.guild.id }).limit(150).sort({ nivel: -1 }).exec(async (err, res) => {
             if (err) return console.log(err);
-            if (res.length === 0) return embedResponse("No hay datos...").catch(err => { enviarError(err, message.author) });
+            if (res.length === 0) return embedResponse("No hay datos...")
 
             let pagina = res.slice(10 * (seleccion - 1), 10 * seleccion);
 
@@ -1233,7 +1235,7 @@ client.on('message', async (message) => {
                 .setFooter(`Pagina actual: ${seleccion <= 0 ? 1 : seleccion}`)
                 .setColor(color)
 
-            message.channel.send({ embed: embed }).catch(err => { enviarError(err, message.author) });
+            message.channel.send({ embed: embed })
 
         });
 
@@ -1243,31 +1245,31 @@ client.on('message', async (message) => {
     //incio de setlevel
 
     else if (command === 'setlevel') {
-        if (!message.member.hasPermission('ADMINISTRATOR')) return errorEmbed('No tienes el permiso `ADMINISTRATOR`')
-            .catch(error => { enviarError(error, message.author) });
+        if (!message.member.hasPermission('ADMINISTRATOR')) return embedResponse('No tienes el permiso `ADMINISTRATOR`')
+
 
         let miembro = message.mentions.members.first();
         //let razon = args.slice(1).join(' ') || 'No especificada';
         if (!miembro) return embedResponse('Menciona a un miembro del servidor!')
-            .catch(error => { enviarError(error, message.author) });
+
 
         if (!args[0].match(/\<\@(\!)?[0-9]{18}\>/g)) return embedResponse('La mencion tiene que ser el primer argumento!')
-            .catch(error => { enviarError(error, message.author) });
+
 
         if (isNaN(args[1])) return embedResponse('El segundo argumento tiene que ser un numero!')
-            .catch(error => { enviarError(error, message.author) });
+
 
         if (parseInt(args[1]) < 0) return embedResponse('El segundo argumento debe ser igual o mayor a 0!')
-            .catch(error => { enviarError(error, message.author) });
+
 
         if (parseInt(args[1]) > 500) return embedResponse('El segundo argumento debe ser igual o menor a 500!')
-            .catch(error => { enviarError(error, message.author) });
+
 
         await client.updateData({ idGuild: `${message.guild.id}`, idMember: `${miembro.user.id}` }, { nivel: parseInt(args[1]) }, 'niveles');
 
         //await client.getData({ id: `${message.guild.id}.${miembro.id}` }, 'warns').then((data) => {
         embedResponse(`Ahora el miembro ${miembro.user.username} es nivel ${args[1]}!`)
-            .catch(error => { enviarError(error, message.author) });
+
         //});
 
 
@@ -1277,12 +1279,12 @@ client.on('message', async (message) => {
 
     //inicio de setchannelxp
     else if (command === 'setchannelxp') {
-        if (!message.member.hasPermission("ADMINISTRATOR")) return errorEmbed("No tienes el permiso `ADMINISTRATOR`").catch(error => { enviarError(error, message.author) })
+        if (!message.member.hasPermission("ADMINISTRATOR")) return embedResponse("No tienes el permiso `ADMINISTRATOR`")
         let channel = message.mentions.channels.first();
-        if (!channel) return embedResponse("No has mencionado un canal/Ese canal no existe.").catch(error => { enviarError(error, message.author) })
-        if (!message.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(channel.id)) return embedResponse('El canal tiene que ser del Servidor donde estas!').catch(error => { enviarError(error, message.author) });
+        if (!channel) return embedResponse("No has mencionado un canal/Ese canal no existe.")
+        if (!message.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(channel.id)) return embedResponse('El canal tiene que ser del Servidor donde estas!')
         await client.updateData({ id: message.guild.id }, { canal: channel.id }, 'logslevel')
-        return embedResponse(`Canal establecido en: <#${channel.id}>`).catch(error => { enviarError(error, message.author) })
+        return embedResponse(`Canal establecido en: <#${channel.id}>`)
     }
     //fin de setchannelxp
 
@@ -1299,13 +1301,13 @@ client.on('message', async (message) => {
 
         let { tokenChat } = await client.getData({ id: message.author.id }, 'usuario');
         if (!tokenChat || tokenChat == 'none') return message.channel.send({ embed: embed })
-            .catch(error => { enviarError(error, message.author) })
+
 
         else {
             let check = await rModel('chat').findOne({ token: tokenChat });
             if (!check)
                 return embedResponse('El token establecido no existe!')
-                    .catch(error => { enviarError(error, message.author) })
+
 
             let { chat, bans, type } = await client.getData({ token: tokenChat }, 'chat');
 
@@ -1314,11 +1316,11 @@ client.on('message', async (message) => {
                 await client.updateData({ id: message.author.id }, { tokenChat: 'none' }, 'usuario');
 
                 return message.channel.send({ embed: embed.setFooter('Oh oh, parece que estas baneado del chat!') })
-                    .catch(error => { enviarError(error, message.author) })
+
             }
 
             if (!chat || chat == 0) return message.channel.send({ embed: embed.setFooter('El chat está vacio, se el primero en hablar!') })
-                .catch(error => { enviarError(error, message.author) })
+
 
             let embed1 = new Discord.MessageEmbed()
                 .setColor(color)
@@ -1327,7 +1329,7 @@ client.on('message', async (message) => {
                 .setFooter(`Token actual: ${tokenChat}, Tipo de chat: ${type}`)
 
             return message.channel.send({ embed: embed1 })
-                .catch(error => { enviarError(error, message.author) });
+
         }
 
 
@@ -1340,21 +1342,21 @@ client.on('message', async (message) => {
 
         if (!args[0] || !['public', 'private'].includes(args[0].toLowerCase()))
             return embedResponse('Selecciona entre `private` o `public`.\nEjemplo de uso: <prefix>createchat private 15')
-                .catch(error => { enviarError(error, message.author) })
+
 
         if (!max || max < 2)
             return embedResponse('Pon un numero mayor a 1!')
-                .catch(error => { enviarError(error, message.author) });
+
 
         if (!max || max > 51)
             return embedResponse('Pon un numero menor a 51!')
-                .catch(error => { enviarError(error, message.author) });
+
 
         let { grupos } = await client.getData({ id: message.author.id }, 'usuario');
         if (grupos) {
             if (grupos.length >= 10)
                 return embedResponse('Has superado el limite de grupos, si quieres borra uno y crea otro!')
-                    .catch(error => { enviarError(error, message.author) })
+
         }
         let tok = Date.now();
 
@@ -1385,7 +1387,7 @@ client.on('message', async (message) => {
         await client.updateData({ id: message.author.id }, { $addToSet: { grupos: `${tok}` } }, 'usuario');
 
         await embedResponse(`Token: ${tok}`)
-            .catch(error => { enviarError(error, message.author) })
+
 
 
 
@@ -1395,13 +1397,13 @@ client.on('message', async (message) => {
 
         if (!args[0])
             return embedResponse('Ejemplo de uso: <prefix>deletechat token_chat')
-                .catch(error => { enviarError(error, message.author) })
+
 
         let checkM = await rModel('chat').findOne({ token: args[0] });
 
         if (!checkM)
             return embedResponse('Token inexistente!')
-                .catch(error => { enviarError(error, message.author) })
+
 
         let chatG = await client.getData({ token: args[0] }, 'chat');
 
@@ -1409,9 +1411,9 @@ client.on('message', async (message) => {
 
         if (owner !== message.author.id)
             return embedResponse('No puedes borrar este chat, solo el creador puede!')
-                .catch(error => { enviarError(error, message.author) })
 
-        embedResponse('Chat borrado!').catch(error => { enviarError(error, message.author) })
+
+        embedResponse('Chat borrado!')
         await deleteChatByToken(args[0]);
     }
 
@@ -1419,13 +1421,13 @@ client.on('message', async (message) => {
 
         if (!args[0])
             return embedResponse('Ejemplo de uso: <prefix>infochat token_chat')
-                .catch(error => { enviarError(error, message.author) })
+
 
         let checkM = await rModel('chat').findOne({ token: args[0] });
 
         if (!checkM)
             return embedResponse('Token inexistente!')
-                .catch(error => { enviarError(error, message.author) })
+
 
         let chatG = await client.getData({ token: args[0] }, 'chat');
 
@@ -1445,7 +1447,7 @@ client.on('message', async (message) => {
             .addField(`Name`, name, true)
             .addField(`Description`, description, true)
         message.channel.send({ embed: embed })
-            .catch(error => { enviarError(error, message.author) })
+
 
     }
 
@@ -1453,19 +1455,19 @@ client.on('message', async (message) => {
 
         if (!args[0] || !args[1])
             return embedResponse('Ejemplo de uso: <prefix>setadmin user_id token_chat')
-                .catch(error => { enviarError(error, message.author) })
+
 
         let user = client.users.cache.get(args[0]);
 
         if (!user)
             return embedResponse('No he encontrado ese usuario!')
-                .catch(error => { enviarError(error, message.author) })
+
 
         let checkM = await rModel('chat').findOne({ token: args[1] });
 
         if (!checkM)
             return embedResponse('Token inexistente!')
-                .catch(error => { enviarError(error, message.author) })
+
 
         let chatG = await client.getData({ token: args[1] }, 'chat');
 
@@ -1473,16 +1475,16 @@ client.on('message', async (message) => {
 
         if (owner !== message.author.id)
             return embedResponse('Solo el creador del chat puede agregar un admin!')
-                .catch(error => { enviarError(error, message.author) })
+
 
         if (admins.includes(args[0]))
             return embedResponse(`El usuario ya era administrador!`)
-                .catch(error => { enviarError(error, message.author) })
+
 
         await client.updateData({ token: args[1] }, { $addToSet: { admins: `${args[0]}` } }, 'chat')
 
         embedResponse(`Has añadido a ${user.tag} como administrador del chat!`)
-            .catch(error => { enviarError(error, message.author) })
+
 
 
     }
@@ -1491,19 +1493,19 @@ client.on('message', async (message) => {
 
         if (!args[0] || !args[1])
             return embedResponse('Ejemplo de uso: <prefix>unsetadmin user_id token_chat')
-                .catch(error => { enviarError(error, message.author) });
+
 
         let user = client.users.cache.get(args[0]);
 
         if (!user)
             return embedResponse('No he encontrado ese usuario!')
-                .catch(error => { enviarError(error, message.author) });
+
 
         let checkM = await rModel('chat').findOne({ token: args[1] });
 
         if (!checkM)
             return embedResponse('Token inexistente!')
-                .catch(error => { enviarError(error, message.author) });
+
 
         let chatG = await client.getData({ token: args[1] }, 'chat');
 
@@ -1511,20 +1513,20 @@ client.on('message', async (message) => {
 
         if (owner !== message.author.id)
             return embedResponse('Solo el creador del chat puede eliminar un admin!')
-                .catch(error => { enviarError(error, message.author) });
+
 
         if (!admins.includes(args[0]))
             return embedResponse(`El usuario no era administrador!`)
-                .catch(error => { enviarError(error, message.author) });
+
 
         if (args[0] == owner)
             return embedResponse('No te puedes eliminar como admin!')
-                .catch(error => { enviarError(error, message.author) });
+
 
         await client.updateData({ token: args[1] }, { $pull: { admins: `${args[0]}` } }, 'chat')
 
         embedResponse(`Has eliminado a ${user.tag} como administrador del chat!`)
-            .catch(error => { enviarError(error, message.author) });
+
 
 
     }
@@ -1533,19 +1535,19 @@ client.on('message', async (message) => {
 
         if (!args[0] || !args[1])
             return embedResponse('Ejemplo de uso: <prefix>banchat user_id token_chat')
-                .catch(error => { enviarError(error, message.author) })
+
 
         let user = client.users.cache.get(args[0]);
 
         if (!user)
             return embedResponse('No he encontrado ese usuario!')
-                .catch(error => { enviarError(error, message.author) })
+
 
         let checkM = await rModel('chat').findOne({ token: args[1] });
 
         if (!checkM)
             return embedResponse('Token inexistente!')
-                .catch(error => { enviarError(error, message.author) })
+
 
         let chatG = await client.getData({ token: args[1] }, 'chat');
 
@@ -1553,24 +1555,24 @@ client.on('message', async (message) => {
 
         if (!admins.includes(message.author.id))
             return embedResponse('Solos los admins pueden banear!')
-                .catch(error => { enviarError(error, message.author) })
+
 
         if (admins.includes(args[0])) {
             if (owner !== message.author.id)
                 return embedResponse(`El usuario es administrador!`)
-                    .catch(error => { enviarError(error, message.author) })
+
         }
 
         if (args[0] == message.author.id)
             return embedResponse('No te puedes banear!')
-                .catch(error => { enviarError(error, message.author) })
+
 
         if (args[0] == owner)
             return embedResponse('No puedes banear al creador!')
 
         if (bans.includes(args[0]))
             return embedResponse('El usuario ya estaba baneado!')
-                .catch(error => { enviarError(error, message.author) })
+
 
         await client.updateData({ token: `${args[1]}` }, { $addToSet: { bans: `${args[0]}` } }, 'chat');
         await client.updateData({ token: `${args[1]}` }, { $pull: { users: `${args[0]}` } }, 'chat');
@@ -1580,7 +1582,7 @@ client.on('message', async (message) => {
         await client.updateData({ id: `${args[0]}` }, { token: `none` }, 'usuario');
 
         embedResponse(`Has baneado a ${user.tag} del chat!`)
-            .catch(error => { enviarError(error, message.author) })
+
 
 
     }
@@ -1589,19 +1591,19 @@ client.on('message', async (message) => {
 
         if (!args[0] || !args[1])
             return embedResponse('Ejemplo de uso: <prefix>unbanchat user_id token_chat')
-                .catch(error => { enviarError(error, message.author) })
+
 
         let user = client.users.cache.get(args[0]);
 
         if (!user)
             return embedResponse('No he encontrado ese usuario!')
-                .catch(error => { enviarError(error, message.author) })
+
 
         let checkM = await rModel('chat').findOne({ token: args[1] });
 
         if (!checkM)
             return embedResponse('Token inexistente!')
-                .catch(error => { enviarError(error, message.author) })
+
 
         let chatG = await client.getData({ token: args[1] }, 'chat');
 
@@ -1609,20 +1611,20 @@ client.on('message', async (message) => {
 
         if (!admins.includes(message.author.id))
             return embedResponse('Solos los admins pueden desbanear!')
-                .catch(error => { enviarError(error, message.author) })
+
 
         if (args[0] == owner || args[0] == message.author.id)
             return embedResponse('No te puedes desbanear!')
-                .catch(error => { enviarError(error, message.author) })
+
 
         if (!bans.includes(args[0]))
             return embedResponse('El usuario ya estaba desbaneado!')
-                .catch(error => { enviarError(error, message.author) })
+
 
         await client.updateData({ token: args[1] }, { $pull: { bans: `${args[0]}` } }, 'chat');
 
         embedResponse(`Has desbaneado a ${user.tag} del chat!`)
-            .catch(error => { enviarError(error, message.author) })
+
 
 
     }
@@ -1633,7 +1635,7 @@ client.on('message', async (message) => {
 
         if (!args[0])
             return embedResponse('Escribe que quieres cambiar!\nEjemplo de uso: <prefix>editchat token_chat name(description o maxusers) new_name(description o maxusers)')
-                .catch(error => { enviarError(error, message.author) })
+
         let checkM = await rModel('chat').findOne({ token: args[0] });
 
         let chatG = await client.getData({ token: args[0] }, 'chat');
@@ -1642,66 +1644,66 @@ client.on('message', async (message) => {
 
         if (!checkM)
             return embedResponse('Token invalido!')
-                .catch(error => { enviarError(error, message.author) });
+
 
         if (args[1] === 'name') {
             if (owner !== message.author.id)
                 return embedResponse('No puedes cambiar el nombre del chat!')
-                    .catch(error => { enviarError(error, message.author) })
+
 
             if (!args[2] || args.slice(2).length >= 21)
                 return embedResponse('Elije un nombre con un nombre menor o igual a 20 caracteres!')
-                    .catch(error => { enviarError(error, message.author) })
+
 
             let regex = args.slice(2).join(' ').match(check);
 
             if (regex || args.slice(2).join(' ').includes('`'))
                 return embedResponse('Ese nombre tiene caracteres no permitidos!')
-                    .catch(error => { enviarError(error, message.author) });
+
 
             embedResponse(`Nombre cambiado a: ${args.slice(2).join(' ')}`)
-                .catch(error => { enviarError(error, message.author) })
+
             return await client.updateData({ token: `${args[0]}` }, { name: args.slice(2).join(' ') }, 'chat');
 
         }
         else if (args[1] === 'description') {
             if (owner !== message.author.id)
                 return embedResponse('No puedes cambiar la descripción del chat!')
-                    .catch(error => { enviarError(error, message.author) })
+
 
             if (!args[2] || args.slice(2).length >= 51)
                 return embedResponse('Elije una descripción con un nombre menor o igual a 50 caracteres!')
-                    .catch(error => { enviarError(error, message.author) })
+
 
             let regex = args.slice(2).join(' ').match(check);
 
             if (regex || args.slice(2).join(' ').includes('`'))
                 return embedResponse('Esa descripción tiene caracteres no permitidos!')
-                    .catch(error => { enviarError(error, message.author) });
+
 
             embedResponse(`Descripción cambiada a: ${args.slice(2).join(' ')}`)
-                .catch(error => { enviarError(error, message.author) })
+
             return await client.updateData({ token: `${args[0]}` }, { description: args.slice(2).join(' ') }, 'chat');
         }
 
         else if (args[1] === 'maxusers') {
             if (owner !== message.author.id)
                 return embedResponse('No puedes cambiar el maximo de usuarios del chat!')
-                    .catch(error => { enviarError(error, message.author) });
+
 
             if (!parseInt(args[2]) || parseInt(args[2]) >= 51)
                 return embedResponse('Elije un maximo de usuarios menor o igual a 50!')
-                    .catch(error => { enviarError(error, message.author) })
+
 
             embedResponse(`Maximo cambiado a: ${args[2]}`)
-                .catch(error => { enviarError(error, message.author) });
+
 
             return await client.updateData({ token: `${args[0]}` }, { max: args[2] }, 'chat');
         }
 
         else {
             return embedResponse('Elije una opción entre `name`, `description` o `maxusers`!')
-                .catch(error => { enviarError(error, message.author) })
+
         }
 
     }
@@ -1716,10 +1718,10 @@ client.on('message', async (message) => {
         let paginas = funcionPagina((await getPublicList(message)), 5)
         if (!paginas[seleccion - 1])
             return embedResponse("Pagina inexistente!")
-                .catch(error => { enviarError(error, message.author) });
+
 
         embedResponse(paginas[seleccion - 1].join('\n') + "\n\nPagina: " + seleccion + "/" + paginas.length)
-            .catch(error => { enviarError(error, message.author) });
+
     }
 
     else if (command === 'sendchat') {
@@ -1739,13 +1741,13 @@ client.on('message', async (message) => {
 
         if (!tokenChat || tokenChat == 'none')
             return embedResponse('Establece un chat!\n<prefix>setchat token_chat')
-                .catch(error => { enviarError(error, message.author) });
+
 
         let xCheck = await rModel('chat').findOne({ token: tokenChat });
 
         if (!xCheck)
             return embedResponse("El chat que tienes establecido no existe!")
-                .catch(error => { enviarError(error, message.author) })
+
 
         let { bans } = await client.getData({ token: tokenChat }, 'chat')
 
@@ -1754,11 +1756,11 @@ client.on('message', async (message) => {
             await client.updateData({ id: message.author.id }, { tokenChat: 'none' }, 'usuario');
 
             return message.channel.send({ embed: embed.setFooter('Oh oh, parece que estas baneado!') })
-                .catch(error => { enviarError(error, message.author) })
+
         }
         if (!args[0])
             return embedResponse('Ejemplo de uso: <prefix>sendchat Hola gente!')
-                .catch(error => { enviarError(error, message.author) })
+
 
         let regex = args.join(' ').match(check);
 
@@ -1766,11 +1768,11 @@ client.on('message', async (message) => {
 
         if (regex || args.join(' ').includes('`'))
             return embedResponse('Este comando no permite caracteres especiales!')
-                .catch(error => { enviarError(error, message.author) });
+
 
         if (args.join(' ').length >= 131)
             return embedResponse('El limite del texto es 130 letras!')
-                .catch(error => { enviarError(error, message.author) })
+
 
         if (regexTag) {
             res = '[EspecialUser#' + message.author.discriminator + ']';
@@ -1783,7 +1785,7 @@ client.on('message', async (message) => {
         await client.updateData({ token: tokenChat }, { $push: { chat: `[${Hora()}]${res}: ${args.join(' ')}` } }, 'chat');
 
         return embedResponse(`Enviado: ${args.join(' ')}`)
-            .catch(error => { enviarError(error, message.author) });
+
     }
 
     else if (command === 'userchats') {
@@ -1798,10 +1800,10 @@ client.on('message', async (message) => {
 
         if (!paginas[seleccion - 1])
             return embedResponse("Pagina inexistente!")
-                .catch(error => { enviarError(error, message.author) });
+
 
         embedResponse(paginas[seleccion - 1].join('\n') + "\n\nPagina: " + seleccion + "/" + paginas.length)
-            .catch(error => { enviarError(error, message.author) });
+
 
     }
 
@@ -1817,10 +1819,10 @@ client.on('message', async (message) => {
 
         if (!paginas[seleccion - 1])
             return embedResponse("Pagina inexistente!")
-                .catch(error => { enviarError(error, message.author) });
+
 
         embedResponse(paginas[seleccion - 1].join('\n') + "\n\nPagina: " + seleccion + "/" + paginas.length)
-            .catch(error => { enviarError(error, message.author) });
+
 
     }
 
@@ -1828,13 +1830,13 @@ client.on('message', async (message) => {
 
         if (!args[0])
             return embedResponse('Ejemplo de uso: `<prefix> invitechat user_id token_chat`')
-                .catch(error => { enviarError(error, message.author) });
+
 
         let check = await rModel('chat').findOne({ token: args[1] });
 
         if (!check)
             return embedResponse('Token invalido!')
-                .catch(error => { enviarError(error, message.author) });
+
 
         let chatG = await client.getData({ token: args[1] }, 'chat');
 
@@ -1842,29 +1844,29 @@ client.on('message', async (message) => {
 
         if (!admins.includes(message.author.id)) {
             return embedResponse('No puedes invitar a nadie sin ser admin!')
-                .catch(error => { enviarError(error, message.author) })
+
         }
 
         if (bans.includes(args[0]))
             return embedResponse('Ese usuario está baneado, usa <prefix>unbanchat user_id token_chat!')
-                .catch(error => { enviarError(error, message.author) });
+
 
         if (!client.users.cache.get(args[0]))
             return embedResponse('No he encontrado a ese usuario!')
-                .catch(error => { enviarError(error, message.author) })
+
 
         if (joinable.includes(args[0]))
             return embedResponse('Ya lo has invitado al chat!')
-                .catch(error => { enviarError(error, message.author) });
+
 
         if (users.includes(args[0]))
             return embedResponse('Ya está en el chat!')
-                .catch(error => { enviarError(error, message.author) });
+
 
         await client.updateData({ token: args[1] }, { $addToSet: { joinable: args[0] } }, 'chat');
 
         return embedResponse(`Has invitado a \`${client.users.cache.get(args[0]).tag}\`!`)
-            .catch(error => { enviarError(error, message.author) });
+
 
     }
 
@@ -1879,13 +1881,13 @@ client.on('message', async (message) => {
 
         if (!args[0])
             return embedResponse('Escribe un token de chat!')
-                .catch(error => { enviarError(error, message.author) });
+
 
         let check = await rModel('chat').findOne({ token: args[0] });
 
         if (!check)
             return embedResponse('Token invalido!')
-                .catch(error => { enviarError(error, message.author) });
+
 
         let chatG = await client.getData({ token: args[0] }, 'chat');
 
@@ -1894,14 +1896,14 @@ client.on('message', async (message) => {
         if (type === 'private') {
             if (!joinable.includes(message.author.id))
                 return embedResponse('No te puedes unir, es un chat privado y no te han invitado!')
-                    .catch(error => { enviarError(error, message.author) })
+
         }
 
         if (bans.includes(message.author.id)) {
             await client.updateData({ id: message.author.id }, { tokenChat: 'none' }, 'usuario');
 
             return message.channel.send({ embed: embed.setFooter('Oh oh, parece que estas baneado!') })
-                .catch(error => { enviarError(error, message.author) })
+
         }
 
         if (!users.includes(message.author.id)) {
@@ -1924,7 +1926,7 @@ client.on('message', async (message) => {
         }
 
         return embedResponse('Chat establecido!\nToken: ' + args[0])
-            .catch(error => { enviarError(error, message.author) });
+
 
     }
 
@@ -1932,23 +1934,23 @@ client.on('message', async (message) => {
 
         if (!args[0])
             return embedResponse('Escribe un token de chat!')
-                .catch(error => { enviarError(error, message.author) });
+
 
         let check = await rModel('chat').findOne({ token: args[0] });
 
         if (!check)
             return embedResponse('Token invalido!')
-                .catch(error => { enviarError(error, message.author) });
+
 
         let chatG = await client.getData({ token: args[0] }, 'chat');
 
         let { type, bans, joinable, users, owner } = chatG;
 
         if (!users.includes(message.author.id))
-            return embedResponse('No estas en el chat!').catch(error => { enviarError(error, message.author) })
+            return embedResponse('No estas en el chat!')
 
         if (owner === message.author.id)
-            return embedResponse('No puedes abandonar el chat, borrala!').catch(error => { enviarError(error, message.author) })
+            return embedResponse('No puedes abandonar el chat, borrala!')
 
         await client.updateData({ id: message.author.id }, { tokenChat: `none` }, 'usuario');
         await client.updateData({ token: args[0] }, { $pull: { users: message.author.id } }, 'chat');
@@ -1967,7 +1969,7 @@ client.on('message', async (message) => {
         await client.updateData({ token: args[0] }, { $push: { chat: `[${Hora()}][LOGS]${res} ha dejado el chat!` } }, 'chat');
 
         return embedResponse('Has dejado el chat: ' + args[0])
-            .catch(error => { enviarError(error, message.author) });
+
 
     }
 
@@ -1983,7 +1985,7 @@ client.on('message', async (message) => {
                 `, { split: true })
                 .setFooter('Gracias por todo!', client.users.cache.get('507367752391196682').displayAvatarURL())
                 .setTimestamp()
-            message.channel.send({ embed: embed }).catch(err => enviarError(err, message.author))
+            message.channel.send({ embed: embed }).catch(err => null)
         }
     */
     //fin de creditos
@@ -2007,7 +2009,7 @@ client.on('message', async (message) => {
         ctx.fillText('._.XD', 50, 180);
 
         let resultado = new Discord.MessageAttachment(canvas.toBuffer(), 'xd.png');
-        message.channel.send(resultado).catch(err => { enviarError(err, message.author) });
+        message.channel.send(resultado)
     }
     //fin de xd
 
@@ -2016,7 +2018,7 @@ client.on('message', async (message) => {
 
         let canalVoz = message.member.voice.channel;
 
-        await among(message, message.member, canalVoz, message.channel, true)//.catch(err => { })
+        await among(message, message.member, canalVoz, message.channel, true)//
 
     }
     //fin de muteall
@@ -2029,8 +2031,8 @@ client.on('message', async (message) => {
         if (messageSS(args[0], canal) === false) return embedResponse('No encontre el mensaje!\nUse: ' + prefix + 'setmessageid <id> <#mencion>')
         await client.updateData({ id: message.guild.id }, { idMessage: args[0] }, 'muteid');
         canal.messages.fetch(args[0]).then(async (a) => {
-            await a.react('751908729930121376').catch(err => { })
-            await a.react('751908729624068226').catch(err => { })
+            await a.react('751908729930121376')
+            await a.react('751908729624068226')
         })
         return embedResponse('Establecido en: <#' + canal.id + '>');
     }
@@ -2040,7 +2042,7 @@ client.on('message', async (message) => {
 
         let canalVoz = message.member.voice.channel;
 
-        await among(message, message.member, canalVoz, message.channel, false)//.catch(err => { })
+        await among(message, message.member, canalVoz, message.channel, false)//
 
     }
     //fin de unmuteall
@@ -2049,7 +2051,7 @@ client.on('message', async (message) => {
         if (message.guild.id !== '757067889550557205')
             return;
         let res = `Total de sangre restante: 🩸${random(10, 90)}%`;
-        embedResponse(res).catch(err => { enviarError(err, message.author) });
+        embedResponse(res)
     }
 
     else if (command === 'sintoma') {
@@ -2057,7 +2059,7 @@ client.on('message', async (message) => {
             return;
         let arraySick = ['dolor de estomago', 'dolor de cabeza', 'disparo en el torax', 'ojo apuñalado', 'pierna rota', 'brazo roto', 'craneo roto', 'pie roto', 'disparo en la pierna', 'diarrea', 'mareo'];
         let res = arraySick[Math.floor(Math.random() * arraySick.length)];
-        embedResponse(`Sintoma: ${capitalize(res)}`).catch(err => { enviarError(err, message.author) });
+        embedResponse(`Sintoma: ${capitalize(res)}`)
     }
 
 
@@ -2066,7 +2068,7 @@ client.on('message', async (message) => {
             return;
         let arraySick = ['El paciente revivió', 'El paciente murió'];
         let res = arraySick[Math.floor(Math.random() * arraySick.length)];
-        embedResponse(`${capitalize(res)}`).catch(err => { enviarError(err, message.author) });
+        embedResponse(`${capitalize(res)}`)
     }
 
 
@@ -2079,7 +2081,7 @@ client.on('message', async (message) => {
         message.channel.send({ embed: embed }).then(msg => {
             msg.delete({ timeout: 10000 })
             message.delete({ timeout: 10000 }).catch(a => { })
-        }).catch(error => { enviarError(error, message.author) });
+        })
 
     }
 });
@@ -2093,7 +2095,7 @@ function embedMusic(argumentoDeLaDescripcion, opcion) {
             .setColor(color)
             .setImage('https://cdn.discordapp.com/attachments/632098744262721564/633640689955110912/nitro.gif')
             .setTimestamp()
-    }).catch(error => { });
+    })
 }
 
 function play(guild, song) {
@@ -2149,7 +2151,7 @@ client.on('messageUpdate', async (oldMessage, newMessage) => {
             .addField('• Author channel mention', `<#${newMessage.channel.id}>`, false)
             .setFooter(newMessage.guild.name, newMessage.guild.iconURL({ format: 'png', size: 2048 }))
             .setTimestamp()
-        return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { return; });
+        return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed })
     });
 });
 
@@ -2177,7 +2179,7 @@ client.on('messageDelete', async (message) => {
             .addField('• Author channel mention', `<#${message.channel.id}>`, false)
             .setFooter(message.guild.name, message.guild.iconURL({ format: 'png', size: 2048 }))
             .setTimestamp()
-        return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { return; });
+        return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed })
     });
 });
 /*
@@ -2298,7 +2300,7 @@ client.on('roleUpdate', async (oldRole, newRole) => {
             .setTimestamp()
             .setFooter(newRole.guild.name, newRole.guild.iconURL({ format: 'png', size: 2048 }))
             .setColor(color)
-        return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { return; });
+        return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed })
     });
 });
 
@@ -2316,7 +2318,7 @@ client.on('roleUpdate', async (oldRole, newRole) => {
             .setTimestamp()
             .setFooter(newRole.guild.name, newRole.guild.iconURL({ format: 'png', size: 2048 }))
             .setColor(color)
-        return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { return; });
+        return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed })
     });
 });
 
@@ -2334,7 +2336,7 @@ client.on('roleUpdate', async (oldRole, newRole) => {
             .setTimestamp()
             .setFooter(newRole.guild.name, newRole.guild.iconURL({ format: 'png', size: 2048 }))
             .setColor(color)
-        return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { return; });
+        return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed })
     });
 });
 
@@ -2353,7 +2355,7 @@ client.on('roleUpdate', async (oldRole, newRole) => {
             .setTimestamp()
             .setFooter(newRole.guild.name, newRole.guild.iconURL({ format: 'png', size: 2048 }))
             .setColor(color)
-        return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { return; });
+        return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed })
     });
 });
 
@@ -2372,7 +2374,7 @@ client.on('roleUpdate', async (oldRole, newRole) => {
             .setTimestamp()
             .setFooter(newRole.guild.name, newRole.guild.iconURL({ format: 'png', size: 2048 }))
             .setColor(color)
-        return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { return; });
+        return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed })
     });
 });
 
@@ -2389,7 +2391,7 @@ client.on('roleCreate', async (role) => {
             .setTimestamp()
             .setFooter(role.guild.name, role.guild.iconURL({ format: 'png', size: 2048 }))
             .setColor(color)
-        return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { return; });
+        return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed })
     });
 });
 
@@ -2406,7 +2408,7 @@ client.on('roleDelete', async (role) => {
             .setTimestamp()
             .setFooter(role.guild.name, role.guild.iconURL({ format: 'png', size: 2048 }))
             .setColor(color)
-        return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { return; });
+        return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed })
     });
 });
 
@@ -2427,7 +2429,7 @@ client.on('guildUpdate', async (oldGuild, newGuild) => {
             .setTimestamp()
             .setFooter(newGuild.name, newGuild.iconURL({ format: 'png', size: 2048 }))
             .setColor(color)
-        return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { return; });
+        return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed })
     });
 });
 
@@ -2445,7 +2447,7 @@ client.on('guildUpdate', async (oldGuild, newGuild) => {
             .setTimestamp()
             .setFooter(newGuild.name, newGuild.iconURL({ format: 'png', size: 2048 }))
             .setColor(color)
-        return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { return; });
+        return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed })
     });
 });
 
@@ -2463,7 +2465,7 @@ client.on('guildUpdate', async (oldGuild, newGuild) => {
             .setTimestamp()
             .setFooter(newGuild.name, newGuild.iconURL({ format: 'png', size: 2048 }))
             .setColor(color)
-        return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { return; });
+        return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed })
     });
 });
 //!fin servidor eventos
@@ -2482,7 +2484,7 @@ client.on('channelCreate', async (channel) => {
             .setTimestamp()
             .setFooter(channel.guild.name, channel.guild.iconURL({ format: 'png', size: 2048 }))
             .setColor(color)
-        return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { return; });
+        return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed })
     });
 });
 
@@ -2499,7 +2501,7 @@ client.on('channelDelete', async (channel) => {
             .setTimestamp()
             .setFooter(channel.guild.name, channel.guild.iconURL({ format: 'png', size: 2048 }))
             .setColor(color)
-        return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { return; }); // doc.channellogs o como hayas definido el canal de logs (supongo que para eso estás usando esta config)
+        return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }) // doc.channellogs o como hayas definido el canal de logs (supongo que para eso estás usando esta config)
     });
 });
 
@@ -2518,7 +2520,7 @@ client.on('channelUpdate', async (oldChannel, newChannel) => {
             .setTimestamp()
             .setFooter(newChannel.guild.name, newChannel.guild.iconURL({ format: 'png', size: 2048 }))
             .setColor(color)
-        return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { return; });
+        return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed })
     });
 });
 
@@ -2536,7 +2538,7 @@ client.on('channelUpdate', async (oldChannel, newChannel) => {
             .setTimestamp()
             .setFooter(newChannel.guild.name, newChannel.guild.iconURL({ format: 'png', size: 2048 }))
             .setColor(color)
-        return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { return; });
+        return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed })
     });
 });
 
@@ -2555,7 +2557,7 @@ client.on('channelUpdate', async (oldChannel, newChannel) => {
             .setTimestamp()
             .setFooter(newChannel.guild.name, newChannel.guild.iconURL({ format: 'png', size: 2048 }))
             .setColor(color)
-        return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { return; });
+        return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed })
     });
 });
 //!fin canales eventos
@@ -2587,7 +2589,7 @@ client.on('guildMemberUpdate', async (oldUser, newUser) => {
             .setTimestamp()
             .setFooter(newUser.guild.name, newUser.guild.iconURL({ format: 'png', size: 2048 }))
             .setColor(color)
-        return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(error => { return; });
+        return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed })
     });
 });
 //!fin usuarios eventos
@@ -2604,7 +2606,7 @@ client.on('guildMemberUpdate', async (oldUser, newUser) => {
 
         if (a[0].content.toLowerCase() === a[1].content.toLowerCase() && a[1].content.toLowerCase() === a[2].content.toLowerCase() &&
             e[0].author.id !== e[1].author.id && e[1].author.id !== e[2].author.id && e[0].author.id !== e[2].author.id) {
-            msg.channel.send(a[2].content).catch(error => { });
+            msg.channel.send(a[2].content)
         };
     });
 });*/
@@ -2619,12 +2621,12 @@ client.on('message', async (m) => {
         if (message.content.toLowerCase() === 'muteall') {
 
             if (cooldownAmong.has(message.author.id)) {
-                return embedResponse('Estas en cooldown de 3s!').catch(err => { })
+                return embedResponse('Estas en cooldown de 3s!')
             }
 
             let canalVoz = message.member.voice.channel;
 
-            await among(message, message.member, canalVoz, message.channel, true)//.catch(err => { })
+            await among(message, message.member, canalVoz, message.channel, true)//
 
             cooldownAmong.add(message.author.id);
             setTimeout(() => {
@@ -2638,12 +2640,12 @@ client.on('message', async (m) => {
         if (message.content.toLowerCase() === 'unmuteall') {
 
             if (cooldownAmong.has(message.author.id)) {
-                return embedResponse('Estas en cooldown de 2s!').catch(err => { })
+                return embedResponse('Estas en cooldown de 2s!')
             }
 
             let canalVoz = message.member.voice.channel;
 
-            await among(message, message.member, canalVoz, message.channel, false)//.catch(err => { })
+            await among(message, message.member, canalVoz, message.channel, false)//
 
             cooldownAmong.add(message.author.id);
             setTimeout(() => {
@@ -2662,7 +2664,7 @@ client.on('message', async (m) => {
 
             if (a[0].content.toLowerCase() === a[1].content.toLowerCase() && a[1].content.toLowerCase() === a[2].content.toLowerCase() &&
                 e[0].author.id !== e[1].author.id && e[1].author.id !== e[2].author.id && e[0].author.id !== e[2].author.id) {
-                msg.channel.send(a[2].content).catch(error => { });
+                msg.channel.send(a[2].content)
             };
         });
     }
@@ -2674,7 +2676,7 @@ client.on('message', async (m) => {
                 .setDescription(argumentoDeLaDescripcion)
                 .setColor(color)
                 .setTimestamp()
-        }).catch(error => { enviarError(error, message.author) });
+        })
     }
 
 
@@ -2747,7 +2749,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
         }, ms('3s'))
 
         //unmute
-        await among(reaction.message, member, canalVoz, user, false)//.catch(err => { })
+        await among(reaction.message, member, canalVoz, user, false)//
         await reaction.users.remove(user).catch(a => { })
     }
 
@@ -2763,7 +2765,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
             cooldownR.delete(user.id)
         }, ms('3s'))
         //mute
-        await among(reaction.message, member, canalVoz, user, true)//.catch(err => { })
+        await among(reaction.message, member, canalVoz, user, true)//
         await reaction.users.remove(user).catch(a => { })
     }
 
@@ -2773,41 +2775,41 @@ function among(mensaje, member, canalVoz, canalText, bol) {
     let message = mensaje;
 
     if (!canalVoz) return response('Tienes que estar en un canal de voz!', canalText)
-        .catch(err => { });
+        ;
 
     if (!canalVoz.name.includes('Among Us')) return response('Tienes que estar en el canal llamado: `Among Us`', canalText)
-        .catch(err => { });
+        ;
 
     if (!message.guild.me.hasPermission('MANAGE_CHANNELS') || !member.voice.channel.permissionsFor(client.user).has("MANAGE_CHANNELS")) return response('Tengo que tener el permiso `MANAGE_CHANNELS`!', canalText)
-        .catch(err => { });
+        ;
 
     let rol = message.guild.roles.cache.find(a => a.name === 'Among Us manager');
 
     if (!rol) {
-        message.guild.roles.create({ data: { name: 'Among Us manager' } }).catch(err => { });
+        message.guild.roles.create({ data: { name: 'Among Us manager' } });
     }
 
     if (!rol || !member.roles.cache.has(rol.id)) return response('Tienes que tener el rol llamado: `Among Us manager`!', canalText)
-        .catch(err => { });
+        ;
 
     if (!message.guild.me.hasPermission('MUTE_MEMBERS') || !member.voice.channel.permissionsFor(client.user).has("MUTE_MEMBERS")) return response('Tengo que tener el permiso `MUTE_MEMBERS`!', canalText)
-        .catch(err => { });
+        ;
 
     if (!message.guild.me.hasPermission('MANAGE_MESSAGES') || !member.voice.channel.permissionsFor(client.user).has("MANAGE_MESSAGES")) return response('Tengo que tener el permiso `MANAGE_MESSAGES`!', canalText)
-        .catch(err => { });
+        ;
 
     if (canalVoz.userLimit < 10) {
-        canalVoz.edit({ userLimit: 10 }).catch(err => { })
+        canalVoz.edit({ userLimit: 10 })
     }
     else {
-        canalVoz.edit({ userLimit: 10 }).catch(err => { })
+        canalVoz.edit({ userLimit: 10 })
     }
 
     if (canalVoz.members.size > 15) return response('Hay más de 15 miembros en el canal!', canalText)
-        .catch(err => { });
+        ;
 
     let p = canalVoz.members.map(a => {
-        a.voice.setMute(bol).catch(err => { })
+        a.voice.setMute(bol)
     });
 
     response('<a:cargando:650442822083674112> En proceso!', canalText).then(async (msg) => {
@@ -2819,9 +2821,9 @@ function among(mensaje, member, canalVoz, canalText, bol) {
 
         await Promise.all(p);
 
-        msg.edit({ embed: embed }).then(a => { a.delete({ timeout: 5000 }) }).catch(err => { })
-        //message.delete({ timeout: 5000 }).catch(err => { });
-    }).catch(err => { });
+        msg.edit({ embed: embed }).then(a => { a.delete({ timeout: 5000 }) })
+        //message.delete({ timeout: 5000 });
+    });
 
 }
 
@@ -2843,73 +2845,7 @@ function funcionPagina(elArray, num) {
     }
     return pagina;
 }
-//return resultado[0]; // ['hola', 'holaxd']
 
-/*if (cooldown.has(`${message.guild.id}_gchat`)) {
-
-    return embedResponse(mal + " Este comando tiene un cooldown de 3s global!(Por servidor)").catch(err => { enviarError(err, message.author) });
-
-}
-
-else {
-
-    cooldown.add(`${message.guild.id}_gchat`);
-    setTimeout(() => {
-        cooldown.delete(`${message.guild.id}_gchat`);
-    }, ms('3s'));
-
-};
-
-if (args[0] === 'send') {
-
-    let check = /[^A-Z0-9\s\!\@\#\$\%\^\&\*\(\)\_\+\=\[\]\"\'\;\.\,\\\:\ñ\|\~\/\<\>(\uD800-\uDBFF][\uDC00-\uDFFF)]/gi;
-
-    let regex = args.slice(1).join(' ').match(check);
-
-    let member = message.member;
-
-    if (!args[1]) return embedResponse(`Escribe algo!`).catch(err => { enviarError(err, message.author) });
-
-    let txt = args.slice(1).join(' ');
-
-    if (regex) return embedResponse(`Este comando no permite caracteres especiales!\nSi quieres sugerir un caracter especial pon z!suggest <caracter>.`).catch(err => { enviarError(err, message.author) });
-
-    if (txt.includes('discord.gg/')) {
-        embedResponse(`Este comando no permite invitaciones por obvias razones!`).catch(err => { enviarError(err, message.author) });
-        return message.delete({ timeout: 1000 });
-    }
-
-    if (txt.includes('`')) return embedResponse(`Este comando no permite el acento grave!`).catch(err => { enviarError(err, message.author) });
-
-    if (txt.length > 80) return embedResponse(`La longitud del texto debe ser menor a 80!`).catch(err => { enviarError(err, message.author) });
-
-    client.updateData({ id: 'chat' }, {
-        $push: {
-            test:
-                `${member.user.username.match(check) ? 'Usuario' : member.user.username.slice(0, 20)}#${member.user.discriminator}: ${txt}`
-        }
-
-    }, 'test');
-
-    return embedResponse('Mensaje enviado!').catch(err => { enviarError(err, message.author) });
-}
-
-else {
-    let { test } = await client.getData({ id: 'chat' }, 'test');
-
-    if (!test || test.length === 0) return embedResponse('Al parecer no hay ningun mensaje...');
-
-    test = test.reverse().slice(0, 10).reverse();
-    let embed = new Discord.MessageEmbed()
-        .setColor(color)
-        .setTimestamp()
-        .setDescription(`
-        \`\`\`\n${test.join('\n\n')}\`\`\`
-        `, { split: true }
-        )
-    message.channel.send({ embed: embed }).catch(err => { enviarError(err, message.author) });
-};
-*/
 async function getPublicList(message) {
 
     let arrayList = [];
