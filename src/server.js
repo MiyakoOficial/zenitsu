@@ -1191,10 +1191,6 @@ client.on('message', async (message) => {
 
     //fin de resetwarns
 
-    else if (command === 'stopchat') {
-
-    }
-
     //inicio de xp
     else if (command === 'xp' || command === 'exp') {
         let member = message.guild.members.cache.find(a => a.user.username === args.join(' ')) || message.guild.members.cache.find(a => a.user.tag === args.join(' ')) || message.guild.members.cache.find(a => a.displayName === args.join(' ')) || message.guild.members.cache.get(args[0]) || message.mentions.members.first() || message.member
