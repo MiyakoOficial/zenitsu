@@ -9,6 +9,7 @@
     },
     "dependencies": {
         "@discordjs/opus": "^0.3.2",
+        "ascii-table": "0.0.9",
         "canvas": "^2.6.1",
         "dblapi.js": "^2.4.1",
         "discord-ytdl-core": "^4.1.0",
