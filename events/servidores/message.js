@@ -6,7 +6,7 @@ module.exports = async (client, message) => {
     const prefix = '??';
     //const prefix = (await client.getData({ id: message.guild.id }, 'prefix')).prefix || 'z!';
     client.color = '#FF0000';
-    if (!message.guild) return;
+    if (!message || !message.guild || !message.author) return;
     client.serverQueue = client.queue.get(message.guild.id);
 
     if (message.author.bot) return;
