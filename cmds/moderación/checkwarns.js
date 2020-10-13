@@ -14,7 +14,7 @@ module.exports = {
 
         let miembro = message.mentions.users.first();
 
-        let data = await client.getData({ id: `${message.guild.id}_${message.mentions.users.first().id}` }, 'warns')
+        let data = (await client.getData({ id: `${message.guild.id}_${message.mentions.users.first().id}` }, 'warns'))
 
         let embed = new Discord.MessageEmbed()
             .setColor(client.color)
