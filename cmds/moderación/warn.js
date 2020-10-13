@@ -17,7 +17,7 @@ module.exports = {
         let razon = args.slice(1).join(' ') || 'No especificada';
         if (!miembro) return embedResponse('Menciona a un miembro del servidor!')
 
-        if (miembro.roles.highest.comparePositionTo(message.member.roles.highest) > 0 || miembro.kickable)
+        if (miembro.roles.highest.comparePositionTo(message.member.roles.highest) > 0 || !miembro.kickable)
             return embedResponse('No puedes advertir a este usuario!')
 
         if (!args[0].match(/\<\@(\!)?[0-9]{18}\>/g)) return embedResponse('La mencion tiene que ser el primer argumento!')
