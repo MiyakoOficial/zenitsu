@@ -113,7 +113,7 @@ module.exports = async (client, message) => {
 
         return;
     }
-    const prefix = (await client.getData({ id: message.guild.id }, 'prefix'));
+    const prefix = (await client.getData({ id: message.guild.id }, 'prefix')).prefix;
     const args = message.content.slice(prefix.length).trim().split(/ +/);
     const command = args.shift().toLowerCase()
 
