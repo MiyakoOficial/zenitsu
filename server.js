@@ -281,7 +281,7 @@ client.among = (mensaje, member, canalVoz, canalText, bol) => {
     response('<a:cargando:650442822083674112> En proceso!', canalText).then(async (msg) => {
         //msg.delete({ timeout: 5000 })
         let embed = new Discord.MessageEmbed()
-            .setColor(color)
+            .setColor(client.color)
             .setTimestamp()
             .setDescription('Listo!')
 

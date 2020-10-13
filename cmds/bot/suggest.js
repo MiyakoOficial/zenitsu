@@ -11,7 +11,7 @@ module.exports = {
     run: async ({ client, message, args, embedResponse, Hora }) => {
         if (!args[0]) return embedResponse('Escribe algo!')
         let embed = new Discord.MessageEmbed()
-            .setColor(color)
+            .setColor(client.color)
             .setTimestamp()
             .addField(message.author.tag, args.join(' '))
         client.channels.cache.get('727948582556270682').send({ embed: embed })
