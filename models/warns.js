@@ -7,7 +7,7 @@ const warns = Schema({
         type: Number
     },
     razon: {
-        default: '',
+        default: 'No especificada.',
         type: String
     }
 })
