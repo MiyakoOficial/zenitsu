@@ -9,7 +9,7 @@ module.exports = {
 
     }, run: async ({ client, message, args, embedResponse, Hora }) => {
 
-        let link = (await client.neko.baka()).url
+        let link = (await client.neko.poke()).url
         let miembro = message.mentions.members.first();
 
         if (!miembro) return embedResponse('Tienes que mencionar a alguien!')
