@@ -3,7 +3,6 @@ const ms = require('ms');
 let cooldownniveles = new Set();
 module.exports = async (client, message) => {
 
-    const prefix = '??';
     //const prefix = (await client.getData({ id: message.guild.id }, 'prefix')).prefix || 'z!';
     client.color = '#FF0000';
     if (!message || !message.guild || !message.author) return;
@@ -114,7 +113,7 @@ module.exports = async (client, message) => {
 
         return;
     }
-
+    const prefix = (await client.getData({ id: message.guild.id }, 'prefix'));
     const args = message.content.slice(prefix.length).trim().split(/ +/);
     const command = args.shift().toLowerCase()
 
