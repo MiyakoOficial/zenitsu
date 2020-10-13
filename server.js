@@ -199,7 +199,7 @@ global.getData = async ({ ...find }, model) => {
 
         await db.create(find)
 
-        return getModel;
+        return (await db.findOne(find));
 
     }
 
