@@ -2,7 +2,7 @@ const Discord = require("discord.js")
 
 module.exports = {
     config: {
-        name: "banchat",
+        name: "unbanchat",
         alias: [],
         description: "Desbanear a una person del chat",
         usage: "z!unban token user_id token",
