@@ -1,7 +1,6 @@
 const Discord = require('discord.js'),
     { Collection } = require('discord.js');
 const nekos = require('nekos.life');
-client.neko = new nekos().sfw;
 
 const mongoose = require('mongoose');
 
@@ -14,6 +13,9 @@ const client = new Discord.Client(
         http: { version: 8 }
     }
 );
+
+client.neko = new nekos().sfw;
+
 client.queue = new Map();
 let { readdirSync } = require('fs');
 
