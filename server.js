@@ -1,5 +1,7 @@
 const Discord = require('discord.js'),
     { Collection } = require('discord.js');
+const nekos = require('nekos.life');
+client.neko = new nekos().sfw;
 
 const mongoose = require('mongoose');
 
