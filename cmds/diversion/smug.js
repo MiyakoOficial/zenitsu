@@ -13,7 +13,7 @@ module.exports = {
 
         let embed = new Discord.MessageEmbed()
             .setColor(client.color)
-            .setDescription(`${message.author.tag} se ha puesto a presumir!`)
+            .setDescription(`${message.author.toString()} se ha puesto a presumir!`)
             .setImage(link)
             .setTimestamp()
 
