@@ -10,7 +10,7 @@ module.exports = {
     run: async ({ client, message, args, embedResponse }) => {
 
         const shorten = require('isgd');
-        if (!args[0]) return embedResponse('Uso correcto:\n`shortlink <link>')
+        if (!args[0]) return embedResponse(`Uso correcto:\nz!shortlink <link>`)
         if (!message.member.hasPermission('ADMINISTRATOR')) {
             if (args[0].includes('discord.gg/')) return embedResponse('No puedes poner una invitacion en el comando!')
         }
