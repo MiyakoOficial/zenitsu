@@ -1,7 +1,7 @@
 const Discord = require('discord.js'),
     { Collection } = require('discord.js');
 
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
 const client = new Discord.Client(
     {
