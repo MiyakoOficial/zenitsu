@@ -8,6 +8,10 @@ module.exports = async (client, message) => {
     if (!message || !message.guild || !message.author) return;
     client.serverQueue = client.queue.get(message.guild.id);
 
+    const prefix = (await client.getData({ id: message.guild.id }, 'prefix')).prefix;
+    const args = message.content.slice(prefix.length).trim().split(/ +/);
+    const command = args.shift().toLowerCase()
+
     if (message.author.bot) return;
     let emojiFinded = message.guild.emojis.cache.find(a => a.name === message.content.slice(2)) || client.emojis.cache.find(a => a.name === message.content.slice(2));
     //console.log(emojiFinded)
@@ -113,9 +117,6 @@ module.exports = async (client, message) => {
 
         return;
     }
-    const prefix = (await client.getData({ id: message.guild.id }, 'prefix')).prefix;
-    const args = message.content.slice(prefix.length).trim().split(/ +/);
-    const command = args.shift().toLowerCase()
 
     let commandfile = client.commands.get(command) || client.commands.get(client.alias.get(command))
 
