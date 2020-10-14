@@ -3,7 +3,7 @@ const { Schema, model } = require('mongoose');
 const Guild = Schema({
     id: String,
     canal: {
-        default: '',
+        default: 'default',
         type: String
     },
 })

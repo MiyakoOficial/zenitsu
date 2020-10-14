@@ -3,7 +3,7 @@ const { Schema, model } = require('mongoose');
 const Snipe = Schema({
     id: String,
     snipe: {
-        default: '',
+        default: 'default',
         type: String
     },
 })
