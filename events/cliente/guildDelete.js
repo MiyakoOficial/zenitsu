@@ -10,9 +10,9 @@ module.exports = async (client, guild) => {
 `
 
     let add2 = `\`\`\`diff
-    - Servidores: ${client.guilds.cache.size}
-    - Usuarios: ${client.users.cache.size}
-    - Canales: ${client.channels.cache.size}\`\`\``
+- Servidores: ${client.guilds.cache.size}
+- Usuarios: ${client.users.cache.size}
+- Canales: ${client.channels.cache.size}\`\`\``
 
     let embed = new Discord.MessageEmbed()
         .setColor('#FF0000')
