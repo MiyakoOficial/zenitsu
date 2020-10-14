@@ -29,6 +29,7 @@
         "path": "^0.12.7",
         "pretty-ms": "^7.0.1",
         "request": "^2.88.2",
+        "star-labs": "^1.1.2",
         "tresenraya": "0.0.4",
         "weather": "^1.0.4",
         "weather-js": "^2.0.0",

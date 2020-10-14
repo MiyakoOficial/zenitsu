@@ -1,19 +1,19 @@
 const Discord = require('discord.js');
 module.exports = {
     config: {
-        name: "dance",//Nombre del cmd
+        name: "sleep",//Nombre del cmd
         alias: [], //Alias
-        description: "Manda un gif bailando", //Descripción (OPCIONAL)
-        usage: "z!dance",
+        description: "Manda un gif durmiendo", //Descripción (OPCIONAL)
+        usage: "z!sleep",
         category: 'diversion'
 
     }, run: async ({ client, message, args, embedResponse, Hora }) => {
 
-        let link = client.star.dance();
+        let link = client.star.sleep();
 
         let embed = new Discord.MessageEmbed()
             .setColor(client.color)
-            .setDescription(`${message.author.toString()} se ha puesto a bailar!`)
+            .setDescription(`${message.author.toString()} está durmiendo!`)
             .setImage(link)
             .setTimestamp()
 

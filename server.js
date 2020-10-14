@@ -15,7 +15,7 @@ const client = new Discord.Client(
 );
 
 client.neko = new nekos().sfw;
-
+client.star = require('star-labs');
 client.queue = new Map();
 let { readdirSync } = require('fs');
 
