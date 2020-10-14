@@ -149,7 +149,7 @@ module.exports = async (client, message) => {
             .setColor(client.color)
             .addField(`Comando usado`, command)
             .addField('Autor', `${message.author.toString()}(${message.author.id})`)
-            .setAuthor(message.author.displayAvatarURL({ dynamic: true }))
+            .setAuthor(message.author.tag, message.author.displayAvatarURL({ dynamic: true }))
             .setFooter(`${message.guild.name}(${message.guild.id})`, message.author.iconURL)
 
         client.channels.cache.get('765757022489542686').send({ embed: embedC });
