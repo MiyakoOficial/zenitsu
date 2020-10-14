@@ -16,15 +16,4 @@ module.exports = async (client) => {
         client.channels.cache.get('756249790211162123').setName(`Users: ${client.users.cache.size}`);
 
     }, ms('5m'));
-
-    console.log(`${client.user.tag} está listo!`);
-    client.user.setPresence({
-        status: "idle",
-        activity: {
-            name: "z!help",
-            type: "WATCHING"
-        }
-
-    })
-
 };
