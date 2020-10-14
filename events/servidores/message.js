@@ -15,9 +15,10 @@ module.exports = async (client, message) => {
     if (message.author.bot) return;
     let emojiFinded = message.guild.emojis.cache.find(a => a.name === message.content.slice(2)) || client.emojis.cache.find(a => a.name === message.content.slice(2));
     //console.log(emojiFinded)
-    if (message.content.slice(0, 2) === ': ' && emojiFinded)
+    if (message.content.slice(0, 2) === ': ' && emojiFinded) {
+        if (message.deletable) message.delete();
         return message.channel.send(emojiFinded.toString())
-
+    }
     let Random = Math.floor(Math.random() * 24) + 1;
     if (!message.content.startsWith(prefix)) {
 

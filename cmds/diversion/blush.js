@@ -13,7 +13,7 @@ module.exports = {
 
         let embed = new Discord.MessageEmbed()
             .setColor(client.color)
-            .setDescription(`${message.author.toString()} se sonrojo!!`)
+            .setDescription(`${message.author.toString()} se sonrojó!`)
             .setImage(link)
             .setTimestamp()
 
