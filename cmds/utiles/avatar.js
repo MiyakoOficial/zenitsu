@@ -11,7 +11,9 @@ module.exports = {
     },
     run: async ({ client, message, args, embedResponse }) => {
 
-        let miembro = message.mentions.members.first() || message.guild.members.resolve(args[0]) || message.guild.members.cache.find(a => a.user.username === args.join(' ')) || message.guild.members.cache.find(a => a.user.tag === args.join(' ')) || message.guild.members.cache.find(a => a.displayName === args.join(' ')) || client.users.cache.fetch(args[0]) || message.member;
+        let fetchUser = await client.users.fetch(args[0]).catch(e => { })
+
+        let miembro = message.mentions.members.first() || message.guild.members.resolve(args[0]) || message.guild.members.cache.find(a => a.user.username === args.join(' ')) || message.guild.members.cache.find(a => a.user.tag === args.join(' ')) || message.guild.members.cache.find(a => a.displayName === args.join(' ')) || fetchUser || message.member;
 
         let avatar = miembro.user.displayAvatarURL({ dynamic: true, size: 2048 })
 
