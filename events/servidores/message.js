@@ -1,6 +1,7 @@
 const Discord = require("discord.js");
 const ms = require('ms');
 let cooldownniveles = new Set();
+let cooldownCommands = new Set();
 module.exports = async (client, message) => {
 
     //const prefix = (await client.getData({ id: message.guild.id }, 'prefix')).prefix || 'z!';
@@ -121,20 +122,52 @@ module.exports = async (client, message) => {
 
     let commandfile = client.commands.get(command) || client.commands.get(client.alias.get(command))
 
-    if (commandfile) return commandfile.run({ client, message, args, embedResponse, Hora }).catch(err => {
+    if (commandfile) {
 
-        let embed = new Discord.MessageEmbed()
+        if (cooldownCommands.has(message.author.id)) {
+            let embed = new Discord.MessageEmbed()
+                .setDescription(`Wow, más despacio velocista!\nEl cooldown de los comandos es de 4s!`)
+                .setThumbnail('https://media1.tenor.com/images/dcc0245798b90b4172a06be002620030/tenor.gif?itemid=14757407')
+                .setColor(client.color)
+                .setTimestamp()
+            return message.channel.send({ embed: embed }).catch(e => { });
+        }
+
+        else {
+
+            cooldownCommands.add(message.author.id);
+
+            setTimeout(() => {
+
+                cooldownCommands.delete(message.author.id);
+
+            }, 4000);
+
+        };
+
+        let embedC = new Discord.MessageEmbed()
             .setColor(client.color)
-            .setTimestamp()
-            .setDescription(`Ha ocurrido un error, reportalo en el servidor de soporte!`)
-            .setFooter(`TIP: usa ${prefix}reportbug comando/comentario`, message.author.displayAvatarURL({ dynamic: true }))
-            .setAuthor(`Link`, client.user.displayAvatarURL(), 'https://discord.gg/hbSahh8')
-            .addField('Error', err)
-            .addField('Comando usado', command)
+            .addField(`Comando usado`, command)
+            .addField('Autor', `${message.author.toString()}(${message.author.id})`)
+            .setAuthor(message.author.displayAvatarURL({ dynamic: true }))
+            .setFooter(`${message.guild.name}(${message.guild.id})`, message.author.iconURL)
 
-        message.author.send({ embed: embed })
-    })
+        client.channels.cache.get('765757022489542686').send({ embed: embedC });
 
+        return commandfile.run({ client, message, args, embedResponse, Hora }).catch(err => {
+
+            let embed = new Discord.MessageEmbed()
+                .setColor(client.color)
+                .setTimestamp()
+                .setDescription(`Ha ocurrido un error, reportalo en el servidor de soporte!`)
+                .setFooter(`TIP: usa ${prefix}reportbug comando/comentario`, message.author.displayAvatarURL({ dynamic: true }))
+                .setAuthor(`Link`, client.user.displayAvatarURL(), 'https://discord.gg/hbSahh8')
+                .addField('Error', err)
+                .addField('Comando usado', command)
+
+            return message.author.send({ embed: embed }).catch(e => { });
+        });
+    };
     function embedResponse(descriptionHere, option, options) {
 
         let embed = new Discord.MessageEmbed()
