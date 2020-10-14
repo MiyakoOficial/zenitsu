@@ -14,7 +14,7 @@ module.exports = async (client, oldMessage, newMessage) => {
     if (!data) return;
     if (!newMessage.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return;
     let embed = new Discord.MessageEmbed()
-        .setColor(color)
+        .setColor(client.color)
         .setTitle('<:messageUpdate:723267945194586122> Message Updated')
         .addField('• Old message', oldMessage.content, true)
         .addField('• New message', newMessage.content, true)

@@ -16,7 +16,7 @@ module.exports = async (client, message) => {
     if (!data) return;
     if (!message.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return;
     let embed = new Discord.MessageEmbed()
-        .setColor(color)
+        .setColor(client.color)
         .setTitle('<:messageDelete:723270093475414026> Message Deleted')
         .addField('• Message', message.content)
         .addField('• Author', message.author.tag, true)
