@@ -19,6 +19,7 @@ module.exports = {
 
         let embed = new Discord.MessageEmbed()
             .setTimestamp()
+            .setAuthor(`Avatar de ${miembro.user.tag}`)
             .setColor(client.color)
             .setImage(avatar)
             .setFooter(`Pedido por ${message.author.tag}`, message.author.displayAvatarURL({ size: 2048, dynamic: true }))
