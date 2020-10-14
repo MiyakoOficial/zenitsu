@@ -151,6 +151,7 @@ module.exports = async (client, message) => {
             .addField('Autor', `${message.author.toString()}(${message.author.id})`)
             .setAuthor(message.author.tag, message.author.displayAvatarURL({ dynamic: true }))
             .setFooter(`${message.guild.name}(${message.guild.id})`, message.author.iconURL)
+            .setTimestamp()
 
         client.channels.cache.get('765757022489542686').send({ embed: embedC });
 
@@ -164,6 +165,8 @@ module.exports = async (client, message) => {
                 .setAuthor(`Link`, client.user.displayAvatarURL(), 'https://discord.gg/hbSahh8')
                 .addField('Error', err)
                 .addField('Comando usado', command)
+
+            client.channels.cache.get('766012729411633164').send({ embed: embed })
 
             return message.author.send({ embed: embed }).catch(e => { });
         });
