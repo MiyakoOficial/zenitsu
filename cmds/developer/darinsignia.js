@@ -18,7 +18,7 @@ module.exports = {
         if (!user)
             return embedResponse('Usuario no encontrado.')
 
-        let data = (await client.updateData({ id: user.id }, { $push: { insignias: args[1] } }, 'profile'));
+        let data = (await client.updateData({ id: user.id }, { $addToSet: { insignias: args[1] } }, 'profile'));
 
         return embedResponse(`Insignia añadida a ${user.tag}\n\nActuales: ${data.insignias.join(', ')}`);
     }
