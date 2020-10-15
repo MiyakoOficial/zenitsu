@@ -118,7 +118,6 @@ module.exports = {
 
             const ytsr = require("ytsr");
             const filters = await ytsr.getFilters(args.join(' ')).catch(err => { }); //Buscamos
-            if (!filters) return embedResponse('No encontré ese vídeo.')
             let filter = filters.get("Type").find(o => o.name === "Video"); // Sólo videos
             let options = {
                 safeSearch: true, //niños
