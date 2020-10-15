@@ -5,7 +5,7 @@ module.exports = {
         alias: [], //Alias
         description: "Manda un gif durmiendo", //Descripción (OPCIONAL)
         usage: "z!sleep",
-        category: 'roleplay'
+        category: 'interacción'
 
     }, run: async ({ client, message, args, embedResponse, Hora }) => {
 

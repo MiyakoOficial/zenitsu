@@ -13,7 +13,7 @@ module.exports = {
 
         let data = (await client.getData({ id: member.user.id }, 'profile'));
 
-        let { description, insignias, img, thumbnail, nick } = data;
+        let { description, insignias, img, thumbnail, nick, footer, footertext } = data;
 
         let embed = new Discord.MessageEmbed()
             .setImage(img)
@@ -23,6 +23,7 @@ module.exports = {
             .addField(`Descripción`, description)
             .addField('Insignias', insignias.length == 0 ? 'No tiene insignias.' : insignias.join(', '))
             .addField('Apodo', nick)
+            .setFooter(footertext, footer)
             .setTimestamp()
         return message.channel.send({ embed: embed })
     }

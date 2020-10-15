@@ -23,6 +23,16 @@ const Guild = Schema({
         default: 'https://cdn.discordapp.com/attachments/758009020526362715/766329070035402763/kimetsu-no-yaiba-romance-tanjiro-kanao.png'
     },
 
+    footer: {
+        type: String,
+        default: 'https://cdn.discordapp.com/attachments/758009020526362715/766329070035402763/kimetsu-no-yaiba-romance-tanjiro-kanao.png'
+    },
+
+    footertext: {
+        type: String,
+        default: 'No establecido.'
+    },
+
     nick: {
         type: String,
         default: 'No establecido.'

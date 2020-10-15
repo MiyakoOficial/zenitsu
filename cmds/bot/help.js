@@ -22,7 +22,7 @@ module.exports = {
             .addField('Bot', client.commands.filter(a => a.config.category === 'bot').map(a => `\`${a.config.name}\``).join(', '))
             .addField('Among Us', client.commands.filter(a => a.config.category === 'among us').map(a => `\`${a.config.name}\``).join(', '))
             .addField('Administracion', client.commands.filter(a => a.config.category === 'administracion').map(a => `\`${a.config.name}\``).join(', '))
-            .addField('Roleplay', client.commands.filter(a => a.config.category === 'roleplay').map(a => `\`${a.config.name}\``).join(', '))
+            .addField('Interacción', client.commands.filter(a => a.config.category === 'interacción').map(a => `\`${a.config.name}\``).join(', '))
 
         if (!args[0])
             return message.channel.send({ embed: embedHelp });
