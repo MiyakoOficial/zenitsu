@@ -52,11 +52,19 @@ module.exports = {
 
                 if (valor.length >= 1024) return embedResponse('Limite de caracteres sobrepasados.')
 
+                let data = await client.updateData({ id: message.author.id }, { footertext: valor }, 'profile')
+
+                return embedResponse('Ahora tu footer es ' + data.footertext);
+
                 break;
 
             case 'nick':
 
                 if (valor.length >= 1024) return embedResponse('Limite de caracteres sobrepasados.')
+
+                let data = await client.updateData({ id: message.author.id }, { nick: valor }, 'profile')
+
+                return embedResponse('Ahora tu apodo es ' + data.nick);
 
                 break;
 
