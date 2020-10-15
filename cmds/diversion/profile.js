@@ -4,7 +4,7 @@ module.exports = {
         name: "profile",//Nombre del cmd
         alias: [], //Alias
         description: "Manda el perfil de un miembro", //Descripción (OPCIONAL)
-        usage: "z!achievement texto",
+        usage: "z!profile",
         category: 'diversion'
 
     }, run: async ({ client, message, args, embedResponse, Hora }) => {
