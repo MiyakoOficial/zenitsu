@@ -21,7 +21,7 @@ module.exports = {
             .setAuthor(`Perfil de ${member.user.tag}`)
             .setColor(client.color)
             .addField(`Descripción`, description)
-            .addField('Insignias', !insignias ? 'No tiene insignias.' : insignias.join(', '))
+            .addField('Insignias', insignias.length == 0 ? 'No tiene insignias.' : insignias.join(', '))
             .setFooter(nick)
             .setTimestamp()
         return message.channel.send({ embed: embed })
