@@ -2,10 +2,10 @@ const Discord = require("discord.js")
 
 module.exports = {
     config: {
-        name: "accept",
+        name: "darinsignia",
         alias: [],
-        description: "Aceptar sugerencia",
-        usage: "z!accept id comment",
+        description: "private",
+        usage: "z!private command jaja",
         category: 'developer'
     },
     run: async ({ client, message, args, embedResponse, Hora }) => {
