@@ -1,22 +1,23 @@
 const Discord = require('discord.js');
 module.exports = {
     config: {
-        name: "poke",//Nombre del cmd
+        name: "feed",//Nombre del cmd
         alias: [], //Alias
-        description: "Manda un gif tocando a alguien.", //Descripción (OPCIONAL)
-        usage: "z!poke @mencion",
-        category: 'diversion'
+        description: "Manda un gif alimentando a alguien", //Descripción (OPCIONAL)
+        usage: "z!feed @mencion",
+        category: 'roleplay'
 
     }, run: async ({ client, message, args, embedResponse, Hora }) => {
 
-        let link = (await client.neko.poke()).url
+        let link = client.star.feed();
+
         let miembro = message.mentions.members.first();
 
         if (!miembro) return embedResponse('Tienes que mencionar a alguien!')
 
         let embed = new Discord.MessageEmbed()
             .setColor(client.color)
-            .setDescription(`${message.author.toString()} está molestando a ${miembro.user.toString()}!`)
+            .setDescription(`${message.author.toString()} alimentó a ${miembro.user.toString()}!`)
             .setImage(link)
             .setTimestamp()
 

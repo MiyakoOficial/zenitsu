@@ -1,23 +1,22 @@
 const Discord = require('discord.js');
 module.exports = {
     config: {
-        name: "tickle",//Nombre del cmd
+        name: "poke",//Nombre del cmd
         alias: [], //Alias
-        description: "Manda un gif haciendo cosquillas", //Descripción (OPCIONAL)
-        usage: "z!tickle @mencion",
-        category: 'diversion'
+        description: "Manda un gif tocando a alguien.", //Descripción (OPCIONAL)
+        usage: "z!poke @mencion",
+        category: 'roleplay'
 
     }, run: async ({ client, message, args, embedResponse, Hora }) => {
 
-        let link = (await client.neko.tickle()).url
-
+        let link = (await client.neko.poke()).url
         let miembro = message.mentions.members.first();
 
         if (!miembro) return embedResponse('Tienes que mencionar a alguien!')
 
         let embed = new Discord.MessageEmbed()
             .setColor(client.color)
-            .setDescription(`${message.author.toString()} le está haciendo cosquillas a ${miembro.user.toString()}!`)
+            .setDescription(`${message.author.toString()} está molestando a ${miembro.user.toString()}!`)
             .setImage(link)
             .setTimestamp()
 

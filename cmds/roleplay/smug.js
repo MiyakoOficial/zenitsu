@@ -5,7 +5,7 @@ module.exports = {
         alias: [], //Alias
         description: "Manda un gif de presumido", //Descripción (OPCIONAL)
         usage: "z!smug",
-        category: 'diversion'
+        category: 'roleplay'
 
     }, run: async ({ client, message, args, embedResponse, Hora }) => {
 

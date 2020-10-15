@@ -1,15 +1,15 @@
 const Discord = require('discord.js');
 module.exports = {
     config: {
-        name: "kiss",//Nombre del cmd
+        name: "tickle",//Nombre del cmd
         alias: [], //Alias
-        description: "Manda un gif besando a alguien", //Descripción (OPCIONAL)
-        usage: "z!kiss @mencion",
-        category: 'diversion'
+        description: "Manda un gif haciendo cosquillas", //Descripción (OPCIONAL)
+        usage: "z!tickle @mencion",
+        category: 'roleplay'
 
     }, run: async ({ client, message, args, embedResponse, Hora }) => {
 
-        let link = client.star.kiss();
+        let link = (await client.neko.tickle()).url
 
         let miembro = message.mentions.members.first();
 
@@ -17,7 +17,7 @@ module.exports = {
 
         let embed = new Discord.MessageEmbed()
             .setColor(client.color)
-            .setDescription(`${message.author.toString()} besó a ${miembro.user.toString()}!`)
+            .setDescription(`${message.author.toString()} le está haciendo cosquillas a ${miembro.user.toString()}!`)
             .setImage(link)
             .setTimestamp()
 
