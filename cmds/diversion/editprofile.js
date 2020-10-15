@@ -11,6 +11,8 @@ module.exports = {
 
         if (!args[1]) return embedResponse('Ejemplo de uso correcto: z!editprofile nick Hello world!');
 
+        let data;
+
         let valor = args.slice(1).join(' ');
 
         switch (args[0]) {
@@ -18,7 +20,7 @@ module.exports = {
 
                 if (valor.length >= 1024) return embedResponse('Limite de caracteres sobrepasados.')
 
-                let data = await client.updateData({ id: message.author.id }, { description: valor }, 'profile')
+                data = await client.updateData({ id: message.author.id }, { description: valor }, 'profile')
 
                 return embedResponse('Ahora tu descripción es ' + data.description);
 
@@ -26,7 +28,7 @@ module.exports = {
 
             case 'img':
 
-                let data = await client.updateData({ id: message.author.id }, { img: args[1] }, 'profile')
+                data = await client.updateData({ id: message.author.id }, { img: args[1] }, 'profile')
 
                 return embedResponse(`Imagen cambiada, ahora prueba con el comando profile.`);
 
@@ -34,7 +36,7 @@ module.exports = {
 
             case 'thumbnail':
 
-                let data = await client.updateData({ id: message.author.id }, { thumbnail: args[1] }, 'profile')
+                data = await client.updateData({ id: message.author.id }, { thumbnail: args[1] }, 'profile')
 
                 return embedResponse(`Thumbnail cambiado, ahora prueba con el comando profile.`);
 
@@ -42,7 +44,7 @@ module.exports = {
 
             case 'footerimg':
 
-                let data = await client.updateData({ id: message.author.id }, { footer: args[1] }, 'profile')
+                data = await client.updateData({ id: message.author.id }, { footer: args[1] }, 'profile')
 
                 return embedResponse(`Imagen del footer cambiado, ahora prueba con el comando profile.`);
 
@@ -52,7 +54,7 @@ module.exports = {
 
                 if (valor.length >= 1024) return embedResponse('Limite de caracteres sobrepasados.')
 
-                let data = await client.updateData({ id: message.author.id }, { footertext: valor }, 'profile')
+                data = await client.updateData({ id: message.author.id }, { footertext: valor }, 'profile')
 
                 return embedResponse('Ahora tu footer es ' + data.footertext);
 
@@ -62,7 +64,7 @@ module.exports = {
 
                 if (valor.length >= 1024) return embedResponse('Limite de caracteres sobrepasados.')
 
-                let data = await client.updateData({ id: message.author.id }, { nick: valor }, 'profile')
+                data = await client.updateData({ id: message.author.id }, { nick: valor }, 'profile')
 
                 return embedResponse('Ahora tu apodo es ' + data.nick);
 
