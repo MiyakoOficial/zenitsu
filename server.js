@@ -315,3 +315,14 @@ client.rModel = (n) => {
 global.modelGet = (n) => {
     return client.rModel(n)
 }
+
+process.on("unhandledRejection", e => {
+    new Discord.WebhookClient('766326417994153994', 'M6JjpcGqlq2PZ70sKTwfEWuURigvpbfURGxzgcHxgjvyuINCYYl-RxKsVHbac0xdmL9-').send(
+        new Discord.MessageEmbed()
+            .setColor('GREEN')
+            .setTitle('Error')
+            .setDescription(`Promesa denegada sin manejar: ${e}`)
+            .setTimestamp())
+    //Discord.WebhookClient().send("Promesa denegada sin manejar: " + e);
+    //console.error("Promesa denegada sin manejar:", e);
+});
