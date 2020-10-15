@@ -22,7 +22,7 @@ module.exports = {
             .setColor(client.color)
             .addField(`Descripción`, description)
             .addField('Insignias', insignias.length == 0 ? 'No tiene insignias.' : insignias.join(', '))
-            .setFooter(nick)
+            .addField('Apodo', nick)
             .setTimestamp()
         return message.channel.send({ embed: embed })
     }
