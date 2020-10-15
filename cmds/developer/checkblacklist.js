@@ -9,7 +9,7 @@ module.exports = {
         category: 'developer'
     },
     run: async ({ client, message, args, embedResponse, Hora }) => {
-        if (!["507367752391196682", "374710341868847104"].includes(message.author.id))
+        if (!["507367752391196682"].includes(message.author.id))
             return embedResponse('No puedes usar este comando!')
         if (!args[0]) return embedResponse('Escribe la ID de un usuario!')
         if (!client.users.cache.get(args[0])) return embedResponse('No encontre al usuario!')
