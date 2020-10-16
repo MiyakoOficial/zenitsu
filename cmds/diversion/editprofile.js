@@ -28,6 +28,9 @@ module.exports = {
 
             case 'img':
 
+                if (!args[1].match(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/gi))
+                    return embedResponse('Introduce una URL valida!');
+
                 data = await client.updateData({ id: message.author.id }, { img: args[1] }, 'profile')
 
                 return embedResponse(`Imagen cambiada, ahora prueba con el comando profile.`);
@@ -36,6 +39,9 @@ module.exports = {
 
             case 'thumbnail':
 
+                if (!args[1].match(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/gi))
+                    return embedResponse('Introduce una URL valida!');
+
                 data = await client.updateData({ id: message.author.id }, { thumbnail: args[1] }, 'profile')
 
                 return embedResponse(`Thumbnail cambiado, ahora prueba con el comando profile.`);
@@ -43,6 +49,9 @@ module.exports = {
                 break;
 
             case 'footerimg':
+
+                if (!args[1].match(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/gi))
+                    return embedResponse('Introduce una URL valida!');
 
                 data = await client.updateData({ id: message.author.id }, { footer: args[1] }, 'profile')
 
