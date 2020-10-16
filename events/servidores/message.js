@@ -104,7 +104,7 @@ module.exports = async (client, message) => {
 
                 ctx.drawImage(avatar, 10, 10, 80, 80);
 
-                channel.send(new Discord.MessageAttachment(canvas.toBuffer(), 'levelImage.png'))
+                channel.send(new Discord.MessageAttachment(canvas.toBuffer(), 'levelImage.png')).catch(e => { })
 
                 //embedResponse(`<@${message.author.id}>, subiste al nivel ${nivel + 1}!`, channel).catch(a => { });
 
