@@ -15,6 +15,12 @@ module.exports = {
 
         let { color, description, insignias, img, thumbnail, nick, footer, footertext } = data;
 
+        let guild = client.guilds.cache.get('645463565813284865');
+
+        if (guild.members.cache.get(member.user.id)) {
+            insignias.push(`<:zDiscordMember:766650472508817448>`)
+        }
+
         let embed = new Discord.MessageEmbed()
             .setImage(img)
             .setThumbnail(thumbnail)
