@@ -91,7 +91,7 @@ module.exports = {
 
             default:
 
-                embedResponse(`Elije entre las opciones disponibles: img, thumbnail, footerimg, footertext, nick, description`)
+                embedResponse(`Elije entre las opciones disponibles: img, thumbnail, footerimg, footertext, nick, description, color`)
 
                 break;
         }

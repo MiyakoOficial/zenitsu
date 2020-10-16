@@ -13,13 +13,13 @@ module.exports = {
 
         let data = (await client.getData({ id: member.user.id }, 'profile'));
 
-        let { description, insignias, img, thumbnail, nick, footer, footertext } = data;
+        let { color, description, insignias, img, thumbnail, nick, footer, footertext } = data;
 
         let embed = new Discord.MessageEmbed()
             .setImage(img)
             .setThumbnail(thumbnail)
             .setAuthor(`Perfil de ${member.user.tag}`, member.user.displayAvatarURL({ dynamic: true }))
-            .setColor(client.color)
+            .setColor(color)
             .addField(`Descripción`, description)
             .addField('Insignias', insignias.length == 0 ? 'No tiene insignias.' : insignias.join(', '))
             .addField('Apodo', nick)
