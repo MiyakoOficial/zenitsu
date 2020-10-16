@@ -18,7 +18,7 @@ module.exports = {
         let embed = new Discord.MessageEmbed()
             .setImage(img)
             .setThumbnail(thumbnail)
-            .setAuthor(`Perfil de ${member.user.tag}`)
+            .setAuthor(`Perfil de ${member.user.tag}`, member.user.displayAvatarURL({ dynamic: true }))
             .setColor(client.color)
             .addField(`Descripción`, description)
             .addField('Insignias', insignias.length == 0 ? 'No tiene insignias.' : insignias.join(', '))
