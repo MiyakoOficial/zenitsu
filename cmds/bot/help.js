@@ -23,6 +23,7 @@ module.exports = {
             .addField('Among Us', client.commands.filter(a => a.config.category === 'among us').map(a => `\`${a.config.name}\``).join(', '))
             .addField('Administracion', client.commands.filter(a => a.config.category === 'administracion').map(a => `\`${a.config.name}\``).join(', '))
             .addField('Interacción', client.commands.filter(a => a.config.category === 'interacción').map(a => `\`${a.config.name}\``).join(', '))
+            .setImage('https://cdn.discordapp.com/attachments/765608178540609598/766651849050292234/para_el_pibe_2.jpg')
 
         if (!args[0])
             return message.channel.send({ embed: embedHelp });
