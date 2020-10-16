@@ -33,6 +33,11 @@ const Guild = Schema({
         default: 'No establecido.'
     },
 
+    color: {
+        type: String,
+        default: '#E09E36'
+    },
+
     nick: {
         type: String,
         default: 'No establecido.'

@@ -79,6 +79,16 @@ module.exports = {
 
                 break;
 
+            case 'color':
+
+                if (valor.length != 6) return embedResponse('Usa el tipo "hexcolor", ejemplo: z!editprofile color FF0000')
+
+                data = await client.updateData({ id: message.author.id }, { color: `#${valor}` }, 'profile')
+
+                return embedResponse('Ahora tu color de embed es ' + data.color);
+
+                break;
+
             default:
 
                 embedResponse(`Elije entre las opciones disponibles: img, thumbnail, footerimg, footertext, nick, description`)
