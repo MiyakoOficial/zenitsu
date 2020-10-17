@@ -22,24 +22,12 @@ module.exports = {
             .addField('Bot', client.commands.filter(a => a.config.category === 'bot').map(a => `\`${a.config.name}\``).join(', '))
             .addField('Among Us', client.commands.filter(a => a.config.category === 'among us').map(a => `\`${a.config.name}\``).join(', '))
             .addField('Administracion', client.commands.filter(a => a.config.category === 'administracion').map(a => `\`${a.config.name}\``).join(', '))
+            .addField('Nuevo: Batallas contra demonios', client.commands.filter(a => a.config.category === 'rol').map(a => `\`${a.config.name}\``).join(', '))
             .addField('Interacción', client.commands.filter(a => a.config.category === 'interacción').map(a => `\`${a.config.name}\``).join(', '))
             .setImage('https://cdn.discordapp.com/attachments/765608178540609598/766651849050292234/para_el_pibe_2.jpg')
 
         if (!args[0])
             return message.channel.send({ embed: embedHelp });
-
-        if (args[0] === 'chat') {
-            let embed = new Discord.MessageEmbed()
-                .setTimestamp()
-                .setColor(client.color)
-                .setAuthor('Cosas basicas para aprender!')
-                .setDescription(`createchat < public | private > num(maximo de usuarios en el chat)\n
-    Si es privado tienes que invitar a los usuarios: invitechat user_id token_chat(el token se te dara al crearlo)\n
-    Si es público solo diles el token y ellos tienen que hacer setchat token_chat.\n
-    Si quieres ponerle un nombre usa: editchat name Nuevo nombre, lo mismo con la descripción(description) o el limite de usuarios(maxusers)`)
-            return message.channel.send({ embed: embed })
-
-        }
 
         if (!client.commands.map(a => a.config.name).includes(args[0]))
             return embedResponse('Comando equivocado!')
