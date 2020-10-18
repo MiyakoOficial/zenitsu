@@ -12,7 +12,7 @@ module.exports = {
 
         const { color } = client;
 
-        await client.rModel('demonios').find({ idGuild: message.guild.id }).limit(150).sort({ nivel: -1 }).exec(async (err, res) => {
+        await client.rModel('demonios').find().limit(150).sort({ nivelespada: -1 }).exec(async (err, res) => {
             if (err) return console.log(err);
             if (res.length === 0) return embedResponse("No hay datos...")
 
