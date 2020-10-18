@@ -58,8 +58,9 @@ module.exports = {
 
                 let embed3 = new Discord.MessageEmbed()
                     .setColor(client.color)
-                    .setDescription('Subiste al nivel ' + dataz.nivelusuario)
+                    .setDescription('Subiste al nivel ' + dataz.nivelusuario + '!')
                     .setTimestamp()
+                    .setAuthor(message.author.tag, message.author.displayAvatarURL({ dynamic: true }))
                     .setImage('https://media1.tenor.com/images/c0011b22ef40718152484c7e11fd4b6d/tenor.gif?itemid=14677284')
 
                 return message.channel.send({ embed: embed3 }).catch(e => { })
