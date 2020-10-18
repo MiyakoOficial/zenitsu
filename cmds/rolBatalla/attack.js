@@ -41,6 +41,7 @@ module.exports = {
                 .setDescription('Estas teniendo una pelea con el enemigo ⚔️!')
                 .setTimestamp()
                 .setImage('https://media1.tenor.com/images/dce718a6dcfac57261944a5bee6c1d76/tenor.gif?itemid=17922860')
+                .setAuthor(message.author.tag, message.author.displayAvatarURL({ dynamic: true }))
 
             message.channel.send({ embed: embed1 }).catch(e => { });
 
