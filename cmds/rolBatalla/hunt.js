@@ -12,6 +12,16 @@ module.exports = {
         let data = await client.getData({ id: message.author.id }, 'demonios')
         let { monstruos, nivelenemigo, nivelespada, nivelusuario, xpusuario, cooldown } = data;
 
+        let elcoso = Math.floor(nivelespada / 10);
+        let multiplica = []
+
+        for (var i = 0; elcoso > 0; i++) {
+            multiplica.push('n')
+            elcoso--
+        }
+
+        let reto = (multiplica.length * 15) + 50
+
         if (cooldown > Date.now())
             return embedResponse('No puedo ir a cazar ahora.\n\nTiempo restante: ' + require('ms')(cooldown - Date.now()))
 
@@ -44,16 +54,36 @@ module.exports = {
 
         let datazo = await client.updateData({ id: message.author.id }, { $inc: { monstruos: 1, dinero: dinero, xpusuario: exp } }, 'demonios')
 
-        let embed2 = new Discord.MessageEmbed()
-            .setColor(client.color)
-            .setAuthor(message.author.tag, message.author.displayAvatarURL({ dynamic: true }))
-            .setDescription(`Haz cazado un demonio (total: ${datazo.monstruos})\n\nRecompensas: ${dinero}$ y ${exp} de experiencia!`)
-            .setTimestamp()
-            .setImage('https://media1.tenor.com/images/ff57d6cb909d69f9c6f7b2ff590f1f19/tenor.gif?itemid=15100391')
+        if (xpusuario + exp < reto) {
 
-        statusA.delete(message.author.id);
+            let embed2 = new Discord.MessageEmbed()
+                .setColor(client.color)
+                .setAuthor(message.author.tag, message.author.displayAvatarURL({ dynamic: true }))
+                .setDescription(`Haz cazado un demonio (total: ${datazo.monstruos})\n\nRecompensas: ${dinero}$ y ${exp} de experiencia!`)
+                .setTimestamp()
+                .setImage('https://media1.tenor.com/images/ff57d6cb909d69f9c6f7b2ff590f1f19/tenor.gif?itemid=15100391')
 
-        return message.channel.send({ embed: embed2 }).catch(e => { })
+            statusA.delete(message.author.id);
+
+            return message.channel.send({ embed: embed2 }).catch(e => { })
+        }
+
+        else {
+
+            await client.updateData({ id: message.author.id }, { $inc: { nivelusuario: 1, nivelespada: 1 } }, 'demonios')
+            let dataz = await client.updateData({ id: message.author.id }, { xpusuario: 0 }, 'demonios');
+
+            let embed3 = new Discord.MessageEmbed()
+                .setColor(client.color)
+                .setDescription('Subiste al nivel ' + dataz.nivelusuario + '!')
+                .setTimestamp()
+                .setAuthor(message.author.tag, message.author.displayAvatarURL({ dynamic: true }))
+                .setImage('https://media1.tenor.com/images/c0011b22ef40718152484c7e11fd4b6d/tenor.gif?itemid=14677284')
+
+            return message.channel.send({ embed: embed3 }).catch(e => { })
+
+
+        }
 
     }
 }
