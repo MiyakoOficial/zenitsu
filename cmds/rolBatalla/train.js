@@ -33,13 +33,13 @@ module.exports = {
 
             await Discord.Util.delayFor(5000);
 
-            if (xpusuario + levelup < 50) {
+            if (xpusuario + levelup < 100) {
 
                 let datazo = await client.updateData({ id: message.author.id }, { $inc: { xpusuario: levelup } }, 'demonios')
 
                 let embed2 = new Discord.MessageEmbed()
                     .setColor(client.color)
-                    .setDescription(`Subiste ${levelup} de experiencia!\n\n${datazo.xpusuario}/50 para el nivel ${parseInt(datazo.nivelusuario) + 1}`)
+                    .setDescription(`Subiste ${levelup} de experiencia!\n\n${datazo.xpusuario}/100 para el nivel ${parseInt(datazo.nivelusuario) + 1}`)
                     .setTimestamp()
                     .setAuthor(message.author.tag, message.author.displayAvatarURL({ dynamic: true }))
                     .setImage('https://media1.tenor.com/images/ff57d6cb909d69f9c6f7b2ff590f1f19/tenor.gif?itemid=15100391')

@@ -21,11 +21,11 @@ module.exports = {
         if (cuanto <= 0)
             return embedResponse('Escoge un numero mayor que 0!')
 
-        if (cuanto * 125 > dinero)
-            return embedResponse('No puedes comprar la cantidad que quieres!\n\nPrecio de nivel: 125')
+        if (cuanto * 200 > dinero)
+            return embedResponse('No puedes comprar la cantidad que quieres!\n\nPrecio de nivel: 200')
 
         let data = await client.updateData({ id: message.author.id }, { $inc: { nivelespada: cuanto, nivelusuario: cuanto } }, 'demonios');
-        await client.updateData({ id: message.author.id }, { $inc: { dinero: -(cuanto * 125) } }, 'demonios');
+        await client.updateData({ id: message.author.id }, { $inc: { dinero: -(cuanto * 200) } }, 'demonios');
 
         return embedResponse('Ahora eres nivel ' + data.nivelusuario);
 
