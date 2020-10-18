@@ -10,7 +10,7 @@ module.exports = {
 
     }, run: async ({ client, message, args, embedResponse, Hora }) => {
 
-        let prob = Math.floor(Math.random() * 59) + 1;
+        let prob = Math.floor(Math.random() * 99) + 1;
 
         let data = await client.getData({ id: message.author.id }, 'demonios')
         let dinero = Math.floor(Math.random() * 49) + 1;
@@ -46,7 +46,7 @@ module.exports = {
 
             await Discord.Util.delayFor(5000);
 
-            if (prob >= 75) {
+            if (prob >= 60) {
 
                 let dataz = await client.updateData({ id: message.author.id }, { $inc: { monstruos: 1, dinero: dinero, nivelenemigo: 1 } }, 'demonios');
 
