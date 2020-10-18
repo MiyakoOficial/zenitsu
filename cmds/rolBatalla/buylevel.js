@@ -24,7 +24,8 @@ module.exports = {
         if (cuanto * 100 > dinero)
             return embedResponse('No puedes comprar la cantidad que quieres!')
 
-        let data = await client.updateData({ id: message.guild.id }, { $inc: { nivelespada: cuanto, nivelusuario: cuanto } }, 'demonios');
+        let data = await client.updateData({ id: message.author.id }, { $inc: { nivelespada: cuanto, nivelusuario: cuanto } }, 'demonios');
+        await client.updateData({ id: message.author.id }, { $inc: { dinero: cuanto * 100 } }, 'demonios')
 
         return embedResponse('Ahora eres nivel ' + data.nivelusuario);
 
