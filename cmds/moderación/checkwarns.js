@@ -19,7 +19,7 @@ module.exports = {
         let embed = new Discord.MessageEmbed()
             .setColor(client.color)
             .setTimestamp()
-            .setTitle('<a:alarma:764931865676218380> Advertencias del miembro <a:alarma:764931865676218380>', miembro.displayAvatarURL({ dynamic: true }))
+            .setTitle('<a:alarma:767497168381935638> Advertencias del miembro <a:alarma:767497168381935638>', miembro.displayAvatarURL({ dynamic: true }))
             .addField('Razón', !data || !data.razon ? 'No especificada!' : data.razon.slice(0, 1024))
             .addField('Advertencias totales', !data.warns ? 0 : data.warn)
 
