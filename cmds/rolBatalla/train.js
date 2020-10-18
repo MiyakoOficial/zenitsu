@@ -13,7 +13,7 @@ module.exports = {
         let data = await client.getData({ id: message.author.id }, 'demonios');
         let { cooldown, xpusuario, nivelespada } = data;
 
-        let elcoso = Math.floor(21 / 10);
+        let elcoso = Math.floor(nivelespada / 10);
         let multiplica = []
 
         for (var i = 0; elcoso > 0; i++) {
@@ -59,8 +59,7 @@ module.exports = {
 
             else {
 
-                await client.updateData({ id: message.author.id }, { $inc: { nivelusuario: 1 } }, 'demonios')
-                await client.updateData({ id: message.author.id }, { $inc: { nivelespada: 1 } }, 'demonios')
+                await client.updateData({ id: message.author.id }, { $inc: { nivelusuario: 1, nivelespada: 1 } }, 'demonios')
                 // await client.updateData({ id: message.author.id }, { $inc: { vidamaxusuario: 15 } }, 'demonios')
                 let dataz = await client.updateData({ id: message.author.id }, { xpusuario: 0 }, 'demonios');
 
