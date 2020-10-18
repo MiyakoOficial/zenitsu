@@ -22,7 +22,7 @@ module.exports = {
                 .setDescription(
                     pagina.map((v, i) =>
 
-                        `${(i + 1) + 10 * (seleccion <= 0 ? 1 : seleccion - 1)} | ${!client.users.cache.get(v.idMember) ? 'Miembro desconocido!' : client.users.cache.get(v.idMember).tag} - ${!v.nivelespada ? 0 : v.nivelespada}`
+                        `${(i + 1) + 10 * (seleccion <= 0 ? 1 : seleccion - 1)} | ${!client.users.cache.get(v.id) ? 'Miembro desconocido!' : client.users.cache.get(v.id).tag} - ${!v.nivelespada ? 0 : v.nivelespada}`
 
                     ).join('\n') || 'Pagina inexistente!'
                 )
