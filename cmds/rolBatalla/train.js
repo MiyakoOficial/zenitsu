@@ -60,10 +60,7 @@ module.exports = {
             else {
 
                 await client.updateData({ id: message.author.id }, { $inc: { nivelusuario: 1, nivelespada: 1 } }, 'demonios')
-                // await client.updateData({ id: message.author.id }, { $inc: { vidamaxusuario: 15 } }, 'demonios')
                 let dataz = await client.updateData({ id: message.author.id }, { xpusuario: 0 }, 'demonios');
-
-
 
                 let embed3 = new Discord.MessageEmbed()
                     .setColor(client.color)
