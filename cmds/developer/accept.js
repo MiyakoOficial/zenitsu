@@ -23,7 +23,7 @@ module.exports = {
                     .setColor('GREEN'))
 
 
-                return a.react('721174526930714634')
+                return a.react('758000069268996227')
             });
             return embedResponse('Sugerencia aceptada!')
         }

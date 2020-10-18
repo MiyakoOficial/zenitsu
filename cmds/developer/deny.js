@@ -23,7 +23,7 @@ module.exports = {
                     .setColor('RED'))
 
 
-                return a.react('721174460073377804')
+                return a.react('758000069654872204')
             });
             return embedResponse('Sugerencia denegada!')
         }
