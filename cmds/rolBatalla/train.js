@@ -24,6 +24,7 @@ module.exports = {
                 .setColor(client.color)
                 .setDescription('Entrenando ⚔️!')
                 .setTimestamp()
+                .setAuthor(message.author.tag, message.author.displayAvatarURL({ dynamic: true }))
                 .setImage('https://media1.tenor.com/images/e83dcba6a3454dd6410d555cf66b6f3d/tenor.gif?itemid=15043714')
 
             await client.updateData({ id: message.author.id }, { cooldown: Date.now() + require('ms')('30s') }, 'demonios');
@@ -40,6 +41,7 @@ module.exports = {
                     .setColor(client.color)
                     .setDescription(`Subiste ${levelup} de experiencia!\n\n${datazo.xpusuario}/50 para el nivel ${parseInt(datazo.nivelusuario) + 1}`)
                     .setTimestamp()
+                    .setAuthor(message.author.tag, message.author.displayAvatarURL({ dynamic: true }))
                     .setImage('https://media1.tenor.com/images/ff57d6cb909d69f9c6f7b2ff590f1f19/tenor.gif?itemid=15100391')
 
                 return message.channel.send({ embed: embed2 }).catch(e => { })

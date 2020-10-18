@@ -23,6 +23,7 @@ module.exports = {
             .addField('Nivel de ' + member.user.tag, nivelusuario, true)
             .addField('Experiencia de usuario', xpusuario, true)
             .addField('Dinero', dinero, true)
+            .addField('Jefes derrotados', Math.floor(monstruos / 10), true)
 
         message.channel.send({ embed: embed }).catch(a => { });
 

@@ -34,6 +34,11 @@ const Guild = Schema({
         default: 0
     },
 
+    jefes: {
+        type: Number,
+        default: 0
+    },
+
     dinero: {
         type: Number,
         default: 10

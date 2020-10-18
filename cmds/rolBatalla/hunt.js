@@ -26,6 +26,7 @@ module.exports = {
         }
 
         let embed1 = new Discord.MessageEmbed()
+            .setAuthor(message.author.tag, message.author.displayAvatarURL({ dynamic: true }))
             .setColor(client.color)
             .setDescription('Buscando a un demonio ⚔️!')
             .setTimestamp()
@@ -45,6 +46,7 @@ module.exports = {
 
         let embed2 = new Discord.MessageEmbed()
             .setColor(client.color)
+            .setAuthor(message.author.tag, message.author.displayAvatarURL({ dynamic: true }))
             .setDescription(`Haz cazado un demonio (total: ${datazo.monstruos})\n\nRecompensas: ${dinero}$ y ${exp} de experiencia!`)
             .setTimestamp()
             .setImage('https://media1.tenor.com/images/ff57d6cb909d69f9c6f7b2ff590f1f19/tenor.gif?itemid=15100391')

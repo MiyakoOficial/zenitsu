@@ -10,6 +10,8 @@ module.exports = {
 
     }, run: async ({ client, message, args, embedResponse, Hora }) => {
 
+        let prob = Math.floor(Math.random() * 99) + 1;
+
         let data = await client.getData({ id: message.author.id }, 'demonios')
         let dinero = Math.floor(Math.random() * 49) + 1;
         let { monstruos, nivelenemigo, nivelespada, nivelusuario, xpusuario } = data;
@@ -44,17 +46,37 @@ module.exports = {
 
             await Discord.Util.delayFor(5000);
 
-            let dataz = await client.updateData({ id: message.author.id }, { $inc: { monstruos: 1, dinero: dinero, nivelenemigo: 1 } }, 'demonios');
+            if (prob >= 75) {
 
-            let embed = new Discord.MessageEmbed()
-                .setColor(client.color)
-                .setDescription(`Haz derrotado un demonio (total: ${dataz.monstruos}) y recibiste ${dinero}$ (total: ${dataz.dinero}$)`)
-                .setTimestamp()
-                .setImage('https://media1.tenor.com/images/8914edb2f83697285be18d3a231dda31/tenor.gif?itemid=18818936')
+                let dataz = await client.updateData({ id: message.author.id }, { $inc: { monstruos: 1, dinero: dinero, nivelenemigo: 1 } }, 'demonios');
 
-            statusA.delete(message.author.id);
+                let embed = new Discord.MessageEmbed()
+                    .setColor(client.color)
+                    .setDescription(`Haz derrotado un demonio (total: ${dataz.monstruos}) y recibiste ${dinero}$ (total: ${dataz.dinero}$)`)
+                    .setTimestamp()
+                    .setImage('https://media1.tenor.com/images/8914edb2f83697285be18d3a231dda31/tenor.gif?itemid=18818936')
+                    .setAuthor(message.author.tag, message.author.displayAvatarURL({ dynamic: true }))
 
-            return message.channel.send({ embed: embed }).catch(e => { });
+                statusA.delete(message.author.id);
+
+                return message.channel.send({ embed: embed }).catch(e => { });
+            }
+
+            else {
+
+                let embed = new Discord.MessageEmbed()
+                    .setColor(client.color)
+                    .setDescription(`Haz perdido contra un demonio!`)
+                    .setTimestamp()
+                    .setImage('https://media1.tenor.com/images/70f561dfe0728a68561f1fad7f79acce/tenor.gif?itemid=14992860')
+                    .setAuthor(message.author.tag, message.author.displayAvatarURL({ dynamic: true }))
+
+                statusA.delete(message.author.id);
+
+                return message.channel.send({ embed: embed }).catch(e => { });
+
+            }
+
         }
     }
 }
