@@ -30,7 +30,7 @@ module.exports = {
                 .setFooter(`Pagina actual: ${seleccion <= 0 ? 1 : seleccion}`)
                 .setColor(color)
 
-            message.channel.send({ embed: embed })
+            message.channel.send({ embed: embed }).catch(e => { })
 
         });
     }
