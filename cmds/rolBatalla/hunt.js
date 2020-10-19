@@ -80,10 +80,9 @@ module.exports = {
                 .setAuthor(message.author.tag, message.author.displayAvatarURL({ dynamic: true }))
                 .setImage('https://media1.tenor.com/images/c0011b22ef40718152484c7e11fd4b6d/tenor.gif?itemid=14677284')
 
+            statusA.delete(message.author.id);
+
             return message.channel.send({ embed: embed3 }).catch(e => { })
-
-
         }
-
     }
 }
