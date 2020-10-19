@@ -9,6 +9,8 @@ module.exports = {
 
     }, run: async ({ client, message, args, embedResponse, Hora }) => {
 
+        let costo = 250;
+
         let { dinero } = await client.getData({ id: message.author.id }, 'demonios');
 
         let cuanto = args[0];
@@ -21,11 +23,11 @@ module.exports = {
         if (cuanto <= 0)
             return embedResponse('Escoge un numero mayor que 0!')
 
-        if (cuanto * 200 > dinero)
-            return embedResponse('No puedes comprar la cantidad que quieres!\n\nPrecio de nivel: 200')
+        if (cuanto * costo > dinero)
+            return embedResponse('No puedes comprar la cantidad que quieres!\n\nPrecio de nivel: ' + costo)
 
         let data = await client.updateData({ id: message.author.id }, { $inc: { nivelespada: cuanto, nivelusuario: cuanto } }, 'demonios');
-        await client.updateData({ id: message.author.id }, { $inc: { dinero: -(cuanto * 200) } }, 'demonios');
+        await client.updateData({ id: message.author.id }, { $inc: { dinero: -(cuanto * costo) } }, 'demonios');
 
         return embedResponse('Ahora eres nivel ' + data.nivelusuario);
 
