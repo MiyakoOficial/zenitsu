@@ -11,7 +11,7 @@ module.exports = {
 
         let costo = 250;
 
-        let { dinero } = await client.getData({ id: message.author.id }, 'demonios');
+        let { dinero, nivelespada } = await client.getData({ id: message.author.id }, 'demonios');
 
         let cuanto = args[0];
 
@@ -19,6 +19,8 @@ module.exports = {
             return embedResponse('Tienes que poner un numero, ejemplo: z!buylevel 5')
 
         cuanto = Math.floor(cuanto);
+
+        costo = (nivelespada * 2) + costo;
 
         if (cuanto <= 0)
             return embedResponse('Escoge un numero mayor que 0!')
