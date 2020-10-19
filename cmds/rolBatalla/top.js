@@ -8,7 +8,7 @@ module.exports = {
         category: 'rol'
 
     }, run: async ({ client, message, args, embedResponse, Hora }) => {
-        let seleccion = parseInt(args[0]) || 1;
+        let seleccion = parseInt(args[1]) || 1;
 
         const { color } = client;
 
