@@ -20,7 +20,7 @@ module.exports = {
 
         cuanto = Math.floor(cuanto);
 
-        costo = (nivelespada * 2) + costo;
+        costo = ((nivelespada * 2) + costo) - 2;
 
         if (cuanto <= 0)
             return embedResponse('Escoge un numero mayor que 0!')
