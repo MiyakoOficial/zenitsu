@@ -54,7 +54,7 @@ module.exports = {
 
             else {
                 if (!turno)
-                    return embedResponse('No estas en tu turno de atacar');
+                    return;
 
                 vidas.get(message.author.id).vidaenem = vidaenem - user
 
@@ -68,7 +68,10 @@ module.exports = {
                     return embedResponse(`Le has ganado al Jefe!\n\nJefes derrotados: ${datazo.jefes}`)
                 }
 
-                embedResponse(`Hicisite ${user} de daño, ahora el enemigo tiene ${vidaenem} de vida`)
+                await embedResponse(`Hicisite ${user} de daño, ahora el enemigo tiene ${vidaenem} de vida`).then(a => {
+                    if (a.deletable) a.delete({ timeout: 3000 });
+                })
+                    .catch(e => { })
 
                 await Discord.Util.delayFor(2000);
 
@@ -82,6 +85,10 @@ module.exports = {
                 }
 
                 await embedResponse('El jefe hizo ' + enem + ' de daño, ahora tienes ' + vidauser + " de vida")
+                    .then(a => {
+                        if (a.deletable) a.delete({ timeout: 3000 });
+                    })
+                    .catch(e => { })
 
                 vidas.get(message.author.id).turno = true;
 
