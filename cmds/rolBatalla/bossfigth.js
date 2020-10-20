@@ -34,15 +34,15 @@ module.exports = {
 
         let exp = Math.floor(Math.random() * 7) + 1;
 
-        let enem = Math.floor(Math.random() * nivelenemigo) + 1;
-
-        let user = Math.floor(Math.random() * nivelespada) + 1;
-
         let col = new Discord.MessageCollector(message.channel, m => m.author.id == message.author.id, { max: 999 })
 
         let cold = new Set();
 
         col.on('collect', async (c) => {
+
+            let enem = Math.floor(Math.random() * nivelenemigo) + 1;
+
+            let user = Math.floor(Math.random() * nivelespada) + 1;
 
             if (!vidas.get(message.author.id))
                 vidas.set(message.author.id, { turno: true, vidaenem: (nivelenemigo * 3) + 5, vidauser: (nivelespada * 3) + 5 });
