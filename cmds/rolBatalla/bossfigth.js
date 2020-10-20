@@ -62,7 +62,7 @@ module.exports = {
 
                 if (vidaenem <= 0) {
                     statusA.delete(message.author.id);
-                    let datazo = await client.updateData({ id: message.author.id }, { $inc: { jefes: 1 } }, 'demonios')
+                    let datazo = await client.updateData({ id: message.author.id }, { $inc: { jefes: 1, nivelenemigo: 1 } }, 'demonios')
                     col.stop()
                     vidas.delete(message.author.id)
                     return embedResponse(`Le has ganado al Jefe!\n\nJefes derrotados: ${datazo.jefes}`)
