@@ -11,7 +11,7 @@ module.exports = {
 
     }, run: async ({ client, message, args, embedResponse, Hora }) => {
 
-        console.log('ejec')
+        embedResponse('Comienzas tu.');
         let data = await client.getData({ id: message.author.id }, 'demonios')
         let { monstruos, nivelenemigo, nivelespada, nivelusuario, xpusuario, cooldown } = data;
 
