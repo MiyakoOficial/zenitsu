@@ -6,28 +6,28 @@ module.exports = {
         name: "bossfigth",//Nombre del cmd
         alias: [], //Alias
         description: "Pelear con el jefe", //Descripción (OPCIONAL)
-        usage: "z!bossfigth",
+        usage: "z!bossfight",
         category: 'rol'
 
     }, run: async ({ client, message, args, embedResponse, Hora }) => {
 
-           let data = await client.getData({ id: message.author.id }, 'demonios')
+        let data = await client.getData({ id: message.author.id }, 'demonios')
         let { monstruos, nivelenemigo, nivelespada, nivelusuario, xpusuario, cooldown } = data;
 
         if (cooldown > Date.now())
             return embedResponse('No puedo ir a la batalla ahora.\n\nTiempo restante: ' + require('ms')(cooldown - Date.now()))
 
-            if (!statusA.get(message.author.id)) {
+        if (!statusA.get(message.author.id)) {
 
-                statusA.set(message.author.id, { status: true });
-    
-            }
-    
-            else {
-                return embedResponse('Ya estas peleando contra el jefe!')
-            }
+            statusA.set(message.author.id, { status: true });
 
-            embedResponse('Comienzas tu.');
+        }
+
+        else {
+            return embedResponse('Ya estas peleando contra el jefe!')
+        }
+
+        embedResponse('Comienzas tu.');
 
         await client.updateData({ id: message.author.id }, { cooldown: Date.now() + require('ms')('30s') }, 'demonios');
 
