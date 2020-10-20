@@ -11,22 +11,23 @@ module.exports = {
 
     }, run: async ({ client, message, args, embedResponse, Hora }) => {
 
-        if (!statusA.get(message.author.id)) {
-
-            statusA.set(message.author.id, { status: true });
-
-        }
-
-        else {
-            return embedResponse('Ya estas peleando contra el jefe!')
-        }
-
-        embedResponse('Comienzas tu.');
-        let data = await client.getData({ id: message.author.id }, 'demonios')
+           let data = await client.getData({ id: message.author.id }, 'demonios')
         let { monstruos, nivelenemigo, nivelespada, nivelusuario, xpusuario, cooldown } = data;
 
         if (cooldown > Date.now())
             return embedResponse('No puedo ir a la batalla ahora.\n\nTiempo restante: ' + require('ms')(cooldown - Date.now()))
+
+            if (!statusA.get(message.author.id)) {
+
+                statusA.set(message.author.id, { status: true });
+    
+            }
+    
+            else {
+                return embedResponse('Ya estas peleando contra el jefe!')
+            }
+
+            embedResponse('Comienzas tu.');
 
         await client.updateData({ id: message.author.id }, { cooldown: Date.now() + require('ms')('30s') }, 'demonios');
 
