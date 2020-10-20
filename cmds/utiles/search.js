@@ -17,7 +17,7 @@ module.exports = {
             return embedResponse('Que quieres buscar?')
 
         const googleIT = require('google-it');
-        let results = (await googleIT({ disableConsole: true, query: f.join(' ') })).catch(e => { })
+        let results = await googleIT({ disableConsole: true, query: f.join(' ') }).catch(e => { })
 
         if (!results || !results[0])
             return embedResponse('Sin resultados');
