@@ -11,6 +11,16 @@ module.exports = {
 
     }, run: async ({ client, message, args, embedResponse, Hora }) => {
 
+        if (!statusA.get(message.author.id)) {
+
+            statusA.set(message.author.id, { status: true });
+
+        }
+
+        else {
+            return embedResponse('Ya estas peleando contra el jefe!')
+        }
+
         embedResponse('Comienzas tu.');
         let data = await client.getData({ id: message.author.id }, 'demonios')
         let { monstruos, nivelenemigo, nivelespada, nivelusuario, xpusuario, cooldown } = data;
@@ -51,6 +61,7 @@ module.exports = {
                 vidas.get(message.author.id).turno = false;
 
                 if (vidaenem <= 0) {
+                    statusA.delete(message.author.id);
                     let datazo = await client.updateData({ id: message.author.id }, { $inc: { jefes: 1 } }, 'demonios')
                     col.stop()
                     vidas.delete(message.author.id)
@@ -64,7 +75,7 @@ module.exports = {
                 vidas.get(message.author.id).vidauser = vidauser - enem
 
                 if (vidauser <= 0) {
-
+                    statusA.delete(message.author.id);
                     col.stop()
                     vidas.delete(message.author.id)
                     return embedResponse(`Has perdido contra el enemigo.`)
