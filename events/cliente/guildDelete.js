@@ -17,7 +17,7 @@ module.exports = async (client, guild) => {
     let embed = new Discord.MessageEmbed()
         .setColor('#FF0000')
         .setTitle(`${client.user.tag} ha sido sacado de un servidor!`)
-        .setThumbnail(guild.iconURL)
+        .setThumbnail(guild.iconURL({ dynamic: true }))
         .setTimestamp()
         .addField('Información del servidor.', add1)
         .addField('Estadisticas.', add2)

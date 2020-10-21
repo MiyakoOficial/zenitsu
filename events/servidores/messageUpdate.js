@@ -25,7 +25,7 @@ module.exports = async (client, oldMessage, newMessage) => {
         .addField('• Author channel name', newMessage.channel.name, true)
         .addField('• Author channel ID', newMessage.channel.id, true)
         .addField('• Author channel mention', `<#${newMessage.channel.id}>`, false)
-        .setFooter(newMessage.guild.name, newMessage.guild.iconURL({ format: 'png', size: 2048 }))
+        .setFooter(newMessage.guild.name, newMessage.guild.iconURL({ dynamic: true, size: 2048 }))
         .setTimestamp()
     return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(e => { })
 

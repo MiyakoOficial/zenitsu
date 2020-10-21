@@ -17,7 +17,7 @@ module.exports = async (client, guild) => {
     let embed = new Discord.MessageEmbed()
         .setColor('GREEN')
         .setTitle(`${client.user.tag} ha sido invitado a un nuevo servidor!`)
-        .setThumbnail(guild.iconURL)
+        .setThumbnail(guild.iconURL({ dynamic: true }))
         .setTimestamp()
         .addField('Información del servidor.', add1)
         .addField('Estadisticas.', add2)
