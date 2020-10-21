@@ -125,7 +125,7 @@ module.exports = {
                 nextpageRef: filter.ref
             };
 
-            const searchResults = await ytsr(null, options).catch(e => { });
+            let searchResults = await ytsr(null, options).catch(e => { });
 
             if (!searchResults || !searchResults.items || !searchResults.items[0]) return embedResponse('No encontré ese vídeo.')
 
