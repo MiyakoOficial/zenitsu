@@ -116,18 +116,16 @@ module.exports = {
                         })
             */
 
-            const ytsr = require("ytsr");
-            const filters = await ytsr.getFilters(args.join(' ')).catch(err => { }); //Buscamos
-            if (!filters)
-                return embedResponse('No encontré ese vídeo.')
+            const filters = await ytsr.getFilters(args.join(' '));
+            let filter = filters.get("Type").find(o => o.name === "Video");
 
-            let filter = filters.get("Type").find(o => o.name === "Video"); // Sólo videos
             let options = {
-                safeSearch: true, //niños
-                limit: 1, //Sólo 1 video (?
-                nextpageRef: filter.ref //Filtro
+                safeSearch: true,
+                limit: 1,
+                nextpageRef: filter.ref
             };
-            let searchResults = await ytsr(null, options).catch(err => { });
+
+            const searchResults = await ytsr(null, options);
 
             if (!searchResults || !searchResults.items || !searchResults.items[0]) return embedResponse('No encontré ese vídeo.')
 
