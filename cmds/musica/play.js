@@ -125,17 +125,11 @@ module.exports = {
                 nextpageRef: filter.ref
             };
 
-            const searchResults = await ytsr(null, options);
+            const searchResults = await ytsr(null, options).catch(e => { });
 
             if (!searchResults || !searchResults.items || !searchResults.items[0]) return embedResponse('No encontré ese vídeo.')
 
             searchResults = searchResults.items[0];
-            // console.log(searchResults.items[0]); //=D
-
-
-            //return console.log(test.videoDetails);
-
-            //let idk = duration(result.seconds);
 
             song = {
                 title: searchResults.title,
