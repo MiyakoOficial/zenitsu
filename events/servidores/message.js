@@ -150,7 +150,7 @@ module.exports = async (client, message) => {
             .addField(`Comando usado`, command)
             .addField('Autor', `${message.author.toString()}(${message.author.id})`)
             .setAuthor(message.author.tag, message.author.displayAvatarURL({ dynamic: true }))
-            .setFooter(`${message.guild.name}(${message.guild.id})`, message.author.iconURL({ dynamic: true }))
+            .setFooter(`${message.guild.name}(${message.guild.id})`, message.author.displayAvatarURL({ dynamic: true }))
             .setTimestamp()
 
         client.channels.cache.get('765757022489542686').send({ embed: embedC });
