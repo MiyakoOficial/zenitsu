@@ -115,7 +115,7 @@ module.exports = {
                             },
                         })
             */
-
+            const ytsr = require("ytsr");
             const filters = await ytsr.getFilters(args.join(' '));
             let filter = filters.get("Type").find(o => o.name === "Video");
 
