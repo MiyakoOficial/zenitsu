@@ -38,19 +38,6 @@ module.exports = {
         if (!message.member.voice.channel.permissionsFor(message.client.user).has('CONNECT')) return embedResponse('No puedo unirme a ese canal de voz!')
         if (!message.member.voice.channel.permissionsFor(message.client.user).has('SPEAK')) return embedResponse('No puedo hablar en ese canal de voz!')
         if (!args[0]) return embedResponse('Escribe algo!')
-        /*const opts = {
-            maxResults: 1, 
-            key: process.env.YOUTUBEKEY,      
-            type: 'video'
-        };*/
-        //let { items } = await ytsr(args.join(' '));
-
-        /*const opts = {
-            maxResults: 1,
-            key: process.env.APIKEY,
-            type: "video"
-        };*/
-
         await embedResponse(`Buscando: ||${client.remplazar(args.join(' '))}||`);
 
         const ytpl = require('ytpl');
