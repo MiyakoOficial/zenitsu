@@ -79,9 +79,9 @@ module.exports = {
             song = {
                 title: track.title,
                 url: `https://www.youtube.com/watch?v=${track.id}`,
-                time: track.duration == '' || track.duration == 0 ? 'LIVE' : track.duration,
+                time: track.duration == '' || track.duration == 0 ? 'LIVE' : client.duration(track.duration),
                 author: message.author,
-                tiempo: track.duration == '' || !track.duration ? 0 : parseInt(timestampToSeconds(track.duration))
+                tiempo: track.duration == '' || !track.duration ? 0 : track.duration
             }
 
             console.log(song)
