@@ -16,6 +16,7 @@ module.exports = {
         if (!message.guild.me.voice.channel) return embedResponse('Wow, creo que no estoy en un canal de voz!')
         if (!serverQueue) return embedResponse('Al parecer no hay ninguna canción reproduciendose!')
         if (!serverQueue.songs[0]) return embedResponse('Al parecer no hay ninguna canción reproduciendose!')
+        if (!serverQueue.connection.dispatcher) return embedResponse('Oh, algo extraño sucedio...')
         else {
 
             if (message.member.voice.channel.id !== message.guild.me.voice.channel.id) return embedResponse('Tienes que estar en el mismo canal de voz para saber la canción que se esta reproduciendo!')
