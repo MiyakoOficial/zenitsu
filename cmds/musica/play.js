@@ -167,7 +167,6 @@ module.exports = {
             } try {
                 const stream = ytdl(song.url, {
                     opusEncoded: true,
-                    filter: "audioonly",
                     highWaterMark: 1 << 25
                 });
                 const dispatcher = serverQueue.connection.play(stream, { type: "opus" })
