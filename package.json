@@ -42,7 +42,7 @@
         "ytsr": "^0.1.21"
     },
     "engines": {
-        "node": "12.x"
+        "node": "14.x"
     },
     "repository": {
         "url": "https://github.com/MARCROCK22"
