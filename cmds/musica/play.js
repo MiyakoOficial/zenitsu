@@ -69,7 +69,7 @@ module.exports = {
 
             const usetube = require('usetube');
 
-            let { tracks } = await usetube.searchVideo(args.join(' '));
+            let { tracks } = await usetube.searchVideo(args.join(' ')).catch(a => { }) || {};
 
             if (!tracks || !tracks[0])
                 return embedResponse('No encontre esa cancion.')
