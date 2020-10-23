@@ -83,9 +83,8 @@ module.exports = {
                 author: message.author,
                 tiempo: track.duration == '' || !track.duration ? 0 : track.duration
             }
-
-            //console.log(song);
         }
+
         if (!serverQueue) {
             const queueObject = {
                 textChannel: message.channel,
