@@ -81,7 +81,7 @@ module.exports = {
                 url: `https://www.youtube.com/watch?v=${track.id}`,
                 time: track.duration == '' || track.duration == 0 ? 'LIVE' : track.duration,
                 author: message.author,
-                tiempo: track.duration == '' || !track.duration ? 0 : parseInt(timestampToSeconds(searchResults.duration))
+                tiempo: track.duration == '' || !track.duration ? 0 : parseInt(timestampToSeconds(track.duration))
             }
 
             console.log(song)
