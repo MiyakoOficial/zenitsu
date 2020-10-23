@@ -20,7 +20,6 @@ function timestampToSeconds(time) {
 
 }
 
-let song;
 module.exports = {
     config: {
         name: "play",//Nombre del cmd
@@ -30,6 +29,8 @@ module.exports = {
         category: 'musica'
 
     }, run: async ({ client, message, args, embedResponse, Hora }) => {
+
+        let song;
 
         //console.log('a')
 
@@ -43,9 +44,8 @@ module.exports = {
         const ytpl = require('ytpl');
         const y = await ytpl(args.join(' ')).catch(err => { });
 
-        //console.log(y)
         if (y && y.items) {
-            //console.log('Ejecutando 1')
+
             song = [];
 
             for await (let s of y.items) {
@@ -63,67 +63,25 @@ module.exports = {
 
                 if (song.length == 0)
                     return embedResponse('Creo que esta playlist es privada!');
-                // await Discord.Util.delayFor(2000);
-                //console.log(obj)
-                //await Discord.Util.delayFor(5000)
-                //if (!obj.tiempo) message.reply(obj.url + " da error!")
             };
-            //console.log(song)
+
         } else {
 
-            // let { videos } = await yts(args.join(' '));
+            const usetube = require('usetube');
 
-            //let result = videos[0] || videos;
+            let { tracks } = await usetube.searchVideo(args.join(' '));
 
-            //            console.log(result)
+            if (!tracks || !tracks[0])
+                return embedResponse('No encontre esa cancion.')
 
-            /*let result = await new Promise(async (resolve, reject) => {
-                await search(args.join(' '), opts, function (err, results) {
-                    resolve(results[0]);
-                });
-            });*/
-            /*
-                        if (!result || !result.title) return embedResponse('Ups, no he encontrado esa música, intenta de nuevo!')
-            */
-            /*const songURL = result.link;
-            let songInfo;
-            try {
-                songInfo = await ytdl.getInfo(songURL);
-            } catch (e) { embedResponse(e) }*/
-
-            //f (!songInfo) return embedResponse('Ups, no he encontrado esa música, intenta de nuevo!')
-            //cookie: VISITOR_INFO1_LIVE=CWyyDTiGzqY; PREF=f6=400; GPS=1; __Secure-3PSID=2AcGQ-aM6p04dEcdMLAcTPKE8AW1VohIxV4owek1kduZyD1vLAhPKTztEekMHD7makayLQ.; __Secure-3PAPISID=fcDt6dOkqiWiLF6G/A2Ih93uF8-SaEuQH7; LOGIN_INFO=AFmmF2swRAIgd2-zbM9VIuhN5AW4pgErVIclcV5FVswkFy87TUtq18wCIGo13YAegVeObqLaRMIFdVKn-YaSmNiXiWP9xqbmIIJW:QUQ3MjNmeDJDVmlZVHJVZGhJMkZQbmsydjdOTjRZTDM5TG9LUEU3ODFlNmgyWEdMV1ZFVk93cTVXTS1mR3ZnVHpVQUZjc2ZqNE52bGY0aUpmYndBMDRXSmtFd3Y4SDdMV1dSZ1dab3JXUTc0RVd6VEJONUJROElKNHlQRFVqVzFTaEswN3ZGYkpPa3BSbmdkRG5ILVNSVmpmejhiZ0ZPS05tTER0Vk1xMl8tQU9veDNQMXROZV9B; YSC=MnFvKgVmpd4; __Secure-3PSIDCC=AJi4QfFRl1KT0FJ_GerO4O8Tfs40FNvt3iobBGIJtQPnK7MCferZo6Fb7ggAnMPNbfFvjYisEw
-            /*
-                        let test = await ytdl.getInfo(result.url, {
-                            requestOptions: {
-                                headers: {
-                                    cookie: `VISITOR_INFO1_LIVE=CWyyDTiGzqY; PREF=f6=400&al=es; YSC=FYK2vu3bUGA; GPS=1; SID=2AeT-uA0987dh7Mg2cByH5m4baIifIQG_izmJZ8MbOrl3Ea0ubQMeD4lBrVuIHwqPq1oDQ.; __Secure-3PSID=2AeT-uA0987dh7Mg2cByH5m4baIifIQG_izmJZ8MbOrl3Ea0CWXetf2JpClG0zX7Yjn23A.; HSID=AgVRiByZOiRagJesy; SSID=AcqCHftg-n-N7WebG; APISID=GDqxvG946rdnWFXQ/AC0M7CULhdm0NLShr; SAPISID=fK_JUiUbcxn53j7y/AeLoWFm8s-XafQkqG; __Secure-3PAPISID=fK_JUiUbcxn53j7y/AeLoWFm8s-XafQkqG; LOGIN_INFO=AFmmF2swRQIgLsX_VdRvHEuQABce_JjngMgbJLZ4sJjIbHKrhcrIfQACIQDswDT9w_5YtiIsZpLd5ig1lntjug0JBfCiMKCf7QYB1A:QUQ3MjNmelVabGFaMjJ3aTRRbXlXblFEWDRJZWE1WlRaLUlESlhxNllmRjNZNVp0X2RfSVNSeVdWZFJLOU4ycmxrdmx0SmtwZ013Y2w5WXlSYTJ4am5EU00tR0RMQ3VWYWNDZjdCUkdTU0xMbldWZlJ5emRSNXp3Z3Q1blB0ZEk3NVhkUElnWUZReldvRkJzZlpCbmJ2ejlNcmNxUUhKd1RwazN6eE9PV0t0NzFqZldrZWpPekZJ; SIDCC=AJi4QfGaTCm6WRV9MuueeptLGHWTw4US0vC1eKjXrNig6UYX9g5eoqh-wmS1aXHKmevAkXlDfw; __Secure-3PSIDCC=AJi4QfFdX0eyVKRjSK5Vbg_Xm9nd79I7ixcCFuppuPx-J9cUfkO-vZY0FZ_XPObyig5xt5Wt`
-                                },
-                            },
-                        })
-            */
-            const ytsr = require("ytsr");
-            const filters = await ytsr.getFilters(args.join(' '));
-            let filter = filters.get("Type").find(o => o.name === "Video");
-
-            let options = {
-                safeSearch: true,
-                limit: 1,
-                nextpageRef: filter.ref
-            };
-
-            let searchResults = await ytsr(null, options).catch(e => { });
-
-            if (!searchResults || !searchResults.items || !searchResults.items[0]) return embedResponse('No encontré ese vídeo.')
-
-            searchResults = searchResults.items[0];
+            let track = tracks[0];
 
             song = {
-                title: searchResults.title,
-                url: searchResults.link,
-                time: searchResults.duration == '' ? 'LIVE' : searchResults.duration,
+                title: track.title,
+                url: `https://www.youtube.com/watch?v=${track.id}`,
+                time: track.duration == '' || track.duration == 0 ? 'LIVE' : track.duration,
                 author: message.author,
-                tiempo: searchResults.duration == '' || !searchResults.duration ? 0 : parseInt(timestampToSeconds(searchResults.duration))
+                tiempo: track.duration == '' || !track.duration ? 0 : parseInt(timestampToSeconds(searchResults.duration))
             }
 
             console.log(song)
