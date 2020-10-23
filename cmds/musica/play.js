@@ -84,7 +84,7 @@ module.exports = {
                 tiempo: track.duration == '' || !track.duration ? 0 : track.duration
             }
 
-            console.log(song)
+            //console.log(song);
         }
         if (!serverQueue) {
             const queueObject = {
@@ -105,11 +105,15 @@ module.exports = {
                 })
 
             } else {
+
                 queueObject.songs.push(song)
             }
+
             try {
+
                 let connection = await message.member.voice.channel.join()
                 queueObject.connection = connection;
+
                 play(message.guild, queueObject.songs[0])
             } catch (err) {
                 client.queue.delete(message.guild.id)
@@ -163,11 +167,10 @@ module.exports = {
                 return;
             } try {
                 const stream = ytdl(song.url, {
-                    opusEncoded: true, //Discord
-                    filter: "audioonly", //Sólo audio
-                    highWaterMark: 1 << 25 //Bug de Node 12
+                    opusEncoded: true,
+                    filter: "audioonly",
+                    highWaterMark: 1 << 25
                 });
-                // if (serverQueue.songs.length=== 0) return serverQueue.textChannel.send('Lista de reproducción acabada.');
                 const dispatcher = serverQueue.connection.play(stream, { type: "opus" })
                     .on('finish', () => {
                         if (serverQueue.loop) {
