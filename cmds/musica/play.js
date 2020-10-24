@@ -158,7 +158,7 @@ module.exports = {
             })
         }
 
-        function play(guild, song) {
+        async function play(guild, song) {
             const serverQueue = client.queue.get(guild.id);
             if (!song) {
                 serverQueue.voiceChannel.leave();
