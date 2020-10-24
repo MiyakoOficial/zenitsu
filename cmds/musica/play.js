@@ -71,7 +71,9 @@ module.exports = {
 
             let { tracks } = await usetube.searchVideo(args.join(' ')).catch(a => { }) || {};
 
-            if (!tracks || !tracks[0])
+            let confirm = (await require('discord-ytdl-core').getBasicInfo(`https://www.youtube.com/watch?v=${track.id}`).catch(e => { }));
+
+            if (!tracks || !tracks[0] || !confirm)
                 return embedResponse('No encontre esa cancion.')
 
             let track = tracks[0];
