@@ -71,12 +71,15 @@ module.exports = {
 
             let { tracks } = await usetube.searchVideo(args.join(' ')).catch(a => { }) || {};
 
-            let confirm = (await require('discord-ytdl-core').getBasicInfo(`https://www.youtube.com/watch?v=${track.id}`).catch(e => { }));
-
-            if (!tracks || !tracks[0] || !confirm)
+            if (!tracks || !tracks[0])
                 return embedResponse('No encontre esa cancion.')
 
             let track = tracks[0];
+
+
+            let confirm = (await require('discord-ytdl-core').getBasicInfo(`https://www.youtube.com/watch?v=${track.id}`).catch(e => { }));
+
+            if (!confirm) return embedResponse('Cancion privada o con restriccion de edad/pais.')
 
             song = {
                 title: track.title,
