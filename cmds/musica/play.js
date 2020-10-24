@@ -76,11 +76,6 @@ module.exports = {
 
             let track = tracks[0];
 
-
-            let confirm = (await require('discord-ytdl-core').getBasicInfo(`https://www.youtube.com/watch?v=${track.id}`).catch(e => { }))?.response;
-
-            if (!confirm) return embedResponse('Cancion privada o con restriccion de edad/pais.')
-
             song = {
                 title: track.title,
                 url: `https://www.youtube.com/watch?v=${track.id}`,

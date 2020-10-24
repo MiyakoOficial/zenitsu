@@ -28,7 +28,7 @@ module.exports = {
 
         results.forEach(r => {
 
-            embed.addField(`[${r.title}](${r.link})`, r.snippet)
+            embed.addField(`\u200b[${r.title}](${r.link})`, '\u200b' + r.snippet)
 
         });
 
