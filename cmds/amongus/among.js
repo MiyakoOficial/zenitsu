@@ -41,7 +41,7 @@ module.exports = {
                 let a = p.activities.find((a) => a.applicationID === "477175586805252107"); // Buscamos la actividad de Among Us por ID
                 if(!salasR.includes(a.party.id)){
 salasR.push(a.party.id);
-                return `\`\`\`md\n# Among Us\n* Código: ${a.party?.id}\n> ${a.party.size[0]}/${a.party.size[1]}\`\`\``; // Devolvemos una string con información que nos da la actividad
+                return `\`\`\`md\n# Among Us\n* : ${a.party?.id}\n> ${a.party.size[0]}/${a.party.size[1]}\`\`\``; // Devolvemos una string con información que nos da la actividad
                 }         
   }); // Cerramos el map
 
@@ -76,7 +76,7 @@ salasR.push(a.party.id);
                 if (a.party.id === args[1].toUpperCase()) return true; // Si se esta jugando una partida con código igual al proporcionado por el usuario retornamos true
             });
 
-            if (!party.first()) return message.channel.send("Código invalido."); // Si no encontro ni siquiera una partida retornamos
+            if (!party.first()) return embedResponse("Código invalido."); // Si no encontro ni siquiera una partida retornamos
 
             let allPlayers = party.map((p, i) => { // Mapeamos las presencias que filtramos previamente
                 return `<@${p.userID}>`; // Devolvemos la mención al usuario que esta jugando
