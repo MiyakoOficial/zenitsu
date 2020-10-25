@@ -6,11 +6,9 @@ const mongoose = require('mongoose');
 
 const client = new Discord.Client(
     {
-        partials: ['MESSAGE', 'REACTION']
-    },
-
-    {
-        http: { version: 8 }
+        partials: ['MESSAGE', 'REACTION'],
+        http: { version: 8 },
+        ws: { intents: Discord.Intents.ALL }
     }
 );
 
