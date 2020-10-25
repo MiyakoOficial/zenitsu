@@ -31,7 +31,7 @@ module.exports = {
                 let res = await funcionPagina(printthis)
 
                 if (!res[seleccion])
-                    return embedResponse(`Pagina inexistente.\n\nPagina: ${args[1]}/${res.length}`)
+                    return embedResponse(`Pagina inexistente.\n\nPagina: ${seleccion + 1}/${res.length}`)
 
                 embedResponse(`${res[seleccion].join('\n')}\nPagina: ${seleccion + 1}/${res.length}`)
 
