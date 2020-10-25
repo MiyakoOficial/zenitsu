@@ -29,7 +29,7 @@ module.exports = {
         */
         let selection = (args[0] || "").toLowerCase();
         let amongUs = "https://swiftcloud.ml/cloud-WUci.jpg"; // Simple decoración, una imagen del logo de Among Us
-        let embed = new Discord.MessageEmbed().setColor("RANDOM"); // Creamos un embed y le damos color, lo usaremos luego
+        let embed = new Discord.MessageEmbed().setColor(client.color); // Creamos un embed y le damos color, lo usaremos luego
         let allPlaying = message.guild.presences.cache.filter((p) => { // Filtramos las presencias del servidor
             let a = p.activities.find((a) => a.applicationID === "477175586805252107"); // Buscamos una actividad que tenga la ID de Among Us
             if (a && a.party?.id) return true; // Si esta jugando y esta en partida (Esto lo sabemos porque tiene la propiedad id) retornamos true
@@ -65,11 +65,11 @@ salasR.push(a.party.id);
                 */
                 .setFooter(`Página ${pages.length ? i + 1 : i} de ${pages.length}.`, amongUs)
 
-            message.channel.send(embed); // Enviamos el embed
+            message.channel.({embed: embed}).catch(e=>{}); // Enviamos el embed
 
         } else if (["room", "sala"].includes(selection)) { // Si el array incluye la selección del usuario
 
-            if (!args[1]) return message.channel.send("Especifica el código xD"); // Si no hay argumentos retornamos
+            if (!args[1]) return embedResponse("Especifica el código."); // Si no hay argumentos retornamos
 
             let party = allPlaying.filter((p) => { // Filtramos las presencias que filtramos previamente
                 let a = p.activities.find((a) => a.applicationID === "477175586805252107"); // Buscamos la actividad de Among Us por ID
@@ -90,11 +90,11 @@ salasR.push(a.party.id);
             embed.setDescription(allPlayers) // Colocamos la descripción del embed, mencionará a todos los usuarios que estén jugando esa partida y estén en el servidor
                 .setFooter(`${partyInfo.size[0]}/${partyInfo.size[1]} jugadores. (Solo muestra usuarios de Discord)`, amongUs); // Ya explicado previamente
 
-            message.channel.send(embed); // Enviamos el embed
+            message.channel.send({embed: embed}).catch(E=>{}); // Enviamos el embed
 
         } else { // Si no uso el comando de forma correcta
 
-            message.channel.send("Uso incorrecto, utilice `among all` o `among room <Código>`."); // Enviamos un mensaje
+           embedReponse("Uso incorrecto, utilice `among all` o `among room <Código>`."); // Enviamos un mensaje
         }; // Cerramos
 
     }
