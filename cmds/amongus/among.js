@@ -1,4 +1,5 @@
 const Discord = require("discord.js");
+let salasR = new Array();
 //Después de Alias es opcional.
 module.exports = {
     config: {
@@ -38,8 +39,11 @@ module.exports = {
 
             let allRooms = allPlaying.map((p) => { // Mapeamos las presencias que filtramos previamente
                 let a = p.activities.find((a) => a.applicationID === "477175586805252107"); // Buscamos la actividad de Among Us por ID
+                if(!salasR.includes(a.party.id)){
+salasR.push(a.party.id);
                 return `\`\`\`md\n# Among Us\n* Código: ${a.party?.id}\n> ${a.party.size[0]}/${a.party.size[1]}\`\`\``; // Devolvemos una string con información que nos da la actividad
-            }); // Cerramos el map
+                }         
+  }); // Cerramos el map
 
             let pages = toPages(allRooms, 20); // Llamamos a la función toPages, uso explicado previamente
             /*
