@@ -27,7 +27,6 @@ module.exports = {
         * Seguidamente transformamos los argumentos si es que hay a minúsculas con toLowerCase
         */
         let selection = (args[0] || "").toLowerCase();
-        let toPages = require("../../util/functions/toPages.js");
         let amongUs = "https://swiftcloud.ml/cloud-WUci.jpg"; // Simple decoración, una imagen del logo de Among Us
         let embed = new Discord.MessageEmbed().setColor("RANDOM"); // Creamos un embed y le damos color, lo usaremos luego
         let allPlaying = message.guild.presences.cache.filter((p) => { // Filtramos las presencias del servidor
