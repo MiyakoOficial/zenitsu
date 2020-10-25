@@ -33,7 +33,7 @@ module.exports = {
                 if (!res[seleccion])
                     return embedResponse(`Pagina inexistente.\n\nPagina: ${args[1]}/${res.length}`)
 
-                embedResponse(`${res[seleccion].join('\n')}\nPagina: ${parseInt(seleccion) + 1}/${res.length}`)
+                embedResponse(`${res[seleccion].join('\n')}\nPagina: ${seleccion + 1}/${res.length}`)
 
                 break;
 
