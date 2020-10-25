@@ -31,14 +31,14 @@ module.exports = {
         let embed = new Discord.MessageEmbed().setColor("RANDOM"); // Creamos un embed y le damos color, lo usaremos luego
         let allPlaying = message.guild.presences.cache.filter((p) => { // Filtramos las presencias del servidor
             let a = p.activities.find((a) => a.applicationID === "477175586805252107"); // Buscamos una actividad que tenga la ID de Among Us
-            if (a && a.party.id) return true; // Si esta jugando y esta en partida (Esto lo sabemos porque tiene la propiedad id) retornamos true
+            if (a && a.party?.id) return true; // Si esta jugando y esta en partida (Esto lo sabemos porque tiene la propiedad id) retornamos true
         }); // Cerramos el filtro
 
         if (["all", "list", "lista", "listar"].includes(selection)) { // Si el array incluye la selección del usuario
 
             let allRooms = allPlaying.map((p) => { // Mapeamos las presencias que filtramos previamente
                 let a = p.activities.find((a) => a.applicationID === "477175586805252107"); // Buscamos la actividad de Among Us por ID
-                return `\`\`\`md\n# Among Us\n* Código: ${a.party.id}\n> ${a.party.size[0]}/${a.party.size[1]}\`\`\``; // Devolvemos una string con información que nos da la actividad
+                return `\`\`\`md\n# Among Us\n* Código: ${a.party?.id}\n> ${a.party.size[0]}/${a.party.size[1]}\`\`\``; // Devolvemos una string con información que nos da la actividad
             }); // Cerramos el map
 
             let pages = toPages(allRooms, 20); // Llamamos a la función toPages, uso explicado previamente
