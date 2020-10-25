@@ -94,7 +94,7 @@ salasR.push(a.party.id);
 
         } else { // Si no uso el comando de forma correcta
 
-           embedReponse("Uso incorrecto, utilice `among all` o `among room <Código>`."); // Enviamos un mensaje
+           embedResponse("Uso incorrecto, utilice `among all` o `among room <Código>`."); // Enviamos un mensaje
         }; // Cerramos
 
     }
