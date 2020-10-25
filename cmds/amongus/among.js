@@ -65,7 +65,7 @@ salasR.push(a.party.id);
                 */
                 .setFooter(`Página ${pages.length ? i + 1 : i} de ${pages.length}.`, amongUs)
 
-            message.channel.({embed: embed}).catch(e=>{}); // Enviamos el embed
+            message.channel.send({embed: embed}).catch(e=>{}); // Enviamos el embed
 
         } else if (["room", "sala"].includes(selection)) { // Si el array incluye la selección del usuario
 
