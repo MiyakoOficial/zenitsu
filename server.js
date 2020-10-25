@@ -8,7 +8,7 @@ const client = new Discord.Client(
     {
         partials: ['MESSAGE', 'REACTION'],
         http: { version: 8 },
-        ws: { intents: Discord.Intents.ALL }
+        ws: {Discord.Intents.NON_PRIVILEGED}
     }
 );
 
