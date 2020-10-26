@@ -39,7 +39,31 @@ module.exports = {
                 break;
 
             case 'room':
+                
+                let embed = new Discord.MessageEmbed().setColor(client.color)
 
+           if (!args[1]) return message.channel.send("Especifica el código."); 
+
+            let party = allPlaying.filter((p) => { 
+                let a = p.activities.find((a) => a.applicationID === "477175586805252107"); 
+                if (a.party.id === args[1].toUpperCase()) return true; 
+            }); 
+
+            if (!party.first()) return message.channel.send("Código invalido."); 
+
+            let allPlayers = party.map((p, i) => { 
+                let a = p.activities.find((a) => a.applicationID === "477175586805252107"); 
+                let host = a.details === "Hosting a game" ? "(Host)" : "" 
+                return `<@${p.userID}> ${host}`; 
+            }); 
+
+            let partyInfo = party.first().activities.find((a) => a.applicationID === "477175586805252107").party
+
+            embed.setDescription(allPlayers)
+                .setFooter(`${partyInfo.size[0]}/${partyInfo.size[1]} jugadores. (Solo muestra usuarios de Discord)`); 
+
+            message.channel.send({embed: embed}).catch(e=>{}); // Enviamos el embed
+                
                 break;
 
             default:
