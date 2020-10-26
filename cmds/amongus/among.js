@@ -13,7 +13,7 @@ module.exports = {
 
         switch (args[0]) {
 
-            case 'all':
+            case 'queue':
 
                 let printthis = message.guild.members.cache.map(a => a.presence)
                     .filter(a => a && a.activities && a.activities.find(a => a && a.applicationID == '477175586805252107'))
@@ -32,7 +32,7 @@ module.exports = {
                 let res = await funcionPagina(printthis)
 
                 if (!res[seleccion])
-                    return embedResponse(`Pagina inexistente.\n\nPagina: ${seleccion + 1}/${res.length}`)
+                    return embedResponse(`Pagina inexistente.\nPagina: ${seleccion + 1}/${res.length}`)
 
                 embedResponse(`${res[seleccion].join('\n')}\nPagina: ${seleccion + 1}/${res.length}`)
 
@@ -43,7 +43,7 @@ module.exports = {
                 break;
 
             default:
-                embedResponse('Uso incorrecto, ejemplo de uso: z!among < all | room > num/code')
+                embedResponse('Uso incorrecto, ejemplo de uso: z!among < queue | room > num/code')
 
         }
     }
