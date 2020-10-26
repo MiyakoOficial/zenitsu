@@ -39,7 +39,6 @@ module.exports = {
                 break;
 
             case 'room':
-         reamos un embed y le damos color, lo usaremos luego
         let allPlaying = message.guild.presences.cache.filter((p) => {
             let a = p.activities.find((a) => a.applicationID === "477175586805252107"); 
             if (a && a.party && a.party.id) return true;
