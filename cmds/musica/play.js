@@ -165,11 +165,9 @@ module.exports = {
                 client.queue.delete(guild.id);
                 return;
             } try {
-                const stream = ytdl(song.url, {
-                    opusEncoded: true,
-                    highWaterMark: 1 << 25
-                });
-                const dispatcher = serverQueue.connection.play(stream, { type: "opus" })
+                const stream = ytdl(song.url)
+
+                const dispatcher = serverQueue.connection.play(stream)
                     .on('finish', () => {
                         if (serverQueue.loop) {
                             serverQueue.songs.push(serverQueue.songs.shift())
