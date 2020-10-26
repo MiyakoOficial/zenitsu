@@ -21,7 +21,8 @@ module.exports = {
                     .filter(a => a.party && a.party.id)
 
                 printthis = printthis.map(a => {
-                    if (!salasR.includes(a.party.id))
+                    if (salasR.includes(a.party.id))
+                        return;
                         salasR.push(a.party.id)
                     return `\`\`\`md\n# Among Us\n* : ${a.party.id}\n> ${a.party.size[0]}/${a.party.size[1]}\n< ${a.state}\`\`\``
                 })
