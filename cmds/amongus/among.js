@@ -39,17 +39,21 @@ module.exports = {
                 break;
 
             case 'room':
-                
+         reamos un embed y le damos color, lo usaremos luego
+        let allPlaying = message.guild.presences.cache.filter((p) => {
+            let a = p.activities.find((a) => a.applicationID === "477175586805252107"); 
+            if (a && a.party && a.party.id) return true;
+        }); 
                 let embed = new Discord.MessageEmbed().setColor(client.color)
 
-           if (!args[1]) return message.channel.send("Especifica el código."); 
+           if (!args[1]) return embedResponse("Especifica el código."); 
 
             let party = allPlaying.filter((p) => { 
                 let a = p.activities.find((a) => a.applicationID === "477175586805252107"); 
                 if (a.party.id === args[1].toUpperCase()) return true; 
             }); 
 
-            if (!party.first()) return message.channel.send("Código invalido."); 
+            if (!party.first()) return embedResponse("Código invalido."); 
 
             let allPlayers = party.map((p, i) => { 
                 let a = p.activities.find((a) => a.applicationID === "477175586805252107"); 
