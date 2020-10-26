@@ -1,5 +1,5 @@
 const search = require('youtube-search');
-const ytdl = require('discord-ytdl-core');
+const ytdl = require('ytdl-core');
 //const ytdl = require('ytdl-core');
 const yts = require('yt-search')
 const Discord = require('discord.js');
