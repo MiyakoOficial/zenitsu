@@ -11,9 +11,9 @@ module.exports = async (client) => {
 
     setInterval(() => {
 
-        client.channels.cache.get('755938504470691871').setName(`Guilds: ${client.guilds.cache.size}`);
+        client.channels.cache.get('755938504470691871').setName(`Guilds: ${client.guilds.cache.size}`).catch(e=>{});
 
-        client.channels.cache.get('756249790211162123').setName(`Users: ${client.users.cache.filter(a => !a.bot).size}`);
+        client.channels.cache.get('756249790211162123').setName(`Users: ${client.users.cache.filter(a => !a.bot).size}`).catch(e=>{});
 
     }, ms('5m'));
 };
