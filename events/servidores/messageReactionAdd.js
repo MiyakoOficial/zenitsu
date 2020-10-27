@@ -15,7 +15,7 @@ module.exports = async (client, reaction, user) => {
 
     if (!idMessage || idMessage === 'id') return;
 
-    if (!message.id === idMessage) return;
+    if (message.id != idMessage) return;
 
     //console.log(member.voice.channel)
 
