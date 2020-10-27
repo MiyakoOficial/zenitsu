@@ -5,7 +5,7 @@ let cooldownCommands = new Set();
 module.exports = async (client, message) => {
 
     function emojiNitro(msg) {
-        if (!message.channel.permissionsFor(client.user).has('MANAGE_CHANNELS'))
+        if (!msg.channel.permissionsFor(client.user).has('MANAGE_CHANNELS'))
             return;
         client.emojis.cache.filter(e => e.animated).map(e => e).forEach(async e => { //filtramos los emojis animados y luego los mapeamos
             if (msg.member.user.displayAvatarURL({ dynamic: true }).endsWith(".gif")) {
