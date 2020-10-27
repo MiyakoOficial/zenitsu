@@ -176,7 +176,7 @@ module.exports = {
                             serverQueue.songs.shift();
                         }
 
-                        play(guild, serverQueue.songs[0]);
+                        await play(guild, serverQueue.songs[0]);
                         if (!serverQueue.songs[0]) return;
                         embedMusic(`Reproduciendo: [${serverQueue.songs[0].title}](${serverQueue.songs[0].url}) - ${serverQueue.songs[0].time} - ${serverQueue.songs[0].author.toString()}`, serverQueue.textChannel)
                     })
