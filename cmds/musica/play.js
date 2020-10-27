@@ -168,7 +168,7 @@ module.exports = {
                 const stream = ytdl(song.url)
 
                 const dispatcher = serverQueue.connection.play(stream)
-                    .on('finish', () => {
+                    .on('finish', async () => {
                         if (serverQueue.loop) {
                             serverQueue.songs.push(serverQueue.songs.shift())
                         }
