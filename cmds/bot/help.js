@@ -18,7 +18,6 @@ module.exports = {
             .addField('Musica', client.commands.filter(a => a.config.category === 'musica').map(a => `\`${a.config.name}\``).join(', '))
             .addField('Diversion', client.commands.filter(a => a.config.category === 'diversion').map(a => `\`${a.config.name}\``).join(', '))
             .addField('Moderación', client.commands.filter(a => a.config.category === 'moderacion').map(a => `\`${a.config.name}\``).join(', '))
-            .addField('Chat', client.commands.filter(a => a.config.category === 'chat').map(a => `\`${a.config.name}\``).join(', '))
             .addField('Bot', client.commands.filter(a => a.config.category === 'bot').map(a => `\`${a.config.name}\``).join(', '))
             .addField('Among Us', client.commands.filter(a => a.config.category === 'among us').map(a => `\`${a.config.name}\``).join(', '))
             .addField('Administracion', client.commands.filter(a => a.config.category === 'administracion').map(a => `\`${a.config.name}\``).join(', '))
