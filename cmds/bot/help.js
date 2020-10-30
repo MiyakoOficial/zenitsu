@@ -15,7 +15,6 @@ module.exports = {
             .setTimestamp()
             .addField('Utiles', client.commands.filter(a => a.config.category === 'utiles').map(a => `\`${a.config.name}\``).join(', '))
             .addField('Nivel', client.commands.filter(a => a.config.category === 'niveles').map(a => `\`${a.config.name}\``).join(', '))
-            .addField('Musica', client.commands.filter(a => a.config.category === 'musica').map(a => `\`${a.config.name}\``).join(', '))
             .addField('Diversion', client.commands.filter(a => a.config.category === 'diversion').map(a => `\`${a.config.name}\``).join(', '))
             .addField('Moderación', client.commands.filter(a => a.config.category === 'moderacion').map(a => `\`${a.config.name}\``).join(', '))
             .addField('Bot', client.commands.filter(a => a.config.category === 'bot').map(a => `\`${a.config.name}\``).join(', '))
