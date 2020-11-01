@@ -25,7 +25,7 @@ module.exports = {
         let datazo = (await client.getData({ idGuild: message.guild.id, idMember: miembro.id }, 'warns'));
 
         if (datazo.warns.length <= 0)
-            return embedResponse('El miembro no tiene advertencia(s).')
+            return embedResponse('El miembro no tiene advertencias.')
 
         let data = (await client.updateData({ idGuild: message.guild.id, idMember: miembro.id }, { $pop: { warns: 1 } }, 'warns'));
 
@@ -34,7 +34,7 @@ module.exports = {
             .setTimestamp()
             .setTitle('Miembro perdonado')
             .setAuthor(miembro.tag, miembro.displayAvatarURL({ dynamic: true }))
-            .setDescription('Ahora el miembro tiene ' + data.warns.length + ' advertencias.')
+            .setDescription('Ahora el miembro tiene ' + data.warns.length + ' advertencia(s).')
             .setFooter('Advertencia quitada por ' + message.author.tag, message.author.displayAvatarURL({ dynamic: true }))
 
 

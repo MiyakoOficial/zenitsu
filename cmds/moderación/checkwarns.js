@@ -27,7 +27,7 @@ module.exports = {
         let embed = new Discord.MessageEmbed()
             .setColor(client.color)
             .setTimestamp()
-            .setTitle('<a:alarma:764931865676218380> Advertencia del miembro <a:alarma:764931865676218380>')
+            .setTitle('<a:alarma:767497168381935638> Advertencia del miembro <a:alarma:767497168381935638>')
             .setAuthor(miembro.tag, miembro.displayAvatarURL({ dynamic: true }))
             .addField(pagina == 1 ? 'Ultima razón:' : 'Razon:', datos.razon.slice(0, 1024))
             .addField(pagina == 1 ? 'Ultimo moderador:' : 'Moderador:', datos.mod)
