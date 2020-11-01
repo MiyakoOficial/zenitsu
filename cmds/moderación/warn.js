@@ -14,43 +14,55 @@ module.exports = {
         if (!message.guild.me.hasPermission('KICK_MEMBERS')) return embedResponse('No tengo el permiso `KICK_MEMBERS`')
 
         let miembro = message.mentions.members.first();
+
         let razon = args.slice(1).join(' ') || 'No especificada';
+
         if (!miembro) return embedResponse('Menciona a un miembro del servidor!')
 
-        if (miembro.roles.highest.comparePositionTo(message.member.roles.highest) > 0 || !miembro.kickable)
-            return embedResponse('No puedes advertir a este usuario!')
+        if (miembro.user.bot) return embedResponse('No puedes advertir a un bot.');
+
+        if (miembro.roles.highest.comparePositionTo(message.member.roles.highest) > 0)
+            return embedResponse('No puedes advertir a este usuario.')
+
+        if (!miembro.kickable)
+            return embedResponse('No puedo advertir a este usuario.')
 
         if (!args[0].match(/\<\@(\!)?[0-9]{18}\>/g)) return embedResponse('La mencion tiene que ser el primer argumento!')
 
+        if (miembro.hasPermission('ADMINISTRATOR'))
+            return embedResponse('El miembro mencionado es administrador.')
 
         miembro = miembro.user;
 
+        if (miembro.id == message.author.id) return embedResponse('No te puedes advertir a ti mismo.')
 
-        await client.updateData({ id: `${message.guild.id}_${miembro.id}` }, { $inc: { warns: 1 } }, 'warns');
+        let data = (await client.updateData({ idGuild: message.guild.id, idMember: miembro.id }, { $push: { warns: { razon: razon, fecha: `${Date.now()}`, mod: message.author.tag } } }, 'warns'));
 
-        let data = (await client.updateData({ id: `${message.guild.id}_${miembro.id}` }, { razon: razon }, 'warns'));
-
+        let check = (await client.getData({ id: message.guild.id }, 'settings')).warnsParaKickear;
         //embedResponse(`El miembro fue advertido!\nAhora tiene: ${data.warns} advertencias.\n\nRazón: ${razon}.`)
 
-        if (data.warns >= 5)
+        if (data.warns.length >= check)
+
             if (message.mentions.members.first().kickable) message.mentions.members.first().kick(razon)
 
                 .then(a => {
-                    message.channel.send('Miembro expulsado').catch(e => { })
+                    embedResponse('Miembro expulsado').catch(e => { })
                 })
 
                 .catch(er => {
-                    message.channel.send('Error en expulsar el miembro!').catch(e => { })
+                    embedResponse('Error en expulsar el miembro!').catch(e => { })
                 })
 
         let embed = new Discord.MessageEmbed()
             .setColor(client.color)
             .setTimestamp()
-            .setTitle('<a:alarma:767497168381935638> Miembro advertido <a:alarma:767497168381935638>', miembro.displayAvatarURL({ dynamic: true }))
+            .setTitle('<a:alarma:767497168381935638> Miembro advertido <a:alarma:767497168381935638>')
+            .setAuthor(miembro.tag, miembro.displayAvatarURL({ dynamic: true }))
             .addField('Razón', razon.slice(0, 1024))
-            .addField('Advertencias totales', data.warns)
-            .addField('Advertencias para ser expulsado', 5)
+            .addField('Advertencias totales', data.warns.length)
+            .addField('Advertencias para ser expulsado', check)
+            .addField('Moderador', message.author.tag)
 
-        return message.channel.send({ embed: embed });
+        return message.channel.send({ embed: embed }).catch(a => { });
     }
 }

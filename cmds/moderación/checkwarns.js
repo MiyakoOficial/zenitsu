@@ -14,14 +14,24 @@ module.exports = {
 
         let miembro = message.mentions.users.first();
 
-        let data = (await client.getData({ id: `${message.guild.id}_${message.mentions.users.first().id}` }, 'warns'))
+        let data = await client.getData({ idGuild: message.guild.id, idMember: message.mentions.users.first().id }, 'warns');
+
+        let pagina = Number(args[1]) <= 0 || !Number(args[1]) ? 1 : Number(args[1]);
+
+        if (!data.warns.length) return embedResponse('El miembro no tiene advertencias.')
+
+        let datos = data.warns.reverse()[pagina - 1];
+
+        if (!datos) return embedResponse('Sin datos.')
 
         let embed = new Discord.MessageEmbed()
             .setColor(client.color)
             .setTimestamp()
-            .setTitle('<a:alarma:767497168381935638> Advertencias del miembro <a:alarma:767497168381935638>', miembro.displayAvatarURL({ dynamic: true }))
-            .addField('Razón', !data || !data.razon ? 'No especificada!' : data.razon.slice(0, 1024))
-            .addField('Advertencias totales', !data.warns ? 0 : data.warn)
+            .setTitle('<a:alarma:764931865676218380> Advertencia del miembro <a:alarma:764931865676218380>')
+            .setAuthor(miembro.tag, miembro.displayAvatarURL({ dynamic: true }))
+            .addField(pagina == 1 ? 'Ultima razón:' : 'Razon:', datos.razon.slice(0, 1024))
+            .addField(pagina == 1 ? 'Ultimo moderador:' : 'Moderador:', datos.mod)
+            .setFooter(`Pagina: ${pagina}/${data.warns.length}`)
 
         return message.channel.send({ embed: embed }).catch(e => { })
 

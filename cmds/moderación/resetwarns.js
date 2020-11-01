@@ -10,12 +10,11 @@ module.exports = {
 
         if (!message.member.hasPermission('ADMINISTRATOR')) return embedResponse('No tienes el permiso `ADMINISTRATOR`')
 
-
         if (!message.mentions.members.first()) return embedResponse('Menciona a un miembro del servidor!')
 
         let member = message.mentions.members.first();
 
-        await client.updateData({ id: `${message.guild.id}_${member.id}` }, { warns: 0, razon: 'No especificada!' }, 'warns')
+        await require('../../models/warns.js').deleteOne({ idGuild: message.guild.id, idMember: member.id });
 
         embedResponse(`Advertencias reseteadas!`)
 

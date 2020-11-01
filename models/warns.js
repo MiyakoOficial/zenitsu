@@ -1,15 +1,20 @@
 const { Schema, model } = require('mongoose');
 
 const warns = Schema({
-    id: String,
-    warns: {
-        default: 0,
-        type: Number
-    },
-    razon: {
-        default: 'No especificada.',
-        type: String
-    }
-})
+    idGuild: String,
+
+    idMember: String,
+
+    warns: [{
+
+        fecha: String,
+
+        mod: String,
+
+        razon: String
+
+    }]
+
+});
 
 module.exports = model('Warns', warns)
