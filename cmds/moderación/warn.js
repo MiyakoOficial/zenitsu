@@ -58,10 +58,11 @@ module.exports = {
             .setTimestamp()
             .setTitle('<a:alarma:767497168381935638> Miembro advertido <a:alarma:767497168381935638>')
             .setAuthor(miembro.tag, miembro.displayAvatarURL({ dynamic: true }))
-            .addField('Razón', razon.slice(0, 1024))
-            .addField('Advertencias totales', data.warns.length)
-            .addField('Advertencias para ser expulsado', check)
-            .addField('Moderador', message.author.tag)
+            .addField('Razón', razon.slice(0, 1024), true)
+            .addField('Moderador', message.author.tag, true)
+            .addField('\u200b', '\u200b', true)
+            .addField('Advertencias totales', data.warns.length, true)
+            .addField('Advertencias para ser expulsado', check, true)
 
         return message.channel.send({ embed: embed }).catch(a => { });
     }
