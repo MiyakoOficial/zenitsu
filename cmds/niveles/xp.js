@@ -27,9 +27,9 @@ module.exports = {
         let { nivel, xp } = await client.getData({ idGuild: `${message.guild.id}`, idMember: `${member.user.id}` }, 'niveles');
         let levelup = 5 * (nivel ** 2) + 50 * nivel + 100;
         //console.log(xp, nivel);
-        await message.channel.startTyping();
+        message.channel.startTyping();
         let rank = await getRank(member)
-        await message.channel.stopTyping();
+        message.channel.stopTyping();
         let embed = new Discord.MessageEmbed()
             .setDescription(`Nivel: ${nivel ? nivel : 0} \nXp: ${xp ? xp : 0}/${levelup ? levelup : '100'}\nRank: ${rank === null ? 'Sin resultados' : rank}`)
             .setColor(color)
