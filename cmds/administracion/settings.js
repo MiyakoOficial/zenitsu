@@ -21,7 +21,7 @@ module.exports = {
                     return embedResponse('Elije un numero.')
 
                 if (parseInt(args[1]) <= 1)
-                    return embedResponse('No puedes establecer un numero menor a igual que 1.');
+                    return embedResponse('No puedes establecer un numero menor o igual que 1.');
 
                 let data = await client.updateData({ id: message.guild.id }, { warnsParaKickear: Number(args[1]) }, 'settings');
 
