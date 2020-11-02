@@ -17,7 +17,10 @@ module.exports = {
 
             case 'maxwarns':
 
-                if (!Number(args[1]) || parseInt(args[1]) <= 1)
+                if (!args[1] || !Number(args[1]))
+                    return embedResponse('Elije un numero.')
+
+                if (parseInt(args[1]) <= 1)
                     return embedResponse('No puedes establecer un numero menor a igual que 1.');
 
                 let data = await client.updateData({ id: message.guild.id }, { warnsParaKickear: Number(args[1]) }, 'settings');
