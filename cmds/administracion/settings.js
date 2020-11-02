@@ -27,7 +27,7 @@ module.exports = {
 
             case 'showlevel':
 
-                const idk = async (bol) => { return await client.updateData({ id: message.guild.id }, { mostrarAnuncio: bol }, 'settings'); };
+                let idk = async (bol) => { return await client.updateData({ id: message.guild.id }, { mostrarAnuncio: bol }, 'settings'); };
 
                 if (args[1] == 'on') {
                     await idk(true);
@@ -48,7 +48,7 @@ module.exports = {
             case 'levelsystem':
 
 
-                const idk = async (bol) => { return await client.updateData({ id: message.guild.id }, { sistemaDeNiveles: bol }, 'settings'); };
+                idk = async (bol) => { return await client.updateData({ id: message.guild.id }, { sistemaDeNiveles: bol }, 'settings'); };
 
                 if (args[1] == 'on') {
                     await idk(true);
