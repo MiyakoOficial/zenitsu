@@ -3,6 +3,7 @@ const ms = require('ms');
 let cooldownniveles = new Set();
 let cooldownCommands = new Set();
 module.exports = async (client, message) => {
+    const settings = await client.getData({ id: message.guild.id }, 'settings');
     /*
         function emojiNitro(msg) {
             if (!msg.channel.permissionsFor(client.user).has('MANAGE_CHANNELS'))
@@ -47,6 +48,9 @@ module.exports = async (client, message) => {
     let Random = Math.floor(Math.random() * 24) + 1;
     if (!message.content.startsWith(prefix)) {
 
+        if (!settings.sistemaDeNiveles)
+            return;
+
         // emojiNitro(message);
 
         let guild = `${message.guild.id}_${message.author.id}`;
@@ -70,68 +74,71 @@ module.exports = async (client, message) => {
 
                 await client.updateData({ idGuild: `${message.guild.id}`, idMember: `${message.author.id}` }, { xp: 0 }, 'niveles');
                 await client.updateData({ idGuild: `${message.guild.id}`, idMember: `${message.author.id}` }, { $inc: { nivel: 1 } }, 'niveles');
-                let { canal } = await client.getData({ id: message.guild.id }, 'logslevel')
-                let channel = client.channels.cache.get(canal) || message.channel;
-                //if (!channel) channel = message.channel;
-                /*
-                                let text = encodeURIComponent(`${message.author.tag}, subiste al nivel ${nivel + 1}!`)
-                                let link = `https://api.alexflipnote.dev/challenge?text=${text}&icon=2`
-                                let embed = new Discord.MessageEmbed()
-                                    .setColor(color)
-                                    .setImage(link);
-                                channel.send({ embed: embed }).catch(a => { });
-                
-                */
-                let usuario = message.author
-                const { createCanvas, loadImage, registerFont } = require('canvas');
 
-                registerFont('/app/OpenSansEmoji.ttf', { family: "Open Sans Emoji" })
-                registerFont('/app/Minecrafter.Reg.ttf', { family: "Minecraft" })
+                if (settings.mostrarAnuncio) {
 
-                const canvas = createCanvas(700, 100);
-                const ctx = canvas.getContext('2d');
+                    let { canal } = await client.getData({ id: message.guild.id }, 'logslevel')
+                    let channel = client.channels.cache.get(canal) || message.channel;
+                    //if (!channel) channel = message.channel;
+                    /*
+                                    let text = encodeURIComponent(`${message.author.tag}, subiste al nivel ${nivel + 1}!`)
+                                    let link = `https://api.alexflipnote.dev/challenge?text=${text}&icon=2`
+                                    let embed = new Discord.MessageEmbed()
+                                        .setColor(color)
+                                        .setImage(link);
+                                    channel.send({ embed: embed }).catch(a => { });
+                    
+                    */
+                    let usuario = message.author
+                    const { createCanvas, loadImage, registerFont } = require('canvas');
 
-                const background = await loadImage('https://cdn.discordapp.com/attachments/621139895729258528/747968079191081010/challenge.png');
-                ctx.drawImage(background, 0, 0, canvas.width, canvas.height)
+                    registerFont('/app/OpenSansEmoji.ttf', { family: "Open Sans Emoji" })
+                    registerFont('/app/Minecrafter.Reg.ttf', { family: "Minecraft" })
 
-                const avatar = await loadImage(usuario.displayAvatarURL({ format: 'png' }));
-
-                const applyText = (canvas, text) => {
+                    const canvas = createCanvas(700, 100);
                     const ctx = canvas.getContext('2d');
 
-                    let fontSize = 70;
+                    const background = await loadImage('https://cdn.discordapp.com/attachments/621139895729258528/747968079191081010/challenge.png');
+                    ctx.drawImage(background, 0, 0, canvas.width, canvas.height)
 
-                    do {
+                    const avatar = await loadImage(usuario.displayAvatarURL({ format: 'png' }));
 
-                        ctx.font = `${fontSize -= 1}px "Open Sans Emoji"`;
+                    const applyText = (canvas, text) => {
+                        const ctx = canvas.getContext('2d');
 
-                    } while (ctx.measureText(text).width > canvas.width - 105);
+                        let fontSize = 70;
 
-                    return ctx.font;
-                };
+                        do {
 
-                let txt = 'Level up!';
-                ctx.fillStyle = "#ea899a";
-                ctx.font = '40px "Minecraft"'
-                ctx.fillText(txt, 95, 45);
+                            ctx.font = `${fontSize -= 1}px "Open Sans Emoji"`;
+
+                        } while (ctx.measureText(text).width > canvas.width - 105);
+
+                        return ctx.font;
+                    };
+
+                    let txt = 'Level up!';
+                    ctx.fillStyle = "#ea899a";
+                    ctx.font = '40px "Minecraft"'
+                    ctx.fillText(txt, 95, 45);
 
 
-                let text = `${usuario.tag} has subido al nivel ${nivel + 1}!`;
-                ctx.font = applyText(canvas, text, 90, 84);
-                ctx.fillStyle = '#FFFFFF';
-                ctx.fillText(text, 95, 80);
+                    let text = `${usuario.tag} has subido al nivel ${nivel + 1}!`;
+                    ctx.font = applyText(canvas, text, 90, 84);
+                    ctx.fillStyle = '#FFFFFF';
+                    ctx.fillText(text, 95, 80);
 
-                //circulo
-                ctx.beginPath();
-                ctx.arc(50, 50, 40, 0, Math.PI * 2, true);
-                ctx.closePath();
-                ctx.clip();
-                //circulo
+                    //circulo
+                    ctx.beginPath();
+                    ctx.arc(50, 50, 40, 0, Math.PI * 2, true);
+                    ctx.closePath();
+                    ctx.clip();
+                    //circulo
 
-                ctx.drawImage(avatar, 10, 10, 80, 80);
+                    ctx.drawImage(avatar, 10, 10, 80, 80);
 
-                channel.send(new Discord.MessageAttachment(canvas.toBuffer(), 'levelImage.png')).catch(e => { })
-
+                    channel.send(new Discord.MessageAttachment(canvas.toBuffer(), 'levelImage.png')).catch(e => { })
+                }
                 //embedResponse(`<@${message.author.id}>, subiste al nivel ${nivel + 1}!`, channel).catch(a => { });
 
             }

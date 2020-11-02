@@ -11,4 +11,5 @@ const Guild = Schema({
     mostrarAnuncio: { default: true, type: Boolean }
 
 })
-module.exports = model('Configuraciones', Guild)
+
+module.exports = model('Configuraciones', Guild);
