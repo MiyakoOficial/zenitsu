@@ -314,7 +314,7 @@ global.modelGet = (n) => {
 }
 
 process.on("unhandledRejection", e => {
-    new Discord.WebhookClient('766326417994153994', 'M6JjpcGqlq2PZ70sKTwfEWuURigvpbfURGxzgcHxgjvyuINCYYl-RxKsVHbac0xdmL9-').send(
+    new Discord.WebhookClient(process.env.WEBHOOKID, process.env.WEBHOOKTOKEN).send(
         new Discord.MessageEmbed()
             .setColor('GREEN')
             .setTitle('Error')
