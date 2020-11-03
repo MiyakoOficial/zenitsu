@@ -36,7 +36,7 @@ module.exports = {
 
         if (miembro.id == message.author.id) return embedResponse('No te puedes advertir a ti mismo.')
 
-        let data = (await client.updateData({ idGuild: message.guild.id, idMember: miembro.id }, { $push: { warns: { razon: razon, fecha: `${Date.now()}`, mod: message.author.tag } } }, 'warns'));
+        let data = (await client.updateData({ idGuild: message.guild.id, idMember: miembro.id }, { $push: { warns: { razon: razon, fecha: Hora(Date.now(), true), mod: message.author.tag } } }, 'warns'));
 
         let check = (await client.getData({ id: message.guild.id }, 'settings')).warnsParaKickear;
         //embedResponse(`El miembro fue advertido!\nAhora tiene: ${data.warns} advertencias.\n\nRazón: ${razon}.`)

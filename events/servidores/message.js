@@ -217,8 +217,9 @@ module.exports = async (client, message) => {
 
     }
 
-    function Hora() {
-        let fecha = new Date(Date.now() - ms('4h'))
+    function Hora(date = Date.now(), dia = false) {
+
+        let fecha = new Date(date - ms('4h'))
 
         let hora = fecha.getHours();
 
@@ -235,8 +236,18 @@ module.exports = async (client, message) => {
         if (segundos < 10) {
             segundos = "0" + segundos
         }
+        if (!dia)
+            return hora + ":" + minutos + ":" + segundos
 
-        return hora + ":" + minutos + ":" + segundos
+        else {
+
+            let dia = new Date(date - ms('4h')).getDay(),
+                mes = new Date(date - ms('4h')).getMonth(),
+                año = new Date(date - ms('4h')).getFullYear()
+
+            return `${hora}:${minutos}:${segundos} - ${dia}/${mes}/${año}`
+
+        }
 
     }
 
