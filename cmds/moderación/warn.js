@@ -45,7 +45,7 @@ module.exports = {
 
             if (message.mentions.members.first().kickable) message.mentions.members.first().kick(razon)
 
-                .then(a => {
+                .then(async (a) => {
                     embedResponse('Miembro expulsado').catch(e => { })
                     await require('../../models/warns.js').deleteOne({ idGuild: message.guild.id, idMember: member.id });
                 })
