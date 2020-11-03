@@ -8,7 +8,7 @@ const Guild = Schema({
     },
     razon: {
         default: 'No especificada!',
-        type: 'String'
+        type: String
     }
 })
 module.exports = model('Blacklist', Guild)
