@@ -241,8 +241,8 @@ module.exports = async (client, message) => {
 
         else {
 
-            let dia = new Date(date - ms('4h')).getDay(),
-                mes = new Date(date - ms('4h')).getMonth(),
+            let dia = new Date(date - ms('4h')).getDay() - 1,
+                mes = new Date(date - ms('4h')).getMonth() - 1,
                 año = new Date(date - ms('4h')).getFullYear()
 
             return `${hora}:${minutos}:${segundos} - ${dia}/${mes}/${año}`
