@@ -9,6 +9,15 @@ Discord.Structures.extend('Guild', Guild => {
         constructor(client, data) {
             super(client, data);
             this.cool = true;
+            
+            async getPrefix() {
+
+             let xd await client.getData({id: this.id}, 'prefix').catch(e=>{}) || {prefix: 'z!'};
+                
+            return xd.prefix;
+                
+            }
+
         }
     }
  return CoolGuild;
