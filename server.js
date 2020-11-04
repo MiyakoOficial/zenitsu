@@ -4,6 +4,16 @@ const nekos = require('nekos.life');
 
 const mongoose = require('mongoose');
 
+Discord.Structures.extend('Guild', Guild => {
+    class CoolGuild extends Guild {
+        constructor(client, data) {
+            super(client, data);
+            this.cool = true;
+        }
+    }
+ return CoolGuild;
+ });
+
 const client = new Discord.Client(
     {
         partials: ['MESSAGE', 'REACTION'],
