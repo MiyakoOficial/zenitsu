@@ -13,7 +13,7 @@ Discord.Structures.extend('Guild', Guild => {
 
                 async getPrefix() {
 
-             let xd await client.getData({id: this.id}, 'prefix').catch(e=>{}) || {prefix: 'z!'};
+             let xd = await client.getData({id: this.id}, 'prefix').catch(e=>{}) || {prefix: 'z!'};
                 
             return xd.prefix;
                 
