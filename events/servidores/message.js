@@ -47,7 +47,12 @@ module.exports = async (client, message) => {
 
         let content = message.content;
 
-        chatbot.getReply(content).then(r => message.reply(r))
+       let r = await chatbot.getReply(content);
+        
+        const easy = require("easymaty")
+let mensaje = r;
+mensaje = await mensaje.traductor()
+   message.reply(mensaje)
 
     }
 
