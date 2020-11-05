@@ -34,7 +34,7 @@ module.exports = async (client, message) => {
     if (!message || !message.guild || !message.author) return;
     client.serverQueue = client.queue.get(message.guild.id);
 
-    const prefix = (await client.getData({ id: message.guild.id }, 'prefix')).prefix;
+    const prefix = await message.guild.getPrefix();
     const args = message.content.slice(prefix.length).trim().split(/ +/);
     const command = args.shift().toLowerCase()
 

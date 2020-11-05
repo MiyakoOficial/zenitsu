@@ -36,7 +36,7 @@ module.exports = {
         if (prob >= 60) {
 
             statusA.delete(message.author.id);
-            let datazo = await client.updateData({ id: message.author.id }, { $inc: { jefes: 1, nivelenemigo: 1 } }, 'demonios')
+            let datazo = await client.updateData({ id: message.author.id }, { $inc: { jefes: 1 } }, 'demonios')
             embedResponse(`Le has ganado al Jefe!\n\nJefes derrotados: ${datazo.jefes}`)
 
         }

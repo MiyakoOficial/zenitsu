@@ -74,7 +74,7 @@ module.exports = {
 
 
             default:
-                return embedResponse('Elije entre: levelsystem, showlevel o maxwarns.')
+                return embedResponse('Elije entre: levelsystem, showlevel o maxwarns.\nEjemplo de uso: z!settings maxwarns 10')
                 break;
 
         }

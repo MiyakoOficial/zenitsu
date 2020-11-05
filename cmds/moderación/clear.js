@@ -1,7 +1,7 @@
 module.exports = {
     config: {
         name: "clear",//Nombre del cmd
-        alias: [], //Alias
+        alias: ['purge'], //Alias
         description: "Borrar mensajes", //Descripción (OPCIONAL)
         usage: "z!clear numero",
         category: 'moderacion'
