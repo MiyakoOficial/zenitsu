@@ -11,7 +11,9 @@ const warns = Schema({
 
         mod: String,
 
-        razon: String
+        razon: String,
+
+        token: String
 
     }]
 

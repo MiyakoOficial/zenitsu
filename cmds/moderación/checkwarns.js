@@ -31,6 +31,8 @@ module.exports = {
             .setAuthor(miembro.tag, miembro.displayAvatarURL({ dynamic: true }))
             .addField(pagina == 1 ? 'Ultima razón:' : 'Razon:', datos.razon.slice(0, 1024))
             .addField(pagina == 1 ? 'Ultimo moderador:' : 'Moderador:', datos.mod)
+            .addField('Fecha', datos.fecha)
+            .addField('ID', datos.token)
             .setFooter(`Pagina: ${pagina}/${data.warns.length}`)
 
         return message.channel.send({ embed: embed }).catch(e => { })

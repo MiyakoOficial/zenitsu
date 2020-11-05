@@ -1,4 +1,5 @@
 const Discord = require('discord.js');
+const easy = require('easymaty');
 
 module.exports = {
     config: {
@@ -36,7 +37,11 @@ module.exports = {
 
         if (miembro.id == message.author.id) return embedResponse('No te puedes advertir a ti mismo.')
 
-        let data = (await client.updateData({ idGuild: message.guild.id, idMember: miembro.id }, { $push: { warns: { razon: razon, fecha: Hora(Date.now(), true), mod: message.author.tag } } }, 'warns'));
+        let chec = async (e) => { if (await require('../../models/warns.js').findOne({ token: e })) return await chec(e); else return e; }
+
+        let res = await chec(easy.clave(6));
+
+        let data = (await client.updateData({ idGuild: message.guild.id, idMember: miembro.id }, { $push: { warns: { razon: razon, fecha: Hora(Date.now(), true), mod: message.author.tag, token: res } } }, 'warns'));
 
         let check = (await client.getData({ id: message.guild.id }, 'settings')).warnsParaKickear;
         //embedResponse(`El miembro fue advertido!\nAhora tiene: ${data.warns} advertencias.\n\nRazón: ${razon}.`)
