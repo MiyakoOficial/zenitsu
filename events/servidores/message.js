@@ -39,18 +39,6 @@ module.exports = async (client, message) => {
     const command = args.shift().toLowerCase()
 
     if (message.author.bot) return;
-    if (message.channel.id == '773899978431004702') {
-
-        const alexa = require('alexa-bot-api')
-
-        const chatbot = new alexa("aw2plm")
-
-        let content = message.content;
-
-       let r = await chatbot.getReply(content).then(a => message.reply(a));
-
-    }
-
     let emojiFinded = message.guild.emojis.cache.find(a => a.name === message.content.slice(2)) || client.emojis.cache.find(a => a.name === message.content.slice(2));
     //console.log(emojiFinded)
     if (message.content.slice(0, 2) === ': ' && emojiFinded) {
