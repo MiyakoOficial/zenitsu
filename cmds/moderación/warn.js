@@ -69,7 +69,7 @@ module.exports = {
             .addField('\u200b', '\u200b', true)
             .addField('Advertencias totales', data.warns.length, true)
             .addField('Advertencias para ser expulsado', check, true)
-            .setFooter(`ID: ${data.warns.reverse()[0].token} - Fecha: ${data.warns.reverse()[0].fecha}`)
+            .setFooter(`ID: ${res} - Fecha: ${Hora(Date.now(), true)}`)
 
         return message.channel.send({ embed: embed }).catch(a => { });
     }
