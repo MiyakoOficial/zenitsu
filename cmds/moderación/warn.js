@@ -37,7 +37,7 @@ module.exports = {
 
         if (miembro.id == message.author.id) return embedResponse('No te puedes advertir a ti mismo.')
 
-        let chec = async (e) => { if (await require('../../models/warns.js').findOne({ token: e })) return await chec(e); else return e; }
+        let chec = async (e) => { if (await require('../../models/warns.js').findOne({ idMember: miembro.id, token: e })) return await chec(e); else return e; }
 
         let res = await chec(easy.clave(6));
 
@@ -69,6 +69,7 @@ module.exports = {
             .addField('\u200b', '\u200b', true)
             .addField('Advertencias totales', data.warns.length, true)
             .addField('Advertencias para ser expulsado', check, true)
+            .setFooter(`ID: ${datos.token} - Fecha: ${datos.fecha}`)
 
         return message.channel.send({ embed: embed }).catch(a => { });
     }

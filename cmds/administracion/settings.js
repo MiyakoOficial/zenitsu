@@ -23,6 +23,9 @@ module.exports = {
                 if (parseInt(args[1]) <= 1)
                     return embedResponse('No puedes establecer un numero menor o igual que 1.');
 
+                if (parseInt(args[1]) > 25)
+                    return embedResponse('No puedes establecer un numero mayor a 25.');
+
                 let data = await client.updateData({ id: message.guild.id }, { warnsParaKickear: Number(args[1]) }, 'settings');
 
                 return embedResponse('Ahora para ser expulsado se necesitan ' + data.warnsParaKickear + ' advertencias.')
