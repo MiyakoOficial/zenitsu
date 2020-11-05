@@ -43,6 +43,12 @@ module.exports = {
 
         }
 
+        else {
+
+            return embedResponse('Elije quitar la ultima advertencia o una por su ID.')
+
+        }
+
         let embed = new Discord.MessageEmbed()
             .setColor(client.color)
             .setTimestamp()
