@@ -30,7 +30,7 @@ Discord.Structures.extend('Guild', Guild => {
 
 const client = new Discord.Client(
     {
-        partials: ['MESSAGE', 'REACTION'],
+        partials: ['MESSAGE', 'REACTION', 'PRESENCE'],
         http: { version: 8 }
     }
 );
