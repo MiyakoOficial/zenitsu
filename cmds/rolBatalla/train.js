@@ -52,7 +52,7 @@ module.exports = {
                     .setDescription(`Subiste ${levelup} de experiencia!\n\n${datazo.xpusuario}/${reto} para el nivel ${parseInt(datazo.nivelusuario) + 1}`)
                     .setTimestamp()
                     .setAuthor(message.author.tag, message.author.displayAvatarURL({ dynamic: true }))
-                    .setImage('https://media1.tenor.com/images/ff57d6cb909d69f9c6f7b2ff590f1f19/tenor.gif?itemid=15100391')
+                    .setThumbnail('https://media1.tenor.com/images/ff57d6cb909d69f9c6f7b2ff590f1f19/tenor.gif?itemid=15100391')
 
                 return message.channel.send({ embed: embed2 }).catch(e => { })
             }
