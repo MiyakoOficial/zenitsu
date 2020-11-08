@@ -35,7 +35,7 @@ module.exports = {
                 .setDescription('Entrenando ⚔️!')
                 .setTimestamp()
                 .setAuthor(message.author.tag, message.author.displayAvatarURL({ dynamic: true }))
-                .setImage('https://media1.tenor.com/images/e83dcba6a3454dd6410d555cf66b6f3d/tenor.gif?itemid=15043714')
+                .setThumbnail('https://media1.tenor.com/images/e83dcba6a3454dd6410d555cf66b6f3d/tenor.gif?itemid=15043714')
 
             await client.updateData({ id: message.author.id }, { cooldown: Date.now() + require('ms')('30s') }, 'demonios');
 
@@ -67,7 +67,7 @@ module.exports = {
                     .setDescription('Subiste al nivel ' + dataz.nivelusuario + '!')
                     .setTimestamp()
                     .setAuthor(message.author.tag, message.author.displayAvatarURL({ dynamic: true }))
-                    .setImage('https://media1.tenor.com/images/c0011b22ef40718152484c7e11fd4b6d/tenor.gif?itemid=14677284')
+                    .setThumbnail('https://media1.tenor.com/images/c0011b22ef40718152484c7e11fd4b6d/tenor.gif?itemid=14677284')
 
                 return message.channel.send({ embed: embed3 }).catch(e => { })
 
