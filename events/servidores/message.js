@@ -47,7 +47,7 @@ module.exports = async (client, message) => {
     }
     let Random = Math.floor(Math.random() * 24) + 1;
 
-    if (!message.member.hasPermission('ADMINISTRATOR') && settings.borrarInv) {
+    if (!message.member.hasPermission('ADMINISTRATOR') && settings.borrarInv && message.content.match(/(https?:\/\/)?(www\.)?(discord\.(gg|io|me|li)|discordapp\.com\/invite)\/.+[a-z]/g)) {
 
         if (message.deletable) {
 
