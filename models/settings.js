@@ -8,7 +8,9 @@ const Guild = Schema({
 
     sistemaDeNiveles: { default: true, type: Boolean },
 
-    mostrarAnuncio: { default: true, type: Boolean }
+    mostrarAnuncio: { default: true, type: Boolean },
+
+    borrarInv: { default: false, type: Boolean }
 
 })
 

@@ -46,6 +46,20 @@ module.exports = async (client, message) => {
         return message.channel.send(emojiFinded.toString())
     }
     let Random = Math.floor(Math.random() * 24) + 1;
+
+    if (!message.member.hasPermission('ADMINISTRATOR') && settings.borrarInv) {
+
+        if (message.deletable) {
+
+            message.delete()
+            return embedResponse('No tienes permitido enviar invitaciones.')
+                .then(a => { a.delete({ timeout: 5000 }).catch(e => { }) })
+                .catch(e => { })
+
+        }
+
+    }
+
     if (!message.content.startsWith(prefix)) {
 
         if (!settings.sistemaDeNiveles)

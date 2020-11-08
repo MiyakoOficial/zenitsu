@@ -73,8 +73,30 @@ module.exports = {
                 break;
 
 
+            case 'invs':
+
+
+                idk = async (bol) => { return await client.updateData({ id: message.guild.id }, { borrarInv: bol }, 'settings'); };
+
+                if (args[1] == 'on') {
+                    await idk(true);
+                    return embedResponse('Ahora se borrarn las invitaciones.')
+                }
+
+                else if (args[1] == 'off') {
+                    await idk(false);
+                    return embedResponse('Ahora el bot ignorara las invitaciones.')
+                }
+
+                else {
+                    embedResponse('Elije entre on y off.\nEjemplo: z!settings invs on');
+                }
+
+                break;
+
+
             default:
-                return embedResponse('Elije entre: levelsystem, showlevel o maxwarns.\nEjemplo de uso: z!settings maxwarns 10')
+                return embedResponse('Elije entre: levelsystem, showlevel, invs o maxwarns.\nEjemplo de uso: z!settings maxwarns 10')
                 break;
 
         }
