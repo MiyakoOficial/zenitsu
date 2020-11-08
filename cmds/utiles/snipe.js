@@ -26,7 +26,6 @@ module.exports = {
             if (!separador || !separador[1]) return embedResponse("Nadie ha borrado un mensaje en el canal.")
 
             let embed = new Discord.MessageEmbed()
-                .addField('Mensaje', '\u200b')
                 .setDescription(separador[0])
                 .addField('Autor', separador[1])
                 .setColor(client.color)
