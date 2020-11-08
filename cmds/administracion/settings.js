@@ -54,15 +54,15 @@ module.exports = {
             case 'levelsystem':
 
 
-                idk = async (bol) => { return await client.updateData({ id: message.guild.id }, { sistemaDeNiveles: bol }, 'settings'); };
+                let idk1 = async (bol) => { return await client.updateData({ id: message.guild.id }, { sistemaDeNiveles: bol }, 'settings'); };
 
                 if (args[1] == 'on') {
-                    await idk(true);
+                    await idk1(true);
                     return embedResponse('Ahora el sistema de niveles funciona.')
                 }
 
                 else if (args[1] == 'off') {
-                    await idk(false);
+                    await idk1(false);
                     return embedResponse('Ahora el sistema de niveles no funciona.')
                 }
 
@@ -76,15 +76,15 @@ module.exports = {
             case 'invs':
 
 
-                idk = async (bol) => { return await client.updateData({ id: message.guild.id }, { borrarInv: bol }, 'settings'); };
+                let idk2 = async (bol) => { return await client.updateData({ id: message.guild.id }, { borrarInv: bol }, 'settings'); };
 
                 if (args[1] == 'on') {
-                    await idk(true);
+                    await idk2(true);
                     return embedResponse('Ahora se borrarn las invitaciones.')
                 }
 
                 else if (args[1] == 'off') {
-                    await idk(false);
+                    await idk2(false);
                     return embedResponse('Ahora el bot ignorara las invitaciones.')
                 }
 
