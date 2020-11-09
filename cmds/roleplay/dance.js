@@ -9,7 +9,7 @@ module.exports = {
 
     }, run: async ({ client, message, args, embedResponse, Hora }) => {
 
-        let link = client.tnai.sfw.dance();
+        let link = await client.tnai.sfw.dance();
 
         let embed = new Discord.MessageEmbed()
             .setColor(client.color)
