@@ -33,14 +33,7 @@ module.exports = {
                 .setTimestamp()
             message.channel.send({ embed: embed })
         } catch (err) {
-            let embed = new Discord.MessageEmbed()
-                .setTitle(`Eval`)
-                .addField(`Error`, `\`\`\`js\n${code}\`\`\``)
-                .addField(`Salida`, `\`\`\`js\n${err}\n\`\`\``.replace(client.token, "Contenido privado"))
-                .addField(`Tipo`, `\`\`\`js\n${asd}\`\`\``.replace("number", "Number").replace("object", "Object").replace("string", "String").replace(undefined, "Undefined").replace("boolean", "Boolean").replace("function", "Function"))
-                .setColor(client.color)
-                .setTimestamp()
-            message.channel.send({ embed: embed })
+            message.channel.send(err, {code: 'js'})
         };
     }
 }
