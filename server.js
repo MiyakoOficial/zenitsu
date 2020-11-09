@@ -1,7 +1,7 @@
 const Discord = require('discord.js'),
     { Collection } = require('discord.js');
 const nekos = require('nekos.life');
-
+const tnai = require('tnai');
 const mongoose = require('mongoose');
 
 Discord.Structures.extend('Guild', Guild => {
@@ -49,7 +49,7 @@ moment.locale("es");*/
 client.neko = new nekos().sfw;
 client.star = require('star-labs');
 client.queue = new Map();
-client.tnai = new require('tnai')().sfw;
+client.tnai = new tnai()
 let { readdirSync } = require('fs');
 
 require('dotenv').config();
