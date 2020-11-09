@@ -49,6 +49,7 @@ moment.locale("es");*/
 client.neko = new nekos().sfw;
 client.star = require('star-labs');
 client.queue = new Map();
+client.tnai = require('tnai');
 let { readdirSync } = require('fs');
 
 require('dotenv').config();
