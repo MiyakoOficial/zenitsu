@@ -24,12 +24,12 @@ module.exports = {
             report = await virustotal.urlReport(virus.resource)
         }
         else if (args[0]) {
-            embedResponse(`Escaneando ${args[0]}`)
+            embedResponse(`Escaneando: ${args[0]}`)
             virus = await virustotal.urlScan(args[0]);
             report = await virustotal.urlReport(virus.resource);
         }
 
-
+        console.log(report)
         embedResponse(`${report.total}, ${report.positives}`)
         /*let embed = new MessageEmbed()
             .setColor(client.color)
