@@ -39,7 +39,7 @@ async function scan(url) {
 
     const virustotal = require('virustotal.js');
 
-    virustotal.setKey('0fe9737a7713725aa5236edac769fb2b04fc0c530060d62505bbb496461396ff');
+    virustotal.setKey(process.env.APIKEYVIRUS);
 
     let check = await require("util").promisify(virustotal.scanUrl)(url).catch(() => { })
 
