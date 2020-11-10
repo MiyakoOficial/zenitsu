@@ -15,16 +15,12 @@ module.exports = {
 
         if (cooldownC.has(message.author.id)) { return embedResponse('Aun se esta escaneando un archivo.') }
 
-        else {
-
-            cooldownC.add(message.author.id)
-
-        }
-
         if (!(`${url}`.match(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/gi)) || !(await fetch(url).catch(e => { })) || (await fetch(url).status == 404))
             return embedResponse('URL invalido.')
 
         embedResponse(`Escaneando: ${url}`);
+
+        cooldownC.add(message.author.id)
 
         let res = await scan(url);
 
