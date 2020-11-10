@@ -1,4 +1,5 @@
 const { MessageEmbed } = require('discord.js');
+const fetch = require('node-fetch');
 let cooldownC = new Set()
 module.exports = {
     config: {
@@ -20,7 +21,7 @@ module.exports = {
 
         }
 
-        if (!(`${url}`.match(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/gi)))
+        if (!(`${url}`.match(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/gi)) || !(await fetch(url).catch(e => { })) || (await fetch(url).status == 404))
             return embedResponse('URL invalido.')
 
         embedResponse(`Escaneando: ${url}`);
