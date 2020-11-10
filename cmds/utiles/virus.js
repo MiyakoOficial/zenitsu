@@ -1,5 +1,4 @@
 const { MessageEmbed } = require('discord.js');
-const Discord = require('discord.js');
 let cooldownC = new Set()
 module.exports = {
     config: {
@@ -25,8 +24,8 @@ module.exports = {
             return embedResponse('URL invalido.')
 
         embedResponse(`Escaneando: ${url}`);
-        let cl = require('easymaty').clave()
-        let res = await scan(url, cl);
+
+        let res = await scan(url);
 
         let embed = new MessageEmbed()
             .setColor(client.color)
@@ -39,28 +38,21 @@ module.exports = {
     }
 }
 
-async function scan(url, pass) {
+async function scan(url) {
 
-
-    const fetch = require('node-fetch');
-    const req = await xd(url);
-    const splited = url.split('.');
-    const extension = splited[1] ? splited[1] : 'html'
-    await require('fs').writeFileSync(`${cl}.${extension}`, (await req.text()));
-    let archivo = require(`../../${cl}.${extension}`);
     const virustotal = require('virustotal.js');
 
     virustotal.setKey('0fe9737a7713725aa5236edac769fb2b04fc0c530060d62505bbb496461396ff');
 
-    let check = await require("util").promisify(virustotal.scanFile)(archivo).catch(() => { })
+    let check = await require("util").promisify(virustotal.scanUrl)(url).catch(() => { })
 
     if (!check)
-        return await scan(url, pass)
+        return await scan(url)
 
-    let res = await require("util").promisify(virustotal.getFileReport)(archivo).catch(() => { })
+    let res = await require("util").promisify(virustotal.getUrlReport)(url).catch(() => { })
 
     if (!res || (res?.total <= 1))
-        return await scan(url, pass)
+        return await scan(url)
 
     else {
         //console.log(res)
