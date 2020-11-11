@@ -1,6 +1,6 @@
 module.exports = {
     config: {
-        name: "resetwarns",//Nombre del cmd
+        name: "resetwarns", //nombre del cmd
         alias: [], //Alias
         description: "Reiniciar advertencias", //Descripción (OPCIONAL)
         usage: "z!resetwarns @mencion",

@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 module.exports = {
     config: {
-        name: "rank",//Nombre del cmd
+        name: "rank", //nombre del cmd
         alias: ['rk'], //Alias
         description: "Visualizar el leaderboard", //Descripción (OPCIONAL)
         usage: "z!rank",
@@ -30,7 +30,7 @@ module.exports = {
                 .setFooter(`Pagina actual: ${seleccion <= 0 ? 1 : seleccion}`)
                 .setColor(color)
 
-            message.channel.send({ embed: embed }).catch(e => { })
+            message.channel.send({ embed: embed }).catch(() => { })
 
         });
     }

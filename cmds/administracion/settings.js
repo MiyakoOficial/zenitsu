@@ -1,8 +1,8 @@
-const Discord = require("discord.js");
+
 //Después de Alias es opcional.
 module.exports = {
     config: {
-        name: "settings",//Nombre del cmd
+        name: "settings", //nombre del cmd
         alias: [], //Alias
         description: "Configurar opciones", //Descripción (OPCIONAL)
         usage: "...",
@@ -26,13 +26,14 @@ module.exports = {
                 if (parseInt(args[1]) > 25)
                     return embedResponse('No puedes establecer un numero mayor a 25.');
 
+                // eslint-disable-next-line no-case-declarations
                 let data = await client.updateData({ id: message.guild.id }, { warnsParaKickear: Number(args[1]) }, 'settings');
 
                 return embedResponse('Ahora para ser expulsado se necesitan ' + data.warnsParaKickear + ' advertencias.')
-                break;
 
             case 'showlevel':
 
+                // eslint-disable-next-line no-case-declarations
                 let idk = async (bol) => { return await client.updateData({ id: message.guild.id }, { mostrarAnuncio: bol }, 'settings'); };
 
                 if (args[1] == 'on') {
@@ -54,6 +55,7 @@ module.exports = {
             case 'levelsystem':
 
 
+                // eslint-disable-next-line no-case-declarations
                 let idk1 = async (bol) => { return await client.updateData({ id: message.guild.id }, { sistemaDeNiveles: bol }, 'settings'); };
 
                 if (args[1] == 'on') {
@@ -76,6 +78,7 @@ module.exports = {
             case 'invs':
 
 
+                // eslint-disable-next-line no-case-declarations
                 let idk2 = async (bol) => { return await client.updateData({ id: message.guild.id }, { borrarInv: bol }, 'settings'); };
 
                 if (args[1] == 'on') {
@@ -97,8 +100,6 @@ module.exports = {
 
             default:
                 return embedResponse('Elije entre: levelsystem, showlevel, invs o maxwarns.\nEjemplo de uso: z!settings maxwarns 10')
-                break;
-
         }
     }
 }

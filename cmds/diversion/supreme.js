@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 module.exports = {
     config: {
-        name: "supreme",//Nombre del cmd
+        name: "supreme", //nombre del cmd
         alias: [], //Alias
         description: "Manda una imagen con un texto", //Descripción (OPCIONAL)
         usage: "z!supreme texto",

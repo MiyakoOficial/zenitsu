@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 module.exports = {
     config: {
-        name: "kiss",//Nombre del cmd
+        name: "kiss", //nombre del cmd
         alias: [], //Alias
         description: "Manda un gif besando a alguien", //Descripción (OPCIONAL)
         usage: "z!kiss @mencion",

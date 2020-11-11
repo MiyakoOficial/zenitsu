@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 module.exports = {
     config: {
-        name: "findinvites",//Nombre del cmd
+        name: "findinvites", //nombre del cmd
         alias: [], //Alias
         description: "Ver los miembros con invitaciones en el estado", //Descripción (OPCIONAL)
         usage: "z!findinvites",

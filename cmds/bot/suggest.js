@@ -8,7 +8,7 @@ module.exports = {
         usage: "z!suggest sugerencia",
         category: 'bot'
     },
-    run: async ({ client, message, args, embedResponse, Hora }) => {
+    run: ({ client, message, args, embedResponse }) => {
         if (!args[0]) return embedResponse('Escribe algo!')
         let embed = new Discord.MessageEmbed()
             .setColor(client.color)

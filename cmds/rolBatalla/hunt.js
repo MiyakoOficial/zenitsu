@@ -2,7 +2,7 @@ const statusA = new Map();
 const Discord = require('discord.js');
 module.exports = {
     config: {
-        name: "hunt",//Nombre del cmd
+        name: "hunt", //nombre del cmd
         alias: [], //Alias
         description: "Cazar demonios", //Descripción (OPCIONAL)
         usage: "z!hunt",
@@ -44,7 +44,7 @@ module.exports = {
 
         await client.updateData({ id: message.author.id }, { cooldown: Date.now() + require('ms')('30s') }, 'demonios');
 
-        message.channel.send({ embed: embed1 }).catch(e => { })
+        message.channel.send({ embed: embed1 }).catch(() => { })
 
         await Discord.Util.delayFor(5000);
 
@@ -65,7 +65,7 @@ module.exports = {
 
             statusA.delete(message.author.id);
 
-            return message.channel.send({ embed: embed2 }).catch(e => { })
+            return message.channel.send({ embed: embed2 }).catch(() => { })
         }
 
         else {
@@ -82,7 +82,7 @@ module.exports = {
 
             statusA.delete(message.author.id);
 
-            return message.channel.send({ embed: embed3 }).catch(e => { })
+            return message.channel.send({ embed: embed3 }).catch(() => { })
         }
     }
 }

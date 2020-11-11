@@ -3,7 +3,7 @@ const Discord = require('discord.js');
 
 module.exports = {
     config: {
-        name: "search",//Nombre del cmd
+        name: "search", //nombre del cmd
         alias: ['google'], //Alias
         description: "Buscar cosas en google", //Descripción (OPCIONAL)
         usage: "z!google cosa a buscar",
@@ -17,7 +17,7 @@ module.exports = {
             return embedResponse('Que quieres buscar?')
 
         const googleIT = require('google-it');
-        let results = await googleIT({ disableConsole: true, query: f.join(' ') }).catch(e => { })
+        let results = await googleIT({ disableConsole: true, query: f.join(' ') }).catch(() => { })
 
         if (!results || !results[0])
             return embedResponse('Sin resultados');
@@ -32,7 +32,7 @@ module.exports = {
 
         });
 
-        return message.channel.send({ embed: embed }).catch(e => { })
+        return message.channel.send({ embed: embed }).catch(() => { })
 
     }
 }

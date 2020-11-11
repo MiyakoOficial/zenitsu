@@ -2,7 +2,7 @@ const Discord = require("discord.js")
 
 module.exports = {
     config: {
-        name: "estructura",//Nombre del cmd
+        name: "estructura", //nombre del cmd
         alias: [], //Alias
         description: "Ver la estructura del servidor", //Descripción (OPCIONAL)
         usage: "z!estructura",
@@ -12,7 +12,7 @@ module.exports = {
 
         let user = message.guild.members.cache.get(args[0]) || message.mentions.members.first() || message.member
 
-        res = Discord.Util.splitMessage(Discord.Util.discordSort(message.guild.channels.cache.sort((a, b) => a.rawPosition - b.rawPosition).filter(channel => channel.type == "category" && channel.permissionsFor(user).has('VIEW_CHANNEL'))).map(x => `[📂] ${x.name}\n\t${x.children.sort(Ordenar).filter(a => a.permissionsFor(user).has('VIEW_CHANNEL')).map(a => a.type == 'text' ? '[💬] ' + a.name : a.type == 'news' ? '[🔔] ' + a.name : a.type == 'voice' ? '[🔊] ' + a.name + voiceChannelMembers(a) : a.name).join('\n\t')}\t`), { maxLength: 1950, char: '' });
+        let res = Discord.Util.splitMessage(Discord.Util.discordSort(message.guild.channels.cache.sort((a, b) => a.rawPosition - b.rawPosition).filter(channel => channel.type == "category" && channel.permissionsFor(user).has('VIEW_CHANNEL'))).map(x => `[📂] ${x.name}\n\t${x.children.sort(Ordenar).filter(a => a.permissionsFor(user).has('VIEW_CHANNEL')).map(a => a.type == 'text' ? '[💬] ' + a.name : a.type == 'news' ? '[🔔] ' + a.name : a.type == 'voice' ? '[🔊] ' + a.name + voiceChannelMembers(a) : a.name).join('\n\t')}\t`), { maxLength: 1950, char: '' });
         res.forEach(a => message.channel.send(`Estructura de ${user.user.tag}.\n${res}`, { code: '' }).catch(() => { }));
 
         function voiceChannelMembers(channel) {
@@ -24,11 +24,11 @@ module.exports = {
             nostream.sort();
             stream.forEach((u) => {
                 const m = message.guild.members.cache.find((x) => x.displayName.toLowerCase() === u);
-                str += '\n\t\t[🙎] ' + m.displayName + ' [Transmitiendo]';
+                str += m.user.bot ? "\n\t\t[🤖] " + m.displayName : '\n\t\t[🙎] ' + m.displayName + ' [Transmitiendo]';
             });
             nostream.forEach((u) => {
                 const m = message.guild.members.cache.find((x) => x.displayName.toLowerCase() === u);
-                str += '\n\t\t[🙎] ' + m.displayName;
+                str += m.user.bot ? "\n\t\t[🤖] " + m.displayName : '\n\t\t[🙎] ' + m.displayName;
             });
 
             return str;

@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 module.exports = {
     config: {
-        name: "editprofile",//Nombre del cmd
+        name: "editprofile", //nombre del cmd
         alias: [], //Alias
         description: "Editas tu perfil", //Descripción (OPCIONAL)
         usage: "z!editprofile",

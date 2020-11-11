@@ -3,7 +3,7 @@ const Discord = require('discord.js');
 
 module.exports = {
     config: {
-        name: "channel",//Nombre del cmd
+        name: "channel", //nombre del cmd
         alias: ['canal'], //Alias
         description: "Comprobar los canales de logs/xp", //Descripción (OPCIONAL)
         usage: "z!channel",

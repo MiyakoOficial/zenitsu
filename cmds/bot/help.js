@@ -2,13 +2,13 @@ const Discord = require("discord.js");
 //Después de Alias es opcional.
 module.exports = {
     config: {
-        name: "help",//Nombre del cmd
+        name: "help", //nombre del cmd
         alias: ['h'], //Alias
         description: "Ver información de los comandos", //Descripción (OPCIONAL)
         usage: "z!help <comando>",
         category: 'bot'
     },
-    run: async ({ client, message, args, embedResponse }) => {
+    run: ({ client, message, args, embedResponse }) => {
 
         let embedHelp = new Discord.MessageEmbed()
             .setColor(client.color)

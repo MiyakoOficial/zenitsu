@@ -1,13 +1,13 @@
 const Discord = require('discord.js');
 module.exports = {
     config: {
-        name: "challenge",//Nombre del cmd
+        name: "challenge", //nombre del cmd
         alias: [], //Alias
         description: "Manda una imagen con el reto cumplido", //Descripción (OPCIONAL)
         usage: "z!challenge texto",
         category: 'diversion'
 
-    }, run: async ({ client, message, args, embedResponse, Hora }) => {
+    }, run: ({ client, message, args, embedResponse }) => {
 
         let argumento = args.join(' ')
         let txt = encodeURIComponent(argumento);

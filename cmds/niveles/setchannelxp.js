@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 module.exports = {
     config: {
-        name: "setchannelxp",//Nombre del cmd
+        name: "setchannelxp", //nombre del cmd
         alias: [], //Alias
         description: "Establecer el canal de niveles", //Descripción (OPCIONAL)
         usage: "z!setchannelxp #mencion",

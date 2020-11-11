@@ -1,13 +1,13 @@
 const Discord = require('discord.js');
 module.exports = {
     config: {
-        name: "drake",//Nombre del cmd
+        name: "drake", //nombre del cmd
         alias: [], //Alias
         description: "Manda una imagen con el meme de drake", //Descripción (OPCIONAL)
         usage: "z!drake texto ,|, texto2",
         category: 'diversion'
 
-    }, run: async ({ client, message, args, embedResponse, Hora }) => {
+    }, run: ({ client, message, args, embedResponse }) => {
 
         let argumento = args.join(' ').split(' ,|, ')
         let txt = encodeURIComponent(argumento[0]);

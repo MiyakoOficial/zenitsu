@@ -1,13 +1,13 @@
 const Discord = require('discord.js');
 module.exports = {
     config: {
-        name: "captcha",//Nombre del cmd
+        name: "captcha", //nombre del cmd
         alias: [], //Alias
         description: "Manda una imagen como si fuese el reto de captcha", //Descripción (OPCIONAL)
         usage: "z!captcha texto",
         category: 'diversion'
 
-    }, run: async ({ client, message, args, embedResponse, Hora }) => {
+    }, run: ({ client, message, args, embedResponse }) => {
 
         let argumento = args.join(' ')
         let txt = encodeURIComponent(argumento);

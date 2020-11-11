@@ -1,13 +1,13 @@
 const Discord = require('discord.js');
 module.exports = {
     config: {
-        name: "didyoumean",//Nombre del cmd
+        name: "didyoumean", //nombre del cmd
         alias: [], //Alias
         description: "Sin descripción", //Descripción (OPCIONAL)
         usage: "z!didyoumean Hola ,|, Adios",
         category: 'diversion'
 
-    }, run: async ({ client, message, args, embedResponse, Hora }) => {
+    }, run: ({ client, message, args, embedResponse }) => {
 
         let argumento = args.join(' ').split(' ,|, ')
         let txt = encodeURIComponent(argumento[0]);

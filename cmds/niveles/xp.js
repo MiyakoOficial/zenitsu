@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 module.exports = {
     config: {
-        name: "xp",//Nombre del cmd
+        name: "xp", //nombre del cmd
         alias: ['exp'], //Alias
         description: "Saber el nivel y experiencia", //Descripción (OPCIONAL)
         usage: "z!xp",

@@ -1,5 +1,3 @@
-const Discord = require("discord.js")
-
 module.exports = {
     config: {
         name: "accept",
@@ -8,7 +6,7 @@ module.exports = {
         usage: "z!accept id comment",
         category: 'developer'
     },
-    run: async ({ client, message, args, embedResponse, Hora }) => {
+    run: async ({ client, message, args, embedResponse }) => {
 
         if (![`507367752391196682`].includes(message.author.id))
             return embedResponse('No puedes usar este comando!')
@@ -28,8 +26,8 @@ module.exports = {
             return embedResponse('Sugerencia aceptada!')
         }
 
-        async function messageS(id) {
-            return new Promise((resolve, reject) => {
+        function messageS(id) {
+            return new Promise((resolve) => {
                 client.channels.cache.get('727948582556270682').messages.fetch(id)
                     .then(() => {
                         return resolve(true);

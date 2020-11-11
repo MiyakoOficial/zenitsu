@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 const ms = require('ms');
 module.exports = {
     config: {
-        name: "train",//Nombre del cmd
+        name: "train", //nombre del cmd
         alias: [], //Alias
         description: "Entrenar", //Descripción (OPCIONAL)
         usage: "z!train",
@@ -39,7 +39,7 @@ module.exports = {
 
             await client.updateData({ id: message.author.id }, { cooldown: Date.now() + require('ms')('30s') }, 'demonios');
 
-            message.channel.send({ embed: embed1 }).catch(e => { })
+            message.channel.send({ embed: embed1 }).catch(() => { })
 
             await Discord.Util.delayFor(5000);
 
@@ -54,7 +54,7 @@ module.exports = {
                     .setAuthor(message.author.tag, message.author.displayAvatarURL({ dynamic: true }))
                     .setThumbnail('https://media1.tenor.com/images/ff57d6cb909d69f9c6f7b2ff590f1f19/tenor.gif?itemid=15100391')
 
-                return message.channel.send({ embed: embed2 }).catch(e => { })
+                return message.channel.send({ embed: embed2 }).catch(() => { })
             }
 
             else {
@@ -69,7 +69,7 @@ module.exports = {
                     .setAuthor(message.author.tag, message.author.displayAvatarURL({ dynamic: true }))
                     .setThumbnail('https://media1.tenor.com/images/c0011b22ef40718152484c7e11fd4b6d/tenor.gif?itemid=14677284')
 
-                return message.channel.send({ embed: embed3 }).catch(e => { })
+                return message.channel.send({ embed: embed3 }).catch(() => { })
 
             }
         }

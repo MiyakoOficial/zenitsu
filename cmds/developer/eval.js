@@ -8,11 +8,12 @@ module.exports = {
         usage: "z!eval return 1+1",
         category: 'developer'
     },
+    // eslint-disable-next-line no-unused-vars
     run: async ({ client, message, args, embedResponse, Hora }) => {
 
         if (!["507367752391196682", "538421122920742942", '374710341868847104'].includes(message.author.id))
             return embedResponse('No puedes usar este comando!')
-        let limit = 1950;
+        //let limit = 1950;
         try {
             let code = args.join(" ");
             let evalued = await eval(`(async() => {${code}})()`);
@@ -34,6 +35,6 @@ module.exports = {
             message.channel.send({ embed: embed })
         } catch (err) {
             message.channel.send(err, { code: 'js' })
-        };
+        }
     }
 }

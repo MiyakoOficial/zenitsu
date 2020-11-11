@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 module.exports = {
     config: {
-        name: "buylevel",//Nombre del cmd
+        name: "buylevel", //nombre del cmd
         alias: ['buyl'], //Alias
         description: "Comprar niveles", //Descripción (OPCIONAL)
         usage: "z!buylevel num",

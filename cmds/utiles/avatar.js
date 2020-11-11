@@ -3,7 +3,7 @@ const Discord = require('discord.js');
 
 module.exports = {
     config: {
-        name: "avatar",//Nombre del cmd
+        name: "avatar", //nombre del cmd
         alias: [], //Alias
         description: "Avatar de un usuario", //Descripción (OPCIONAL)
         usage: "z!avatar",

@@ -1,14 +1,14 @@
-const Discord = require("discord.js");
+
 //Después de Alias es opcional.
 module.exports = {
     config: {
-        name: "setlogs",//Nombre del cmd
+        name: "setlogs", //nombre del cmd
         alias: [], //Alias
         description: "Establecer el canal de logs", //Descripción (OPCIONAL)
         usage: "z!setlogs #canal",
         category: 'administracion'
     },
-    run: async ({ client, message, args, embedResponse }) => {
+    run: async ({ client, message, embedResponse }) => {
         if (!message.member.hasPermission("ADMINISTRATOR")) return embedResponse("No tienes el permiso `ADMINISTRATOR`")
         let channel = message.mentions.channels.first();
         if (!channel) return embedResponse("No has mencionado un canal/Ese canal no existe.")

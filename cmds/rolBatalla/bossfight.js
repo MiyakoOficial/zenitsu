@@ -3,7 +3,7 @@ let vidas = new Map();
 const Discord = require('discord.js');
 module.exports = {
     config: {
-        name: "bossfight",//Nombre del cmd
+        name: "bossfight", //nombre del cmd
         alias: [], //Alias
         description: "Pelear con el jefe", //Descripción (OPCIONAL)
         usage: "z!bossfight",

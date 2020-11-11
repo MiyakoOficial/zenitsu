@@ -1,5 +1,3 @@
-const Discord = require("discord.js")
-
 module.exports = {
     config: {
         name: "blacklist",
@@ -8,7 +6,7 @@ module.exports = {
         usage: "z!blacklist user_id true/false",
         category: 'developer'
     },
-    run: async ({ client, message, args, embedResponse, Hora }) => {
+    run: async ({ client, message, args, embedResponse }) => {
         if (!['507367752391196682'].includes(message.author.id))
             return embedResponse('No puedes usar este comando!')
         let razon = args.slice(2).join(' ') || 'No especificada!'

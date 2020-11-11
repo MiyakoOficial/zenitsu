@@ -1,8 +1,7 @@
-const Discord = require("discord.js");
 //Después de Alias es opcional.
 module.exports = {
     config: {
-        name: "setmessageid",//Nombre del cmd
+        name: "setmessageid", //nombre del cmd
         alias: [], //Alias
         description: "Estable un mensaje por us ID para hacer muteall/unmuteall con reacciones", //Descripción (OPCIONAL)
         usage: "z!setmessageid ID_MESSAGE #mencion(opcional)",
@@ -13,7 +12,7 @@ module.exports = {
         if (!rol || !message.member.roles.cache.has(rol.id)) return embedResponse('Tienes que tener el rol `Among Us manager`')
         if (!args[0]) return embedResponse('Ponga una ID valida de mensaje!');
         let canal = message.mentions.channels.first() || message.channel
-        if (messageSS(args[0], canal) === false) return embedResponse('No encontre el mensaje!\nUse: ' + prefix + 'setmessageid <id> <#mencion>')
+        if (messageSS(args[0], canal) === false) return embedResponse('No encontre el mensaje!\nUse: z!setmessageid <id> <#mencion>')
         await client.updateData({ id: message.guild.id }, { idMessage: args[0] }, 'muteid');
         canal.messages.fetch(args[0]).then(async (a) => {
             await a.react('751908729930121376')
@@ -24,8 +23,8 @@ module.exports = {
     }
 }
 
-async function messageSS(id, canal) {
-    return new Promise((resolve, reject) => {
+function messageSS(id, canal) {
+    return new Promise((resolve) => {
         canal.messages.fetch(id, true)
             .then(() => {
                 return resolve(true);

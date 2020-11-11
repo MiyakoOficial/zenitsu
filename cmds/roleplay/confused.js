@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 module.exports = {
     config: {
-        name: "confused",//Nombre del cmd
+        name: "confused", //nombre del cmd
         alias: [], //Alias
         description: "Manda un gif confundido", //Descripción (OPCIONAL)
         usage: "z!confused",

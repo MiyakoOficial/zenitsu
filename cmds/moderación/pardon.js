@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 
 module.exports = {
     config: {
-        name: "pardon",//Nombre del cmd
+        name: "pardon", //nombre del cmd
         alias: [], //Alias
         description: "Quita una advertencia a un miembro", //Descripción (OPCIONAL)
         usage: "z!pardon @mencion",
@@ -56,6 +56,6 @@ module.exports = {
             .setAuthor(miembro.tag, miembro.displayAvatarURL({ dynamic: true }))
             .setDescription('Ahora el miembro tiene ' + data.warns.length + ' advertencia(s).')
             .setFooter('Advertencia quitada por ' + message.author.tag, message.author.displayAvatarURL({ dynamic: true }))
-        return message.channel.send({ embed: embed }).catch(e => { });
+        return message.channel.send({ embed: embed }).catch(() => { });
     }
 }

@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 
 module.exports = {
     config: {
-        name: "checkwarns",//Nombre del cmd
+        name: "checkwarns", //nombre del cmd
         alias: [], //Alias
         description: "Revisar el numero advertencias", //Descripción (OPCIONAL)
         usage: "z!checkwarns @mencion",
@@ -35,7 +35,7 @@ module.exports = {
             .addField('ID', datos.token)
             .setFooter(`Pagina: ${pagina}/${data.warns.length}`)
 
-        return message.channel.send({ embed: embed }).catch(e => { })
+        return message.channel.send({ embed: embed }).catch(() => { })
 
         //embedResponse(`Tiene ${!data.warns ? 0 : data.warns} advertencias\n\nUltima razón: ${!data.razon ? 'No especificada!' : data.razon}`)
 

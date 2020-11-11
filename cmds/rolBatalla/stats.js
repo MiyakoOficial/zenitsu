@@ -2,7 +2,7 @@ const statusA = new Map();
 const Discord = require('discord.js');
 module.exports = {
     config: {
-        name: "stats",//Nombre del cmd
+        name: "stats", //nombre del cmd
         alias: [], //Alias
         description: "Revisar las estadisticas de un usuario", //Descripción (OPCIONAL)
         usage: "z!stats @mencion",

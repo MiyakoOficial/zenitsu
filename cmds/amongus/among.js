@@ -1,8 +1,9 @@
+/* eslint-disable no-case-declarations */
 const Discord = require("discord.js");
 //Después de Alias es opcional.
 module.exports = {
     config: {
-        name: "among",//Nombre del cmd
+        name: "among", //nombre del cmd
         alias: [], //Alias
         description: "Silenciar a todos en el canal de voz", //Descripción (OPCIONAL)
         usage: "z!among < list | room > < num | code >",
@@ -16,6 +17,7 @@ module.exports = {
 
             case 'queue':
 
+                // eslint-disable-next-line no-case-declarations
                 let printthis = message.guild.members.cache.map(a => a.presence)
                     .filter(a => a && a.activities && a.activities.find(a => a && a.applicationID == '477175586805252107'))
                     .map(a => a.activities.find(a => a.applicationID == '477175586805252107'))
@@ -28,8 +30,10 @@ module.exports = {
                     return `\`\`\`md\n# Among Us\n* : ${a.party.id}\n> ${a.party.size[0]}/${a.party.size[1]}\n< ${a.state}\`\`\``
                 })
 
+                // eslint-disable-next-line no-case-declarations
                 let seleccion = Number(args[1]) - 1 || 0;
 
+                // eslint-disable-next-line no-case-declarations
                 let res = await funcionPagina(printthis)
 
                 if (!res[seleccion])
@@ -40,6 +44,7 @@ module.exports = {
                 break;
 
             case 'room':
+                // eslint-disable-next-line no-case-declarations
                 let allPlaying = message.guild.presences.cache.filter((p) => {
                     let a = p.activities.find((a) => a.applicationID === "477175586805252107");
                     if (a && a.party && a.party.id) return true;
@@ -48,6 +53,7 @@ module.exports = {
 
                 if (!args[1]) return embedResponse("Especifica el código.");
 
+                // eslint-disable-next-line no-case-declarations
                 let party = allPlaying.filter((p) => {
                     let a = p.activities.find((a) => a.applicationID === "477175586805252107");
                     if (a.party.id === args[1].toUpperCase()) return true;
@@ -55,7 +61,7 @@ module.exports = {
 
                 if (!party.first()) return embedResponse("Código invalido.");
 
-                let allPlayers = party.map((p, i) => {
+                let allPlayers = party.map(p => {
                     let a = p.activities.find((a) => a.applicationID === "477175586805252107");
                     let host = a.details === "Hosting a game" ? "(Host)" : ""
                     return `<@${p.userID}> ${host}`;
@@ -66,7 +72,7 @@ module.exports = {
                 embed.setDescription(allPlayers)
                     .setFooter(`${partyInfo.size[0]}/${partyInfo.size[1]} jugadores. (Solo muestra usuarios de Discord)`);
 
-                message.channel.send({ embed: embed }).catch(e => { }); // Enviamos el embed
+                message.channel.send({ embed: embed }).catch(() => { }); // Enviamos el embed
 
                 break;
 
@@ -77,10 +83,10 @@ module.exports = {
     }
 }
 
-async function funcionPagina(elArray, num = 10) {
+function funcionPagina(elArray, num = 10) {
     let pagina = [];
     for (let i = 0; i < elArray.length; i += num) {
         pagina.push(elArray.slice(i, i + num))
     }
     return pagina;
-};
+}

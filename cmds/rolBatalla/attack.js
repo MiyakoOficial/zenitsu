@@ -2,7 +2,7 @@ const statusA = new Map();
 const Discord = require('discord.js');
 module.exports = {
     config: {
-        name: "attack",//Nombre del cmd
+        name: "attack", //nombre del cmd
         alias: [], //Alias
         description: "Atacar al jefe", //Descripción (OPCIONAL)
         usage: "z!attack",
@@ -43,7 +43,7 @@ module.exports = {
                 .setThumbnail('https://media1.tenor.com/images/dce718a6dcfac57261944a5bee6c1d76/tenor.gif?itemid=17922860')
                 .setAuthor(message.author.tag, message.author.displayAvatarURL({ dynamic: true }))
 
-            message.channel.send({ embed: embed1 }).catch(e => { });
+            message.channel.send({ embed: embed1 }).catch(() => { });
 
             await Discord.Util.delayFor(5000);
 
@@ -60,7 +60,7 @@ module.exports = {
 
                 statusA.delete(message.author.id);
 
-                return message.channel.send({ embed: embed }).catch(e => { });
+                return message.channel.send({ embed: embed }).catch(() => { });
             }
 
             else {
@@ -74,7 +74,7 @@ module.exports = {
 
                 statusA.delete(message.author.id);
 
-                return message.channel.send({ embed: embed }).catch(e => { });
+                return message.channel.send({ embed: embed }).catch(() => { });
 
             }
 

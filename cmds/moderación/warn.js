@@ -3,7 +3,7 @@ const easy = require('easymaty');
 
 module.exports = {
     config: {
-        name: "warn",//Nombre del cmd
+        name: "warn", //nombre del cmd
         alias: [], //Alias
         description: "Advertir a un miembro", //Descripción (OPCIONAL)
         usage: "z!warn @mencion razon(opcional)",
@@ -51,12 +51,12 @@ module.exports = {
             if (message.mentions.members.first().kickable) message.mentions.members.first().kick(razon)
 
                 .then(async (a) => {
-                    embedResponse('Miembro expulsado').catch(e => { })
+                    embedResponse('Miembro expulsado').catch(() => { })
                     await require('../../models/warns.js').deleteOne({ idGuild: message.guild.id, idMember: member.id });
                 })
 
                 .catch(er => {
-                    embedResponse('Error en expulsar el miembro!').catch(e => { })
+                    embedResponse('Error en expulsar el miembro!').catch(() => { })
                 })
 
         let embed = new Discord.MessageEmbed()

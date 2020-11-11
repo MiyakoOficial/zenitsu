@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 module.exports = {
     config: {
-        name: "sleep",//Nombre del cmd
+        name: "sleep", //nombre del cmd
         alias: [], //Alias
         description: "Manda un gif durmiendo", //Descripción (OPCIONAL)
         usage: "z!sleep",

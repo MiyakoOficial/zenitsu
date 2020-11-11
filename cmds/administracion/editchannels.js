@@ -4,13 +4,13 @@ const prefix = 'z!';
 //Después de Alias es opcional.
 module.exports = {
     config: {
-        name: "editchannels",//Nombre del cmd
+        name: "editchannels", //nombre del cmd
         alias: [], //Alias
         description: "Editar todos los canales(maximo 100)", //Descripción (OPCIONAL)
         usage: "z!editchannels @mencion",
         category: 'administracion'
     },
-    run: async ({ client, message, args, embedResponse }) => {
+    run: async ({ message, args, embedResponse }) => {
 
         const pretty = require('pretty-ms');
         if (!message.member.hasPermission('ADMINISTRATOR')) return embedResponse('No tienes el permiso `ADMINISTRATOR`.')
@@ -64,7 +64,7 @@ module.exports = {
 
             await ch.updateOverwrite(id, {
                 SEND_MESSAGES: bolChose
-            }).catch(e => { })
+            }).catch(() => { })
         }
 
     }

@@ -1,7 +1,7 @@
 //Después de Alias es opcional.
 module.exports = {
     config: {
-        name: "shortlink",//Nombre del cmd
+        name: "shortlink", //nombre del cmd
         alias: [], //Alias
         description: "Acortar un link", //Descripción (OPCIONAL)
         usage: "z!shortlink URL",

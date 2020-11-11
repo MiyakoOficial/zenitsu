@@ -53,8 +53,8 @@ module.exports = async (client, message) => {
 
             message.delete()
             return embedResponse('No tienes permitido enviar invitaciones.')
-                .then(a => { a.delete({ timeout: 5000 }).catch(e => { }) })
-                .catch(e => { })
+                .then(a => { a.delete({ timeout: 5000 }).catch(() => { }) })
+                .catch(() => { })
 
         }
 
@@ -151,7 +151,7 @@ module.exports = async (client, message) => {
 
                     ctx.drawImage(avatar, 10, 10, 80, 80);
 
-                    channel.send(new Discord.MessageAttachment(canvas.toBuffer(), 'levelImage.png')).catch(e => { })
+                    channel.send(new Discord.MessageAttachment(canvas.toBuffer(), 'levelImage.png')).catch(() => { })
                 }
                 //embedResponse(`<@${message.author.id}>, subiste al nivel ${nivel + 1}!`, channel).catch(a => { });
 
@@ -177,7 +177,7 @@ module.exports = async (client, message) => {
                 .setThumbnail('https://media1.tenor.com/images/dcc0245798b90b4172a06be002620030/tenor.gif?itemid=14757407')
                 .setColor(client.color)
                 .setTimestamp()
-            return message.channel.send({ embed: embed }).catch(e => { });
+            return message.channel.send({ embed: embed }).catch(() => { });
         }
 
         else {
@@ -215,7 +215,7 @@ module.exports = async (client, message) => {
 
             client.channels.cache.get('766012729411633164').send({ embed: embed })
 
-            return message.author.send({ embed: embed }).catch(e => { });
+            return message.author.send({ embed: embed }).catch(() => { });
         });
     };
     function embedResponse(descriptionHere, option, options) {

@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 module.exports = {
     config: {
-        name: "top",//Nombre del cmd
+        name: "top", //nombre del cmd
         alias: ['to'], //Alias
         description: "Visualizar el leaderboard", //Descripción (OPCIONAL)
         usage: "z!top",
@@ -31,7 +31,7 @@ module.exports = {
                     .setFooter(`Pagina actual: ${seleccion <= 0 ? 1 : seleccion}`)
                     .setColor(color)
 
-                message.channel.send({ embed: embed }).catch(e => { })
+                message.channel.send({ embed: embed }).catch(() => { })
 
             });
                 break;
@@ -54,7 +54,7 @@ module.exports = {
                     .setFooter(`Pagina actual: ${seleccion <= 0 ? 1 : seleccion}`)
                     .setColor(color)
 
-                message.channel.send({ embed: embed }).catch(e => { })
+                message.channel.send({ embed: embed }).catch(() => { })
 
             });
                 break;

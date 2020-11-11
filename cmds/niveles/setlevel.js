@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 module.exports = {
     config: {
-        name: "setlevel",//Nombre del cmd
+        name: "setlevel", //nombre del cmd
         alias: [], //Alias
         description: "Establecer el nivel del miembro", //Descripción (OPCIONAL)
         usage: "z!setlevel",

@@ -8,7 +8,7 @@ module.exports = {
         usage: "z!invite",
         category: 'bot'
     },
-    run: async ({ client, message, args, embedResponse, Hora }) => {
+    run: ({ client, message }) => {
 
         let link = 'https://discordapp.com/oauth2/authorize?client_id=721080193678311554&scope=bot&permissions=2146958847';
         let invitacionLink = 'https://discord.gg/hbSahh8';

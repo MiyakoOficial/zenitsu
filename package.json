@@ -60,5 +60,8 @@
         "glitch",
         "express"
     ],
-    "author": "Lil_MARCROCK22"
+    "author": "Lil_MARCROCK22",
+    "devDependencies": {
+        "eslint": "^7.13.0"
+    }
 }

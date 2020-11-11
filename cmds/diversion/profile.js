@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 module.exports = {
     config: {
-        name: "profile",//Nombre del cmd
+        name: "profile", //nombre del cmd
         alias: [], //Alias
         description: "Manda el perfil de un miembro", //Descripción (OPCIONAL)
         usage: "z!profile",
