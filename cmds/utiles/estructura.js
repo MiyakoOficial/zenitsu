@@ -29,7 +29,7 @@ module.exports = {
 
             let str = '';
 
-            let streaming = sortMembers(channel.members.array().filter(a => a.voice.streaming));
+            let streaming = sortMembers(channel.members.filter(a => a.voice.streaming));
             streaming = streaming.map(member => member.user.bot ? `\n\t\t[${emojisVoice(member, '🎧🤖', '🤖')}] ${member.displayName} [EN DIRECTO]` : `\n\t\t[${emojisVoice(member, '🧏', '🙎')}] ${member.displayName} [EN DIRECTO]`)
             streaming.forEach(a => {
 
@@ -37,7 +37,7 @@ module.exports = {
 
             });
 
-            let noStreaming = channel.members.array().filter(a => !a.voice.streaming);
+            let noStreaming = sortMembers(channel.members.filter(a => !a.voice.streaming));
             noStreaming = noStreaming.map(member => member.user.bot ? `\n\t\t[${emojisVoice(member, "🎧🤖", '🤖')}] ${member.displayName}` : `\n\t\t[${emojisVoice(member, '🧏', '🙎')}] ${member.displayName}`)
             noStreaming.forEach(a => {
                 str += a
