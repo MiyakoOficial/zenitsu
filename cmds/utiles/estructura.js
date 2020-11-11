@@ -1,3 +1,5 @@
+const Discord = require("discord.js")
+
 module.exports = {
     config: {
         name: "estructura",//Nombre del cmd
