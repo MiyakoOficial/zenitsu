@@ -32,7 +32,7 @@ module.exports = {
             streaming.forEach(a => {
 
                 let member = message.guild.members.cache.find(e => e.displayName.toLowerCase() === a)
-                str += member.user.bot ? `\n\t[${emojisVoice(member, '🎧🤖', '🤖')}] ${member.displayName} [EN DIRECTO]` : `\n\t[${emojisVoice(member, '🧏', '🙎')}] ${member.displayName} [EN DIRECTO]`
+                str += member.user.bot ? `\n\t\t[${emojisVoice(member, '🎧🤖', '🤖')}] ${member.displayName} [EN DIRECTO]` : `\n\t\t[${emojisVoice(member, '🧏', '🙎')}] ${member.displayName} [EN DIRECTO]`
             });
 
             let noStreaming = channel.members.array().filter(a => !a.voice.streaming);
@@ -40,7 +40,7 @@ module.exports = {
             noStreaming.forEach(a => {
 
                 let member = message.guild.members.cache.find(e => e.displayName.toLowerCase() === a)
-                str += member.user.bot ? `\n\t[${emojisVoice(member, "🎧🤖", '🤖')}] ${member.displayName}` : `\n\t[${emojisVoice(member, '🧏', '🙎')}] ${member.displayName}`
+                str += member.user.bot ? `\n\t\t[${emojisVoice(member, "🎧🤖", '🤖')}] ${member.displayName}` : `\n\t\t[${emojisVoice(member, '🧏', '🙎')}] ${member.displayName}`
             });
             return str
 
