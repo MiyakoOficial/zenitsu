@@ -7,7 +7,7 @@ module.exports = {
         usage: "z!pat @mencion",
         category: 'interacción'
 
-    }, run: async ({ client, message, args, embedResponse, Hora }) => {
+    }, run: ({ client, message, embedResponse }) => {
 
         let link = client.star.pat();
         let miembro = message.mentions.members.first();
@@ -20,7 +20,7 @@ module.exports = {
             .setImage(link)
             .setTimestamp()
 
-        return message.channel.send({ embed: embed }).catch(er => { });
+        return message.channel.send({ embed: embed }).catch(() => { });
 
     }
 }

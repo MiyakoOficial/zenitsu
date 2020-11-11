@@ -7,7 +7,7 @@ module.exports = {
         usage: "z!tickle @mencion",
         category: 'interacción'
 
-    }, run: async ({ client, message, args, embedResponse, Hora }) => {
+    }, run: async ({ client, message, embedResponse }) => {
 
         let link = (await client.neko.tickle()).url
 
@@ -21,7 +21,7 @@ module.exports = {
             .setImage(link)
             .setTimestamp()
 
-        return message.channel.send({ embed: embed }).catch(er => { });
+        return message.channel.send({ embed: embed }).catch(() => { });
 
     }
 }

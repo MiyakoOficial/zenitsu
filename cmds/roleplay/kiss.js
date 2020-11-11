@@ -7,7 +7,7 @@ module.exports = {
         usage: "z!kiss @mencion",
         category: 'interacción'
 
-    }, run: async ({ client, message, args, embedResponse, Hora }) => {
+    }, run: ({ client, message, embedResponse }) => {
 
         let link = client.star.kiss();
 
@@ -21,7 +21,7 @@ module.exports = {
             .setImage(link)
             .setTimestamp()
 
-        return message.channel.send({ embed: embed }).catch(er => { });
+        return message.channel.send({ embed: embed }).catch(() => { });
 
     }
 }
