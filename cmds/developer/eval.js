@@ -17,7 +17,7 @@ module.exports = {
             let code = args.join(" ");
             let evalued = await eval(`(async() => {${code}})()`);
             let asd = typeof (evalued)
-            evalued = require("util").inspect(evalued, { showHidden: true});
+            evalued = require("util").inspect(evalued, { showHidden: true, depth: 0 });
             let txt = "" + evalued;
             let limit = 1999
             if (txt.length > limit) {
