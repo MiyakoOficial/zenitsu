@@ -10,7 +10,7 @@ module.exports = {
     },
     run: async ({ client, message, args, embedResponse }) => {
 
-        let user = client.users.cache.get(args[0]) || await client.users.fetch(args[0]).catch(() => { }) || message.mentions.members.first() || message.guild.ownerID;
+        let user = client.users.cache.get(args[0]) || await client.users.fetch(args[0]).catch(() => { }) || message.mentions.members.first() || message.author
 
         res = Discord.Util.splitMessage(Discord.Util.discordSort(message.guild.channels.cache.filter(channel => channel.type == "category" && channel.permissionsFor(user).has('VIEW_CHANNEL'))).map(x => `[📂] ${x.name}\n\t${x.children.filter(a => a.permissionsFor(user).has('VIEW_CHANNEL')).map(a => a.type == 'text' ? '[💬] ' + a.name : a.type == 'news' ? '[🔔] ' + a.name : a.type == 'voice' ? '[🔊] ' + a.name + voiceChannelMembers(a) : a.name).join('\n\t')}\t`));
         message.channel.send('Estructura del servidor.')
