@@ -21,7 +21,6 @@ module.exports = {
             .setAuthor(data.nombre, data.avatarURL)
             .setColor(client.color)
             .setTimestamp()
-            .setTitle('Snipe')
             .setThumbnail('https://media1.tenor.com/images/8c3e8a0a3c7b0afc22624c9278be6a89/tenor.gif?itemid=5489827')
         return message.channel.send({ embed: embed }).catch(() => { })
 
