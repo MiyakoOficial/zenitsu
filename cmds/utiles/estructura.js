@@ -12,7 +12,7 @@ module.exports = {
 
         let user = message.guild.members.cache.get(args[0]) || message.mentions.members.first() || message.member
 
-        res = Discord.Util.splitMessage(Discord.Util.discordSort(message.guild.channels.cache.sort((a, b) => a.rawPosition - b.rawPosition).filter(channel => channel.type == "category" && channel.permissionsFor(user).has('VIEW_CHANNEL'))).map(x => `[📂] ${x.name}\n\t${x.children.filter(a => a.permissionsFor(user).has('VIEW_CHANNEL')).map(a => a.type == 'text' ? '[💬] ' + a.name : a.type == 'news' ? '[🔔] ' + a.name : a.type == 'voice' ? '[🔊] ' + a.name + voiceChannelMembers(a) : a.name).join('\n\t')}\t`), { maxLength: 1950, char: '' });
+        res = Discord.Util.splitMessage(Discord.Util.discordSort(message.guild.channels.cache.sort((a, b) => a.rawPosition - b.rawPosition).filter(channel => channel.type == "category" && channel.permissionsFor(user).has('VIEW_CHANNEL'))).map(x => `[📂] ${x.name}\n\t${x.children.sort(Ordenar).filter(a => a.permissionsFor(user).has('VIEW_CHANNEL')).map(a => a.type == 'text' ? '[💬] ' + a.name : a.type == 'news' ? '[🔔] ' + a.name : a.type == 'voice' ? '[🔊] ' + a.name + voiceChannelMembers(a) : a.name).join('\n\t')}\t`), { maxLength: 1950, char: '' });
         res.forEach(a => message.channel.send(`Estructura de ${user.user.tag}.\n${res}`, { code: '' }).catch(() => { }));
 
         function voiceChannelMembers(channel) {
@@ -36,3 +36,8 @@ module.exports = {
 
     }
 }
+
+function Ordenar(canal1, canal2) {
+    if (canal2.type == "voice" && canal1.type != "voice") return -1
+    return (canal1.type != "voice" || canal2.type == "voice") ? canal1.position - canal2.position : 1
+};
