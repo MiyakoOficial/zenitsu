@@ -12,7 +12,7 @@ module.exports = {
 
         let member = message.guild.members.cache.get(args[0]) || message.guild.members.cache.find(a => a.displayName == args.join(' ') || a.user.tag == args.join(' ') || a.user.username == args.join(' ')) || message.mentions.members.first() || message.member;
 
-        let printT = message.guild.channels.cache.filter(a => a.type == 'category').sort((a, b) => a.position - b.position);
+        let printT = message.guild.channels.cache.filter(a => a.type == 'category').filter(a => a.permissionsFor(member).has('VIEW_CHANNEL')).sort((a, b) => a.position - b.position);
 
         printT = printT.map(cat => {
 
