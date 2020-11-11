@@ -1,9 +1,9 @@
 module.exports = {
     config: {
-        name: "djs",//Nombre del cmd
+        name: "estructura",//Nombre del cmd
         alias: [], //Alias
-        description: "Ver la documentacion de djs", //Descripción (OPCIONAL)
-        usage: "z!djs",
+        description: "Ver la estructura del servidor", //Descripción (OPCIONAL)
+        usage: "z!estructura",
         category: 'utiles'
     },
     run: async ({ client, message, args, embedResponse }) => {
