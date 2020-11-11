@@ -63,7 +63,8 @@ function emojisVoice(member, deaf, normal) {
 
 function sortMembers(members) {
 
-    let items = members
+    let items = members.array()
+
     return items.sort(function (a, b) {
         if (a.displayName > b.displayName) {
             return 1;
