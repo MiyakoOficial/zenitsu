@@ -13,7 +13,7 @@ module.exports = {
         let user = message.guild.members.cache.get(args[0]) || await message.guild.members.fetch(args[0]).catch(() => { }) || message.mentions.members.first() || message.member
 
         res = Discord.Util.splitMessage(Discord.Util.discordSort(message.guild.channels.cache.sort((a, b) => a.rawPosition - b.rawPosition).filter(channel => channel.type == "category" && channel.permissionsFor(user).has('VIEW_CHANNEL'))).map(x => `[📂] ${x.name}\n\t${x.children.filter(a => a.permissionsFor(user).has('VIEW_CHANNEL')).map(a => a.type == 'text' ? '[💬] ' + a.name : a.type == 'news' ? '[🔔] ' + a.name : a.type == 'voice' ? '[🔊] ' + a.name + voiceChannelMembers(a) : a.name).join('\n\t')}\t`), { maxLength: 1950, char: '' });
-        res.forEach(a => message.channel.send(`Estructura de ${user.user.tag}.`, { code: '' }).catch(() => { }));
+        res.forEach(a => message.channel.send(`Estructura de ${user.user.tag}.\n${res}`, { code: '' }).catch(() => { }));
 
         function voiceChannelMembers(channel) {
             let str = '';
