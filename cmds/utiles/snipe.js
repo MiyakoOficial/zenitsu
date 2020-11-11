@@ -14,7 +14,7 @@ module.exports = {
 
         let data = (await client.getData({ id: canal.id }, 'snipe'))
 
-        if (!data) return embedResponse("Ningun mensaje ha sido borrado en este canal.")
+        if (!data || !data.mensaje) return embedResponse("Ningun mensaje ha sido borrado en este canal.")
 
         let embed = new Discord.MessageEmbed()
             .setDescription(data.mensaje)
