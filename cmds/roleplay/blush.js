@@ -7,7 +7,7 @@ module.exports = {
         usage: "z!blush",
         category: 'interacción'
 
-    }, run: async ({ client, message, args, embedResponse, Hora }) => {
+    }, run: ({ client, message }) => {
 
         let link = client.star.blush();
 
@@ -17,7 +17,7 @@ module.exports = {
             .setImage(link)
             .setTimestamp()
 
-        return message.channel.send({ embed: embed }).catch(er => { });
+        return message.channel.send({ embed: embed }).catch(() => { });
 
     }
 }

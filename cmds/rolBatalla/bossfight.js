@@ -1,5 +1,4 @@
 const statusA = new Map();
-let vidas = new Map();
 const Discord = require('discord.js');
 module.exports = {
     config: {
@@ -9,10 +8,10 @@ module.exports = {
         usage: "z!bossfight",
         category: 'rol'
 
-    }, run: async ({ client, message, args, embedResponse, Hora }) => {
+    }, run: async ({ client, message, embedResponse }) => {
 
         let data = await client.getData({ id: message.author.id }, 'demonios')
-        let { monstruos, nivelenemigo, nivelespada, nivelusuario, xpusuario, cooldown } = data;
+        let { cooldown } = data;
 
         let prob = Math.floor(Math.random() * 99) + 1;
 

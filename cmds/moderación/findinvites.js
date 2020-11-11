@@ -7,7 +7,7 @@ module.exports = {
         usage: "z!findinvites",
         category: 'moderacion'
 
-    }, run: async ({ client, message, args, embedResponse, Hora }) => {
+    }, run: async ({ client, message, args, embedResponse }) => {
 
         const color = client.color;
 
@@ -41,7 +41,7 @@ module.exports = {
             .setFooter(`Pagina ${seleccion()}/${paginas.length}`)
             .setTimestamp();
 
-        let m = await message.channel.send({ embed: inicio })
+        await message.channel.send({ embed: inicio }).catch(() => { })
 
     }
 }

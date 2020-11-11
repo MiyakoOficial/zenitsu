@@ -1,4 +1,3 @@
-const Discord = require('discord.js');
 module.exports = {
     config: {
         name: "setchannelxp", //nombre del cmd
@@ -7,8 +6,7 @@ module.exports = {
         usage: "z!setchannelxp #mencion",
         category: 'niveles'
 
-    }, run: async ({ client, message, args, embedResponse, Hora }) => {
-        const { color } = client;
+    }, run: async ({ client, message, embedResponse }) => {
 
         if (!message.member.hasPermission("ADMINISTRATOR")) return embedResponse("No tienes el permiso `ADMINISTRATOR`")
         let channel = message.mentions.channels.first();

@@ -8,14 +8,14 @@ module.exports = {
         usage: "z!hunt",
         category: 'rol'
 
-    }, run: async ({ client, message, args, embedResponse, Hora }) => {
+    }, run: async ({ client, message, embedResponse }) => {
         let data = await client.getData({ id: message.author.id }, 'demonios')
-        let { monstruos, nivelenemigo, nivelespada, nivelusuario, xpusuario, cooldown } = data;
+        let { nivelespada, xpusuario, cooldown } = data;
 
         let elcoso = Math.floor(nivelespada / 10);
         let multiplica = []
 
-        for (var i = 0; elcoso > 0; i++) {
+        for (let i = 0; elcoso > 0; i++) {
             multiplica.push('n')
             elcoso--
         }

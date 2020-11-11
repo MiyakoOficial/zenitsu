@@ -8,13 +8,13 @@ module.exports = {
         usage: "z!attack",
         category: 'rol'
 
-    }, run: async ({ client, message, args, embedResponse, Hora }) => {
+    }, run: async ({ client, message, embedResponse }) => {
 
         let prob = Math.floor(Math.random() * 99) + 1;
 
         let data = await client.getData({ id: message.author.id }, 'demonios')
         let dinero = Math.floor(Math.random() * 49) + 1;
-        let { monstruos, nivelenemigo, nivelespada, nivelusuario, xpusuario } = data;
+        let { nivelenemigo, nivelespada } = data;
 
         let dañoenemigo = nivelenemigo;
         let dañouser = nivelespada;

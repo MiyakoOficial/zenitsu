@@ -7,7 +7,7 @@ module.exports = {
         usage: "z!dance",
         category: 'interacción'
 
-    }, run: async ({ client, message, args, embedResponse, Hora }) => {
+    }, run: async ({ client, message }) => {
 
         let link = await client.tnai.sfw.dance();
 
@@ -17,7 +17,7 @@ module.exports = {
             .setImage(link)
             .setTimestamp()
 
-        return message.channel.send({ embed: embed }).catch(er => { });
+        return message.channel.send({ embed: embed }).catch(() => { });
 
     }
 }

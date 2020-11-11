@@ -7,13 +7,13 @@ module.exports = {
         usage: "z!xp",
         category: 'niveles'
 
-    }, run: async ({ client, message, args, embedResponse, Hora }) => {
+    }, run: async ({ client, message, args }) => {
         const { color } = client;
 
-        let getRank = async (member) => {
+        let getRank = (member) => {
 
-            return new Promise((resolve, reject) => {
-                client.rModel('niveles').find({ idGuild: message.guild.id }).sort({ nivel: -1 }).exec(async (err, res) => {
+            return new Promise((resolve) => {
+                client.rModel('niveles').find({ idGuild: message.guild.id }).sort({ nivel: -1 }).exec((err, res) => {
 
                     let results = res.map(a => a.idMember);
 

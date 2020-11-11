@@ -28,7 +28,7 @@ module.exports = {
         if (!miembro.kickable)
             return embedResponse('No puedo advertir a este usuario.')
 
-        if (!args[0].match(/\<\@(\!)?[0-9]{18}\>/g)) return embedResponse('La mencion tiene que ser el primer argumento!')
+        if (!args[0].match(/<@(!)?[0-9]{18}>/g)) return embedResponse('La mencion tiene que ser el primer argumento!')
 
         if (miembro.hasPermission('ADMINISTRATOR'))
             return embedResponse('El miembro mencionado es administrador.')
@@ -50,12 +50,12 @@ module.exports = {
 
             if (message.mentions.members.first().kickable) message.mentions.members.first().kick(razon)
 
-                .then(async (a) => {
+                .then(async () => {
                     embedResponse('Miembro expulsado').catch(() => { })
-                    await require('../../models/warns.js').deleteOne({ idGuild: message.guild.id, idMember: member.id });
+                    await require('../../models/warns.js').deleteOne({ idGuild: message.guild.id, idMember: miembro.id });
                 })
 
-                .catch(er => {
+                .catch(() => {
                     embedResponse('Error en expulsar el miembro!').catch(() => { })
                 })
 
@@ -71,6 +71,6 @@ module.exports = {
             .addField('Advertencias para ser expulsado', check, true)
             .setFooter(`ID: ${res} - Fecha: ${Hora(Date.now(), true)}`)
 
-        return message.channel.send({ embed: embed }).catch(a => { });
+        return message.channel.send({ embed: embed }).catch(() => { });
     }
 }

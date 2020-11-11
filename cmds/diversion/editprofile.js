@@ -1,4 +1,3 @@
-const Discord = require('discord.js');
 module.exports = {
     config: {
         name: "editprofile", //nombre del cmd
@@ -7,7 +6,7 @@ module.exports = {
         usage: "z!editprofile",
         category: 'diversion'
 
-    }, run: async ({ client, message, args, embedResponse, Hora }) => {
+    }, run: async ({ client, message, args, embedResponse }) => {
 
         if (!args[1]) return embedResponse('Ejemplo de uso correcto: z!editprofile nick Hello world!');
 
@@ -24,7 +23,7 @@ module.exports = {
 
                 return embedResponse('Ahora tu descripción es ' + data.description);
 
-                break;
+
 
             case 'img':
 
@@ -35,7 +34,7 @@ module.exports = {
 
                 return embedResponse(`Imagen cambiada, ahora prueba con el comando profile.`);
 
-                break;
+
 
             case 'thumbnail':
 
@@ -46,7 +45,7 @@ module.exports = {
 
                 return embedResponse(`Thumbnail cambiado, ahora prueba con el comando profile.`);
 
-                break;
+
 
             case 'footerimg':
 
@@ -57,7 +56,7 @@ module.exports = {
 
                 return embedResponse(`Imagen del footer cambiado, ahora prueba con el comando profile.`);
 
-                break;
+
 
             case 'footertext':
 
@@ -67,7 +66,7 @@ module.exports = {
 
                 return embedResponse('Ahora tu footer es ' + data.footertext);
 
-                break;
+
 
             case 'nick':
 
@@ -77,7 +76,7 @@ module.exports = {
 
                 return embedResponse('Ahora tu apodo es ' + data.nick);
 
-                break;
+
 
             case 'color':
 
@@ -87,7 +86,7 @@ module.exports = {
 
                 return embedResponse('Ahora tu color de embed es ' + data.color);
 
-                break;
+
 
             default:
 

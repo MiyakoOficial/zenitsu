@@ -1,5 +1,4 @@
 const Discord = require('discord.js');
-const ms = require('ms');
 module.exports = {
     config: {
         name: "train", //nombre del cmd
@@ -8,7 +7,7 @@ module.exports = {
         usage: "z!train",
         category: 'rol'
 
-    }, run: async ({ client, message, args, embedResponse, Hora }) => {
+    }, run: async ({ client, message, embedResponse }) => {
 
         let data = await client.getData({ id: message.author.id }, 'demonios');
         let { cooldown, xpusuario, nivelespada } = data;
@@ -16,7 +15,7 @@ module.exports = {
         let elcoso = Math.floor(nivelespada / 10);
         let multiplica = []
 
-        for (var i = 0; elcoso > 0; i++) {
+        for (let i = 0; elcoso > 0; i++) {
             multiplica.push('n')
             elcoso--
         }

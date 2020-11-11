@@ -6,7 +6,7 @@ module.exports = {
         usage: "z!clear numero",
         category: 'moderacion'
 
-    }, run: async ({ client, message, args, embedResponse, Hora }) => {
+    }, run: async ({ message, args, embedResponse }) => {
 
         if (!message.member.hasPermission('MANAGE_MESSAGES')) return embedResponse('No tienes el permiso `MANAGE_MESSAGES`!')
         if (!message.guild.me.hasPermission('MANAGE_MESSAGES')) return embedResponse('No tengo el permiso `MANAGE_MESSAGES`')

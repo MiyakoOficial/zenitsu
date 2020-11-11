@@ -7,12 +7,12 @@ module.exports = {
         usage: "z!rank",
         category: 'niveles'
 
-    }, run: async ({ client, message, args, embedResponse, Hora }) => {
+    }, run: async ({ client, message, args, embedResponse }) => {
         let seleccion = parseInt(args[0]) || 1;
 
         const { color } = client;
 
-        await client.rModel('niveles').find({ idGuild: message.guild.id }).limit(150).sort({ nivel: -1 }).exec(async (err, res) => {
+        await client.rModel('niveles').find({ idGuild: message.guild.id }).limit(150).sort({ nivel: -1 }).exec((err, res) => {
             if (err) return console.log(err);
             if (res.length === 0) return embedResponse("No hay datos...")
 

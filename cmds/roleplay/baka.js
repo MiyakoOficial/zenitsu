@@ -7,7 +7,7 @@ module.exports = {
         usage: "z!baka @mencion",
         category: 'interacción'
 
-    }, run: async ({ client, message, args, embedResponse, Hora }) => {
+    }, run: async ({ client, message, embedResponse }) => {
 
         let link = (await client.neko.baka()).url
         let miembro = message.mentions.members.first();
@@ -20,7 +20,7 @@ module.exports = {
             .setImage(link)
             .setTimestamp()
 
-        return message.channel.send({ embed: embed }).catch(er => { });
+        return message.channel.send({ embed: embed }).catch(() => { });
 
     }
 }

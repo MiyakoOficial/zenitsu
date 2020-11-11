@@ -1,4 +1,3 @@
-const Discord = require('discord.js');
 module.exports = {
     config: {
         name: "buylevel", //nombre del cmd
@@ -7,7 +6,7 @@ module.exports = {
         usage: "z!buylevel num",
         category: 'rol'
 
-    }, run: async ({ client, message, args, embedResponse, Hora }) => {
+    }, run: async ({ client, message, args, embedResponse }) => {
 
         let costo = 250;
 

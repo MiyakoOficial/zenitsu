@@ -8,7 +8,7 @@ module.exports = {
         usage: "z!pardon @mencion",
         category: 'moderacion'
 
-    }, run: async ({ client, message, args, embedResponse, Hora }) => {
+    }, run: async ({ client, message, args, embedResponse }) => {
 
         if (!message.member.hasPermission('KICK_MEMBERS')) return embedResponse('No tienes el permiso `KICK_MEMBERS`');
 

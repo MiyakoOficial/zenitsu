@@ -7,13 +7,13 @@ module.exports = {
         usage: "z!top",
         category: 'rol'
 
-    }, run: async ({ client, message, args, embedResponse, Hora }) => {
+    }, run: async ({ client, message, args, embedResponse }) => {
         let seleccion = parseInt(args[1]) || 1;
 
         const { color } = client;
 
         switch (args[0]) {
-            case 'level': await client.rModel('demonios').find().limit(150).sort({ nivelespada: -1 }).exec(async (err, res) => {
+            case 'level': await client.rModel('demonios').find().limit(150).sort({ nivelespada: -1 }).exec((err, res) => {
                 if (err) return console.log(err);
                 if (res.length === 0) return embedResponse("No hay datos...")
 
@@ -36,7 +36,7 @@ module.exports = {
             });
                 break;
 
-            case 'kill': await client.rModel('demonios').find().limit(150).sort({ monstruos: -1 }).exec(async (err, res) => {
+            case 'kill': await client.rModel('demonios').find().limit(150).sort({ monstruos: -1 }).exec((err, res) => {
                 if (err) return console.log(err);
                 if (res.length === 0) return embedResponse("No hay datos...")
 
@@ -62,8 +62,6 @@ module.exports = {
             default:
 
                 return embedResponse(`Elije entre las opciones: level, kill`)
-
-                break;
 
         }
     }

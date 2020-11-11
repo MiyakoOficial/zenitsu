@@ -6,7 +6,7 @@ module.exports = {
         usage: "z!resetwarns @mencion",
         category: 'moderacion'
 
-    }, run: async ({ client, message, args, embedResponse, Hora }) => {
+    }, run: async ({ message, embedResponse }) => {
 
         if (!message.member.hasPermission('ADMINISTRATOR')) return embedResponse('No tienes el permiso `ADMINISTRATOR`')
 

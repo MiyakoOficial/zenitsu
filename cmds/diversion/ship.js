@@ -7,7 +7,7 @@ module.exports = {
         usage: "z!ship @mencion",
         category: 'diversion'
 
-    }, run: async ({ client, message, args, embedResponse, Hora }) => {
+    }, run: ({ client, message, embedResponse }) => {
 
         let mencionado = message.mentions.users.first()
         if (!mencionado) return embedResponse('Menciona a alguien!')

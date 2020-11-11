@@ -1,4 +1,3 @@
-const statusA = new Map();
 const Discord = require('discord.js');
 module.exports = {
     config: {
@@ -8,7 +7,7 @@ module.exports = {
         usage: "z!stats @mencion",
         category: 'rol'
 
-    }, run: async ({ client, message, args, embedResponse, Hora }) => {
+    }, run: async ({ client, message, args }) => {
 
         let member = message.guild.members.cache.find(a => a.user.username === args.join(' ')) || message.guild.members.cache.find(a => a.user.tag === args.join(' ')) || message.guild.members.cache.find(a => a.displayName === args.join(' ')) || message.guild.members.cache.get(args[0]) || message.mentions.members.first() || message.member
         let data = await client.getData({ id: member.user.id }, 'demonios')
@@ -25,7 +24,6 @@ module.exports = {
             .addField('Dinero', dinero, true)
             .addField('Jefes derrotados', jefes, true)
 
-        message.channel.send({ embed: embed }).catch(a => { });
-
+        message.channel.send({ embed: embed }).catch(() => { });
     }
 }

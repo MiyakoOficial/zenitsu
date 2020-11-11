@@ -8,7 +8,7 @@ module.exports = {
         usage: "z!checkwarns @mencion",
         category: 'moderacion'
 
-    }, run: async ({ client, message, args, embedResponse, Hora }) => {
+    }, run: async ({ client, message, args, embedResponse }) => {
 
         if (!message.mentions.members.first()) return embedResponse('Menciona a un miembro del servidor!')
 

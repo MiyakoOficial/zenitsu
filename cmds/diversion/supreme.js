@@ -7,7 +7,7 @@ module.exports = {
         usage: "z!supreme texto",
         category: 'diversion'
 
-    }, run: async ({ client, message, args, embedResponse, Hora }) => {
+    }, run: ({ client, message, args, embedResponse }) => {
 
         let argumento = args.join(' ');
         let txt = encodeURIComponent(argumento);
