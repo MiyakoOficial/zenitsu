@@ -8,35 +8,55 @@ module.exports = {
         usage: "z!estructura",
         category: 'utiles'
     },
-    run: ({ message, args }) => {
+    run: ({ message }) => {
 
-        let user = message.guild.members.cache.get(args[0]) || message.mentions.members.first() || message.member
+        let printT = message.guild.channels.cache.filter(a => a.type == 'category').sort((a, b) => a.position - b.position);
 
-        let res = Discord.Util.splitMessage(Discord.Util.discordSort(message.guild.channels.cache.sort((a, b) => a.rawPosition - b.rawPosition).filter(channel => channel.type == "category" && channel.permissionsFor(user).has('VIEW_CHANNEL'))).map(x => `[📂] ${x.name}\n\t${x.children.sort(Ordenar).filter(a => a.permissionsFor(user).has('VIEW_CHANNEL')).map(a => a.type == 'text' ? '[💬] ' + a.name : a.type == 'news' ? '[🔔] ' + a.name : a.type == 'voice' ? '[🔊] ' + a.name + voiceChannelMembers(a) : a.name).join('\n\t')}\t`), { maxLength: 1950, char: '' });
-        res.forEach(resul => message.channel.send(`Estructura de ${user.user.tag}.\n${resul}`, { code: '' }).catch(() => { }));
+        printT = printT.map(cat => {
 
-        function voiceChannelMembers(channel) {
+            return `[📁] ${cat.name}${cat.children.filter(a => a.type != 'voice').sort((a, b) => a.position - b.position).map(a => `\n\t${name(a)}`).join('')}${cat.children.filter(a => a.type == 'voice').sort((a, b) => a.position - b.position).map(a => `\n\t[🔊] ${a.name}${membersInfoInChannel(a)}`).join('')}`
+
+        })
+
+        let res = Discord.Util.splitMessage(printT, { maxLength: 1900 });
+
+
+        res.forEach(a => message.channel.send(a, { code: '' }))
+
+        function membersInfoInChannel(channel) {
+
             let str = '';
-            const members = channel.members;
-            const stream = members.filter((x) => x.voice.streaming).map((x) => x.displayName.toLowerCase());
-            const nostream = members.filter((x) => !x.voice.streaming).map((x) => x.displayName.toLowerCase());
-            stream.sort();
-            nostream.sort();
-            stream.forEach((u) => {
-                const m = message.guild.members.cache.find((x) => x.displayName.toLowerCase() === u);
-                str += m.user.bot ? "\n\t\t[🤖] " + m.displayName : '\n\t\t[🙎] ' + m.displayName + ' [Transmitiendo]';
-            });
-            nostream.forEach((u) => {
-                const m = message.guild.members.cache.find((x) => x.displayName.toLowerCase() === u);
-                str += m.user.bot ? "\n\t\t[🤖] " + m.displayName : '\n\t\t[🙎] ' + m.displayName;
+
+            let streaming = channel.members.array().filter(a => a.voice.streaming);
+            streaming = streaming.map(a => a.displayName.toLowerCase()).sort()
+            streaming.forEach(a => {
+
+                let member = message.guild.members.cache.find(e => e.displayName.toLowerCase() === a)
+                str += member.user.bot ? `\n\t[${emojisVoice(member, '🎧🤖', '🤖')}] ${member.displayName} [EN DIRECTO]` : `\n\t[${emojisVoice(member, '🧏', '🙎')}] ${member.displayName} [EN DIRECTO]`
             });
 
-            return str;
+            let noStreaming = channel.members.array().filter(a => !a.voice.streaming);
+            noStreaming = noStreaming.map(a => a.displayName.toLowerCase()).sort()
+            noStreaming.forEach(a => {
+
+                let member = message.guild.members.cache.find(e => e.displayName.toLowerCase() === a)
+                str += member.user.bot ? `\n\t[${emojisVoice(member, "🎧🤖", '🤖')}] ${member.displayName}` : `\n\t[${emojisVoice(member, '🧏', '🙎')}] ${member.displayName}`
+            });
+            return str
+
         }
+
     }
 }
 
-function Ordenar(canal1, canal2) {
-    if (canal2.type == "voice" && canal1.type != "voice") return -1
-    return (canal1.type != "voice" || canal2.type == "voice") ? canal1.position - canal2.position : 1
+function name(a) {
+
+    return a.type == 'text' ? `[💬] ${a.name}` : a.type == 'news' ? `[🔔] ${a.name}` : a.type == 'store' ? `[🏬] ${a.name}` : `[❓] ${a.name}`
+
+}
+
+function emojisVoice(member, deaf, normal) {
+
+    return `${member.voice.selfMute || member.voice.serverMute ? '🔇' : ''}${member.voice.selfVideo ? '🎥' : ''}${member.voice.selfDeaf || member.voice.serverDeaf ? deaf : normal}`
+
 }
