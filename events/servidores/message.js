@@ -164,7 +164,6 @@ module.exports = async (client, message) => {
             return; //console.log('no prefix message')
         }
 
-        return;
     }
 
     let commandfile = client.commands.get(command) || client.commands.get(client.alias.get(command))
@@ -190,7 +189,7 @@ module.exports = async (client, message) => {
 
             }, 4000);
 
-        };
+        }
 
         let embedC = new Discord.MessageEmbed()
             .setColor(client.color)
@@ -217,8 +216,8 @@ module.exports = async (client, message) => {
 
             return message.author.send({ embed: embed }).catch(() => { });
         });
-    };
-    function embedResponse(descriptionHere, option, options) {
+    }
+    function embedResponse(descriptionHere, option) {
 
         let embed = new Discord.MessageEmbed()
             .setDescription(descriptionHere)

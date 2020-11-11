@@ -1,5 +1,3 @@
-const Discord = require("discord.js")
-
 module.exports = {
     config: {
         name: "txt",
@@ -8,7 +6,7 @@ module.exports = {
         usage: "z!txt Hola mundo!",
         category: 'utiles'
     },
-    run: async ({ client, message, args, embedResponse, Hora }) => {
+    run: ({ message, args, embedResponse }) => {
         if (!message.channel.permissionsFor(message.author).has('ATTACH_FILES')) return embedResponse('No tienes el permiso `ATTACH_FILES`')
         if (!message.channel.permissionsFor(message.client.user).has('ATTACH_FILES')) return embedResponse('No tengo el permiso `ATTACH_FILES`')
         if (!args[0]) return embedResponse('Escribe algo!');

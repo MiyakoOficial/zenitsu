@@ -1,4 +1,3 @@
-const Discord = require("discord.js");
 const fetch = require('node-fetch');
 
 module.exports = {
@@ -9,7 +8,7 @@ module.exports = {
         usage: "z!djs",
         category: 'utiles'
     },
-    run: async ({ client, message, args, embedResponse }) => {
+    run: async ({ message, args, embedResponse }) => {
 
         if (!args[0]) return embedResponse('¿Que quieres buscar?');
         let response = await fetch(`https://djsdocs.sorta.moe/v2/embed?src=stable&q=${encodeURIComponent(args.join(' '))}`).catch(() => { });

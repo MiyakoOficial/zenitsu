@@ -9,7 +9,7 @@ module.exports = {
         usage: "z!channel",
         category: 'utiles'
     },
-    run: async ({ client, message, args, embedResponse }) => {
+    run: async ({ client, message }) => {
 
         let { canal } = await client.getData({ id: message.guild.id }, 'logslevel');
         let { channellogs } = await client.getData({ id: message.guild.id }, 'logs');

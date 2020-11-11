@@ -50,7 +50,6 @@ client.neko = new nekos().sfw;
 client.star = require('star-labs');
 client.queue = new Map();
 client.tnai = new tnai()
-let { readdirSync } = require('fs');
 
 require('dotenv').config();
 
@@ -66,7 +65,7 @@ mongoose.connect(process.env.MONGODB, { useNewUrlParser: true, useUnifiedTopolog
 });
 
 client.login(process.env.BOT_TOKEN)
-    .then(async () => {
+    .then(() => {
 
         console.log(`Estoy listo, soy ${client.user.tag}`);
 
@@ -194,20 +193,20 @@ client.duration = (ms) => {
 }
 
 function duration(segundos) {
-    var s = parseInt(segundos) * 1000
-    var ms = s % 1000;
+    let s = parseInt(segundos) * 1000
+    let ms = s % 1000;
     s = (s - ms) / 1000;
-    var secs = s % 60;
+    let secs = s % 60;
     s = (s - secs) / 60;
-    var mins = s % 60;
-    var hrs = (s - mins) / 60;
+    let mins = s % 60;
+    let hrs = (s - mins) / 60;
     if (`${secs}`.length === 1) {
         secs = `0${secs}`;
-    };
+    }
 
     if (`${mins}`.length === 1) {
         mins = `0${mins}`;
-    };
+    }
 
     if (hrs <= 0) {
         if (mins <= 0) {
@@ -218,7 +217,7 @@ function duration(segundos) {
     } else {
         return hrs + ":" + mins + ":" + secs;
     }
-};
+}
 
 global.getData = async ({ ...find }, model) => {
 
@@ -273,7 +272,7 @@ global.updateData = async ({ ...find }, { ...newValue }, model) => {
 }
 
 client.among = (mensaje, member, canalVoz, canalText, bol) => {
-    let color = client.color;
+    //let color = client.color;
 
     let message = mensaje;
 
@@ -324,7 +323,7 @@ client.among = (mensaje, member, canalVoz, canalText, bol) => {
 
         await Promise.all(p);
 
-        msg.edit({ embed: embed }).then(a => { a.delete({ timeout: 5000 }).catch(err => { }) })
+        msg.edit({ embed: embed }).then(a => { a.delete({ timeout: 5000 }).catch(() => { }) })
         //message.delete({ timeout: 5000 });
     });
 
@@ -337,7 +336,7 @@ function response(d, c) {
         .setDescription(d)
         .setColor(color)
     return c.send({ embed: embed })
-};
+}
 
 client.rModel = (n) => {
 

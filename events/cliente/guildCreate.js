@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 
-module.exports = async (client, guild) => {
+module.exports = (client, guild) => {
 
     let add1 = `\`\`\`diff
 + Nombre: ${guild.name}

@@ -19,7 +19,7 @@ module.exports = (client) => {
             }
 
             if (carpeta.config.alias) carpeta.config.alias.forEach(a => client.alias.set(a, carpeta.config.name));
-        };
+        }
     };
     require('fs')
         .readdirSync('./cmds')

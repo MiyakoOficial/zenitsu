@@ -1,5 +1,5 @@
-const Discord = require("discord.js");
-const ms = require('ms');
+/*const Discord = require("discord.js");
+const ms = require('ms');*/
 
 module.exports = async (client, reaction, user) => {
 
@@ -7,7 +7,7 @@ module.exports = async (client, reaction, user) => {
     if (user.bot) return;
     let message = reaction.message;
     let guild = message.guild;
-    let channel = message.channel;
+    //let channel = message.channel;
     let emoji = reaction.emoji;
     let member = guild.member(user);
 
@@ -34,7 +34,7 @@ module.exports = async (client, reaction, user) => {
 
         //unmute
         await client.among(reaction.message, member, canalVoz, user, false)//
-        await reaction.users.remove(user).catch(a => { })
+        await reaction.users.remove(user).catch(() => { })
     }
 
     else if (emoji.id === '751908729624068226') {
@@ -50,7 +50,7 @@ module.exports = async (client, reaction, user) => {
         }, ms('3s'))*/
         //mute
         await client.among(reaction.message, member, canalVoz, user, true)//
-        await reaction.users.remove(user).catch(a => { })
+        await reaction.users.remove(user).catch(() => { })
     }
 
 }

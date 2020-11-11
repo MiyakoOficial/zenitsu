@@ -7,7 +7,7 @@ module.exports = {
         usage: "z!shortlink URL",
         category: 'utiles'
     },
-    run: async ({ client, message, args, embedResponse }) => {
+    run: ({ message, args, embedResponse }) => {
 
         const shorten = require('isgd');
         if (!args[0]) return embedResponse(`Uso correcto:\nz!shortlink <link>`)

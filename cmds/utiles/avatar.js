@@ -9,7 +9,7 @@ module.exports = {
         usage: "z!avatar",
         category: 'utiles'
     },
-    run: async ({ client, message, args, embedResponse }) => {
+    run: ({ client, message, args }) => {
 
         let miembro = message.mentions.members.first() || message.guild.members.resolve(args[0]) || message.guild.members.cache.find(a => a.user.username === args.join(' ')) || message.guild.members.cache.find(a => a.user.tag === args.join(' ')) || message.guild.members.cache.find(a => a.displayName === args.join(' ')) || message.member;
 
@@ -24,7 +24,7 @@ module.exports = {
             .setImage(avatar)
             .setFooter(`Pedido por ${message.author.tag}`, message.author.displayAvatarURL({ size: 2048, dynamic: true }))
             .setDescription(`[Link avatar](${avatar})\n[Búscalo en google](${buscarG})`)
-        return message.channel.send({ embed: embed }).catch(err => { });
+        return message.channel.send({ embed: embed }).catch(() => { });
 
     }
 };

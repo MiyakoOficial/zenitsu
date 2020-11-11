@@ -1,6 +1,4 @@
 const Discord = require("discord.js");
-const ayuda = 'elsuperduperincreibleseparadordearraysencaminoxdxd:v:vxdxdestonadieloescribiranuncaxdxdhdsbasudkjbsdjnasiudhaskkdhbdjfasdfilshdvfaciludvshfilahsdvfcliuasdbvfcilukjbsdvfiulKJVIUHJIOSDHADUJohifjbdsofihbsfihjbsdfiohbaiaslhabodhb'
-
 
 module.exports = async (client, message) => {
 
@@ -9,7 +7,7 @@ module.exports = async (client, message) => {
     if (message.author.bot) return;
     if (message.channel.type === 'dm') return;
     if (!message.content) return;
-    await client.updateData({ id: message.channel.id }, { snipe: `${message.content}${ayuda}<@${message.author.id}>` }, 'snipe')
+    await client.updateData({ id: message.channel.id }, { nombre: message.author.tag, avatarURL: message.author.displayAvatarURL({ dynamic: true }), mensaje: message.content }, 'snipe')
 
     let data = (await client.getData({ id: message.guild.id }, 'logs'))
 
