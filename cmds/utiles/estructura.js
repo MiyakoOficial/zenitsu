@@ -12,18 +12,19 @@ module.exports = {
 
         let memberXD = message.guild.members.cache.get(args[0]) || message.guild.members.cache.find(a => a.displayName == args.join(' ') || a.user.tag == args.join(' ') || a.user.username == args.join(' ')) || message.mentions.members.first() || message.member;
 
-        let printT = message.guild.channels.cache.filter(a => a.type == 'category').filter(a => a.permissionsFor(memberXD).has('VIEW_CHANNEL')).sort((a, b) => a.position - b.position);
+        let printT = message.guild.channels.cache.filter(a => a.type == 'category').sort((a, b) => a.position - b.position);
 
         printT = printT.map(cat => {
-
-            return `[📁] ${cat.name}${cat.children.filter(a => a.permissionsFor(memberXD).has('VIEW_CHANNEL')).filter(a => a.type != 'voice').sort((a, b) => a.position - b.position).map(a => `\n\t${name(a)}`).join('')}${cat.children.filter(a => a.permissionsFor(memberXD).has('VIEW_CHANNEL')).filter(a => a.type == 'voice').sort((a, b) => a.position - b.position).map(a => `\n\t[🔊] ${a.name}${membersInfoInChannel(a)}`).join('')}`
+            let canales_no_voice = cat.children.filter(a => a.permissionsFor(memberXD).has('VIEW_CHANNEL')).filter(a => a.type != 'voice')
+            let canales_si_voice = cat.children.filter(a => a.permissionsFor(memberXD).has('VIEW_CHANNEL')).filter(a => a.type == 'voice')
+            return `[📁] ${cat.name} [${canales_si_voice.size + canales_no_voice.size / cat.children.size}]${canales_no_voice.sort((a, b) => a.position - b.position).map(a => `\n\t${name(a)}`).join('')}${canales_si_voice.sort((a, b) => a.position - b.position).map(a => `\n\t[🔊] ${a.name}${membersInfoInChannel(a)}`).join('')}`
 
         })
 
         let res = Discord.Util.splitMessage(printT, { maxLength: 1900 });
 
-        message.channel.send(`**Estructura de ${memberXD.user.tag}**`)
-        res.forEach(a => message.channel.send(a, { code: '' }))
+        message.channel.send(`**Estructura de ${memberXD.user.tag}**`).catch(() => { })
+        res.forEach(a => message.channel.send(a, { code: '' }).catch(() => { }))
 
         function membersInfoInChannel(channel) {
 
