@@ -54,10 +54,10 @@ module.exports = {
             .setColor(client.color)
             .setThumbnail(avatar)
             .addField('Nivel', nivel, true)
-            .addField('Logros', datazo.length == 0 ? 'No tiene logros.' : datazo.join(', '), true)
             .addField("Puntos web", puntosWeb, true)
             .addField('Numero de seguidores.', seguidores, true)
             .addField('Numero de logros', logrosCount, true)
+            .addField('Logros', datazo.length == 0 ? 'No tiene logros.' : datazo.join(', '), true)
             .setTimestamp()
         message.channel.send({ embed: embed }).catch(() => { })
 
