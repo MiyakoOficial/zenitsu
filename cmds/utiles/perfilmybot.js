@@ -21,7 +21,7 @@ module.exports = {
         if (data.includes('Upps! Ocurrio un error</h2> La pagina que intentabas buscar, no esta disponible o no tienes acceso a ella. <br><br>'))
             return embedResponse('Usuario invalido.')
 
-        console.log(data)
+        //console.log(data)
 
         let seguidores = data.split('<div>')[0].split('data countFollow">')[1].split('<br>')[0]
         //        console.log(puntos);
