@@ -10,18 +10,34 @@ module.exports = {
     },
     run: async ({ message, args }) => {
 
+        let todo = '';
+
         let memberXD = message.guild.members.cache.get(args[0]) || message.guild.members.cache.find(a => a.displayName == args.join(' ') || a.user.tag == args.join(' ') || a.user.username == args.join(' ')) || message.mentions.members.first() || message.member;
 
         let printT = message.guild.channels.cache.filter(a => a.type == 'category').sort((a, b) => a.position - b.position);
 
+        let without = message.guild.channels.cache.filter(a => !a.parent && a.type != 'category')
+
+        let textos = without.sort((a, b) => a.position - b.position).filter(a => a.type != 'voice').filter(a => a.permissionsFor(memberXD).has('VIEW_CHANNEL'))
+        let voz = without.sort((a, b) => a.position - b.position).filter(a => a.type == 'voice').filter(a => a.permissionsFor(memberXD).has('VIEW_CHANNEL'))
+        todo += `[${voz.size + textos.size}/${without.size}]`
+        textos = textos.map(a => `\t${name(a)}`)
+        voz = voz.map(a => `\n\t[🔊] ${a.name}${membersInfoInChannel(a)}`)
+
+        todo += `${textos.join('\n')}`
+        todo += `${voz.join('')}`;
+
         printT = printT.map(cat => {
+
             let canales_no_voice = cat.children.filter(a => a.permissionsFor(memberXD).has('VIEW_CHANNEL')).filter(a => a.type != 'voice')
             let canales_si_voice = cat.children.filter(a => a.permissionsFor(memberXD).has('VIEW_CHANNEL')).filter(a => a.type == 'voice')
-            return `[📁] ${cat.name} [${canales_si_voice.size + canales_no_voice.size + "/" + cat.children.size}]${canales_no_voice.sort((a, b) => a.position - b.position).map(a => `\n\t${name(a)}`).join('')}${canales_si_voice.sort((a, b) => a.position - b.position).map(a => `\n\t[🔊] ${a.name}${membersInfoInChannel(a)}`).join('')}`
+            return `[📁] ${cat.name} [${canales_si_voice.size + canales_no_voice.size + "/" + cat.children.size}]${canales_no_voice.sort((a, b) => a.position - b.position).map(a => `\n\t${name(a)}`).join('')}${canales_si_voice.sort((a, b) => a.position - b.position).map(a => `\n\t[🔊] ${a.name}${membersInfoInChannel(a)}`).join('')}\n`
 
         })
 
-        let res = Discord.Util.splitMessage(printT, { maxLength: 1900 });
+        todo += `\n${printT.join('')}`
+
+        let res = Discord.Util.splitMessage(todo, { maxLength: 1900 });
 
         await message.channel.send(`**Estructura de ${memberXD.user.tag}**`).catch(() => { })
         res.forEach(async a => await message.channel.send(a, { code: '' }).catch(() => { }))
