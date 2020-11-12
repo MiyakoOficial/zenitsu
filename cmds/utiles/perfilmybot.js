@@ -21,7 +21,7 @@ module.exports = {
         let data = await fetch(`https://mybo.me/${args[0]}`);
         data = await data.text();
 
-        if (data.includes(`<div class="card-body">En marcha mi primer Bot, primeros pasos y más.</div>`) && data.includes(`<span>Te interesa promocionar tu servidor de discord, bot, sitio web o producto en portalmybot? <a`))
+        if (data.includes(`<div class="card-body">En marcha mi primer Bot, primeros pasos y más.</div>`))
             return embedResponse('Usuario invalido.')
 
         let datazo = data.split(`<p class="fw-700 p-mg">Logros:</p>`)[1].split('<div class="container content-coders "')[0];
