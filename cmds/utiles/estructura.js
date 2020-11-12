@@ -20,7 +20,7 @@ module.exports = {
 
         let textos = without.sort((a, b) => a.position - b.position).filter(a => a.type != 'voice').filter(a => a.permissionsFor(memberXD).has('VIEW_CHANNEL'))
         let voz = without.sort((a, b) => a.position - b.position).filter(a => a.type == 'voice').filter(a => a.permissionsFor(memberXD).has('VIEW_CHANNEL'))
-        todo += `[${voz.size + textos.size}/${without.size}]`
+        todo += `[${voz.size + textos.size}/${without.size}]\n`
         textos = textos.map(a => `\t${name(a)}`)
         voz = voz.map(a => `\n\t[🔊] ${a.name}${membersInfoInChannel(a)}`)
 
