@@ -70,12 +70,12 @@ module.exports = {
 
         else {
 
-            await client.updateData({ id: message.author.id }, { $inc: { nivelusuario: 1, nivelespada: 1 } }, 'demonios')
+            await client.updateData({ id: message.author.id }, { $inc: { nivelespada: 1 } }, 'demonios')
             let dataz = await client.updateData({ id: message.author.id }, { xpusuario: 0 }, 'demonios');
 
             let embed3 = new Discord.MessageEmbed()
                 .setColor(client.color)
-                .setDescription('Subiste al nivel ' + dataz.nivelusuario + '!')
+                .setDescription('Subiste al nivel ' + dataz.nivelespada + '!')
                 .setTimestamp()
                 .setAuthor(message.author.tag, message.author.displayAvatarURL({ dynamic: true }))
                 .setThumbnail('https://media1.tenor.com/images/c0011b22ef40718152484c7e11fd4b6d/tenor.gif?itemid=14677284')

@@ -19,11 +19,6 @@ const Guild = Schema({
         default: 1
     },
 
-    nivelusuario: {
-        type: Number,
-        default: 1
-    },
-
     xpusuario: {
         type: Number,
         default: 0
