@@ -14,6 +14,9 @@ module.exports = {
         if (!args[0])
             return embedResponse('¿A quien quieres buscar?')
 
+        if (/[^a-z0-9]/gi.test(args[0]))
+            return embedResponse('Solo se permiten usar letras y numeros.')
+
         const fetch = require('node-fetch');
         let data = await fetch(`https://mybo.me/${args[0]}`);
         data = await data.text();
