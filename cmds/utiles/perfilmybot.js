@@ -40,7 +40,7 @@ module.exports = {
                 return xd[1].split(`">`)[0]
             })
 
-        let avatar = "https://cdn.discordapp.com/avatars/" + data.split(`"https://cdn.discordapp.com/avatars/`)[1] ? data.split(`"https://cdn.discordapp.com/avatars/`)[1].split(`" />`)[0] : 'https://cdn.discordapp.com/embed/avatars/2.png'
+        let avatar = data.split(`"https://cdn.discordapp.com/avatars/`)[1] ? "https://cdn.discordapp.com/avatars/" + data.split(`"https://cdn.discordapp.com/avatars/`)[1].split(`" />`)[0] : 'https://cdn.discordapp.com/embed/avatars/2.png'
 
         let nivel = data.split(`"Nivel de usuario">`)[1].split('/i')[0].split('<')[0].trim();
 
