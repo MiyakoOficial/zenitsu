@@ -8,7 +8,7 @@ module.exports = {
         usage: "z!estructura",
         category: 'utiles'
     },
-    run: ({ message, args }) => {
+    run: async ({ message, args }) => {
 
         let memberXD = message.guild.members.cache.get(args[0]) || message.guild.members.cache.find(a => a.displayName == args.join(' ') || a.user.tag == args.join(' ') || a.user.username == args.join(' ')) || message.mentions.members.first() || message.member;
 
@@ -23,8 +23,8 @@ module.exports = {
 
         let res = Discord.Util.splitMessage(printT, { maxLength: 1900 });
 
-        message.channel.send(`**Estructura de ${memberXD.user.tag}**`).catch(() => { })
-        res.forEach(a => message.channel.send(a, { code: '' }).catch(() => { }))
+        await message.channel.send(`**Estructura de ${memberXD.user.tag}**`).catch(() => { })
+        res.forEach(async a => await message.channel.send(a, { code: '' }).catch(() => { }))
 
         function membersInfoInChannel(channel) {
 
