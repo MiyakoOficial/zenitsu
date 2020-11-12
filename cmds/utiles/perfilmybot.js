@@ -23,6 +23,12 @@ module.exports = {
 
         //console.log(data)
 
+        let avatar = "https://cdn.discordapp.com/avatars/" + data.split(`"https://cdn.discordapp.com/avatars/`)[1].split(`" />`)[0]
+
+        //message.channel.send(avatar)
+        let nivel = data.split(`"Nivel de usuario">`)[1].split('/i')[0].split('<')[0].trim();
+
+
         let seguidores = data.split('<div>')[0].split('data countFollow">')[1].split('<br>')[0]
         //        console.log(puntos);
 
@@ -36,6 +42,8 @@ module.exports = {
 
         let embed = new Discord.MessageEmbed()
             .setColor(client.color)
+            .setThumbnail(avatar)
+            .addField('Nivel', nivel)
             .addField("Puntos web", puntosWeb, true)
             .addField('Numero de seguidores.', seguidores, true)
             .addField('Numero de logros', logrosCount, true)
