@@ -21,15 +21,15 @@ module.exports = {
         let data = await fetch(`https://mybo.me/${args[0]}`);
         data = await data.text();
 
+        if (data.includes(`<div class="card-body">En marcha mi primer Bot, primeros pasos y más.</div>`) && data.includes(`<span>Te interesa promocionar tu servidor de discord, bot, sitio web o producto en portalmybot? <a`))
+            return embedResponse('Usuario invalido.')
+
         let datazo = data.split(`<p class="fw-700 p-mg">Logros:</p>`)[1].split('<div class="container content-coders "')[0];
         datazo = datazo.split('<div class="column col-xs-2">').slice(1)
             .map(a => {
                 let xd = a.split('alt="logro-')
                 return xd[1].split(`">`)[0]
             })
-
-        if (data.includes(`<div class="card-body">En marcha mi primer Bot, primeros pasos y más.</div>`) && data.includes(`<span>Te interesa promocionar tu servidor de discord, bot, sitio web o producto en portalmybot? <a`))
-            return embedResponse('Usuario invalido.')
 
         let avatar = "https://cdn.discordapp.com/avatars/" + data.split(`"https://cdn.discordapp.com/avatars/`)[1].split(`" />`)[0]
 
