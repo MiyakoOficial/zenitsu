@@ -1,4 +1,5 @@
-const Discord = require("discord.js")
+const Discord = require("discord.js");
+const { text } = require("express");
 
 module.exports = {
     config: {
@@ -20,7 +21,7 @@ module.exports = {
 
         let textos = without.sort((a, b) => a.position - b.position).filter(a => a.type != 'voice').filter(a => a.permissionsFor(memberXD).has('VIEW_CHANNEL'))
         let voz = without.sort((a, b) => a.position - b.position).filter(a => a.type == 'voice').filter(a => a.permissionsFor(memberXD).has('VIEW_CHANNEL'))
-        todo += `[${voz.size + textos.size}/${without.size}]\n`
+        todo += `[${voz.size + textos.size}/${without.size}]${textos.length == 0 && voz.length == 0 ? '' : '\n'}`
         textos = textos.map(a => `\t${name(a)}`)
         voz = voz.map(a => `${textos.length >= 1 ? '\n' : ''}\t[🔊] ${a.name}${membersInfoInChannel(a)}`)
 
