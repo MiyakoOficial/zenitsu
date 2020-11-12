@@ -22,7 +22,7 @@ module.exports = {
         let voz = without.sort((a, b) => a.position - b.position).filter(a => a.type == 'voice').filter(a => a.permissionsFor(memberXD).has('VIEW_CHANNEL'))
         todo += `[${voz.size + textos.size}/${without.size}]\n`
         textos = textos.map(a => `\t${name(a)}`)
-        voz = voz.map(a => `\n\t[🔊] ${a.name}${membersInfoInChannel(a)}`)
+        voz = voz.map(a => `${textos.length >= 1 ? '\n' : ''}\t[🔊] ${a.name}${membersInfoInChannel(a)}`)
 
         todo += `${textos.join('\n')}`
         todo += `${voz.join('')}`;
