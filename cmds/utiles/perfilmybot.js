@@ -30,6 +30,10 @@ module.exports = {
             return embedResponse('Usuario invalido.')
 
         let datazo = logrosCheck.split('<div class="container content-coders "')[0];
+
+        if (!datazo)
+            return embedResponse('Usuario invalido.')
+
         datazo = datazo.split('<div class="column col-xs-2">').slice(1)
             .map(a => {
                 let xd = a.split('alt="logro-')
