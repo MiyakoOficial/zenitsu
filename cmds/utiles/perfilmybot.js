@@ -28,27 +28,19 @@ module.exports = {
                 return xd[1].split(`">`)[0]
             })
 
-        //console.log(datazo)
-
-        if (data.includes('La mejor opción para emp') && data.includes('ezar a desarrollar'))
+        if (data.includes(`<div class="card-body">En marcha mi primer Bot, primeros pasos y más.</div>`) && data.includes(`<span>Te interesa promocionar tu servidor de discord, bot, sitio web o producto en portalmybot? <a`))
             return embedResponse('Usuario invalido.')
-
-        //console.log(data)
 
         let avatar = "https://cdn.discordapp.com/avatars/" + data.split(`"https://cdn.discordapp.com/avatars/`)[1].split(`" />`)[0]
 
-        //message.channel.send(avatar)
         let nivel = data.split(`"Nivel de usuario">`)[1].split('/i')[0].split('<')[0].trim();
 
 
         let seguidores = data.split('<div>')[0].split('data countFollow">')[1].split('<br>')[0]
-        //        console.log(puntos);
 
         let puntosWeb = data.split('<div>')[0].split('data countPoint">')[1].split('<br>')[0]
-        //        console.log(puntosWeb)
 
         let logrosCount = data.split('<div>')[0].split('data">')[1].split('<br>')[0]
-        //        console.log(logrosCount)
 
         let embed = new Discord.MessageEmbed()
             .setColor(client.color)
