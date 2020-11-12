@@ -21,7 +21,16 @@ module.exports = {
         let data = await fetch(`https://mybo.me/${args[0]}`);
         data = await data.text();
 
-        if (data.includes('Upps! Ocurrio un error</h2> La pagina que intentabas buscar, no esta disponible o no tienes acceso a ella. <br><br>'))
+        let datazo = data.split(`<p class="fw-700 p-mg">Logros:</p>`)[1].split('<div class="container content-coders "')[0];
+        datazo = datazo.split('<div class="column col-xs-2">').slice(1)
+            .map(a => {
+                let xd = a.split('alt="logro-')
+                return xd[1].split(`">`)[0]
+            })
+
+        //console.log(datazo)
+
+        if (data.includes('La mejor opción para emp') && data.includes('ezar a desarrollar'))
             return embedResponse('Usuario invalido.')
 
         //console.log(data)
@@ -38,15 +47,14 @@ module.exports = {
         let puntosWeb = data.split('<div>')[0].split('data countPoint">')[1].split('<br>')[0]
         //        console.log(puntosWeb)
 
-
-
         let logrosCount = data.split('<div>')[0].split('data">')[1].split('<br>')[0]
         //        console.log(logrosCount)
 
         let embed = new Discord.MessageEmbed()
             .setColor(client.color)
             .setThumbnail(avatar)
-            .addField('Nivel', nivel)
+            .addField('Nivel', nivel, true)
+            .addField('Logros', datazo.length == 0 ? 'No tiene logros.' : datazo.length, true)
             .addField("Puntos web", puntosWeb, true)
             .addField('Numero de seguidores.', seguidores, true)
             .addField('Numero de logros', logrosCount, true)
