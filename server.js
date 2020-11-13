@@ -355,6 +355,4 @@ process.on("unhandledRejection", e => {
             .setTitle('Error')
             .setDescription(`Promesa denegada sin manejar: ${e}`)
             .setTimestamp())
-    //Discord.WebhookClient().send("Promesa denegada sin manejar: " + e);
-    //console.error("Promesa denegada sin manejar:", e);
 });
