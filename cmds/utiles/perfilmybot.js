@@ -21,10 +21,10 @@ module.exports = {
         let data = await fetch(`https://portalmybot.com/u/${args[0]}`);
         data = await data.text();
 
-        if (!data || data.toLowerCase().includes(`En marcha mi primer Bot, primeros pasos y más`))
-            return embedResponse('Usuario invalido.')
-
         let logrosCheck = data.split(`<p class="fw-700 p-mg">Logros:</p>`)[1];
+
+        if (!logrosCheck)
+            return embedResponse('Usuario invalido.\n_Recuerda que el link es "portalmybot.com/u/USUARIO"_')
 
         let datazo = logrosCheck.split('<div class="container content-coders "')[0];
 
