@@ -23,13 +23,10 @@ module.exports = {
 
         if (!data || data.toLowerCase().includes(`En marcha mi primer Bot, primeros pasos y más`))
             return embedResponse('Usuario invalido.')
+
         let logrosCheck = data.split(`<p class="fw-700 p-mg">Logros:</p>`)[1];
-        if (!logrosCheck)
-            return embedResponse('Usuario invalido.')
 
         let datazo = logrosCheck.split('<div class="container content-coders "')[0];
-        if (!datazo)
-            return embedResponse('Usuario invalido.')
 
         datazo = datazo.split('<div class="column col-xs-2">').slice(1)
             .map(a => {
