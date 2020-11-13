@@ -18,20 +18,16 @@ module.exports = {
             return embedResponse('Solo se permiten usar letras y numeros.')
 
         const fetch = require('node-fetch');
-        let data = await fetch(`https://mybo.me/${args[0]}`);
+        let data = await fetch(`https://portalmybot.com/u/${args[0]}`);
         data = await data.text();
 
-        console.log('1')
         if (!data || data.toLowerCase().includes(`En marcha mi primer Bot, primeros pasos y más`))
             return embedResponse('Usuario invalido.')
-
         let logrosCheck = data.split(`<p class="fw-700 p-mg">Logros:</p>`)[1];
-        console.log('2')
         if (!logrosCheck)
             return embedResponse('Usuario invalido.')
 
         let datazo = logrosCheck.split('<div class="container content-coders "')[0];
-        console.log('3')
         if (!datazo)
             return embedResponse('Usuario invalido.')
 
@@ -41,7 +37,7 @@ module.exports = {
                 return xd[1].split(`">`)[0]
             })
 
-        let avatar = data.split(`"https://cdn.discordapp.com/avatars/`)[1] ? "https://cdn.discordapp.com/avatars/" + data.split(`"https://cdn.discordapp.com/avatars/`)[1].split(`" />`)[0] : 'https://cdn.discordapp.com/embed/avatars/2.png'
+        let avatar = data.split(`"https://cdn.discordapp.com/avatars/`)[1] ? "https://cdn.discordapp.com/avatars/" + data.split(`"https://cdn.discordapp.com/avatars/`)[1].split(`" />`)[0] : 'https://cdn.discordapp.com/attachments/359425464885837827/776602943037898772/ico-portal.png'
 
         let nivel = data.split(`"Nivel de usuario">`)[1].split('/i')[0].split('<')[0].trim();
 
