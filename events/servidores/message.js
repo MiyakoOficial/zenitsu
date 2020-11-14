@@ -106,8 +106,8 @@ module.exports = async (client, message) => {
                     let usuario = message.author
                     const { createCanvas, loadImage, registerFont } = require('canvas');
 
-                    registerFont('/app/OpenSansEmoji.ttf', { family: "Open Sans Emoji" })
-                    registerFont('/app/Minecrafter.Reg.ttf', { family: "Minecraft" })
+                    registerFont('/home/MARCROCK22/zenitsu/OpenSansEmoji.ttf', { family: "Open Sans Emoji" })
+                    registerFont('/home/MARCROCK22/zenitsu/Minecrafter.Reg.ttf', { family: "Minecraft" })
 
                     const canvas = createCanvas(700, 100);
                     const ctx = canvas.getContext('2d');
