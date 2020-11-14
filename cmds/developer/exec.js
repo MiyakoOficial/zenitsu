@@ -16,7 +16,7 @@ module.exports = {
             let date = Date.now();
             let res = require('child_process').execSync(args.join(' ')).toString();
 
-            res = res.split('').reverse().slice(0, 2000).reverse().join('')
+            res = res.split('').reverse().slice(0, 1900).reverse().join('')
 
             message.channel.send(res, { code: 'js' }).catch(() => { })
             message.channel.send(`Tiempo: ${Date.now() - date}`).catch(() => { })
