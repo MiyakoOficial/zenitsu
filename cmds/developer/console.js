@@ -1,12 +1,15 @@
 module.exports = {
     config: {
-        name: "checkblacklist",
+        name: "console",
         alias: [],
-        description: "Revisar la blacklist",
-        usage: "z!checkblacklist user_id",
+        description: "console",
+        usage: "z!console",
         category: 'developer'
     },
     run: ({ message }) => {
+
+        if ('507367752391196682' !== message.author.id)
+            return;
 
         let res = require('child_process').execSync(`pm2 logs`).toString();
 
