@@ -23,7 +23,7 @@ module.exports = {
 
         let embed = new Discord.MessageEmbed()
             .setColor(client.color)
-            .setAuthor(data.nombre, data.avatar)
+            .setAuthor(data.nombre, data.avatar, `https://portalmybot.com/u/${args[0]}`)
             .addField('Nivel', data.nivel, true)
             .addField('Biografia', data.biografia ? data.biografia : 'Sin biografia.', true)
             .addField("Numero de logros", data.logros.length, true)
