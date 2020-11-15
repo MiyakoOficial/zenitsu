@@ -23,6 +23,5 @@ module.exports = {
             .addField('Nivel', data.nivel, true)
 
         message.channel.send({ embed: embed }).catch(() => { });
-
     }
 };
