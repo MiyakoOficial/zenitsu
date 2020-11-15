@@ -22,7 +22,7 @@ module.exports = {
             .setColor(client.color)
             .setAuthor(data.nombre, data.avatar)
             .addField('Nivel', data.nivel, true)
-            .addField('Biografia', data.biografia)
+            .addField('Biografia', data.biografia, true)
             .addField("Numero de logros", data.logrosCount, true)
             .addField('Numero de seguidores', data.seguidores, true)
             .addField('Puntos web', data.puntosWeb, true)
