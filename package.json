@@ -26,7 +26,7 @@
         "jimp": "^0.16.1",
         "mongoose": "^5.9.19",
         "ms": "^2.1.2",
-        "myscrapper": "^0.0.6",
+        "myscrapper": "^0.0.7",
         "nekos.life": "^2.0.7",
         "node-fetch": "^2.6.0",
         "opusscript": "0.0.7",
