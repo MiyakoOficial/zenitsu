@@ -29,7 +29,7 @@ module.exports = {
             .addField("Numero de logros", data.logros.length, true)
             .addField('Numero de seguidores', data.seguidores, true)
             .addField('Puntos web', data.puntosWeb, true)
-            .addField('Ultimo codigo', data.codigos.length >= 1 ? `[${data.codigos[0].titulo}](${data.codigos[0].link})` : 'No tiene codigos subidos.', true)
+            .addField('Ultimo codigo', data.codigos.length >= 1 ? `[${data.codigos[data.codigos.length - 1].titulo}](${data.codigos[data.codigos.length - 1].link})` : 'No tiene codigos subidos.', true)
             .addField('Logros', data.logros.length >= 1 ? data.logros.join(', ') : 'Sin logros.', true)
             .setFooter(`Ubicacion: ${data.ubicacion ? data.ubicacion : 'Sin especificar.'}`)
 
