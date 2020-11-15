@@ -20,7 +20,13 @@ module.exports = {
 
         let embed = new Discord.MessageEmbed()
             .setColor(client.color)
+            .setAuthor(data.nombre, data.avatar)
             .addField('Nivel', data.nivel, true)
+            .addField('Biografia', data.biografia)
+            .addField("Numero de logros", data.logrosCount, true)
+            .addField('Numero de seguidores', data.seguidores, true)
+            .addField('Puntos web', data.puntosWeb, true)
+            .addField('Logros', data.logros, true)
 
         message.channel.send({ embed: embed }).catch(() => { });
     }
