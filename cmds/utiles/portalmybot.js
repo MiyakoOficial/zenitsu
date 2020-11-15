@@ -26,7 +26,7 @@ module.exports = {
             .addField("Numero de logros", data.logrosCount, true)
             .addField('Numero de seguidores', data.seguidores, true)
             .addField('Puntos web', data.puntosWeb, true)
-            .addField('Logros', data.logros, true)
+            .addField('Logros', data.logros.join(', '), true)
 
         message.channel.send({ embed: embed }).catch(() => { });
     }
