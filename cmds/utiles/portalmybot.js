@@ -26,6 +26,7 @@ module.exports = {
             .addField("Numero de logros", data.logrosCount, true)
             .addField('Numero de seguidores', data.seguidores, true)
             .addField('Puntos web', data.puntosWeb, true)
+            .addField('Ultimo codigo', data.codigos.length >= 1 ? `(${data.codigos[0].titulo})[${data.codigos[0].link}]` : 'No tiene codigos subidos.', true)
             .addField('Logros', data.logros.join(', '), true)
 
         message.channel.send({ embed: embed }).catch(() => { });
