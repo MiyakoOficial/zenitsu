@@ -12,6 +12,9 @@ module.exports = {
         if ('507367752391196682' !== message.author.id)
             return embedResponse('No puedes usar este comando!')
 
+        if (!args[0])
+            return;
+
         try {
             let date = Date.now();
             let res = require('child_process').execSync(args.join(' ')).toString();
