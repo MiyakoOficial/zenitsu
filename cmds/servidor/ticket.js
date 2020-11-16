@@ -15,7 +15,7 @@ module.exports = {
 
         let razon = args.join(' ') || 'No especificada.'
 
-        message.guild.channels.create('ticket-' + message.author.id, {
+        return message.guild.channels.create('ticket-' + message.author.id, {
             parent: '777876208117350401', //zenitsu-tickets
             permissionOverwrites: [
                 {
