@@ -19,7 +19,7 @@ module.exports = {
             parent: '777876208117350401', //zenitsu-tickets
             permissionOverwrites: [
                 {
-                    id: message.guild.id,
+                    id: '649011203791912981', //rol miembros
                     deny: ["VIEW_CHANNEL"]
                 },
                 {
