@@ -19,10 +19,6 @@ module.exports = {
             parent: '777876208117350401', //zenitsu-tickets
             permissionOverwrites: [
                 {
-                    id: message.guild.id, //servidor
-                    deny: ['VIEW_CHANNEL'],
-                },
-                {
                     id: message.author.id, //usuario
                     allow: ['VIEW_CHANNEL', 'SEND_MESSAGES', 'ATTACH_FILES', 'EMBED_LINKS']
                 },
