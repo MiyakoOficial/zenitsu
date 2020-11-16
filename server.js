@@ -353,6 +353,6 @@ process.on("unhandledRejection", e => {
         new Discord.MessageEmbed()
             .setColor('GREEN')
             .setTitle('Error')
-            .setDescription(`Promesa denegada sin manejar: ${e.stacik}`.slice(0, 2040))
+            .setDescription(`Promesa denegada sin manejar: ${e.stack}`.slice(0, 2040))
             .setTimestamp())
 });
