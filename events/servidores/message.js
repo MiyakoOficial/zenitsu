@@ -204,7 +204,9 @@ module.exports = async (client, message) => {
 
         client.channels.cache.get('765757022489542686').send({ embed: embedC });
 
-        return commandfile.run({ client, message, args, embedResponse, Hora }).catch(async err => {
+        let runCommand = commandfile.run({ client, message, args, embedResponse, Hora })
+
+        return !runCommand ? runCommand : runCommand.catch(async err => {
 
             let embed = new Discord.MessageEmbed()
                 .setColor(client.color)
