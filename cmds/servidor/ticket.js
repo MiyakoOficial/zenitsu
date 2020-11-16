@@ -16,11 +16,10 @@ module.exports = {
         let razon = args.join(' ') || 'No especificada.'
 
         return message.guild.channels.create('ticket-' + message.author.id, {
-            parent: '777876208117350401', //zenitsu-tickets
             permissionOverwrites: [
                 {
-                    id: '649011203791912981', //rol miembros
-                    deny: ["VIEW_CHANNEL"]
+                    id: message.guild.id,
+                    deny: ["VIEW_CHANNEL", "SEND_MESSAGES"]
                 },
                 {
                     id: message.author.id, //usuario
@@ -31,6 +30,7 @@ module.exports = {
                     allow: ['VIEW_CHANNEL', 'SEND_MESSAGES', 'ATTACH_FILES', 'EMBED_LINKS']
                 }
             ],
+            parent: '777876208117350401', //zenitsu-tickets
         }).then(a => {
             a.send(`>>> Hola ${message.author.toString()}, espera que un staff venga a ayudarte.\nRazon de ticket: ${razon}`)
         });
