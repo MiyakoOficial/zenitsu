@@ -60,8 +60,8 @@ module.exports = {
                 msg.delete()
                 msg = await message.channel.send({
                     embed: new Discord.MessageEmbed()
-                        .setColor('#FF0000')
-                        .setDescription(opciones)
+                        .setColor(color(akinator.progreso))
+                        .setDescription(opciones + " " + akinator.progreso + "%")
                         .setAuthor(respuesta.pregunta)
                         .setFooter('Puedes parar con escribiendo "stop" o "back" para retroceder.')
                 })
