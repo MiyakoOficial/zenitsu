@@ -75,7 +75,7 @@ module.exports = {
 }
 
 function color(p) {
-    if (p <= 5) return '#FF0000'
+    if (p <= 5) return '#FF0000';
     else if (p <= 10) return '#ff2b00';
     else if (p <= 20) return '#ff8000';
     else if (p <= 30) return '#ffaa00';
