@@ -16,7 +16,7 @@ module.exports = {
         switch (args[0]) {
             case 'add':
                 await client.updateData({ id: args[1] }, { bol: true, razon: razon }, 'blacklist');
-                return embedResponse('Listo, ahora <@' + args[0] + '> esta en la blacklist.')
+                return embedResponse('Listo, ahora <@' + args[1] + '> esta en la blacklist.')
             case 'remove':
                 await client.updateData({ id: args[1] }, { bol: false, razon: razon }, 'blacklist');
                 return embedResponse('Listo, ahora <@' + args[1] + '> no esta en la blacklist.')
