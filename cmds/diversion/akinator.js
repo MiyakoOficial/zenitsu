@@ -1,14 +1,21 @@
 const Discord = require('discord.js');
-const opciones = `Opciones validas:\n1- Si\n2- No\n3- No lo se\n4- Probablemente\n5- Probablamente no`;
+const opciones = `Opciones validas:\n1- Si\n2- No\n3- No lo se\n4- Probablemente\n5- Probablamente no\n⏹️- Parar de jugar\n◀️- Volver atras.`;
+const emojis = [`1️⃣`, `2️⃣`, `3️⃣`, `4️⃣`, `5️⃣`, `⏹️`, `◀️`];
 module.exports = {
     config: {
         name: "akinator", //Nombre del cmd
         alias: ['aki'], //Alias
-        description: "Ver el ultimo mensaje borrado", //Descripción (OPCIONAL)
+        description: "Adivinar un personaje.", //Descripción (OPCIONAL)
         usage: "z!akinator",
         category: 'utiles'
     },
     run: async ({ message, embedResponse, client }) => {
+
+        if (!message.guild.me.hasPermission('MANAGE_MESSAGES'))
+            return embedResponse('Necesito el permiso `MANAGE_MESSAGES`.')
+
+        const filter = (reaction, user) => emojis.includes(reaction.emoji.name) && user.id === message.author.id;
+
         let i = 0;
 
         if (message.guild.aki)
@@ -19,57 +26,65 @@ module.exports = {
         message.channel.send('🤔')
         const mech_aki = require("mech-aki");
         let akinator = new mech_aki("es");
-        let colector = new Discord.MessageCollector(message.channel, m => m.author.id == message.author.id);
+        //let colector = new Discord.MessageCollector(message.channel, m => m.author.id == message.author.id);
+        let msg = await message.channel.send('Espera unos momentos.')
+
         let respuesta = await akinator.empezar();
-        let msg = await message.channel.send({
+
+
+        for (let i of emojis) {
+
+            await msg.react(i)
+
+        }
+
+        msg = await msg.edit(`\u200b`, {
             embed: new Discord.MessageEmbed()
                 .setColor('#FF0000')
                 .setDescription(opciones)
                 .setAuthor(respuesta.pregunta)
-                .setFooter('Puedes parar con escribiendo "stop" o "back" para retroceder.')
         })
-        let u = 0
-        colector.on('collect', async (c) => {
 
-            if (c.content == 'stop') {
+        let colector = msg.createReactionCollector(filter);
+
+        colector.on('collect', async (c, u) => {
+            console.log(u)
+            c.users.remove(u).catch(() => { })
+
+            if (c.emoji.name == '⏹️') {
+                msg.delete();
                 message.guild.stoped = true
                 return colector.stop();
             }
 
             let respuesta;
 
-            c.delete({ timeout: 1000 }).catch(() => { })
-
-            if (i != 0 && c.content == 'back') {
+            if (i != 0 && c.emoji.name == '◀️') {
                 i--
                 respuesta = await akinator.atras()
             }
-            else if (parseInt(c.content) && parseInt(c.content) <= 5) {
-                respuesta = parseInt(c.content) - 1
+            else {
+                respuesta = emojis.slice(0, 5).indexOf(c.emoji.name)
+                console.log(respuesta)
                 respuesta = await akinator.siguiente(respuesta)
                 i++
             }
 
             if (!respuesta) return;
-            u++
-            if (akinator.progreso >= 95) return colector.stop();
-            if (u != 6) {
-                msg.edit(msg.embeds[0].setAuthor(respuesta.pregunta + " progreso: " + akinator.progreso + "%").setColor(color(akinator.progreso)))
+
+            if (akinator.progreso >= 95) {
+                message.guild.terminado = true
+                return colector.stop();
             }
-            else {
-                msg.delete()
-                msg = await message.channel.send({
-                    embed: new Discord.MessageEmbed()
-                        .setColor(color(akinator.progreso))
-                        .setDescription(opciones)
-                        .setAuthor(respuesta.pregunta + " " + akinator.progreso + "%")
-                        .setFooter('Puedes parar con escribiendo "stop" o "back" para retroceder.')
-                })
-                u = 0;
-            }
+            msg.edit(msg.embeds[0].setAuthor(respuesta.pregunta + " progreso: " + akinator.progreso + "%").setColor(color(akinator.progreso)))
+
         })
         colector.on('end', async () => {
-            delete message.guild.aki;
+            if (!message.guild.terminado) {
+                delete message.guild.terminado
+                return delete message.guild.aki;
+            }
+            delete message.guild.aki
             if (!message.guild.stoped) {
                 let resultados = await akinator.respuestas();
                 let embed = new Discord.MessageEmbed()
