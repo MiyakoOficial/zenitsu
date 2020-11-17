@@ -3,7 +3,7 @@ const opciones = `Opciones validas:\n1- Si\n2- No\n3- No lo se\n4- Probablemente
 module.exports = {
     config: {
         name: "akinator", //Nombre del cmd
-        alias: [], //Alias
+        alias: ['aki'], //Alias
         description: "Ver el ultimo mensaje borrado", //Descripción (OPCIONAL)
         usage: "z!akinator",
         category: 'utiles'
@@ -57,6 +57,7 @@ module.exports = {
                 msg.edit(msg.embeds[0].setAuthor(respuesta.pregunta + " progreso: " + akinator.progreso + "%").setColor(color(akinator.progreso)))
             }
             else {
+                msg.delete()
                 msg = await message.channel.send({
                     embed: new Discord.MessageEmbed()
                         .setColor('#FF0000')
