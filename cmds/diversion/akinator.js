@@ -57,7 +57,7 @@ module.exports = {
                 msg.edit(msg.embeds[0].setAuthor(respuesta.pregunta + " progreso: " + akinator.progreso + "%").setColor(color(akinator.progreso)))
             }
             else {
-                message.channel.send({
+                msg = await message.channel.send({
                     embed: new Discord.MessageEmbed()
                         .setColor('#FF0000')
                         .setDescription(opciones)
