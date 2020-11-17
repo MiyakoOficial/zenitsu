@@ -171,8 +171,11 @@ module.exports = async (client, message) => {
         else return true
     }).get(command) || client.commands.get(client.alias.get(command))
 
-    if (commandfile && !(await client.getData({ id: message.author.id }, 'blacklist')).bol) {
-
+    if (commandfile) {
+        let dataB = (await client.getData({ id: message.author.id }, 'blacklist'))
+        if (dataB.bol) {
+            return embedResponse('Estas en la lista negra por: ' + dataB.razon)
+        }
         if (cooldownCommands.has(message.author.id)) {
             let embed = new Discord.MessageEmbed()
                 .setDescription(`Wow, más despacio velocista!\nEl cooldown de los comandos es de 4s!`)

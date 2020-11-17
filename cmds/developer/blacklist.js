@@ -8,12 +8,24 @@ module.exports = {
     },
     run: async ({ client, message, args, embedResponse }) => {
         if (!['507367752391196682'].includes(message.author.id))
-            return embedResponse('No puedes usar este comando!')
+            return;
         let razon = args.slice(2).join(' ') || 'No especificada!'
-        if (!args[0]) return embedResponse('Escribe la ID de un usuario!')
-        if (!client.users.cache.get(args[0])) return embedResponse('No encontre al usuario!')
-        if (!['true', 'false'].includes(args[1])) return embedResponse('¿true o false?')
-        await client.updateData({ id: args[0] }, { bol: args[1], razon: razon }, 'blacklist');
-        return embedResponse('Listo!')
+        if (!args[1]) return embedResponse('Faltan argumentos.')
+        if (!client.users.cache.get(args[1])) return embedResponse('No encontre al usuario!')
+        if (!['add', 'remove', 'check'].some(a => a == args[0])) return embedResponse('Add, remove o check?')
+        switch (args[0]) {
+            case 'add':
+                await client.updateData({ id: args[1] }, { bol: true, razon: razon }, 'blacklist');
+                return embedResponse('Listo, ahora <@' + args[0] + '> esta en la blacklist.')
+            case 'remove':
+                await client.updateData({ id: args[1] }, { bol: false, razon: razon }, 'blacklist');
+                return embedResponse('Listo, ahora <@' + args[1] + '> no esta en la blacklist.')
+            case 'check':
+                // eslint-disable-next-line no-case-declarations
+                let data = await client.getData({ id: args[1] }, 'blacklist');
+                return embedResponse(data.bol ? `<@${data.id}> esta en la blacklist` : 'No esta.')
+            default:
+                return embedResponse('Error.')
+        }
     }
 }
