@@ -1,4 +1,5 @@
 const Discord = require('discord.js');
+const opciones = `Opciones validas:\n1- Si\n2- No\n3- No lo se\n4- Probablemente\n5- Probablamente no`;
 module.exports = {
     config: {
         name: "akinator", //Nombre del cmd
@@ -23,11 +24,11 @@ module.exports = {
         let msg = await message.channel.send({
             embed: new Discord.MessageEmbed()
                 .setColor('#FF0000')
-                .setDescription(`Opciones validas:\n1- Si\n2- No\n3- No lo se\n4- Probablemente\n5- Probablamente no`)
+                .setDescription(opciones)
                 .setAuthor(respuesta.pregunta)
                 .setFooter('Puedes parar con escribiendo "stop" o "back" para retroceder.')
         })
-
+        let u = 0
         colector.on('collect', async (c) => {
 
             if (c.content == 'stop') {
@@ -50,9 +51,21 @@ module.exports = {
             }
 
             if (!respuesta) return;
-
+            u++
             if (akinator.progreso >= 95) return colector.stop();
-            msg.edit(msg.embeds[0].setAuthor(respuesta.pregunta + " progreso: " + akinator.progreso + "%").setColor(color(akinator.progreso)))
+            if (u != 6) {
+                msg.edit(msg.embeds[0].setAuthor(respuesta.pregunta + " progreso: " + akinator.progreso + "%").setColor(color(akinator.progreso)))
+            }
+            else {
+                message.channel.send({
+                    embed: new Discord.MessageEmbed()
+                        .setColor('#FF0000')
+                        .setDescription(opciones)
+                        .setAuthor(respuesta.pregunta)
+                        .setFooter('Puedes parar con escribiendo "stop" o "back" para retroceder.')
+                })
+                u = 0;
+            }
         })
         colector.on('end', async () => {
             delete message.guild.aki;
