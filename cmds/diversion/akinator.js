@@ -11,7 +11,7 @@ module.exports = {
     },
     run: async ({ message, embedResponse, client }) => {
 
-        if (!message.guild.me.hasPermission('MANAGE_MESSAGES'))
+        if (!message.channel.permissionsFor(message.client.user).has('MANAGE_MESSAGES'))
             return embedResponse('Necesito el permiso `MANAGE_MESSAGES`.')
 
         const filter = (reaction, user) => emojis.includes(reaction.emoji.name) && user.id === message.author.id;
