@@ -72,8 +72,7 @@ module.exports = {
             delete message.guild.stoped
         })
     }
-}
-
+};
 function color(p) {
     if (p <= 5) return '#FF0000';
     else if (p <= 10) return '#ff2b00';
