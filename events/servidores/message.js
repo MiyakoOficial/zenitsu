@@ -171,7 +171,7 @@ module.exports = async (client, message) => {
         else return true
     }).get(command) || client.commands.get(client.alias.get(command))
 
-    if (commandfile) {
+    if (commandfile && !(await client.getData({ id: message.author.id }, 'blacklist')).bol) {
 
         if (cooldownCommands.has(message.author.id)) {
             let embed = new Discord.MessageEmbed()
