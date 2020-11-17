@@ -61,8 +61,8 @@ module.exports = {
                 msg = await message.channel.send({
                     embed: new Discord.MessageEmbed()
                         .setColor(color(akinator.progreso))
-                        .setDescription(opciones + " " + akinator.progreso + "%")
-                        .setAuthor(respuesta.pregunta)
+                        .setDescription(opciones)
+                        .setAuthor(respuesta.pregunta + " " + akinator.progreso + "%")
                         .setFooter('Puedes parar con escribiendo "stop" o "back" para retroceder.')
                 })
                 u = 0;
