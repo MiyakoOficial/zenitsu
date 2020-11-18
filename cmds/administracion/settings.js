@@ -83,7 +83,7 @@ module.exports = {
 
                 if (args[1] == 'on') {
                     await idk2(true);
-                    return embedResponse('Ahora se borrarn las invitaciones.')
+                    return embedResponse('Ahora se borraran las invitaciones.')
                 }
 
                 else if (args[1] == 'off') {
