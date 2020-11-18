@@ -59,11 +59,11 @@ module.exports = {
         const collector = message.channel.createMessageCollector(a => true);
 
         collector.on('collect', async m => {
-            nou++
+            ++nou
             //  embedResponse(m.author.id)
             if (m.author.id != chose.find(a => a.id != chosed.id))
                 return;
-            if (nou == 6) {
+            if (nou >= 6) {
                 nou = 0;
                 msg.delete().catch(() => { })
                 msg = await message.channel.send({
