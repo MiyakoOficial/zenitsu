@@ -64,14 +64,13 @@ module.exports = {
                 return;
 
             if (COOLDOWN.has(m.author.id)) {
-                --nou
                 return;
             }
             else {
                 COOLDOWN.add(m.author.id)
                 setTimeout(() => {
                     COOLDOWN.delete(m.author.id)
-                }, require('ms')('4s'))
+                }, require('ms')('3s'))
             }
             if (nou >= 10) {
                 nou = 0;
