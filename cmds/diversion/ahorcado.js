@@ -73,7 +73,7 @@ module.exports = {
                 COOLDOWN.add(m.author.id)
                 setTimeout(() => {
                     COOLDOWN.delete(m.author.id)
-                }, require('ms')('3s'))
+                }, require('ms')('2s'))
             }
             if (nou >= 6) {
                 nou = 0;
