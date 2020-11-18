@@ -60,8 +60,9 @@ module.exports = {
 
         collector.on('collect', async m => {
             nou++
+            embedResponse(m.author.id)
             if (m.author.id != chose.find(a => a.id != chosed.id))
-                return embedResponse(m.author.id)
+                return;
             if (nou == 6) {
                 nou = 0;
                 msg.delete().catch(() => { })
