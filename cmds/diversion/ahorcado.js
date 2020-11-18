@@ -19,6 +19,9 @@ module.exports = {
         let mention = message.mentions.users.first();
         let author = message.author;
 
+        if (!mention)
+            return embedResponse('Menciona a un usuario.')
+
         let chose = [author, mention];
 
         let chosed = chose[Math.floor(Math.random() * chose.length)];
