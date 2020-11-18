@@ -56,7 +56,7 @@ module.exports = {
             .setFooter(`Dichas: ${message.guild.letrasdichas.join(', ')} | Fallidas: ${message.guild.fallidas.join(', ')}`)
         let msg = await message.channel.send({ embed: embed });
 
-        const collector = message.channel.createMessageCollector(true);
+        const collector = message.channel.createMessageCollector(a => true);
 
         collector.on('collect', async m => {
             nou++
