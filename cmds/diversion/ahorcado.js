@@ -110,7 +110,7 @@ module.exports = {
                     }
                 }
                 if (idk(message.guild.frase, message.guild.letrasdichas) == message.guild.frase) collector.stop();
-                message.guild.adivinador = m.author;
+                message.guild.adivinador = chose.find(a => a.id != chosed.id);
                 return msg.edit({
                     embed:
                         msg.embeds[0].setFooter(`Dichas: ${message.guild.letrasdichas.join(', ')} | Fallidas: ${message.guild.fallidas.join(', ')}`)
