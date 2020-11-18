@@ -75,7 +75,7 @@ module.exports = {
                     COOLDOWN.delete(m.author.id)
                 }, require('ms')('3s'))
             }
-            if (nou >= 10) {
+            if (nou >= 6) {
                 nou = 0;
                 msg.delete().catch(() => { })
                 msg = await m.channel.send({
