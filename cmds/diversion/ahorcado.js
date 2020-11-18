@@ -66,7 +66,7 @@ module.exports = {
             if (nou >= 6) {
                 nou = 0;
                 msg.delete().catch(() => { })
-                msg = await message.channel.send({
+                msg = await m.channel.send({
                     embed:
                         new MessageEmbed()
                             .setColor(`#e74c3c`)
