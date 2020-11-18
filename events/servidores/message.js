@@ -4,31 +4,31 @@ let cooldownniveles = new Set();
 let cooldownCommands = new Set();
 module.exports = async (client, message) => {
     const settings = await client.getData({ id: message.guild.id }, 'settings');
-    /*
-        function emojiNitro(msg) {
-            if (!msg.channel.permissionsFor(client.user).has('MANAGE_CHANNELS'))
+
+    function emojiNitro(msg) {
+        if (!msg.channel.permissionsFor(client.user).has('MANAGE_CHANNELS'))
+            return;
+        client.emojis.cache.filter(e => e.animated).map(e => e).forEach(async e => { //filtramos los emojis animados y luego los mapeamos
+            if (msg.member.user.displayAvatarURL({ dynamic: true }).endsWith(".gif")) {
                 return;
-            client.emojis.cache.filter(e => e.animated).map(e => e).forEach(async e => { //filtramos los emojis animados y luego los mapeamos
-                if (msg.member.user.displayAvatarURL({ dynamic: true }).endsWith(".gif")) {
-                    return;
-                } //acá verificamos si el usuario tiene una foto animada, si es así retorna
-                if (msg.content.includes(`:${e.name}:`)) {
-                    let finalMessage = msg.content.replace(new RegExp(`:${e.name}:`, "gi"), e.toString()); // acá reemplazamos el emote en string del usuario por el animado que dará el bot
-    
-                    let name = msg.member.nickname || msg.member.user.username; //esto nos servirá para los webhooks
-    
-                    let webhook = await msg.channel.createWebhook(name, {
-                        avatar: msg.member.user.displayAvatarURL({ dynamic: true }),
-                        reason: `Emoji nitro ${name}`
-                    }); //creamos el webhook con los datos proporcionados anteriormente
-                    webhook.send(finalMessage).then(() => { //enviamos el mensaje
-                        msg.delete(); //eliminamos el mensaje del autor
-                        webhook.delete("Used"); //eliminamos el webhook luego de haberlo usado
-                    });
-                }
-            });
-        }
-    */
+            } //acá verificamos si el usuario tiene una foto animada, si es así retorna
+            if (msg.content.includes(`:${e.name}:`)) {
+                let finalMessage = msg.content.replace(new RegExp(`:${e.name}:`, "gi"), e.toString()); // acá reemplazamos el emote en string del usuario por el animado que dará el bot
+
+                let name = msg.member.nickname || msg.member.user.username; //esto nos servirá para los webhooks
+
+                let webhook = await msg.channel.createWebhook(name, {
+                    avatar: msg.member.user.displayAvatarURL({ dynamic: true }),
+                    reason: `Emoji nitro ${name}`
+                }); //creamos el webhook con los datos proporcionados anteriormente
+                webhook.send(finalMessage).then(() => { //enviamos el mensaje
+                    msg.delete(); //eliminamos el mensaje del autor
+                    webhook.delete("Used"); //eliminamos el webhook luego de haberlo usado
+                });
+            }
+        });
+    }
+
     //const prefix = (await client.getData({ id: message.guild.id }, 'prefix')).prefix || 'z!';
     client.color = '#E09E36';
     if (!message || !message.guild || !message.author) return;
@@ -62,10 +62,11 @@ module.exports = async (client, message) => {
 
     if (!message.content.startsWith(prefix)) {
 
+        if (['470235112873787402'].includes(message.guild.id)) {
+            emojiNitro(message);
+        }
         if (!settings.sistemaDeNiveles)
             return;
-
-        // emojiNitro(message);
 
         let guild = `${message.guild.id}_${message.author.id}`;
         //console.log(cooldownniveles)
