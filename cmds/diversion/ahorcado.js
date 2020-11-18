@@ -56,14 +56,24 @@ module.exports = {
             .setFooter(`Dichas: ${message.guild.letrasdichas.join(', ')} | Fallidas: ${message.guild.fallidas.join(', ')}`)
         let msg = await message.channel.send({ embed: embed });
 
-        const collector = message.channel.createMessageCollector(a => true);
-
+        const collector = message.channel.createMessageCollector(() => true);
+        let COOLDOWN = new Set();
         collector.on('collect', async m => {
             ++nou
-            //  embedResponse(m.author.id)
             if (m.author.id != chose.find(a => a.id != chosed.id))
                 return;
-            if (nou >= 6) {
+
+            if (COOLDOWN.has(m.author.id)) {
+                --nou
+                return;
+            }
+            else {
+                COOLDOWN.add(m.author.id)
+                setTimeout(() => {
+                    COOLDOWN.delete(m.author.id)
+                }, require('ms')('4s'))
+            }
+            if (nou >= 10) {
                 nou = 0;
                 msg.delete().catch(() => { })
                 msg = await m.channel.send({
