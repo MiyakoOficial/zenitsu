@@ -19,7 +19,7 @@ module.exports = {
         let mention = message.mentions.users.first();
         let author = message.author;
 
-        if (!mention)
+        if (!mention || mention?.bot)
             return embedResponse('Menciona a un usuario.')
 
         let chose = [author, mention];
