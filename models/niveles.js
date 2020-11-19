@@ -10,6 +10,10 @@ const Guild = Schema({
     nivel: {
         default: 0,
         type: Number
-    }
+    },
+    cacheName: {
+        default: 'none',
+        type: String
+}
 })
 module.exports = model('Niveles', Guild)
