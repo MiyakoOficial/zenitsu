@@ -33,7 +33,7 @@ module.exports = async (client, message) => {
     client.color = '#E09E36';
     if (!message || !message.guild || !message.author) return;
     client.serverQueue = client.queue.get(message.guild.id);
-await client.rModel('niveles').update({idMember: message.author.id}, {cacheName: message.author.tag}).catch(()=>{})
+await client.updateData({idMember: message.author.id, idGuild: message.guild.id}, {cacheName: message.author.tag}, 'niveles').catch(e=>{})
     const prefix = await message.guild.getPrefix();
     const args = message.content.slice(prefix.length).trim().split(/ +/);
     const command = args.shift().toLowerCase()
