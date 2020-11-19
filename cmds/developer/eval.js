@@ -28,7 +28,7 @@ module.exports = {
             let embed = new Discord.MessageEmbed()
                 .setTitle(`Eval`)
                 .addField(`Entrada`, `\`\`\`js\n${code}\`\`\``)
-                .addField(`Salida`, `\`\`\`js\n${evalued}\n\`\`\``.replace(client.token, "Contenido privado"))
+                .addField(`Salida`, `\`\`\`js\n${evalued}\n\`\`\``.replaceAll(client.token, "Contenido privado"))
                 .addField(`Tipo`, `\`\`\`js\n${asd}\`\`\``.replace("number", "Number").replace("object", "Object").replace("string", "String").replace(undefined, "Undefined").replace("boolean", "Boolean").replace("function", "Function"))
                 .setColor(client.color)
                 .setTimestamp()
