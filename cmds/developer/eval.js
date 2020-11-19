@@ -11,7 +11,7 @@ module.exports = {
     // eslint-disable-next-line no-unused-vars
     run: async ({ client, message, args, embedResponse, Hora }) => {
 
-        if (!["507367752391196682", "538421122920742942", '374710341868847104'].includes(message.author.id))
+        if (!["507367752391196682", "538421122920742942", '374710341868847104', '686766483350880351'].includes(message.author.id))
             return embedResponse('No puedes usar este comando!')
         //let limit = 1950;
         try {
