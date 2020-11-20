@@ -34,18 +34,6 @@ module.exports = async (client, message) => {
     if (!message || !message.guild || !message.author) return;
     client.serverQueue = client.queue.get(message.guild.id);
 
-    if (message.channel.id == '359425464885837827') {
-        if (message.author.bot) return;
-        client.channels.cache.get('779151834556137472').send(message.content)
-
-    }
-
-    if (message.channel.id == '779151834556137472') {
-
-        client.channels.cache.get('359425464885837827').send(message.content)
-
-    }
-
     await client.updateData({ idMember: message.author.id, idGuild: message.guild.id }, { cacheName: message.author.tag }, 'niveles').catch(e => { })
     const prefix = await message.guild.getPrefix();
     const args = message.content.slice(prefix.length).trim().split(/ +/);
