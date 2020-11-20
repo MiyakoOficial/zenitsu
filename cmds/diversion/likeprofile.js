@@ -10,7 +10,7 @@ module.exports = {
 
         let user = message.mentions.users.first();
 
-        if (!user || !user?.id)
+        if (!user || !user?.id || user?.id == message.author.id)
             return embedResponse('¿A quien quieres darle un like?');
 
         let check = (await client.getData({ id: user.id }, 'profile')).likes.includes(message.author.id);

@@ -10,7 +10,7 @@ module.exports = {
 
         let user = message.mentions.users.first();
 
-        if (!user || !user?.id)
+        if (!user || !user?.id || user?.id == message.author.id)
             return embedResponse('¿A quien quieres seguir?');
 
         let check = (await client.getData({ id: user.id }, 'profile')).seguidores.includes(message.author.id);
