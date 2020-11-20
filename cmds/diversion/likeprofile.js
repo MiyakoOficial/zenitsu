@@ -3,7 +3,7 @@ module.exports = {
         name: "likeprofile", //nombre del cmd
         alias: [], //Alias
         description: "Darle like al perfil de una persona", //Descripción (OPCIONAL)
-        usage: "z!likeprofile",
+        usage: "z!likeprofile @mencion",
         category: 'diversion'
 
     }, run: async ({ client, message, embedResponse }) => {

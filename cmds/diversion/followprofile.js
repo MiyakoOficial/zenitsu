@@ -3,7 +3,7 @@ module.exports = {
         name: "followprofile", //nombre del cmd
         alias: [], //Alias
         description: "Sigues el perfil de una persona.", //Descripción (OPCIONAL)
-        usage: "z!followprofile",
+        usage: "z!followprofile @mencion",
         category: 'diversion'
 
     }, run: async ({ client, message, embedResponse }) => {
