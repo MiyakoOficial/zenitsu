@@ -1,5 +1,4 @@
 const { MessageEmbed } = require("discord.js");
-const ms = require("ms");
 module.exports = {
     config: {
         name: "ahorcado", //Nombre del cmd
