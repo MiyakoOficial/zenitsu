@@ -33,7 +33,6 @@ module.exports = async (client, message) => {
     client.color = '#E09E36';
     if (!message || !message.guild || !message.author) return;
     client.serverQueue = client.queue.get(message.guild.id);
-<<<<<<< HEAD
 
     if (message.channel.id == '359425464885837827') {
         if (message.author.bot) return;
@@ -47,9 +46,7 @@ module.exports = async (client, message) => {
 
     }
 
-=======
-await client.updateData({idMember: message.author.id, idGuild: message.guild.id}, {cacheName: message.author.tag}, 'niveles').catch(e=>{})
->>>>>>> 39e6bf41a80ecf11592e4b245943b52ae37a971e
+    await client.updateData({ idMember: message.author.id, idGuild: message.guild.id }, { cacheName: message.author.tag }, 'niveles').catch(e => { })
     const prefix = await message.guild.getPrefix();
     const args = message.content.slice(prefix.length).trim().split(/ +/);
     const command = args.shift().toLowerCase()
