@@ -41,6 +41,16 @@ const Guild = Schema({
     nick: {
         type: String,
         default: 'No establecido.'
+    },
+
+    seguidores: {
+        type: Array,
+        default: []
+    },
+
+    likes: {
+        type: Array,
+        default: []
     }
 
 })

@@ -13,7 +13,7 @@ module.exports = {
 
         let data = (await client.getData({ id: member.user.id }, 'profile'));
 
-        let { color, description, insignias, img, thumbnail, nick, footer, footertext } = data;
+        let { color, description, insignias, img, thumbnail, nick, footer, footertext, likes, seguidores } = data;
 
         let guild = client.guilds.cache.get('645463565813284865');
 
@@ -29,6 +29,8 @@ module.exports = {
             .addField(`Descripción`, description)
             .addField('Insignias', insignias.length == 0 ? 'No tiene insignias.' : insignias.join(', '))
             .addField('Apodo', nick)
+            .addField('Seguidores', seguidores.length)
+            .addField('Likes', likes.length)
             .setFooter(footertext, footer)
             .setTimestamp()
         return message.channel.send({ embed: embed })
