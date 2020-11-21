@@ -1,3 +1,4 @@
+const { MessageEmbed } = require("discord.js");
 
 //Después de Alias es opcional.
 module.exports = {
@@ -6,16 +7,39 @@ module.exports = {
         alias: [], //Alias
         description: "Establecer el canal de logs", //Descripción (OPCIONAL)
         usage: "z!setlogs #canal",
-        category: 'administracion'
+        category: 'administracion',
+        botPermissions: [],
+        memberPermissions: ['ADMINISTRATOR']
+
     },
-    run: async ({ client, message, embedResponse }) => {
-        if (!message.member.hasPermission("ADMINISTRATOR")) return embedResponse("No tienes el permiso `ADMINISTRATOR`")
+    run: ({ client, message, embedResponse }) => {
+
         let channel = message.mentions.channels.first();
-        if (!channel) return embedResponse("No has mencionado un canal/Ese canal no existe.")
-        if (!message.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(channel.id)) return embedResponse('El canal tiene que ser del Servidor donde estas!')
+        let embedErr = new MessageEmbed()
+            .setColor(client.color)
+            .setDescription(`<:cancel:779536630041280522> | No has mencionado un canal.`)
+            .setTimestamp()
 
-        await client.updateData({ id: message.guild.id }, { channellogs: channel.id }, 'logs')
+        if (!channel) return message.channel.send({ embed: embedErr })
+        return client.updateData({ id: message.guild.id }, { channellogs: channel.id }, 'logs').then(data => {
 
-        return embedResponse(`Canal establecido en: <#${channel.id}>`)
+            let embed = new MessageEmbed()
+                .setColor(client.color)
+                .setDescription(`<:moderator:779536592431087619> | ${message.author.username} ha establecido el canal de logs en: <#${data.channellogs}>`)
+                .setTimestamp()
+
+            return message.channel.send({ embed: embed })
+
+        }).catch(err => {
+
+            let embed = new MessageEmbed()
+                .setColor(client.color)
+                .setDescription(`<:cancel:779536630041280522> | Error al establecer el canal de logs.`)
+                .setTimestamp()
+                .setFooter(err)
+
+            return message.channel.send({ embed: embed })
+
+        })
     }
 }
