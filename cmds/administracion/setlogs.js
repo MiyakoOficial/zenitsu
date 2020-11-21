@@ -12,7 +12,7 @@ module.exports = {
         memberPermissions: ['ADMINISTRATOR']
 
     },
-    run: ({ client, message, embedResponse }) => {
+    run: ({ client, message }) => {
 
         let channel = message.mentions.channels.first();
         let embedErr = new MessageEmbed()
@@ -34,7 +34,7 @@ module.exports = {
 
             let embed = new MessageEmbed()
                 .setColor(client.color)
-                .setDescription(`<: moderator: 779536592431087619 > | ${message.author.username} ha establecido el canal de logs en: <#${data.channellogs}>`)
+                .setDescription(`<:moderator:779536592431087619> | ${message.author.username} ha establecido el canal de logs en: <#${data.channellogs}>`)
                 .setTimestamp()
 
             return message.channel.send({ embed: embed })
