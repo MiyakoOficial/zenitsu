@@ -20,7 +20,7 @@ module.exports = {
         }).then(() => {
             let embed = new Discord.MessageEmbed()
                 .setColor(client.color)
-                .setDescription(`<:trustedAdmin:779695112036286474> ${message.author.tag} ha bloqueado el canal para los miembros.`)
+                .setDescription(`<:trustedAdmin:779695112036286474> | ${message.author.username} ha bloqueado el canal para los miembros.`)
                 .setTimestamp()
             return message.channel.send({ embed: embed })
         })
