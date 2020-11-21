@@ -31,7 +31,7 @@ module.exports = {
 
             let embed = new MessageEmbed()
                 .setColor(client.color)
-                .setDescription(`<:moderator:779536592431087619> | ${message.author.username} ha establecido el prefijo a: ${data.prefix}`)
+                .setDescription(`<:trustedAdmin:779695112036286474> | ${message.author.username} ha establecido el prefijo a: ${data.prefix}`)
                 .setTimestamp()
 
             return message.channel.send({ embed: embed })
