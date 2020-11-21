@@ -6,7 +6,9 @@ module.exports = {
         alias: [], //Alias
         description: "Establecer el nuevo prefix", //Descripción (OPCIONAL)
         usage: "z!setprefix prefix",
-        category: 'administracion'
+        category: 'administracion',
+        botPermissions: [],
+        memberPermissions: ['ADMINISTRATOR']
     }, run: async ({ client, message, args, embedResponse }) => {
 
         if (!message.member.hasPermission("ADMINISTRATOR")) return embedResponse("No tienes el permiso `ADMINISTRATOR`")

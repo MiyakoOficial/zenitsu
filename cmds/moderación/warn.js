@@ -43,7 +43,7 @@ module.exports = {
 
         let data = (await client.updateData({ idGuild: message.guild.id, idMember: miembro.id }, { $push: { warns: { razon: razon, fecha: Hora(Date.now(), true), mod: message.author.tag, token: res } } }, 'warns'));
 
-        let check = (await client.getData({ id: message.guild.id }, 'settings')).warnsParaKickear;
+        let check = 5
         //embedResponse(`El miembro fue advertido!\nAhora tiene: ${data.warns} advertencias.\n\nRazón: ${razon}.`)
 
         if (data.warns.length >= check)

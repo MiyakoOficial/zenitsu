@@ -19,7 +19,7 @@ module.exports = {
 
             let embed = new Discord.MessageEmbed()
                 .setColor(client.color)
-                .setDescription(`<:trustedAdmin:779695112036286474> | ${message.author.username} ha desbloqueado el canal para los miembros.`)
+                .setDescription(`<:moderator:779536592431087619> | ${message.author.username} ha desbloqueado el canal para los miembros.`)
                 .setTimestamp()
             return message.channel.send({ embed: embed })
 
