@@ -24,7 +24,7 @@ module.exports = {
             .setDescription(`<:cancel:779536630041280522> | El prefix debe tener menos de 3 caracteres.`)
             .setTimestamp()
 
-        if (!args[0].length >= 4)
+        if (args[0].length >= 4)
             return message.channel.send({ embed: embedE })
 
         return client.updateData({ id: message.guild.id }, { prefix: args[0] }, 'prefix').then(data => {
