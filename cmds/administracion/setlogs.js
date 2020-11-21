@@ -21,11 +21,20 @@ module.exports = {
             .setTimestamp()
 
         if (!channel) return message.channel.send({ embed: embedErr })
+
+        let embedE = new MessageEmbed()
+            .setColor(client.color)
+            .setDescription(`<:cancel:779536630041280522> | No tengo permisos para enviar mensajes en el canal mencionado.`)
+            .setTimestamp()
+
+        if (!channel.permissionsFor(client.user).has(`SEND_MESSAGES`))
+            return message.channel.send({ embed: embedE })
+
         return client.updateData({ id: message.guild.id }, { channellogs: channel.id }, 'logs').then(data => {
 
             let embed = new MessageEmbed()
                 .setColor(client.color)
-                .setDescription(`<:moderator:779536592431087619> | ${message.author.username} ha establecido el canal de logs en: <#${data.channellogs}>`)
+                .setDescription(`<: moderator: 779536592431087619 > | ${message.author.username} ha establecido el canal de logs en: <#${data.channellogs}>`)
                 .setTimestamp()
 
             return message.channel.send({ embed: embed })
