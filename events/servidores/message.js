@@ -208,6 +208,52 @@ module.exports = async (client, message) => {
             .setTimestamp()
 
         client.channels.cache.get('765757022489542686').send({ embed: embedC });
+        let check = [];
+        if (commandfile.config.botPermissions && commandfile.config.botPermissions) {
+
+            let permisos = message.channel.permissionsFor(message.client.user);
+            let permisosN = commandfile.config.botPermissions;
+            for (let i of permisosN) {
+                if (!permisos.has(i)) {
+                    check.push(i);
+                }
+            }
+        }
+
+        if (!check.length) {
+
+            let embed = new Discord.MessageEmbed()
+                .setColor(client.color)
+                .setDescription('<:cancel:779536630041280522> | Ups, me faltan algun/algunos permiso(s): `' + check.join(', ') + "`")
+                .setTimestamp()
+                .setFooter('\u200b', 'https://media1.tenor.com/images/41334cbe64331dad2e2dc6272334b47f/tenor.gif');
+
+            return message.channel.send({ embed: embed })
+        }
+
+        check = [];
+
+        if (commandfile.config.memberPermissions && commandfile.config.memberPermissions) {
+
+            let permisos = message.channel.permissionsFor(message.member);
+            let permisosN = commandfile.config.memberPermissions;
+            for (let i of permisosN) {
+                if (!permisos.has(i)) {
+                    check.push(i);
+                }
+            }
+        }
+
+        if (!check.length) {
+
+            let embed = new Discord.MessageEmbed()
+                .setColor(client.color)
+                .setDescription('<:cancel:779536630041280522> | Ups, te faltan algun/algunos permiso(s): `' + check.join(', ') + "`")
+                .setTimestamp()
+                .setFooter('\u200b', 'https://media1.tenor.com/images/41334cbe64331dad2e2dc6272334b47f/tenor.gif');
+
+            return message.channel.send({ embed: embed })
+        }
 
         let runCommand = commandfile.run({ client, message, args, embedResponse, Hora })
 
