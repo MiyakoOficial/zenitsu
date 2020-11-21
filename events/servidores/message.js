@@ -220,7 +220,7 @@ module.exports = async (client, message) => {
             }
         }
 
-        if (check.length == 0) {
+        if (check.length >= 1) {
 
             let embed = new Discord.MessageEmbed()
                 .setColor(client.color)
@@ -244,7 +244,7 @@ module.exports = async (client, message) => {
             }
         }
 
-        if (check.length == 0) {
+        if (check.length >= 1) {
 
             let embed = new Discord.MessageEmbed()
                 .setColor(client.color)
