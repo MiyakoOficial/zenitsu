@@ -1,4 +1,4 @@
-
+const { MessageEmbed } = require('discord.js');
 //Después de Alias es opcional.
 module.exports = {
     config: {
@@ -9,13 +9,43 @@ module.exports = {
         category: 'administracion',
         botPermissions: [],
         memberPermissions: ['ADMINISTRATOR']
-    }, run: async ({ client, message, args, embedResponse }) => {
+    }, run: ({ client, message, args }) => {
 
-        if (!message.member.hasPermission("ADMINISTRATOR")) return embedResponse("No tienes el permiso `ADMINISTRATOR`")
-        if (!args[0] || args[0].length >= 4) return embedResponse('El prefix debe tener menos de 3 caracteres!')
+        let embedErr = new MessageEmbed()
+            .setColor(client.color)
+            .setDescription(`<:cancel:779536630041280522> | Necesitas especificar el prefijo nuevo.`)
+            .setTimestamp()
 
-        await client.updateData({ id: message.guild.id }, { prefix: args[0] }, 'prefix').catch(() => { });
+        if (!args[0])
+            return message.channel.send({ embed: embedErr })
 
-        return embedResponse(`Prefix establecido a \`${args[0]}\``)
+        let embedE = new MessageEmbed()
+            .setColor(client.color)
+            .setDescription(`<:cancel:779536630041280522> | El prefix debe tener menos de 3 caracteres.`)
+            .setTimestamp()
+
+        if (!args[0].length >= 4)
+            return message.channel.send({ embed: embedE })
+
+        return client.updateData({ id: message.guild.id }, { prefix: args[0] }, 'prefix').then(data => {
+
+            let embed = new MessageEmbed()
+                .setColor(client.color)
+                .setDescription(`<:moderator:779536592431087619> | ${message.author.username} ha establecido el prefijo a: ${data.prefix}`)
+                .setTimestamp()
+
+            return message.channel.send({ embed: embed })
+
+        }).catch(err => {
+
+            let embed = new MessageEmbed()
+                .setColor(client.color)
+                .setDescription(`<:cancel:779536630041280522> | Error al establecer el prefijo.`)
+                .setTimestamp()
+                .setFooter(err)
+
+            return message.channel.send({ embed: embed })
+
+        })
     }
 }
