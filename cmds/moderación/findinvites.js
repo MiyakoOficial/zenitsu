@@ -33,7 +33,7 @@ module.exports = {
         }
 
         if (!paginas[seleccion() - 1])
-            return embedResponse('Pagina inexistente.')
+            return embedResponse('No hay miembros con invitaciones en la pagina ' + seleccion())
 
         let inicio = new Discord.MessageEmbed()
             .setDescription(paginas[seleccion() - 1].join('\n'))

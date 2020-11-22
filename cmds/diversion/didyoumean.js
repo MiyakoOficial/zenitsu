@@ -5,7 +5,10 @@ module.exports = {
         alias: [], //Alias
         description: "Sin descripción", //Descripción (OPCIONAL)
         usage: "z!didyoumean Hola ,|, Adios",
-        category: 'diversion'
+        category: 'diversion',
+        botPermissions: [],
+        memberPermissions: []
+
 
     }, run: ({ client, message, args, embedResponse }) => {
 

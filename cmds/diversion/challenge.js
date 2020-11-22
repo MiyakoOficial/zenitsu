@@ -5,7 +5,10 @@ module.exports = {
         alias: [], //Alias
         description: "Manda una imagen con el reto cumplido", //Descripción (OPCIONAL)
         usage: "z!challenge texto",
-        category: 'diversion'
+        category: 'diversion',
+        botPermissions: [],
+        memberPermissions: []
+
 
     }, run: ({ client, message, args, embedResponse }) => {
 

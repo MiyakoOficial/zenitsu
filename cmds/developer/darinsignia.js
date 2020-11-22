@@ -4,7 +4,10 @@ module.exports = {
         alias: [],
         description: "private",
         usage: "z!private command jaja",
-        category: 'developer'
+        category: 'developer',
+        botPermissions: [],
+        memberPermissions: []
+
     },
     run: async ({ client, message, args, embedResponse }) => {
 

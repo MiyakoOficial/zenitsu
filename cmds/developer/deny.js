@@ -4,7 +4,10 @@ module.exports = {
         alias: [],
         description: "Denegar sugerencia",
         usage: "z!accept id comment",
-        category: 'developer'
+        category: 'developer',
+        botPermissions: [],
+        memberPermissions: []
+
     },
     run: async ({ client, message, args, embedResponse }) => {
 

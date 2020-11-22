@@ -5,7 +5,10 @@ module.exports = {
         alias: [], //Alias
         description: "Manda una imagen con el meme de drake", //Descripción (OPCIONAL)
         usage: "z!drake texto ,|, texto2",
-        category: 'diversion'
+        category: 'diversion',
+        botPermissions: [],
+        memberPermissions: []
+
 
     }, run: ({ client, message, args, embedResponse }) => {
 

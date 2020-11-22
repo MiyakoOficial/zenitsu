@@ -4,7 +4,10 @@ module.exports = {
         alias: ['offbot'],
         description: "reset",
         usage: "z!reset",
-        category: 'developer'
+        category: 'developer',
+        botPermissions: [],
+        memberPermissions: []
+
     },
     // eslint-disable-next-line no-unused-vars
     run: ({ client, message, args, embedResponse, Hora }) => {

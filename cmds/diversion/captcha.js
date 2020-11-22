@@ -5,7 +5,10 @@ module.exports = {
         alias: [], //Alias
         description: "Manda una imagen como si fuese el reto de captcha", //Descripción (OPCIONAL)
         usage: "z!captcha texto",
-        category: 'diversion'
+        category: 'diversion',
+        botPermissions: [],
+        memberPermissions: []
+
 
     }, run: ({ client, message, args, embedResponse }) => {
 

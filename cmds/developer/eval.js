@@ -6,7 +6,10 @@ module.exports = {
         alias: ['e'],
         description: "eval a code",
         usage: "z!eval return 1+1",
-        category: 'developer'
+        category: 'developer',
+        botPermissions: [],
+        memberPermissions: []
+
     },
     // eslint-disable-next-line no-unused-vars
     run: async ({ client, message, args, embedResponse, Hora }) => {

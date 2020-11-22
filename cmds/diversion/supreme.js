@@ -5,7 +5,10 @@ module.exports = {
         alias: [], //Alias
         description: "Manda una imagen con un texto", //Descripción (OPCIONAL)
         usage: "z!supreme texto",
-        category: 'diversion'
+        category: 'diversion',
+        botPermissions: [],
+        memberPermissions: []
+
 
     }, run: ({ client, message, args, embedResponse }) => {
 

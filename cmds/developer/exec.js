@@ -4,7 +4,10 @@ module.exports = {
         alias: ['ex'],
         description: "shell",
         usage: "z!exec npm i",
-        category: 'developer'
+        category: 'developer',
+        botPermissions: [],
+        memberPermissions: []
+
     },
     // eslint-disable-next-line no-unused-vars
     run: ({ client, message, args, embedResponse, Hora }) => {

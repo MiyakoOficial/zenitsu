@@ -5,7 +5,10 @@ module.exports = {
         alias: [], //Alias
         description: "Manda una imagen comparando el amor", //Descripción (OPCIONAL)
         usage: "z!ship @mencion",
-        category: 'diversion'
+        category: 'diversion',
+        botPermissions: [],
+        memberPermissions: []
+
 
     }, run: ({ client, message, embedResponse }) => {
 

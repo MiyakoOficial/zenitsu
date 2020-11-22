@@ -5,7 +5,10 @@ module.exports = {
         alias: [], //Alias
         description: "Manda el perfil de un miembro", //Descripción (OPCIONAL)
         usage: "z!profile",
-        category: 'diversion'
+        category: 'diversion',
+        botPermissions: [],
+        memberPermissions: []
+
 
     }, run: async ({ client, message, args }) => {
 
