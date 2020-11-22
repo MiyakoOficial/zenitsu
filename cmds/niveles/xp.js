@@ -50,7 +50,7 @@ module.exports = {
         return message.channel.send({ embed: embed }).then(async a => {
             let rank = await getRank(member)
             let global = await getGlobalRank(member);
-            return a.edit(a.embeds[0].setDescription(`Nivel: ${nivel ? nivel : 0} \nXp: ${xp ? xp : 0}/${levelup ? levelup : '100'}\nRank: ${rank === null ? 'Sin resultados' : rank}\nRank global: ${global}`))
+            return a.edit(a.embeds[0].setDescription(`<:upvote:721259868937388033> Nivel: ${nivel ? nivel : 0} \n🔷 XP: ${xp ? xp : 0}/${levelup ? levelup : '100'}\n<:member:779536579966271488> Rank: ${rank}\n🌐 Rank global: ${global}`))
         })
 
     }
