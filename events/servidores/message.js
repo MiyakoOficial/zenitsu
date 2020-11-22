@@ -212,7 +212,7 @@ module.exports = async (client, message) => {
 
             let permisos = message.channel.permissionsFor(message.client.user);
             let permisosN = commandfile.config.botPermissions;
-            for (let i of permisosN) {
+            for await (let i of permisosN) {
                 if (!permisos.has(i)) {
                     check.push(i);
                 }
@@ -236,7 +236,7 @@ module.exports = async (client, message) => {
 
             let permisos = message.channel.permissionsFor(message.member);
             let permisosN = commandfile.config.memberPermissions;
-            for (let i of permisosN) {
+            for await (let i of permisosN) {
                 if (!permisos.has(i)) {
                     check.push(i);
                 }
