@@ -5,7 +5,9 @@ module.exports = {
         alias: [], //Alias
         description: "Estable un mensaje por us ID para hacer muteall/unmuteall con reacciones", //Descripción (OPCIONAL)
         usage: "z!setmessageid ID_MESSAGE #mencion(opcional)",
-        category: 'among us'
+        category: 'among us',
+        botPermissions: ['MANAGE_MESSAGES'],
+        memberPermissions: []
     }, run: async ({ client, message, args, embedResponse }) => {
 
         let rol = message.guild.roles.cache.find(a => a.name === 'Among Us manager');

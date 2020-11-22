@@ -5,11 +5,13 @@ module.exports = {
         alias: [], //Alias
         description: "Desilencia a todos en el canal de voz", //Descripción (OPCIONAL)
         usage: "z!unmuteall",
-        category: 'among us'
+        category: 'among us',
+        botPermissions: [],
+        memberPermissions: []
     }, run: async ({ client, message }) => {
 
         let canalVoz = message.member.voice.channel;
-        await client.among(message, message.member, canalVoz, message.channel, false)//
+        return await client.among(message, message.member, canalVoz, message.channel, false)//
 
     }
 }
