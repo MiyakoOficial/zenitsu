@@ -14,7 +14,9 @@ module.exports = {
         if (!rol || !message.member.roles.cache.has(rol.id)) return embedResponse('<:cancel:779536630041280522> | Tienes que tener el rol `Among Us manager`')
         if (!args[0]) return embedResponse('<:cancel:779536630041280522> | Ponga una ID valida de mensaje.');
         let canal = message.mentions.channels.first() || message.channel
-        if (messageSS(args[0], canal) === false) return embedResponse('<:cancel:779536630041280522> | No encontre el mensaje!\nPuedes buscar el mensaje mencionando el canal donde esta. z!setmessageid <id> <#mencion>')
+        if (await messageSS(args[0], canal) === false) return embedResponse('<:cancel:779536630041280522> | No encontre el mensaje!\nPuedes buscar el mensaje mencionando el canal donde esta. z!setmessageid <id> <#mencion>')
+        if (!canal.permissionsFor(client.user).has('MANAGE_MESSAGES'))
+            return embedResponse('<:cancel:779536630041280522> | Necesito el permiso `MANAGE_MESSAGES` en el canal ' + canal.toString())
         await client.updateData({ id: message.guild.id }, { idMessage: args[0] }, 'muteid');
         canal.messages.fetch(args[0]).then(async (a) => {
             await a.react('751908729930121376')
