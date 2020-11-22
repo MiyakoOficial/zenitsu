@@ -65,7 +65,7 @@ module.exports = {
             .addField('<:moderator:779536592431087619> Moderador', message.author.tag, true)
             .addField('\u200b', '\u200b', true)
             .addField('📄 Advertencias totales', data.warns.length, true)
-            .addField('📄 Advertencias para ser expulsado', check, true)
+            .addField('<:reason:779536605047554068> Advertencias para ser expulsado', check, true)
             .setFooter(`🆔 ID: ${res} - Fecha: ${Hora(Date.now(), true)}`)
 
         return message.channel.send({ embed: embed }).catch(() => { });
