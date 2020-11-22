@@ -29,7 +29,7 @@ module.exports = {
             return message.channel.send({ embed: embedHelp });
 
         if (!client.commands.map(a => a.config.name).includes(args[0]))
-            return embedResponse('Comando equivocado!')
+            return embedResponse('`Comando` no encontrado.')
 
         let datos = client.commands.find(a => a.config.name === args[0])
         let alia = datos.config.alias;
