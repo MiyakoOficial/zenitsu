@@ -166,7 +166,7 @@ function idk(string, dichas) {
 
     let res = [];
 
-    for (let e of string.split("")) {
+    string.split('').forEach(e => {
 
         if (e == '' || e == ' ')
             return res.push(' ')
@@ -175,8 +175,8 @@ function idk(string, dichas) {
         else {
             res.push('*')
         }
+    })
 
-    }
     return res.join('');
 
 }
