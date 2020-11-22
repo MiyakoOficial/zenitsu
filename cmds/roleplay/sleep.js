@@ -5,7 +5,9 @@ module.exports = {
         alias: [], //Alias
         description: "Manda un gif durmiendo", //Descripción (OPCIONAL)
         usage: "z!sleep",
-        category: 'interacción'
+        category: 'interacción',
+        botPermissions: [],
+        memberPermissions: []
 
     }, run: ({ client, message }) => {
 

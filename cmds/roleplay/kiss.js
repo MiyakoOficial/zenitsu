@@ -5,7 +5,9 @@ module.exports = {
         alias: [], //Alias
         description: "Manda un gif besando a alguien", //Descripción (OPCIONAL)
         usage: "z!kiss @mencion",
-        category: 'interacción'
+        category: 'interacción',
+        botPermissions: [],
+        memberPermissions: []
 
     }, run: ({ client, message, embedResponse }) => {
 

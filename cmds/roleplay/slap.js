@@ -5,7 +5,9 @@ module.exports = {
         alias: [], //Alias
         description: "Manda un gif golpeando a alguien", //Descripción (OPCIONAL)
         usage: "z!slap @mencion",
-        category: 'interacción'
+        category: 'interacción',
+        botPermissions: [],
+        memberPermissions: []
 
     }, run: async ({ client, message, embedResponse }) => {
 

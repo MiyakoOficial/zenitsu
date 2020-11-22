@@ -128,6 +128,7 @@ module.exports = {
                 delete message.guild.playing
                 delete message.guild.perdi
             }
+            delete message.guild.playing
 
         });
 

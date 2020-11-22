@@ -5,7 +5,9 @@ module.exports = {
         alias: [], //Alias
         description: "Manda un gif tocando a alguien.", //Descripción (OPCIONAL)
         usage: "z!poke @mencion",
-        category: 'interacción'
+        category: 'interacción',
+        botPermissions: [],
+        memberPermissions: []
 
     }, run: async ({ client, message, embedResponse }) => {
 

@@ -5,7 +5,9 @@ module.exports = {
         alias: [], //Alias
         description: "Manda un gif de presumido", //Descripción (OPCIONAL)
         usage: "z!smug",
-        category: 'interacción'
+        category: 'interacción',
+        botPermissions: [],
+        memberPermissions: []
 
     }, run: async ({ client, message }) => {
 

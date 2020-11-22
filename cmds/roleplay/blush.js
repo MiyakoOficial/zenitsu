@@ -5,7 +5,9 @@ module.exports = {
         alias: [], //Alias
         description: "Manda un gif sonrojado", //Descripción (OPCIONAL)
         usage: "z!blush",
-        category: 'interacción'
+        category: 'interacción',
+        botPermissions: [],
+        memberPermissions: []
 
     }, run: ({ client, message }) => {
 
