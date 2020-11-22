@@ -14,7 +14,7 @@ module.exports = {
 
         await client.rModel('niveles').find({ idGuild: message.guild.id }).limit(150).sort({ nivel: -1 }).exec((err, res) => {
             if (err) return console.log(err);
-            if (res.length === 0) return embedResponse("No hay datos...")
+            if (res.length === 0) return embedResponse("🤔 | Parece que nadie ha hablado en este servidor.")
 
             let pagina = res.slice(10 * (seleccion - 1), 10 * seleccion);
 
