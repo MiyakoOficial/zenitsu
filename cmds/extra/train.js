@@ -5,7 +5,9 @@ module.exports = {
         alias: [], //Alias
         description: "Entrenar", //Descripción (OPCIONAL)
         usage: "z!train",
-        category: 'rol'
+        category: 'extra',
+        botPermissions: [],
+        memberPermissions: []
 
     }, run: async ({ client, message, embedResponse }) => {
 

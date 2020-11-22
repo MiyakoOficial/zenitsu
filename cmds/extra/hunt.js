@@ -6,7 +6,9 @@ module.exports = {
         alias: [], //Alias
         description: "Cazar demonios", //Descripción (OPCIONAL)
         usage: "z!hunt",
-        category: 'rol'
+        category: 'extra',
+        botPermissions: [],
+        memberPermissions: []
 
     }, run: async ({ client, message, embedResponse }) => {
         let data = await client.getData({ id: message.author.id }, 'demonios')

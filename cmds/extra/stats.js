@@ -5,7 +5,9 @@ module.exports = {
         alias: [], //Alias
         description: "Revisar las estadisticas de un usuario", //Descripción (OPCIONAL)
         usage: "z!stats @mencion",
-        category: 'rol'
+        category: 'extra',
+        botPermissions: [],
+        memberPermissions: []
 
     }, run: async ({ client, message, args }) => {
 

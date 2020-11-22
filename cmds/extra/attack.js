@@ -6,7 +6,9 @@ module.exports = {
         alias: [], //Alias
         description: "Atacar al jefe", //Descripción (OPCIONAL)
         usage: "z!attack",
-        category: 'rol'
+        category: 'extra',
+        botPermissions: [],
+        memberPermissions: []
 
     }, run: async ({ client, message, embedResponse }) => {
 

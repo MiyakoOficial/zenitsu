@@ -4,7 +4,9 @@ module.exports = {
         alias: ['buyl'], //Alias
         description: "Comprar niveles", //Descripción (OPCIONAL)
         usage: "z!buylevel num",
-        category: 'rol'
+        category: 'extra',
+        botPermissions: [],
+        memberPermissions: []
 
     }, run: async ({ client, message, args, embedResponse }) => {
 

@@ -5,7 +5,9 @@ module.exports = {
         alias: ['to'], //Alias
         description: "Visualizar el leaderboard", //Descripción (OPCIONAL)
         usage: "z!top",
-        category: 'rol'
+        category: 'extra',
+        botPermissions: [],
+        memberPermissions: []
 
     }, run: async ({ client, message, args, embedResponse }) => {
         let seleccion = parseInt(args[1]) || 1;
