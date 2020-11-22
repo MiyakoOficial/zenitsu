@@ -6,8 +6,8 @@ module.exports = {
         description: "Visualizar el leaderboard", //Descripción (OPCIONAL)
         usage: "z!rank",
         category: 'niveles',
-        botPermissions: ['KICK_MEMBERS'],
-        memberPermissions: ['KICK_MEMBERS']
+        botPermissions: [],
+        memberPermissions: []
 
     }, run: async ({ client, message, args, embedResponse }) => {
         let seleccion = parseInt(args[0]) || 1;

@@ -5,7 +5,9 @@ module.exports = {
         alias: ['exp'], //Alias
         description: "Saber el nivel y experiencia", //Descripción (OPCIONAL)
         usage: "z!xp",
-        category: 'niveles'
+        category: 'niveles',
+        botPermissions: [],
+        memberPermissions: []
 
     }, run: async ({ client, message, args }) => {
         const { color } = client;
