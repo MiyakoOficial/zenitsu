@@ -6,11 +6,13 @@ module.exports = {
         alias: [], //Alias
         description: "Revisar el numero advertencias", //Descripción (OPCIONAL)
         usage: "z!checkwarns @mencion",
-        category: 'moderacion'
+        category: 'moderacion',
+        botPermissions: [],
+        memberPermissions: []
 
     }, run: async ({ client, message, args, embedResponse }) => {
 
-        if (!message.mentions.members.first()) return embedResponse('Menciona a un miembro del servidor!')
+        if (!message.mentions.members.first()) return embedResponse('<:cancel:779536630041280522> | Necesitas mencionar a un miembro.')
 
         let miembro = message.mentions.users.first();
 
@@ -18,22 +20,22 @@ module.exports = {
 
         let pagina = Number(args[1]) <= 0 || !Number(args[1]) ? 1 : Number(args[1]);
 
-        if (!data.warns.length) return embedResponse('El miembro no tiene advertencias.')
+        if (!data.warns.length) return embedResponse('📜 | ' + miembro.toString() + ' no tiene advertencias en este servidor.')
 
         let datos = data.warns.reverse()[pagina - 1];
 
-        if (!datos) return embedResponse('Sin datos.')
+        if (!datos) return embedResponse(`<:cancel:779536630041280522> | En la pagina ${pagina} no hay datos.`)
 
         let embed = new Discord.MessageEmbed()
             .setColor(client.color)
             .setTimestamp()
             .setTitle('<a:alarma:767497168381935638> Advertencia del miembro <a:alarma:767497168381935638>')
             .setAuthor(miembro.tag, miembro.displayAvatarURL({ dynamic: true }))
-            .addField(pagina == 1 ? 'Ultima razón:' : 'Razon:', datos.razon.slice(0, 1024))
-            .addField(pagina == 1 ? 'Ultimo moderador:' : 'Moderador:', datos.mod)
-            .addField('Fecha', datos.fecha)
-            .addField('ID', datos.token)
-            .setFooter(`Pagina: ${pagina}/${data.warns.length}`)
+            .addField(pagina == 1 ? '<:reason2:779695137205911552> Ultima razón:' : '<:reason2:779695137205911552> Razón:', datos.razon.slice(0, 1024))
+            .addField(pagina == 1 ? '<:moderator:779536592431087619> Ultimo moderador:' : '<:moderator:779536592431087619> Moderador:', datos.mod)
+            .addField('🗓️ Fecha', datos.fecha)
+            .addField('🆔 ID', datos.token)
+            .setFooter(`📄 Pagina: ${pagina}/${data.warns.length}`)
 
         return message.channel.send({ embed: embed }).catch(() => { })
 
