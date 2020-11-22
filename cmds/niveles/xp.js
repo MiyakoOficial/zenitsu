@@ -41,15 +41,17 @@ module.exports = {
         let levelup = 5 * (nivel ** 2) + 50 * nivel + 100;
         //console.log(xp, nivel);
         message.channel.startTyping();
-        let rank = await getRank(member)
-        let global = await getGlobalRank(member);
         message.channel.stopTyping();
         let embed = new Discord.MessageEmbed()
-            .setDescription(`Nivel: ${nivel ? nivel : 0} \nXp: ${xp ? xp : 0}/${levelup ? levelup : '100'}\nRank: ${rank === null ? 'Sin resultados' : rank}\nRank global: ${global}`)
+            .setDescription(`<a:cargando:650442822083674112>`)
             .setColor(color)
             .setThumbnail(member.user.displayAvatarURL({ dynamic: true }))
             .setTimestamp()
-        message.channel.send({ embed: embed })
+        return message.channel.send({ embed: embed }).then(async a => {
+            let rank = await getRank(member)
+            let global = await getGlobalRank(member);
+            return a.edit(a.embeds[0].setDescription(`Nivel: ${nivel ? nivel : 0} \nXp: ${xp ? xp : 0}/${levelup ? levelup : '100'}\nRank: ${rank === null ? 'Sin resultados' : rank}\nRank global: ${global}`))
+        })
 
     }
 }
