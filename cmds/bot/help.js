@@ -6,7 +6,9 @@ module.exports = {
         alias: ['h'], //Alias
         description: "Ver información de los comandos", //Descripción (OPCIONAL)
         usage: "z!help <comando>",
-        category: 'bot'
+        category: 'bot',
+        botPermissions: [],
+        memberPermissions: []
     },
     run: ({ client, message, args, embedResponse }) => {
 

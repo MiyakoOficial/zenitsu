@@ -6,7 +6,9 @@ module.exports = {
         alias: [],
         description: "invitar al bot",
         usage: "z!invite",
-        category: 'bot'
+        category: 'bot',
+        botPermissions: [],
+        memberPermissions: []
     },
     run: ({ client, message }) => {
         let link = 'https://discordapp.com/oauth2/authorize?client_id=721080193678311554&scope=bot&permissions=2146958847';

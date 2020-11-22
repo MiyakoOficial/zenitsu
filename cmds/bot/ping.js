@@ -5,11 +5,14 @@ module.exports = {
         alias: ['pong'], //Alias
         description: "Ver la latencia del bot", //Descripción (OPCIONAL)
         usage: "z!ping",
-        category: 'bot'
+        category: 'bot',
+        botPermissions: [],
+        memberPermissions: []
     },
     run: ({ client, embedResponse }) => {
-
-        return embedResponse(`Ping: ${client.ws.ping}ms`);
+        let date = Date.now();
+        return embedResponse(`Pong?`)
+            .then(msg => msg.edit(msg.embeds[0].setDescription(`Bot: ${client.ws.ping}\nDiscord API: ${Date.now() - date}`)));
 
     }
 }
