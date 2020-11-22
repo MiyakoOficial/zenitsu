@@ -13,7 +13,7 @@ module.exports = {
         let invitacionLink = 'https://discord.gg/hbSahh8';
         let embed = new Discord.MessageEmbed()
             .setThumbnail(client.user.displayAvatarURL({ format: 'png', size: 2048 }))
-            .setDescription(`Link de invitación del bot: [Link 🤖](${link}) \nLink de invitación al servidor de soporte: [Link <:zStaffZenitsu:766436216966217729>](${invitacionLink})`)
+            .setDescription(`Link de invitación del bot: [Link](${link} "Invitaras al bot")🤖\nLink de invitación al servidor de soporte: [Link](${invitacionLink} "Recibiras ayuda")<:zStaffZenitsu:766436216966217729>`)
             .setColor(client.color)
             .setFooter('Gracias por apoyar!', message.author.displayAvatarURL({ format: 'png', size: 2048 }))
             .setTimestamp()
