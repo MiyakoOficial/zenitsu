@@ -12,7 +12,7 @@ module.exports = {
     run: ({ client, embedResponse }) => {
         let date = Date.now();
         return embedResponse(`Pong?`)
-            .then(msg => msg.edit(msg.embeds[0].setDescription(`Bot: ${client.ws.ping}\nDiscord API: ${Date.now() - date}`)));
+            .then(msg => msg.edit(msg.embeds[0].setDescription(`🏓 Bot: ${client.ws.ping}ms\n📡 Discord API: ${Date.now() - date}ms`)));
 
     }
 }
