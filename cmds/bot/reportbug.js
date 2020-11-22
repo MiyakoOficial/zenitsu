@@ -6,7 +6,9 @@ module.exports = {
         alias: [],
         description: "reportar algun bot del bot",
         usage: "z!reportbug bug ocurrido",
-        category: 'bot'
+        category: 'bot',
+        botPermissions: [],
+        memberPermissions: []
     },
     run: ({ client, message, args, embedResponse }) => {
 

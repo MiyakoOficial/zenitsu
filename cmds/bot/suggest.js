@@ -6,7 +6,9 @@ module.exports = {
         alias: [],
         description: "sugerir un comando/cambio en el bot",
         usage: "z!suggest sugerencia",
-        category: 'bot'
+        category: 'bot',
+        botPermissions: [],
+        memberPermissions: []
     },
     run: ({ client, message, args, embedResponse }) => {
 
