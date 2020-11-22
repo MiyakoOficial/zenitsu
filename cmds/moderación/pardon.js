@@ -6,26 +6,24 @@ module.exports = {
         alias: [], //Alias
         description: "Quita una advertencia a un miembro", //Descripción (OPCIONAL)
         usage: "z!pardon @mencion",
-        category: 'moderacion'
+        category: 'moderacion',
+        botPermissions: [],
+        memberPermissions: ['KICK_MEMBERS']
 
     }, run: async ({ client, message, args, embedResponse }) => {
 
-        if (!message.member.hasPermission('KICK_MEMBERS')) return embedResponse('No tienes el permiso `KICK_MEMBERS`');
-
         let miembro = message.mentions.members.first();
 
-        if (!miembro) return embedResponse('Menciona a un miembro del servidor!')
-
-        if (miembro.user.bot) return embedResponse('No puedes perdonar a un bot.');
+        if (!miembro || miembro?.user?.bot) return embedResponse('<:cancel:779536630041280522> | Menciona a un miembro del servidor.')
 
         miembro = miembro.user;
 
-        if (miembro.id == message.author.id) return embedResponse('No te puedes perdonar a ti mismo.')
+        if (miembro.id == message.author.id) return embedResponse('<:cancel:779536630041280522> | No te puedes perdonar a ti mismo.')
 
         let datazo = (await client.getData({ idGuild: message.guild.id, idMember: miembro.id }, 'warns'));
 
         if (datazo.warns.length <= 0)
-            return embedResponse('El miembro no tiene advertencias.')
+            return embedResponse('📜 | ' + miembro.toString() + ' no tiene advertencias.')
 
         let data;
 
@@ -45,7 +43,7 @@ module.exports = {
 
         else {
 
-            return embedResponse('Elije quitar la ultima advertencia(last) o una por su ID.')
+            return embedResponse('<:cancel:779536630041280522> | z!pardon @mencion < last | ID de la advertencia >')
 
         }
 
@@ -54,7 +52,7 @@ module.exports = {
             .setTimestamp()
             .setTitle('Miembro perdonado')
             .setAuthor(miembro.tag, miembro.displayAvatarURL({ dynamic: true }))
-            .setDescription('Ahora el miembro tiene ' + data.warns.length + ' advertencia(s).')
+            .setDescription('📢 Ahora el miembro tiene ' + data.warns.length + ' advertencia(s).')
             .setFooter('Advertencia quitada por ' + message.author.tag, message.author.displayAvatarURL({ dynamic: true }))
         return message.channel.send({ embed: embed }).catch(() => { });
     }

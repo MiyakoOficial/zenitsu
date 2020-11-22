@@ -5,7 +5,9 @@ module.exports = {
         alias: [], //Alias
         description: "Ver los miembros con invitaciones en el estado", //Descripción (OPCIONAL)
         usage: "z!findinvites",
-        category: 'moderacion'
+        category: 'moderacion',
+        botPermissions: [],
+        memberPermissions: []
 
     }, run: async ({ client, message, args, embedResponse }) => {
 
