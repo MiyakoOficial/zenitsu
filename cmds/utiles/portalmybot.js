@@ -7,7 +7,9 @@ module.exports = {
         alias: [`mybo`, `mybot`, `myscrapper`], //Alias
         description: "Ver informacion de los usuarios de portalmybot.com", //Descripción (OPCIONAL)
         usage: "z!portalmybot",
-        category: 'utiles'
+        category: 'utiles',
+        botPermissions: [],
+        memberPermissions: []
     },
     run: async ({ message, args, embedResponse, client }) => {
 

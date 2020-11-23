@@ -4,7 +4,9 @@ module.exports = {
         alias: [], //Alias
         description: "Abrir un ticket", //Descripción (OPCIONAL)
         usage: "z!ticket",
-        category: 'servidor'
+        category: 'servidor',
+        botPermissions: ['MANAGE_CHANNELS'],
+        memberPermissions: []
     },
     run: ({ message, args, embedResponse }) => {
 

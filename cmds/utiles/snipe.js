@@ -6,7 +6,9 @@ module.exports = {
         alias: [], //Alias
         description: "Ver el ultimo mensaje borrado", //Descripción (OPCIONAL)
         usage: "z!snipe #mention",
-        category: 'utiles'
+        category: 'utiles',
+        botPermissions: [],
+        memberPermissions: []
     },
     run: async ({ client, message, embedResponse }) => {
 
@@ -14,7 +16,7 @@ module.exports = {
 
         let data = (await client.getData({ id: canal.id }, 'snipe'))
 
-        if (!data || !data.mensaje) return embedResponse("Ningun mensaje ha sido borrado en este canal.")
+        if (!data || !data.mensaje) return embedResponse("<:cancel:779536630041280522> | No he visto ningun mensaje borrarse en este canal.")
 
         let embed = new Discord.MessageEmbed()
             .setDescription(data.mensaje)

@@ -4,12 +4,12 @@ module.exports = {
         alias: [],
         description: "Conviertes el texto a un archivo .txt",
         usage: "z!txt Hola mundo!",
-        category: 'utiles'
+        category: 'utiles',
+        botPermissions: ['ATTACH_FILES'],
+        memberPermissions: ['ATTACH_FILES']
     },
     run: ({ message, args, embedResponse }) => {
-        if (!message.channel.permissionsFor(message.author).has('ATTACH_FILES')) return embedResponse('No tienes el permiso `ATTACH_FILES`')
-        if (!message.channel.permissionsFor(message.client.user).has('ATTACH_FILES')) return embedResponse('No tengo el permiso `ATTACH_FILES`')
-        if (!args[0]) return embedResponse('Escribe algo!');
+        if (!args[0]) return embedResponse('<:cancel:779536630041280522> | Escribe algo para convertirlo a un archivo de texto.');
         return message.channel.send({
             files: [{
                 attachment: Buffer.from(args.join(' ')),

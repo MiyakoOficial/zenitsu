@@ -6,7 +6,9 @@ module.exports = {
         alias: [], //Alias
         description: "Ver la estructura del servidor", //Descripción (OPCIONAL)
         usage: "z!estructura",
-        category: 'utiles'
+        category: 'utiles',
+        botPermissions: [],
+        memberPermissions: []
     },
     run: async ({ message, args }) => {
 

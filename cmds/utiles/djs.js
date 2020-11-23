@@ -6,7 +6,9 @@ module.exports = {
         alias: [], //Alias
         description: "Ver la documentacion de djs", //Descripción (OPCIONAL)
         usage: "z!djs",
-        category: 'utiles'
+        category: 'utiles',
+        botPermissions: [],
+        memberPermissions: []
     },
     run: async ({ message, args, embedResponse }) => {
 

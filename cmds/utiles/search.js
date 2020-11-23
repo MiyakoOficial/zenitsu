@@ -7,7 +7,9 @@ module.exports = {
         alias: ['google'], //Alias
         description: "Buscar cosas en google", //Descripción (OPCIONAL)
         usage: "z!google cosa a buscar",
-        category: 'utiles'
+        category: 'utiles',
+        botPermissions: [],
+        memberPermissions: []
     },
     run: async ({ client, message, args, embedResponse }) => {
 

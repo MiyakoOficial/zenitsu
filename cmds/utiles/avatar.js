@@ -7,7 +7,9 @@ module.exports = {
         alias: [], //Alias
         description: "Avatar de un usuario", //Descripción (OPCIONAL)
         usage: "z!avatar",
-        category: 'utiles'
+        category: 'utiles',
+        botPermissions: [],
+        memberPermissions: []
     },
     run: ({ client, message, args }) => {
 
