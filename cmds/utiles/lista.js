@@ -1,6 +1,4 @@
 /* eslint-disable no-case-declarations */
-const Discord = require("discord.js")
-
 module.exports = {
     config: {
         name: "lista", //nombre del cmd
@@ -27,10 +25,7 @@ module.exports = {
 
             case 'remove':
                 if (!args[1]) return embedResponse('Que quieres remover?')
-                let data3 = await client.getData({ id: message.author.id }, 'lista');
-                if (!data3.elementos.reverse()[Number(args[1]) - 1]) return embedResponse("a")
-                let data1 = await client.updateData({ id: message.author.id }, { $pull: { elementos: data3.elementos.reverse()[Number(args[1]) - 1] } }, 'lista')
-
+                let data1 = await client.updateData({ id: message.author.id }, { $pull: { elementos: args.slice(1).join(' ') } }, 'lista')
                 return embedResponse('Eliminado de la lista... Elementos actuales: ' + data1.elementos.length)
 
             case 'view':
