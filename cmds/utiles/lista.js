@@ -19,12 +19,14 @@ module.exports = {
         switch (args[0]) {
 
             case 'add':
+                if (!args[1]) return embedResponse('Que quieres añadir?')
 
                 let data = await client.updateData({ id: message.author.id }, { $addToSet: { elementos: args.slice(1).join(' ') } }, 'lista')
 
                 return embedResponse('Añadido a la lista... Elementos actuales: ' + data.elementos.length)
 
             case 'remove':
+                if (!args[1]) return embedResponse('Que quieres remover?')
 
                 let data1 = await client.updateData({ id: message.author.id }, { $pull: { elementos: args.slice(1).join(' ') } }, 'lista')
 
@@ -32,10 +34,10 @@ module.exports = {
 
             case 'view':
                 let data2 = await client.getData({ id: message.author.id }, 'lista');
-                return embedResponse(data2.elementos.join('\n') || 'xd')
+                return embedResponse(data2.elementos.join('\n') || 'Lista vacia.')
 
             default:
-                return embedResponse('xdn\'t')
+                return embedResponse('z!lista <view | add | remove> item')
 
         }
     }
