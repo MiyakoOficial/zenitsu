@@ -32,7 +32,7 @@ module.exports = {
 
             case 'view':
                 let data2 = await client.getData({ id: message.author.id }, 'lista');
-                return embedResponse(data2.join('\n') || 'xd')
+                return embedResponse(data2.elementos.join('\n') || 'xd')
 
             default:
                 return embedResponse('xdn\'t')
