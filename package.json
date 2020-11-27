@@ -33,6 +33,7 @@
         "opusscript": "0.0.7",
         "pretty-ms": "^7.0.1",
         "request": "^2.88.2",
+        "scrape-yt": "^1.4.6",
         "star-labs": "^1.1.2",
         "tnai": "^1.0.5",
         "tresenraya": "0.0.4",
