@@ -35,9 +35,9 @@ module.exports = {
 
         if (miembro.id == message.author.id) return embedResponse('<:cancel:779536630041280522> | No te puedes advertir a ti mismo.')
 
-        let chec = async (e) => { if (await require('../../models/warns.js').findOne({ idMember: miembro.id, token: e })) return await chec(e); else return e; }
+        let chec = async (e) => { if (await require('../../models/warns.js').findOne({ idMember: miembro.id, token: e })) return await chec(easy.clave(6, '123456789')); else return e; }
 
-        let res = await chec(easy.clave(6));
+        let res = await chec(easy.clave(6, '123456789'));
 
         let data = (await client.updateData({ idGuild: message.guild.id, idMember: miembro.id }, { $push: { warns: { razon: razon, fecha: Hora(Date.now(), true), mod: message.author.tag, token: res } } }, 'warns'));
 

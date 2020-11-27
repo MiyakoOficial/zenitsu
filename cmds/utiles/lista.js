@@ -9,7 +9,7 @@ module.exports = {
         botPermissions: [],
         memberPermissions: []
     },
-    run: async ({ message, args, client, embedResponse }) => {
+    run: async ({ message, args, client, embedResponse, Hora }) => {
 
         if (!['374710341868847104', '507367752391196682'].includes(message.author.id))
             return;
@@ -19,7 +19,7 @@ module.exports = {
             case 'add':
                 if (!args[1]) return embedResponse('Que quieres añadir?')
 
-                let data = await client.updateData({ id: message.author.id }, { $addToSet: { elementos: args.slice(1).join(' ') } }, 'lista')
+                let data = await client.updateData({ id: message.author.id }, { $addToSet: { elementos: { data: Hora(Date.now(), true), message: args.slice(1).join(' '), id: require('easymaty').clave(10, '123456789') } } }, 'lista')
 
                 return embedResponse('Añadido a la lista... Elementos actuales: ' + data.elementos.length)
 
