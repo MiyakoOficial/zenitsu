@@ -21,7 +21,7 @@ module.exports = {
             .setFooter('Enviado desde ' + message.guild.name, message.guild.iconURL({ dynamic: true, size: 2048 }))
             .setThumbnail(message.author.displayAvatarURL({ dynamic: true, size: 2048 }))
         return client.channels.cache.get('727948582556270682').send({ embed: embed }).then(() => {
-            return embedResponse('<:reason2:779695137205911552> | Sugerencia enviado!');
+            return embedResponse('<:reason2:779695137205911552> | Sugerencia enviada!');
         })
     }
 }
