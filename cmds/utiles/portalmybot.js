@@ -15,10 +15,7 @@ module.exports = {
 
         if (!args[0]) return embedResponse('¿Que quieres buscar?');
 
-        if (args[0].match(/[^A-Z0-9]/gi))
-            return embedResponse('Usuario invalido.')
-
-        let data = await mybo.getUser(args[0]);
+        let data = await mybo.mybot(args[0]);
 
         if (data.message)
             return embedResponse(data.message)
