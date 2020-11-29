@@ -10,6 +10,8 @@ module.exports = (client) => {
         for (let file of commands) {
             let carpeta = require(`../cmds/${dirs}/${file}`);
 
+            carpeta.config.category = dirs;
+
             client.commands.set(carpeta.config.name, carpeta);
             if (carpeta.config.name) {
                 table.addRow(file, '✅');
