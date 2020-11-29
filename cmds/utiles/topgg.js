@@ -29,7 +29,8 @@ module.exports = {
 
         let embed = new MessageEmbed()
             .setColor(client.color)
-            .addField('Nombre', data.name)
+            .addField('Nombre', data.name, true)
+            .addField('ID', data.id, true)
             .addField('Tipo', types[data.type], true)
 
         if (data.invite)
