@@ -33,7 +33,7 @@ module.exports = {
             .addField('Tipo', types[data.type], true)
 
         if (data.invite)
-            embed.addField('Invitacion', data.invite, true)
+            embed.addField('Invitacion', `[Dame click!](${data.invite})`, true)
 
         embed = embed
             .addField('Descripcion', data.description, true)
