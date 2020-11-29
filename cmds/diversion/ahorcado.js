@@ -5,7 +5,7 @@ module.exports = {
         alias: ['test'], //Alias
         description: "Ver el ultimo mensaje borrado", //Descripción (OPCIONAL)
         usage: "z!akinator",
-        category: 'utiles',
+        category: 'diversion',
         botPermissions: [],
         memberPermissions: []
 
