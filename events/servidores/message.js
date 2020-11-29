@@ -151,8 +151,10 @@ module.exports = async (client, message) => {
                 //circulo
 
                 ctx.drawImage(avatar, 10, 10, 80, 80);
-
+                let dataN = await client.getData({idMember: message.author.id, idGuild: message.guild.id}, 'niveles')
+                if(!dataN.disableNotify) {
                 channel.send(new Discord.MessageAttachment(canvas.toBuffer(), 'levelImage.png')).catch(() => { })
+                } // Yes
                 //}
                 //embedResponse(`<@${message.author.id}>, subiste al nivel ${nivel + 1}!`, channel).catch(a => { });
 
