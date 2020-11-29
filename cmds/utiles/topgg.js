@@ -13,12 +13,12 @@ module.exports = {
     run: async ({ client, args, message, embedResponse }) => {
 
         if (!args[0])
-            return embedResponse('¿Que quieres buscar?');
+            return embedResponse(':x: ¿Que quieres buscar?');
 
         let data = await topGG(args.join(' ')) || [];
 
         if (!data || !data[0])
-            return embedResponse('Sin resultados.')
+            return embedResponse(':x: Sin resultados.')
 
         let superdata = data;
         data = data[0]
