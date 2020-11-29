@@ -20,6 +20,7 @@ module.exports = {
         if (!data || !data[0])
             return embedResponse('Sin resultados.')
 
+        let superdata = data;
         data = data[0]
 
         let types = {
@@ -41,6 +42,7 @@ module.exports = {
             .addField('Tags', data.tags.join(', '))
             .setThumbnail(data.icon)
             .setTimestamp()
+            .setFooter(`Resultado 1/${superdata.length}`)
 
         return message.channel.send({ embed: embed })
 
