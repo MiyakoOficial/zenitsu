@@ -33,9 +33,11 @@ module.exports = {
 
             let canales_no_voice = cat.children.filter(a => a.permissionsFor(memberXD).has('VIEW_CHANNEL')).filter(a => a.type != 'voice')
             let canales_si_voice = cat.children.filter(a => a.permissionsFor(memberXD).has('VIEW_CHANNEL')).filter(a => a.type == 'voice')
-            return `[📁] ${cat.name} [${canales_si_voice.size + canales_no_voice.size + "/" + cat.children.size}]${canales_no_voice.sort((a, b) => a.position - b.position).map(a => `\n\t${name(a)}`).join('')}${canales_si_voice.sort((a, b) => a.position - b.position).map(a => `\n\t[🔊] ${a.name}${membersInfoInChannel(a)}`).join('')}\n`
+            if (canales_no_voice.size == 0 && canales_si_voice.size == 0)
+                return undefined;
+            return `[📁] ${cat.name} ${canales_no_voice.sort((a, b) => a.position - b.position).map(a => `\n\t${name(a)}`).join('')}${canales_si_voice.sort((a, b) => a.position - b.position).map(a => `\n\t[🔊] ${a.name}${membersInfoInChannel(a)}`).join('')}\n`
 
-        })
+        }).filter(a => a)
 
         todo += `\n${printT.join('')}`
 
