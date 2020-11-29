@@ -13,12 +13,14 @@ module.exports = {
     run: async ({ client, args, message, embedResponse }) => {
 
         if (!args[0])
-            return embedResponse(':x: ¿Que quieres buscar?');
+            return embedResponse('<:cancel:779536630041280522> | ¿Que quieres buscar?');
 
-        let data = await topGG(args.join(' ')) || [];
+        await embedResponse('<:accept:779536642365063189> | Buscando: ' + args.join(' '))
+
+        let data = await topGG(args.join(' '), 'true') || [];
 
         if (!data || !data[0])
-            return embedResponse(':x: Sin resultados.')
+            return embedResponse('<:cancel:779536630041280522> | Sin resultados.')
 
         let superdata = data;
         data = data[0]
@@ -42,6 +44,7 @@ module.exports = {
             .addField('Tags', data.tags.join(', '))
             .setThumbnail(data.icon)
             .setTimestamp()
+            .setAuthor(data.owners[0].name, data.owners[0].avatarURL)
             .setFooter(`Primer resultado de ${superdata.length}`)
 
         return message.channel.send({ embed: embed })
