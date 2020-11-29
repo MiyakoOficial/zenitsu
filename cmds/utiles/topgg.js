@@ -36,7 +36,8 @@ module.exports = {
             embed.addField('Invitacion', data.invite, true)
 
         embed = embed
-            .addField('Descripcion', data.description)
+            .addField('Descripcion', data.description, true)
+            .addField('Tags', data.tags.join(', '))
             .setThumbnail(data.icon)
             .setTimestamp()
 
