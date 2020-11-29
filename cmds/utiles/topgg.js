@@ -42,7 +42,7 @@ module.exports = {
             .addField('Tags', data.tags.join(', '))
             .setThumbnail(data.icon)
             .setTimestamp()
-            .setFooter(`Resultado 1/${superdata.length}`)
+            .setFooter(`Primer resultado de ${superdata.length}`)
 
         return message.channel.send({ embed: embed })
 
