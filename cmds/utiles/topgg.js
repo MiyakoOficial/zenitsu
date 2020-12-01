@@ -44,8 +44,10 @@ module.exports = {
             .addField('Tags', data.tags.join(', '))
             .setThumbnail(data.icon)
             .setTimestamp()
-            .setAuthor(data.owners[0].name, data.owners[0].avatarURL)
-            .setFooter(`Primer resultado de ${superdata.length}`)
+        if (data.owners && data.owners[0]) {
+            embed = embed.setAuthor(data.owners[0].name, data.owners[0].avatarURL)
+        }
+        embed = embed.setFooter(`Primer resultado de ${superdata.length}`)
 
         return message.channel.send({ embed: embed })
 
