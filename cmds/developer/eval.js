@@ -16,7 +16,6 @@ module.exports = {
 
         if (!["507367752391196682", "784579952220962837"].includes(message.author.id))
             return embedResponse('No puedes usar este comando!')
-        //let limit = 1950;
         try {
             let code = args.join(" ");
             let evalued = await eval(`(async() => {${code}})()`);
