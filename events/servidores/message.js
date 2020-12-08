@@ -175,7 +175,7 @@ module.exports = async (client, message) => {
     if (commandfile) {
         let dataB = (await client.getData({ id: message.author.id }, 'blacklist'))
         if (dataB.bol) {
-            return embedResponse('Estas en la lista negra por: ' + dataB.razon)
+            return;
         }
         if (cooldownCommands.has(message.author.id)) {
             let embed = new Discord.MessageEmbed()
