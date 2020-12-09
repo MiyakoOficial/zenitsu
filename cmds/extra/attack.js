@@ -55,7 +55,7 @@ module.exports = {
 
                 let embed = new Discord.MessageEmbed()
                     .setColor(client.color)
-                    .setDescription(`Haz derrotado un demonio (total: ${dataz.monstruos}) y recibiste ${dinero}$ (total: ${dataz.dinero}$)`)
+                    .setDescription(`Has derrotado un demonio (total: ${dataz.monstruos}) y recibiste ${dinero}$ (total: ${dataz.dinero}$)`)
                     .setTimestamp()
                     .setThumbnail('https://media1.tenor.com/images/8914edb2f83697285be18d3a231dda31/tenor.gif?itemid=18818936')
                     .setAuthor(message.author.tag, message.author.displayAvatarURL({ dynamic: true }))
@@ -69,7 +69,7 @@ module.exports = {
 
                 let embed = new Discord.MessageEmbed()
                     .setColor(client.color)
-                    .setDescription(`Haz perdido contra un demonio!`)
+                    .setDescription(`Has perdido contra un demonio!`)
                     .setTimestamp()
                     .setThumbnail('https://media1.tenor.com/images/70f561dfe0728a68561f1fad7f79acce/tenor.gif?itemid=14992860')
                     .setAuthor(message.author.tag, message.author.displayAvatarURL({ dynamic: true }))

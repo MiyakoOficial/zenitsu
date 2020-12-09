@@ -12,12 +12,6 @@ module.exports = {
     },
     run: async ({ message, embedResponse }) => {
 
-        let nou = 0;
-
-        message.guild.letrasdichas = [];
-        message.guild.fallidas = [];
-        message.guild.frase;
-
         let mention = message.mentions.users.first();
         let author = message.author;
 
@@ -54,6 +48,11 @@ module.exports = {
             return delete message.guild.playing
         }
         message.guild.frase = palabra
+
+        let nou = 0;
+
+        message.guild.letrasdichas = [];
+        message.guild.fallidas = [];
 
         let embed = new MessageEmbed()
             .setColor(`#e74c3c`)

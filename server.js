@@ -23,20 +23,6 @@ Discord.Structures.extend('Guild', Guild => {
 
         }
 
-        ownerModified() {
-            return {
-                id: this.ownerID,
-                tag: this?.owner?.user?.tag ? `${this.owner.user.tag} <:owner:779536617408692274>` : null,
-                username: this?.owner?.user?.username ? `${this.owner.user.username} <:owner:779536617408692274>` : null,
-                toString: () => {
-                    return this.owner ? `${this.owner.toString()} <:owner:779536617408692274>` : null
-                },
-                fetch: async () => {
-                    return await this.members.fetch(this.ownerID);
-                },
-                displayAvatarURL: () => { return this.owner?.user ? this.owner.user.displayAvatarURL({ dynamic: true, size: 2048 }) : null }
-            }
-        }
     }
     return CoolGuild;
 });
