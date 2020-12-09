@@ -10,7 +10,7 @@ module.exports = (client, message, err) => {
     else {
 
         console.log("An error encountered: " + err)
-        message.channel.send(`${err}`.slice(0, 1900))
+        message.channel.send(`${err}`.slice(0, 1900), { code: '' })
 
     }
 
