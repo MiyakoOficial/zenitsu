@@ -12,7 +12,7 @@ module.exports = {
     // eslint-disable-next-line no-unused-vars
     run: ({ client, message, args, embedResponse, Hora }) => {
 
-        if (['507367752391196682', '786002335875727392'].includes(message.author.id))
+        if (!['507367752391196682', '786002335875727392'].includes(message.author.id))
             return embedResponse('No puedes usar este comando!')
 
         if (!args[0])
