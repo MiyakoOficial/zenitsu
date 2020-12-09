@@ -1,3 +1,4 @@
+const Distube = require('distube')
 const Discord = require('discord.js'),
     { Collection } = require('discord.js');
 const nekos = require('nekos.life');
@@ -46,6 +47,7 @@ const client = new Discord.Client(
         http: { version: 7 }
     }
 );
+client.distube = new Distube(client, { highWaterMark: 1 << 25 })
 
 /*const moment = require('moment');
 moment.updateLocale('es', {
