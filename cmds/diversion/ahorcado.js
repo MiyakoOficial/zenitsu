@@ -36,7 +36,7 @@ module.exports = {
             return embedResponse(`${mention.tag} no ha respondido correctamente.`)
         }
 
-        await embedResponse(`Eleji a ${chosed.tag} para que elija la frase.`)
+        await embedResponse(`Elegi a ${chosed.tag} para que elija la frase.`)
 
         let palabra = await waitWord(chosed, m => m.author.id == chosed.id)
 
