@@ -47,7 +47,7 @@ const client = new Discord.Client(
         http: { version: 7 }
     }
 );
-client.distube = new Distube(client, { highWaterMark: 1 << 25, leaveOnFinish: true, leaveOnEmpty: false })
+client.distube = new Distube(client, { highWaterMark: 1 << 25, leaveOnFinish: true, leaveOnEmpty: false, youtubeCookie: process.env.COOKIE })
 
 /*const moment = require('moment');
 moment.updateLocale('es', {
