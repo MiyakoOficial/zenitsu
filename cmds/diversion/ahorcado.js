@@ -113,10 +113,6 @@ module.exports = {
                 if (idk(message.guild.frase, message.guild.letrasdichas) == message.guild.frase) {
                     collector.stop();
                     embedResponse(message.guild.adivinador.tag + ' ha ganado!')
-                    delete message.guild.playing
-                    delete message.guild.perdi
-                    delete message.guild.playing
-
                 }
                 message.guild.adivinador = chose.find(a => a.id != chosed.id);
                 return msg.edit({
@@ -129,6 +125,10 @@ module.exports = {
         });
 
         collector.on('end', () => {
+
+            delete message.guild.playing
+            delete message.guild.perdi
+            delete message.guild.playing
 
         });
 
