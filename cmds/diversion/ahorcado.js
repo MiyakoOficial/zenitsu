@@ -110,7 +110,14 @@ module.exports = {
                         return embedResponse('Perdiste!\n\nLa frase era: ' + message.guild.frase)
                     }
                 }
-                if (idk(message.guild.frase, message.guild.letrasdichas) == message.guild.frase) collector.stop();
+                if (idk(message.guild.frase, message.guild.letrasdichas) == message.guild.frase) {
+                    collector.stop();
+                    embedResponse(message.guild.adivinador.tag + ' ha ganado!')
+                    delete message.guild.playing
+                    delete message.guild.perdi
+                    delete message.guild.playing
+
+                }
                 message.guild.adivinador = chose.find(a => a.id != chosed.id);
                 return msg.edit({
                     embed:
@@ -122,12 +129,6 @@ module.exports = {
         });
 
         collector.on('end', () => {
-            if (!message.guild.perdi) {
-                embedResponse(message.guild.adivinador.tag + ' ha ganado!')
-                delete message.guild.playing
-                delete message.guild.perdi
-            }
-            delete message.guild.playing
 
         });
 
@@ -140,6 +141,7 @@ async function waitWord(chosed, filter) {
         chosed.send('Hola, fuiste elejido para escojer la palabra, cual quieres poner?\n\nSolo puede tener letras.').then(async () => {
             (await chosed.createDM()).awaitMessages(filter, { max: 1, time: 60000, errors: ['time'] })
                 .then(collected => {
+                    chosed.send('Bien, ahora regresa al canal.')
                     give(collected.array()[0].content)
                 })
                 .catch(() => {
