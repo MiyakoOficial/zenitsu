@@ -49,7 +49,7 @@ module.exports = {
             .setAuthor(`Reproduciendo ahora`)
             .setDescription(`[${np.name}](${np.url}) - ${np.formattedDuration}\n\n*\`En cola:\`*\n\n${queue.join('\n') || 'No hay ninguna cancion.'}`)
             .setTimestamp()
-            .setFooter(`Pagina ${seleccion(args[0])} de `)
+            .setFooter(`Pagina ${seleccion(args[0])} de ${supernp.length}.`)
             .setThumbnail('https://media1.tenor.com/images/869a5e483261d0b8e4f296b1152cba8e/tenor.gif?itemid=15940704');
 
         return message.channel.send({ embed: embed })
