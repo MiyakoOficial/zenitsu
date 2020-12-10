@@ -30,7 +30,7 @@ module.exports = {
         let embed = new MessageEmbed()
             .setColor(client.color)
             .setTimestamp()
-            .setDescription(`Buscando: [ ${client.remplazar(song)} ]`)
+            .setDescription(`<a:CatLoad:724324015275245568> | Buscando: [ ${client.remplazar(song)} ]`)
 
         client.distube.play(message, song)
         return message.channel.send({ embed: embed })

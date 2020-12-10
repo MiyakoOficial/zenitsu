@@ -26,16 +26,17 @@ module.exports = {
             return embedResponse(`No hay canciones en la pagina ${seleccion(args[0])}.`)
 
         queue = funcionPagina(queue.songs);
-        queue = queue[seleccion(args[0]) - 1].map((a, i) => {
+        queue = queue[seleccion(args[0]) - 1].slice(1).map((a, i) => {
 
             return `[${(i + 1) + 10 * (seleccion(args[0]) <= 0 ? 1 : seleccion(args[0]) - 1)}] [${a.name}](${a.url}) - ${a.formattedDuration} - ${a.user.toString()}`
 
         });
-
+        let np = queue[seleccion(args[0]) - 1][0];
         let embed = new MessageEmbed()
             .setColor(client.color)
-            .setDescription(queue.join('\n'))
+            .setDescription(`Reproduciendo ahora:\n[${np.name}](${np.url}) - ${np.formattedDuration}\nEn cola:\n${queue.join('\n')}`)
             .setTimestamp()
+            .setThumbnail('https://media1.tenor.com/images/869a5e483261d0b8e4f296b1152cba8e/tenor.gif?itemid=15940704');
 
         message.channel.send({ embed: embed })
 
