@@ -7,6 +7,7 @@ const Discord = require('discord.js');
  */
 
 module.exports = (client, message, queue, playlist, song) => {
+    console.log(playlist)
     let embed = new Discord.MessageEmbed()
         .setColor(client.color)
         .setThumbnail(playlist.thumbnail)
