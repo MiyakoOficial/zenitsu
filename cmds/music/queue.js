@@ -35,7 +35,8 @@ module.exports = {
         let np = supernp[seleccion(args[0]) - 1][0];
         let embed = new MessageEmbed()
             .setColor(client.color)
-            .setDescription(`Reproduciendo ahora:\n[${np.name}](${np.url}) - ${np.formattedDuration}\nEn cola:\n${queue.join('\n')}`)
+            .setAuthor(`Reproduciendo ahora`)
+            .setDescription(`[${np.name}](${np.url}) - ${np.formattedDuration}\nEn cola:\n\n${queue.join('\n') || 'No hay ninguna cancion.'}`)
             .setTimestamp()
             .setThumbnail('https://media1.tenor.com/images/869a5e483261d0b8e4f296b1152cba8e/tenor.gif?itemid=15940704');
 
