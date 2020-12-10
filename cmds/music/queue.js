@@ -26,12 +26,13 @@ module.exports = {
             return embedResponse(`No hay canciones en la pagina ${seleccion(args[0])}.`)
 
         queue = funcionPagina(queue.songs);
+        let supernp = queue
         queue = queue[seleccion(args[0]) - 1].slice(1).map((a, i) => {
 
             return `[${(i + 1) + 10 * (seleccion(args[0]) <= 0 ? 1 : seleccion(args[0]) - 1)}] [${a.name}](${a.url}) - ${a.formattedDuration} - ${a.user.toString()}`
 
         });
-        let np = queue[seleccion(args[0]) - 1][0];
+        let np = supernp[seleccion(args[0]) - 1][0];
         let embed = new MessageEmbed()
             .setColor(client.color)
             .setDescription(`Reproduciendo ahora:\n[${np.name}](${np.url}) - ${np.formattedDuration}\nEn cola:\n${queue.join('\n')}`)
