@@ -21,21 +21,8 @@ module.exports = {
             let code = args.join(" ");
             let evalued = await eval(`(async() => {${code}})()`);
             let asd = typeof (evalued)
-            evalued = require("util").inspect(evalued, { showHidden: true, depth: 0 });
-            let txt = "" + evalued;
-            let limit = 1999
-            if (txt.length > limit) {
-                embedResponse('Evaluación mayor a 1999 caracteres! Enviando a la consola');
-                console.log(`El contenido a evaluar es mayor a 1999 caracteres y se ha enviado a la consola. \n Entrada: \n ${code} \n \n Salida: \n ${evalued} \n \n Tipo: \n ${asd} \n \n`)
-            }
-            let embed = new Discord.MessageEmbed()
-                .setTitle(`Eval`)
-                .addField(`Entrada`, `\`\`\`js\n${code}\`\`\``)
-                .addField(`Salida`, `\`\`\`js\n${evalued}\n\`\`\``.replace(client.token, "Contenido privado"))
-                .addField(`Tipo`, `\`\`\`js\n${asd}\`\`\``.replace("number", "Number").replace("object", "Object").replace("string", "String").replace(undefined, "Undefined").replace("boolean", "Boolean").replace("function", "Function"))
-                .setColor(client.color)
-                .setTimestamp()
-            message.channel.send({ embed: embed })
+            evalued = require("util").inspect(evalued, { depth: 0 });
+            message.channel.send(`(${asd}) ${evalued}`, { code: 'js', split: { char: '', maxLength: 1900 } })
         } catch (err) {
             message.channel.send(err, { code: 'js' })
         }
