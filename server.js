@@ -23,6 +23,12 @@ Discord.Structures.extend('Guild', Guild => {
 
         }
 
+        getQueue() {
+
+            return client.distube.getQueue(this.id);
+
+        }
+
     }
     return CoolGuild;
 });
