@@ -39,7 +39,7 @@ module.exports = {
 
         for (let a of queue[seleccion(args[0]) - 1]) {
             ++i
-            return `[${a.fromPlaylist ? `[<:mc_song:786660726914678834>](${await getUrl(a.fromPlaylistURL)})` : '<a:songDJ:786662120388296724>'}][${(i + 1) + 10 * (seleccion(args[0]) <= 0 ? 1 : seleccion(args[0]) - 1)}] [${a.name}](${a.url}) - ${a.formattedDuration} - ${a.user.toString()}`
+            return `[${a.fromPlaylist ? `<:mc_song:786660726914678834>` : '<a:songDJ:786662120388296724>'}][${(i + 1) + 10 * (seleccion(args[0]) <= 0 ? 1 : seleccion(args[0]) - 1)}] [${a.name}](${a.url}) - ${a.formattedDuration} - ${a.user.toString()}`
 
         }
 
