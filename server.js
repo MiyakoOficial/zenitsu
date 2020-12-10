@@ -35,6 +35,9 @@ const client = new Discord.Client(
 );
 client.distube = new Distube(client, { highWaterMark: 1 << 25, leaveOnFinish: true, leaveOnEmpty: false, youtubeCookie: process.env.COOKIE })
 
+client.devseval = [
+    '507367752391196682', //Lil MARCROCK22
+]
 /*const moment = require('moment');
 moment.updateLocale('es', {
     months: 'Enero_Febrero_Marzo_Abril_Mayo_Junio_Julio_Agosto_Septiembre_Octubre_Noviembre_Diciembre'.split('_'),
