@@ -4,6 +4,7 @@ const Discord = require('discord.js'),
 const nekos = require('nekos.life');
 const tnai = require('tnai');
 const mongoose = require('mongoose');
+require('dotenv').config()
 
 Discord.Structures.extend('Guild', Guild => {
 
