@@ -17,7 +17,7 @@ module.exports = {
         const createBar = require('string-progressbar');
         let total = data.songs[0].duration;
         let current = data.dispatcher.streamTime >= 1000 ? Math.floor(data.dispatcher.streamTime / 1000) : 1;
-        let size = 50;
+        let size = 40;
         let slider = "[]"
         let line = "▬"
         console.log(total, current)
