@@ -34,20 +34,19 @@ module.exports = {
 
         queue = funcionPagina(queue.songs);
         let supernp = queue
-
+        let aver = [];
         let i = 0;
 
         for (let a of queue[seleccion(args[0]) - 1]) {
             ++i
-            return `[${a.fromPlaylist ? `<:mc_song:786660726914678834>` : '<a:songDJ:786662120388296724>'}][${(i + 1) + 10 * (seleccion(args[0]) <= 0 ? 1 : seleccion(args[0]) - 1)}] [${a.name}](${a.url}) - ${a.formattedDuration} - ${a.user.toString()}`
-
+            return aver.push(`[${a.fromPlaylist ? `<:mc_song:786660726914678834>` : '<a:songDJ:786662120388296724>'}][${(i + 1) + 10 * (seleccion(args[0]) <= 0 ? 1 : seleccion(args[0]) - 1)}] [${a.name}](${a.url}) - ${a.formattedDuration} - ${a.user.toString()}`)
         }
 
         let np = supernp[seleccion(args[0]) - 1][0];
         let embed = new MessageEmbed()
             .setColor(client.color)
             .setAuthor(`Reproduciendo ahora`)
-            .setDescription(`[${np.name}](${np.url}) - ${np.formattedDuration}\n\n*\`En cola:\`*\n\n${queue.join('\n') || 'No hay ninguna cancion.'}`)
+            .setDescription(`[${np.name}](${np.url}) - ${np.formattedDuration}\n\n*\`En cola:\`*\n\n${aver.join('\n') || 'No hay ninguna cancion.'}`)
             .setTimestamp()
             .setFooter(`Pagina ${seleccion(args[0])} de `)
             .setThumbnail('https://media1.tenor.com/images/869a5e483261d0b8e4f296b1152cba8e/tenor.gif?itemid=15940704');
