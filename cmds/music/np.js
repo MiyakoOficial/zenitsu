@@ -25,7 +25,7 @@ module.exports = {
 
         let embed = new MessageEmbed()
             .setColor(client.color)
-            .setAuthor(data.songs[0].name, '#', data.songs[0].url)
+            .setAuthor(data.songs[0].name, 'https://media1.tenor.com/images/869a5e483261d0b8e4f296b1152cba8e/tenor.gif?itemid=15940704', data.songs[0].url)
             .setThumbnail(data.songs[0].thumbnail)
             .setDescription(`[\`${res}\`]`)
             .setFooter(`Puesta por: ${data.songs[0].user.tag}`, data.songs[0].user.displayAvatarURL({ dynamic: true, size: 2048 }))
