@@ -52,7 +52,7 @@ module.exports = {
             .setFooter(`Pagina ${seleccion(args[0])} de `)
             .setThumbnail('https://media1.tenor.com/images/869a5e483261d0b8e4f296b1152cba8e/tenor.gif?itemid=15940704');
 
-        message.channel.send({ embed: embed })
+        return message.channel.send({ embed: embed })
 
     }
 }
