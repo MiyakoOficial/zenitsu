@@ -188,7 +188,9 @@ module.exports = async (client, message) => {
 
         else {
 
-            cooldownCommands.add(message.author.id);
+            if (!client.devseval.includes(message.author.id)) {
+                cooldownCommands.add(message.author.id);
+            }
 
             setTimeout(() => {
 
