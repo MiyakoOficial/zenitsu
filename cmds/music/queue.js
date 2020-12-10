@@ -23,7 +23,7 @@ module.exports = {
         let queue = message.guild.getQueue();
 
         if (!queue || !queue.songs || !queue.songs[seleccion(args[0]) - 1])
-            return embedResponse('No hay canciones reproduciendose.')
+            return embedResponse(`No hay canciones en la pagina ${seleccion(args[0])}.`)
 
         queue = funcionPagina(queue.songs);
         queue = queue[seleccion(args[0]) - 1].map((a, i) => {

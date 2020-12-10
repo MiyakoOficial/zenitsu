@@ -36,6 +36,7 @@
         "pretty-ms": "^7.0.1",
         "request": "^2.88.2",
         "star-labs": "^1.1.2",
+        "string-progressbar": "^1.0.1",
         "tnai": "^1.0.5",
         "tresenraya": "0.0.4",
         "virustotal-api": "^1.1.3",

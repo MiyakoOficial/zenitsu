@@ -8,13 +8,12 @@ module.exports = {
         usage: "z!np",
         category: 'musica'
     },
-    run: ({ message, client, args }) => {
+    run: ({ message, client, args, embedResponse }) => {
 
         let data = message.guild.getQueue();
 
         if (!data || !data.dispatcher || !data.dispatcher.streamTime)
-            return message.channel.send('Ninguna cancion se esta reproduciendo.')
-        //return console.log(data.songs[0])
+            return embedResponse('Ninguna cancion se esta reproduciendo.')
         const createBar = require('string-progressbar');
         let total = data.songs[0].duration;
         let current = data.dispatcher.streamTime >= 1000 ? Math.floor(data.dispatcher.streamTime / 1000) : 1;
