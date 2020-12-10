@@ -8,7 +8,14 @@ module.exports = {
         usage: "z!queue",
         category: 'musica'
     },
-    run: ({ message, client, args, embedResponse }) => {
+    run: async ({ message, client, args, embedResponse }) => {
+
+        let getUrl = async (url) => {
+
+            let fetchRes = await require('node-fetch')(`https://is.gd/create.php?format=simple&url=${encodeURIComponent(url)}`)
+            return await fetchRes.text();
+
+        }
 
         let seleccion = (num) => {
             if (!num || !parseInt(num) || 0 >= parseInt(num))
@@ -27,11 +34,13 @@ module.exports = {
 
         queue = funcionPagina(queue.songs);
         let supernp = queue
-        queue = queue[seleccion(args[0]) - 1].map((a, i) => {
 
-            return `[${a.fromPlaylist ? `[<:mc_song:786660726914678834>](${a.fromPlaylistURL})` : '<a:songDJ:786662120388296724>'}][${(i + 1) + 10 * (seleccion(args[0]) <= 0 ? 1 : seleccion(args[0]) - 1)}] [${a.name}](${a.url}) - ${a.formattedDuration} - ${a.user.toString()}`
+        for (let a of queue[seleccion(args[0]) - 1]) {
 
-        });
+            return `[${a.fromPlaylist ? `[<:mc_song:786660726914678834>](${await getUrl(a.fromPlaylistURL)})` : '<a:songDJ:786662120388296724>'}][${(i + 1) + 10 * (seleccion(args[0]) <= 0 ? 1 : seleccion(args[0]) - 1)}] [${a.name}](${a.url}) - ${a.formattedDuration} - ${a.user.toString()}`
+
+        }
+
         let np = supernp[seleccion(args[0]) - 1][0];
         let embed = new MessageEmbed()
             .setColor(client.color)
