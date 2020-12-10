@@ -7,7 +7,11 @@ const Discord = require('discord.js');
  */
 
 module.exports = (client, message, queue, playlist) => {
-    queue.songs.map(a => a.fromPlaylist = true)
+    queue.songs.map(a => {
+        a.fromPlaylist = true;
+        a.fromPlaylistURL = playlist.url;
+        return true;
+    })
     let song = playlist.songs[0];
     let embed = new Discord.MessageEmbed()
         .setColor(client.color)
