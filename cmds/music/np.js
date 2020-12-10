@@ -14,14 +14,22 @@ module.exports = {
 
         if (!data || !data.dispatcher || !data.dispatcher.streamTime)
             return embedResponse('Ninguna cancion se esta reproduciendo.')
-        const createBar = require('string-progressbar');
-        let total = data.songs[0].duration;
-        let current = data.dispatcher.streamTime >= 1000 ? Math.floor(data.dispatcher.streamTime / 1000) : 1;
-        let size = 40;
-        let slider = "[]"
-        let line = "▬"
-        console.log(total, current)
-        let res = createBar(total, current, size, line, slider)[0]
+
+        let res;
+
+        if (data.songs[0].formattedDuration != 'Live') {
+            const createBar = require('string-progressbar');
+            let total = data.songs[0].duration;
+            let current = data.dispatcher.streamTime >= 1000 ? Math.floor(data.dispatcher.streamTime / 1000) : 1;
+            let size = 40;
+            let slider = "[]"
+            let line = "▬"
+            console.log(total, current)
+            res = createBar(total, current, size, line, slider)[0]
+        }
+
+        if (!res)
+            res = 'LIVE'
 
         let embed = new MessageEmbed()
             .setColor(client.color)
