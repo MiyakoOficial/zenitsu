@@ -8,7 +8,7 @@ module.exports = {
         usage: "z!np",
         category: 'musica'
     },
-    run: ({ message, client, args, embedResponse }) => {
+    run: ({ message, client, embedResponse }) => {
 
         let data = message.guild.getQueue();
 
