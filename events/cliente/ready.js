@@ -15,11 +15,11 @@ module.exports = (client) => {
 
 
             let members = a.channel.members.filter(a => !a.user.bot);
-
+            console.log(members)
             if (members.size == 0) {
 
                 let q = client.distube.getQueue(client.guilds.cache.get(members.array()[0].guild.id));
-
+                console.log(q)
                 if (!q) return;
                 try {
                     a.channel.leave()
