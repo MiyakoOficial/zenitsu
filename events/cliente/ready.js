@@ -9,31 +9,31 @@ module.exports = (client) => {
         }
     });
 
-    /* setInterval(() => {
- */
-    /* client.voice.connections.map(a => {
- 
- 
-         let members = a.channel.members
-         let membersF = a.channel.members.filter(a => !a.user.bot);
-         //console.log(members)
-         if (membersF.size == 0) {
-             let check = members.array()[0];
-             let q = client.distube.getQueue(check.guild.id);
-             console.log(q)
-             if (!q) return;
-             try {
-                 client.distube.emit('empty', q.songs[0].message)
-                 a.channel.leave()
-             }
-             catch (e) {
-                 return;
-             }
-         }
- 
-     });
- 
- }, ms('5s'));*/
+    setInterval(() => {
+
+        client.voice.connections.map(a => {
+
+
+            let members = a.channel.members
+            let membersF = a.channel.members.filter(a => !a.user.bot);
+            //console.log(members)
+            if (membersF.size == 0) {
+                let check = members.array()[0];
+                let q = client.distube.getQueue(check.guild.id);
+                console.log(q)
+                if (!q) return;
+                try {
+                    client.distube.emit('empty', q.songs[0].reactions.message)
+                    a.channel.leave()
+                }
+                catch (e) {
+                    return;
+                }
+            }
+
+        });
+
+    }, ms('5s'));
 
 
     setInterval(() => {
