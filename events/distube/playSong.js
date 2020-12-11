@@ -13,5 +13,5 @@ module.exports = (client, message, queue, song) => {
         .setAuthor('Reproduciendo ahora', 'https://media1.tenor.com/images/18a006ba771a888cd82e34a84e8b5ed7/tenor.gif?itemid=11366262')
         .setFooter(song.user.tag, song.user.displayAvatarURL({ dynamic: true, size: 2048 }))
         .setDescription(`[${song.name}](${song.url}) - ${song.formattedDuration}`)
-    return message.channel.send({ embed: embed })
+    message.channel.send({ embed: embed })
 }

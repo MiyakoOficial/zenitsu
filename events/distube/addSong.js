@@ -7,6 +7,6 @@ module.exports = (client, message, queue, song) => {
         .setThumbnail(song.thumbnail)
         .setDescription(`Cancion añadida: [${song.name}](${song.url}) - ${song.formattedDuration}`)
         .setFooter(song.user.tag, song.user.displayAvatarURL({ dynamic: true, size: 2048 }))
-    return message.channel.send({ embed: embed })
+    message.channel.send({ embed: embed })
 
 }

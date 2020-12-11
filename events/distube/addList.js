@@ -27,5 +27,5 @@ module.exports = async (client, message, queue, playlist) => {
         .setDescription(`Playlist [${client.remplazar(playlist.name)}](${playlist.url})  *\`añadida\`* (${playlist.songs.length} canciones).`)
         .setTimestamp()
         .setFooter(song.user.tag, song.user.displayAvatarURL({ dynamic: true, size: 2048 }))
-    return message.channel.send({ embed: embed })
+    message.channel.send({ embed: embed })
 }
