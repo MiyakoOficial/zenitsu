@@ -46,7 +46,7 @@ module.exports = (client) => {
 
         let embed = new MessageEmbed()
             .setColor(client.color)
-            .addField('Canales', client.channels.cache.size, true)
+            .addField('Servidores', client.guilds.cache.size, true)
             .addField('Usuarios en cache', client.users.cache.filter(a => !a.bot).size, true)
             .addField('Conexiones de voz', client.voice.connections.size, true)
 
