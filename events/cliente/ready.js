@@ -18,8 +18,8 @@ module.exports = (client) => {
             let membersF = a.channel.members.filter(a => !a.user.bot);
             console.log(members)
             if (membersF.size == 0) {
-
-                let q = client.distube.getQueue(client.guilds.cache.get(members.array()[0].guild.id));
+                let check = members.array()[0];
+                let q = client.distube.getQueue(check.guild.id);
                 console.log(q)
                 if (!q) return;
                 try {
