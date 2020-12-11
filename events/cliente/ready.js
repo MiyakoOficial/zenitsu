@@ -52,6 +52,6 @@ module.exports = (client) => {
 
         mensaje.edit({ embed: embed })
 
-    }, ms('15s'));
+    }, ms('5m'));
 
 };
