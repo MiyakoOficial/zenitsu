@@ -1,4 +1,10 @@
+const { MessageEmbed, Client } = require('discord.js');
 const ms = require('ms')
+
+/**
+ * 
+ * @param {Client} client 
+ */
 
 module.exports = (client) => {
     client.user.setPresence({
@@ -12,11 +18,8 @@ module.exports = (client) => {
     setInterval(() => {
 
         client.voice.connections.map(a => {
-
-
             let members = a.channel.members
             let membersF = a.channel.members.filter(a => !a.user.bot);
-            //console.log(members)
             if (membersF.size == 0) {
                 let check = members.array()[0];
                 let q = client.distube.getQueue(check.guild.id);
@@ -29,20 +32,26 @@ module.exports = (client) => {
                     return console.log(e)
                 }
             }
-
         });
 
-    }, ms('5s'));
+    }, ms('60s'));
 
 
-    setInterval(() => {
+    setInterval(async () => {
 
 
-        client.channels.cache.get('755938504470691871').setName(`Guilds: ${client.guilds.cache.size}`).catch(() => { });
+        let canal = client.channels.cache.get('786997292040847401');
 
-        client.channels.cache.get('756249790211162123').setName(`Users: ${client.users.cache.filter(a => !a.bot).size}`).catch(() => { });
+        let mensaje = await canal.messages.fetch('786997341998678056')
 
+        let embed = new MessageEmbed()
+            .setColor(client.color)
+            .addField('Canales', client.channels.cache.size, true)
+            .addField('Usuarios en cache', client.users.cache.filter(a => !a.bot), true)
+            .addField('Conexiones de voz', client.voice.connections.size, true)
 
-    }, ms('5m'));
+        mensaje.edit({ embed: embed })
+
+    }, ms('15s'));
 
 };
