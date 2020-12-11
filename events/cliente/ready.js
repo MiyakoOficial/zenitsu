@@ -20,6 +20,7 @@ module.exports = (client) => {
 
                 let q = client.distube.getQueue(client.guilds.cache.get(members.array()[0].guild.id));
 
+                if (!q) return;
                 try {
                     a.channel.leave()
 
