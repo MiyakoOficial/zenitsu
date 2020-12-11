@@ -38,7 +38,7 @@ module.exports = {
 
         });
 
-        let np = supernp[seleccion(args[0]) - 1][0];
+        let np = supernp[0][0];
         let embed = new MessageEmbed()
             .setColor(client.color)
             .setAuthor(`Reproduciendo ahora`)
