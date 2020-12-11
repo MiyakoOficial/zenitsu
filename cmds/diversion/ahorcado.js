@@ -66,7 +66,8 @@ module.exports = {
             ++nou
             if (m.author.id != chose.find(a => a.id != chosed.id))
                 return;
-
+            if (m.content == 'cancel')
+                return collector.stop()
             if (COOLDOWN.has(m.author.id)) {
                 return;
             }
@@ -83,6 +84,7 @@ module.exports = {
                     embed:
                         new MessageEmbed()
                             .setColor(`#e74c3c`)
+                            .setAuthor('Puedes dejar de jugar escribiendo "cancel"')
                             .setDescription("```" + idk(message.guild.frase, message.guild.letrasdichas) + "```")
                             .setFooter(`Dichas: ${message.guild.letrasdichas.join(', ')} | Fallidas: ${message.guild.fallidas.join(', ')}`)
                 })
