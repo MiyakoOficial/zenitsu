@@ -5,17 +5,10 @@ const Discord = require('discord.js');
  * @param {Discord.Message} message 
  * @returns {Promise<Discord.Message>}
  */
-const { shorten } = require('isgd')
-module.exports = async (client, message, queue, playlist, song) => {
-
-    const short = require('util').promisify(shorten);
-
-    let url = await short(playlist.url)
+module.exports = (client, message, queue, playlist, song) => {
 
     queue.songs.map(a => {
         a.fromPlaylist = true;
-        a.fromPlaylistURL = url;
-        return true;
     })
     let embed = new Discord.MessageEmbed()
         .setColor(client.color)
