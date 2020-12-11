@@ -20,14 +20,13 @@ module.exports = (client) => {
             if (membersF.size == 0) {
                 let check = members.array()[0];
                 let q = client.distube.getQueue(check.guild.id);
-                console.log(q)
                 if (!q) return;
                 try {
                     client.distube.emit('vacio', q.initMessage)
                     a.channel.leave()
                 }
                 catch (e) {
-                    return;
+                    return console.log(e)
                 }
             }
 
