@@ -8,14 +8,7 @@ module.exports = {
         usage: "z!queue",
         category: 'musica'
     },
-    run: async ({ message, client, args, embedResponse }) => {
-
-        let getUrl = async (url) => {
-
-            let fetchRes = await require('node-fetch')(`https://is.gd/create.php?format=simple&url=${encodeURIComponent(url)}`)
-            return await fetchRes.text();
-
-        }
+    run: ({ message, client, args, embedResponse }) => {
 
         let seleccion = (num) => {
             if (!num || !parseInt(num) || 0 >= parseInt(num))
