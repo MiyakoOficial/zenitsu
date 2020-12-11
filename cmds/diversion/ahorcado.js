@@ -16,14 +16,14 @@ module.exports = {
         let author = message.author;
 
         if (!mention || mention?.bot || mention?.id == message.author.id)
-            return embedResponse('Menciona a un usuario.')
+            return embedResponse('<:cancel:779536630041280522> | Necesitas mencionar a un usuario.')
 
         let chose = [author, mention];
 
         let chosed = chose[Math.floor(Math.random() * chose.length)];
 
         if (message.guild.playing)
-            return embedResponse('Alguien en el servidor esta jugando.')
+            return embedResponse('<:cancel:779536630041280522> | Alguien en el servidor esta jugando.')
 
         message.guild.playing = true;
 
@@ -33,18 +33,18 @@ module.exports = {
 
         if (!aw) {
             delete message.guild.playing
-            return embedResponse(`${mention.tag} no ha respondido correctamente.`)
+            return embedResponse(`<:cancel:779536630041280522> | ${mention.tag} no ha respondido correctamente.`)
         }
 
-        await embedResponse(`Elegi a ${chosed.tag} para que elija la frase.`)
+        await embedResponse(`<:accept:779536642365063189> | Elegi a ${chosed.tag} para que elija la frase.`)
 
         let palabra = await waitWord(chosed, m => m.author.id == chosed.id)
 
         if (palabra == 'dm') {
             delete message.guild.playing
-            return embedResponse(`${chosed.tag} tiene los dms desactivados.`)
+            return embedResponse(`<:cancel:779536630041280522> | ${chosed.tag} tiene los dms desactivados.`)
         } if (!palabra) {
-            embedResponse("No se elijio la frase")
+            embedResponse("<:cancel:779536630041280522> | No se elijio la frase.")
             return delete message.guild.playing
         }
         message.guild.frase = palabra
