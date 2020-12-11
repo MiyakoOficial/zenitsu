@@ -5,11 +5,16 @@ const Discord = require('discord.js');
  * @param {Discord.Message} message 
  * @returns {Promise<Discord.Message>}
  */
+const { shorten } = require('isgd')
+module.exports = async (client, message, queue, playlist, song) => {
 
-module.exports = (client, message, queue, playlist, song) => {
+    const short = require('util').promisify(shorten);
+
+    let url = await short(playlist.url)
+
     queue.songs.map(a => {
         a.fromPlaylist = true;
-        a.fromPlaylistURL = playlist.url;
+        a.fromPlaylistURL = url;
         return true;
     })
     let embed = new Discord.MessageEmbed()
@@ -19,5 +24,5 @@ module.exports = (client, message, queue, playlist, song) => {
         .setDescription(`Playlist [${client.remplazar(playlist.name)}](${playlist.url})  *\`reproduciendose\`* (${playlist.songs.length} canciones).`)
         .setTimestamp()
         .setFooter(song.user.tag, song.user.displayAvatarURL({ dynamic: true, size: 2048 }))
-    message.channel.send({ embed: embed })
+    return message.channel.send({ embed: embed })
 }
