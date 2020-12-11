@@ -12,7 +12,7 @@ module.exports = async (client, message, queue, playlist, song) => {
 
     const short = require('util').promisify(shorten)
 
-    console.log(await short(playlist.url))
+    console.log(await short(playlist.url).catch(e => e))
 
     queue.songs.map(a => {
         a.fromPlaylist = true;
