@@ -138,7 +138,7 @@ module.exports = {
 async function waitWord(chosed, filter) {
 
     let palabra = await new Promise((give) => {
-        chosed.send('Hola, fuiste elejido para escojer la palabra, cual quieres poner?\n\nSolo puede tener letras.').then(async () => {
+        chosed.send('Hola, fuiste elegido para escojer la palabra, cual quieres poner?\n\nSolo puede tener letras.').then(async () => {
             (await chosed.createDM()).awaitMessages(filter, { max: 1, time: 60000, errors: ['time'] })
                 .then(collected => {
                     chosed.send('Bien, ahora regresa al canal.')
