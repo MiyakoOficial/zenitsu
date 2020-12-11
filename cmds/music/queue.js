@@ -41,7 +41,7 @@ module.exports = {
         let supernp = queue;
         queue = queue[seleccion(args[0]) - 1].map((a, i) => {
 
-            return `[${a.fromPlaylist ? '<:mc_song:786660726914678834>' : '<a:songDJ:786662120388296724>'}][${(i + 1) + num * (seleccion(args[0]) <= 0 ? 1 : seleccion(args[0]) - 1)}] [${a.name}](${a.url}) - ${a.formattedDuration} - ${a.user.toString()}`
+            return `[${a.fromPlaylist ? `[<:mc_song:786660726914678834>](${a.fromPlaylistURL})` : '<a:songDJ:786662120388296724>'}][${(i + 1) + num * (seleccion(args[0]) <= 0 ? 1 : seleccion(args[0]) - 1)}] [${a.name}](${a.url}) - ${a.formattedDuration} - ${a.user.toString()}`
 
         });
 

@@ -6,10 +6,17 @@ const Discord = require('discord.js');
  * @returns {Promise<Discord.Message>}
  */
 
-module.exports = (client, message, queue, playlist) => {
+const { shorten } = require('isgd');
+
+module.exports = async (client, message, queue, playlist) => {
+
+    const short = require('util').promisify(shorten);
+
+    let url = await short(playlist.url)
+
     queue.songs.map(a => {
         a.fromPlaylist = true;
-        a.fromPlaylistURL = playlist.url;
+        a.fromPlaylistURL = url;
         return true;
     })
     let song = playlist.songs[0];
@@ -20,5 +27,5 @@ module.exports = (client, message, queue, playlist) => {
         .setDescription(`Playlist [${client.remplazar(playlist.name)}](${playlist.url})  *\`añadida\`* (${playlist.songs.length} canciones).`)
         .setTimestamp()
         .setFooter(song.user.tag, song.user.displayAvatarURL({ dynamic: true, size: 2048 }))
-    message.channel.send({ embed: embed })
+    return message.channel.send({ embed: embed })
 }
