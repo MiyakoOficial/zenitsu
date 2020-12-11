@@ -23,9 +23,8 @@ module.exports = (client) => {
                 console.log(q)
                 if (!q) return;
                 try {
-                    a.channel.leave()
-
                     client.distube.emit('empty', q.songs[0].message)
+                    a.channel.leave()
                 }
                 catch (e) {
                     return;
