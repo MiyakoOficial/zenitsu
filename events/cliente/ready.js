@@ -14,9 +14,10 @@ module.exports = (client) => {
         client.voice.connections.map(a => {
 
 
-            let members = a.channel.members.filter(a => !a.user.bot);
+            let members = a.channel.members
+            let membersF = a.channel.members.filter(a => !a.user.bot);
             console.log(members)
-            if (members.size == 0) {
+            if (membersF.size == 0) {
 
                 let q = client.distube.getQueue(client.guilds.cache.get(members.array()[0].guild.id));
                 console.log(q)
