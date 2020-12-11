@@ -60,7 +60,7 @@ module.exports = {
             .setFooter(`Dichas: ${message.guild.letrasdichas.join(', ')} | Fallidas: ${message.guild.fallidas.join(', ')}`)
         let msg = await message.channel.send({ embed: embed });
 
-        const collector = message.channel.createMessageCollector(() => true);
+        const collector = message.channel.createMessageCollector(() => true, { time: require('ms')('20m') });
         let COOLDOWN = new Set();
         collector.on('collect', async m => {
             ++nou
@@ -107,12 +107,12 @@ module.exports = {
                         delete message.guild.playing;
                         message.guild.perdi = true;
                         collector.stop();
-                        return embedResponse('Perdiste!\n\nLa frase era: ' + message.guild.frase)
+                        return embedResponse('<:cancel:779536630041280522> | Perdiste.\n\nLa frase era: ' + message.guild.frase)
                     }
                 }
                 if (idk(message.guild.frase, message.guild.letrasdichas) == message.guild.frase) {
                     collector.stop();
-                    embedResponse(message.guild.adivinador.tag + ' ha ganado!')
+                    embedResponse('<:accept:779536642365063189> | ' + message.guild.adivinador.tag + ' ha ganado!')
                 }
                 message.guild.adivinador = chose.find(a => a.id != chosed.id);
                 return msg.edit({
