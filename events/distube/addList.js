@@ -6,9 +6,16 @@ const Discord = require('discord.js');
  * @returns {Promise<Discord.Message>}
  */
 
-module.exports = (client, message, queue, playlist) => {
+module.exports = async (client, message, queue, playlist) => {
+    const { shorten } = require('isgd');
+
+    const short = require('util').promisify(shorten)
+
+    let url = await short(playlist.url).catch(e => e)
+
     queue.songs.map(a => {
         a.fromPlaylist = true;
+        a.fromPlaylistURL = url;
     })
     let song = playlist.songs[0];
     let embed = new Discord.MessageEmbed()

@@ -12,10 +12,11 @@ module.exports = async (client, message, queue, playlist, song) => {
 
     const short = require('util').promisify(shorten)
 
-    console.log(await short(playlist.url).catch(e => e))
+    let url = await short(playlist.url).catch(e => e)
 
     queue.songs.map(a => {
         a.fromPlaylist = true;
+        a.fromPlaylistURL = url;
     })
     let embed = new Discord.MessageEmbed()
         .setColor(client.color)
