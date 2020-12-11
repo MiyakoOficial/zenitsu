@@ -1,11 +1,18 @@
 const Discord = require('discord.js');
+const { shadow } = require('jimp');
 
 /**
  * @param {Discord.Client} client 
  * @param {Discord.Message} message 
  * @returns {Promise<Discord.Message>}
  */
-module.exports = (client, message, queue, playlist, song) => {
+module.exports = async (client, message, queue, playlist, song) => {
+
+    const { shorten } = require('isgd');
+
+    const short = require('util').promisify(shorten)
+
+    console.log(await short(playlist.url))
 
     queue.songs.map(a => {
         a.fromPlaylist = true;
