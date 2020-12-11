@@ -32,14 +32,13 @@ module.exports = {
         if (!queue || !queue.songs || !queue.songs[seleccion(args[0]) - 1])
             return embedResponse(`No hay canciones en la pagina ${seleccion(args[0])}.`)
 
-        queue = funcionPagina(queue.songs);
-        let supernp = queue
-        let aver = [];
-        let i = 0;
+        let num = 5;
 
+        queue = funcionPagina(queue.songs, num);
+        let supernp = queue;
         queue = queue[seleccion(args[0]) - 1].map((a, i) => {
 
-            return `[${a.fromPlaylist ? '<:mc_song:786660726914678834>' : '<a:songDJ:786662120388296724>'}][${(i + 1) + 10 * (seleccion(args[0]) <= 0 ? 1 : seleccion(args[0]) - 1)}] [${a.name}](${a.url}) - ${a.formattedDuration} - ${a.user.toString()}`
+            return `[${a.fromPlaylist ? '<:mc_song:786660726914678834>' : '<a:songDJ:786662120388296724>'}][${(i + 1) + num * (seleccion(args[0]) <= 0 ? 1 : seleccion(args[0]) - 1)}] [${a.name}](${a.url}) - ${a.formattedDuration} - ${a.user.toString()}`
 
         });
 
