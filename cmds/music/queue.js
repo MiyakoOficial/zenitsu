@@ -29,12 +29,15 @@ module.exports = {
 
         let queue = message.guild.getQueue();
 
-        if (!queue || !queue.songs || !queue.songs[seleccion(args[0]) - 1])
-            return embedResponse(`No hay canciones en la pagina ${seleccion(args[0])}.`)
+        if (!queue || !queue.songs || !queue.songs[0])
+            return embedResponse(`No hay canciones en cola.`)
 
         let num = 5;
 
         queue = funcionPagina(queue.songs, num);
+        if (!queue[seleccion(args[0]) - 1])
+            return embedResponse(`No hay canciones en la pagina ${seleccion(args[0])}.`)
+
         let supernp = queue;
         queue = queue[seleccion(args[0]) - 1].map((a, i) => {
 
