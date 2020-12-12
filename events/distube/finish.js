@@ -10,6 +10,6 @@ module.exports = (client, message) => {
     let embed = new Discord.MessageEmbed()
         .setColor(client.color)
         .setTimestamp()
-        .setDescription('Termine de reproducir la musica, Adios!')
+        .setDescription('<a:baimefui:787148055421517845> | Termine de reproducir la musica, Adios!')
     message.channel.send({ embed: embed })
 }

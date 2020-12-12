@@ -6,14 +6,8 @@ module.exports = (client, message, err) => {
         return message.channel.send('Sin resultados.')
     if (`${err}`.includes('Unsupported URL: '))
         return message.channel.send('URL no soportado.')
-
     else {
-
-        console.log("An error encountered: " + err)
+        console.log("Error encontrado: " + err)
         message.channel.send(`${err}`.slice(0, 1900), { code: '' })
-
     }
-
-
-
 }

@@ -7,6 +7,7 @@ const Discord = require('discord.js');
  */
 
 module.exports = async (client, message, queue, playlist) => {
+
     const { shorten } = require('isgd');
 
     const short = require('util').promisify(shorten)

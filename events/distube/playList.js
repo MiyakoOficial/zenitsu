@@ -1,6 +1,4 @@
 const Discord = require('discord.js');
-const { shadow } = require('jimp');
-
 /**
  * @param {Discord.Client} client 
  * @param {Discord.Message} message 

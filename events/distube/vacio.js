@@ -10,6 +10,6 @@ module.exports = (client, message) => {
     let embed = new Discord.MessageEmbed()
         .setColor(client.color)
         .setTimestamp()
-        .setDescription('No hay nadie en el canal de voz, Hasta la proxima!')
+        .setDescription('<a:baimefui:787148055421517845> | No hay nadie en el canal de voz, Hasta la proxima!')
     message.channel.send({ embed: embed })
 }
