@@ -17,7 +17,7 @@ module.exports = {
 
         await embedResponse('<:accept:779536642365063189> | Buscando: ' + args.join(' '))
 
-        let data = await topGG(args.join(' '), 'true') || [];
+        let { data } = await topGG(args.join(' '), 'true') || { data: [] };
 
         if (!data || !data[0])
             return embedResponse('<:cancel:779536630041280522> | Sin resultados.')
