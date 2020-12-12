@@ -17,7 +17,6 @@ module.exports = (client) => {
     });
 
     setInterval(() => {
-        require('myscrapper').mybot('g4lvatron');
         client.voice.connections.map(a => {
             let members = a.channel.members
             let membersF = a.channel.members.filter(a => !a.user.bot);
