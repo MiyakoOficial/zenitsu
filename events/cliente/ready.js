@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 const { MessageEmbed, Client } = require('discord.js');
 const ms = require('ms')
 

@@ -15,7 +15,7 @@ module.exports = async (client, oldMessage, newMessage) => {
     if (!newMessage.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return;
     let embed = new Discord.MessageEmbed()
         .setColor(client.color)
-        .setTitle('<:messageUpdate:723267945194586122> Message Updated')
+        .setTitle('<:zsMessageUpdate:709728834626519081> Message Updated')
         .addField('• Old message', oldMessage.content, true)
         .addField('• New message', newMessage.content, true)
         .addField('• Link', `[Link of the message](https://discordapp.com/channels/${newMessage.guild.id}/${newMessage.channel.id}/${newMessage.id})`, false)
