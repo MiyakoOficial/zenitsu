@@ -15,7 +15,7 @@ module.exports = {
 
         if (!args[0]) return embedResponse('¿Que quieres buscar?');
 
-        let data = await mybo.mybot(args[0]);
+        let { data } = await mybo.mybot(args[0]);
 
         if (data.message)
             return embedResponse(data.message)
