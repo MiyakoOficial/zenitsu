@@ -25,12 +25,18 @@ module.exports = {
             });
         };
 
+        let array = new Array();
         let getGlobalRank = (member) => {
 
             return new Promise((resolve) => {
                 client.rModel('niveles').find({}).sort({ nivel: -1 }).exec((err, res) => {
 
-                    let results = res.map(a => a.idMember);
+                    let results = res.map(a => {
+                        if (!array.includes(a.idMember)) {
+                            array.push(a.idMember)
+                            return a.idMember
+                        }
+                    });
 
                     resolve(results.findIndex(a => a === member.user.id) + 1);
 
