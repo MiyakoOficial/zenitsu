@@ -19,9 +19,7 @@ module.exports = {
         if (data.message)
             return embedResponse(data.message)
 
-        let res = `
-        == INFO BOT ==
-        
+        let res = `== INFO BOT ==
         [Detalles BOT]
         ID: ${data.bot.id}
         PREFIX: ${data.bot.prefix}
@@ -30,8 +28,7 @@ module.exports = {
         
         [Detalles USER]
         ID: ${data.owner.id}
-        TAG: ${data.owner.tag}
-        `
+        TAG: ${data.owner.tag}`
 
         message.channel.send(res, { code: 'asciidoc' }).catch(() => { });
     }
