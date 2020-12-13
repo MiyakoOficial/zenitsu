@@ -19,16 +19,7 @@ module.exports = {
         if (data.message)
             return embedResponse(data.message)
 
-        let res = `== INFO BOT ==
-        [Detalles BOT]
-        ID: ${data.bot.id}
-        PREFIX: ${data.bot.prefix}
-        INFO: ${data.bot.descripcion}
-        ${data.bot.nombre}
-        
-        [Detalles USER]
-        ID: ${data.owner.id}
-        TAG: ${data.owner.tag}`
+        let res = `== INFO BOT ==\n[Detalles BOT]\nID: ${data.bot.id}\nPREFIX: ${data.bot.prefix}\nINFO: ${data.bot.descripcion}\n${data.bot.nombre}\n\n[Detalles USER]\nID: ${data.owner.id}\nTAG: ${data.owner.tag}`
 
         message.channel.send(res, { code: 'asciidoc' }).catch(() => { });
     }
