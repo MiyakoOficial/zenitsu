@@ -30,6 +30,8 @@ module.exports = {
             guild: 'servidor'
         }
 
+        console.log(data)
+
         let embed = new MessageEmbed()
             .setColor(client.color)
             .addField('Nombre', data.name, true)
