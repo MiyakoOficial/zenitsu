@@ -30,8 +30,6 @@ module.exports = {
             guild: 'servidor'
         }
 
-        console.log(data)
-
         let embed = new MessageEmbed()
             .setColor(client.color)
             .addField('Nombre', data.name, true)
@@ -43,7 +41,7 @@ module.exports = {
 
         embed = embed
             .addField('Descripcion', data.description, true)
-            .addField('Tags', data.tags.join(', '))
+            .addField('Tags', data.tags ? data.tags.join(', ') : 'Sin tags.')
             .setThumbnail(data.icon)
             .setTimestamp()
         if (data.owners && data.owners[0]) {
