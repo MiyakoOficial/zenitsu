@@ -6,7 +6,7 @@ module.exports = {
         name: "portalmybot", //nombre del cmd
         alias: [`mybo`, `mybot`, `myscrapper`], //Alias
         description: "Ver informacion de los usuarios de portalmybot.com", //Descripción (OPCIONAL)
-        usage: "z!portalmybot",
+        usage: "z!portalmybot USUARIO",
         category: 'utiles',
         botPermissions: [],
         memberPermissions: []
