@@ -139,7 +139,7 @@ client.updateData = async ({ ...find }, { ...newValue }, model) => {
 
     }
 
-}
+};
 
 /*
 (async () => {
