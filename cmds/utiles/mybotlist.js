@@ -12,7 +12,7 @@ module.exports = {
     },
     run: async ({ message, args, embedResponse }) => {
 
-        if (!args[0]) return embedResponse('¿Que quieres buscar?');
+        if (!args[0]) return embedResponse('Acerca de cual bot quieres obtener informacion?');
 
         let { data } = await mybo.mybotlist(args[0]);
 
