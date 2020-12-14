@@ -12,11 +12,11 @@ module.exports = {
     },
     run: async ({ message, args, embedResponse }) => {
 
-        if (!args[0]) return embedResponse('¿Que quieres buscar?');
+        if (!args[0]) return embedResponse('<a:CatLoad:724324015275245568> | ¿Que quieres buscar?');
         let response = await fetch(`https://djsdocs.sorta.moe/v2/embed?src=stable&q=${encodeURIComponent(args.join(' '))}`).catch(() => { });
         if (!response) return embedResponse('Sin resultados.');
         let megadb = await response.json();
-        if (!megadb) return embedResponse("No pude encontrarlo en la documentacion de discord.js.")
+        if (!megadb) return embedResponse("<:cancel:779536630041280522> | No pude encontrarlo en la documentacion de discord.js.")
         message.channel.send({ embed: megadb }).catch(() => { });
 
     }

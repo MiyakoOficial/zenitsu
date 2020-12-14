@@ -13,12 +13,12 @@ module.exports = {
     },
     run: async ({ message, args, embedResponse, client }) => {
 
-        if (!args[0]) return embedResponse('¿Que quieres buscar?');
+        if (!args[0]) return embedResponse('<a:CatLoad:724324015275245568> | ¿A quien quieres buscar?');
 
         let { data } = await mybo.mybot(args[0]);
 
         if (data.message)
-            return embedResponse(data.message)
+            return embedResponse('<:cancel:779536630041280522> | ' + data.message)
 
         let embed = new Discord.MessageEmbed()
             .setColor(client.color)
