@@ -28,7 +28,7 @@ module.exports = {
 
                         return `${I} | [${I == 1 && i == 0 || I == 2 && i == 1 || I == 3 && i == 2 ? '👑' : '<:member:779536579966271488>'}]${!client.users.cache.get(v.idMember) ? v.cacheName == 'none' ? 'Miembro desconocido.' : v.cacheName : client.users.cache.get(v.idMember).tag} - ${!v.nivel ? 0 : v.nivel}`
 
-                    }).join('\n') || `En la pagina ${seleccion} no hay datos.`
+                    }).join('\n') || `<:cancel:779536630041280522> | En la pagina ${seleccion} no hay datos.`
                 )
                 .setTimestamp()
                 .setFooter(`Pagina actual: ${seleccion <= 0 ? 1 : seleccion} de ${Math.round(res.length / 10)}`)
