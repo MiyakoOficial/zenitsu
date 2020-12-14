@@ -13,14 +13,14 @@ module.exports = {
     },
     run: async ({ message, args, embedResponse }) => {
 
-        let userAvatar = message.author.displayAvatarURL({ dynamic: true, size: 2048 });
+        let userAvatar = message.author.displayAvatarURL({ dynamic: true, size: 2048, format: 'png' });
 
         let user = message.mentions.users.first() || null;
 
         if (!user)
             return embedResponse('<:cancel:779536630041280522> | Debes de mencionar a un usuario.')
 
-        const avatares = [userAvatar, user.displayAvatarURL({ format: 'png', size: 4096 })];
+        const avatares = [userAvatar, user.displayAvatarURL({ format: 'png', size: 2048, dynamic: true })];
 
         if (args.join(' ').toLowerCase().endsWith(' --reverse')) avatares.reverse();
         const canvas = Canvas.createCanvas(908, 920);
