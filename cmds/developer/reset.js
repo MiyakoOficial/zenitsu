@@ -13,11 +13,11 @@ module.exports = {
     run: ({ client, message, args, embedResponse, Hora }) => {
 
         if (!['507367752391196682'].includes(message.author.id))
-            return embedResponse('No puedes usar este comando!')
+            return;
 
         try {
 
-            require('child_process').execSync(`git pull && pm2 restart all`).toString();
+            require('child_process').execSync(`git pull && pm2 restart 0`).toString();
 
         } catch (err) {
 

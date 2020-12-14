@@ -17,7 +17,7 @@ module.exports = {
 
 
         if (!client.devseval.includes(message.author.id))
-            return embedResponse('No puedes usar este comando!')
+            return;
         try {
             let code = args.join(" ");
             let evalued = await eval(`(async() => {${code}})()`);

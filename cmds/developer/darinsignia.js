@@ -12,8 +12,7 @@ module.exports = {
     run: async ({ client, message, args, embedResponse }) => {
 
         if (!["507367752391196682"].includes(message.author.id))
-            return embedResponse('No puedes usar este comando!')
-
+            return;
         let user = client.users.cache.get(args[0]) || message.mentions.users.first();
 
         if (!user)
