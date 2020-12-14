@@ -31,7 +31,7 @@ module.exports = {
                     }).join('\n') || `En la pagina ${seleccion} no hay datos.`
                 )
                 .setTimestamp()
-                .setFooter(`Pagina actual: ${seleccion <= 0 ? 1 : seleccion} de ${res.length}`)
+                .setFooter(`Pagina actual: ${seleccion <= 0 ? 1 : seleccion} de ${Math.floor(res.length / 10)}`)
                 .setColor(color)
 
             message.channel.send({ embed: embed }).catch(() => { })
