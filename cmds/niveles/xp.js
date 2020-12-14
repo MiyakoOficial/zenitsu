@@ -34,7 +34,7 @@ module.exports = {
                     let results = res.map(a => {
                         if (!array.includes(a.idMember)) {
                             array.push(a.idMember)
-                            return a.idMember
+                            return a.idMember;
                         }
                     });
 

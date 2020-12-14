@@ -22,11 +22,13 @@ module.exports = {
 
             let embed = new Discord.MessageEmbed()
                 .setDescription(
-                    pagina.map((v, i) =>
+                    pagina.map((v, i) => {
 
-                        `${(i + 1) + 10 * (seleccion <= 0 ? 1 : seleccion - 1)} | [${i == 0 || i == 1 || i == 2 ? '👑' : '<:member:779536579966271488>'}]${!client.users.cache.get(v.idMember) ? v.cacheName == 'none' ? 'Miembro desconocido.' : v.cacheName : client.users.cache.get(v.idMember).tag} - ${!v.nivel ? 0 : v.nivel}`
+                        let I = (i + 1) + 10 * (seleccion <= 0 ? 1 : seleccion - 1);
 
-                    ).join('\n') || `En la pagina ${seleccion} no hay datos.`
+                        return `${I} | [${I == 0 && i == 0 || I == 0 && i == 1 || I == 0 && i == 2 ? '👑' : '<:member:779536579966271488>'}]${!client.users.cache.get(v.idMember) ? v.cacheName == 'none' ? 'Miembro desconocido.' : v.cacheName : client.users.cache.get(v.idMember).tag} - ${!v.nivel ? 0 : v.nivel}`
+
+                    }).join('\n') || `En la pagina ${seleccion} no hay datos.`
                 )
                 .setTimestamp()
                 .setFooter(`Pagina actual: ${seleccion <= 0 ? 1 : seleccion}`)
