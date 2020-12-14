@@ -1,5 +1,3 @@
-const Discord = require("discord.js")
-
 module.exports = {
     config: {
         name: "overwrites", //nombre del cmd
@@ -26,7 +24,7 @@ module.exports = {
             str += `[👪] ${message.guild.roles.cache.get(a.id)?.name}\n\t\t${a.deny.toArray().length ? '❌' + a.deny.toArray().join(' ❌') : ''} ${a.allow.toArray().length ? '✅' + a.allow.toArray().join(' ✅') : ''}\n`
         }
 
-        str += `Este canal ${canal.permissionsLocked ? 'esta sincronizado con la categoria' : 'no esta sincronizado con la categoria'}.`
+        str += `\nEste canal ${canal.permissionsLocked ? 'esta sincronizado con la categoria' : 'no esta sincronizado con la categoria'}.`
 
         message.channel.send(str, { code: '' });
 
