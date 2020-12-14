@@ -14,7 +14,7 @@ module.exports = {
 
         const { color } = client;
 
-        await client.rModel('niveles').find({ idGuild: message.guild.id }).limit(150).sort({ nivel: -1 }).exec((err, res) => {
+        await client.rModel('niveles').find({ idGuild: message.guild.id }).sort({ nivel: -1 }).exec((err, res) => {
             if (err) return console.log(err);
             if (res.length === 0) return embedResponse("🤔 | Parece que nadie ha hablado en este servidor.")
 
@@ -31,7 +31,7 @@ module.exports = {
                     }).join('\n') || `En la pagina ${seleccion} no hay datos.`
                 )
                 .setTimestamp()
-                .setFooter(`Pagina actual: ${seleccion <= 0 ? 1 : seleccion}`)
+                .setFooter(`Pagina actual: ${seleccion <= 0 ? 1 : seleccion} de ${res.length}`)
                 .setColor(color)
 
             message.channel.send({ embed: embed }).catch(() => { })
