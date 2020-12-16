@@ -8,13 +8,13 @@ module.exports = {
         usage: "z!play musica",
         category: 'musica'
     },
-    run: ({ message, client, args, embedResponse }) => {
+    run: async ({ message, client, args, embedResponse }) => {
         if (message.author.id !== '507367752391196682')
             return;
         const canalVoz = message.member.voice.channel;
         if (!canalVoz)
             return message.channel.send('Necesitas estar en un canal de voz.')
-        const res = client.erela.search(args.join(' '), message.author);
+        const res = await client.erela.search(args.join(' '), message.author);
         const player = client.erela.create({
             guild: message.guild.id,
             voiceChannel: canalVoz.id,
