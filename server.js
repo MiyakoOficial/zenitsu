@@ -5,7 +5,7 @@ const nekos = require('nekos.life');
 const tnai = require('tnai');
 const mongoose = require('mongoose');
 require('dotenv').config()
-
+const { Manager } = require('erela.js');
 Discord.Structures.extend('Guild', Guild => {
 
     class CoolGuild extends Guild {
@@ -40,7 +40,33 @@ const client = new Discord.Client(
         http: { version: 7 }
     }
 );
+client.erela = new Manager({
+    nodes: [
+        {
+            host: 'zenitsu.eastus.cloudapp.azure.com',
+            port: 2333,
+            password: 'probando'
+        }
+    ],
+    send(id, payload) {
+        const guild = client.guilds.cache.get(id);
+        if (guild) guild.shard.send(payload);
+    },
+})
+    .on("nodeConnect", node => console.log(`Node ${node.options.identifier} connected`))
+    .on("nodeError", (node, error) => console.log(`Node ${node.options.identifier} had an error: ${error.message}`))
+    .on("trackStart", (player, track) => {
+        client.channels.cache
+            .get(player.textChannel)
+            .send(`Now playing: ${track.title}`);
+    })
+    .on("queueEnd", (player) => {
+        client.channels.cache
+            .get(player.textChannel)
+            .send("Cola terminada.");
 
+        player.destroy();
+    });
 client.kaomojis = ['(* ^ ω ^)', '(o^▽^o)', 'ヽ(・∀・)ﾉ', '(o･ω･o)', '( ´ ω ` )', '╰(▔∀▔)╯', '(✯◡✯)', '(⌒‿⌒)', 'ヽ(>∀<☆)ノ', '＼(￣▽￣)／', '(╯✧▽✧)╯', '(⁀ᗢ⁀)', '(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧', 'ヽ(*⌒▽⌒*)ﾉ', '☆*:.｡.o(≧▽≦)o.｡.:*☆', '(๑˃ᴗ˂)ﻭ', '(b ᵔ▽ᵔ)b', '(⌒ω⌒)', '(´ ∀ ` *)', '(─‿‿─)'];
 
 client.distube = new Distube(client, { youtubeCookie: process.env.COOKIE, highWaterMark: 1 << 25, leaveOnFinish: true, leaveOnEmpty: false })
