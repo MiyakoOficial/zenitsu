@@ -80,7 +80,7 @@ client.erela = new Manager({
                 *\`Informacion:\`*
                 <a:frog_rotate:720984862231887883> | Modo de repeticion: ${player.trackRepeat ? 'Cancion' : player.queueRepeat ? 'Cola' : 'Ninguno'}
                 <a:REEEEEEEEEEEEE:787117184777584640> | Volumen: ${player.volume}%
-                <a:CatLoad:724324015275245568> | Duracion: ${newDate(song.duration)}
+                <a:CatLoad:724324015275245568> | Duracion: ${song.isLive ? 'LIVE' : newDate(song.duration)}
                 `)
 
         client.channels.cache
