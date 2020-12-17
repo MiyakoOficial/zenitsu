@@ -53,7 +53,7 @@ module.exports = {
         } else {
             player.queue.add(res.tracks[0]);
             if (player.queue.size >= 1) {
-                client.erela('trackAdd', message.guild.player(), res.tracks[0])
+                client.erela.emit('trackAdd', message.guild.player(), res.tracks[0])
                 message.channel.send(`Añadiendo a la cola: ${res.tracks[0].title}`)
             }
             if (!player.playing && !player.paused && !player.queue.size)
