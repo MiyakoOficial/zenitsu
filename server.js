@@ -93,7 +93,7 @@ client.erela = new Manager({
             .setTimestamp()
             .setThumbnail(song.thumbnail)
             .setDescription(`<:accept:779536642365063189> | Cancion *\`añadida:\`* [${client.remplazar(song.title)}](${song.uri}) - ${song.isStream ? 'LIVE' : newDate(song.duration)}`)
-            .setFooter(song.user.tag, song.user.displayAvatarURL({ dynamic: true, size: 2048 }))
+            .setFooter(song.message.author.tag, song.message.author.displayAvatarURL({ dynamic: true, size: 2048 }))
         song.message.channel.send({ embed: embed })
 
     })
