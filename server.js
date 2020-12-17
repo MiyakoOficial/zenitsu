@@ -21,7 +21,7 @@ Discord.Structures.extend('Guild', g => {
 
         }
 
-        get player() {
+        player() {
 
             return client.erela.players.get(this.id);
 
