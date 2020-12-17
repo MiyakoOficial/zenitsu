@@ -43,6 +43,7 @@ module.exports = {
         if (!res || !res.tracks || !res.tracks.length)
             return embedResponse('<:cancel:779536630041280522> | Sin resultados.')
         player.connect();
+        res.tracks.map(a => a.message = message)
         if (res.loadType == 'PLAYLIST_LOADED') {
             res.tracks.map(a => a.fromPlaylist = true);
             res.tracks.map(a => player.queue.add(a));
