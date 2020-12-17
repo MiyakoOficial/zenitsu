@@ -47,7 +47,8 @@ module.exports = {
         if (res.loadType == 'PLAYLIST_LOADED') {
             res.tracks.map(a => a.fromPlaylist = true);
             res.tracks.map(a => player.queue.add(a));
-            client.erela.emit('playlistAdd', message.guild.player(), res)
+            res.playlist.uri = song;
+            client.erela.emit('playList', message.guild.player(), res.tracks, res.playlist)
             if (!player.playing && !player.paused)
                 player.play();
         } else {
