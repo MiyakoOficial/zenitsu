@@ -12,6 +12,7 @@ class Options {
     * @param {String} data.authorText
     * @param {String} data.authorLink
     * @param {String} data.authorURL
+    * @param {Array} data.fields
     */
 
     constructor(data) {
@@ -26,6 +27,7 @@ class Options {
         this.authorText = data.authorText;
         this.authorLink = data.authorLink;
         this.authorURL = data.authorURL;
+        this.fields = data.fields;
     }
 
 }

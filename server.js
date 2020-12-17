@@ -84,8 +84,9 @@ client.sendEmbed = (object = {}, options = { timestamp: true }) => {
 
     let embed = new Discord.MessageEmbed()
 
-    let { description, imageURL, footerLink, footerText, color, channel, title, thumbnailURL, authorURL, authorText, authorLink } = object;
+    let { fields, description, imageURL, footerLink, footerText, color, channel, title, thumbnailURL, authorURL, authorText, authorLink } = object;
 
+    fields.map(a => embed.addField(a[0], a[1], a[2] ? true : false))
     if (description) embed.setDescription(description)
     if (imageURL) embed.setImage(imageURL);
     if (thumbnailURL) embed.setThumbnail(thumbnailURL)
@@ -96,7 +97,6 @@ client.sendEmbed = (object = {}, options = { timestamp: true }) => {
     }
     if (authorText && authorLink && authorURL) embed.setAuthor(authorText, authorLink, authorURL)
     else if (authorText && authorLink) embed.setAuthor(authorText, authorLink)
-
     if (color) embed.setColor(color)
     if (title) embed.setTitle(title)
     if (options.timestamp) embed.setTimestamp()
