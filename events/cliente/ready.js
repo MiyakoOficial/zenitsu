@@ -28,19 +28,6 @@ module.exports = (client) => {
             let members = canalVoz.members;
             let bot = members.get(client.user.id)
             if (!bot || !bot.voice) return a.destroy();
-            let voz = bot.voice;
-            console.log('Si')
-            if (voz.channel && !voz.guild.player) {
-                voz.channel.leave();
-                console.log('Primera')
-            }
-            else if (!voz.channel && voz.guild.player && !(voz.guild.player.paused)) {
-                console.log('SEgunda')
-                voz.guild.player.destroy();
-            }
-
-            else return console.log('Nop');
-
         })
 
     }, require('ms')('10s'));
