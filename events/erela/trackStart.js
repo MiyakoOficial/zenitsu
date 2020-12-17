@@ -23,9 +23,5 @@ module.exports = (client, player, track) => {
             <a:CatLoad:724324015275245568> | Duracion: ${song.isStream ? 'LIVE' : client.newDate(song.duration)}
             `)
     song.thumbnail ? embed.setThumbnail(song.thumbnail) : null
-
-    client.channels.cache
-        .get(player.textChannel)
-        .send({ embed: embed })
-
+    song.message.channel.send({ embed: embed })
 }
