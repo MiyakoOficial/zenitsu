@@ -80,7 +80,25 @@ const embedOptions = require('./Classes/Classes.js');
  * @param {Object} options
  * @returns {Promise<Discord.Message>} 
  */
-client.sendEmbed = (object = {}, options) => {
+client.sendEmbed = (object = {}, options = { timestamp: true }) => {
+
+    let embed = new Discord.MessageEmbed()
+
+    let { description, imageURL, footerLink, footerText, color, channel, title, thumbnailURL } = object;
+
+    if (description) embed.setDescription(description)
+    if (imageURL) embed.setImage(imageURL);
+    if (thumbnailURL) embed.setThumbnail(thumbnailURL)
+    if (footerLink && footerText) embed.setFooter(footerText, footerLink)
+    else {
+        if (footerText) embed.setFooter(footerText)
+        if (footerLink) embed.setFooter('\u200b', footerLink)
+    }
+    if (color) embed.setColor(color)
+    if (title) embed.setTitle(title)
+    if (options.timestamp) embed.setTimestamp()
+    if (!channel || !channel.send) return;
+    return channel.send({ embed: embed });
 
 }
 
