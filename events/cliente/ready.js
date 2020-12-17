@@ -20,9 +20,15 @@ module.exports = (client) => {
     console.log('lito')
     setInterval(() => {
         console.log('intervalo')
-        client.voice.connections.map(connection => {
-
-            let voz = connection.voice;
+        client.erela.players.map(a => {
+            let guild = client.guilds.cache.get(a.guild);
+            if (!guild) return a.destroy()
+            let canalVoz = guild.channels.cache.get(a.voiceChannel);
+            if (!canalVoz) return a.destroy()
+            let members = canalVoz.members;
+            let bot = members.get(client.user.id)
+            if (!bot || !bot.voice) return a.destroy();
+            let voz = bot.voice;
             console.log('Si')
             if (voz.channel && !voz.guild.player) {
                 voz.channel.leave();
@@ -48,11 +54,11 @@ module.exports = (client) => {
                 let check = members.array()[0];
                 let q = client.distube.getQueue(check.guild.id);
                 if (!q) {
-
+    
                     a.channel.leave().catch(() => { })
-
+    
                     return;
-
+    
                 }
                 try {
                     client.distube.emit('vacio', q.initMessage)
@@ -63,7 +69,7 @@ module.exports = (client) => {
                 }
             }
         });
-
+    
     }, ms('60s'));*/
     setInterval(async () => {
         let canal = client.channels.cache.get('786997292040847401');
