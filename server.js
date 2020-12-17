@@ -66,7 +66,7 @@ client.erela = new Manager({
             .setThumbnail(song.thumbnail)
             .setAuthor(kaomoji, 'https://media1.tenor.com/images/869a5e483261d0b8e4f296b1152cba8e/tenor.gif?itemid=15940704')
             .setDescription(`*\`Reproduciendo ahora:\`*
-                [${song.fromPlaylist ? `<:mc_song:786660726914678834>` : '<a:songDJ:786662120388296724>'}] [${song.name}](${song.url})
+                [${song.fromPlaylist ? `<:mc_song:786660726914678834>` : '<a:songDJ:786662120388296724>'}] [${song.title}](${song.uri})
                 *\`Informacion:\`*
                 <a:frog_rotate:720984862231887883> | Modo de repeticion: ${player.trackRepeat ? 'Cancion' : player.queueRepeat ? 'Cola' : 'Ninguno'}
                 <a:REEEEEEEEEEEEE:787117184777584640> | Volumen: ${player.volume}%
