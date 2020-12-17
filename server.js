@@ -67,9 +67,7 @@ client.erela = new Manager({
 
         let kaomoji = kaomojis[Math.floor(Math.random() * kaomojis.length)];
         const song = track
-        const queue = player.queue;
         //  .setFooter(song.user.tag, song.user.displayAvatarURL({ dynamic: true, size: 2048 }))
-
         let embed = new Discord.MessageEmbed()
             .setColor(client.color)
             .setTimestamp()
@@ -80,7 +78,7 @@ client.erela = new Manager({
                 *\`Informacion:\`*
                 <a:frog_rotate:720984862231887883> | Modo de repeticion: ${player.trackRepeat ? 'Cancion' : player.queueRepeat ? 'Cola' : 'Ninguno'}
                 <a:REEEEEEEEEEEEE:787117184777584640> | Volumen: ${player.volume}%
-                <a:CatLoad:724324015275245568> | Duracion: ${song.isLive ? 'LIVE' : newDate(song.duration)}
+                <a:CatLoad:724324015275245568> | Duracion: ${song.isStream ? 'LIVE' : newDate(song.duration)}
                 `)
 
         client.channels.cache
