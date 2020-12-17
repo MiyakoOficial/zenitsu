@@ -69,7 +69,7 @@ client.erela = new Manager({
                 [${song.fromPlaylist ? `<:mc_song:786660726914678834>` : '<a:songDJ:786662120388296724>'}] [${song.name}](${song.url})
                 *\`Informacion:\`*
                 <a:frog_rotate:720984862231887883> | Modo de repeticion: ${player.trackRepeat ? 'Cancion' : player.queueRepeat ? 'Cola' : 'Ninguno'}
-                <a:REEEEEEEEEEEEE:787117184777584640> | Volumen: ${queue.volume}%
+                <a:REEEEEEEEEEEEE:787117184777584640> | Volumen: ${player.volume}%
                 <a:CatLoad:724324015275245568> | Duracion: ${song.formattedDuration}
                 `)
 
