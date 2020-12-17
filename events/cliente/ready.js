@@ -36,8 +36,7 @@ module.exports = (client) => {
             }
             else if (!voz.channel && voz.guild.player && !(voz.guild.player.paused)) {
                 console.log('SEgunda')
-                voz.guild.player.queue.clear()
-                return voz.guild.player.stop()
+                voz.guild.player.destroy();
             }
 
             else return console.log('Nop');
