@@ -19,6 +19,6 @@ module.exports = (client, player, tracks, playlist) => {
         .setAuthor(song.name, song.thumbnail, song.url)
         .setDescription(`Playlist [${client.remplazar(playlist.name)}](${playlist.url})  *\`añadida\`* (${tracks.length} canciones).`)
         .setTimestamp()
-        .setFooter(song.user.tag, song.user.displayAvatarURL({ dynamic: true, size: 2048 }))
+        .setFooter(song.message.author.tag, song.message.author.displayAvatarURL({ dynamic: true, size: 2048 }))
     tracks[0].message.channel.send({ embed: embed })
 }
