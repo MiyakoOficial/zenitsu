@@ -9,11 +9,29 @@ module.exports = {
         category: 'musica'
     },
     run: async ({ message, client, args, embedResponse }) => {
-        if (message.author.id !== '507367752391196682')
-            return;
-        const canalVoz = message.member.voice.channel;
+
+        let canalVoz = message.member.voice.channel;
+        let botCanalVoz = message.guild.me.voice.channel
+
+        let song = args.join(' ');
+
         if (!canalVoz)
-            return message.channel.send('Necesitas estar en un canal de voz.')
+            return embedResponse('<:cancel:779536630041280522> | Necesitas estar en un canal de voz.')
+        if (!song)
+            return embedResponse('<a:CatLoad:724324015275245568> | Que quieres buscar?')
+
+        if (message.guild.player) {
+
+            if (canalVoz.id != botCanalVoz?.id)
+                return embedResponse('<:cancel:779536630041280522> | Necesitas estar en el mismo canal que yo.')
+
+        }
+
+        let embed = new MessageEmbed()
+            .setColor(client.color)
+            .setTimestamp()
+            .setDescription(`<a:CatLoad:724324015275245568> | Buscando: [ ${client.remplazar(song)} ]`)
+        message.channel.send({ embed: embed })
         const res = await client.erela.search(args.join(' '), message.author);
         const player = client.erela.create({
             guild: message.guild.id,
@@ -22,8 +40,9 @@ module.exports = {
             selfDeafen: true
         })
 
+        if (!res || !res.tracks || !res.tracks.length)
+            return embedResponse('<:cancel:779536630041280522> | Sin resultados.')
         player.connect();
-        console.log(res.tracks)
         player.queue.add(res.tracks[0]);
         if (player.queue.size >= 1) {
             message.channel.send(`Añadiendo a la cola: ${res.tracks[0].title}`)

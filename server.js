@@ -21,7 +21,7 @@ Discord.Structures.extend('Guild', g => {
 
         }
 
-        getPlayer() {
+        get player() {
 
             return client.erela.players.get(this.id);
 
@@ -53,9 +53,29 @@ client.erela = new Manager({
     .on("nodeConnect", node => console.log(`Node ${node.options.identifier} connected`))
     .on("nodeError", (node, error) => console.log(`Node ${node.options.identifier} had an error: ${error.message}`))
     .on("trackStart", (player, track) => {
+        let { kaomojis } = client;
+
+        let kaomoji = kaomojis[Math.floor(Math.random() * kaomojis.length)];
+        const song = track
+        const queue = player.queue;
+        let embed = new Discord.MessageEmbed()
+            .setColor(client.color)
+            .setTimestamp()
+            .setThumbnail(song.thumbnail)
+            .setAuthor(kaomoji, 'https://media1.tenor.com/images/869a5e483261d0b8e4f296b1152cba8e/tenor.gif?itemid=15940704')
+            .setFooter(song.user.tag, song.user.displayAvatarURL({ dynamic: true, size: 2048 }))
+            .setDescription(`*\`Reproduciendo ahora:\`*
+                [${song.fromPlaylist ? `<:mc_song:786660726914678834>` : '<a:songDJ:786662120388296724>'}] [${song.name}](${song.url})
+                *\`Informacion:\`*
+                <a:frog_rotate:720984862231887883> | Modo de repeticion: ${queue.repeatMode == 0 ? 'Ninguno' : queue.repeatMode == 1 ? 'Cancion' : 'Cola'}
+                <a:REEEEEEEEEEEEE:787117184777584640> | Volumen: ${queue.volume}%
+                <a:CatLoad:724324015275245568> | Duracion: ${song.formattedDuration}
+                `)
+
         client.channels.cache
             .get(player.textChannel)
-            .send(`Reproduciendo ahora: ${track.title}`);
+            .send({ embed: embed })
+
     })
     .on("queueEnd", (player) => {
         client.channels.cache
