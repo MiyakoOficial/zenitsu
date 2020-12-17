@@ -97,7 +97,7 @@ client.sendEmbed = (object = {}, options = { timestamp: true }) => {
     if (color) embed.setColor(color)
     if (title) embed.setTitle(title)
     if (options.timestamp) embed.setTimestamp()
-    if (!channel || !channel.send) return;
+    if (!channel || !channel.send) throw new Error('No es un canal valido.');
     return channel.send({ embed: embed });
 
 }
