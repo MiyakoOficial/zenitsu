@@ -16,7 +16,7 @@ module.exports = (client, player, tracks, playlist) => {
     let embed = new Discord.MessageEmbed()
         .setColor(client.color)
         .setThumbnail(playlist.thumbnail)
-        .setAuthor(song.name, song.thumbnail, song.url)
+        .setAuthor(song.title, song.thumbnail, song.link)
         .setDescription(`Playlist [${client.remplazar(playlist.name)}](${playlist.uri})  *\`añadida\`* (${tracks.length} canciones).`)
         .setTimestamp()
         .setFooter(song.message.author.tag, song.message.author.displayAvatarURL({ dynamic: true, size: 2048 }))
