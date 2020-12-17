@@ -18,7 +18,7 @@ module.exports = {
         if (!canalVoz)
             return embedResponse('<:cancel:779536630041280522> | Necesitas estar en un canal de voz.')
         if (!song)
-            return embedResponse('<a:CatLoad:724324015275245568> | Que quieres buscar?')
+            return embedResponse('<a:CatLoad:724324015275245568> | ¿Que quieres buscar?')
 
         if (message.guild.player) {
 
