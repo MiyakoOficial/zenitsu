@@ -67,9 +67,9 @@ client.erela = new Manager({
 
         let kaomoji = kaomojis[Math.floor(Math.random() * kaomojis.length)];
         const song = track
-        //  .setFooter(song.user.tag, song.user.displayAvatarURL({ dynamic: true, size: 2048 }))
         let embed = new Discord.MessageEmbed()
             .setColor(client.color)
+            .setFooter(song.message.author.tag, song.message.author.displayAvatarURL({ dynamic: true, size: 2048 }))
             .setTimestamp()
             .setThumbnail(song.thumbnail)
             .setAuthor(kaomoji, 'https://media1.tenor.com/images/869a5e483261d0b8e4f296b1152cba8e/tenor.gif?itemid=15940704')
@@ -84,6 +84,11 @@ client.erela = new Manager({
         client.channels.cache
             .get(player.textChannel)
             .send({ embed: embed })
+
+    })
+    .on('trackAdd', (player, track) => {
+
+
 
     })
     .on("queueEnd", (player) => {
