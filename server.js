@@ -40,7 +40,7 @@ const client = new Discord.Client(
 client.erela = new Manager({
     nodes: [
         {
-            host: 'zenitsu.eastus.cloudapp.azure.com',
+            host: '127.0.0.1',
             port: 2333,
             password: 'probando'
         }
