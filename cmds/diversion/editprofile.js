@@ -88,7 +88,7 @@ module.exports = {
 
                 if (!check) return embedResponse('Usa el tipo "hexcolor", ejemplo: z!editprofile color #FF0000')
 
-                data = await client.updateData({ id: message.author.id }, { color: `#${valor}` }, 'profile')
+                data = await client.updateData({ id: message.author.id }, { color: `${valor}` }, 'profile')
 
                 return embedResponse('Ahora tu color de embed es ' + data.color);
 
