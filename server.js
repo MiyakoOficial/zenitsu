@@ -30,7 +30,14 @@ Discord.Structures.extend('Guild', g => {
     }
     return Guild;
 });
-function newDate(ms) {
+
+const client = new Discord.Client(
+    {
+        partials: ['MESSAGE', 'REACTION', 'PRESENCE'],
+        http: { version: 7 }
+    }
+);
+client.newDate = (ms) => {
 
     let res = new Date(ms).toISOString().slice(11, 19);
 
@@ -40,13 +47,6 @@ function newDate(ms) {
     return res;
 
 }
-
-const client = new Discord.Client(
-    {
-        partials: ['MESSAGE', 'REACTION', 'PRESENCE'],
-        http: { version: 7 }
-    }
-);
 client.erela = new Manager({
     nodes: [
         {
