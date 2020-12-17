@@ -30,6 +30,16 @@ Discord.Structures.extend('Guild', g => {
     }
     return Guild;
 });
+function newDate(ms) {
+
+    let res = new Date(ms).toISOString().slice(11, 19);
+
+    while (res.startsWith('00:')) {
+        res = res = res.slice(3)
+    }
+    return res;
+
+}
 
 const client = new Discord.Client(
     {
@@ -70,7 +80,7 @@ client.erela = new Manager({
                 *\`Informacion:\`*
                 <a:frog_rotate:720984862231887883> | Modo de repeticion: ${player.trackRepeat ? 'Cancion' : player.queueRepeat ? 'Cola' : 'Ninguno'}
                 <a:REEEEEEEEEEEEE:787117184777584640> | Volumen: ${player.volume}%
-                <a:CatLoad:724324015275245568> | Duracion: ${new Date(song.duration).toISOString().slice(11, 19)}
+                <a:CatLoad:724324015275245568> | Duracion: ${newDate(song.duration)}
                 `)
 
         client.channels.cache
