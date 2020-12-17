@@ -84,7 +84,7 @@ client.sendEmbed = (object = {}, options = { timestamp: true }) => {
 
     let embed = new Discord.MessageEmbed()
 
-    let { description, imageURL, footerLink, footerText, color, channel, title, thumbnailURL } = object;
+    let { description, imageURL, footerLink, footerText, color, channel, title, thumbnailURL, authorURL, authorText, authorLink } = object;
 
     if (description) embed.setDescription(description)
     if (imageURL) embed.setImage(imageURL);
@@ -94,6 +94,9 @@ client.sendEmbed = (object = {}, options = { timestamp: true }) => {
         if (footerText) embed.setFooter(footerText)
         if (footerLink) embed.setFooter('\u200b', footerLink)
     }
+    if (authorText && authorLink && authorURL) embed.setAuthor(authorText, authorLink, authorURL)
+    else if (authorText && authorLink) embed.setAuthor(authorText, authorLink)
+
     if (color) embed.setColor(color)
     if (title) embed.setTitle(title)
     if (options.timestamp) embed.setTimestamp()
@@ -197,40 +200,40 @@ client.updateData = async ({ ...find }, { ...newValue }, model) => {
 
 /*
 (async () => {
-
+ 
 const { readdir } = require("fs").promises;
 const db_files = await readdir(require("path").join(__dirname, "./models/"));
 const available_models = db_files.map(elem => elem.endsWith("js") ? elem.slice(0, -3) : elem);
-
+ 
 client.getData = async ({ ...search }, db, inexistentSave = true) => {
     if (!search || !db) return;
     if (!available_models.includes(db))
         return console.log("[-] (getData) Se esperaba una colección existente, pusiste esta: " + db);
-
+ 
     const db_collection = require(`./models/${db}`);
     const data = await db_collection.findOne(search);
     if (!data && inexistentSave) await client.createData(search, db);
-
+ 
     return data || {};
 }
-
+ 
 client.createData = async (data, db) => {
     if (!data || !db) return;
     if (!available_models.includes(db))
         return console.log("[-] (createData) Se esperaba una colección existente, pusiste esta: " + db);
-
+ 
     const db_collection = require(`./models/${db}`);
     let merged = Object.assign({ _id: mongoose.Types.ObjectId() }, data);
-
+ 
     const newData = new db_collection(merged);
     return newData.save().catch(err => console.log(err));
 }
-
+ 
 client.updateData = async ({ ...search }, { ...settings }, db, saveIfNotExists = true) => {
     if (!search || !settings || !db) return;
     if (!available_models.includes(db))
         return console.log("[-] (updateData) Se esperaba una colección existente, pusiste esta: " + db);
-
+ 
     let data = await client.getData(search, db);
     if (typeof data !== "object") data = {};
     if (!Object.keys(data).length) {
@@ -239,7 +242,7 @@ client.updateData = async ({ ...search }, { ...settings }, db, saveIfNotExists =
         else
             return null; //console.log("[-] (updateData) Si quieres actualizar datos aún así no exista el documento, pon como 4to parámetro en la función: true.");
     }
-
+ 
 for (const key in settings) {
 if (settings.hasOwnProperty(key)) {
     if (data[key] !== settings[key]) data[key] = settings[key];

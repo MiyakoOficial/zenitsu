@@ -9,6 +9,9 @@ class Options {
     * @param {import('discord.js').TextChannel} data.channel
     * @param {String} data.color
     * @param {String} data.thumbnailURL
+    * @param {String} data.authorText
+    * @param {String} data.authorLink
+    * @param {String} data.authorURL
     */
 
     constructor(data) {
@@ -19,7 +22,10 @@ class Options {
         this.description = data.description;
         this.channel = data.channel;
         this.color = data.color ? data.color : '#E09E36';
-        this.thumbnailURL = data.thumbnailURL
+        this.thumbnailURL = data.thumbnailURL;
+        this.authorText = data.authorText;
+        this.authorLink = data.authorLink;
+        this.authorURL = data.authorURL;
     }
 
 }
