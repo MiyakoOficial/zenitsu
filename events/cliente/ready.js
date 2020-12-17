@@ -17,6 +17,26 @@ module.exports = (client) => {
             type: "WATCHING"
         }
     });
+
+    setInterval(() => {
+
+        client.voice.connections.map(connection => {
+
+            let voz = connection.voice;
+
+            if (voz.channel && !voz.guild.player)
+                return voz.channel.leave();
+            else if (!voz.channel && voz.guild.player && !(voz.guild.player.paused)) {
+                voz.guild.player.queue.clear()
+                return voz.guild.player.stop()
+            }
+
+            else return true;
+
+        })
+
+    }, require('ms')('10s'));
+
     /*setInterval(() => {
         client.voice.connections.map(a => {
             let members = a.channel.members
