@@ -18,7 +18,7 @@ module.exports = (client) => {
         }
     });
     console.log('lito')
-    setInterval(() => {
+    /*setInterval(() => {
         console.log('intervalo')
         client.erela.players.map(a => {
             let guild = client.guilds.cache.get(a.guild);
@@ -30,7 +30,7 @@ module.exports = (client) => {
             if (!bot || !bot.voice) return a.destroy();
         })
 
-    }, require('ms')('10s'));
+    }, require('ms')('10s'));*/
 
     /*setInterval(() => {
         client.voice.connections.map(a => {
