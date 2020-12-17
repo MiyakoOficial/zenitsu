@@ -47,14 +47,13 @@ module.exports = {
         if (res.loadType == 'PLAYLIST_LOADED') {
             res.tracks.map(a => a.fromPlaylist = true);
             res.tracks.map(a => player.queue.add(a));
-            embedResponse(`Playlist *\`añadida\`*: [${res.playlist.name}](${song})`)
+            client.erela.emit('playlistAdd', message.guild.player(), res)
             if (!player.playing && !player.paused)
                 player.play();
         } else {
             player.queue.add(res.tracks[0]);
             if (player.queue.size >= 1) {
                 client.erela.emit('trackAdd', message.guild.player(), res.tracks[0])
-                message.channel.send(`Añadiendo a la cola: ${res.tracks[0].title}`)
             }
             if (!player.playing && !player.paused && !player.queue.size)
                 player.play();
