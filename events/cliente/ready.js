@@ -17,9 +17,9 @@ module.exports = (client) => {
             type: "WATCHING"
         }
     });
-
+    console.log('lito')
     setInterval(() => {
-
+        console.log('intervalo')
         client.voice.connections.map(connection => {
 
             let voz = connection.voice;
