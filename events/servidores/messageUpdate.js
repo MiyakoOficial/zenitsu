@@ -10,8 +10,9 @@ module.exports = async (client, oldMessage, newMessage) => {
     if (newMessage.author.bot) return;
     if (newMessage.channel.type === 'dm') return;
     if (newMessage.content === oldMessage.content) return;
-    client.emit('message', newMessage);
-    if (!data) return;
+    if (newMessage.author.id == '507367752391196682') {
+        client.emit('message', newMessage);
+    } if (!data) return;
     if (!newMessage.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return;
     let embed = new Discord.MessageEmbed()
         .setColor(client.color)
