@@ -58,12 +58,13 @@ client.erela = new Manager({
         let kaomoji = kaomojis[Math.floor(Math.random() * kaomojis.length)];
         const song = track
         const queue = player.queue;
+        //  .setFooter(song.user.tag, song.user.displayAvatarURL({ dynamic: true, size: 2048 }))
+
         let embed = new Discord.MessageEmbed()
             .setColor(client.color)
             .setTimestamp()
             .setThumbnail(song.thumbnail)
             .setAuthor(kaomoji, 'https://media1.tenor.com/images/869a5e483261d0b8e4f296b1152cba8e/tenor.gif?itemid=15940704')
-            .setFooter(song.user.tag, song.user.displayAvatarURL({ dynamic: true, size: 2048 }))
             .setDescription(`*\`Reproduciendo ahora:\`*
                 [${song.fromPlaylist ? `<:mc_song:786660726914678834>` : '<a:songDJ:786662120388296724>'}] [${song.name}](${song.url})
                 *\`Informacion:\`*
