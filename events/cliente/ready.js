@@ -8,9 +8,8 @@ const ms = require('ms')
  */
 
 module.exports = (client) => {
-
+    client.color = '#E09E36';
     client.erela.init(client.user.id);
-
     client.user.setPresence({
         status: "idle",
         activity: {
@@ -18,8 +17,7 @@ module.exports = (client) => {
             type: "WATCHING"
         }
     });
-
-    setInterval(() => {
+    /*setInterval(() => {
         client.voice.connections.map(a => {
             let members = a.channel.members
             let membersF = a.channel.members.filter(a => !a.user.bot);
@@ -43,24 +41,15 @@ module.exports = (client) => {
             }
         });
 
-    }, ms('60s'));
-
-
+    }, ms('60s'));*/
     setInterval(async () => {
-
-
         let canal = client.channels.cache.get('786997292040847401');
-
         let mensaje = await canal.messages.fetch('786997341998678056')
-
         let embed = new MessageEmbed()
             .setColor(client.color)
             .addField('Servidores', client.guilds.cache.size, true)
             .addField('Usuarios en cache', client.users.cache.filter(a => !a.bot).size, true)
             .addField('Conexiones de voz', client.voice.connections.size, true)
-
         mensaje.edit({ embed: embed })
-
     }, ms('5m'));
-
 };

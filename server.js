@@ -1,4 +1,4 @@
-const Distube = require('distube')
+//const Distube = require('distube')
 const Discord = require('discord.js'),
     { Collection } = require('discord.js');
 const nekos = require('nekos.life');
@@ -6,15 +6,12 @@ const tnai = require('tnai');
 const mongoose = require('mongoose');
 require('dotenv').config()
 const { Manager } = require('erela.js');
-Discord.Structures.extend('Guild', Guild => {
+Discord.Structures.extend('Guild', g => {
 
-    class CoolGuild extends Guild {
+    class Guild extends g {
 
         constructor(client, data) {
-
             super(client, data);
-            this.cool = true;
-
         }
 
         async getPrefix() {
@@ -24,14 +21,14 @@ Discord.Structures.extend('Guild', Guild => {
 
         }
 
-        getQueue() {
+        getPlayer() {
 
-            return client.distube.getQueue(this.id);
+            return client.erela.players.get(this.id);
 
         }
 
     }
-    return CoolGuild;
+    return Guild;
 });
 
 const client = new Discord.Client(
@@ -58,22 +55,35 @@ client.erela = new Manager({
     .on("trackStart", (player, track) => {
         client.channels.cache
             .get(player.textChannel)
-            .send(`Now playing: ${track.title}`);
+            .send(`Reproduciendo ahora: ${track.title}`);
     })
     .on("queueEnd", (player) => {
         client.channels.cache
             .get(player.textChannel)
-            .send("Cola terminada.");
+            .send("Cola de reproduccion terminada terminada.");
 
         player.destroy();
     });
 client.kaomojis = ['(* ^ ω ^)', '(o^▽^o)', 'ヽ(・∀・)ﾉ', '(o･ω･o)', '( ´ ω ` )', '╰(▔∀▔)╯', '(✯◡✯)', '(⌒‿⌒)', 'ヽ(>∀<☆)ノ', '＼(￣▽￣)／', '(╯✧▽✧)╯', '(⁀ᗢ⁀)', '(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧', 'ヽ(*⌒▽⌒*)ﾉ', '☆*:.｡.o(≧▽≦)o.｡.:*☆', '(๑˃ᴗ˂)ﻭ', '(b ᵔ▽ᵔ)b', '(⌒ω⌒)', '(´ ∀ ` *)', '(─‿‿─)'];
 
-client.distube = new Distube(client, { youtubeCookie: process.env.COOKIE, highWaterMark: 1 << 25, leaveOnFinish: true, leaveOnEmpty: false })
+//client.distube = new Distube(client, { youtubeCookie: process.env.COOKIE, highWaterMark: 1 << 25, leaveOnFinish: true, leaveOnEmpty: false })
 
 client.devseval = [
     '507367752391196682', //Lil MARCROCK22
-]
+];
+// eslint-disable-next-line no-unused-vars
+const embedOptions = require('./Classes/Classes.js');
+//global.classes = require('./Classes/Classes.js');
+/**
+ * 
+ * @param {embedOptions} object 
+ * @param {Object} options
+ * @returns {Promise<Discord.Message>} 
+ */
+client.sendEmbed = (object = {}, options) => {
+
+}
+
 /*const moment = require('moment');
 moment.updateLocale('es', {
     months: 'Enero_Febrero_Marzo_Abril_Mayo_Junio_Julio_Agosto_Septiembre_Octubre_Noviembre_Diciembre'.split('_'),
@@ -92,8 +102,8 @@ client.tnai = new tnai()
 
 require('dotenv').config();
 
-["alias", "commands"].forEach(x => client[x] = new Collection()); //Colocamos nuevas colecciones al Cliente
-["comandos", "eventos"].forEach(x => require(`./handler/${x}`)(client)); //Hacemos un array con las carpetas que tendrá el handler NO TOCAR.
+["alias", "commands"].forEach(x => client[x] = new Collection());
+["comandos", "eventos"].forEach(x => require(`./handler/${x}`)(client));
 
 mongoose.set('useFindAndModify', false)
 
@@ -264,7 +274,7 @@ global.getData = async ({ ...find }, model) => {
     const db_files = await readdir(require("path").join(__dirname, "./models/"));
     const available_models = db_files.map(elem => elem.endsWith("js") ? elem.slice(0, -3) : elem);
 
-    if (!available_models.includes(model)) return console.log('[GET_DATA]Model no encontrado!')
+    if (!available_models.includes(model)) throw new Error('[GET_DATA]: Model no encontrado!')
 
     let db = require('./models/' + model + '.js');
 
@@ -288,7 +298,7 @@ global.updateData = async ({ ...find }, { ...newValue }, model) => {
     const db_files = await readdir(require("path").join(__dirname, "./models/"));
     const available_models = db_files.map(elem => elem.endsWith("js") ? elem.slice(0, -3) : elem);
 
-    if (!available_models.includes(model)) return console.log('[UPDATE_DATA]Model no encontrado!')
+    if (!available_models.includes(model)) throw new Error('[UPDATE_DATA]: Model no encontrado!')
 
     let db = require('./models/' + model + '.js');
 
@@ -311,18 +321,13 @@ global.updateData = async ({ ...find }, { ...newValue }, model) => {
 }
 
 client.among = (mensaje, member, canalVoz, canalText, bol) => {
-    //let color = client.color;
-
     let message = mensaje;
 
-    if (!canalVoz) return response('Tienes que estar en un canal de voz!', canalText)
-        ;
+    if (!canalVoz) return response('Tienes que estar en un canal de voz!', canalText);
 
-    if (!canalVoz.name.includes('Among Us')) return response('Tienes que estar en el canal llamado: `Among Us`', canalText)
-        ;
+    if (!canalVoz.name.includes('Among Us')) return response('Tienes que estar en el canal llamado: `Among Us`', canalText);
 
-    if (!message.guild.me.hasPermission('MANAGE_CHANNELS') || !member.voice.channel.permissionsFor(client.user).has("MANAGE_CHANNELS")) return response('Tengo que tener el permiso `MANAGE_CHANNELS`!', canalText)
-        ;
+    if (!message.guild.me.hasPermission('MANAGE_CHANNELS') || !member.voice.channel.permissionsFor(client.user).has("MANAGE_CHANNELS")) return response('Tengo que tener el permiso `MANAGE_CHANNELS`!', canalText);
 
     let rol = message.guild.roles.cache.find(a => a.name === 'Among Us manager');
 
@@ -330,24 +335,16 @@ client.among = (mensaje, member, canalVoz, canalText, bol) => {
         message.guild.roles.create({ data: { name: 'Among Us manager' } });
     }
 
-    if (!rol || !member.roles.cache.has(rol.id)) return response('Tienes que tener el rol llamado: `Among Us manager`!', canalText)
-        ;
+    if (!rol || !member.roles.cache.has(rol.id)) return response('Tienes que tener el rol llamado: `Among Us manager`!', canalText);
 
-    if (!message.guild.me.hasPermission('MUTE_MEMBERS') || !member.voice.channel.permissionsFor(client.user).has("MUTE_MEMBERS")) return response('Tengo que tener el permiso `MUTE_MEMBERS`!', canalText)
-        ;
+    if (!message.guild.me.hasPermission('MUTE_MEMBERS') || !member.voice.channel.permissionsFor(client.user).has("MUTE_MEMBERS")) return response('Tengo que tener el permiso `MUTE_MEMBERS`!', canalText);
 
-    if (!message.guild.me.hasPermission('MANAGE_MESSAGES') || !member.voice.channel.permissionsFor(client.user).has("MANAGE_MESSAGES")) return response('Tengo que tener el permiso `MANAGE_MESSAGES`!', canalText)
-        ;
+    if (!message.guild.me.hasPermission('MANAGE_MESSAGES') || !member.voice.channel.permissionsFor(client.user).has("MANAGE_MESSAGES")) return response('Tengo que tener el permiso `MANAGE_MESSAGES`!', canalText);
 
-    if (canalVoz.userLimit < 10) {
+    if (canalVoz.userLimit != 10) {
         canalVoz.edit({ userLimit: 10 })
     }
-    else {
-        canalVoz.edit({ userLimit: 10 })
-    }
-
-    if (canalVoz.members.size > 15) return response('Hay más de 15 miembros en el canal!', canalText)
-        ;
+    if (canalVoz.members.size > 15) return response('Hay más de 15 miembros en el canal!', canalText);
 
     let p = canalVoz.members.map(a => {
         a.voice.setMute(bol)

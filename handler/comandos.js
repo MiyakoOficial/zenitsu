@@ -5,7 +5,9 @@ table.setHeading("Command", "Load status");
 module.exports = (client) => {
     const load = dirs => {
 
-        const commands = readdirSync(`./cmds/${dirs}/`).filter(d => d.endsWith('.js'));
+        const commands = readdirSync(`./cmds/${dirs}/`).filter(d => {
+            return d.endsWith('.js');
+        });
 
         for (let file of commands) {
             let carpeta = require(`../cmds/${dirs}/${file}`);
@@ -20,13 +22,19 @@ module.exports = (client) => {
                 continue;
             }
 
-            if (carpeta.config.alias) carpeta.config.alias.forEach(a => client.alias.set(a, carpeta.config.name));
+            if (carpeta.config.alias) carpeta.config.alias.forEach(a => {
+                return client.alias.set(a, carpeta.config.name);
+            });
         }
     };
     require('fs')
         .readdirSync('./cmds')
-        .filter(a => !a.endsWith('.js'))
-        .forEach(x => load(x));
+        .filter(a => {
+            return !a.endsWith('.js');
+        })
+        .forEach(x => {
+            return load(x);
+        });
 
     console.log(table.toString());
 };

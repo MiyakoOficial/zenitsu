@@ -29,7 +29,6 @@ module.exports = async (client, message) => {
      }*/
 
     //const prefix = (await client.getData({ id: message.guild.id }, 'prefix')).prefix || 'z!';
-    client.color = '#E09E36';
     if (!message || !message.guild || !message.author) return;
     client.serverQueue = client.queue.get(message.guild.id);
 

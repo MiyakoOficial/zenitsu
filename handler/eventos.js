@@ -1,23 +1,36 @@
 const { readdirSync } = require("fs")
-
+// eslint-disable-next-line no-unused-vars
+const Discord = require('discord.js')
+/**
+ * 
+ * @param {Discord.Client} client 
+ */
 module.exports = (client) => {
-    const load = dirs => {
-        const events = readdirSync(`./events/${dirs}/`).filter(d => d.endsWith('.js'));
+    function load(dirs) {
+        const events = readdirSync(`./events/${dirs}/`).filter(d => {
+            return d.endsWith('.js');
+        });
         for (let file of events) {
             const evt = require(`../events/${dirs}/${file}`);
             let eName = file.split('.')[0];
             client.on(eName, evt.bind(null, client));
         }
-    };
-    ["cliente", "servidores"].forEach(x => load(x));
+    }
+    ["cliente", "servidores"].map(x => {
+        return load(x);
+    });
 
-    const loadDistube = dirs => {
-        const events = readdirSync(`./events/${dirs}/`).filter(d => d.endsWith('.js'));
+    function loadDistube(dirs) {
+        const events = readdirSync(`./events/${dirs}/`).filter(d => {
+            return d.endsWith('.js');
+        });
         for (let file of events) {
             const evt = require(`../events/${dirs}/${file}`);
             let eName = file.split('.')[0];
-            client.distube.on(eName, evt.bind(null, client));
+            client.erela.on(eName, evt.bind(null, client));
         }
-    };
-    ['distube'].forEach(x => loadDistube(x));
+    }
+    ['erela'].map(x => {
+        return loadDistube(x);
+    });
 };
