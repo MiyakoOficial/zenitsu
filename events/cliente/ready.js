@@ -23,15 +23,18 @@ module.exports = (client) => {
         client.voice.connections.map(connection => {
 
             let voz = connection.voice;
-
-            if (voz.channel && !voz.guild.player)
-                return voz.channel.leave();
+            console.log('Si')
+            if (voz.channel && !voz.guild.player) {
+                voz.channel.leave();
+                console.log('Primera')
+            }
             else if (!voz.channel && voz.guild.player && !(voz.guild.player.paused)) {
+                console.log('SEgunda')
                 voz.guild.player.queue.clear()
                 return voz.guild.player.stop()
             }
 
-            else return true;
+            else return console.log('Nop');
 
         })
 
