@@ -87,8 +87,16 @@ client.erela = new Manager({
 
     })
     .on('trackAdd', (player, track) => {
+        const song = track
+        let embed = new Discord.MessageEmbed()
+            .setColor(client.color)
+            .setTimestamp()
+            .setThumbnail(song.thumbnail)
+            .setDescription(`<:accept:779536642365063189> | Cancion *\`añadida:\`* [${client.remplazar(song.title)}](${song.uri}) - ${songo.isStream ? 'LIVE' : newDate(song.duration)}`)
+            .setFooter(song.user.tag, song.user.displayAvatarURL({ dynamic: true, size: 2048 }))
+        message.channel.send({ embed: embed })
 
-
+    }
 
     })
     .on("queueEnd", (player) => {
