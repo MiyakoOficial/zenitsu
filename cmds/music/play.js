@@ -43,9 +43,15 @@ module.exports = {
         if (!res || !res.tracks || !res.tracks.length)
             return embedResponse('<:cancel:779536630041280522> | Sin resultados.')
         player.connect();
-        player.queue.add(res.tracks[0]);
-        if (player.queue.size >= 1) {
-            message.channel.send(`Añadiendo a la cola: ${res.tracks[0].title}`)
+        if (res.loadType == 'PLAYLIST_LOADED') {
+            res.tracks.map(a => a.fromPlaylist = true);
+            res.tracks.map(a => player.queue.add(a));
+            embedResponse(`Playlist *\`añadida\`*: [${res.playlist.name}](${song})`)
+        } else {
+            player.queue.add(res.tracks[0]);
+            if (player.queue.size >= 1) {
+                message.channel.send(`Añadiendo a la cola: ${res.tracks[0].title}`)
+            }
         }
         if (!player.playing && !player.paused && !player.queue.size)
             player.play();
