@@ -83,7 +83,10 @@ module.exports = {
 
             case 'color':
 
-                if (valor.length != 6) return embedResponse('Usa el tipo "hexcolor", ejemplo: z!editprofile color FF0000')
+                // eslint-disable-next-line no-case-declarations
+                const check = /^#[a-fA-F0-9]{3,6}$/.test(valor)
+
+                if (!check) return embedResponse('Usa el tipo "hexcolor", ejemplo: z!editprofile color #FF0000')
 
                 data = await client.updateData({ id: message.author.id }, { color: `#${valor}` }, 'profile')
 
