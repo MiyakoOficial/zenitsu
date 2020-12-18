@@ -34,7 +34,7 @@ module.exports = {
         queue = funcionPagina(queue, num);
         if (!queue[seleccion(args[0]) - 1])
             return embedResponse(`<:cancel:779536630041280522> | No hay canciones en la pagina ${seleccion(args[0])}.`)
-        queue = queue[seleccion(args[0] - 1)].map((a, i) => {
+        queue = queue[seleccion(args[0]) - 1].map((a, i) => {
             console.log(a)
             return `[${emoji(a)}][${(i + 1) + num * (seleccion(args[0]) <= 0 ? 1 : seleccion(args[0]) - 1)}] [${a.name}](${a.url}) - ${client.newDate(a.duration)} - ${a.message.author.toString()}`
 
