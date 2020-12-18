@@ -43,7 +43,7 @@ module.exports = {
         let embed = new MessageEmbed()
             .setColor(client.color)
             .setAuthor(`Reproduciendo ahora`)
-            .setDescription(`${emoji(np)}[${np.title}](${np.uri}) - ${np.isStream ? 'LIVE' : client.newDate(np.duration)}\n\n*\`En cola:\`*\n\n${queue.join('\n') || 'No hay ninguna cancion.'}`)
+            .setDescription(`[${emoji(np)}][${np.title}](${np.uri}) - ${np.isStream ? 'LIVE' : client.newDate(np.duration)}\n\n*\`En cola:\`*\n\n${queue.join('\n') || 'No hay ninguna cancion.'}`)
             .setTimestamp()
             .setFooter(`Pagina ${seleccion(args[0])} de ${superqueue.length}.`)
             .setThumbnail('https://media1.tenor.com/images/869a5e483261d0b8e4f296b1152cba8e/tenor.gif?itemid=15940704');
