@@ -12,7 +12,7 @@ module.exports = (client, oldState, newState) => {
     let player = client.erela.get(newState.guild.id);
     let canalVoz = newState.channel;
     if (newState.member.user.id == client.user.id && !canalVoz && player) return player.destroy();
-    else if (!canalVoz && player) {
-        if (canalVoz.members.filter(a => !a.user.bot).size == 0) return player.destroy();
+    else if (oldState.channel && !canalVoz && player) {
+        if (oldState.channel.members.filter(a => !a.user.bot).size == 0) return player.destroy();
     }
 }
