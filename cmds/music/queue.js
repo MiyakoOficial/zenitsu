@@ -35,14 +35,14 @@ module.exports = {
         if (!queue[seleccion(args[0]) - 1])
             return embedResponse(`<:cancel:779536630041280522> | No hay canciones en la pagina ${seleccion(args[0])}.`)
         queue = queue[seleccion(args[0]) - 1].map((a, i) => {
-            return `[${emoji(a)}][${(i + 1) + num * (seleccion(args[0]) <= 0 ? 1 : seleccion(args[0]) - 1)}] [${a.title}](${a.url}) - ${client.newDate(a.duration)} - ${a.message.author.toString()}`
+            return `[${emoji(a)}][${(i + 1) + num * (seleccion(args[0]) <= 0 ? 1 : seleccion(args[0]) - 1)}] [${a.title}](${a.url}) - ${a.isStream ? 'LIVE' : client.newDate(a.duration)} - ${a.message.author.toString()}`
         });
 
         let np = xd.current;
         let embed = new MessageEmbed()
             .setColor(client.color)
             .setAuthor(`Reproduciendo ahora`)
-            .setDescription(`[${np.title}](${np.uri}) - ${client.newDate(np.duration)}\n\n*\`En cola:\`*\n\n${queue.join('\n') || 'No hay ninguna cancion.'}`)
+            .setDescription(`[${np.title}](${np.uri}) - ${np.isStream ? 'LIVE' : client.newDate(np.duration)}\n\n*\`En cola:\`*\n\n${queue.join('\n') || 'No hay ninguna cancion.'}`)
             .setTimestamp()
             .setFooter(`Pagina ${seleccion(args[0])} de SI.`)
             .setThumbnail('https://media1.tenor.com/images/869a5e483261d0b8e4f296b1152cba8e/tenor.gif?itemid=15940704');
