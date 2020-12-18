@@ -1,5 +1,4 @@
 const { MessageEmbed } = require("discord.js");
-//wtf x
 module.exports = {
     config: {
         name: "play", //Nombre del cmd
@@ -9,24 +8,17 @@ module.exports = {
         category: 'musica'
     },
     run: async ({ message, client, args, embedResponse }) => {
-
         let canalVoz = message.member.voice.channel;
         let botCanalVoz = message.guild.me.voice.channel
-
         let song = args.join(' ');
-
         if (!canalVoz)
             return embedResponse('<:cancel:779536630041280522> | Necesitas estar en un canal de voz.')
         if (!song)
             return embedResponse('<a:CatLoad:724324015275245568> | ¿Que quieres buscar?')
-
         if (message.guild.player()) {
-
             if (canalVoz.id != botCanalVoz?.id)
                 return embedResponse('<:cancel:779536630041280522> | Necesitas estar en el mismo canal que yo.')
-
         }
-
         let embed = new MessageEmbed()
             .setColor(client.color)
             .setTimestamp()
@@ -38,16 +30,18 @@ module.exports = {
             voiceChannel: canalVoz.id,
             textChannel: message.channel.id,
             selfDeafen: true
-        })
-
+        });
         if (!res || !res.tracks || !res.tracks.length)
             return embedResponse('<:cancel:779536630041280522> | Sin resultados.')
         player.connect();
         res.tracks.map(a => a.message = message)
         if (res.loadType == 'PLAYLIST_LOADED') {
-            res.tracks.map(a => a.fromPlaylist = true);
+            res.tracks.map(a => {
+                a.fromPlaylistURL = song;
+                a.fromPlaylist = true
+            });
+            res.playlist.url = song;
             res.tracks.map(a => player.queue.add(a));
-            res.playlist.uri = song;
             client.erela.emit('playList', message.guild.player(), res.tracks, res.playlist)
             if (!player.playing && !player.paused)
                 player.play();
@@ -59,6 +53,5 @@ module.exports = {
             if (!player.playing && !player.paused && !player.queue.size)
                 player.play();
         }
-
     }
 }
