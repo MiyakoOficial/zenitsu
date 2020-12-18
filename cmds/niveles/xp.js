@@ -13,6 +13,7 @@ module.exports = {
         const { color } = client;
         let obj = [];
         let getRank = (member) => {
+            let obj = [];
             return new Promise((resolve) => {
                 client.rModel('niveles').find({ idGuild: message.guild.id }).sort({ nivel: -1 }).exec((err, res) => {
                     res.map(a => {
@@ -26,10 +27,11 @@ module.exports = {
                     let XD = obj
                     let aver = [];
                     for (let i of XD) { for (let a of i) aver.push(a) }
-                    resolve(aver.reverse().indexOf(member.id) + 1)
+                    resolve(aver.reverse().findIndex(a => a.idMember == member.id))
                 });
             });
         };
+
         let getGlobalRank = (member) => {
             return new Promise((resolve) => {
                 client.rModel('niveles').find({}).sort({ nivel: -1 }).exec((err, res) => {

@@ -17,7 +17,7 @@ module.exports = {
         let obj = [];
 
         let getRank = (member) => {
-            let obj;
+            let obj = [];
             return new Promise((resolve) => {
                 client.rModel('niveles').find({ idGuild: message.guild.id }).sort({ nivel: -1 }).exec((err, res) => {
                     res.map(a => {
@@ -31,7 +31,7 @@ module.exports = {
                     let XD = obj
                     let aver = [];
                     for (let i of XD) { for (let a of i) aver.push(a) }
-                    resolve(aver.reverse().indexOf(member.id) + 1)
+                    resolve(aver.reverse().findIndex(a => a.idMember == message.member.id))
                 });
             });
         };
