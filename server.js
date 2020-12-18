@@ -61,13 +61,6 @@ client.erela = new Manager({
 })
     .on("nodeConnect", node => console.log(`Node ${node.options.identifier} connected`))
     .on("nodeError", (node, error) => console.log(`Node ${node.options.identifier} had an error: ${error.message}`))
-    .on("queueEnd", (player) => {
-        client.channels.cache
-            .get(player.textChannel)
-            .send("Cola de reproduccion terminada terminada.");
-
-        player.destroy();
-    });
 client.kaomojis = ['(* ^ ω ^)', '(o^▽^o)', 'ヽ(・∀・)ﾉ', '(o･ω･o)', '( ´ ω ` )', '╰(▔∀▔)╯', '(✯◡✯)', '(⌒‿⌒)', 'ヽ(>∀<☆)ノ', '＼(￣▽￣)／', '(╯✧▽✧)╯', '(⁀ᗢ⁀)', '(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧', 'ヽ(*⌒▽⌒*)ﾉ', '☆*:.｡.o(≧▽≦)o.｡.:*☆', '(๑˃ᴗ˂)ﻭ', '(b ᵔ▽ᵔ)b', '(⌒ω⌒)', '(´ ∀ ` *)', '(─‿‿─)'];
 client.devseval = [
     '507367752391196682', //Lil MARCROCK22
