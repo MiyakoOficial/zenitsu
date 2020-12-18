@@ -40,13 +40,13 @@ module.exports = {
                             obj[a.nivel] = [];
                         }
                         obj[a.nivel].push(a);
-                        return a.idMember;
+                        return a.idMember
                     });
-                    obj = obj.map(a => a.sort((a, b) => a.xp - b.xp)).filter(a => a);
-                    let XD = obj;
+                    obj = obj.map(a => a.sort((a, b) => a.xp - b.xp)).filter(a => a)
+                    let XD = obj
                     let aver = [];
                     for (let i of XD) { for (let a of i) aver.push(a) }
-                    resolve(aver.reverse().indexOf(member.id) + 1);
+                    resolve(aver.reverse().findIndex(a => a.idMember == member.id) + 1)
                 });
             });
         };
