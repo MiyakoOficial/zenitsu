@@ -31,7 +31,7 @@ module.exports = {
                     let XD = obj
                     let aver = [];
                     for (let i of XD) { for (let a of i) aver.push(a) }
-                    resolve(aver.reverse().findIndex(a => a.idMember == message.member.id))
+                    resolve(aver.reverse().findIndex(a => a.idMember == member.id) + 1)
                 });
             });
         };
