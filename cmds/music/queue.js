@@ -34,6 +34,7 @@ module.exports = {
         queue = funcionPagina(queue, num);
         if (!queue[seleccion(args[0]) - 1])
             return embedResponse(`<:cancel:779536630041280522> | No hay canciones en la pagina ${seleccion(args[0])}.`)
+        let superqueue = queue;
         queue = queue[seleccion(args[0]) - 1].map((a, i) => {
             return `[${emoji(a)}][${(i + 1) + num * (seleccion(args[0]) <= 0 ? 1 : seleccion(args[0]) - 1)}] [${a.title}](${a.url}) - ${a.isStream ? 'LIVE' : client.newDate(a.duration)} - ${a.message.author.toString()}`
         });
@@ -44,7 +45,7 @@ module.exports = {
             .setAuthor(`Reproduciendo ahora`)
             .setDescription(`[${np.title}](${np.uri}) - ${np.isStream ? 'LIVE' : client.newDate(np.duration)}\n\n*\`En cola:\`*\n\n${queue.join('\n') || 'No hay ninguna cancion.'}`)
             .setTimestamp()
-            .setFooter(`Pagina ${seleccion(args[0])} de SI.`)
+            .setFooter(`Pagina ${seleccion(args[0])} de ${superqueue.length}.`)
             .setThumbnail('https://media1.tenor.com/images/869a5e483261d0b8e4f296b1152cba8e/tenor.gif?itemid=15940704');
 
         return message.channel.send({ embed: embed })
