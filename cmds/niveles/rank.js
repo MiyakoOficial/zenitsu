@@ -62,6 +62,11 @@ module.exports = {
                 message.channel.send({ embed: embedd }).catch(() => { })
                 break;
             default:
+                let embedError = new Discord.MessageEmbed()
+                    .setColor(client.color)
+                    .setTimestamp()
+                    .setDescription('<:cancel:779536630041280522> | Tienes que elegir entre global y local!\n~~Ejemplo: z!rk global 1~~')
+                message.channel.send({ embed: embedError })
                 break;
 
         }
