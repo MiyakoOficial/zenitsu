@@ -9,10 +9,9 @@ const { VoiceState } = require('discord.js');
  */
 
 module.exports = (client, oldState, newState) => {
+    let canales = newState.guild.channels.cache.filter(a => a.type == 'voice');
+    let canal = canales.find(a => a.members.get(client.user.id));
     let player = client.erela.get(newState.guild.id);
-    let canalVoz = newState.channel;
-    if (newState.member.user.id == client.user.id && !canalVoz && player && [oldState.channelID, newState.channelID].includes(player.voiceChannel)) return player.destroy();
-    else if (oldState.channel && !canalVoz && player && [oldState.channelID, newState.channelID].includes(player.voiceChannel)) {
-        if (oldState.channel.members.filter(a => !a.user.bot).size == 0) return player.destroy();
-    }
+    if (!player) return;
+    if (canal.members.filter(a => !a.user.bot) == 0) return player.destroy();
 }
