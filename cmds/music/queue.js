@@ -44,7 +44,7 @@ module.exports = {
         let embed = new MessageEmbed()
             .setColor(client.color)
             .setAuthor(`Reproduciendo ahora`)
-            .setDescription(`[${np.name}](${np.url}) - ${np.formattedDuration}\n\n*\`En cola:\`*\n\n${queue.join('\n') || 'No hay ninguna cancion.'}`)
+            .setDescription(`[${np.title}](${np.uri}) - ${client.newDate(np.duration)}\n\n*\`En cola:\`*\n\n${queue.join('\n') || 'No hay ninguna cancion.'}`)
             .setTimestamp()
             .setFooter(`Pagina ${seleccion(args[0])} de SI.`)
             .setThumbnail('https://media1.tenor.com/images/869a5e483261d0b8e4f296b1152cba8e/tenor.gif?itemid=15940704');
