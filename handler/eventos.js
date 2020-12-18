@@ -20,7 +20,7 @@ module.exports = (client) => {
         return load(x);
     });
 
-    function loadDistube(dirs) {
+    function loadErela(dirs) {
         const events = readdirSync(`./events/${dirs}/`).filter(d => {
             return d.endsWith('.js');
         });
@@ -31,6 +31,6 @@ module.exports = (client) => {
         }
     }
     ['erela'].map(x => {
-        return loadDistube(x);
+        return loadErela(x);
     });
 };

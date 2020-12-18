@@ -1,4 +1,3 @@
-//const Distube = require('distube')
 const Discord = require('discord.js'),
     { Collection } = require('discord.js');
 const nekos = require('nekos.life');
@@ -70,9 +69,6 @@ client.erela = new Manager({
         player.destroy();
     });
 client.kaomojis = ['(* ^ ω ^)', '(o^▽^o)', 'ヽ(・∀・)ﾉ', '(o･ω･o)', '( ´ ω ` )', '╰(▔∀▔)╯', '(✯◡✯)', '(⌒‿⌒)', 'ヽ(>∀<☆)ノ', '＼(￣▽￣)／', '(╯✧▽✧)╯', '(⁀ᗢ⁀)', '(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧', 'ヽ(*⌒▽⌒*)ﾉ', '☆*:.｡.o(≧▽≦)o.｡.:*☆', '(๑˃ᴗ˂)ﻭ', '(b ᵔ▽ᵔ)b', '(⌒ω⌒)', '(´ ∀ ` *)', '(─‿‿─)'];
-
-//client.distube = new Distube(client, { youtubeCookie: process.env.COOKIE, highWaterMark: 1 << 25, leaveOnFinish: true, leaveOnEmpty: false })
-
 client.devseval = [
     '507367752391196682', //Lil MARCROCK22
 ];
