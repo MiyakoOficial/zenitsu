@@ -30,6 +30,7 @@ module.exports = {
 
         if (!res)
             res = 'LIVE'
+        else res += `\n${client.newDate(data.position)}/${client.newDate(data.queue.current.duration)}`
 
         let embed = new MessageEmbed()
             .setColor(client.color)
