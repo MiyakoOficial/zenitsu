@@ -11,7 +11,7 @@ const { VoiceState } = require('discord.js');
 module.exports = (client, oldState, newState) => {
     let player = client.erela.get(newState.guild.id);
     let canalVoz = newState.channel;
-    if (newState.member.user.id != client.user.id && !canalVoz && player) return player.destroy();
+    if (newState.member.user.id == client.user.id && !canalVoz && player) return player.destroy();
     if (canalVoz && player) {
 
         if (canalVoz.members.filter(a => !a.user.bot).size == 0) return player.destroy();
