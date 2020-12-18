@@ -13,5 +13,5 @@ module.exports = (client, oldState, newState) => {
     let canal = canales.find(a => a.members.get(client.user.id));
     let player = client.erela.get(newState.guild.id);
     if (!player) return;
-    if (canal.members.filter(a => !a.user.bot) == 0) return player.destroy();
+    if (canal.members.filter(a => !a.user.bot).size == 0) return player.destroy();
 }
