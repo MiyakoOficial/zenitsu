@@ -39,6 +39,7 @@ module.exports = {
                     .setColor(color)
 
                 message.channel.send({ embed: embed }).catch(() => { })
+                break;
             case 'global':
                 let ress = await getGlobalRank();
                 if (ress.length === 0) return embedResponse("🤔 | Parece que nadie ha hablado en este servidor.")
