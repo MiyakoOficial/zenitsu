@@ -32,6 +32,5 @@ module.exports = {
             .setDescription(`${`[${data.queue.current.isStream ? '<a:frog_rotate:720984862231887883>' : data.queue.current.fromPlaylist ? `<:mc_song:786660726914678834>` : '<a:songDJ:786662120388296724>'}]`}[\`${res}\`]\n${data.queue.current.isStream ? 'LIVE' : `${client.newDate(data.position) + '/' + client.newDate(data.queue.current.duration)}`}`)
             .setFooter(`Puesta por: ${data.queue.current.message.author.tag}`, data.queue.current.message.author.displayAvatarURL({ dynamic: true, size: 2048 }))
         message.channel.send({ embed: embed })
-
     }
 }

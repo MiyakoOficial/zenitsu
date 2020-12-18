@@ -9,8 +9,6 @@ module.exports = {
         category: 'musica'
     },
     run: ({ message, client, args, embedResponse }) => {
-        if (message.author.id !== '507367752391196682')
-            return;
 
         let seleccion = (num) => {
             if (!num || !parseInt(num) || 0 >= parseInt(num))
@@ -20,7 +18,6 @@ module.exports = {
                 return parseInt(num);
 
         }
-
 
         let queue = message.guild.player();
 
