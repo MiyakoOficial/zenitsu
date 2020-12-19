@@ -24,14 +24,16 @@ module.exports = {
             return message.channel.awaitMessages(filter, { max: 1, time: require('ms')('10s'), errors: ['time'] })
                 .then(collected => {
                     let msg = collected.array()[0];
-                    if (msg.content == 's')
-                        return message.guild.roles.create({ data: { hoist: true, name: roleName, color: '#9c4b2d', permissions: 0 }, reason: 'Rol creado para silenciar personas.' })
+                    if (msg.content == 's') {
+                        let find = message.guild.roles.cache.filter(a => !a.managed && a.editable).sort((a, b) => b.position - a.position).find(a => !a.permissions.toArray().includes('KICK_MEMBERS'));
+                        return message.guild.roles.create({ data: { position: find.position, hoist: true, name: roleName, color: '#9c4b2d', permissions: 0 }, reason: 'Rol creado para silenciar personas.' })
                             .then(() =>
                                 message.reply('Rol creado.').then(a => a.delete({ timeout: 3000 }))
                             )
                             .catch(() =>
                                 message.reply('Error al intentar crear el rol.').then(a => a.delete({ timeout: 3000 }))
                             )
+                    }
                 })
                 .catch(() => { });
         }
