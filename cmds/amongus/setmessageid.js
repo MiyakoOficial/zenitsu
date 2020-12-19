@@ -1,4 +1,4 @@
-//Después de Alias es opcional.
+const Discord = require('discord.js')
 module.exports = {
     config: {
         name: "setmessageid", //nombre del cmd
@@ -17,13 +17,23 @@ module.exports = {
         if (await messageSS(args[0], canal) === false) return embedResponse('<:cancel:779536630041280522> | No encontre el mensaje!\nPuedes buscar el mensaje mencionando el canal donde esta. z!setmessageid <id> <#mencion>')
         if (!canal.permissionsFor(client.user).has('MANAGE_MESSAGES'))
             return embedResponse('<:cancel:779536630041280522> | Necesito el permiso `MANAGE_MESSAGES` en el canal ' + canal.toString())
-        await client.updateData({ id: message.guild.id }, { idMessage: args[0] }, 'muteid');
-        canal.messages.fetch(args[0]).then(async (a) => {
-            await a.react('751908729930121376')
-            await a.react('751908729624068226')
-        })
-        return embedResponse('<:member:779536579966271488> | ' + message.author.username + ' establecio el mensaje en: <#' + canal.id + '>');
+        return await client.updateData({ id: message.guild.id }, { idMessage: args[0] }, 'muteid')
+            .then(() => {
+                canal.messages.fetch(args[0]).then(async (a) => {
+                    await a.react('751908729930121376')
+                    await a.react('751908729624068226')
+                })
+                return embedResponse('<:member:779536579966271488> | ' + message.author.username + ' establecio el mensaje en: <#' + canal.id + '>');
+            })
+            .catch(err => {
+                let embed = new Discord.MessageEmbed()
+                    .setColor(client.color)
+                    .setDescription(`<:cancel:779536630041280522> | Error al establecer el mensaje.`)
+                    .setTimestamp()
+                    .setFooter(err)
 
+                return message.channel.send({ embed: embed });
+            })
     }
 }
 
