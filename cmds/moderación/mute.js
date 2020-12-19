@@ -1,6 +1,4 @@
 const Discord = require('discord.js');
-const easy = require('easymaty');
-
 module.exports = {
     config: {
         name: "mute", //nombre del cmd
@@ -27,7 +25,13 @@ module.exports = {
                 .then(collected => {
                     let msg = collected.array()[0];
                     if (msg.content == 's')
-                        return message.guild.roles.create({ data: { name: roleName, color: '#9c4b2d', permissions: 0 } }, { reason: 'Rol creado para silenciar personas.' })
+                        return message.guild.roles.create({ data: { name: roleName, color: '#9c4b2d', permissions: 0 }, reason: 'Rol creado para silenciar personas.' })
+                            .then(() =>
+                                message.reply('Rol creado.').then(a => a.delete({ timeout: 3000 }))
+                            )
+                            .catch(() =>
+                                message.reply('Error al intentar crear el rol.').then(a => a.delete({ timeout: 3000 }))
+                            )
                 })
                 .catch(() => { });
         }
