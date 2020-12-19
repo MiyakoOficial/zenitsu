@@ -58,7 +58,7 @@ module.exports = {
 
         if (miembro.id == message.author.id) return embedResponse('<:cancel:779536630041280522> | No te puedes silenciar a ti mismo.')
 
-        return message.guild.mmeber(miembro).roles.add(role).then(() => {
+        return message.guild.member(miembro).roles.add(role).then(() => {
             let types = ['text', 'category', 'news']
             let canales = message.guild.channels.cache.array()
                 .filter(a => types.includes(a.type));
