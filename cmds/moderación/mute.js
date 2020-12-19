@@ -23,8 +23,8 @@ module.exports = {
         if (!roles.find(a => a.name == roleName)) {
             embedResponse('<:cancel:779536630041280522> | Necesitas crear el rol `MUTED`\n~~¿Deseas crearlo ahora?~~')
 
-            const filter = () => true;
-            message.channel.awaitMessages(filter, { max: 1, time: require('ms')('10s'), errors: ['time'] })
+            const filter = m => m.author.id == message.author.id;
+            return message.channel.awaitMessages(filter, { max: 1, time: require('ms')('10s'), errors: ['time'] })
                 .then(collected => {
                     console.log(collected);
                 })
