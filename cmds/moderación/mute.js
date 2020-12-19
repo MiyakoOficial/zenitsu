@@ -26,7 +26,8 @@ module.exports = {
             const filter = m => m.author.id == message.author.id;
             return message.channel.awaitMessages(filter, { max: 1, time: require('ms')('10s'), errors: ['time'] })
                 .then(collected => {
-                    console.log(collected);
+                    let msg = collected.array()[0];
+                    console.log(msg.content);
                 })
                 .catch(collected => console.log(`After a minute, only ${collected.size} out of 4 voted.`));
 
