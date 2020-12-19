@@ -74,7 +74,7 @@ module.exports = {
                 for (let c of canales) {
                     await Discord.Util.delayFor(2000)
                     try {
-                        await c.updateOverwrite(role, { SEND_MESSAGES: true })
+                        await c.updateOverwrite(role, { SEND_MESSAGES: false })
                     } catch {
                         return false;
                     }
