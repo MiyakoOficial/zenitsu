@@ -17,16 +17,15 @@ module.exports = {
         let roles = message.guild.roles.cache.filter(a => !a.managed && a.editable);
 
         let roleName = 'MUTED';
-
-        if (!roles.find(a => a.name == roleName)) {
+        let role = roles.find(a => a.name == roleName);
+        if (!role) {
             embedResponse('<:cancel:779536630041280522> | Necesitas crear el rol `MUTED`\n~~¿Deseas crearlo ahora? [Escribe `s`]~~')
             const filter = m => m.author.id == message.author.id;
             return message.channel.awaitMessages(filter, { max: 1, time: require('ms')('10s'), errors: ['time'] })
                 .then(collected => {
                     let msg = collected.array()[0];
                     if (msg.content == 's') {
-                        let find = message.guild.roles.cache.filter(a => !a.managed && a.editable).sort((a, b) => b.position - a.position).find(a => !a.permissions.toArray().includes('KICK_MEMBERS'));
-                        return message.guild.roles.create({ data: { position: find.rawPosition, hoist: true, name: roleName, color: '#9c4b2d', permissions: 0 }, reason: 'Rol creado para silenciar personas.' })
+                        return message.guild.roles.create({ data: { hoist: true, name: roleName, color: '#9c4b2d', permissions: 0 }, reason: 'Rol creado para silenciar personas.' })
                             .then(() =>
                                 message.reply('Rol creado.').then(a => a.delete({ timeout: 3000 }))
                             )
@@ -59,15 +58,34 @@ module.exports = {
 
         if (miembro.id == message.author.id) return embedResponse('<:cancel:779536630041280522> | No te puedes silenciar a ti mismo.')
 
-        let embed = new Discord.MessageEmbed()
-            .setColor(client.color)
-            .setTimestamp()
-            .setTitle('<a:alarma:767497168381935638> Miembro silenciado <a:alarma:767497168381935638>')
-            .setAuthor(miembro.tag, miembro.displayAvatarURL({ dynamic: true }))
-            .addField('<:reason2:779695137205911552> Razón', razon.slice(0, 1024), true)
-            .addField('<:moderator:779536592431087619> Moderador', message.author.tag, true)
-            .addField('<:reason:779536605047554068> Advertencias para ser expulsado', razon, true)
+        return miembro.roles.add(role).then(() => {
+            let types = ['text', 'category', 'news']
+            let canales = message.guild.channels.cache.array()
+                .filter(a => types.includes(a.type));
 
-        return message.channel.send({ embed: embed }).catch(() => { });
+            let embed = new Discord.MessageEmbed()
+                .setColor(client.color)
+                .setTimestamp()
+                .setTitle('<a:alarma:767497168381935638> Miembro silenciado <a:alarma:767497168381935638>')
+                .setAuthor(miembro.tag, miembro.displayAvatarURL({ dynamic: true }))
+                .addField('<:reason2:779695137205911552> Razón', razon.slice(0, 1024), true)
+                .addField('<:moderator:779536592431087619> Moderador', message.author.tag, true)
+            return message.channel.send({ embed: embed }).finally(async () => {
+                for (let c of canales) {
+                    await Discord.Util.delayFor(2000)
+                    try {
+                        await c.updateOverwrite(role, { SEND_MESSAGES: true })
+                    } catch {
+                        return false;
+                    }
+                }
+            })
+        }).catch(() => {
+            let embed = new Discord.MessageEmbed()
+                .setColor(client.color)
+                .setTimestamp()
+                .setDescription('<:cancel:779536630041280522> | Error al intentar silenciar al miembro.')
+            return message.channel.send({ embed: embed }).catch(() => { });
+        })
     }
 }
