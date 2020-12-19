@@ -29,7 +29,7 @@ module.exports = {
                     let XD = obj
                     let aver = [];
                     for (let i of XD) { for (let a of i) aver.push(a) }
-                    resolve(aver.reverse().findIndex(a => a.idMember == member.id) + 1)
+                    resolve({ rank: aver.reverse().findIndex(a => a.idMember == member.id) + 1, data: aver.reverse().find(a => a.idMember == member.id) })
                 });
             });
         };
@@ -52,13 +52,12 @@ module.exports = {
                     let XD = obj
                     let aver = [];
                     for (let i of XD) { for (let a of i) aver.push(a) }
-                    resolve(aver.reverse().findIndex(a => a.idMember == member.id) + 1)
+                    resolve({ rank: aver.reverse().findIndex(a => a.idMember == member.id) + 1, data: aver.reverse().find(a => a.idMember == member.id) })
                 });
             });
         };
         let member = message.guild.members.cache.find(a => a.user.username === args.join(' ')) || message.guild.members.cache.find(a => a.user.tag === args.join(' ')) || message.guild.members.cache.find(a => a.displayName === args.join(' ')) || message.guild.members.cache.get(args[0]) || message.mentions.members.first() || message.member
-        let { nivel, xp } = await client.getData({ idGuild: `${message.guild.id}`, idMember: `${member.user.id}` }, 'niveles');
-        let levelup = 5 * (nivel ** 2) + 50 * nivel + 100;
+        let levelup = (nivel) => 5 * (nivel ** 2) + 50 * nivel + 100;
         let embed = new Discord.MessageEmbed()
             .setDescription(`<a:cargando:650442822083674112>`)
             .setColor(color)
@@ -67,7 +66,7 @@ module.exports = {
         return message.channel.send({ embed: embed }).then(async a => {
             let rank = await getRank(member)
             let global = await getGlobalRank(member);
-            return a.edit(a.embeds[0].setDescription(`<:upvote:721259868937388033> Nivel: ${nivel ? nivel : 0} \n🔷 XP: ${xp ? xp : 0}/${levelup ? levelup : '100'}\n<:member:779536579966271488> Rank: ${rank ? rank : '❌'}\n🌐 Rank global: ${global ? global : '❌'}`))
+            return a.edit(a.embeds[0].setDescription(`<:upvote:721259868937388033> Nivel: ${rank.data.nivel ? rank.data.nivel : 0} \n🔷 XP: ${rank.xp ? rank.data.xp : 0}/${levelup(rank.data.nivel) ? levelup(rank.data.nivel) : '100'}\n<:member:779536579966271488> Rank: ${rank.rank ? rank.rank : '❌'}\n🌐 Rank global: ${global.rank ? global.rank : '❌'}`))
         });
     }
 };
