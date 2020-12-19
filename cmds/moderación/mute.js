@@ -61,7 +61,7 @@ module.exports = {
         return message.guild.member(miembro).roles.add(role).then(() => {
             let types = ['text', 'category', 'news']
             let canales = message.guild.channels.cache.array()
-                .filter(a => types.includes(a.type) && a.manageable);
+                .filter(a => types.includes(a.type) && a.manageable && !a.permissionOverwrites.array().find(r => r.id == '789958900626620477'));
 
             let embed = new Discord.MessageEmbed()
                 .setColor(client.color)
