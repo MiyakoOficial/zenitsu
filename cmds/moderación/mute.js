@@ -21,16 +21,15 @@ module.exports = {
         let roleName = 'MUTED';
 
         if (!roles.find(a => a.name == roleName)) {
-            embedResponse('<:cancel:779536630041280522> | Necesitas crear el rol `MUTED`\n~~¿Deseas crearlo ahora?~~')
-
+            embedResponse('<:cancel:779536630041280522> | Necesitas crear el rol `MUTED`\n~~¿Deseas crearlo ahora? [Escribe `s`]~~')
             const filter = m => m.author.id == message.author.id;
             return message.channel.awaitMessages(filter, { max: 1, time: require('ms')('10s'), errors: ['time'] })
                 .then(collected => {
                     let msg = collected.array()[0];
-                    console.log(msg.content);
+                    if (msg.content == 's')
+                        return message.guild.roles.create({ data: { name: roleName, color: '#9c4b2d' } }, { reason: 'Rol creador para silenciar personas.' })
                 })
-                .catch(collected => console.log(`After a minute, only ${collected.size} out of 4 voted.`));
-
+                .catch(() => { });
         }
         let miembro = message.mentions.members.first();
 
