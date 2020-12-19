@@ -26,7 +26,7 @@ module.exports = {
                     let msg = collected.array()[0];
                     if (msg.content == 's') {
                         let find = message.guild.roles.cache.filter(a => !a.managed && a.editable).sort((a, b) => b.position - a.position).find(a => !a.permissions.toArray().includes('KICK_MEMBERS'));
-                        return message.guild.roles.create({ data: { position: find.position, hoist: true, name: roleName, color: '#9c4b2d', permissions: 0 }, reason: 'Rol creado para silenciar personas.' })
+                        return message.guild.roles.create({ data: { position: find.rawPosition, hoist: true, name: roleName, color: '#9c4b2d', permissions: 0 }, reason: 'Rol creado para silenciar personas.' })
                             .then(() =>
                                 message.reply('Rol creado.').then(a => a.delete({ timeout: 3000 }))
                             )
