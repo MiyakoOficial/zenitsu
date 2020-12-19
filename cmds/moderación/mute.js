@@ -27,7 +27,7 @@ module.exports = {
                 .then(collected => {
                     let msg = collected.array()[0];
                     if (msg.content == 's')
-                        return message.guild.roles.create({ data: { name: roleName, color: '#9c4b2d' } }, { reason: 'Rol creador para silenciar personas.' })
+                        return message.guild.roles.create({ data: { name: roleName, color: '#9c4b2d', permissions: 0 } }, { reason: 'Rol creado para silenciar personas.' })
                 })
                 .catch(() => { });
         }
