@@ -11,7 +11,7 @@ module.exports = {
 
     }, run: async ({ client, message, args }) => {
         const { color } = client;
-        let obj = [];
+        let check = [];
         let getRank = (member) => {
             let obj = [];
             return new Promise((resolve) => {
@@ -20,6 +20,8 @@ module.exports = {
                         if (!obj[a.nivel]) {
                             obj[a.nivel] = [];
                         }
+                        check.push(a.idMember)
+                        obj[a.nivel].push(a);
                         obj[a.nivel].push(a);
                         return a.idMember
                     });
@@ -33,12 +35,16 @@ module.exports = {
         };
 
         let getGlobalRank = (member) => {
+            let check = [];
+            let obj = [];
             return new Promise((resolve) => {
                 client.rModel('niveles').find({}).sort({ nivel: -1 }).exec((err, res) => {
                     res.map(a => {
                         if (!obj[a.nivel]) {
                             obj[a.nivel] = [];
                         }
+                        if (check.includes(a.idMember)) return false;
+                        check.push(a.idMember)
                         obj[a.nivel].push(a);
                         return a.idMember
                     });
