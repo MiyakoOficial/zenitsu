@@ -65,7 +65,7 @@ module.exports = {
                 .filter(a => a.manageable && ch(a))
                 .array();
             function ch(c) {
-                let permissions = c.permissionOverwrites.array().find(r => r.id == '789958900626620477')
+                let permissions = c.permissionOverwrites.array().find(r => r.id == role.id)
                 if (!permissions) {
                     return true
                 }
