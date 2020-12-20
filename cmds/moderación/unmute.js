@@ -3,8 +3,8 @@ module.exports = {
     config: {
         name: "mute", //nombre del cmd
         alias: [], //Alias
-        description: "Silenciar a un miembro", //Descripción (OPCIONAL)
-        usage: "z!mute @mencion razon(opcional)",
+        description: "Quitarle el rol \"MUTED\" a un miembro", //Descripción (OPCIONAL)
+        usage: "z!unmute @mencion",
         category: 'moderacion',
         botPermissions: ['ADMINISTRATOR', 'MANAGE_ROLES', 'MANAGE_CHANNELS'],
         memberPermissions: ['MANAGE_MESSAGES', 'KICK_MEMBERS']
@@ -35,12 +35,10 @@ module.exports = {
         }
         let miembro = message.mentions.members.first();
 
-        let razon = args.slice(1).join(' ') || 'No especificada.';
-
         if (!miembro || miembro?.user?.bot) return embedResponse('<:cancel:779536630041280522> | Menciona a un miembro del servidor.')
 
         if (miembro.roles.highest.comparePositionTo(message.member.roles.highest) > 0)
-            return embedResponse('<:cancel:779536630041280522> | No puedes silenciar a este usuario.')
+            return embedResponse('<:cancel:779536630041280522> | No puedes quitarle el silencio a este usuario.')
 
         if (miembro.roles.highest.comparePositionTo(message.guild.me.roles.highest) > 0)
             return embedResponse('<:cancel:779536630041280522> | No puedo moderar a este usuario.')
@@ -51,11 +49,12 @@ module.exports = {
             if (miembro.hasPermission('ADMINISTRATOR'))
                 return embedResponse('<:cancel:779536630041280522> | ' + miembro.toString() + ' es administrador.')
         }
+
         miembro = miembro.user;
 
-        if (miembro.id == message.author.id) return embedResponse('<:cancel:779536630041280522> | No te puedes silenciar a ti mismo.')
+        if (miembro.id == message.author.id) return embedResponse('<:cancel:779536630041280522> | No te puedes quitar el silencio a ti mismo.')
 
-        return message.guild.member(miembro).roles.add(role).then(() => {
+        return message.guild.member(miembro).roles.remove(role).then(() => {
             let types = ['text', 'category', 'news']
             let canales = message.guild.channels.cache
                 .filter(a => types.includes(a.type))
@@ -75,9 +74,8 @@ module.exports = {
             let embed = new Discord.MessageEmbed()
                 .setColor(client.color)
                 .setTimestamp()
-                .setTitle('<a:alarma:767497168381935638> Miembro silenciado <a:alarma:767497168381935638>')
+                .setTitle('<a:alarma:767497168381935638> Miembro desmuteado <a:alarma:767497168381935638>')
                 .setAuthor(miembro.tag, miembro.displayAvatarURL({ dynamic: true }))
-                .addField('<:reason2:779695137205911552> Razón', razon.slice(0, 1024), true)
                 .addField('<:moderator:779536592431087619> Moderador', message.author.tag, true)
             return message.channel.send({ embed: embed }).finally(async () => {
                 for (let c of canales) {
@@ -93,7 +91,7 @@ module.exports = {
             let embed = new Discord.MessageEmbed()
                 .setColor(client.color)
                 .setTimestamp()
-                .setDescription('<:cancel:779536630041280522> | Error al intentar silenciar al miembro.')
+                .setDescription('<:cancel:779536630041280522> | Error al intentar quitar el silencio al miembro.')
             return message.channel.send({ embed: embed }).catch(() => { });
         })
     }
