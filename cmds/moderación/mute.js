@@ -60,9 +60,10 @@ module.exports = {
 
         return message.guild.member(miembro).roles.add(role).then(() => {
             let types = ['text', 'category', 'news']
-            let canales = message.guild.channels.cache.array()
-                .filter(a => types.includes(a.type) && a.manageable && !a.permissionOverwrites.array().find(r => r.id == role.id))
-                .filter(a => a.manageable && ch(a));
+            let canales = message.guild.channels.cache
+                .filter(a => types.includes(a.type))
+                .filter(a => a.manageable && ch(a))
+                .array();
             function ch(c) {
                 let permissions = c.permissionOverwrites.array().find(r => r.id == '789958900626620477')
                 if (!permissions) {
