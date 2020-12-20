@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 module.exports = {
     config: {
-        name: "mute", //nombre del cmd
+        name: "unmute", //nombre del cmd
         alias: [], //Alias
         description: "Quitarle el rol \"MUTED\" a un miembro", //Descripción (OPCIONAL)
         usage: "z!unmute @mencion",
