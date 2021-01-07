@@ -19,7 +19,7 @@ module.exports = {
         if (data.message)
             return embedResponse('<:cancel:779536630041280522> | ' + data.message)
 
-        let res = `== INFO BOT ==\n[Detalles BOT]\n\nID: ${data.bot.id}\nPREFIX: ${data.bot.prefix}\nINFO: ${data.bot.descripcion}\n${data.bot.nombre}\n\n[Detalles USER]\nID: ${data.owner.id}\nTAG: ${data.owner.tag}`
+        let res = `== INFO BOT ==\n\n[Detalles BOT]\nID: ${data.bot.id}\nPREFIX: ${data.bot.prefix}\nINFO: ${data.bot.descripcion}\n${data.bot.nombre}\n\n[Detalles USER]\nID: ${data.owner.id}\nTAG: ${data.owner.tag}`
 
         message.channel.send(res, { code: 'asciidoc' }).catch(() => { });
     }
