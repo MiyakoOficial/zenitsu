@@ -64,6 +64,8 @@ client.erela = new Manager({
 client.kaomojis = ['(* ^ ω ^)', '(o^▽^o)', 'ヽ(・∀・)ﾉ', '(o･ω･o)', '( ´ ω ` )', '╰(▔∀▔)╯', '(✯◡✯)', '(⌒‿⌒)', 'ヽ(>∀<☆)ノ', '＼(￣▽￣)／', '(╯✧▽✧)╯', '(⁀ᗢ⁀)', '(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧', 'ヽ(*⌒▽⌒*)ﾉ', '☆*:.｡.o(≧▽≦)o.｡.:*☆', '(๑˃ᴗ˂)ﻭ', '(b ᵔ▽ᵔ)b', '(⌒ω⌒)', '(´ ∀ ` *)', '(─‿‿─)'];
 client.devseval = [
     '507367752391196682', //Lil MARCROCK22
+    '405958241202339840', //G5lvatron
+    '538421122920742942' // Vyrek
 ];
 // eslint-disable-next-line no-unused-vars
 const embedOptions = require('./Classes/Classes.js');
