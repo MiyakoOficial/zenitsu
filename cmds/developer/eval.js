@@ -23,9 +23,27 @@ module.exports = {
             let evalued = await eval(`(async() => {${code}})()`);
             let asd = typeof (evalued)
             evalued = require("util").inspect(evalued, { depth: 0 });
+            evalued = replace(evalued, [client.token, process.env.MONGODB, process.env.WEBHOOKID, process.env.WEBHOOKTOKEN])
             message.channel.send(`(${asd}) ${evalued}`, { code: 'js', split: { char: '', maxLength: 1900 } })
         } catch (err) {
             message.channel.send(err, { code: 'js' })
         }
     }
+}
+
+/**
+ * 
+ * @param {String} string 
+ * @param {Array} array
+ * @returns {String}
+ * @example
+ * replace('tokenn', ['token']) //[PRIVATE]n
+ */
+
+function replace(string, array) {
+
+    let res = array.map(a => string.split(a).join('[PRIVATE]')).join('')
+
+    return res;
+
 }
