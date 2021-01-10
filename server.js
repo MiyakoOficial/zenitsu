@@ -69,21 +69,22 @@ client.devseval = [
     '710880777662890095' // Avii
 ];
 // eslint-disable-next-line no-unused-vars
-const embedOptions = require('./Classes/Classes.js');
+const Classes = require('./Utils/Classes.js');
 //global.classes = require('./Classes/Classes.js');
 /**
  * 
- * @param {embedOptions} object 
+ * @param {Classes.embedOptions} object 
  * @param {Object} options
+ * @param {Number} options.timestamp
  * @returns {Promise<Discord.Message>} 
  */
-client.sendEmbed = (object = {}, options = { timestamp: true }) => {
+client.sendEmbed = (object = {}, options = { timestamp: Date.now() }) => {
 
     let embed = new Discord.MessageEmbed()
 
     let { fields, description, imageURL, footerLink, footerText, color, channel, title, thumbnailURL, authorURL, authorText, authorLink } = object;
 
-    fields.map(a => embed.addField(a[0], a[1], a[2] ? true : false))
+    fields && fields.length ? fields.map(a => embed.addField(a[0], a[1], a[2] ? true : false)) : false
     if (description) embed.setDescription(description)
     if (imageURL) embed.setImage(imageURL);
     if (thumbnailURL) embed.setThumbnail(thumbnailURL)

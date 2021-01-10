@@ -31,4 +31,4 @@ class Options {
     }
 
 }
-module.exports = Options 
+module.exports.embedOptions = Options;

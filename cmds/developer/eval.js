@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 const Discord = require("discord.js")
-
+const { replace } = require('../../Utils/Functions.js');
 module.exports = {
     config: {
         name: "eval",
@@ -15,7 +15,6 @@ module.exports = {
     // eslint-disable-next-line no-unused-vars
     run: async ({ client, message, args, embedResponse, Hora }) => {
 
-
         if (!client.devseval.includes(message.author.id))
             return;
         try {
@@ -29,25 +28,4 @@ module.exports = {
             message.channel.send(err, { code: 'js' })
         }
     }
-}
-
-/**
- * 
- * @param {String} string 
- * @param {Array} array
- * @returns {String}
- * @example
- * replace('tokenn', ['token']) //[PRIVATE]n
- */
-
-function replace(string, array) {
-
-    let res = string;
-
-    for (let i of array) {
-        res = res.split(i).join('[PRIVATE]')
-    }
-
-    return res;
-
 }
