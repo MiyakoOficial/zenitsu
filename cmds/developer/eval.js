@@ -42,7 +42,11 @@ module.exports = {
 
 function replace(string, array) {
 
-    let res = array.map(a => string.split(a).join('[PRIVATE]')).join('')
+    let res = string;
+
+    for (let i of array) {
+        res = res.split(i).join('[PRIVATE]')
+    }
 
     return res;
 
