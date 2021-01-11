@@ -49,7 +49,7 @@ module.exports = {
             message.guild.partida = undefined;
             return sendEmbed({
                 channel: message.channel,
-                description: `<:wtf:789166898356289567> | Un empate entre ${jugadores.map(user => client.users.cache.get(user).username).join(' y ')}!\n\n${tablero.string}`,
+                description: `<:wtfDuddd:797933539454091305> | Un empate entre ${jugadores.map(user => client.users.cache.get(user).username).join(' y ')}!\n\n${tablero.string}`,
                 attachFiles: new MessageAttachment(await mapaCanvas(tablero.array), 'tictactoe.gif'),
                 imageURL: 'attachment://tictactoe.gif'
             });
