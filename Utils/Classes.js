@@ -13,9 +13,11 @@ class Options {
     * @param {String} data.authorLink
     * @param {String} data.authorURL
     * @param {Array} data.fields
+    * @param {String} data.titleURL
+    * @param {Array<(String|Buffer|import('discord.js').MessageAttachment|import('discord.js').FileOptions>}
     */
 
-    constructor(data) {
+    constructor(data = {}) {
         this.imageURL = data.imageURL;
         this.footerText = data.footerText;
         this.footerLink = data.footerLink;
@@ -28,6 +30,8 @@ class Options {
         this.authorLink = data.authorLink;
         this.authorURL = data.authorURL;
         this.fields = data.fields;
+        this.titleURL = data.titleURL
+        this.attachFiles = data.attachFiles
     }
 
 }
