@@ -38,18 +38,18 @@ module.exports = {
 
         let respuesta = await awaitMessage({ channel: message.channel, filter: (m) => m.author.id == usuario.id && ['s', 'n'].some(item => item == m.content), time: (2 * 60) * 1000, max: 1 }).catch(() => { })
 
-        if (respuesta == 'n') {
-            sendEmbed({
-                channel: message.channel,
-                description: 'Pues, hasta luego!'
-            })
-            return message.guild.partida == undefined;
-        }
-
         if (!respuesta) {
             sendEmbed({
                 channel: message.channel,
                 description: `${usuario} no respondio...`
+            })
+            return message.guild.partida == undefined;
+        }
+
+        if (respuesta.first().content == 'n') {
+            sendEmbed({
+                channel: message.channel,
+                description: 'Pues, hasta luego!'
             })
             return message.guild.partida == undefined;
         }
