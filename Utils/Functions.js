@@ -67,7 +67,6 @@ module.exports.replace = function (string, array) {
  */
 
 module.exports.mapaCanvas = async function (mapatest, win = false) {
-    console.log(mapatest)
     let modelo = require('../models/attachment.js');
     let numeros = [
         '1️⃣', '2️⃣', '3️⃣',
@@ -426,7 +425,6 @@ module.exports.mapaCanvas = async function (mapatest, win = false) {
                 let ultravalues = [275, 250, 225, 200, 175, 150, 125, 100, 75, 50, 25];
 
                 for (let i in values) {
-                    console.log(values[i], ultravalues[i])
                     ctx.lineWidth = 10;
                     ctx.beginPath();
                     ctx.moveTo(values[i], ultravalues[i]);
