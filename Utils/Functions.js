@@ -67,15 +67,31 @@ module.exports.replace = function (string, array) {
  */
 
 module.exports.mapaCanvas = async function (mapatest, win = false) {
+    console.log(mapatest)
+    let modelo = require('../models/attachment.js');
+    let numeros = [
+        '1️⃣', '2️⃣', '3️⃣',
+        '4️⃣', '5️⃣', '6️⃣',
+        '7️⃣', '8️⃣', '9️⃣'
+    ]
+
+    let soniguales = mapatest.every((_, i) => _ == numeros[i]);
+
+    if (!soniguales) {
+        let check = await modelo.findOne({ mapa: mapatest });
+
+        console.log(check ? true : false)
+
+        if (check)
+            return check.Attachment.buffer;
+    }
     const encoder = new GIFEncoder(300, 300);
-    let fondo = 'https://cdn.discordapp.com/attachments/730181305433587744/797923952583245894/unknown.png'
 
     const canvas = Canvas.createCanvas(300, 300);
 
     const ctx = canvas.getContext('2d');
 
-    let bck = await Canvas.loadImage(fondo)
-
+    let bck = await Canvas.loadImage(`Utils\\Images\\inicio_tictactoe.gif`)
     ctx.drawImage(bck, 0, 0, canvas.width, canvas.height)
 
     const img = {
@@ -83,81 +99,42 @@ module.exports.mapaCanvas = async function (mapatest, win = false) {
         '⭕': await Canvas.loadImage(`https://cdn.discordapp.com/attachments/730181305433587744/798284232354824222/O_de_tic_tac_toe.png`)
     }
 
-    for (let i in mapatest) {
-        let IMAGEN = img[mapatest[i]]
-        if (!IMAGEN) continue;
-        if (i == 0) {
-            ctx.drawImage(IMAGEN, 10, 5, 85, 85)
+    if (!soniguales) {
+        for (let i in mapatest) {
+            let IMAGEN = img[mapatest[i]]
+            if (!IMAGEN) continue;
+            if (i == 0) {
+                ctx.drawImage(IMAGEN, 10, 5, 85, 85)
+            }
+            else if (i == 1) {
+                ctx.drawImage(IMAGEN, 110, 5, 85, 85)
+            }
+            else if (i == 2) {
+                ctx.drawImage(IMAGEN, 210, 5, 85, 85)
+            }
+            else if (i == 3) {
+                ctx.drawImage(IMAGEN, 10, 110, 85, 85)
+            }
+            else if (i == 4) {
+                ctx.drawImage(IMAGEN, 110, 105, 85, 85)
+            }
+            else if (i == 5) {
+                ctx.drawImage(IMAGEN, 210, 110, 85, 85)
+            }
+            else if (i == 6) {
+                ctx.drawImage(IMAGEN, 10, 205, 85, 85)
+            }
+            else if (i == 7) {
+                ctx.drawImage(IMAGEN, 110, 205, 85, 85)
+            }
+            else if (i == 8) {
+                ctx.drawImage(IMAGEN, 210, 205, 85, 85)
+            }
+            continue;
         }
-        else if (i == 1) {
-            ctx.drawImage(IMAGEN, 110, 5, 85, 85)
-        }
-        else if (i == 2) {
-            ctx.drawImage(IMAGEN, 210, 5, 85, 85)
-        }
-        else if (i == 3) {
-            ctx.drawImage(IMAGEN, 10, 110, 85, 85)
-        }
-        else if (i == 4) {
-            ctx.drawImage(IMAGEN, 110, 110, 85, 85)
-        }
-        else if (i == 5) {
-            ctx.drawImage(IMAGEN, 210, 110, 85, 85)
-        }
-        else if (i == 6) {
-            ctx.drawImage(IMAGEN, 10, 210, 85, 85)
-        }
-        else if (i == 7) {
-            ctx.drawImage(IMAGEN, 110, 210, 85, 85)
-        }
-        else if (i == 8) {
-            ctx.drawImage(IMAGEN, 210, 210, 85, 85)
-        }
-        continue;
     }
 
-    // IZQUIERDA A DERECHA
-
-    ctx.beginPath();
-    ctx.moveTo(100, 0);
-    ctx.lineTo(100, 300);
-    ctx.stroke();
-
-    ctx.beginPath();
-    ctx.moveTo(200, 0);
-    ctx.lineTo(200, 300);
-    ctx.stroke();
-
-    ctx.beginPath();
-    ctx.moveTo(300, 0);
-    ctx.lineTo(300, 300);
-    ctx.stroke();
-
-    // IZQUIERDA A DERECHA
-
-    // ARRIBA A ABAJO
-
-    ctx.beginPath();
-    ctx.moveTo(0, 100);
-    ctx.lineTo(300, 100);
-    ctx.stroke();
-
-    ctx.beginPath();
-    ctx.moveTo(0, 200);
-    ctx.lineTo(300, 200);
-    ctx.stroke();
-
-    ctx.beginPath();
-    ctx.moveTo(0, 300);
-    ctx.lineTo(300, 300);
-    ctx.stroke();
-
-
-    // ARRIBA A ABAJO
-
     ctx.font = '73px sans-serif'
-
-    //ctx.fillText(mapatest.map((_, i) => i == 2 || i == 5 ? `${_}\n` : _).join(''), 0, 80)
 
     const pos = [
         [0, 1, 2],
@@ -489,13 +466,19 @@ module.exports.mapaCanvas = async function (mapatest, win = false) {
     }
 
     const attachment = canvas.toBuffer()
+    let final;
     if (win && stream) {
-        return await require('util').promisify(module.exports.buffer)(stream)
+        final = await require('util').promisify(module.exports.buffer)(stream)
     }
-    return attachment;
+    else {
+        final = attachment
+    }
+
+    await modelo.create({ mapa: mapatest, Attachment: final })
+
+    return final;
 
 }
-
 
 
 /**
