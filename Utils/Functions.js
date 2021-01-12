@@ -563,7 +563,7 @@ module.exports.mapaCanvas = async function (mapatest, win = false) {
 
 
 /**
- * 
+ * @async
  * @param {Object} obj
  * @param {Discord.CollectorFilter} obj.filter
  * @param {Discord.TextChannel} obj.channel
