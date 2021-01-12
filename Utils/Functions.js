@@ -469,9 +469,9 @@ module.exports.mapaCanvas = async function (mapatest, win = false) {
     else {
         final = attachment
     }
-
-    await modelo.create({ mapa: mapatest, Attachment: final })
-
+    if (!soniguales) {
+        await modelo.create({ mapa: mapatest, Attachment: final })
+    }
     return final;
 
 }
