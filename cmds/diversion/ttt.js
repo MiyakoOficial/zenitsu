@@ -25,7 +25,7 @@ module.exports = {
 
         if (!usuario || usuario.id == message.author.id || usuario.user.bot) return sendEmbed({
             channel: message.channel,
-            description: `<:cancel:779536630041280522> | Menciona a un miembro para jugar!`
+            description: `<:cancel:779536630041280522> | Menciona a un miembro del servidor para jugar.`
         })
         usuario = usuario.user
         if (message.guild.partida)
@@ -41,7 +41,7 @@ module.exports = {
         if (!respuesta) {
             sendEmbed({
                 channel: message.channel,
-                description: `😔 | ${usuario} no respondio...`
+                description: `😔 | ${usuario} no respondió...`
             })
             return message.guild.partida == undefined;
         }
@@ -49,7 +49,7 @@ module.exports = {
         if (respuesta.first().content == 'n') {
             sendEmbed({
                 channel: message.channel,
-                description: '😔 | Rechazo la invitación...'
+                description: '😔 | Rechazó la invitación...'
             })
             return message.guild.partida == undefined;
         }
