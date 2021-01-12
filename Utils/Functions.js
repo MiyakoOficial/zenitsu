@@ -80,8 +80,6 @@ module.exports.mapaCanvas = async function (mapatest, win = false) {
     if (!soniguales) {
         let check = await modelo.findOne({ mapa: mapatest });
 
-        console.log(check ? true : false)
-
         if (check)
             return check.Attachment.buffer;
     }
@@ -91,7 +89,7 @@ module.exports.mapaCanvas = async function (mapatest, win = false) {
 
     const ctx = canvas.getContext('2d');
 
-    let bck = await Canvas.loadImage(`Utils\\Images\\inicio_tictactoe.gif`)
+    let bck = await Canvas.loadImage(`/home/MARCROCK22/zenitsu/Utils/Images/inicio_tictactoe.gif`)
     ctx.drawImage(bck, 0, 0, canvas.width, canvas.height)
 
     const img = {
