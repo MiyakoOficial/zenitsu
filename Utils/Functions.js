@@ -446,85 +446,21 @@ module.exports.mapaCanvas = async function (mapatest, win = false) {
                 encoder.setDelay(1);  // frame delay in ms
                 encoder.setQuality(10); // image quality. 10 is default.
 
-                ctx.lineWidth = 10;
-                ctx.beginPath();
-                ctx.moveTo(25, 275);
-                ctx.lineTo(10, 290);
-                ctx.strokeStyle = whowin()
-                ctx.stroke();
-                encoder.addFrame(ctx)
+                let values = [25, 50, 75, 100, 125, 150, 175, 200, 225, 250, 275]
 
-                ctx.lineWidth = 10;
-                ctx.beginPath();
-                ctx.moveTo(50, 250);
-                ctx.lineTo(10, 290);
-                ctx.strokeStyle = whowin()
-                ctx.stroke();
-                encoder.addFrame(ctx)
+                let ultravalues = [275, 250, 225, 200, 175, 150, 125, 100, 75, 50, 25];
 
-                ctx.lineWidth = 10;
-                ctx.beginPath();
-                ctx.moveTo(75, 225);
-                ctx.lineTo(10, 290);
-                ctx.strokeStyle = whowin()
-                ctx.stroke();
-                encoder.addFrame(ctx)
+                for (let i in values) {
+                    console.log(values[i], ultravalues[i])
+                    ctx.lineWidth = 10;
+                    ctx.beginPath();
+                    ctx.moveTo(values[i], ultravalues[i]);
+                    ctx.lineTo(10, 290);
+                    ctx.strokeStyle = whowin()
+                    ctx.stroke();
+                    encoder.addFrame(ctx)
 
-                ctx.lineWidth = 10;
-                ctx.beginPath();
-                ctx.moveTo(100, 200);
-                ctx.lineTo(10, 290);
-                ctx.strokeStyle = whowin()
-                ctx.stroke();
-                encoder.addFrame(ctx)
-
-                ctx.lineWidth = 10;
-                ctx.beginPath();
-                ctx.moveTo(125, 175);
-                ctx.lineTo(10, 290);
-                ctx.strokeStyle = whowin()
-                ctx.stroke();
-                encoder.addFrame(ctx)
-
-                ctx.lineWidth = 10;
-                ctx.beginPath();
-                ctx.moveTo(150, 150);
-                ctx.lineTo(10, 290);
-                ctx.strokeStyle = whowin()
-                ctx.stroke();
-                encoder.addFrame(ctx)
-
-                ctx.lineWidth = 10;
-                ctx.beginPath();
-                ctx.moveTo(175, 125);
-                ctx.lineTo(10, 290);
-                ctx.strokeStyle = whowin()
-                ctx.stroke();
-                encoder.addFrame(ctx)
-
-                ctx.lineWidth = 10;
-                ctx.beginPath();
-                ctx.moveTo(200, 100);
-                ctx.lineTo(10, 290);
-                ctx.strokeStyle = whowin()
-                ctx.stroke();
-                encoder.addFrame(ctx)
-
-                ctx.lineWidth = 10;
-                ctx.beginPath();
-                ctx.moveTo(225, 75);
-                ctx.lineTo(10, 290);
-                ctx.strokeStyle = whowin()
-                ctx.stroke();
-                encoder.addFrame(ctx)
-
-                ctx.lineWidth = 10;
-                ctx.beginPath();
-                ctx.moveTo(250, 50);
-                ctx.lineTo(10, 290);
-                ctx.strokeStyle = whowin()
-                ctx.stroke();
-                encoder.addFrame(ctx)
+                }
 
                 ctx.lineWidth = 10;
                 ctx.beginPath();
