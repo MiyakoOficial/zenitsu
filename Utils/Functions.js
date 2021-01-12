@@ -99,19 +99,19 @@ module.exports.mapaCanvas = async function (mapatest, win = false) {
             ctx.drawImage(IMAGEN, 10, 110, 85, 85)
         }
         else if (i == 4) {
-            ctx.drawImage(IMAGEN, 110, 105, 85, 85)
+            ctx.drawImage(IMAGEN, 110, 110, 85, 85)
         }
         else if (i == 5) {
             ctx.drawImage(IMAGEN, 210, 110, 85, 85)
         }
         else if (i == 6) {
-            ctx.drawImage(IMAGEN, 10, 205, 85, 85)
+            ctx.drawImage(IMAGEN, 10, 210, 85, 85)
         }
         else if (i == 7) {
-            ctx.drawImage(IMAGEN, 110, 205, 85, 85)
+            ctx.drawImage(IMAGEN, 110, 210, 85, 85)
         }
         else if (i == 8) {
-            ctx.drawImage(IMAGEN, 210, 205, 85, 85)
+            ctx.drawImage(IMAGEN, 210, 210, 85, 85)
         }
         continue;
     }
