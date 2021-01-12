@@ -33,10 +33,10 @@ module.exports = {
 
         sendEmbed({
             channel: message.channel,
-            description: `${usuario} tienes 2 minutos para responder...\n¿Quieres jugar?: ~~responde "s"~~, ¿No quieres?: ~~responde "n"~~`
+            description: `${usuario} tienes 1 minuto para responder...\n¿Quieres jugar?: ~~responde "s"~~, ¿No quieres?: ~~responde "n"~~`
         })
 
-        let respuesta = await awaitMessage({ channel: message.channel, filter: (m) => m.author.id == usuario.id && ['s', 'n'].some(item => item == m.content), time: (2 * 60) * 1000, max: 1 }).catch(() => { })
+        let respuesta = await awaitMessage({ channel: message.channel, filter: (m) => m.author.id == usuario.id && ['s', 'n'].some(item => item == m.content), time: (1 * 60) * 1000, max: 1 }).catch(() => { })
 
         if (!respuesta) {
             sendEmbed({
@@ -49,7 +49,7 @@ module.exports = {
         if (respuesta.first().content == 'n') {
             sendEmbed({
                 channel: message.channel,
-                description: 'Pues, hasta luego!'
+                description: 'Pues, vuelve cuando quieras jugar.'
             })
             return message.guild.partida == undefined;
         }
@@ -83,7 +83,7 @@ module.exports = {
             message.guild.partida = undefined;
             return sendEmbed({
                 channel: message.channel,
-                description: `<:wtf:789166898356289567> | Tiempo excedido!\n\n${tablero.string}`,
+                description: `<:wtfDuddd:797933539454091305> | Tiempo excedido!\n\n${tablero.string}`,
                 attachFiles: new MessageAttachment(await mapaCanvas(tablero.array), 'tictactoe.gif'),
                 imageURL: 'attachment://tictactoe.gif'
             });
