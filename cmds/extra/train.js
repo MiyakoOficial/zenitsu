@@ -38,7 +38,7 @@ module.exports = {
                 .setAuthor(message.author.tag, message.author.displayAvatarURL({ dynamic: true }))
                 .setThumbnail('https://media1.tenor.com/images/e83dcba6a3454dd6410d555cf66b6f3d/tenor.gif?itemid=15043714')
 
-            await client.updateData({ id: message.author.id }, { cooldown: Date.now() + require('ms')('30s') }, 'demonios');
+            await client.updateData({ id: message.author.id }, { cooldown: Date.now() + require('ms')('20s') }, 'demonios');
 
             message.channel.send({ embed: embed1 }).catch(() => { })
 

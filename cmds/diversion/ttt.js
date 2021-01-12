@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-const { sendEmbed, mapaCanvas } = require('../../Utils/Functions')
+const { sendEmbed, mapaCanvas, awaitMessage } = require('../../Utils/Functions')
 const tresenraya = require('tresenraya');
 const { Message, MessageAttachment } = require('discord.js');
 const { Client } = require('discord.js');
@@ -30,6 +30,29 @@ module.exports = {
         usuario = usuario.user
         if (message.guild.partida)
             return sendEmbed({ channel: message.channel, description: ':x: | Hay otra persona jugando en este servidor!' })
+
+        sendEmbed({
+            channel: message.channel,
+            description: `${usuario} tienes 2 minutos para responder...\n¿Quieres jugar?: ~~responde "s"~~, ¿No quieres?: ~~responde "n"~~`
+        })
+
+        let respuesta = await awaitMessage({ channel: message.channel, filter: (m) => m.author.id == usuario.id && ['s', 'n'].some(item => item == m.content), time: (2 * 60) * 1000, max: 1 }).catch(() => { })
+
+        if (respuesta == 'n') {
+            sendEmbed({
+                channel: message.channel,
+                description: 'Pues, hasta luego!'
+            })
+            return message.guild.partida == undefined;
+        }
+
+        if (!respuesta) {
+            sendEmbed({
+                channel: message.channel,
+                description: `${usuario} no respondio...`
+            })
+            return message.guild.partida == undefined;
+        }
 
         message.guild.partida = message.guild.partida ? message.guild.partida : new tresenraya.partida({ jugadores: [message.author.id, usuario.id] });
 

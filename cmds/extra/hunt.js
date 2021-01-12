@@ -44,7 +44,7 @@ module.exports = {
             .setTimestamp()
             .setThumbnail('https://media1.tenor.com/images/89f8120f72fd144b0f4639486657afb3/tenor.gif?itemid=15330449')
 
-        await client.updateData({ id: message.author.id }, { cooldown: Date.now() + require('ms')('30s') }, 'demonios');
+        await client.updateData({ id: message.author.id }, { cooldown: Date.now() + require('ms')('20s') }, 'demonios');
 
         message.channel.send({ embed: embed1 }).catch(() => { })
 

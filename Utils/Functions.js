@@ -560,6 +560,29 @@ module.exports.mapaCanvas = async function (mapatest, win = false) {
 
 }
 
+
+
+/**
+ * 
+ * @param {Object} obj
+ * @param {Discord.CollectorFilter} obj.filter
+ * @param {Discord.TextChannel} obj.channel
+ * @param {Number} obj.max
+ * @param {Number} obj.time
+ * @returns {Promise<Discord.Collection<Discord.Snowflake, Discord.Message>>}
+ */
+
+module.exports.awaitMessage = function (obj) {
+    const { filter, channel, max, time } = obj;
+    if (!channel) throw new Error('Y el canal? kek')
+    return new Promise((resolve, reject) => {
+        channel.awaitMessages(filter, { max: max ? max : 1, time: time ? time : require('ms')('60s'), errors: ['time'] })
+            .then(collected => resolve(collected))
+            .catch((c) => c.size ? resolve(c) : reject('TIME'))
+    });
+};
+
+
 exports.array = toArray
 exports.buffer = toBuffer
 
