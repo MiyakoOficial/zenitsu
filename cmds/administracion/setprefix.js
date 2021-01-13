@@ -33,7 +33,7 @@ module.exports = {
                 .setColor(client.color)
                 .setDescription(`<:trustedAdmin:779695112036286474> | ${message.author.username} ha establecido el prefijo a: ${data.prefix}`)
                 .setTimestamp()
-
+            message.guild.cachePrefix = data.prefix
             return message.channel.send({ embed: embed })
 
         }).catch(err => {

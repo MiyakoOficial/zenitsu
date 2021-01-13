@@ -32,8 +32,9 @@ module.exports = async (client, message) => {
     if (!message || !message.guild || !message.author) return;
     client.serverQueue = client.queue.get(message.guild.id);
 
-    await client.updateData({ idMember: message.author.id, idGuild: message.guild.id }, { cacheName: message.author.tag }, 'niveles').catch(() => { })
-    const prefix = await message.guild.getPrefix();
+    client.updateData({ idMember: message.author.id, idGuild: message.guild.id }, { cacheName: message.author.tag }, 'niveles').catch(() => { })
+    const prefix = message.guild.cachePrefix || await message.guild.getPrefix();
+    message.guild.cachePrefix = prefix;
     const args = message.content.slice(prefix.length).trim().split(/ +/);
     const command = args.shift().toLowerCase()
 
