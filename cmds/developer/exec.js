@@ -19,6 +19,7 @@ module.exports = {
             return;
 
         try {
+            // eslint-disable-next-line no-unused-vars
             return require('child_process').exec(args.join(' '), (err, stdout, stderr) => {
                 if (err) return message.channel.send(err, { code: '', split: { char: '', maxLength: 1900 } })
                 return message.channel.send(stdout.toString(), { code: '', split: { char: '', maxLength: 1900 } })
