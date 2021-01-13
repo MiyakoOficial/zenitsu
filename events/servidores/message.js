@@ -273,6 +273,14 @@ module.exports = async (client, message) => {
             return await message.author.send({ embed: embed }).catch(() => { });
         }
     }
+
+    /**
+     * @async
+     * @param {String} descriptionHere 
+     * @param {Discord.TextChannel} option
+     * @returns {Discord.Message} 
+     */
+
     function embedResponse(descriptionHere, option) {
 
         let embed = new Discord.MessageEmbed()
