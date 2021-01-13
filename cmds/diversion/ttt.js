@@ -110,7 +110,7 @@ module.exports = {
             })
 
         });
-        colector.on('end', () => partida.finalizado ? null : partida.emit('finalizado', partida.jugadores, partida.tablero, partida.paso))
+        colector.on('end', () => !partida || partida.finalizado ? null : partida.emit('finalizado', partida.jugadores, partida.tablero, partida.paso))
         return true;
     }
 }
