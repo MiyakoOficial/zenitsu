@@ -253,10 +253,10 @@ module.exports = async (client, message) => {
 
             return message.channel.send({ embed: embed })
         }
+        try {
+            await commandfile.run({ client, message, args, embedResponse, Hora })
+        } catch (err) {
 
-        let runCommand = commandfile.run({ client, message, args, embedResponse, Hora })
-
-        return !runCommand ? runCommand : runCommand.catch(async err => {
 
             let embed = new Discord.MessageEmbed()
                 .setColor(client.color)
@@ -270,7 +270,7 @@ module.exports = async (client, message) => {
             client.channels.cache.get('766012729411633164').send({ embed: embed })
 
             return await message.author.send({ embed: embed }).catch(() => { });
-        });
+        }
     }
     function embedResponse(descriptionHere, option) {
 
