@@ -73,10 +73,8 @@ module.exports = async (client, message) => {
             return;
         }
         else {
-
+            let dataN = await client.getData({ idMember: message.author.id, idGuild: message.guild.id }, 'niveles')
             let { xp, nivel } = await client.getData({ idGuild: `${message.guild.id}`, idMember: `${message.author.id}` }, 'niveles');
-
-
             let levelup = 5 * (nivel ** 2) + 50 * nivel + 100;
 
             cooldownniveles.add(guild);
@@ -104,55 +102,54 @@ module.exports = async (client, message) => {
                 
                 */
                 let usuario = message.author
-                const { createCanvas, loadImage, registerFont } = require('canvas');
+                if (dataN.disableNotify) {
+                    const { createCanvas, loadImage, registerFont } = require('canvas');
 
-                registerFont('/home/MARCROCK22/zenitsu/OpenSansEmoji.ttf', { family: "Open Sans Emoji" })
-                registerFont('/home/MARCROCK22/zenitsu/Minecrafter.Reg.ttf', { family: "Minecraft" })
+                    registerFont('/home/MARCROCK22/zenitsu/OpenSansEmoji.ttf', { family: "Open Sans Emoji" })
+                    registerFont('/home/MARCROCK22/zenitsu/Minecrafter.Reg.ttf', { family: "Minecraft" })
 
-                const canvas = createCanvas(700, 100);
-                const ctx = canvas.getContext('2d');
-
-                const background = await loadImage('https://cdn.discordapp.com/attachments/621139895729258528/747968079191081010/challenge.png');
-                ctx.drawImage(background, 0, 0, canvas.width, canvas.height)
-
-                const avatar = await loadImage(usuario.displayAvatarURL({ format: 'png' }));
-
-                const applyText = (canvas, text) => {
+                    const canvas = createCanvas(700, 100);
                     const ctx = canvas.getContext('2d');
 
-                    let fontSize = 70;
+                    const background = await loadImage('https://cdn.discordapp.com/attachments/621139895729258528/747968079191081010/challenge.png');
+                    ctx.drawImage(background, 0, 0, canvas.width, canvas.height)
 
-                    do {
+                    const avatar = await loadImage(usuario.displayAvatarURL({ format: 'png' }));
 
-                        ctx.font = `${fontSize -= 1}px "Open Sans Emoji"`;
+                    const applyText = (canvas, text) => {
+                        const ctx = canvas.getContext('2d');
 
-                    } while (ctx.measureText(text).width > canvas.width - 105);
+                        let fontSize = 70;
 
-                    return ctx.font;
-                };
+                        do {
 
-                let txt = 'Level up!';
-                ctx.fillStyle = "#ea899a";
-                ctx.font = '40px "Minecraft"'
-                ctx.fillText(txt, 95, 45);
+                            ctx.font = `${fontSize -= 1}px "Open Sans Emoji"`;
+
+                        } while (ctx.measureText(text).width > canvas.width - 105);
+
+                        return ctx.font;
+                    };
+
+                    let txt = 'Level up!';
+                    ctx.fillStyle = "#ea899a";
+                    ctx.font = '40px "Minecraft"'
+                    ctx.fillText(txt, 95, 45);
 
 
-                let text = `${usuario.tag} has subido al nivel ${nivel + 1}!`;
-                ctx.font = applyText(canvas, text, 90, 84);
-                ctx.fillStyle = '#FFFFFF';
-                ctx.fillText(text, 95, 80);
+                    let text = `${usuario.tag} has subido al nivel ${nivel + 1}!`;
+                    ctx.font = applyText(canvas, text, 90, 84);
+                    ctx.fillStyle = '#FFFFFF';
+                    ctx.fillText(text, 95, 80);
 
-                //circulo
-                ctx.beginPath();
-                ctx.arc(50, 50, 40, 0, Math.PI * 2, true);
-                ctx.closePath();
-                ctx.clip();
-                //circulo
+                    //circulo
+                    ctx.beginPath();
+                    ctx.arc(50, 50, 40, 0, Math.PI * 2, true);
+                    ctx.closePath();
+                    ctx.clip();
+                    //circulo
 
-                ctx.drawImage(avatar, 10, 10, 80, 80);
-                let dataN = await client.getData({idMember: message.author.id, idGuild: message.guild.id}, 'niveles')
-                if(!dataN.disableNotify) {
-                channel.send(new Discord.MessageAttachment(canvas.toBuffer(), 'levelImage.png')).catch(() => { })
+                    ctx.drawImage(avatar, 10, 10, 80, 80);
+                    channel.send(new Discord.MessageAttachment(canvas.toBuffer(), 'levelImage.png')).catch(() => { })
                 } // Yes
                 //}
                 //embedResponse(`<@${message.author.id}>, subiste al nivel ${nivel + 1}!`, channel).catch(a => { });

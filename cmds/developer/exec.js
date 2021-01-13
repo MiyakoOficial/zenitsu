@@ -19,17 +19,13 @@ module.exports = {
             return;
 
         try {
-            let date = Date.now();
-            let res = require('child_process').execSync(args.join(' ')).toString();
-
-            res = res.split('').reverse().slice(0, 1900).reverse().join('')
-
-            message.channel.send(res, { code: 'js' }).catch(() => { })
-            message.channel.send(`Tiempo: ${Date.now() - date}`).catch(() => { })
-
+            return require('child_process').exec(args.join(' '), (err, stdout, stderr) => {
+                if (err) return message.channel.send(err, { code: '', split: { char: '', maxLength: 1900 } })
+                return message.channel.send(stdout.toString(), { code: '', split: { char: '', maxLength: 1900 } })
+            })
         } catch (err) {
 
-            message.channel.send(err, { code: 'js' }).catch(() => { })
+            return message.channel.send(err, { code: 'js' }).catch(() => { })
 
         }
     }
