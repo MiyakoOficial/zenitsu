@@ -2,7 +2,7 @@ const { MessageEmbed } = require("discord.js");
 module.exports = {
     config: {
         name: "ahorcado", //Nombre del cmd
-        alias: ['test'], //Alias
+        alias: [], //Alias
         description: "Ver el ultimo mensaje borrado", //Descripción (OPCIONAL)
         usage: "z!akinator",
         category: 'diversion',
