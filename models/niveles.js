@@ -16,7 +16,7 @@ const Guild = Schema({
         type: String
 },
     disableNotify: {
-        default: false,
+        default: true,
         type: Boolean
     }
 })
