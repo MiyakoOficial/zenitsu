@@ -9,7 +9,7 @@ module.exports = {
         memberPermissions: []
     },
     run: async({ client, message, args }) => {
-    let cosoactualxddd = client.getData({idMember: message.author.id, idGuild: message.guild.id}, 'niveles')
+    let cosoactualxddd = await client.getData({idMember: message.author.id, idGuild: message.guild.id}, 'niveles')
     let eritruofals = cosoactualxddd.disableNotify ? false : true
     let quetengoqueresponder = !eritruofals ? 'Desactivaste las notificaciones' : 'Activaste las notificaciones'
     await client.updateData({idMember: message.author.id, idGuild: message.guild.id}, {$set: { disableNotify: eritruofals} }, 'niveles')
