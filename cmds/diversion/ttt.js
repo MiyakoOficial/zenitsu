@@ -35,7 +35,7 @@ module.exports = {
             channel: message.channel,
             description: `<a:amongushappy:798373703880278016> | ${usuario} tienes 1 minuto para responder...\n¿Quieres jugar?: ~~responde "s"~~\n¿No quieres?: ~~responde "n"~~`
         });
-        message.guild.partida = message.guild.partida ? message.guild.partida : new tresenraya.partida({ jugadores: [message.author.id, usuario.id] });
+        message.guild.partida = new tresenraya.partida({ jugadores: [message.author.id, usuario.id] });
         let respuesta = await awaitMessage({ channel: message.channel, filter: (m) => m.author.id == usuario.id && ['s', 'n'].some(item => item == m.content), time: (1 * 60) * 1000, max: 1 }).catch(() => { })
 
         if (!respuesta) {
