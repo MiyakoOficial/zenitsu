@@ -14,6 +14,10 @@ const Guild = Schema({
     cacheName: {
         default: 'none',
         type: String
-}
+},
+    disableNotify: {
+        default: false,
+        type: Boolean
+    }
 })
 module.exports = model('Niveles', Guild)
