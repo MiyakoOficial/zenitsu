@@ -43,7 +43,7 @@ module.exports = {
                 channel: message.channel,
                 description: `😔 | ${usuario} no respondió...`
             })
-            return message.guild.partida == undefined;
+            return message.guild.partida = undefined;
         }
 
         if (respuesta.first().content == 'n') {
@@ -51,7 +51,7 @@ module.exports = {
                 channel: message.channel,
                 description: '😔 | Rechazó la invitación...'
             })
-            return message.guild.partida == undefined;
+            return message.guild.partida = undefined;
         }
 
         const { partida } = message.guild;
