@@ -554,11 +554,11 @@ function toBuffer(stream, callback) {
 
 async function displayConnectFourBoard(mapa, game) {
     mapa = mapa.map(a => a.map(e => e.replace('⬛', '⚪')))
-    const win = await Canvas.loadImage('C:\\Users\\MI PC\\Desktop\\Mis Cosas\\Marcos\\handler\\Utils\\Images\\morado_de_4.png')
+    const win = await Canvas.loadImage('/home/MARCROCK22/zenitsu/Utils/Images/morado_de_4')
     const imgs = {
-        "⚪": await Canvas.loadImage('C:\\Users\\MI PC\\Desktop\\Mis Cosas\\Marcos\\handler\\Utils\\Images\\espacio_blanco_4.png'),
-        "🟢": await Canvas.loadImage('C:\\Users\\MI PC\\Desktop\\Mis Cosas\\Marcos\\handler\\Utils\\Images\\rojo_de_cuatro.png'),
-        "🟡": await Canvas.loadImage('C:\\Users\\MI PC\\Desktop\\Mis Cosas\\Marcos\\handler\\Utils\\Images\\amarillo_de_cuatro.png')
+        "⚪": await Canvas.loadImage(`/home/MARCROCK22/zenitsu/Utils/Images/espacio_blanco_4.png`),
+        "🟢": await Canvas.loadImage('/home/MARCROCK22/zenitsu/Utils/Images/rojo_de_cuatro.png'),
+        "🟡": await Canvas.loadImage('/home/MARCROCK22/zenitsu/Utils/Images/amarillo_de_cuatro.png')
     }
     const canvas = Canvas.createCanvas(700, 600)
     const ctx = canvas.getContext('2d')
