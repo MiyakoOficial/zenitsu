@@ -549,10 +549,11 @@ function toBuffer(stream, callback) {
  * @async
  * @param {Array<Array<String>>} mapa
  * @param {import('connect4-ai/lib/Connect4')} game
+ * @param {import('discord.js').Client} client
  * @returns {Promise<Buffer>}
  */
 
-async function displayConnectFourBoard(mapa, game) {
+async function displayConnectFourBoard(mapa, game, client) {
     const toBuffer = require('util').promisify(module.exports.buffer);
     const encoder = new GIFEncoder(700, 600);
     const stream = encoder.createReadStream()
@@ -561,12 +562,9 @@ async function displayConnectFourBoard(mapa, game) {
     encoder.setDelay(200);  // frame delay in ms
     encoder.setQuality(10); // image quality. 10 is default.
     mapa = mapa.map(a => a.map(e => e.replace('⬛', '⚪')))
-    const win = await Canvas.loadImage('/home/MARCROCK22/zenitsu/Utils/Images/morado_de_4.png')
-    const bck = await Canvas.loadImage('/home/MARCROCK22/zenitsu/Utils/Images/4enraya.png')
-    const imgs = {
-        "🟢": await Canvas.loadImage('/home/MARCROCK22/zenitsu/Utils/Images/rojo_de_cuatro.png'),
-        "🟡": await Canvas.loadImage('/home/MARCROCK22/zenitsu/Utils/Images/amarillo_de_cuatro.png')
-    }
+
+    const { imgs, bck, win } = client;
+
     const canvas = Canvas.createCanvas(700, 600)
     const ctx = canvas.getContext('2d')
     ctx.drawImage(bck, 0, 0, 700, 600)
@@ -625,7 +623,6 @@ async function displayConnectFourBoard(mapa, game) {
     }
     encoder.finish();
     return await toBuffer(stream);
-
 }
 
 module.exports.displayConnectFourBoard = displayConnectFourBoard;

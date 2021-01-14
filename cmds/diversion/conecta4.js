@@ -19,7 +19,7 @@ module.exports = {
 
     run: async (obj) => {
 
-        const { message } = obj;
+        const { message, client } = obj;
 
         if (message.guild.game)
             return sendEmbed({ channel: message.channel, description: ':x: | Hay otra persona jugando en este servidor!' })
@@ -59,7 +59,7 @@ module.exports = {
 
         usuario.TURNO = Math.floor(Math.random() * 2) + 1;
         message.author.TURNO = usuario.TURNO == 2 ? 1 : 2;
-        let res = await displayConnectFourBoard(displayBoard(message.guild.game.ascii()), message.guild.game);
+        let res = await displayConnectFourBoard(displayBoard(message.guild.game.ascii()), message.guild.game, client);
         let att = new MessageAttachment(res, '4enraya.gif')
         sendEmbed({
             attachFiles: att,
@@ -73,7 +73,7 @@ module.exports = {
 
             msg.guild.game.play(parseInt(msg.content) - 1)
             if (msg.guild.game.gameStatus().gameOver && msg.guild.game.gameStatus().solution) {
-                let res = await displayConnectFourBoard(displayBoard(message.guild.game.ascii()), msg.guild.game);
+                let res = await displayConnectFourBoard(displayBoard(message.guild.game.ascii()), msg.guild.game, client);
                 let att = new MessageAttachment(res, '4enraya.gif')
                 sendEmbed({
                     description: `<:zsUHHHHHH:649036589195853836> | ${msg.author.tag} ha ganado la partida!`,
@@ -86,7 +86,7 @@ module.exports = {
             }
 
             else if (msg.guild.game.gameStatus().gameOver) {
-                let res = await displayConnectFourBoard(displayBoard(message.guild.game.ascii()), msg.guild.game);
+                let res = await displayConnectFourBoard(displayBoard(message.guild.game.ascii()), msg.guild.game, client);
                 let att = new MessageAttachment(res, '4enraya.gif')
                 sendEmbed({
                     channel: msg.channel,
@@ -98,7 +98,7 @@ module.exports = {
                 return colector.stop();
             }
 
-            let res = await displayConnectFourBoard(displayBoard(msg.guild.game.ascii()), msg.guild.game);
+            let res = await displayConnectFourBoard(displayBoard(msg.guild.game.ascii()), msg.guild.game, client);
             let att = new MessageAttachment(res, '4enraya.gif')
 
             await sendEmbed({
@@ -113,7 +113,7 @@ module.exports = {
                 sendEmbed({
                     channel: message.channel,
                     description: `<:wtfDuddd:797933539454091305> | Tiempo excedido!`,
-                    attachFiles: new MessageAttachment(await displayConnectFourBoard(displayBoard(message.guild.game.ascii()), message.guild.game), '4enraya.gif'),
+                    attachFiles: new MessageAttachment(await displayConnectFourBoard(displayBoard(message.guild.game.ascii()), message.guild.game, client), '4enraya.gif'),
                     imageURL: 'attachment://4enraya.gif'
                 })
                 return message.guild.game = undefined;
