@@ -166,11 +166,14 @@ module.exports = async (client, message) => {
 
     }
 
-    let commandfile = client.commands.filter(e => {
+    let filter = e => {
         if (message.guild.id != '645463565813284865' && e.config.category == 'servidor') return false;
         else if (e.config.dev && !client.devseval.includes(message.author.id)) return false;
         return true
-    }).get(command) || client.commands.get(client.alias.get(command))
+    }
+
+    let commandfile = client.commands.filter(filter).get(command)
+        || client.commands.filter(filter).get(client.alias.get(command))
 
     if (commandfile) {
         let dataB = (await client.getData({ id: message.author.id }, 'blacklist'))
