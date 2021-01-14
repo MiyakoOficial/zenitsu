@@ -558,7 +558,7 @@ async function displayConnectFourBoard(mapa, game) {
     const stream = encoder.createReadStream()
     encoder.start();
     encoder.setRepeat(-1);   // 0 for repeat, -1 for no-repeat
-    encoder.setDelay(500);  // frame delay in ms
+    encoder.setDelay(200);  // frame delay in ms
     encoder.setQuality(10); // image quality. 10 is default.
     mapa = mapa.map(a => a.map(e => e.replace('⬛', '⚪')))
     const win = await Canvas.loadImage('/home/MARCROCK22/zenitsu/Utils/Images/morado_de_4.png')
