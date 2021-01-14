@@ -60,11 +60,11 @@ module.exports = {
         usuario.TURNO = Math.floor(Math.random() * 2) + 1;
         message.author.TURNO = usuario.TURNO == 2 ? 1 : 2;
         let res = await displayConnectFourBoard(displayBoard(message.guild.game.ascii()), message.guild.game);
-        let att = new MessageAttachment(res, '4enraya.png')
+        let att = new MessageAttachment(res, '4enraya.gif')
         sendEmbed({
             attachFiles: att,
             channel: message.channel,
-            imageURL: 'attachment://4enraya.png',
+            imageURL: 'attachment://4enraya.gif',
             description: `🤔 | Empieza ${message.author.TURNO == 1 ? message.author.tag : usuario.tag}, elige un numero del 1 al 7.`
         })
         const colector = message.channel.createMessageCollector(msg => msg.author.TURNO === msg.guild.game.gameStatus().currentPlayer && !isNaN(msg.content) && (Number(msg.content) >= 1 && Number(msg.content) <= 7) && message.guild.game.canPlay(parseInt(msg.content) - 1) && !message.guild.game.gameStatus().gameOver, { time: (10 * 60) * 1000 });
@@ -74,12 +74,12 @@ module.exports = {
             msg.guild.game.play(parseInt(msg.content) - 1)
             if (msg.guild.game.gameStatus().gameOver && msg.guild.game.gameStatus().solution) {
                 let res = await displayConnectFourBoard(displayBoard(message.guild.game.ascii()), msg.guild.game);
-                let att = new MessageAttachment(res, '4enraya.png')
+                let att = new MessageAttachment(res, '4enraya.gif')
                 sendEmbed({
                     description: `<:zsUHHHHHH:649036589195853836> | ${msg.author.tag} ha ganado la partida!`,
                     channel: msg.channel,
                     attachFiles: att,
-                    imageURL: 'attachment://4enraya.png'
+                    imageURL: 'attachment://4enraya.gif'
                 })
                 msg.guild.game = undefined;
                 return colector.stop();
@@ -87,25 +87,25 @@ module.exports = {
 
             else if (msg.guild.game.gameStatus().gameOver) {
                 let res = await displayConnectFourBoard(displayBoard(message.guild.game.ascii()), msg.guild.game);
-                let att = new MessageAttachment(res, '4enraya.png')
+                let att = new MessageAttachment(res, '4enraya.gif')
                 sendEmbed({
                     channel: msg.channel,
                     description: `<:wtfDuddd:797933539454091305> | Un empate entre ${usuario.tag} y ${message.author.tag}!`,
                     attachFiles: att,
-                    imageURL: 'attachment://4enraya.png'
+                    imageURL: 'attachment://4enraya.gif'
                 })
                 msg.guild.game = undefined;
                 return colector.stop();
             }
 
             let res = await displayConnectFourBoard(displayBoard(msg.guild.game.ascii()), msg.guild.game);
-            let att = new MessageAttachment(res, '4enraya.png')
+            let att = new MessageAttachment(res, '4enraya.gif')
 
             await sendEmbed({
                 channel: msg.channel,
                 attachFiles: att,
                 description: `😆 | Turno de ${message.author.TURNO == msg.author.TURNO ? usuario.tag : message.author.tag}`,
-                imageURL: 'attachment://4enraya.png'
+                imageURL: 'attachment://4enraya.gif'
             })
         })
         colector.on('end', async () => {
@@ -113,8 +113,8 @@ module.exports = {
                 sendEmbed({
                     channel: message.channel,
                     description: `<:wtfDuddd:797933539454091305> | Tiempo excedido!`,
-                    attachFiles: new MessageAttachment(await displayConnectFourBoard(displayBoard(message.guild.game.ascii()), message.guild.game), '4enraya.png'),
-                    imageURL: 'attachment://4enraya.png'
+                    attachFiles: new MessageAttachment(await displayConnectFourBoard(displayBoard(message.guild.game.ascii()), message.guild.game), '4enraya.gif'),
+                    imageURL: 'attachment://4enraya.gif'
                 })
                 return message.guild.game = undefined;
             }
