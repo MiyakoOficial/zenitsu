@@ -553,6 +553,13 @@ function toBuffer(stream, callback) {
  */
 
 async function displayConnectFourBoard(mapa, game) {
+    const toBuffer = require('util').promisify(module.exports.buffer);
+    const encoder = new GIFEncoder(700, 600);
+    const stream = encoder.createReadStream()
+    encoder.start();
+    encoder.setRepeat(-1);   // 0 for repeat, -1 for no-repeat
+    encoder.setDelay(500);  // frame delay in ms
+    encoder.setQuality(10); // image quality. 10 is default.
     mapa = mapa.map(a => a.map(e => e.replace('⬛', '⚪')))
     const win = await Canvas.loadImage('/home/MARCROCK22/zenitsu/Utils/Images/morado_de_4.png')
     const imgs = {
@@ -580,7 +587,16 @@ async function displayConnectFourBoard(mapa, game) {
             "3": 310,
             "4": 410,
             "5": 510
+        },
+        filaR = {
+            "0": 510,
+            "1": 410,
+            "2": 310,
+            "3": 210,
+            "4": 110,
+            "5": 10
         }
+
     let numero = 0;
     for (let i of mapa) {
         let lugar = 0;
@@ -591,26 +607,25 @@ async function displayConnectFourBoard(mapa, game) {
         numero++
     }
 
+    encoder.addFrame(ctx)
+
     if (game.solution) {
-
-        let filaR = {
-            "0": 510,
-            "1": 410,
-            "2": 310,
-            "3": 210,
-            "4": 110,
-            "5": 10
-        }
-
         for (let i of game.solution) {
-
             ctx.drawImage(win, columna[i.column] + 10, filaR[i.spacesFromBottom] + 10, 50, 50)
-
         }
-
+        encoder.addFrame(ctx);
+        for (let i of game.solution) {
+            ctx.drawImage(game.winner == 1 ? imgs['🟢'] : imgs['🟡'], columna[i.column] + 10, filaR[i.spacesFromBottom] + 10, 50, 50)
+        }
+        encoder.addFrame(ctx);
+        for (let i of game.solution) {
+            ctx.drawImage(win, columna[i.column] + 10, filaR[i.spacesFromBottom] + 10, 50, 50)
+        }
+        encoder.addFrame(ctx);
     }
+    encoder.finish();
+    return await toBuffer(stream);
 
-    return canvas.toBuffer();
 }
 
 module.exports.displayConnectFourBoard = displayConnectFourBoard;
