@@ -543,3 +543,74 @@ function toBuffer(stream, callback) {
 
     return stream
 }
+
+
+/**
+ * @async
+ * @param {Array<Array<String>>} mapa
+ * @param {import('connect4-ai/lib/Connect4')} game
+ * @returns {Promise<Buffer>}
+ */
+
+async function displayConnectFourBoard(mapa, game) {
+    mapa = mapa.map(a => a.map(e => e.replace('⬛', '⚪')))
+    const win = await Canvas.loadImage('C:\\Users\\MI PC\\Desktop\\Mis Cosas\\Marcos\\handler\\Utils\\Images\\morado_de_4.png')
+    const imgs = {
+        "⚪": await Canvas.loadImage('C:\\Users\\MI PC\\Desktop\\Mis Cosas\\Marcos\\handler\\Utils\\Images\\espacio_blanco_4.png'),
+        "🟢": await Canvas.loadImage('C:\\Users\\MI PC\\Desktop\\Mis Cosas\\Marcos\\handler\\Utils\\Images\\rojo_de_cuatro.png'),
+        "🟡": await Canvas.loadImage('C:\\Users\\MI PC\\Desktop\\Mis Cosas\\Marcos\\handler\\Utils\\Images\\amarillo_de_cuatro.png')
+    }
+    const canvas = Canvas.createCanvas(700, 600)
+    const ctx = canvas.getContext('2d')
+    ctx.fillStyle = '#4287f5'
+    ctx.fillRect(0, 0, 700, 600);
+    const columna = {
+        "0": 10,
+        "1": 110,
+        "2": 210,
+        "3": 310,
+        "4": 410,
+        "5": 510,
+        "6": 610,
+    },
+        fila = {
+            "0": 10,
+            "1": 110,
+            "2": 210,
+            "3": 310,
+            "4": 410,
+            "5": 510
+        }
+    let numero = 0;
+    for (let i of mapa) {
+        let lugar = 0;
+        for (let j of i) {
+            ctx.drawImage(imgs[j], columna[lugar] + 10, fila[numero] + 10, 50, 50)
+            lugar++
+        }
+        numero++
+    }
+
+    if (game.solution) {
+
+        let filaR = {
+            "0": 510,
+            "1": 410,
+            "2": 310,
+            "3": 210,
+            "4": 110,
+            "5": 10
+        }
+
+        for (let i of game.solution) {
+
+            ctx.drawImage(win, columna[i.column] + 10, filaR[i.spacesFromBottom] + 10, 50, 50)
+
+        }
+
+    }
+
+    return canvas.toBuffer();
+}
+
+module.exports.displayConnectFourBoard = displayConnectFourBoard;
