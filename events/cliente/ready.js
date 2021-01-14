@@ -9,7 +9,6 @@ const ms = require('ms')
 
 module.exports = (client) => {
     client.color = '#E09E36';
-    client.erela.init(client.user.id);
     client.user.setPresence({
         status: "idle",
         activity: {

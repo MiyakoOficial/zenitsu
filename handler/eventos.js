@@ -19,18 +19,4 @@ module.exports = (client) => {
     ["cliente", "servidores"].map(x => {
         return load(x);
     });
-
-    function loadErela(dirs) {
-        const events = readdirSync(`./events/${dirs}/`).filter(d => {
-            return d.endsWith('.js');
-        });
-        for (let file of events) {
-            const evt = require(`../events/${dirs}/${file}`);
-            let eName = file.split('.')[0];
-            client.erela.on(eName, evt.bind(null, client));
-        }
-    }
-    ['erela'].map(x => {
-        return loadErela(x);
-    });
 };

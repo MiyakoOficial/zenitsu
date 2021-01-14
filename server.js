@@ -3,8 +3,7 @@ const Discord = require('discord.js'),
 const nekos = require('nekos.life');
 const tnai = require('tnai');
 const mongoose = require('mongoose');
-require('dotenv').config()
-const { Manager } = require('erela.js');
+require('dotenv').config();
 Discord.Structures.extend('Guild', g => {
 
     class Guild extends g {
@@ -17,12 +16,6 @@ Discord.Structures.extend('Guild', g => {
 
             let res = await client.getData({ id: this.id }, 'prefix').catch(() => { }) || { prefix: 'z!' };
             return res.prefix;
-
-        }
-
-        player() {
-
-            return client.erela.players.get(this.id);
 
         }
 
@@ -46,21 +39,6 @@ client.newDate = (ms) => {
     return res;
 
 }
-client.erela = new Manager({
-    nodes: [
-        {
-            host: '127.0.0.1',
-            port: 2333,
-            password: 'probando'
-        }
-    ],
-    send(id, payload) {
-        const guild = client.guilds.cache.get(id);
-        if (guild) guild.shard.send(payload);
-    },
-})
-    .on("nodeConnect", node => console.log(`Node ${node.options.identifier} connected`))
-    .on("nodeError", (node, error) => console.log(`Node ${node.options.identifier} had an error: ${error.message}`))
 client.kaomojis = ['(* ^ ω ^)', '(o^▽^o)', 'ヽ(・∀・)ﾉ', '(o･ω･o)', '( ´ ω ` )', '╰(▔∀▔)╯', '(✯◡✯)', '(⌒‿⌒)', 'ヽ(>∀<☆)ノ', '＼(￣▽￣)／', '(╯✧▽✧)╯', '(⁀ᗢ⁀)', '(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧', 'ヽ(*⌒▽⌒*)ﾉ', '☆*:.｡.o(≧▽≦)o.｡.:*☆', '(๑˃ᴗ˂)ﻭ', '(b ᵔ▽ᵔ)b', '(⌒ω⌒)', '(´ ∀ ` *)', '(─‿‿─)'];
 client.devseval = [
     '507367752391196682', // Lil MARCROCK22
