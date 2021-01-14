@@ -600,9 +600,9 @@ async function displayConnectFourBoard(mapa, game) {
     for (let i of mapa) {
         let lugar = 0;
         for (let j of i) {
-            if (!imgs[j]) continue;
-            ctx.drawImage(imgs[j], columna[lugar] + 10, fila[numero] + 10, 50, 50)
-            lugar++
+            if (imgs[j]) {
+                ctx.drawImage(imgs[j], columna[lugar] + 10, fila[numero] + 10, 50, 50)
+            } lugar++
         }
         numero++
     }
