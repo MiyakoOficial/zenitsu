@@ -168,7 +168,8 @@ module.exports = async (client, message) => {
 
     let commandfile = client.commands.filter(e => {
         if (message.guild.id != '645463565813284865' && e.config.category == 'servidor') return false;
-        else return true
+        else if (e.config.dev && !client.devseval.includes(message.author.id)) return false;
+        return true
     }).get(command) || client.commands.get(client.alias.get(command))
 
     if (commandfile) {
