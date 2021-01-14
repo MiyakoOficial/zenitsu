@@ -562,13 +562,14 @@ async function displayConnectFourBoard(mapa, game) {
     encoder.setQuality(10); // image quality. 10 is default.
     mapa = mapa.map(a => a.map(e => e.replace('⬛', '⚪')))
     const win = await Canvas.loadImage('/home/MARCROCK22/zenitsu/Utils/Images/morado_de_4.png')
+    const bck = await Canvas.loadImage('/home/MARCROCK22/zenitsu/Utils/Images/4enraya.png')
     const imgs = {
-        "⚪": await Canvas.loadImage(`/home/MARCROCK22/zenitsu/Utils/Images/espacio_blanco_4.png`),
         "🟢": await Canvas.loadImage('/home/MARCROCK22/zenitsu/Utils/Images/rojo_de_cuatro.png'),
         "🟡": await Canvas.loadImage('/home/MARCROCK22/zenitsu/Utils/Images/amarillo_de_cuatro.png')
     }
     const canvas = Canvas.createCanvas(700, 600)
     const ctx = canvas.getContext('2d')
+    ctx.drawImage(bck, 0, 0, 700, 600)
     ctx.fillStyle = '#4287f5'
     ctx.fillRect(0, 0, 700, 600);
     const columna = {
@@ -601,6 +602,7 @@ async function displayConnectFourBoard(mapa, game) {
     for (let i of mapa) {
         let lugar = 0;
         for (let j of i) {
+            if (!imgs[j]) continue;
             ctx.drawImage(imgs[j], columna[lugar] + 10, fila[numero] + 10, 50, 50)
             lugar++
         }
