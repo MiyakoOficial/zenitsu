@@ -65,7 +65,7 @@ module.exports = {
             attachFiles: att,
             channel: message.channel,
             imageURL: 'attachment://4enraya.gif',
-            description: `🤔 | Empieza ${message.author.TURNO == 1 ? message.author.tag : usuario.tag}, elige un numero del 1 al 7.`
+            description: `🤔 | Empieza ${message.author.TURNO == 1 ? message.author.tag : usuario.tag}, elige un numero del 1 al 7. [\`🔴\`]`
         })
         const colector = message.channel.createMessageCollector(msg => msg.author.TURNO === msg.guild.game.gameStatus().currentPlayer && !isNaN(msg.content) && (Number(msg.content) >= 1 && Number(msg.content) <= 7) && message.guild.game.canPlay(parseInt(msg.content) - 1) && !message.guild.game.gameStatus().gameOver, { time: (10 * 60) * 1000 });
 
@@ -104,7 +104,7 @@ module.exports = {
             await sendEmbed({
                 channel: msg.channel,
                 attachFiles: att,
-                description: `😆 | Turno de ${message.author.TURNO == msg.author.TURNO ? usuario.tag : message.author.tag}`,
+                description: `😆 | Turno de ${message.author.TURNO == msg.author.TURNO ? usuario.tag : message.author.tag} [${msg.author.TURNO == 2 ? "`🔴`" : "`🟡`"}]`,
                 imageURL: 'attachment://4enraya.gif'
             })
         })
