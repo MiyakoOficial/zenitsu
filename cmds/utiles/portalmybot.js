@@ -24,13 +24,13 @@ module.exports = {
             .setColor(client.color)
             .setAuthor(data.nombre, data.avatar, `https://portalmybot.com/u/${args[0]}`)
             .addField('Nivel', data.nivel, true)
-            .addField('Biografia', data.biografia ? data.biografia : 'Sin biografia.', true)
+            .addField('Biografia', data.biografia ? data.biografia.slice(0, 1000) : 'Sin biografia.', true)
             .addField("Numero de logros", data.logros.length, true)
             .addField('Numero de seguidores', data.seguidores, true)
             .addField('Puntos web', data.puntosWeb, true)
             .addField('Link del perfil', `https://portalmybot.com/u/${args[0]}`, true)
-            .addField('Logros', data.logros.length >= 1 ? data.logros.join(', ') : 'Sin logros.', true)
-            .setFooter(`Ubicacion: ${data.ubicacion ? data.ubicacion : 'Sin especificar.'}`)
+            .addField('Logros', data.logros && data.logros.length >= 1 ? data.logros.join(', ').slice(0, 1000) : 'Sin logros.', true)
+            .setFooter(`Ubicacion: ${data.ubicacion ? data.ubicacion.slice(0, 1000) : 'Sin especificar.'}`)
 
         message.channel.send({ embed: embed }).catch(() => { });
     }
