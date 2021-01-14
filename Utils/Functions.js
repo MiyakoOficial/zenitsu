@@ -570,8 +570,6 @@ async function displayConnectFourBoard(mapa, game) {
     const canvas = Canvas.createCanvas(700, 600)
     const ctx = canvas.getContext('2d')
     ctx.drawImage(bck, 0, 0, 700, 600)
-    ctx.fillStyle = '#4287f5'
-    ctx.fillRect(0, 0, 700, 600);
     const columna = {
         "0": 10,
         "1": 110,
