@@ -10,7 +10,10 @@ module.exports = {
         alias: ['tresenraya'], //Alias
         description: "Jugar tresenraya con un amigo.", //Descripción (OPCIONAL)
         usage: "z!ttt @mencion",
-        category: 'utiles'
+        category: 'diversion',
+        botPermissions: [],
+        memberPermissions: []
+
     },
     /**
      * @param {Object} obj

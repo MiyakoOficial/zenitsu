@@ -3,8 +3,8 @@ module.exports = {
     config: {
         name: "ahorcado", //Nombre del cmd
         alias: [], //Alias
-        description: "Ver el ultimo mensaje borrado", //Descripción (OPCIONAL)
-        usage: "z!akinator",
+        description: "Jugar el juego del ahorcado", //Descripción (OPCIONAL)
+        usage: "z!ahoracado @mencoin",
         category: 'diversion',
         botPermissions: [],
         memberPermissions: []

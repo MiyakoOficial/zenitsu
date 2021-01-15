@@ -8,8 +8,11 @@ module.exports = {
         name: "conecta4", //Nombre del cmd
         alias: [`connect4`, 'fourinrow', '4enlinea'], //Alias
         description: "Jugar el famoso juego conecta 4", //Descripción (OPCIONAL)
-        usage: "z!channel",
-        category: 'utiles'
+        usage: "z!connect4 @mencion",
+        category: 'diversion',
+        botPermissions: [],
+        memberPermissions: []
+
     },
 
     /**

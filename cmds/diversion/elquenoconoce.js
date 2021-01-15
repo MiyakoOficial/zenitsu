@@ -7,7 +7,7 @@ module.exports = {
         alias: [], //Alias
         description: "Meme de el que no conoce a dios a cualquier santo le reza", //Descripción (OPCIONAL)
         usage: "z!elquenoconoce @mencion",
-        category: 'utiles',
+        category: 'diversion',
         botPermissions: [],
         memberPermissions: []
     },
