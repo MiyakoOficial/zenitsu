@@ -596,8 +596,9 @@ async function displayConnectFourBoard(mapa, game) {
             "5": 10
         }
 
-    ctx.font = '25px sans-serif'
-    for (let i = 0; i <= 7; i++) {
+    ctx.font = '25px sans-serif';
+
+    for (let i of [0, 1, 2, 3, 4, 5, 6]) {
         ctx.fillText(i + 1, fila[i] + 10, 590)
     }
 
