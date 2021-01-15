@@ -45,6 +45,8 @@ module.exports = {
         let respuesta = await awaitMessage({ channel: message.channel, filter: (m) => m.author.id == usuario.id && ['s', 'n'].some(item => item == m.content), time: (1 * 60) * 1000, max: 1 }).catch(() => { })
 
         if (!respuesta) {
+            message.author.TURNO = undefined;
+            usuario.TURNO = undefined
             message.guild.game = undefined;
             return sendEmbed({
                 channel: message.channel,
@@ -53,6 +55,8 @@ module.exports = {
         }
 
         if (respuesta.first().content == 'n') {
+            message.author.TURNO = undefined;
+            usuario.TURNO = undefined
             message.guild.game = undefined;
             return sendEmbed({
                 channel: message.channel,
@@ -84,6 +88,8 @@ module.exports = {
                     attachFiles: att,
                     imageURL: 'attachment://4enraya.gif'
                 })
+                message.author.TURNO = undefined;
+                usuario.TURNO = undefined
                 msg.guild.game = undefined;
                 return colector.stop();
             }
@@ -97,6 +103,8 @@ module.exports = {
                     attachFiles: att,
                     imageURL: 'attachment://4enraya.gif'
                 })
+                message.author.TURNO = undefined;
+                usuario.TURNO = undefined
                 msg.guild.game = undefined;
                 return colector.stop();
             }
@@ -119,6 +127,8 @@ module.exports = {
                     attachFiles: new MessageAttachment(await displayConnectFourBoard(displayBoard(message.guild.game.ascii()), message.guild.game), '4enraya.gif'),
                     imageURL: 'attachment://4enraya.gif'
                 })
+                message.author.TURNO = undefined;
+                usuario.TURNO = undefined
                 return message.guild.game = undefined;
             }
         })
