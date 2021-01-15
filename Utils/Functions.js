@@ -599,7 +599,7 @@ async function displayConnectFourBoard(mapa, game) {
     ctx.font = '25px sans-serif';
 
     for (let i of [0, 1, 2, 3, 4, 5, 6]) {
-        ctx.fillText(i + 1, columna[i] + 25, 590)
+        ctx.fillText(i + 1, columna[i] + 26, 592)
     }
 
     let numero = 0;
