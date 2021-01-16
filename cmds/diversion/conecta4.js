@@ -44,7 +44,7 @@ module.exports = {
         if (message.author.TURNO)
             return sendEmbed({
                 channel: message.channel,
-                description: `${message.author.tag} estás jugando en un servidor.`
+                description: `${message.author.tag} estas jugando en un servidor.`
             });
 
         message.guild.game = new Connect4();
