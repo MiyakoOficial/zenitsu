@@ -137,8 +137,7 @@ module.exports = {
                 imageURL: 'attachment://4enraya.gif'
             })
         })
-        colector.on('end', async (r) => {
-            console.log(r)
+        colector.on('end', async (_, r) => {
             if (r === 'SURRENDER') {
                 sendEmbed({
                     channel: message.channel,
