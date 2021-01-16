@@ -68,7 +68,7 @@ module.exports = {
             message.guild.game = undefined;
             return sendEmbed({
                 channel: message.channel,
-                description: `${usuario.tag} está jugando en un servidor.`
+                description: `${usuario.tag} está jugando en otro servidor.`
             });
         }
 
@@ -76,7 +76,7 @@ module.exports = {
             message.guild.game = undefined;
             return sendEmbed({
                 channel: message.channel,
-                description: `${message.author.tag} estas jugando en un servidor.`
+                description: `${message.author.tag} estas jugando en otro servidor.`
             });
         }
         usuario.TURNO = Math.floor(Math.random() * 2) + 1;
