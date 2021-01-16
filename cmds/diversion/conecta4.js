@@ -35,18 +35,6 @@ module.exports = {
                 description: `<:cancel:779536630041280522> | Menciona a un miembro para jugar!`
             });
 
-        if (usuario.TURNO)
-            return sendEmbed({
-                channel: message.channel,
-                description: `${usuario.tag} está jugando en un servidor.`
-            });
-
-        if (message.author.TURNO)
-            return sendEmbed({
-                channel: message.channel,
-                description: `${message.author.tag} estas jugando en un servidor.`
-            });
-
         message.guild.game = new Connect4();
 
         await sendEmbed({
@@ -76,6 +64,21 @@ module.exports = {
             })
         }
 
+        if (usuario.TURNO) {
+            message.guild.game = undefined;
+            return sendEmbed({
+                channel: message.channel,
+                description: `${usuario.tag} está jugando en un servidor.`
+            });
+        }
+
+        if (message.author.TURNO) {
+            message.guild.game = undefined;
+            return sendEmbed({
+                channel: message.channel,
+                description: `${message.author.tag} estas jugando en un servidor.`
+            });
+        }
         usuario.TURNO = Math.floor(Math.random() * 2) + 1;
         message.author.TURNO = usuario.TURNO == 2 ? 1 : 2;
         let res = await displayConnectFourBoard(displayBoard(message.guild.game.ascii()), message.guild.game);
