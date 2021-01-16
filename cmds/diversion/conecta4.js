@@ -35,6 +35,18 @@ module.exports = {
                 description: `<:cancel:779536630041280522> | Menciona a un miembro para jugar!`
             });
 
+        if (usuario.TURNO)
+            return sendEmbed({
+                channel: message.channel,
+                description: `${usuario.tag} está jugando en un servidor.`
+            });
+
+        if (message.author.TURNO)
+            return sendEmbed({
+                channel: message.channel,
+                description: `${message.author.tag} estás jugando en un servidor.`
+            });
+
         message.guild.game = new Connect4();
 
         await sendEmbed({
