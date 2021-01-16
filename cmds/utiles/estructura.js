@@ -13,9 +13,11 @@ module.exports = {
     run: async ({ message, args }) => {
 
         let todo = '';
-
-        let memberXD = message.guild.members.cache.get(args[0]) || message.guild.members.cache.find(a => a.displayName == args.join(' ') || a.user.tag == args.join(' ') || a.user.username == args.join(' ')) || message.mentions.members.first() || message.member;
-
+        async function GETOWNER() {
+            return await message.guild.members.fetch(message.guild.ownerID)
+        }
+        let memberXD = args[0] == 'guild' ? await GETOWNER() : message.guild.members.cache.get(args[0]) || message.guild.members.cache.find(a => a.displayName == args.join(' ') || a.user.tag == args.join(' ') || a.user.username == args.join(' ')) || message.mentions.members.first() || message.member;
+        if (!memberXD) memberXD = message.member
         let printT = message.guild.channels.cache.filter(a => a.type == 'category').sort((a, b) => a.position - b.position);
 
         let without = message.guild.channels.cache.filter(a => !a.parent && a.type != 'category')
