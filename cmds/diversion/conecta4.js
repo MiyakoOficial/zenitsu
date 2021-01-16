@@ -93,7 +93,7 @@ module.exports = {
 
         colector.on('collect', async (msg) => {
 
-            if (msg.content == 'surrender')
+            if (msg.content === 'surrender')
                 return colector.stop('SURRENDER');
 
             msg.guild.game.play(parseInt(msg.content) - 1)
@@ -138,7 +138,8 @@ module.exports = {
             })
         })
         colector.on('end', async (r) => {
-            if (r == 'SURRENDER') {
+            console.log(r)
+            if (r === 'SURRENDER') {
                 sendEmbed({
                     channel: message.channel,
                     description: `<:wtfDuddd:797933539454091305> | Juego terminado...`,
