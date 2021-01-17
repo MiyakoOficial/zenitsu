@@ -89,7 +89,7 @@ module.exports = {
             imageURL: 'attachment://4enraya.gif',
             description: `🤔 | Empieza ${message.author.TURNO == 1 ? message.author.tag : usuario.tag}, elige un numero del 1 al 7. [\`🔴\`]`
         })
-        const colector = message.channel.createMessageCollector(msg => msg.author.TURNO === msg.guild.game.gameStatus().currentPlayer && !isNaN(msg.content) && (Number(msg.content) >= 1 && Number(msg.content) <= 7) && message.guild.game.canPlay(parseInt(msg.content) - 1) && !message.guild.game.gameStatus().gameOver || msg.content == 'surrender', { time: (30 * 60) * 1000 });
+        const colector = message.channel.createMessageCollector(msg => msg.author.TURNO === msg.guild.game.gameStatus().currentPlayer && !isNaN(msg.content) && (Number(msg.content) >= 1 && Number(msg.content) <= 7) && message.guild.game.canPlay(parseInt(msg.content) - 1) && !message.guild.game.gameStatus().gameOver || msg.content == 'surrender', { idle: (3 * 60) * 1000, time: (30 * 60) * 1000 });
 
         colector.on('collect', async (msg) => {
 
@@ -138,7 +138,7 @@ module.exports = {
             })
         })
         colector.on('end', async (_, r) => {
-            if (r === 'SURRENDER') {
+            if (r === 'SURRENDER' && message.guild.game) {
                 sendEmbed({
                     channel: message.channel,
                     description: `<:wtfDuddd:797933539454091305> | Juego terminado...`,
@@ -150,10 +150,22 @@ module.exports = {
                 return message.guild.game = undefined;
             }
 
+            if (r === 'idle' && message.guild.game) {
+                sendEmbed({
+                    channel: message.channel,
+                    description: `<:dislike1:369553357377110027> | Duraste tres minutos sin responder, juego terminado!`,
+                    attachFiles: new MessageAttachment(await displayConnectFourBoard(displayBoard(message.guild.game.ascii()), message.guild.game), '4enraya.gif'),
+                    imageURL: 'attachment://4enraya.gif'
+                })
+                message.author.TURNO = undefined;
+                usuario.TURNO = undefined
+                return message.guild.game = undefined;
+            }
+
             if (message.guild.game) {
                 sendEmbed({
                     channel: message.channel,
-                    description: `<:wtfDuddd:797933539454091305> | Tiempo excedido!`,
+                    description: `<:dislike1:369553357377110027> | Ya pasaron 30 minutos, juego terminado!`,
                     attachFiles: new MessageAttachment(await displayConnectFourBoard(displayBoard(message.guild.game.ascii()), message.guild.game), '4enraya.gif'),
                     imageURL: 'attachment://4enraya.gif'
                 })

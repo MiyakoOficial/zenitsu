@@ -32,21 +32,6 @@ const client = new Discord.Client(
 
 client.extra = {};
 
-(async () => {
-    const Canvas = require('canvas')
-    const win = await Canvas.loadImage('/home/MARCROCK22/zenitsu/Utils/Images/morado_de_4.png')
-    const bck = await Canvas.loadImage('/home/MARCROCK22/zenitsu/Utils/Images/4enraya.png')
-    const imgs = {
-        "🟢": await Canvas.loadImage('/home/MARCROCK22/zenitsu/Utils/Images/rojo_de_cuatro.png'),
-        "🟡": await Canvas.loadImage('/home/MARCROCK22/zenitsu/Utils/Images/amarillo_de_cuatro.png')
-    }
-
-    client.extra.win = win;
-    client.extra.bck = bck
-    client.extra.imgs = imgs
-
-})()
-
 client.newDate = (ms) => {
 
     let res = new Date(ms).toISOString().slice(11, 19);
