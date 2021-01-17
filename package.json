@@ -10,7 +10,6 @@
     "dependencies": {
         "@discordjs/opus": "^0.3.2",
         "@sindresorhus/to-milliseconds": "^1.2.0",
-        "alexa-bot-api": "^0.1.4",
         "ascii-table": "0.0.9",
         "canvas": "^2.6.1",
         "connect4-ai": "^0.1.3",
