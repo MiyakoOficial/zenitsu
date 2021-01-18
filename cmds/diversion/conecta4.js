@@ -19,11 +19,12 @@ module.exports = {
     * @param { Object } obj
     * @param { Discord.Message } obj.message
     * @param {Discord.Client} obj.client
+	* @param {Array<String>} obj.args
     */
 
     run: async (obj) => {
 
-        const { message, client } = obj;
+        const { message, client,args } = obj;
 
         if (message.guild.game)
             return sendEmbed({ channel: message.channel, description: ':x: | Hay otra persona jugando en este servidor!' })
