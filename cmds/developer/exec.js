@@ -28,7 +28,7 @@ module.exports = {
 			}
 
 			if(res.stdout.length){
-				message.channel.send(res.stderr, {split: {char: '', maxLength: 1950}, code: ''})
+				message.channel.send(res.stdout, {split: {char: '', maxLength: 1950}, code: ''})
 			}
 
 		} catch (err) {
