@@ -23,7 +23,7 @@ module.exports = {
 
 		const difficulty = ['easy','medium','hard'].includes(args[0]?.toLowerCase()) ? args[0]?.toLowerCase() : 'medium'
 
-		let data = await require('../../models/c4top.js').find({ difficulty })
+		let data = await require('../../models/c4top.js').find({ difficulty }).sort({ganadas: -1})
 
 		data = data.slice(0, 10)
 
