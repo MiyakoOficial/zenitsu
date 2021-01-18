@@ -2,8 +2,8 @@ const { sendEmbed } = require('../../Utils/Functions.js');
 const Discord = require('discord.js');
 module.exports = {
 	config: {
-		name: "profile", //nombre del cmd
-		alias: [], //Alias
+		name: "conecta4stats", //nombre del cmd
+		alias: [`connect4stats`, 'fourinrowstats', '4enlineastats', 'c4stats'], //Alias
 		description: "Manda el perfil de un miembro", //Descripción (OPCIONAL)
 		usage: "z!conecta4stats @mencion",
 		category: 'diversion',
