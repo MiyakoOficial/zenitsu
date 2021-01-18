@@ -16,22 +16,22 @@ module.exports = {
 
 		let data = await require('../../models/c4top.js').find({ id: member.user.id });
 
-		if(!data || !data.length)
+		if (!data || !data.length)
 			return sendEmbed({
 				channel: message.channel,
 				description: `<:cancel:779536630041280522> | ${member.user} no tiene datos.`
 			});
 
-		const easy = data.find(item=>item.difficulty == 'easy'),
-			  medium = data.find(item=>item.difficulty == 'medium'),
-			  hard = data.find(item=>item.difficulty == 'hard')
+		const easy = data.find(item => item.difficulty == 'easy'),
+			medium = data.find(item => item.difficulty == 'medium'),
+			hard = data.find(item => item.difficulty == 'hard')
 
 		let embed = new Discord.MessageEmbed()
-		.setColor(client.color)
-		.setAuthor(member.user.tag, member.user.displayAvatarURL({size: 2048, dynamic: true}))
-		if(easy) embed.addField('Facil', `Ganadas: ${easy.ganadas} Perdidas: ${easy.perdidas}`)
-		if(medium) embed.addField('Intermedio', `Ganadas: ${medium.ganadas} Perdidas: ${medium.perdidas}`)
-		if(hard) embed.addField('Dificil', `Ganadas: ${hard.ganadas} Perdidas: ${hard.perdidas}`)
+			.setColor(client.color)
+			.setAuthor(member.user.tag, member.user.displayAvatarURL({ size: 2048, dynamic: true }))
+		if (easy) embed.addField('Facil', `Ganadas: ${easy.ganadas} Perdidas: ${easy.perdidas}`)
+		if (medium) embed.addField('Intermedio', `Ganadas: ${medium.ganadas} Perdidas: ${medium.perdidas}`)
+		if (hard) embed.addField('Dificil', `Ganadas: ${hard.ganadas} Perdidas: ${hard.perdidas}`)
 
 		return message.channel.send({ embed: embed });
 	}
