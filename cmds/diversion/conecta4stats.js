@@ -10,7 +10,7 @@ module.exports = {
 		botPermissions: [],
 		memberPermissions: []
 
-	}, run: async ({ message, args }) => {
+	}, run: async ({ message, args, client }) => {
 
 		let member = message.guild.members.cache.find(a => a.user.username === args.join(' ')) || message.guild.members.cache.find(a => a.user.tag === args.join(' ')) || message.guild.members.cache.find(a => a.displayName === args.join(' ')) || message.guild.members.cache.get(args[0]) || message.mentions.members.first() || message.member
 
@@ -27,6 +27,7 @@ module.exports = {
 			  hard = data.find(item=>item.difficulty == 'hard')
 
 		let embed = new Discord.MessageEmbed()
+		.setColor(client.color)
 		if(easy) embed.addField('Facil', `Ganadas: ${easy.ganadas} Perdidas: ${easy.perdidas}`)
 		if(medium) embed.addField('Intermedio', `Ganadas: ${medium.ganadas} Perdidas: ${medium.perdidas}`)
 		if(hard) embed.addField('Dificil', `Ganadas: ${hard.ganadas} Perdidas: ${hard.perdidas}`)
