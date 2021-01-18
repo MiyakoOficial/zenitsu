@@ -11,4 +11,4 @@ declare module 'discord.js' {
     }
 
 
-};
+}

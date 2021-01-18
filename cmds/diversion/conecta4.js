@@ -1,4 +1,4 @@
-const Connect4 = require('connect4-ai/lib/Connect4');
+const { Connect4, Connect4AI } = require('connect4-ai');
 const { MessageAttachment } = require('discord.js');
 // eslint-disable-next-line no-unused-vars
 const Discord = require('discord.js');
@@ -18,162 +18,310 @@ module.exports = {
     /**
     * @param { Object } obj
     * @param { Discord.Message } obj.message
+    * @param {Discord.Client} obj.client
     */
 
     run: async (obj) => {
 
-        const { message } = obj;
+        const { message, client } = obj;
 
         if (message.guild.game)
             return sendEmbed({ channel: message.channel, description: ':x: | Hay otra persona jugando en este servidor!' })
 
         let usuario = message.mentions.users.first();
 
-        if (!usuario || usuario.id == message.author.id || usuario.bot)
+        if (!usuario || usuario.id == message.author.id || (usuario.bot && usuario.id != client.user.id))
             return sendEmbed({
                 channel: message.channel,
                 description: `<:cancel:779536630041280522> | Menciona a un miembro para jugar!`
             });
 
-        message.guild.game = new Connect4();
+        if (usuario.id != client.user.id) {
 
-        await sendEmbed({
-            channel: message.channel,
-            description: `<a:amongushappy:798373703880278016> | ${usuario} tienes 1 minuto para responder...\n¿Quieres jugar?: ~~responde "s"~~\n¿No quieres?: ~~responde "n"~~`
-        });
-
-        let respuesta = await awaitMessage({ channel: message.channel, filter: (m) => m.author.id == usuario.id && ['s', 'n'].some(item => item == m.content), time: (1 * 60) * 1000, max: 1 }).catch(() => { })
-
-        if (!respuesta) {
-            message.author.TURNO = undefined;
-            usuario.TURNO = undefined
-            message.guild.game = undefined;
-            return sendEmbed({
-                channel: message.channel,
-                description: `😔 | ${usuario} no respondió...`
-            })
-        }
-
-        if (respuesta.first().content == 'n') {
-            message.author.TURNO = undefined;
-            usuario.TURNO = undefined
-            message.guild.game = undefined;
-            return sendEmbed({
-                channel: message.channel,
-                description: '😔 | Rechazó la invitación...'
-            })
-        }
-
-        if (usuario.TURNO) {
-            message.guild.game = undefined;
-            return sendEmbed({
-                channel: message.channel,
-                description: `${usuario.tag} está jugando en otro servidor.`
-            });
-        }
-
-        if (message.author.TURNO) {
-            message.guild.game = undefined;
-            return sendEmbed({
-                channel: message.channel,
-                description: `${message.author.tag} estas jugando en otro servidor.`
-            });
-        }
-        usuario.TURNO = Math.floor(Math.random() * 2) + 1;
-        message.author.TURNO = usuario.TURNO == 2 ? 1 : 2;
-        let res = await displayConnectFourBoard(displayBoard(message.guild.game.ascii()), message.guild.game);
-        let att = new MessageAttachment(res, '4enraya.gif')
-        sendEmbed({
-            attachFiles: att,
-            channel: message.channel,
-            imageURL: 'attachment://4enraya.gif',
-            description: `🤔 | Empieza ${message.author.TURNO == 1 ? message.author.tag : usuario.tag}, elige un numero del 1 al 7. [\`🔴\`]`
-        })
-        const colector = message.channel.createMessageCollector(msg => msg.author.TURNO === msg.guild.game.gameStatus().currentPlayer && !isNaN(msg.content) && (Number(msg.content) >= 1 && Number(msg.content) <= 7) && message.guild.game.canPlay(parseInt(msg.content) - 1) && !message.guild.game.gameStatus().gameOver || msg.content == 'surrender', { idle: (3 * 60) * 1000, time: (30 * 60) * 1000 });
-
-        colector.on('collect', async (msg) => {
-
-            if (msg.content === 'surrender')
-                return colector.stop('SURRENDER');
-
-            msg.guild.game.play(parseInt(msg.content) - 1)
-            if (msg.guild.game.gameStatus().gameOver && msg.guild.game.gameStatus().solution) {
-                let res = await displayConnectFourBoard(displayBoard(message.guild.game.ascii()), msg.guild.game);
-                let att = new MessageAttachment(res, '4enraya.gif')
-                sendEmbed({
-                    description: `<:zsUHHHHHH:649036589195853836> | ${msg.author.tag} ha ganado la partida!`,
-                    channel: msg.channel,
-                    attachFiles: att,
-                    imageURL: 'attachment://4enraya.gif'
-                })
-                message.author.TURNO = undefined;
-                usuario.TURNO = undefined
-                msg.guild.game = undefined;
-                return colector.stop();
-            }
-
-            else if (msg.guild.game.gameStatus().gameOver) {
-                let res = await displayConnectFourBoard(displayBoard(message.guild.game.ascii()), msg.guild.game);
-                let att = new MessageAttachment(res, '4enraya.gif')
-                sendEmbed({
-                    channel: msg.channel,
-                    description: `<:wtfDuddd:797933539454091305> | Un empate entre ${usuario.tag} y ${message.author.tag}!`,
-                    attachFiles: att,
-                    imageURL: 'attachment://4enraya.gif'
-                })
-                message.author.TURNO = undefined;
-                usuario.TURNO = undefined
-                msg.guild.game = undefined;
-                return colector.stop();
-            }
-
-            let res = await displayConnectFourBoard(displayBoard(msg.guild.game.ascii()), msg.guild.game);
-            let att = new MessageAttachment(res, '4enraya.gif')
+            message.guild.game = new Connect4();
 
             await sendEmbed({
-                channel: msg.channel,
+                channel: message.channel,
+                description: `<a:amongushappy:798373703880278016> | ${usuario} tienes 1 minuto para responder...\n¿Quieres jugar?: ~~responde "s"~~\n¿No quieres?: ~~responde "n"~~`
+            });
+
+            let respuesta = await awaitMessage({ channel: message.channel, filter: (m) => m.author.id == usuario.id && ['s', 'n'].some(item => item == m.content), time: (1 * 60) * 1000, max: 1 }).catch(() => { })
+
+            if (!respuesta) {
+                message.author.TURNO = undefined;
+                usuario.TURNO = undefined
+                message.guild.game = undefined;
+                return sendEmbed({
+                    channel: message.channel,
+                    description: `😔 | ${usuario} no respondió...`
+                })
+            }
+
+            if (respuesta.first().content == 'n') {
+                message.author.TURNO = undefined;
+                usuario.TURNO = undefined
+                message.guild.game = undefined;
+                return sendEmbed({
+                    channel: message.channel,
+                    description: '😔 | Rechazó la invitación...'
+                })
+            }
+
+            if (usuario.TURNO) {
+                message.guild.game = undefined;
+                return sendEmbed({
+                    channel: message.channel,
+                    description: `${usuario.tag} está jugando en otro servidor.`
+                });
+            }
+
+            if (message.author.TURNO) {
+                message.guild.game = undefined;
+                return sendEmbed({
+                    channel: message.channel,
+                    description: `${message.author.tag} estas jugando en otro servidor.`
+                });
+            }
+            usuario.TURNO = Math.floor(Math.random() * 2) + 1;
+            message.author.TURNO = usuario.TURNO == 2 ? 1 : 2;
+            let res = await displayConnectFourBoard(displayBoard(message.guild.game.ascii()), message.guild.game);
+            let att = new MessageAttachment(res, '4enraya.gif')
+            sendEmbed({
                 attachFiles: att,
-                description: `😆 | Turno de ${message.author.TURNO == msg.author.TURNO ? usuario.tag : message.author.tag} [${msg.author.TURNO == 2 ? "`🔴`" : "`🟡`"}]`,
-                imageURL: 'attachment://4enraya.gif'
+                channel: message.channel,
+                imageURL: 'attachment://4enraya.gif',
+                description: `🤔 | Empieza ${message.author.TURNO == 1 ? message.author.tag : usuario.tag}, elige un numero del 1 al 7. [\`🔴\`]`
             })
-        })
-        colector.on('end', async (_, r) => {
-            if (r === 'SURRENDER' && message.guild.game) {
-                sendEmbed({
-                    channel: message.channel,
-                    description: `<:wtfDuddd:797933539454091305> | Juego terminado...`,
-                    attachFiles: new MessageAttachment(await displayConnectFourBoard(displayBoard(message.guild.game.ascii()), message.guild.game), '4enraya.gif'),
-                    imageURL: 'attachment://4enraya.gif'
-                })
-                message.author.TURNO = undefined;
-                usuario.TURNO = undefined
-                return message.guild.game = undefined;
-            }
+            const colector = message.channel.createMessageCollector(msg => msg.author.TURNO === msg.guild.game.gameStatus().currentPlayer && !isNaN(msg.content) && (Number(msg.content) >= 1 && Number(msg.content) <= 7) && message.guild.game.canPlay(parseInt(msg.content) - 1) && !message.guild.game.gameStatus().gameOver || msg.content == 'surrender', { idle: (3 * 60) * 1000, time: (30 * 60) * 1000 });
 
-            if (r === 'idle' && message.guild.game) {
-                sendEmbed({
-                    channel: message.channel,
-                    description: `<:dislike1:369553357377110027> | Duraste tres minutos sin responder, juego terminado!`,
-                    attachFiles: new MessageAttachment(await displayConnectFourBoard(displayBoard(message.guild.game.ascii()), message.guild.game), '4enraya.gif'),
-                    imageURL: 'attachment://4enraya.gif'
-                })
-                message.author.TURNO = undefined;
-                usuario.TURNO = undefined
-                return message.guild.game = undefined;
-            }
+            colector.on('collect', async (msg) => {
 
-            if (message.guild.game) {
-                sendEmbed({
-                    channel: message.channel,
-                    description: `<:dislike1:369553357377110027> | Ya pasaron 30 minutos, juego terminado!`,
-                    attachFiles: new MessageAttachment(await displayConnectFourBoard(displayBoard(message.guild.game.ascii()), message.guild.game), '4enraya.gif'),
+                if (msg.content === 'surrender')
+                    return colector.stop('SURRENDER');
+
+                msg.guild.game.play(parseInt(msg.content) - 1)
+                if (msg.guild.game.gameStatus().gameOver && msg.guild.game.gameStatus().solution) {
+                    let res = await displayConnectFourBoard(displayBoard(message.guild.game.ascii()), msg.guild.game);
+                    let att = new MessageAttachment(res, '4enraya.gif')
+                    sendEmbed({
+                        description: `<:zsUHHHHHH:649036589195853836> | ${msg.author.tag} ha ganado la partida!`,
+                        channel: msg.channel,
+                        attachFiles: att,
+                        imageURL: 'attachment://4enraya.gif'
+                    })
+                    message.author.TURNO = undefined;
+                    usuario.TURNO = undefined
+                    msg.guild.game = undefined;
+                    return colector.stop();
+                }
+
+                else if (msg.guild.game.gameStatus().gameOver) {
+                    let res = await displayConnectFourBoard(displayBoard(message.guild.game.ascii()), msg.guild.game);
+                    let att = new MessageAttachment(res, '4enraya.gif')
+                    sendEmbed({
+                        channel: msg.channel,
+                        description: `<:wtfDuddd:797933539454091305> | Un empate entre ${usuario.tag} y ${message.author.tag}!`,
+                        attachFiles: att,
+                        imageURL: 'attachment://4enraya.gif'
+                    })
+                    message.author.TURNO = undefined;
+                    usuario.TURNO = undefined
+                    msg.guild.game = undefined;
+                    return colector.stop();
+                }
+
+                let res = await displayConnectFourBoard(displayBoard(msg.guild.game.ascii()), msg.guild.game);
+                let att = new MessageAttachment(res, '4enraya.gif')
+
+                await sendEmbed({
+                    channel: msg.channel,
+                    attachFiles: att,
+                    description: `😆 | Turno de ${message.author.TURNO == msg.author.TURNO ? usuario.tag : message.author.tag} [${msg.author.TURNO == 2 ? "`🔴`" : "`🟡`"}]`,
                     imageURL: 'attachment://4enraya.gif'
                 })
-                message.author.TURNO = undefined;
-                usuario.TURNO = undefined
-                return message.guild.game = undefined;
-            }
-        })
+            })
+            colector.on('end', async (_, r) => {
+                if (r === 'SURRENDER' && message.guild.game) {
+                    sendEmbed({
+                        channel: message.channel,
+                        description: `<:wtfDuddd:797933539454091305> | Juego terminado...`,
+                        attachFiles: new MessageAttachment(await displayConnectFourBoard(displayBoard(message.guild.game.ascii()), message.guild.game), '4enraya.gif'),
+                        imageURL: 'attachment://4enraya.gif'
+                    })
+                    message.author.TURNO = undefined;
+                    usuario.TURNO = undefined
+                    return message.guild.game = undefined;
+                }
+
+                if (r === 'idle' && message.guild.game) {
+                    sendEmbed({
+                        channel: message.channel,
+                        description: `<:dislike1:369553357377110027> | Duraste tres minutos sin responder, juego terminado!`,
+                        attachFiles: new MessageAttachment(await displayConnectFourBoard(displayBoard(message.guild.game.ascii()), message.guild.game), '4enraya.gif'),
+                        imageURL: 'attachment://4enraya.gif'
+                    })
+                    message.author.TURNO = undefined;
+                    usuario.TURNO = undefined
+                    return message.guild.game = undefined;
+                }
+
+                if (message.guild.game) {
+                    sendEmbed({
+                        channel: message.channel,
+                        description: `<:dislike1:369553357377110027> | Ya pasaron 30 minutos, juego terminado!`,
+                        attachFiles: new MessageAttachment(await displayConnectFourBoard(displayBoard(message.guild.game.ascii()), message.guild.game), '4enraya.gif'),
+                        imageURL: 'attachment://4enraya.gif'
+                    })
+                    message.author.TURNO = undefined;
+                    usuario.TURNO = undefined
+                    return message.guild.game = undefined;
+                }
+            })
+        }
+		
+		else {
+		const difficulty = args[1] ? ['easy', 'medium', 'hard'].includes(args[1]) ? args[1] : 'medium' : 'medium'
+		
+		message.guild.game = new Connect4AI();
+
+          if (message.author.TURNO) {
+                message.guild.game = undefined;
+                return sendEmbed({
+                    channel: message.channel,
+                    description: `${message.author.tag} estas jugando en otro servidor.`
+                });
+            };
+			
+            message.author.TURNO = 1
+            let res = await displayConnectFourBoard(displayBoard(message.guild.game.ascii()), message.guild.game);
+            let att = new MessageAttachment(res, '4enraya.gif')
+            sendEmbed({
+                attachFiles: att,
+                channel: message.channel,
+                imageURL: 'attachment://4enraya.gif',
+                description: `🤔 | Empieza ${message.author.tag}, elige un numero del 1 al 7. [\`🔴\`]`
+            })
+			
+            const colector = message.channel.createMessageCollector(msg => msg.author.TURNO === msg.guild.game.gameStatus().currentPlayer && !isNaN(msg.content) && (Number(msg.content) >= 1 && Number(msg.content) <= 7) && message.guild.game.canPlay(parseInt(msg.content) - 1) && !message.guild.game.gameStatus().gameOver || msg.content == 'surrender', { idle: (3 * 60) * 1000, time: (30 * 60) * 1000 });
+
+            colector.on('collect', async (msg) => {
+
+                if (msg.content === 'surrender')
+                    return colector.stop('SURRENDER');
+
+                msg.guild.game.play(parseInt(msg.content) - 1)
+                if (msg.guild.game.gameStatus().gameOver && msg.guild.game.gameStatus().solution) {
+                    let res = await displayConnectFourBoard(displayBoard(message.guild.game.ascii()), msg.guild.game);
+                    let att = new MessageAttachment(res, '4enraya.gif')
+                    sendEmbed({
+                        description: `<:zsUHHHHHH:649036589195853836> | ${message.author.tag} ha ganado la partida!`,
+                        channel: msg.channel,
+                        attachFiles: att,
+                        imageURL: 'attachment://4enraya.gif'
+                    })
+                    message.author.TURNO = undefined;
+                    usuario.TURNO = undefined
+                    msg.guild.game = undefined;
+                    return colector.stop();
+                }
+
+				else if (msg.guild.game.gameStatus().gameOver) {
+                    let res = await displayConnectFourBoard(displayBoard(message.guild.game.ascii()), msg.guild.game);
+                    let att = new MessageAttachment(res, '4enraya.gif')
+                    sendEmbed({
+                        channel: msg.channel,
+                        description: `<:wtfDuddd:797933539454091305> | Un empate entre ${message.author.tag} y ${client.user.tag}!`,
+                        attachFiles: att,
+                        imageURL: 'attachment://4enraya.gif'
+                    })
+                    message.author.TURNO = undefined;
+                    usuario.TURNO = undefined
+                    msg.guild.game = undefined;
+                    return colector.stop();
+                }
+				
+				msg.guild.game.playAI(difficulty)
+
+				 if (msg.guild.game.gameStatus().gameOver && msg.guild.game.gameStatus().solution) {
+                    let res = await displayConnectFourBoard(displayBoard(message.guild.game.ascii()), msg.guild.game);
+                    let att = new MessageAttachment(res, '4enraya.gif')
+                    sendEmbed({
+                        description: `<:zsUHHHHHH:649036589195853836> | ${client.user.tag} ha ganado la partida!`,
+                        channel: msg.channel,
+                        attachFiles: att,
+                        imageURL: 'attachment://4enraya.gif'
+                    })
+                    message.author.TURNO = undefined;
+                    usuario.TURNO = undefined
+                    msg.guild.game = undefined;
+                    return colector.stop();
+                }
+
+				else if (msg.guild.game.gameStatus().gameOver) {
+                    let res = await displayConnectFourBoard(displayBoard(message.guild.game.ascii()), msg.guild.game);
+                    let att = new MessageAttachment(res, '4enraya.gif')
+                    sendEmbed({
+                        channel: msg.channel,
+                        description: `<:wtfDuddd:797933539454091305> | Un empate entre ${message.author.tag} y ${client.user.tag}!`,
+                        attachFiles: att,
+                        imageURL: 'attachment://4enraya.gif'
+                    })
+                    message.author.TURNO = undefined;
+                    usuario.TURNO = undefined
+                    msg.guild.game = undefined;
+                    return colector.stop();
+                }
+				
+                let res = await displayConnectFourBoard(displayBoard(msg.guild.game.ascii()), msg.guild.game);
+                let att = new MessageAttachment(res, '4enraya.gif')
+
+                await sendEmbed({
+                    channel: msg.channel,
+                    attachFiles: att,
+                    description: `😆 | Turno de ${message.author.tag} [\`🔴\`]`,
+                    imageURL: 'attachment://4enraya.gif'
+                })
+            })
+            colector.on('end', async (_, r) => {
+                if (r === 'SURRENDER' && message.guild.game) {
+                    sendEmbed({
+                        channel: message.channel,
+                        description: `<:wtfDuddd:797933539454091305> | Juego terminado...`,
+                        attachFiles: new MessageAttachment(await displayConnectFourBoard(displayBoard(message.guild.game.ascii()), message.guild.game), '4enraya.gif'),
+                        imageURL: 'attachment://4enraya.gif'
+                    })
+                    message.author.TURNO = undefined;
+                    usuario.TURNO = undefined
+                    return message.guild.game = undefined;
+                }
+
+                if (r === 'idle' && message.guild.game) {
+                    sendEmbed({
+                        channel: message.channel,
+                        description: `<:dislike1:369553357377110027> | Duraste tres minutos sin responder, juego terminado!`,
+                        attachFiles: new MessageAttachment(await displayConnectFourBoard(displayBoard(message.guild.game.ascii()), message.guild.game), '4enraya.gif'),
+                        imageURL: 'attachment://4enraya.gif'
+                    })
+                    message.author.TURNO = undefined;
+                    usuario.TURNO = undefined
+                    return message.guild.game = undefined;
+                }
+
+                if (message.guild.game) {
+                    sendEmbed({
+                        channel: message.channel,
+                        description: `<:dislike1:369553357377110027> | Ya pasaron 30 minutos, juego terminado!`,
+                        attachFiles: new MessageAttachment(await displayConnectFourBoard(displayBoard(message.guild.game.ascii()), message.guild.game), '4enraya.gif'),
+                        imageURL: 'attachment://4enraya.gif'
+                    })
+                    message.author.TURNO = undefined;
+                    usuario.TURNO = undefined
+                    return message.guild.game = undefined;
+                }
+            })
+			
+		}
+		
     }
 }
 /**
