@@ -362,4 +362,4 @@ function displayBoard(board) {
 	.map(a => a.match(regex))
 	return res;
 
-}
+};
