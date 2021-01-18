@@ -27,7 +27,7 @@ module.exports = {
 		const { message, client,args } = obj;
 
 		if (message.guild.game)
-			return sendEmbed({ channel: message.channel, description: ':x: | Hay otra persona jugando en este servidor!' })
+			return sendEmbed({ channel: message.channel, description: ':x: | Hay una partida en curso en este servidor!' })
 
 		let usuario = ['easy', 'medium', 'hard'].includes(args[0]?.toLowerCase()) ? client.user : message.mentions.users.first();
 
