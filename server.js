@@ -30,8 +30,6 @@ const client = new Discord.Client(
     }
 );
 
-client.extra = {};
-
 client.newDate = (ms) => {
 
     let res = new Date(ms).toISOString().slice(11, 19);
@@ -125,19 +123,19 @@ client.login(process.env.BOT_TOKEN)
 
     });
 
-client.getData = async ({ ...find }, model) => {
+client.getData = async ({ ...find }, model, createifnoexists = true) => {
 
     const { readdir } = require("fs").promises;
     const db_files = await readdir(require("path").join(__dirname, "./models/"));
     const available_models = db_files.map(elem => elem.endsWith("js") ? elem.slice(0, -3) : elem);
 
-    if (!available_models.includes(model)) return console.log('[GET_DATA]Model no encontrado!')
+    if (!available_models.includes(model)) return console.log('[GET_DATA]: Model no encontrado!')
 
     let db = require('./models/' + model + '.js');
 
     let getModel = (await db.findOne(find));
 
-    if (!getModel) {
+    if (!getModel && createifnoexists) {
 
         await db.create(find)
 
