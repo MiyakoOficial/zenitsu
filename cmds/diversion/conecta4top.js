@@ -37,7 +37,7 @@ module.exports = {
 
 			return `${client.users.cache.get(item.id)?.username ||item.cacheName}\nGanadas: ${item.ganadas} Perdidas: ${item.perdidas}`
 			
-		}).join('\n')
+		}).join('\n\n')
 		
 		return sendEmbed({
 			description,
