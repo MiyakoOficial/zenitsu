@@ -29,7 +29,7 @@ module.exports = {
 		if (message.guild.game)
 			return sendEmbed({ channel: message.channel, description: ':x: | Hay otra persona jugando en este servidor!' })
 
-		let usuario = ['easy', 'medium', 'hard'].includes(args[0]) ? client.user : message.mentions.users.first();
+		let usuario = ['easy', 'medium', 'hard'].includes(args[0]?.toLowerCase()) ? client.user : message.mentions.users.first();
 
 		if (!usuario || usuario.id == message.author.id || (usuario.bot && usuario.id != client.user.id))
 			return sendEmbed({
@@ -180,7 +180,7 @@ module.exports = {
 		}
 
 		else {
-			const difficulty = ["hard", "medium", "easy"].includes(args[1].toLowerCase()) ? args[1].toLowerCase() : "medium";
+			const difficulty = ["hard", "medium", "easy"].includes(args[0]?.toLowerCase()) ? args[0]?.toLowerCase() : "medium";
 			message.guild.game = new Connect4AI();
 
 			if (message.author.TURNO) {
