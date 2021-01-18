@@ -28,6 +28,7 @@ module.exports = {
 
 		let embed = new Discord.MessageEmbed()
 		.setColor(client.color)
+		.setAuthor(member.user.tag, member.user.displayAvatarURL({size: 2048, dynamic: true}))
 		if(easy) embed.addField('Facil', `Ganadas: ${easy.ganadas} Perdidas: ${easy.perdidas}`)
 		if(medium) embed.addField('Intermedio', `Ganadas: ${medium.ganadas} Perdidas: ${medium.perdidas}`)
 		if(hard) embed.addField('Dificil', `Ganadas: ${hard.ganadas} Perdidas: ${hard.perdidas}`)
