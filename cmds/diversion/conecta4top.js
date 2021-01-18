@@ -29,7 +29,7 @@ module.exports = {
 
 		if(!data.length)
 			return sendEmbed({
-				description: `Aún no hay datos en la dificultad ${difficulty}`,
+				description: `<:cancel:779536630041280522> | Aún no hay datos en la dificultad ${difficulty}`,
 				channel: message.channel
 			});
 		
