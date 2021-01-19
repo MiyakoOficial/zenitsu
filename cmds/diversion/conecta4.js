@@ -238,7 +238,7 @@ module.exports = {
 						imageURL: 'attachment://4enraya.gif',
 						footerText: difficulty
 					})
-					await client.updateData({id: message.author.id, difficulty},  {$set: {cacheName: message.author.username}}, 'c4top');
+					await client.updateData({id: message.author.id, difficulty},  {$inc: {empates: 1},$set: {cacheName: message.author.username}}, 'c4top');
 					message.author.TURNO = undefined;
 					usuario.TURNO = undefined
 					msg.guild.game = undefined;
@@ -274,7 +274,7 @@ module.exports = {
 						imageURL: 'attachment://4enraya.gif',
 						footerText: difficulty
 					})
-					await client.updateData({id: message.author.id, difficulty},  {$set: {cacheName: message.author.username}}, 'c4top');
+					await client.updateData({id: message.author.id, difficulty},  {$inc: {empates: 1},$set: {cacheName: message.author.username}}, 'c4top');
 					message.author.TURNO = undefined;
 					usuario.TURNO = undefined
 					msg.guild.game = undefined;

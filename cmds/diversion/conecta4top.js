@@ -35,7 +35,7 @@ module.exports = {
 		
 		const description = data.map(item => {
 
-			return `${client.users.cache.get(item.id)?.username ||item.cacheName}\nGanadas: ${item.ganadas} Perdidas: ${item.perdidas}`
+			return `${client.users.cache.get(item.id)?.username ||item.cacheName}\nGanadas: ${item.ganadas} Perdidas: ${item.perdidas} Empates: ${item.empates}`
 			
 		}).join('\n\n')
 		

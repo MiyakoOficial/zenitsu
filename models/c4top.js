@@ -5,6 +5,8 @@ const Guild = Schema({
     difficulty: { type: String, default: 'medium' },
     perdidas: { type: Number, default: 0 },
     ganadas: { type: Number, default: 0 },
+	empates: {type: Number, default: 0},
 	cacheName: {type: String, default: '?'}
-})
+});
+
 module.exports = model('c4top', Guild);
