@@ -2,30 +2,46 @@
 const Discord = require("discord.js")
 const { replace } = require('../../Utils/Functions.js');
 module.exports = {
-    config: {
-        name: "eval",
-        alias: ['e'],
-        description: "eval a code",
-        usage: "z!eval return 1+1",
-        category: 'developer',
-        botPermissions: [],
-        memberPermissions: []
+	config: {
+		name: "eval",
+		alias: ['e'],
+		description: "eval a code",
+		usage: "z!eval return 1+1",
+		category: 'developer',
+		botPermissions: [],
+		memberPermissions: []
 
-    },
-    // eslint-disable-next-line no-unused-vars
-    run: async ({ client, message, args, embedResponse, Hora }) => {
+	},
+	/**
+	@param {Object} obj
+	@param {Discord.Message} obj.message
+	*/
+	run: async (obj) => {
+		// eslint-disable-next-line no-unused-vars
+		const { client, message, args, embedResponse, Hora } = obj;
+		if (!client.devseval.includes(message.author.id))
+			return;
+		try {
+			let code = args.join(" ");
+			let evalued = await eval(`(async() => {${code}})()`);
+			let TYPE = typeof (evalued)
+			evalued = require("util").inspect(evalued, { depth: 0 });
+			evalued = replace(evalued, [client.token, process.env.MONGODB, process.env.WEBHOOKID, process.env.WEBHOOKTOKEN])
+			const res = Discord.Util.splitMessage(evalued, {char: '', maxLength: 2000});
 
-        if (!client.devseval.includes(message.author.id))
-            return;
-        try {
-            let code = args.join(" ");
-            let evalued = await eval(`(async() => {${code}})()`);
-            let asd = typeof (evalued)
-            evalued = require("util").inspect(evalued, { depth: 0 });
-            evalued = replace(evalued, [client.token, process.env.MONGODB, process.env.WEBHOOKID, process.env.WEBHOOKTOKEN])
-            message.channel.send(`(${asd}) ${evalued}`, { code: 'js', split: { char: '', maxLength: 1900 } })
-        } catch (err) {
-            message.channel.send(err, { code: 'js' })
-        }
-    }
+			for (let minires of res){
+				const embed = new Discord.MessageEmbed()
+				.setColor(client.color)
+				.setDescription(minires)
+				.setTimestamp()
+				.setFooter(message.author.tag, message.author.displayAvatarURL({dynamic: true, size: 2048}))
+				.addField('typeof', '```js\nTYPE\n```', true)
+				.addField('code', code, true)
+				message.channel.send({embed: embed})
+				await Discord.Util.delayFor(1500)
+			}
+		} catch (err) {
+			message.channel.send(err, { code: 'js' })
+		}
+	}
 }
