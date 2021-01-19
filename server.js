@@ -2,7 +2,7 @@ require('dotenv').config();
 const { ShardingManager } = require('discord.js')
 
 const sharder = new ShardingManager('./index.js', {
-    token: 'es obvio ._.xd',
+    token: process.env.BOT_TOKEN,
     shards: 'auto'
 });
 
