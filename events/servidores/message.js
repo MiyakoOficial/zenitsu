@@ -190,17 +190,19 @@ module.exports = async (client, message) => {
         const timestamps = cooldowns.get(commandfile.config.name);
         const cooldownAmount = (commandfile.config.cooldown || 4) * 1000;
 
-        if (timestamps.has(message.author.id)) {
-            const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
-            if (now < expirationTime) {
-                const timeLeft = (expirationTime - now) / 1000;
-                return message.reply(`Por favor espera ${timeLeft.toFixed(1)} segundo(s) antes de usar \`${command}\`.`);
+        if (!client.devseval.includes(message.author.id)) {
+            if (timestamps.has(message.author.id)) {
+                const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
+                if (now < expirationTime) {
+                    const timeLeft = (expirationTime - now) / 1000;
+                    return message.reply(`Por favor espera ${timeLeft.toFixed(1)} segundo(s) antes de usar \`${command}\`.`);
+                }
             }
-        }
 
-        else {
-            timestamps.set(message.author.id, now);
-            setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
+            else {
+                timestamps.set(message.author.id, now);
+                setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
+            }
         }
 
         let check = [];
