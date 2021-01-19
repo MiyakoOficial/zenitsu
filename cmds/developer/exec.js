@@ -8,7 +8,6 @@ module.exports = {
 		category: 'developer',
 		botPermissions: [],
 		memberPermissions: []
-
 	},
 	// eslint-disable-next-line no-unused-vars
 	run: async ({ message, args }) => {
@@ -17,24 +16,24 @@ module.exports = {
 			return;
 
 		if (!args[0])
-			return;
+			return message.channel.send('eres o te haces?');
 
 		try {
-			// eslint-disable-next-line no-unused-vars
-			const res = await promisify(require('child_process').exec)(args.join(' '))
 
-			if(res.stderr.length){
-				message.channel.send(res.stderr, {split: {char: '', maxLength: 1950}, code: ''})
+			const res = await promisify(require('child_process').exec)(args.join(' '));
+
+			if (res.stderr.length) {
+				message.channel.send('STDERR:\n' + res.stderr, { split: { char: '', maxLength: 1950 }, code: '' });
 			}
 
-			if(res.stdout.length){
-				message.channel.send(res.stdout, {split: {char: '', maxLength: 1950}, code: ''})
+			if (res.stdout.length) {
+				message.channel.send('STDOUT:\n' + res.stdout, { split: { char: '', maxLength: 1950 }, code: '' });
 			}
 
 		} catch (err) {
 
-			return message.channel.send(err, {split: {char: '', maxLength: 1950}, code: ''});
+			return message.channel.send('ERR:\n' + err, { split: { char: '', maxLength: 1950 }, code: '' });
 
 		}
 	}
-}
+};

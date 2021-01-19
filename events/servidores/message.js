@@ -1,5 +1,6 @@
 const Discord = require("discord.js");
 const ms = require('ms');
+const cooldowns = new Discord.Collection();
 let cooldownniveles = new Set();
 let cooldownCommands = new Set();
 module.exports = async (client, message) => {
@@ -180,16 +181,35 @@ module.exports = async (client, message) => {
         if (dataB.bol) {
             return;
         }
-        if (cooldownCommands.has(message.author.id)) {
-            let embed = new Discord.MessageEmbed()
-                .setDescription(`Wow, más despacio velocista!\nEl cooldown de los comandos es de 4s!`)
-                .setThumbnail('https://media1.tenor.com/images/dcc0245798b90b4172a06be002620030/tenor.gif?itemid=14757407')
-                .setColor(client.color)
-                .setTimestamp()
-            return message.channel.send({ embed: embed }).catch(() => { });
+        //if (cooldownCommands.has(message.author.id)) {
+
+        if (!cooldowns.has(commandfile.config.name)) {
+            cooldowns.set(commandfile.config.name, new Discord.Collection());
         }
 
-        else {
+        const now = Date.now();
+        const timestamps = cooldowns.get(commandfile.config.name);
+        const cooldownAmount = (commandfile.config.cooldown || 4) * 1000;
+        timestamps.set(message.author.id, now);
+        setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
+
+        if (timestamps.has(message.author.id)) {
+            const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
+            if (now < expirationTime) {
+                const timeLeft = (expirationTime - now) / 1000;
+                return message.reply(`Por favor espera ${timeLeft.toFixed(1)} segundo(s) antes de usar \`${command}\`.`);
+            }
+        }
+
+        let embed = new Discord.MessageEmbed()
+            .setDescription(`Wow, más despacio velocista!\nEl cooldown de los comandos es de 4s!`)
+            .setThumbnail('https://media1.tenor.com/images/dcc0245798b90b4172a06be002620030/tenor.gif?itemid=14757407')
+            .setColor(client.color)
+            .setTimestamp()
+        message.channel.send({ embed: embed }).catch(() => { });
+        //}
+
+        /*else {
 
             if (!client.devseval.includes(message.author.id)) {
                 cooldownCommands.add(message.author.id);
@@ -201,7 +221,7 @@ module.exports = async (client, message) => {
 
             }, 4000);
 
-        }
+        }*/
 
         let embedC = new Discord.MessageEmbed()
             .setColor(client.color)

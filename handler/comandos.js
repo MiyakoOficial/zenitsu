@@ -16,6 +16,8 @@ module.exports = (client) => {
                 carpeta.config.dev = true
             }
 
+            carpeta.config.cooldown = carpeta.config.cooldown || 4;
+
             client.commands.set(carpeta.config.name, carpeta);
             if (carpeta.config.name) {
                 table.addRow(file, '✅');

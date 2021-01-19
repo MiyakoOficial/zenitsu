@@ -24,7 +24,7 @@ module.exports = {
 
 	run: async (obj) => {
 
-		const { message, client,args } = obj;
+		const { message, client, args } = obj;
 
 		if (message.guild.game)
 			return sendEmbed({ channel: message.channel, description: ':x: | Hay una partida en curso en este servidor!' })
@@ -190,7 +190,7 @@ module.exports = {
 					channel: message.channel,
 					description: `${message.author.tag} estas jugando en otro servidor.`
 				});
-			};
+			}
 
 			message.author.TURNO = 1
 			let res = await displayConnectFourBoard(displayBoard(message.guild.game.ascii()), message.guild.game);
@@ -301,7 +301,7 @@ module.exports = {
 						imageURL: 'attachment://4enraya.gif',
 						footerText: difficulty
 					})
-					await client.updateData({id: message.author.id, difficulty},  {$inc:{ perdidas:1},$set: {cacheName: message.author.username}}, 'c4top');
+					await client.updateData({id: message.author.id, difficulty},  {$inc:{ perdidas:1}, $set: {cacheName: message.author.username}}, 'c4top');
 					message.author.TURNO = undefined;
 					usuario.TURNO = undefined
 					return message.guild.game = undefined;
@@ -315,7 +315,7 @@ module.exports = {
 						imageURL: 'attachment://4enraya.gif',
 						footerText: difficulty
 					})
-					await client.updateData({id: message.author.id, difficulty},  {$inc:{ perdidas:1},$set: {cacheName: message.author.username}}, 'c4top');
+					await client.updateData({id: message.author.id, difficulty},  {$inc:{ perdidas:1}, $set: {cacheName: message.author.username}}, 'c4top');
 					message.author.TURNO = undefined;
 					usuario.TURNO = undefined
 					return message.guild.game = undefined;
@@ -362,4 +362,4 @@ function displayBoard(board) {
 	.map(a => a.match(regex))
 	return res;
 
-};
+}
