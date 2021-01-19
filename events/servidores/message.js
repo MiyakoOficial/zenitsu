@@ -2,7 +2,6 @@ const Discord = require("discord.js");
 const ms = require('ms');
 const cooldowns = new Discord.Collection();
 let cooldownniveles = new Set();
-let cooldownCommands = new Set();
 module.exports = async (client, message) => {
 
     /* function emojiNitro(msg) {
@@ -204,31 +203,6 @@ module.exports = async (client, message) => {
             setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
         }
 
-        //}
-
-        /*else {
-
-            if (!client.devseval.includes(message.author.id)) {
-                cooldownCommands.add(message.author.id);
-            }
-
-            setTimeout(() => {
-
-                cooldownCommands.delete(message.author.id);
-
-            }, 4000);
-
-        }*/
-
-        let embedC = new Discord.MessageEmbed()
-            .setColor(client.color)
-            .addField(`Comando usado`, command)
-            .addField('Autor', `${message.author.toString()}(${message.author.id})`)
-            .setAuthor(message.author.tag, message.author.displayAvatarURL({ dynamic: true }))
-            .setFooter(`${message.guild.name}(${message.guild.id})`, message.author.displayAvatarURL({ dynamic: true }))
-            .setTimestamp()
-
-        client.channels.cache.get('765757022489542686').send({ embed: embedC });
         let check = [];
         if (commandfile.config.botPermissions && commandfile.config.botPermissions) {
 
