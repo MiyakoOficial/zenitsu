@@ -192,7 +192,6 @@ module.exports = async (client, message) => {
         const cooldownAmount = (commandfile.config.cooldown || 4) * 1000;
 
         if (timestamps.has(message.author.id)) {
-            timestamps.set(message.author.id, now);
             const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
             if (now < expirationTime) {
                 const timeLeft = (expirationTime - now) / 1000;
