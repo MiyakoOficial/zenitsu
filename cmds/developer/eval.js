@@ -32,11 +32,10 @@ module.exports = {
 			for (let minires of res){
 				const embed = new Discord.MessageEmbed()
 				.setColor(client.color)
-				.setDescription(minires)
+				.setDescription('```js\n'+minires+'\n```')
 				.setTimestamp()
 				.setFooter(message.author.tag, message.author.displayAvatarURL({dynamic: true, size: 2048}))
 				.addField('typeof', '```js\n'+TYPE+'\n```', true)
-				.addField('code', code ? code : 'undefined', true)
 				message.channel.send({embed: embed})
 				await Discord.Util.delayFor(1500)
 			}
