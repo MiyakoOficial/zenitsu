@@ -37,7 +37,7 @@ module.exports = {
 				.setFooter(message.author.tag, message.author.displayAvatarURL({dynamic: true, size: 2048}))
 				.addField('typeof', '```js\n'+TYPE+'\n```', true)
 				message.channel.send({embed: embed})
-				await Discord.Util.delayFor(1500)
+				await Discord.Util.delayFor(1000)
 			}
 		} catch (err) {
 			message.channel.send(err, { code: 'js' })
