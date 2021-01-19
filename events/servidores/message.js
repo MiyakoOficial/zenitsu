@@ -190,7 +190,6 @@ module.exports = async (client, message) => {
         const now = Date.now();
         const timestamps = cooldowns.get(commandfile.config.name);
         const cooldownAmount = (commandfile.config.cooldown || 4) * 1000;
-        setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
 
         if (timestamps.has(message.author.id)) {
             timestamps.set(message.author.id, now);
@@ -199,6 +198,11 @@ module.exports = async (client, message) => {
                 const timeLeft = (expirationTime - now) / 1000;
                 return message.reply(`Por favor espera ${timeLeft.toFixed(1)} segundo(s) antes de usar \`${command}\`.`);
             }
+        }
+
+        else {
+            timestamps.set(message.author.id, now);
+            setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
         }
 
         //}
