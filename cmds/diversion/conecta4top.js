@@ -4,7 +4,7 @@ module.exports = {
 		name: "conecta4top", //Nombre del cmd
 		alias: [`connect4top`, 'fourinrowtop', '4enlineatop', 'c4top'], //Alias
 		description: "Ver el top de los mejores jugadores.", //Descripción (OPCIONAL)
-		usage: "z!connect4top <global/server> <easy/medium/hard>",
+		usage: "z!connect4top <easy/medium/hard>",
 		category: 'diversion',
 		botPermissions: [],
 		memberPermissions: []

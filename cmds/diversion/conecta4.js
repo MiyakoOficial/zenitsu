@@ -34,7 +34,8 @@ module.exports = {
 		if (!usuario || usuario.id == message.author.id || (usuario.bot && usuario.id != client.user.id))
 			return sendEmbed({
 				channel: message.channel,
-				description: `<:cancel:779536630041280522> | Menciona a un miembro para jugar!`
+				description: `<:cancel:779536630041280522> | Menciona a un miembro para jugar.`,
+				footerText: 'Tambien puedes jugar con Zenitsu poniendo z!connect4 easy/medium/hard'
 			});
 
 		if (usuario.id != client.user.id) {
