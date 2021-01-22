@@ -27,13 +27,18 @@ module.exports = {
 
         message.guild.playing = true;
 
-        const filter = m => m.author.id == mention.id;
+        const filter = m => (m.author.id == mention.id) && ['si', 'no'].some(a=>a==m.content);
 
         let aw = await waitRequest(mention, filter, message.channel)
 
-        if (!aw) {
+        if (aw === 'no') {
             delete message.guild.playing
-            return embedResponse(`<:cancel:779536630041280522> | ${mention.tag} no ha respondido correctamente.`)
+            return embedResponse(`<:cancel:779536630041280522> | ${mention.tag} no quizo jugar.`)
+        }
+		
+		if (aw === 'time') {
+            delete message.guild.playing
+            return embedResponse(`<:cancel:779536630041280522> | ${mention.tag} no respondio a tiempo.`)
         }
 
         await embedResponse(`<:accept:779536642365063189> | Elegi a ${chosed.tag} para que elija la frase.`)
@@ -194,13 +199,11 @@ async function waitRequest(mencion, filter, channel) {
                     give(collected.array()[0].content)
                 })
                 .catch(() => {
-                    console.log(`No ha respondido.`)
-                    give('a')
+                     give('time')
                 });
         })
     })
 
-    if (palabra.toLowerCase() == 'si')
-        return true;
-    else return false;
+    return palabra;
+	
 }
