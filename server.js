@@ -1,5 +1,5 @@
 require('dotenv').config();
-const { ShardingManager } = require('discord.js')
+const { ShardingManager } = require('discord.js');
 
 const sharder = new ShardingManager('./index.js', {
     token: process.env.BOT_TOKEN,
