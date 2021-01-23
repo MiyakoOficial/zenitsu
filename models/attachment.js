@@ -2,7 +2,7 @@ const { Schema, model } = require('mongoose');
 
 const Guild = Schema({
 
-    mapa: Array,
+    mapa: String,
     Attachment: Object
 
 });

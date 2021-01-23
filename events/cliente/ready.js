@@ -8,7 +8,7 @@ require('dotenv').config()
  */
 
 module.exports = (client) => {
-
+	presence(client)
 	//TOP.GG
 	const { dbl } = client;
 	client.color = '#E09E36';

@@ -77,7 +77,7 @@ module.exports.mapaCanvas = async function (mapatest, win = false) {
     let soniguales = mapatest.every((_, i) => _ == numeros[i]);
 
     if (!soniguales) {
-        let check = await modelo.findOne({ mapa: mapatest });
+        let check = await modelo.findOne({ mapa: mapatest.join('') });
 
         if (check)
             return check.Attachment.buffer;
@@ -470,7 +470,7 @@ module.exports.mapaCanvas = async function (mapatest, win = false) {
         final = attachment
     }
     if (!soniguales) {
-        await modelo.create({ mapa: mapatest, Attachment: final })
+        await modelo.create({ mapa: mapatest.join(''), Attachment: final })
     }
     return final;
 
