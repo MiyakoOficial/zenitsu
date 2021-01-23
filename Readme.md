@@ -1,10 +1,10 @@
 <div align="center">
-	<br />
+	<br/>
 	<p>
 		<a href="https://discordapp.com/oauth2/authorize?client_id=721080193678311554&scope=bot&permissions=2146958847"><img src="https://cdn.discordapp.com/avatars/721080193678311554/47b35cb3ae5bda2346d60b2e5735b37b.webp?size=2048" width="256" height="256"/></a>
 	</p>
 
-	<br />
+	<br/>
 	<p>
 		<a href="https://discord.gg/hbSahh8"><img src="https://img.shields.io/discord/645463565813284865?color=7289DA&label=DISCORD&logo=DISCORD&style=for-the-badge" alt="Discord server" /></a>
 		<a href="https://github.com/MARCROCK22/zenitsu"><img src="https://img.shields.io/github/package-json/v/MARCROCK22/zenitsu?logo=Pinboard&style=for-the-badge" alt="Zenitsu version" /></a>
