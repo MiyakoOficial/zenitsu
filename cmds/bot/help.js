@@ -23,7 +23,6 @@ module.exports = class Comando extends Command {
             .addField('Bot', client.commands.filter(a => a.category === 'bot').map(a => `\`${a.name}\``).join(', '))
             .addField('Among Us', client.commands.filter(a => a.category === 'among us').map(a => `\`${a.name}\``).join(', '))
             .addField('Administracion', client.commands.filter(a => a.category === 'administracion').map(a => `\`${a.name}\``).join(', '))
-            .addField('Interacción', client.commands.filter(a => a.category === 'interacción').map(a => `\`${a.name}\``).join(', '))
             .addField('(Solo disponible en el soporte)', client.commands.filter(a => a.category === 'servidor').map(a => `\`${a.name}\``).join(', '))
             .addField('Extras', client.commands.filter(a => a.category === 'extra').map(a => `\`${a.name}\``).join(', '))
             .setImage('https://cdn.discordapp.com/attachments/765608178540609598/766651849050292234/para_el_pibe_2.jpg')
