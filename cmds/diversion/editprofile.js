@@ -1,15 +1,11 @@
-module.exports = {
-    config: {
-        name: "editprofile", //nombre del cmd
-        alias: [], //Alias
-        description: "Editas tu perfil", //Descripción (OPCIONAL)
-        usage: "z!editprofile",
-        category: 'diversion',
-        botPermissions: [],
-        memberPermissions: []
-
-
-    }, run: async ({ client, message, args, embedResponse }) => {
+const Command = require('../../Utils/Classes').Command;
+module.exports = class Comando extends Command {
+    constructor() {
+        super()
+        this.name = "editprofile"
+        this.category = 'diversion'
+    }
+    async run({ client, message, args, embedResponse }) {
 
         if (!args[1]) return embedResponse('Ejemplo de uso correcto: z!editprofile nick Hello world!');
 

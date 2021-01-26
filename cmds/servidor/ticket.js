@@ -1,14 +1,12 @@
-module.exports = {
-    config: {
-        name: "ticket", //nombre del cmd
-        alias: [], //Alias
-        description: "Abrir un ticket", //Descripción (OPCIONAL)
-        usage: "z!ticket",
-        category: 'servidor',
-        botPermissions: ['MANAGE_CHANNELS'],
-        memberPermissions: []
-    },
-    run: ({ message, args, embedResponse }) => {
+const Command = require('../../Utils/Classes').Command;
+module.exports = class Comando extends Command {
+    constructor() {
+        super()
+        this.name = "ticket"
+        this.botPermissions.guild = ['MANAGE_CHANNELS']
+        this.category = 'servidor'
+    }
+    run({ message, args, embedResponse }) {
 
         let canalCheck = message.guild.channels.cache.find(a => a.name === `ticket-${message.author.id}`);
 

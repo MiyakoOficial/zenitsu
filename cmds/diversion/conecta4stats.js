@@ -1,16 +1,14 @@
 const { sendEmbed } = require('../../Utils/Functions.js');
 const Discord = require('discord.js');
-module.exports = {
-	config: {
-		name: "conecta4stats", //nombre del cmd
-		alias: [`connect4stats`, 'fourinrowstats', '4enlineastats', 'c4stats'], //Alias
-		description: "Manda el perfil de un miembro", //Descripción (OPCIONAL)
-		usage: "z!conecta4stats @mencion",
-		category: 'diversion',
-		botPermissions: [],
-		memberPermissions: []
-
-	}, run: async ({ message, args, client }) => {
+const Command = require('../../Utils/Classes').Command;
+module.exports = class Comando extends Command {
+	constructor() {
+		super()
+		this.name = "conecta4stats"
+		this.alias = [`connect4stats`, 'fourinrowstats', '4enlineastats', 'c4stats']
+		this.category = 'diversion'
+	}
+	async run({ message, args, client }) {
 
 		let member = message.guild.members.cache.find(a => a.user.username === args.join(' ')) || message.guild.members.cache.find(a => a.user.tag === args.join(' ')) || message.guild.members.cache.find(a => a.displayName === args.join(' ')) || message.guild.members.cache.get(args[0]) || message.mentions.members.first() || message.member
 

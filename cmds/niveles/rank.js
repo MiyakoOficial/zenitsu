@@ -2,17 +2,15 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-case-declarations */
 const Discord = require('discord.js');
-module.exports = {
-    config: {
-        name: "rank", //nombre del cmd
-        alias: ['rk'], //Alias
-        description: "Visualizar el leaderboard", //Descripción (OPCIONAL)
-        usage: "z!rank",
-        category: 'niveles',
-        botPermissions: [],
-        memberPermissions: []
-
-    }, run: async ({ client, message, args, embedResponse }) => {
+const Command = require('../../Utils/Classes').Command;
+module.exports = class Comando extends Command {
+    constructor() {
+        super()
+        this.name = "rank"
+        this.alias = ['rk']
+        this.category = 'niveles'
+    }
+    async run({ client, message, args, embedResponse }) {
         let seleccion = parseInt(args[1]) || 1;
 
         const { color } = client;

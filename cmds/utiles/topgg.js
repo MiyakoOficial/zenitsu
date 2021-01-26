@@ -1,16 +1,14 @@
 const { MessageEmbed } = require('discord.js');
 const { topGG } = require('myscrapper');
 
-module.exports = {
-    config: {
-        name: 'topgg',
-        alias: [],
-        usage: 'topgg <bot name | category>',
-        description: 'Informacion sobre top.gg/',
-        botPermissions: [],
-        memberPermissions: [],
-    },
-    run: async ({ client, args, message, embedResponse }) => {
+const Command = require('../../Utils/Classes').Command;
+module.exports = class Comando extends Command {
+    constructor() {
+        super()
+        this.name = 'topgg'
+        this.category = 'utiles'
+    }
+    async run({ client, args, message, embedResponse }) {
 
         if (!args[0])
             return embedResponse('<:cancel:779536630041280522> | ¿Que quieres buscar?');

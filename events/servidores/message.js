@@ -2,6 +2,11 @@ const Discord = require("discord.js");
 const ms = require('ms');
 const cooldowns = new Discord.Collection();
 let cooldownniveles = new Set();
+/**
+ * 
+ * @param {Discord.Client} client 
+ * @param {Discord.Message} message 
+ */
 module.exports = async (client, message) => {
 
     /* function emojiNitro(msg) {
@@ -165,30 +170,28 @@ module.exports = async (client, message) => {
         }
 
     }
-
     let filter = e => {
-        if (message.guild.id != '645463565813284865' && e.config.category == 'servidor') return false;
-        else if (e.config.dev && !client.devseval.includes(message.author.id)) return false;
+        if (message.guild.id != '645463565813284865' && e.category == 'servidor') return false;
+        else if (e.dev && !client.devseval.includes(message.author.id)) return false;
         return true
     }
 
     let commandfile = client.commands.filter(filter).get(command)
-        || client.commands.filter(filter).get(client.alias.get(command))
-
+        || client.commands.filter(filter).find(item => item.alias.includes(command))
+    console.log(commandfile)
     if (commandfile) {
         let dataB = (await client.getData({ id: message.author.id }, 'blacklist'))
         if (dataB.bol) {
             return;
         }
-        //if (cooldownCommands.has(message.author.id)) {
 
-        if (!cooldowns.has(commandfile.config.name)) {
-            cooldowns.set(commandfile.config.name, new Discord.Collection());
+        if (!cooldowns.has(commandfile.name)) {
+            cooldowns.set(commandfile.name, new Discord.Collection());
         }
 
         const now = Date.now();
-        const timestamps = cooldowns.get(commandfile.config.name);
-        const cooldownAmount = (commandfile.config.cooldown || 4) * 1000;
+        const timestamps = cooldowns.get(commandfile.name);
+        const cooldownAmount = (commandfile.cooldown || 4) * 1000;
 
         if (!client.devseval.includes(message.author.id)) {
             if (timestamps.has(message.author.id)) {
@@ -206,10 +209,10 @@ module.exports = async (client, message) => {
         }
 
         let check = [];
-        if (commandfile.config.botPermissions && commandfile.config.botPermissions) {
+        if (commandfile.botPermissions.channel?.length) {
 
             let permisos = message.channel.permissionsFor(message.client.user);
-            let permisosN = commandfile.config.botPermissions;
+            let permisosN = commandfile.botPermissions.channel;
             for await (let i of permisosN) {
                 if (!permisos.has(i)) {
                     check.push(i);
@@ -221,7 +224,7 @@ module.exports = async (client, message) => {
 
             let embed = new Discord.MessageEmbed()
                 .setColor(client.color)
-                .setDescription('<:cancel:779536630041280522> | Ups, me faltan algun/algunos permiso(s): `' + check.join(', ') + "`")
+                .setDescription('<:cancel:779536630041280522> | Ups, me faltan algun/algunos permiso(s) en el canal: `' + check.join(', ') + "`")
                 .setTimestamp()
                 .setFooter('\u200b', 'https://media1.tenor.com/images/41334cbe64331dad2e2dc6272334b47f/tenor.gif');
 
@@ -230,10 +233,10 @@ module.exports = async (client, message) => {
 
         check = [];
 
-        if (commandfile.config.memberPermissions && commandfile.config.memberPermissions) {
+        if (commandfile.memberPermissions.channel?.length) {
 
             let permisos = message.channel.permissionsFor(message.member);
-            let permisosN = commandfile.config.memberPermissions;
+            let permisosN = commandfile.memberPermissions.channel;
             for await (let i of permisosN) {
                 if (!permisos.has(i)) {
                     check.push(i);
@@ -245,16 +248,63 @@ module.exports = async (client, message) => {
 
             let embed = new Discord.MessageEmbed()
                 .setColor(client.color)
-                .setDescription('<:cancel:779536630041280522> | Ups, te faltan algun/algunos permiso(s): `' + check.join(', ') + "`")
+                .setDescription('<:cancel:779536630041280522> | Ups, te faltan algun/algunos permiso(s) en el canal: `' + check.join(', ') + "`")
                 .setTimestamp()
                 .setFooter('\u200b', 'https://media1.tenor.com/images/41334cbe64331dad2e2dc6272334b47f/tenor.gif');
 
             return message.channel.send({ embed: embed })
         }
+
+        check = [];
+        if (commandfile.botPermissions.guild?.length) {
+
+            let permisos = message.guild.me.permissions.toArray()
+            let permisosN = commandfile.botPermissions.guild;
+            for await (let i of permisosN) {
+                if (!permisos.includes(i)) {
+                    check.push(i);
+                }
+            }
+        }
+
+        if (check.length >= 1) {
+
+            let embed = new Discord.MessageEmbed()
+                .setColor(client.color)
+                .setDescription('<:cancel:779536630041280522> | Ups, me faltan algun/algunos permiso(s) en el servidor: `' + check.join(', ') + "`")
+                .setTimestamp()
+                .setFooter('\u200b', 'https://media1.tenor.com/images/41334cbe64331dad2e2dc6272334b47f/tenor.gif');
+
+            return message.channel.send({ embed: embed })
+        }
+
+        check = [];
+
+        if (commandfile.memberPermissions.guild?.length) {
+
+            let permisos = message.member.permissions.toArray();
+            let permisosN = commandfile.memberPermissions.guild;
+            for await (let i of permisosN) {
+                if (!permisos.includes(i)) {
+                    check.push(i);
+                }
+            }
+        }
+
+        if (check.length >= 1) {
+
+            let embed = new Discord.MessageEmbed()
+                .setColor(client.color)
+                .setDescription('<:cancel:779536630041280522> | Ups, te faltan algun/algunos permiso(s) en el servidor: `' + check.join(', ') + "`")
+                .setTimestamp()
+                .setFooter('\u200b', 'https://media1.tenor.com/images/41334cbe64331dad2e2dc6272334b47f/tenor.gif');
+
+            return message.channel.send({ embed: embed })
+        }
+
         try {
             await commandfile.run({ client, message, args, embedResponse, Hora })
         } catch (err) {
-
 
             let embed = new Discord.MessageEmbed()
                 .setColor(client.color)
@@ -265,7 +315,7 @@ module.exports = async (client, message) => {
                 .addField('Error', err)
                 .addField('Comando usado', command)
 
-            client.channels.cache.get('766012729411633164').send({ embed: embed })
+            client.channels.cache.get('766012729411633164') ? client.channels.cache.get('766012729411633164').send({ embed: embed }) : null;
 
             return await message.author.send({ embed: embed }).catch(() => { });
         }

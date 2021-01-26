@@ -1,15 +1,12 @@
 const Discord = require('discord.js');
-module.exports = {
-    config: {
-        name: "top", //nombre del cmd
-        alias: ['to'], //Alias
-        description: "Visualizar el leaderboard", //Descripción (OPCIONAL)
-        usage: "z!top",
-        category: 'extra',
-        botPermissions: [],
-        memberPermissions: []
-
-    }, run: async ({ client, message, args, embedResponse }) => {
+const Command = require('../../Utils/Classes').Command;
+module.exports = class Comando extends Command {
+    constructor() {
+        super()
+        this.name = "top"
+        this.category = 'extra'
+    }
+    async run({ client, message, args, embedResponse }) {
         let seleccion = parseInt(args[1]) || 1;
 
         const { color } = client;

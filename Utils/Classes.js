@@ -36,3 +36,42 @@ class Options {
 
 }
 module.exports.embedOptions = Options;
+
+class Command {
+
+    constructor() {
+
+
+        /**@type {Array<String>} */
+        this.alias = []
+        /**@type {String}*/
+        this.name = 'NO_NAME_COMMAND'
+        /**@type {String}*/
+        this.category = 'none'
+        //ARREGLAR PERMISOS
+        this.botPermissions = {
+            /**@type {Array<String>}*/
+            guild: [],
+            /**@type {Array<String>}*/
+            channel: []
+        }
+        /**@type {Number}*/
+        this.cooldown = 4;
+
+        this.memberPermissions = {
+            /**@type {Array<String>}*/
+            guild: [],
+            /**@type {Array<String>}*/
+            channel: []
+        }
+    }
+    /**
+    @returns {(Promise<(import('discord.js').Message|Object)>|void)}
+    */
+    run() {
+
+    }
+
+}
+
+module.exports.Command = Command

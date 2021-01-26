@@ -8,6 +8,7 @@ require('dotenv').config()
  */
 
 module.exports = (client) => {
+
 	presence(client)
 	//TOP.GG
 	const { dbl } = client;
@@ -23,9 +24,9 @@ module.exports = (client) => {
 		let canal = client.channels.cache.get('786997292040847401');
 		let mensaje = canal.messages.cache.get('786997341998678056') || await canal.messages.fetch('786997341998678056')
 		let embed = new MessageEmbed()
-		.setColor(client.color)
-		.addField('Servidores', client.guilds.cache.size, true)
-		.addField('Usuarios en cache', client.users.cache.filter(a => !a.bot).size, true)
+			.setColor(client.color)
+			.addField('Servidores', client.guilds.cache.size, true)
+			.addField('Usuarios en cache', client.users.cache.filter(a => !a.bot).size, true)
 		mensaje.edit({ embed: embed })
 	}, ms('5m'));
 };
@@ -35,7 +36,7 @@ module.exports = (client) => {
 @returns {Promise<Presence>}
 */
 
-function presence(client){
+function presence(client) {
 	return client.user.setPresence({
 		status: "idle",
 		activity: {

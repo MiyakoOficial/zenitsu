@@ -1,15 +1,16 @@
 const { MessageEmbed } = require('discord.js');
 //Después de Alias es opcional.
-module.exports = {
-    config: {
-        name: "setprefix", //nombre del cmd
-        alias: [], //Alias
-        description: "Establecer el nuevo prefix", //Descripción (OPCIONAL)
-        usage: "z!setprefix prefix",
-        category: 'administracion',
-        botPermissions: [],
-        memberPermissions: ['ADMINISTRATOR']
-    }, run: ({ client, message, args }) => {
+const Command = require('../../Utils/Classes').Command;
+module.exports = class Comando extends Command {
+    constructor() {
+        super()
+        this.name = "setprefix"
+        this.alias = []
+        this.category = 'administracion'
+        this.botPermissions = { guild: [], channel: [] }
+        this.memberPermissions = { guild: ['ADMINISTRATOR'], channel: [] }
+    }
+    run({ client, message, args }) {
 
         let embedErr = new MessageEmbed()
             .setColor(client.color)

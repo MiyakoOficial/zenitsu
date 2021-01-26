@@ -1,16 +1,13 @@
 const statusA = new Map();
 const Discord = require('discord.js');
-module.exports = {
-    config: {
-        name: "bossfight", //nombre del cmd
-        alias: [], //Alias
-        description: "Pelear con el jefe", //Descripción (OPCIONAL)
-        usage: "z!bossfight",
-        category: 'extra',
-        botPermissions: [],
-        memberPermissions: []
-
-    }, run: async ({ client, message, embedResponse }) => {
+const Command = require('../../Utils/Classes').Command;
+module.exports = class Comando extends Command {
+    constructor() {
+        super()
+        this.name = "bossfight"
+        this.category = 'extra'
+    }
+    async run({ client, message, embedResponse }) {
 
         let data = await client.getData({ id: message.author.id }, 'demonios')
         let { cooldown } = data;

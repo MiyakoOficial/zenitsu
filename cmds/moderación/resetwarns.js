@@ -1,16 +1,14 @@
 const { MessageEmbed } = require('discord.js');
 
-module.exports = {
-    config: {
-        name: "resetwarns", //nombre del cmd
-        alias: [], //Alias
-        description: "Reiniciar advertencias", //Descripción (OPCIONAL)
-        usage: "z!resetwarns @mencion",
-        category: 'moderacion',
-        botPermissions: [],
-        memberPermissions: ['ADMINISTRATOR']
-
-    }, run: async ({ message, embedResponse, client }) => {
+const Command = require('../../Utils/Classes').Command;
+module.exports = class Comando extends Command {
+    constructor() {
+        super()
+        this.name = "resetwarns"
+        this.category = 'moderacion'
+        this.memberPermissions = { guild: ['ADMINISTRATOR'], channel: [] }
+    }
+    async run({ message, embedResponse, client }) {
 
         let member = message.mentions.members.first();
 

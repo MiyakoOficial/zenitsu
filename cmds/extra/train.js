@@ -1,15 +1,12 @@
 const Discord = require('discord.js');
-module.exports = {
-    config: {
-        name: "train", //nombre del cmd
-        alias: [], //Alias
-        description: "Entrenar", //Descripción (OPCIONAL)
-        usage: "z!train",
-        category: 'extra',
-        botPermissions: [],
-        memberPermissions: []
-
-    }, run: async ({ client, message, embedResponse }) => {
+const Command = require('../../Utils/Classes').Command;
+module.exports = class Comando extends Command {
+    constructor() {
+        super()
+        this.name = "train"
+        this.category = 'extra'
+    }
+    async run({ client, message, embedResponse }) {
 
         let data = await client.getData({ id: message.author.id }, 'demonios');
         let { cooldown, xpusuario, nivelespada } = data;

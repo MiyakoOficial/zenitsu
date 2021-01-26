@@ -1,15 +1,12 @@
-module.exports = {
-    config: {
-        name: "darinsignia",
-        alias: [],
-        description: "private",
-        usage: "z!private command jaja",
-        category: 'developer',
-        botPermissions: [],
-        memberPermissions: []
+const Command = require('../../Utils/Classes').Command;
+module.exports = class Comando extends Command {
+    constructor() {
+        super()
+        this.name = "darinsignia"
+        this.category = 'developer'
 
-    },
-    run: async ({ client, message, args, embedResponse }) => {
+    }
+    async run({ client, message, args, embedResponse }) {
 
         if (!["507367752391196682"].includes(message.author.id))
             return;

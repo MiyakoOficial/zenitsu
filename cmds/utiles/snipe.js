@@ -1,16 +1,13 @@
 const Discord = require('discord.js');
 
-module.exports = {
-    config: {
-        name: "snipe", //nombre del cmd
-        alias: [], //Alias
-        description: "Ver el ultimo mensaje borrado", //Descripción (OPCIONAL)
-        usage: "z!snipe #mention",
-        category: 'utiles',
-        botPermissions: [],
-        memberPermissions: []
-    },
-    run: async ({ client, message, embedResponse }) => {
+const Command = require('../../Utils/Classes').Command;
+module.exports = class Comando extends Command {
+    constructor() {
+        super()
+        this.name = "snipe"
+        this.category = 'utiles'
+    }
+    async run({ client, message, embedResponse }) {
 
         let canal = message.mentions.channels.first() || message.channel;
 

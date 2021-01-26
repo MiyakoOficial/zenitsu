@@ -1,16 +1,14 @@
 const mybo = require("myscrapper");
 
-module.exports = {
-    config: {
-        name: "mybotlist", //nombre del cmd
-        alias: [`mybotlist`, `ml`, `mbl`], //Alias
-        description: "Ver informacion de los bots de portalmybot.com/mybotlist", //Descripción (OPCIONAL)
-        usage: "z!mybotlist ID",
-        category: 'utiles',
-        botPermissions: [],
-        memberPermissions: []
-    },
-    run: async ({ message, args, embedResponse }) => {
+const Command = require('../../Utils/Classes').Command;
+module.exports = class Comando extends Command {
+    constructor() {
+        super()
+        this.name = "mybotlist"
+        this.alias = [`mybotlist`, `ml`, `mbl`]
+        this.category = 'utiles'
+    }
+    async run({ message, args, embedResponse }) {
 
         if (!args[0]) return embedResponse('<a:CatLoad:724324015275245568> | ¿Acerca de cual bot quieres obtener informacion?');
 

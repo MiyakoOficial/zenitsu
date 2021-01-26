@@ -1,38 +1,23 @@
 const Discord = require('discord.js');
-module.exports = {
-    config: {
-        name: "mute", //nombre del cmd
-        alias: [], //Alias
-        description: "Silenciar a un miembro", //Descripción (OPCIONAL)
-        usage: "z!mute @mencion razon(opcional)",
-        category: 'moderacion',
-        botPermissions: ['ADMINISTRATOR', 'MANAGE_ROLES', 'MANAGE_CHANNELS'],
-        memberPermissions: ['MANAGE_MESSAGES', 'KICK_MEMBERS']
+const Command = require('../../Utils/Classes').Command;
+module.exports = class Comando extends Command {
+    constructor() {
+        super()
+        this.name = "mute"
+        this.category = 'moderacion'
+        this.memberPermissions = { guild: ['KICK_MEMBERS', 'MANAGE_MESSAGES'], channel: [] }
+        this.botPermissions = { guild: ['ADMINISTRATOR', 'MANAGE_ROLES', 'MANAGE_CHANNELS'], channel: [] }
+    }
 
-    }, run: ({ client, message, args, embedResponse }) => {
+    run({ client, message, args, embedResponse }) {
 
         let roles = message.guild.roles.cache.filter(a => !a.managed && a.editable);
 
         let roleName = 'MUTED';
         let role = roles.find(a => a.name == roleName);
-        if (!role) {
-            embedResponse('<:cancel:779536630041280522> | Necesitas crear el rol `MUTED`\n~~¿Deseas crearlo ahora? [Escribe `s`]~~')
-            const filter = m => m.author.id == message.author.id;
-            return message.channel.awaitMessages(filter, { max: 1, time: require('ms')('10s'), errors: ['time'] })
-                .then(collected => {
-                    let msg = collected.array()[0];
-                    if (msg.content == 's') {
-                        return message.guild.roles.create({ data: { hoist: true, name: roleName, color: '#9c4b2d', permissions: 0 }, reason: 'Rol creado para silenciar personas.' })
-                            .then(() =>
-                                message.reply('Rol creado.').then(a => a.delete({ timeout: 3000 }))
-                            )
-                            .catch(() =>
-                                message.reply('Error al intentar crear el rol.').then(a => a.delete({ timeout: 3000 }))
-                            )
-                    }
-                })
-                .catch(() => { });
-        }
+        if (!role)
+            return embedResponse('<:thonk:722390649659195392> | Necesitas crear un rol llamado `MUTED` y que yo pueda gestionar.')
+
         let miembro = message.mentions.members.first();
 
         let razon = args.slice(1).join(' ') || 'No especificada.';

@@ -1,15 +1,11 @@
-module.exports = {
-    config: {
-        name: "accept",
-        alias: [],
-        description: "Aceptar sugerencia",
-        usage: "z!accept id comment",
-        category: 'developer',
-        botPermissions: [],
-        memberPermissions: []
-
-    },
-    run: async ({ client, message, args, embedResponse }) => {
+const Command = require('../../Utils/Classes').Command;
+module.exports = class Comando extends Command {
+    constructor() {
+        super()
+        this.name = "accept"
+        this.category = 'developer'
+    }
+    async run({ client, message, args, embedResponse }) {
 
         if (![`507367752391196682`].includes(message.author.id))
             return;

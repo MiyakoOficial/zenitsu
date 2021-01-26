@@ -1,16 +1,14 @@
 const statusA = new Map();
 const Discord = require('discord.js');
-module.exports = {
-    config: {
-        name: "hunt", //nombre del cmd
-        alias: [], //Alias
-        description: "Cazar demonios", //Descripción (OPCIONAL)
-        usage: "z!hunt",
-        category: 'extra',
-        botPermissions: [],
-        memberPermissions: []
+const Command = require('../../Utils/Classes').Command;
+module.exports = class Comando extends Command {
+    constructor() {
+        super()
+        this.name = "hunt"
+        this.category = 'extra'
+    }
 
-    }, run: async ({ client, message, embedResponse }) => {
+    async run({ client, message, embedResponse }) {
         let data = await client.getData({ id: message.author.id }, 'demonios')
         let { nivelespada, xpusuario, cooldown } = data;
 

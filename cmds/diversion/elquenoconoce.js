@@ -1,17 +1,15 @@
 const Canvas = require('canvas');
 const Discord = require("discord.js")
 
-module.exports = {
-    config: {
-        name: "elquenoconoce", //nombre del cmd
-        alias: [], //Alias
-        description: "Meme de el que no conoce a dios a cualquier santo le reza", //Descripción (OPCIONAL)
-        usage: "z!elquenoconoce @mencion",
-        category: 'diversion',
-        botPermissions: [],
-        memberPermissions: []
-    },
-    run: async ({ message, args, embedResponse }) => {
+const Command = require('../../Utils/Classes').Command;
+module.exports = class Comando extends Command {
+    constructor() {
+        super()
+        this.name = "elquenoconoce"
+        this.category = 'diversion'
+    }
+
+    async run({ message, args, embedResponse }) {
 
         let userAvatar = message.author.displayAvatarURL({ dynamic: true, size: 2048, format: 'png' });
 

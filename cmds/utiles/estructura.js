@@ -1,16 +1,13 @@
 const Discord = require("discord.js")
 
-module.exports = {
-    config: {
-        name: "estructura", //nombre del cmd
-        alias: [], //Alias
-        description: "Ver la estructura del servidor", //Descripción (OPCIONAL)
-        usage: "z!estructura",
-        category: 'utiles',
-        botPermissions: [],
-        memberPermissions: []
-    },
-    run: async ({ message, args }) => {
+const Command = require('../../Utils/Classes').Command;
+module.exports = class Comando extends Command {
+    constructor() {
+        super()
+        this.name = "estructura"
+        this.category = 'utiles'
+    }
+    async run({ message, args }) {
 
         let todo = '';
         async function GETOWNER() {

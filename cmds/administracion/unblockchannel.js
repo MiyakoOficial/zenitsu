@@ -1,16 +1,16 @@
 const Discord = require("discord.js");
 //Después de Alias es opcional.
-module.exports = {
-    config: {
-        name: "unblockchannel", //nombre del cmd
-        alias: [], //Alias
-        description: "Desbloquea el canal para los miembros.", //Descripción (OPCIONAL)
-        usage: "z!unblockchannel",
-        category: 'administracion',
-        botPermissions: ['MANAGE_CHANNELS'],
-        memberPermissions: ['MANAGE_CHANNELS']
-    },
-    run: ({ message, client }) => {
+const Command = require('../../Utils/Classes').Command;
+module.exports = class Comando extends Command {
+    constructor() {
+        super()
+        this.name = "unblockchannel"
+        this.alias = []
+        this.category = 'administracion'
+        this.botPermissions = { guild: [], channel: ['MANAGE_CHANNELS'] }
+        this.memberPermissions = { guild: [], channel: ['MANAGE_CHANNELS'] }
+    }
+    run({ message, client }) {
         if (message.author.id != '507367752391196682')
             return;
         return message.channel.updateOverwrite(message.guild.id, {

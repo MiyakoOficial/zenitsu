@@ -1,14 +1,14 @@
-module.exports = {
-    config: {
-        name: "buylevel", //nombre del cmd
-        alias: ['buyl'], //Alias
-        description: "Comprar niveles", //Descripción (OPCIONAL)
-        usage: "z!buylevel num",
-        category: 'extra',
-        botPermissions: [],
-        memberPermissions: []
+const Command = require('../../Utils/Classes').Command;
+module.exports = class Comando extends Command {
+    constructor() {
+        super()
+        this.name = "buylevel"
+        this.alias = ['buyl']
+        this.category = 'extra'
 
-    }, run: async ({ client, message, args, embedResponse }) => {
+    }
+
+    async run({ client, message, args, embedResponse }) {
 
         let costo = 250;
 

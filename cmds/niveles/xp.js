@@ -1,15 +1,13 @@
 const Discord = require('discord.js');
-module.exports = {
-    config: {
-        name: "xp", //nombre del cmd
-        alias: ['exp'], //Alias
-        description: "Saber el nivel y experiencia", //Descripción (OPCIONAL)
-        usage: "z!xp",
-        category: 'niveles',
-        botPermissions: [],
-        memberPermissions: []
-
-    }, run: ({ client, message, args }) => {
+const Command = require('../../Utils/Classes').Command;
+module.exports = class Comando extends Command {
+    constructor() {
+        super()
+        this.name = "xp"
+        this.alias = ['exp']
+        this.category = 'niveles'
+    }
+    run({ client, message, args }) {
         const { color } = client;
 
         function getRank() {

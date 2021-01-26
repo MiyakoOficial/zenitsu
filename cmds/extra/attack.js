@@ -1,16 +1,13 @@
 const statusA = new Map();
 const Discord = require('discord.js');
-module.exports = {
-    config: {
-        name: "attack", //nombre del cmd
-        alias: [], //Alias
-        description: "Atacar al jefe", //Descripción (OPCIONAL)
-        usage: "z!attack",
-        category: 'extra',
-        botPermissions: [],
-        memberPermissions: []
-
-    }, run: async ({ client, message, embedResponse }) => {
+const Command = require('../../Utils/Classes').Command;
+module.exports = class Comando extends Command {
+    constructor() {
+        super()
+        this.name = "attack"
+        this.category = 'extra'
+    }
+    async run({ client, message, embedResponse }) {
 
         let prob = Math.floor(Math.random() * 99) + 1;
 

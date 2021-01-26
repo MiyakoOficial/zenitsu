@@ -1,23 +1,22 @@
 const Discord = require('discord.js');
 const easy = require('easymaty');
 
-module.exports = {
-    config: {
-        name: "warn", //nombre del cmd
-        alias: [], //Alias
-        description: "Advertir a un miembro", //Descripción (OPCIONAL)
-        usage: "z!warn @mencion razon(opcional)",
-        category: 'moderacion',
-        botPermissions: ['KICK_MEMBERS'],
-        memberPermissions: ['KICK_MEMBERS']
-
-    }, run: async ({ client, message, args, embedResponse, Hora }) => {
+const Command = require('../../Utils/Classes').Command;
+module.exports = class Comando extends Command {
+    constructor() {
+        super()
+        this.name = "warn"
+        this.category = 'moderacion'
+        this.botPermissions.guild = ['KICK_MEMBERS']
+        this.memberPermissions.guild = ['KICK_MEMBERS']
+    }
+    async run({ client, message, args, embedResponse, Hora }) {
 
         let miembro = message.mentions.members.first();
 
         let razon = args.slice(1).join(' ') || 'No especificada';
 
-        if (!miembro || miembro?.user?.bot) return embedResponse('<:cancel:779536630041280522> | Menciona a un miembro del servidor.')
+        if (!miembro || miembro?.user?.bot || (miembro.user.id == message.author.id)) return embedResponse('<:cancel:779536630041280522> | Menciona a un miembro del servidor.')
 
         if (miembro.roles.highest.comparePositionTo(message.member.roles.highest) > 0)
             return embedResponse('<:cancel:779536630041280522> | No puedes advertir a este usuario.')
@@ -31,9 +30,8 @@ module.exports = {
             if (miembro.hasPermission('ADMINISTRATOR'))
                 return embedResponse('<:cancel:779536630041280522> | ' + miembro.toString() + ' es administrador.')
         }
-        miembro = miembro.user;
 
-        if (miembro.id == message.author.id) return embedResponse('<:cancel:779536630041280522> | No te puedes advertir a ti mismo.')
+        miembro = miembro.user;
 
         let chec = async (e) => { if (await require('../../models/warns.js').findOne({ idMember: miembro.id, token: e })) return await chec(easy.clave(6, '123456789')); else return e; }
 

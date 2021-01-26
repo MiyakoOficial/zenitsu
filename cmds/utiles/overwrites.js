@@ -1,14 +1,11 @@
-module.exports = {
-    config: {
-        name: "overwrites", //nombre del cmd
-        alias: [], //Alias
-        description: "Ver los permisos del canal", //Descripción (OPCIONAL)
-        usage: "z!overwrites <#canal>",
-        category: 'utiles',
-        botPermissions: [],
-        memberPermissions: []
-    },
-    run: async ({ message, args, client }) => {
+const Command = require('../../Utils/Classes').Command;
+module.exports = class Comando extends Command {
+    constructor() {
+        super()
+        this.name = "overwrites"
+        this.category = 'utiles'
+    }
+    async run({ message, args, client }) {
 
         let canal = message.guild.channels.cache.get(args[0]) || message.mentions.channels.first() || message.channel
 

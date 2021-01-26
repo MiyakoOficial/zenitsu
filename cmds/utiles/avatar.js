@@ -1,17 +1,14 @@
 //Después de Alias es opcional.
 const Discord = require('discord.js');
 
-module.exports = {
-    config: {
-        name: "avatar", //nombre del cmd
-        alias: [], //Alias
-        description: "Avatar de un usuario", //Descripción (OPCIONAL)
-        usage: "z!avatar",
-        category: 'utiles',
-        botPermissions: [],
-        memberPermissions: []
-    },
-    run: ({ client, message, args }) => {
+const Command = require('../../Utils/Classes').Command;
+module.exports = class Comando extends Command {
+    constructor() {
+        super()
+        this.name = "avatar"
+        this.category = 'utiles'
+    }
+    run({ client, message, args }) {
 
         let miembro = message.mentions.members.first() || message.guild.members.resolve(args[0]) || message.guild.members.cache.find(a => a.user.username === args.join(' ')) || message.guild.members.cache.find(a => a.user.tag === args.join(' ')) || message.guild.members.cache.find(a => a.displayName === args.join(' ')) || message.member;
 

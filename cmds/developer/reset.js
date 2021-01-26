@@ -1,16 +1,12 @@
-module.exports = {
-    config: {
-        name: "reset",
-        alias: ['offbot'],
-        description: "reset",
-        usage: "z!reset",
-        category: 'developer',
-        botPermissions: [],
-        memberPermissions: []
-
-    },
+const Command = require('../../Utils/Classes').Command;
+module.exports = class Comando extends Command {
+    constructor() {
+        super()
+        this.name = "reset"
+        this.category = 'developer'
+    }
     // eslint-disable-next-line no-unused-vars
-    run: ({ client, message, args, embedResponse, Hora }) => {
+    run({ client, message, args, embedResponse, Hora }) {
 
         if (!['507367752391196682'].includes(message.author.id))
             return;

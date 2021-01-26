@@ -1,16 +1,13 @@
 const Discord = require("discord.js")
 
-module.exports = {
-    config: {
-        name: "suggest",
-        alias: [],
-        description: "sugerir un comando/cambio en el bot",
-        usage: "z!suggest sugerencia",
-        category: 'bot',
-        botPermissions: [],
-        memberPermissions: []
-    },
-    run: ({ client, message, args, embedResponse }) => {
+const Command = require('../../Utils/Classes').Command;
+module.exports = class Comando extends Command {
+    constructor() {
+        super()
+        this.name = "suggest"
+        this.category = 'bot'
+    }
+    run({ client, message, args, embedResponse }) {
 
         if (!args[0]) return embedResponse('<:cancel:779536630041280522> | Necesitas especificar la sugerencia.')
         let embed = new Discord.MessageEmbed()

@@ -1,16 +1,14 @@
 const Discord = require('discord.js');
 
-module.exports = {
-    config: {
-        name: "pardon", //nombre del cmd
-        alias: [], //Alias
-        description: "Quita una advertencia a un miembro", //Descripción (OPCIONAL)
-        usage: "z!pardon @mencion",
-        category: 'moderacion',
-        botPermissions: [],
-        memberPermissions: ['KICK_MEMBERS']
-
-    }, run: async ({ client, message, args, embedResponse }) => {
+const Command = require('../../Utils/Classes').Command;
+module.exports = class Comando extends Command {
+    constructor() {
+        super()
+        this.name = "pardon"
+        this.category = 'moderacion'
+        this.memberPermissions = { guild: ['KICK_MEMBERS'], channel: [] }
+    }
+    async run({ client, message, args, embedResponse }) {
 
         let miembro = message.mentions.members.first();
 

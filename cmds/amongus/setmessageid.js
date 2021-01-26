@@ -1,14 +1,14 @@
 const Discord = require('discord.js')
-module.exports = {
-    config: {
-        name: "setmessageid", //nombre del cmd
-        alias: [], //Alias
-        description: "Estable un mensaje por us ID para hacer muteall/unmuteall con reacciones", //Descripción (OPCIONAL)
-        usage: "z!setmessageid ID_MESSAGE #mencion(opcional)",
-        category: 'among us',
-        botPermissions: ['MANAGE_MESSAGES'],
-        memberPermissions: []
-    }, run: async ({ client, message, args, embedResponse }) => {
+const Command = require('../../Utils/Classes').Command;
+module.exports = class Comando extends Command {
+    constructor() {
+        super()
+        this.name = "setmessageid"
+        this.alias = []
+        this.category = 'among us'
+        this.botPermissions = { guild: ['MANAGE_MESSAGES'], channel: [] }
+        this.memberPermissions = []
+    } async run({ client, message, args, embedResponse }) {
 
         let rol = message.guild.roles.cache.find(a => a.name === 'Among Us manager');
         if (!rol || !message.member.roles.cache.has(rol.id)) return embedResponse('<:cancel:779536630041280522> | Tienes que tener el rol `Among Us manager`')

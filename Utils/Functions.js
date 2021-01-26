@@ -1,6 +1,5 @@
 // eslint-disable-next-line no-unused-vars
 const Classes = require('./Classes.js');
-const GIFEncoder = require('gifencoder');
 /**
  * @param {Classes.embedOptions} object 
  * @param {Object} options
@@ -82,6 +81,7 @@ module.exports.mapaCanvas = async function (mapatest, win = false) {
         if (check)
             return check.Attachment.buffer;
     }
+    const GIFEncoder = require('gifencoder');
     const encoder = new GIFEncoder(300, 300);
 
     const canvas = Canvas.createCanvas(300, 300);
@@ -553,6 +553,7 @@ function toBuffer(stream, callback) {
  */
 
 async function displayConnectFourBoard(mapa, game) {
+    const GIFEncoder = require('gifencoder');
     const toBuffer = require('util').promisify(module.exports.buffer);
     const encoder = new GIFEncoder(700, 600);
     const stream = encoder.createReadStream()

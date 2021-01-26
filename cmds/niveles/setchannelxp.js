@@ -1,16 +1,14 @@
 const { MessageEmbed } = require("discord.js");
 
-module.exports = {
-    config: {
-        name: "setchannelxp", //nombre del cmd
-        alias: [], //Alias
-        description: "Establecer el canal de niveles", //Descripción (OPCIONAL)
-        usage: "z!setchannelxp #mencion",
-        category: 'niveles',
-        botPermissions: [],
-        memberPermissions: ['ADMINISTRATOR']
-
-    }, run: ({ client, message, embedResponse }) => {
+const Command = require('../../Utils/Classes').Command;
+module.exports = class Comando extends Command {
+    constructor() {
+        super()
+        this.name = "setchannelxp"
+        this.category = 'niveles'
+        this.memberPermissions.guild = ['ADMINISTRATOR']
+    }
+    run({ client, message, embedResponse }) {
 
         let channel = message.mentions.channels.first();
         if (!channel) return embedResponse("<:cancel:779536630041280522> | Necesitas mencionar el canal.")

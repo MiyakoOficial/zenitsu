@@ -1,16 +1,14 @@
 const Discord = require('discord.js');
 
-module.exports = {
-    config: {
-        name: "checkwarns", //nombre del cmd
-        alias: [], //Alias
-        description: "Revisar el numero advertencias", //Descripción (OPCIONAL)
-        usage: "z!checkwarns @mencion",
-        category: 'moderacion',
-        botPermissions: [],
-        memberPermissions: []
+const Command = require('../../Utils/Classes').Command;
+module.exports = class Comando extends Command {
+    constructor() {
+        super()
+        this.name = "checkwarns"
+        this.category = 'moderacion'
 
-    }, run: async ({ client, message, args, embedResponse }) => {
+    }
+    async run({ client, message, args, embedResponse }) {
 
         if (!message.mentions.members.first()) return embedResponse('<:cancel:779536630041280522> | Necesitas mencionar a un miembro.')
 

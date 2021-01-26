@@ -1,16 +1,12 @@
 const Discord = require('discord.js');
-module.exports = {
-    config: {
-        name: "profile", //nombre del cmd
-        alias: [], //Alias
-        description: "Manda el perfil de un miembro", //Descripción (OPCIONAL)
-        usage: "z!profile",
-        category: 'diversion',
-        botPermissions: [],
-        memberPermissions: []
-
-
-    }, run: async ({ client, message, args }) => {
+const Command = require('../../Utils/Classes').Command;
+module.exports = class Comando extends Command {
+    constructor() {
+        super()
+        this.name = "profile"
+        this.category = 'diversion'
+    }
+    async run({ client, message, args }) {
 
         let member = message.guild.members.cache.find(a => a.user.username === args.join(' ')) || message.guild.members.cache.find(a => a.user.tag === args.join(' ')) || message.guild.members.cache.find(a => a.displayName === args.join(' ')) || message.guild.members.cache.get(args[0]) || message.mentions.members.first() || message.member
 

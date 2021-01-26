@@ -4,23 +4,20 @@ const tresenraya = require('tresenraya');
 const { Message, MessageAttachment } = require('discord.js');
 const { Client } = require('discord.js');
 
-module.exports = {
-    config: {
-        name: "ttt", //Nombre del cmd
-        alias: ['tresenraya'], //Alias
-        description: "Jugar tresenraya con un amigo.", //Descripción (OPCIONAL)
-        usage: "z!ttt @mencion",
-        category: 'diversion',
-        botPermissions: [],
-        memberPermissions: []
-
-    },
+const Command = require('../../Utils/Classes').Command;
+module.exports = class Comando extends Command {
+    constructor() {
+        super()
+        this.name = "ttt"
+        this.alias = ['tresenraya']
+        this.category = 'diversion'
+    }
     /**
      * @param {Object} obj
      * @param {Message} obj.message
      * @param {Client} obj.client
      */
-    run: async (obj) => {
+    async run(obj) {
 
         const { message, client } = obj;
 

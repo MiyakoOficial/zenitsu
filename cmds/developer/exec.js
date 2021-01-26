@@ -1,16 +1,14 @@
 const { promisify } = require('util');
-module.exports = {
-	config: {
-		name: "exec",
-		alias: ['ex'],
-		description: "shell",
-		usage: "z!exec npm i",
-		category: 'developer',
-		botPermissions: [],
-		memberPermissions: []
-	},
+const Command = require('../../Utils/Classes').Command;
+module.exports = class Comando extends Command {
+	constructor() {
+		super()
+		this.name = "exec"
+		this.alias = ['ex']
+		this.category = 'developer'
+	}
 	// eslint-disable-next-line no-unused-vars
-	run: async ({ message, args }) => {
+	async run({ message, args }) {
 
 		if (!['507367752391196682'].includes(message.author.id))
 			return;

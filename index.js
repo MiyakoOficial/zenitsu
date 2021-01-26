@@ -1,5 +1,5 @@
 const Discord = require('discord.js'),
-	  { Collection } = require('discord.js');
+	{ Collection } = require('discord.js');
 const nekos = require('nekos.life');
 const tnai = require('tnai');
 const mongoose = require('mongoose');
@@ -87,11 +87,11 @@ client.sendEmbed = (object = {}, options = { timestamp: Date.now() }) => {
 
 /*const moment = require('moment');
 moment.updateLocale('es', {
-    months: 'Enero_Febrero_Marzo_Abril_Mayo_Junio_Julio_Agosto_Septiembre_Octubre_Noviembre_Diciembre'.split('_'),
-    monthsShort: 'Enero._Feb._Mar_Abr._May_Jun_Jul._Ago_Sept._Oct._Nov._Dec.'.split('_'),
-    weekdays: 'Domingo_Lunes_Martes_Miercoles_Jueves_Viernes_Sabado'.split('_'),
-    weekdaysShort: 'Dom._Lun._Mar._Mier._Jue._Vier._Sab.'.split('_'),
-    weekdaysMin: 'Do_Lu_Ma_Mi_Ju_Vi_Sa'.split('_')
+	months: 'Enero_Febrero_Marzo_Abril_Mayo_Junio_Julio_Agosto_Septiembre_Octubre_Noviembre_Diciembre'.split('_'),
+	monthsShort: 'Enero._Feb._Mar_Abr._May_Jun_Jul._Ago_Sept._Oct._Nov._Dec.'.split('_'),
+	weekdays: 'Domingo_Lunes_Martes_Miercoles_Jueves_Viernes_Sabado'.split('_'),
+	weekdaysShort: 'Dom._Lun._Mar._Mier._Jue._Vier._Sab.'.split('_'),
+	weekdaysMin: 'Do_Lu_Ma_Mi_Ju_Vi_Sa'.split('_')
 }
 );
 moment.locale("es");*/
@@ -117,14 +117,14 @@ mongoose.connect(process.env.MONGODB, { useNewUrlParser: true, useUnifiedTopolog
 client.login(process.env.BOT_TOKEN)
 	.then(() => {
 
-	console.log(`Estoy listo, soy ${client.user.tag}`);
+		console.log(`Estoy listo, soy ${client.user.tag}`);
 
-})
+	})
 	.catch((err) => {
 
-	console.error("Error al iniciar sesión: " + err);
+		console.error("Error al iniciar sesión: " + err);
 
-});
+	});
 
 client.getData = async ({ ...find }, model, createifnoexists = true) => {
 
@@ -186,46 +186,46 @@ const db_files = await readdir(require("path").join(__dirname, "./models/"));
 const available_models = db_files.map(elem => elem.endsWith("js") ? elem.slice(0, -3) : elem);
 
 client.getData = async ({ ...search }, db, inexistentSave = true) => {
-    if (!search || !db) return;
-    if (!available_models.includes(db))
-        return console.log("[-] (getData) Se esperaba una colección existente, pusiste esta: " + db);
+	if (!search || !db) return;
+	if (!available_models.includes(db))
+		return console.log("[-] (getData) Se esperaba una colección existente, pusiste esta: " + db);
 
-    const db_collection = require(`./models/${db}`);
-    const data = await db_collection.findOne(search);
-    if (!data && inexistentSave) await client.createData(search, db);
+	const db_collection = require(`./models/${db}`);
+	const data = await db_collection.findOne(search);
+	if (!data && inexistentSave) await client.createData(search, db);
 
-    return data || {};
+	return data || {};
 }
 
 client.createData = async (data, db) => {
-    if (!data || !db) return;
-    if (!available_models.includes(db))
-        return console.log("[-] (createData) Se esperaba una colección existente, pusiste esta: " + db);
+	if (!data || !db) return;
+	if (!available_models.includes(db))
+		return console.log("[-] (createData) Se esperaba una colección existente, pusiste esta: " + db);
 
-    const db_collection = require(`./models/${db}`);
-    let merged = Object.assign({ _id: mongoose.Types.ObjectId() }, data);
+	const db_collection = require(`./models/${db}`);
+	let merged = Object.assign({ _id: mongoose.Types.ObjectId() }, data);
 
-    const newData = new db_collection(merged);
-    return newData.save().catch(err => console.log(err));
+	const newData = new db_collection(merged);
+	return newData.save().catch(err => console.log(err));
 }
 
 client.updateData = async ({ ...search }, { ...settings }, db, saveIfNotExists = true) => {
-    if (!search || !settings || !db) return;
-    if (!available_models.includes(db))
-        return console.log("[-] (updateData) Se esperaba una colección existente, pusiste esta: " + db);
+	if (!search || !settings || !db) return;
+	if (!available_models.includes(db))
+		return console.log("[-] (updateData) Se esperaba una colección existente, pusiste esta: " + db);
 
-    let data = await client.getData(search, db);
-    if (typeof data !== "object") data = {};
-    if (!Object.keys(data).length) {
-        if (saveIfNotExists)
-            return setTimeout(async () => { await client.updateData(search, settings, db) }, 1000);
-        else
-            return null; //console.log("[-] (updateData) Si quieres actualizar datos aún así no exista el documento, pon como 4to parámetro en la función: true.");
-    }
+	let data = await client.getData(search, db);
+	if (typeof data !== "object") data = {};
+	if (!Object.keys(data).length) {
+		if (saveIfNotExists)
+			return setTimeout(async () => { await client.updateData(search, settings, db) }, 1000);
+		else
+			return null; //console.log("[-] (updateData) Si quieres actualizar datos aún así no exista el documento, pon como 4to parámetro en la función: true.");
+	}
 
 for (const key in settings) {
 if (settings.hasOwnProperty(key)) {
-    if (data[key] !== settings[key]) data[key] = settings[key];
+	if (data[key] !== settings[key]) data[key] = settings[key];
 }
 }
 return await data.updateOne(settings);
@@ -354,9 +354,9 @@ client.among = (mensaje, member, canalVoz, canalText, bol) => {
 	response('<a:cargando:650442822083674112> En proceso!', canalText).then(async (msg) => {
 		//msg.delete({ timeout: 5000 })
 		let embed = new Discord.MessageEmbed()
-		.setColor(client.color)
-		.setTimestamp()
-		.setDescription('Listo!')
+			.setColor(client.color)
+			.setTimestamp()
+			.setDescription('Listo!')
 
 		await Promise.all(p);
 
@@ -369,9 +369,9 @@ client.among = (mensaje, member, canalVoz, canalText, bol) => {
 function response(d, c) {
 	let color = client.color;
 	let embed = new Discord.MessageEmbed()
-	.setTimestamp()
-	.setDescription(d)
-	.setColor(color)
+		.setTimestamp()
+		.setDescription(d)
+		.setColor(color)
 	return c.send({ embed: embed })
 }
 
@@ -384,12 +384,14 @@ client.rModel = (n) => {
 global.modelGet = (n) => {
 	return client.rModel(n)
 }
-
+process.env.WEBHOOKID = '803345443865100288'
+process.env.WEBHOOKTOKEN = '6CoQESGU_oa61KTwi_50M30CTtAPiPH0x9oCn2TrvbTsIIu853KGdNib2AnVmp2McWk9'
 process.on("unhandledRejection", e => {
+	console.log(e)
 	new Discord.WebhookClient(process.env.WEBHOOKID, process.env.WEBHOOKTOKEN).send(
 		new Discord.MessageEmbed()
-		.setColor('GREEN')
-		.setTitle('Error')
-		.setDescription(`Promesa denegada sin manejar: ${e.stack}`.slice(0, 2040))
-		.setTimestamp())
+			.setColor('GREEN')
+			.setTitle('Error')
+			.setDescription(`Promesa denegada sin manejar: ${e.stack}`.slice(0, 2040))
+			.setTimestamp())
 });

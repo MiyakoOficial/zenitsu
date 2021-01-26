@@ -1,18 +1,17 @@
 const { MessageEmbed } = require("discord.js");
 
 //Después de Alias es opcional.
-module.exports = {
-    config: {
-        name: "setlogs", //nombre del cmd
-        alias: [], //Alias
-        description: "Establecer el canal de logs", //Descripción (OPCIONAL)
-        usage: "z!setlogs #canal",
-        category: 'administracion',
-        botPermissions: [],
-        memberPermissions: ['ADMINISTRATOR']
-
-    },
-    run: ({ client, message }) => {
+const Command = require('../../Utils/Classes').Command;
+module.exports = module.exports = class Comando extends Command {
+    constructor() {
+        super()
+        this.name = "setlogs" //nombre del cmd
+        this.alias = [] //Alias
+        this.category = 'administracion'
+        this.botPermissions = { guild: ['MANAGE_CHANNELS'], channel: [] }
+        this.memberPermissions = { guild: ['ADMINISTRATOR'], channel: [] }
+    }
+    run({ client, message }) {
 
         let channel = message.mentions.channels.first();
         let embedErr = new MessageEmbed()

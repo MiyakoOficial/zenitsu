@@ -1,17 +1,15 @@
 const Discord = require('discord.js')
 const mybo = require("myscrapper");
 
-module.exports = {
-    config: {
-        name: "portalmybot", //nombre del cmd
-        alias: [`mybo`, `mybot`, `myscrapper`], //Alias
-        description: "Ver informacion de los usuarios de portalmybot.com", //Descripción (OPCIONAL)
-        usage: "z!portalmybot USUARIO",
-        category: 'utiles',
-        botPermissions: [],
-        memberPermissions: []
-    },
-    run: async ({ message, args, embedResponse, client }) => {
+const Command = require('../../Utils/Classes').Command;
+module.exports = class Comando extends Command {
+    constructor() {
+        super()
+        this.name = "portalmybot"
+        this.alias = [`mybo`, `mybot`]
+        this.category = 'utiles'
+    }
+    async run({ message, args, embedResponse, client }) {
 
         if (!args[0]) return embedResponse('<a:CatLoad:724324015275245568> | ¿A quien quieres buscar?');
 

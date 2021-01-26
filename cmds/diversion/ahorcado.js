@@ -1,16 +1,12 @@
 const { MessageEmbed } = require("discord.js");
-module.exports = {
-    config: {
-        name: "ahorcado", //Nombre del cmd
-        alias: [], //Alias
-        description: "Jugar el juego del ahorcado", //Descripción (OPCIONAL)
-        usage: "z!ahoracado @mencoin",
-        category: 'diversion',
-        botPermissions: [],
-        memberPermissions: []
-
-    },
-    run: async ({ message, embedResponse }) => {
+const Command = require('../../Utils/Classes').Command;
+module.exports = class Comando extends Command {
+    constructor() {
+        super()
+        this.name = "ahorcado"
+        this.category = 'diversion'
+    }
+    async run({ message, embedResponse }) {
 
         let mention = message.mentions.users.first();
         let author = message.author;
@@ -27,7 +23,7 @@ module.exports = {
 
         message.guild.playing = true;
 
-        const filter = m => (m.author.id == mention.id) && ['si', 'no'].some(a=>a==m.content);
+        const filter = m => (m.author.id == mention.id) && ['si', 'no'].some(a => a == m.content);
 
         let aw = await waitRequest(mention, filter, message.channel)
 
@@ -35,8 +31,8 @@ module.exports = {
             delete message.guild.playing
             return embedResponse(`<:cancel:779536630041280522> | ${mention.tag} no quizo jugar.`)
         }
-		
-		if (aw === 'time') {
+
+        if (aw === 'time') {
             delete message.guild.playing
             return embedResponse(`<:cancel:779536630041280522> | ${mention.tag} no respondio a tiempo.`)
         }
@@ -199,11 +195,11 @@ async function waitRequest(mencion, filter, channel) {
                     give(collected.array()[0].content)
                 })
                 .catch(() => {
-                     give('time')
+                    give('time')
                 });
         })
     })
 
     return palabra;
-	
+
 }

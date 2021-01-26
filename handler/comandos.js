@@ -8,27 +8,21 @@ module.exports = (client) => {
         const commands = readdirSync(`./cmds/${dirs}/`).filter(d => {
             return d.endsWith('.js');
         });
-
+        console.log(commands)
         for (let file of commands) {
-            let carpeta = require(`../cmds/${dirs}/${file}`);
-
-            if (carpeta.config.category == 'developer') {
-                carpeta.config.dev = true
+            try {
+                let carpeta = require(`../cmds/${dirs}/${file}`);
+                console.log(new carpeta().name)
+                client.commands.set(new carpeta().name, new carpeta());
+                if (carpeta.name) {
+                    table.addRow(file, '✅');
+                } else {
+                    table.addRow(file, `❌  -> falta un .name, o .name no es un string.`);
+                    continue;
+                }
+            } catch (e) {
+                table.addRow(file, `❌ error: ` + e.message);
             }
-
-            carpeta.config.cooldown = carpeta.config.cooldown || 4;
-
-            client.commands.set(carpeta.config.name, carpeta);
-            if (carpeta.config.name) {
-                table.addRow(file, '✅');
-            } else {
-                table.addRow(file, `❌  -> falta un config.name, o config.name no es un string.`);
-                continue;
-            }
-
-            if (carpeta.config.alias) carpeta.config.alias.forEach(a => {
-                return client.alias.set(a, carpeta.config.name);
-            });
         }
     };
     require('fs')

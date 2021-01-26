@@ -1,17 +1,13 @@
 const { MessageEmbed } = require("discord.js");
 
-module.exports = {
-    config: {
-        name: "reportbug",
-        alias: [],
-        description: "reportar algun bot del bot",
-        usage: "z!reportbug bug ocurrido",
-        category: 'bot',
-        botPermissions: [],
-        memberPermissions: []
-    },
-    run: ({ client, message, args, embedResponse }) => {
-
+const Command = require('../../Utils/Classes').Command;
+module.exports = class Comando extends Command {
+    constructor() {
+        super()
+        this.name = "reportbug"
+        this.category = 'bot'
+    }
+    run({ client, message, args, embedResponse }) {
         if (!args[0]) return embedResponse('<:cancel:779536630041280522> | Necesitas especificar el error/bug.')
         let embed = new MessageEmbed()
             .setColor(client.color)
