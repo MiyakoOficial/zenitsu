@@ -384,8 +384,7 @@ client.rModel = (n) => {
 global.modelGet = (n) => {
 	return client.rModel(n)
 }
-process.env.WEBHOOKID = '803345443865100288'
-process.env.WEBHOOKTOKEN = '6CoQESGU_oa61KTwi_50M30CTtAPiPH0x9oCn2TrvbTsIIu853KGdNib2AnVmp2McWk9'
+
 process.on("unhandledRejection", e => {
 	console.log(e)
 	new Discord.WebhookClient(process.env.WEBHOOKID, process.env.WEBHOOKTOKEN).send(
