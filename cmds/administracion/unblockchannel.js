@@ -11,8 +11,7 @@ module.exports = class Comando extends Command {
         this.memberPermissions = { guild: [], channel: ['MANAGE_CHANNELS'] }
     }
     run({ message, client }) {
-        if (message.author.id != '507367752391196682')
-            return;
+
         return message.channel.updateOverwrite(message.guild.id, {
             SEND_MESSAGES: null
         }).then(() => {

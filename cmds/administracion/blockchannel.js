@@ -13,8 +13,7 @@ module.exports = class Comando extends Command {
 
     }
     run({ message, client }) {
-        if (message.author.id != '507367752391196682')
-            return;
+
         return message.channel.updateOverwrite(message.guild.id, {
             SEND_MESSAGES: false
         }).then(() => {
