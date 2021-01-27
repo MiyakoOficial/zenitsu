@@ -41,7 +41,7 @@ module.exports = class Comando extends Command {
 
 		todo += `\n${printT.join('')}`
 
-		let res = Discord.Util.splitMessage(`**Estructura de ${memberXD?.user?.tag || memberXD.name}** [${(memberXD instanceof Discord.GuildMember) ? 'miembro' : 'rol'}]`+todo, { maxLength: 1900 });
+		let res = Discord.Util.splitMessage(`**Estructura de ${memberXD?.user?.tag || memberXD.name}** [${(memberXD instanceof Discord.GuildMember) ? 'miembro' : 'rol'}]\n`+todo, { maxLength: 1900 });
 
 		for (let a of res){
 			let embed = new Discord.MessageEmbed()
