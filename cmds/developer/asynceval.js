@@ -2,8 +2,8 @@ const Command = require('../../Utils/Classes').Command;
 module.exports = class Comando extends Command {
 	constructor() {
 		super()
-		this.name = "eval"
-		this.alias = ['e']
+		this.name = "asynceval"
+		this.alias = ['ae']
 		this.category = 'developer'
 	}
 	async run(obj) {
@@ -16,7 +16,7 @@ module.exports = class Comando extends Command {
 			return;
 		try {
 			let code = args.join(" ");
-			let evalued = await eval(code);
+			let evalued = await eval(`(async() => {${code}})()`);
 			let TYPE = typeof (evalued)
 			evalued = require("util").inspect(evalued, { depth: 0 });
 			evalued = replace(evalued, [client.token, process.env.MONGODB, process.env.WEBHOOKID, process.env.WEBHOOKTOKEN, process.env.DBLTOKEN])
