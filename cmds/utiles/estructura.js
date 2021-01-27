@@ -41,10 +41,16 @@ module.exports = class Comando extends Command {
 
 		todo += `\n${printT.join('')}`
 
-		let res = Discord.Util.splitMessage(todo, { maxLength: 1900 });
+		let res = Discord.Util.splitMessage(`**Estructura de ${memberXD?.user?.tag || memberXD.name}** [${(memberXD instanceof Discord.GuildMember) ? 'miembro' : 'rol'}]`+todo, { maxLength: 1900 });
 
-		await message.channel.send(`**Estructura de ${memberXD?.user?.tag || memberXD.name}** [${(memberXD instanceof Discord.GuildMember) ? 'miembro' : 'rol'}]`).catch(() => { })
-		res.forEach(async a => await message.channel.send(a, { code: '' }).catch(() => { }))
+		for (let a of res){
+			let embed = new Discord.MessageEmbed()
+			.setTimestamp()
+			.setColor(message.client.color)
+			.setDescription('```js\n'+a+'```')
+			
+			await message.channel.send({embed}).catch(() => { })
+		}
 
 		function membersInfoInChannel(channel) {
 
