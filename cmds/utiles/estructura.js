@@ -10,10 +10,7 @@ module.exports = class Comando extends Command {
 	async run({ message, args }) {
 
 		let todo = '';
-		async function GETOWNER() {
-			return await message.guild.members.fetch(message.guild.ownerID)
-		}
-		let memberXD = args[0] == 'guild' ? await GETOWNER().catch(() => { }) : message.guild.members.cache.get(args[0]) || message.guild.members.cache.find(a => a.displayName == args.join(' ') || a.user.tag == args.join(' ') || a.user.username == args.join(' ')) || message.mentions.members.first()
+		let memberXD = message.guild.members.cache.find(a => a.displayName == args.join(' ') || a.user.tag == args.join(' ') || a.user.username == args.join(' ')) || message.mentions.members.first()
 		|| message.mentions.roles.first()
 		|| message.guild.roles.cache.get(args[0])
 		|| message.guild.roles.cache.find(r => r.name === args.join(' '))
@@ -46,7 +43,7 @@ module.exports = class Comando extends Command {
 
 		let res = Discord.Util.splitMessage(todo, { maxLength: 1900 });
 
-		await message.channel.send(`**Estructura de ${memberXD?.user?.tag ||memberXD.name}** [${(memberXD instanceof Discord.GuildMember) ? 'miembro' : 'rol'}]`).catch(() => { })
+		await message.channel.send(`**Estructura de ${memberXD?.user?.tag || memberXD.name}** [${(memberXD instanceof Discord.GuildMember) ? 'miembro' : 'rol'}]`).catch(() => { })
 		res.forEach(async a => await message.channel.send(a, { code: '' }).catch(() => { }))
 
 		function membersInfoInChannel(channel) {
