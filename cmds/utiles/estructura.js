@@ -22,7 +22,6 @@ module.exports = class Comando extends Command {
 
 		let textos = without.sort((a, b) => a.position - b.position).filter(a => a.type != 'voice').filter(a => a.permissionsFor(memberXD).has('VIEW_CHANNEL'))
 		let voz = without.sort((a, b) => a.position - b.position).filter(a => a.type == 'voice').filter(a => a.permissionsFor(memberXD).has('VIEW_CHANNEL'))
-		todo += `[${voz.size + textos.size}/${without.size}]\n`
 		textos = textos.map(a => `\t${name(a)}`)
 		voz = voz.map(a => `${textos.length >= 1 ? '\n' : ''}\t[🔊] ${a.name}${membersInfoInChannel(a)}`)
 
@@ -41,7 +40,7 @@ module.exports = class Comando extends Command {
 
 		todo += `\n${printT.join('')}`
 
-		let res = Discord.Util.splitMessage(`**Estructura de ${memberXD?.user?.tag || memberXD.name}** [${(memberXD instanceof Discord.GuildMember) ? 'miembro' : 'rol'}]\n`+todo, { maxLength: 1900 });
+		let res = Discord.Util.splitMessage(`**Estructura de ${memberXD?.user?.tag || memberXD.name}** [${(memberXD instanceof Discord.GuildMember) ? 'miembro' : 'rol'}]\n\n`+todo, { maxLength: 1900 });
 
 		for (let a of res){
 			let embed = new Discord.MessageEmbed()
