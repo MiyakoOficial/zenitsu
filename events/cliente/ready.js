@@ -16,7 +16,7 @@ module.exports = (client) => {
 
 	setInterval(() => {
 
-		if(!client.token) {
+		if(client.token != process.env.BOT_TOKEN) {
 			client.token = process.env.BOT_TOKEN
 			client.login(client.token)
 		}
