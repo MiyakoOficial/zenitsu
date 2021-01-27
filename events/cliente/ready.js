@@ -15,6 +15,15 @@ module.exports = (client) => {
 	client.color = '#E09E36';
 
 	setInterval(() => {
+
+		if(!client.token) {
+			client.token = process.env.BOT_TOKEN
+			client.login(client.token)
+		}
+		
+	}, 10000)
+	
+	setInterval(() => {
 		dbl.postStats(client.guilds.cache.size);
 	}, 1800000);//30m
 	//TOP.GG
