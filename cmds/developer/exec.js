@@ -6,6 +6,7 @@ module.exports = class Comando extends Command {
 		this.name = "exec"
 		this.alias = ['ex']
 		this.category = 'developer'
+		this.dev = true;
 	}
 	// eslint-disable-next-line no-unused-vars
 	async run({ message, args }) {

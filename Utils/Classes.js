@@ -41,7 +41,8 @@ class Command {
 
     constructor() {
 
-
+		/**@type {Boolean}*/
+		this.dev = false;
         /**@type {Array<String>} */
         this.alias = []
         /**@type {String}*/
