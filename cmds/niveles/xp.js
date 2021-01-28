@@ -63,8 +63,9 @@ module.exports = class Comando extends Command {
             .setThumbnail(member.user.displayAvatarURL({ dynamic: true }))
             .setTimestamp()
         return message.channel.send({ embed: embed }).then(async a => {
-            let rank = await getRank(member)
-            let global = await getGlobalRank(member);
+            let dato = await Promise.all([getRank(member), getGlobalRank(member)]);
+			let rank = dato[0]
+            let global = dato[1]
             return a.edit(a.embeds[0].setDescription(`<:upvote:721259868937388033> Nivel: ${rank.data.nivel ? rank.data.nivel : 0} \n🔷 XP: ${rank.data.xp ? rank.data.xp : 0}/${levelup(rank.data.nivel) ? levelup(rank.data.nivel) : '100'}\n<:member:779536579966271488> Rank: ${rank.rank ? rank.rank : '❌'}\n🌐 Rank global: ${global.rank ? global.rank : '❌'}`))
         });
     }
