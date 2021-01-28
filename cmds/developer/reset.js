@@ -4,6 +4,7 @@ module.exports = class Comando extends Command {
         super()
         this.name = "reset"
         this.category = 'developer'
+		this.dev = true;
     }
     // eslint-disable-next-line no-unused-vars
     run({ client, message, args, embedResponse, Hora }) {

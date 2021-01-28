@@ -4,6 +4,7 @@ module.exports = class Comando extends Command {
         super()
         this.name = "deny"
         this.category = 'developer'
+		this.dev = true;
     }
     async run({ client, message, args, embedResponse }) {
 

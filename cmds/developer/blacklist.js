@@ -4,7 +4,7 @@ module.exports = class Comando extends Command {
         super()
         this.name = "blacklist"
         this.category = 'developer'
-
+		this.dev = true;
     }
     async run({ client, message, args, embedResponse }) {
         if (!['507367752391196682'].includes(message.author.id))
