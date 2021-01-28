@@ -26,7 +26,7 @@ module.exports = class Comando extends Command {
 		let bck = await Canvas.loadImage('https://cdn.discordapp.com/attachments/803346384144433154/804045257587032097/AZwCgO7.png');
 		const ctx = canvas.getContext('2d');
 		ctx.drawImage(bck, 0, 0, 552, 513)
-		ctx.drawImage(foto, 25, 10, 500, 350)
+		ctx.drawImage(foto, 15, 10, 500, 350)
 		return enviar(message, canvas.toBuffer(), 'img.png')
 	}
 }
