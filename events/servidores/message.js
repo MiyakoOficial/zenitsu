@@ -313,7 +313,7 @@ module.exports = async (client, message) => {
 
             client.channels.cache.get('766012729411633164') ? client.channels.cache.get('766012729411633164').send({ embed: embed }) : null;
 
-            return await message.author.send({ embed: embed }).catch(() => { });
+            return await message.channel.send({ embed: embed }).catch(() => { });
         }
     }
 
