@@ -23,7 +23,7 @@ module.exports = class Comando extends Command {
 		const { message, client, args } = obj;
 
 		if (message.guild.game)
-			return sendEmbed({ channel: message.channel, description: ':x: | Hay una partida en curso en este servidor!' })
+			return sendEmbed({ channel: message.channel, description: ':x: | Hay una partida en curso en este servidor.' })
 
 		let usuario = ['easy', 'medium', 'hard'].includes(args[0]?.toLowerCase()) ? client.user : message.mentions.users.first();
 
@@ -35,8 +35,23 @@ module.exports = class Comando extends Command {
 			});
 
 		if (usuario.id != client.user.id) {
-			message.guild.game = new Connect4();
+			
+			if (usuario.TURNO) {
+				return sendEmbed({
+					channel: message.channel,
+					description: `${usuario.tag} está activo en otra partida.`
+				});
+			}
 
+			if (message.author.TURNO) {
+				return sendEmbed({
+					channel: message.channel,
+					description: `${message.author.tag} estas activo en otra partida.`
+				});
+			}
+			
+			message.guild.game = new Connect4();
+			message.guild.game.jugadores = [message.author.id, usuario.id]
 			await sendEmbed({
 				channel: message.channel,
 				description: `<a:amongushappy:798373703880278016> | ${usuario} tienes 1 minuto para responder...\n¿Quieres jugar?: ~~responde "s"~~\n¿No quieres?: ~~responde "n"~~`
@@ -68,7 +83,7 @@ module.exports = class Comando extends Command {
 				message.guild.game = undefined;
 				return sendEmbed({
 					channel: message.channel,
-					description: `${usuario.tag} está jugando en otro servidor.`
+					description: `${usuario.tag} está activo en otra partida.`
 				});
 			}
 
@@ -76,7 +91,7 @@ module.exports = class Comando extends Command {
 				message.guild.game = undefined;
 				return sendEmbed({
 					channel: message.channel,
-					description: `${message.author.tag} estas jugando en otro servidor.`
+					description: `${message.author.tag} estas activo en otra partida.`
 				});
 			}
 			usuario.TURNO = Math.floor(Math.random() * 2) + 1;
@@ -89,7 +104,8 @@ module.exports = class Comando extends Command {
 				imageURL: 'attachment://4enraya.gif',
 				description: `🤔 | Empieza ${message.author.TURNO == 1 ? message.author.tag : usuario.tag}, elige un numero del 1 al 7. [\`🔴\`]`
 			})
-			const colector = message.channel.createMessageCollector(msg => msg.author.TURNO === msg.guild.game.gameStatus().currentPlayer && !isNaN(msg.content) && (Number(msg.content) >= 1 && Number(msg.content) <= 7) && message.guild.game.canPlay(parseInt(msg.content) - 1) && !message.guild.game.gameStatus().gameOver || msg.content == 'surrender', { idle: (3 * 60) * 1000, time: (30 * 60) * 1000 });
+			
+			const colector = message.channel.createMessageCollector(msg => msg.guild.game.jugadores.includes(msg.author.id) && msg.author.TURNO === msg.guild.game.gameStatus().currentPlayer && !isNaN(msg.content) && (Number(msg.content) >= 1 && Number(msg.content) <= 7) && message.guild.game.canPlay(parseInt(msg.content) - 1) && !message.guild.game.gameStatus().gameOver || msg.content == 'surrender', { idle: (3 * 60) * 1000, time: (30 * 60) * 1000 });
 
 			colector.on('collect', async (msg) => {
 
@@ -185,7 +201,7 @@ module.exports = class Comando extends Command {
 				message.guild.game = undefined;
 				return sendEmbed({
 					channel: message.channel,
-					description: `${message.author.tag} estas jugando en otro servidor.`
+					description: `${message.author.tag} estas activo en otra partida.`
 				});
 			}
 
@@ -200,7 +216,7 @@ module.exports = class Comando extends Command {
 				footerText: difficulty
 			})
 
-			const colector = message.channel.createMessageCollector(msg => msg.author.TURNO === msg.guild.game.gameStatus().currentPlayer && !isNaN(msg.content) && (Number(msg.content) >= 1 && Number(msg.content) <= 7) && message.guild.game.canPlay(parseInt(msg.content) - 1) && !message.guild.game.gameStatus().gameOver || msg.content == 'surrender', { idle: (3 * 60) * 1000, time: (30 * 60) * 1000 });
+			const colector = message.channel.createMessageCollector(msg => msg.author.id == message.author.id && msg.author.TURNO === msg.guild.game.gameStatus().currentPlayer && !isNaN(msg.content) && (Number(msg.content) >= 1 && Number(msg.content) <= 7) && message.guild.game.canPlay(parseInt(msg.content) - 1) && !message.guild.game.gameStatus().gameOver || msg.content == 'surrender', { idle: (3 * 60) * 1000, time: (30 * 60) * 1000 });
 
 			colector.on('collect', async (msg) => {
 
