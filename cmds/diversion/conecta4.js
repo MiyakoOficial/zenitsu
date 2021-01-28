@@ -106,7 +106,7 @@ module.exports = class Comando extends Command {
 				description: `🤔 | Empieza ${message.author.TURNO == 1 ? message.author.tag : usuario.tag}, elige un numero del 1 al 7. [\`🔴\`]`
 			})
 
-			const colector = message.channel.createMessageCollector(msg => msg.guild.game.jugadores.includes(msg.author.id) && msg.author.TURNO === msg.guild.game.gameStatus().currentPlayer && !isNaN(msg.content) && (Number(msg.content) >= 1 && Number(msg.content) <= 7) && message.guild.game.canPlay(parseInt(msg.content) - 1) && !message.guild.game.gameStatus().gameOver || msg.content == 'surrender', { idle: (3 * 60) * 1000, time: (30 * 60) * 1000 });
+			const colector = message.channel.createMessageCollector(msg => msg.guild.game.jugadores.includes(msg.author.id) && msg.author.TURNO === msg.guild.game.gameStatus().currentPlayer && !isNaN(msg.content) && (Number(msg.content) >= 1 && Number(msg.content) <= 7) && message.guild.game.canPlay(parseInt(msg.content) - 1) && !message.guild.game.gameStatus().gameOver || (msg.guild.game.jugadores.includes(msg.author.id) && msg.content == 'surrender'), { idle: (3 * 60) * 1000, time: (30 * 60) * 1000 });
 
 			colector.on('collect', async (msg) => {
 
@@ -217,7 +217,7 @@ module.exports = class Comando extends Command {
 				footerText: difficulty
 			})
 
-			const colector = message.channel.createMessageCollector(msg => msg.author.id == message.author.id && msg.author.TURNO === msg.guild.game.gameStatus().currentPlayer && !isNaN(msg.content) && (Number(msg.content) >= 1 && Number(msg.content) <= 7) && message.guild.game.canPlay(parseInt(msg.content) - 1) && !message.guild.game.gameStatus().gameOver || msg.content == 'surrender', { idle: (3 * 60) * 1000, time: (30 * 60) * 1000 });
+			const colector = message.channel.createMessageCollector(msg => msg.author.id == message.author.id && msg.author.TURNO === msg.guild.game.gameStatus().currentPlayer && !isNaN(msg.content) && (Number(msg.content) >= 1 && Number(msg.content) <= 7) && message.guild.game.canPlay(parseInt(msg.content) - 1) && !message.guild.game.gameStatus().gameOver || (msg.guild.game.jugadores.includes(msg.author.id) && msg.content == 'surrender'), { idle: (3 * 60) * 1000, time: (30 * 60) * 1000 });
 
 			colector.on('collect', async (msg) => {
 
