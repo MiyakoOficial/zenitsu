@@ -29,7 +29,7 @@ module.exports = class Comando extends Command {
 
                             return `${I} | ${I == 1 && i == 0 || I == 2 && i == 1 || I == 3 && i == 2 ? '[👑] ' : ''}${!client.users.cache.get(v.idMember) ? v.cacheName == 'none' ? 'Miembro desconocido.' : v.cacheName : client.users.cache.get(v.idMember).tag} - ${!v.nivel ? 0 : v.nivel}`
 
-                        }).join('\n') || `<:cancel:779536630041280522> | En la pagina ${seleccion} no hay datos.`
+                        }).join('\n') || `<:cancel:804368628861763664> | En la pagina ${seleccion} no hay datos.`
                     )
                     )
                     .setTimestamp()
@@ -40,7 +40,7 @@ module.exports = class Comando extends Command {
                 break;
             case 'global':
                 let ress = await getGlobalRank();
-                if (ress.length === 0) return embedResponse("🤔 | Parece que nadie ha hablado en este servidor.")
+                if (ress.length === 0) return embedResponse("🤔 | Parece que nadie ha hablado.")
                 let paginaa = ress.slice(10 * (seleccion - 1), 10 * seleccion);
                 let embedd = new Discord.MessageEmbed()
                     .setDescription(client.remplazar(
@@ -50,7 +50,7 @@ module.exports = class Comando extends Command {
 
                             return `${I} | ${I == 1 && i == 0 || I == 2 && i == 1 || I == 3 && i == 2 ? '[👑] ' : ''}${!client.users.cache.get(v.idMember) ? v.cacheName == 'none' ? 'Miembro desconocido.' : v.cacheName : client.users.cache.get(v.idMember).tag} - ${!v.nivel ? 0 : v.nivel}`
 
-                        }).join('\n') || `<:cancel:779536630041280522> | En la pagina ${seleccion} no hay datos.`
+                        }).join('\n') || `<:cancel:804368628861763664> | En la pagina ${seleccion} no hay datos.`
                     )
                     )
                     .setTimestamp()
@@ -63,7 +63,7 @@ module.exports = class Comando extends Command {
                 let embedError = new Discord.MessageEmbed()
                     .setColor(client.color)
                     .setTimestamp()
-                    .setDescription('<:cancel:779536630041280522> | Tienes que elegir entre global y local!\n~~Ejemplo: z!rk global 1~~')
+                    .setDescription('<:cancel:804368628861763664> | Tienes que elegir entre global y local!\n~~Ejemplo: z!rk global 1~~')
                 message.channel.send({ embed: embedError })
                 break;
 

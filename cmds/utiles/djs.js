@@ -9,11 +9,11 @@ module.exports = class Comando extends Command {
     }
     async run({ message, args, embedResponse }) {
 
-        if (!args[0]) return embedResponse('<a:CatLoad:724324015275245568> | ¿Que quieres buscar?');
+        if (!args[0]) return embedResponse('<a:CatLoad:804368444526297109> | ¿Que quieres buscar?');
         let response = await fetch(`https://djsdocs.sorta.moe/v2/embed?src=stable&q=${encodeURIComponent(args.join(' '))}`).catch(() => { });
         if (!response) return embedResponse('Sin resultados.');
         let megadb = await response.json().catch(() => { });
-        if (!megadb) return embedResponse("<:cancel:779536630041280522> | No pude encontrarlo en la documentacion de discord.js.")
+        if (!megadb) return embedResponse("<:cancel:804368628861763664> | No pude encontrarlo en la documentacion de discord.js.")
         message.channel.send({ embed: megadb }).catch(() => { });
 
     }

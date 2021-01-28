@@ -11,14 +11,14 @@ module.exports = class Comando extends Command {
     async run({ client, args, message, embedResponse }) {
 
         if (!args[0])
-            return embedResponse('<:cancel:779536630041280522> | ¿Que quieres buscar?');
+            return embedResponse('<:cancel:804368628861763664> | ¿Que quieres buscar?');
 
-        await embedResponse('<:accept:779536642365063189> | Buscando: ' + args.join(' '))
+        await embedResponse('<:accept:804368642913206313> | Buscando: ' + args.join(' '))
 
         let { data } = await topGG(args.join(' '), 'true') || { data: [] };
 
         if (!data || !data[0])
-            return embedResponse('<:cancel:779536630041280522> | Sin resultados.')
+            return embedResponse('<:cancel:804368628861763664> | Sin resultados.')
 
         let superdata = data;
         data = data[0]

@@ -12,11 +12,11 @@ module.exports = class Comando extends Command {
 
         let miembro = message.mentions.members.first();
 
-        if (!miembro || miembro?.user?.bot) return embedResponse('<:cancel:779536630041280522> | Menciona a un miembro del servidor.')
+        if (!miembro || miembro?.user?.bot) return embedResponse('<:cancel:804368628861763664> | Menciona a un miembro del servidor.')
 
         miembro = miembro.user;
 
-        if (miembro.id == message.author.id) return embedResponse('<:cancel:779536630041280522> | No te puedes perdonar a ti mismo.')
+        if (miembro.id == message.author.id) return embedResponse('<:cancel:804368628861763664> | No te puedes perdonar a ti mismo.')
 
         let datazo = (await client.getData({ idGuild: message.guild.id, idMember: miembro.id }, 'warns'));
 
@@ -41,7 +41,7 @@ module.exports = class Comando extends Command {
 
         else {
 
-            return embedResponse('<:cancel:779536630041280522> | z!pardon @mencion < last | ID de la advertencia >')
+            return embedResponse('<:cancel:804368628861763664> | z!pardon @mencion < last | ID de la advertencia >')
 
         }
 

@@ -14,7 +14,7 @@ module.exports = class Comando extends Command {
 
         let embedErr = new MessageEmbed()
             .setColor(client.color)
-            .setDescription(`<:cancel:779536630041280522> | Necesitas especificar el prefijo nuevo.`)
+            .setDescription(`<:cancel:804368628861763664> | Necesitas especificar el prefijo nuevo.`)
             .setTimestamp()
 
         if (!args[0])
@@ -22,7 +22,7 @@ module.exports = class Comando extends Command {
 
         let embedE = new MessageEmbed()
             .setColor(client.color)
-            .setDescription(`<:cancel:779536630041280522> | El prefix debe tener menos de 3 caracteres.`)
+            .setDescription(`<:cancel:804368628861763664> | El prefix debe tener menos de 3 caracteres.`)
             .setTimestamp()
 
         if (args[0].length >= 4)
@@ -32,7 +32,7 @@ module.exports = class Comando extends Command {
 
             let embed = new MessageEmbed()
                 .setColor(client.color)
-                .setDescription(`<:trustedAdmin:779695112036286474> | ${message.author.username} ha establecido el prefijo a: ${data.prefix}`)
+                .setDescription(`<:trustedAdmin:804368672520536104> | ${message.author.username} ha establecido el prefijo a: ${data.prefix}`)
                 .setTimestamp()
             message.guild.cachePrefix = data.prefix
             return message.channel.send({ embed: embed })
@@ -41,7 +41,7 @@ module.exports = class Comando extends Command {
 
             let embed = new MessageEmbed()
                 .setColor(client.color)
-                .setDescription(`<:cancel:779536630041280522> | Error al establecer el prefijo.`)
+                .setDescription(`<:cancel:804368628861763664> | Error al establecer el prefijo.`)
                 .setTimestamp()
                 .setFooter(err)
 

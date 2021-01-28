@@ -17,7 +17,7 @@ module.exports = class Comando extends Command {
 		if (!data || !data.length)
 			return sendEmbed({
 				channel: message.channel,
-				description: `<:cancel:779536630041280522> | ${member.user} no tiene datos.`
+				description: `<:cancel:804368628861763664> | ${member.user} no tiene datos.`
 			});
 
 		const easy = data.find(item => item.difficulty == 'easy'),

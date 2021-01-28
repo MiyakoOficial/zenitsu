@@ -27,7 +27,7 @@ module.exports = class Comando extends Command {
 
 		if (!data.length)
 			return sendEmbed({
-				description: `<:cancel:779536630041280522> | Aún no hay datos en la dificultad ${difficulty}`,
+				description: `<:cancel:804368628861763664> | Aún no hay datos en la dificultad ${difficulty}`,
 				channel: message.channel
 			});
 

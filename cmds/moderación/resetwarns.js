@@ -12,7 +12,7 @@ module.exports = class Comando extends Command {
 
         let member = message.mentions.members.first();
 
-        if (!member || member?.user?.bot) return embedResponse('<:cancel:779536630041280522> | Menciona a un miembro del servidor.')
+        if (!member || member?.user?.bot) return embedResponse('<:cancel:804368628861763664> | Menciona a un miembro del servidor.')
 
         await require('../../models/warns.js').deleteOne({ idGuild: message.guild.id, idMember: member.id });
 

@@ -1,3 +1,4 @@
+/* eslint-disable no-case-declarations */
 const Command = require('../../Utils/Classes').Command;
 module.exports = class Comando extends Command {
     constructor() {
@@ -5,9 +6,19 @@ module.exports = class Comando extends Command {
         this.name = "editprofile"
         this.category = 'diversion'
     }
-    async run({ client, message, args, embedResponse }) {
 
-        if (!args[1]) return embedResponse('Ejemplo de uso correcto: z!editprofile nick Hello world!');
+    /**
+     * 
+     * @param {Object} obj
+     * @param {import('discord.js').Message} obj.message
+     * @param {import('discord.js').Client} obj.client
+     * @param {Array<String>} obj.args
+     * @returns {Promise<(import('discord.js').Message|void)>}
+     */
+
+    async run(obj) {
+
+        const { client, message, args, embedResponse } = obj
 
         let data;
 
@@ -16,18 +27,20 @@ module.exports = class Comando extends Command {
         switch (args[0]) {
             case 'description':
 
-                if (valor.length >= 1024) return embedResponse('Limite de caracteres sobrepasados.')
+                if (!valor) return embedResponse('<:cancel:804368628861763664> | Necesitas especificar tu descripción.')
+
+                if (valor.length >= 1024) return embedResponse('<:cancel:804368628861763664> | Limite de caracteres sobrepasados. (1024)')
 
                 data = await client.updateData({ id: message.author.id }, { description: valor }, 'profile')
 
-                return embedResponse('Ahora tu descripción es ' + data.description);
-
-
+                return embedResponse(`Descripción cambiada correctamente.`);
 
             case 'img':
+                const regex = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/gi,
+                    url = (message.attachments.array()[0] ? message.attachments.array()[0].attachment : null) || (args[1].match(regex) ? args[1].match(regex)[0] : null)
 
-                if (!args[1].match(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/gi))
-                    return embedResponse('Introduce una URL valida!');
+                if (!url)
+                    return embedResponse('<:cancel:804368628861763664> | Adjunta un archivo o introduce una URL valida.');
 
                 data = await client.updateData({ id: message.author.id }, { img: args[1] }, 'profile')
 

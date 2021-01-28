@@ -6,7 +6,7 @@ module.exports = async (client, oldMessage, newMessage) => {
     if (!oldMessage.content) return;
     if (!newMessage.content) return;
     if (!newMessage.guild || !oldMessage.guild) return;
-    let data = (await client.getData({ id: newMessage.guild.id }, 'logs'))
+    let data = newMessage.guild.cacheLogs(await client.getData({ id: newMessage.guild.id }, 'logs'))
     if (newMessage.author.bot) return;
     if (newMessage.channel.type === 'dm') return;
     if (newMessage.content === oldMessage.content) return;
@@ -14,6 +14,7 @@ module.exports = async (client, oldMessage, newMessage) => {
         client.emit('message', newMessage);
     } if (!data) return;
     if (!newMessage.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return;
+    newMessage.guild.cacheLogs = data;
     let embed = new Discord.MessageEmbed()
         .setColor(client.color)
         .setTitle('<:zsMessageUpdate:709728834626519081> Message Updated')

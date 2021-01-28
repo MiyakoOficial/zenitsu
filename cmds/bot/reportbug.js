@@ -8,7 +8,7 @@ module.exports = class Comando extends Command {
         this.category = 'bot'
     }
     run({ client, message, args, embedResponse }) {
-        if (!args[0]) return embedResponse('<:cancel:779536630041280522> | Necesitas especificar el error/bug.')
+        if (!args[0]) return embedResponse('<:cancel:804368628861763664> | Necesitas especificar el error/bug.')
         let embed = new MessageEmbed()
             .setColor(client.color)
             .setDescription(`[📢] | ${args.join(' ')}`)

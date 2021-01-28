@@ -22,7 +22,7 @@ module.exports = class Comando extends Command {
             .setColor(client.color)
             .setImage(avatar)
             .setFooter(`Pedido por ${message.author.tag}`, message.author.displayAvatarURL({ size: 2048, dynamic: true }))
-            .setDescription(`<:member:779536579966271488> [Link avatar](${avatar})\n🌐 [Búscalo en google](${buscarG})`)
+            .setDescription(`<:member:804368573186441237> [Link avatar](${avatar})\n🌐 [Búscalo en google](${buscarG})`)
         return message.channel.send({ embed: embed }).catch(() => { });
 
     }

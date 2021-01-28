@@ -26,29 +26,29 @@ module.exports = class Comando extends Command {
 		let razon = args.slice(1).join(' ') || 'No especificada';
 		razon = razon.slice(0, 500)
 
-		if (!miembro || miembro?.user?.bot || (miembro.user.id == message.author.id)) return embedResponse('<:cancel:779536630041280522> | Menciona a un miembro del servidor.')
+		if (!miembro || miembro?.user?.bot || (miembro.user.id == message.author.id)) return embedResponse('<:cancel:804368628861763664> | Menciona a un miembro del servidor.')
 
 		if (miembro.roles.highest.comparePositionTo(message.member.roles.highest) > 0)
-			return embedResponse('<:cancel:779536630041280522> | No puedes expulsar a este usuario.')
+			return embedResponse('<:cancel:804368628861763664> | No puedes expulsar a este usuario.')
 
 		if (!miembro.kickable)
-			return embedResponse('<:cancel:779536630041280522> | No puedo expulsar a este usuario.')
+			return embedResponse('<:cancel:804368628861763664> | No puedo expulsar a este usuario.')
 
-		if (!args[0].match(/<@(!)?[0-9]{18}>/g)) return embedResponse('<:cancel:779536630041280522> | La mencion tiene que ser el primer argumento.')
+		if (!args[0].match(/<@(!)?[0-9]{18}>/g)) return embedResponse('<:cancel:804368628861763664> | La mencion tiene que ser el primer argumento.')
 
 		if (message.author.id != message.guild.ownerID) {
 			if (miembro.hasPermission('ADMINISTRATOR'))
-				return embedResponse('<:cancel:779536630041280522> | ' + miembro.toString() + ' es administrador.')
+				return embedResponse('<:cancel:804368628861763664> | ' + miembro.toString() + ' es administrador.')
 		}
 
 		let usuario = miembro.user;
 
 		if (message.mentions.members.first().kickable) return message.mentions.members.first().kick(razon)
 			.then(async () => {
-				return embedResponse('<:accept:779536642365063189> | ' + usuario.tag + ' fue expulsado').catch(() => { })
-		})
+				return embedResponse('<:accept:804368642913206313> | ' + usuario.tag + ' fue expulsado').catch(() => { })
+			})
 			.catch(() => {
-				return embedResponse('<:cancel:779536630041280522> | Error en expulsar el miembro.').catch(() => { })
-		})
+				return embedResponse('<:cancel:804368628861763664> | Error en expulsar el miembro.').catch(() => { })
+			})
 	}
 }

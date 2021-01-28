@@ -25,15 +25,15 @@ module.exports = class Comando extends Command {
 
         if (!usuario || usuario.id == message.author.id || usuario.user.bot) return sendEmbed({
             channel: message.channel,
-            description: `<:cancel:779536630041280522> | Menciona a un miembro del servidor para jugar.`
+            description: `<:cancel:804368628861763664> | Menciona a un miembro del servidor para jugar.`
         })
         usuario = usuario.user
         if (message.guild.partida)
-            return sendEmbed({ channel: message.channel, description: ':x: | Hay otra persona jugando en este servidor!' })
+            return sendEmbed({ channel: message.channel, description: '<:cancel:804368628861763664> | Hay otra persona jugando en este servidor.' })
 
         sendEmbed({
             channel: message.channel,
-            description: `<a:amongushappy:798373703880278016> | ${usuario} tienes 1 minuto para responder...\n¿Quieres jugar?: ~~responde "s"~~\n¿No quieres?: ~~responde "n"~~`
+            description: `<a:waiting:804396292793040987> | ${usuario} tienes 1 minuto para responder...\n¿Quieres jugar?: ~~responde "s"~~\n¿No quieres?: ~~responde "n"~~`
         });
         message.guild.partida = new tresenraya.partida({ jugadores: [message.author.id, usuario.id] });
         let respuesta = await awaitMessage({ channel: message.channel, filter: (m) => m.author.id == usuario.id && ['s', 'n'].some(item => item == m.content), time: (1 * 60) * 1000, max: 1 }).catch(() => { })

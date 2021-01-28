@@ -16,19 +16,19 @@ module.exports = class Comando extends Command {
 
 		let razon = args.slice(1).join(' ') || 'No especificada';
 
-		if (!miembro || miembro?.user?.bot || (miembro.user.id == message.author.id)) return embedResponse('<:cancel:779536630041280522> | Menciona a un miembro del servidor.')
+		if (!miembro || miembro?.user?.bot || (miembro.user.id == message.author.id)) return embedResponse('<:cancel:804368628861763664> | Menciona a un miembro del servidor.')
 
 		if (miembro.roles.highest.comparePositionTo(message.member.roles.highest) > 0)
-			return embedResponse('<:cancel:779536630041280522> | No puedes advertir a este usuario.')
+			return embedResponse('<:cancel:804368628861763664> | No puedes advertir a este usuario.')
 
 		if (!miembro.kickable)
-			return embedResponse('<:cancel:779536630041280522> | No puedo advertir a este usuario.')
+			return embedResponse('<:cancel:804368628861763664> | No puedo advertir a este usuario.')
 
-		if (!args[0].match(/<@(!)?[0-9]{18}>/g)) return embedResponse('<:cancel:779536630041280522> | La mencion tiene que ser el primer argumento.')
+		if (!args[0].match(/<@(!)?[0-9]{18}>/g)) return embedResponse('<:cancel:804368628861763664> | La mencion tiene que ser el primer argumento.')
 
 		if (message.author.id != message.guild.ownerID) {
 			if (miembro.hasPermission('ADMINISTRATOR'))
-				return embedResponse('<:cancel:779536630041280522> | ' + miembro.toString() + ' es administrador.')
+				return embedResponse('<:cancel:804368628861763664> | ' + miembro.toString() + ' es administrador.')
 		}
 
 		miembro = miembro.user;
@@ -45,25 +45,25 @@ module.exports = class Comando extends Command {
 
 			if (message.mentions.members.first().kickable) return message.mentions.members.first().kick(razon)
 				.then(async () => {
-					embedResponse('<:accept:779536642365063189> | ' + miembro.tag + ' fue expulsado').catch(() => { })
+					embedResponse('<:accept:804368642913206313> | ' + miembro.tag + ' fue expulsado').catch(() => { })
 					return await require('../../models/warns.js').deleteOne({ idGuild: message.guild.id, idMember: miembro.id });
-			})
+				})
 
 				.catch(() => {
-				embedResponse('<:cancel:779536630041280522> | Error en expulsar el miembro.').catch(() => { })
-			})
+					embedResponse('<:cancel:804368628861763664> | Error en expulsar el miembro.').catch(() => { })
+				})
 
 		let embed = new Discord.MessageEmbed()
-		.setColor(client.color)
-		.setTimestamp()
-		.setTitle('<a:alarma:767497168381935638> Miembro advertido <a:alarma:767497168381935638>')
-		.setAuthor(miembro.tag, miembro.displayAvatarURL({ dynamic: true }))
-		.addField('<:reason2:779695137205911552> Razón', razon.slice(0, 1024), true)
-		.addField('<:moderator:779536592431087619> Moderador', message.author.tag, true)
-		.addField('\u200b', '\u200b', true)
-		.addField('📄 Advertencias totales', data.warns.length, true)
-		.addField('<:reason:779536605047554068> Advertencias para ser expulsado', check, true)
-		.setFooter(`🆔 ID: ${res} - Fecha: ${Hora(Date.now(), true)}`)
+			.setColor(client.color)
+			.setTimestamp()
+			.setTitle('<a:alarma:804396920466178088> Miembro advertido <a:alarma:804396920466178088>')
+			.setAuthor(miembro.tag, miembro.displayAvatarURL({ dynamic: true }))
+			.addField('<:reason2:804368699887845376> Razón', razon.slice(0, 1024), true)
+			.addField('<:moderator:804368587115593800> Moderador', message.author.tag, true)
+			.addField('\u200b', '\u200b', true)
+			.addField('📄 Advertencias totales', data.warns.length, true)
+			.addField('<:reason:779536605047554068> Advertencias para ser expulsado', check, true)
+			.setFooter(`🆔 ID: ${res} - Fecha: ${Hora(Date.now(), true)}`)
 
 		return message.channel.send({ embed: embed }).catch(() => { });
 	}

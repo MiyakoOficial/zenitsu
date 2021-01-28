@@ -16,7 +16,7 @@ module.exports = class Comando extends Command {
         let user = message.mentions.users.first() || null;
 
         if (!user)
-            return embedResponse('<:cancel:779536630041280522> | Debes de mencionar a un usuario.')
+            return embedResponse('<:cancel:804368628861763664> | Debes de mencionar a un usuario.')
 
         const avatares = [userAvatar, user.displayAvatarURL({ format: 'png', size: 2048, dynamic: true })];
 

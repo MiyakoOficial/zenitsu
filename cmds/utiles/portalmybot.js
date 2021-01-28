@@ -11,12 +11,12 @@ module.exports = class Comando extends Command {
     }
     async run({ message, args, embedResponse, client }) {
 
-        if (!args[0]) return embedResponse('<a:CatLoad:724324015275245568> | ¿A quien quieres buscar?');
+        if (!args[0]) return embedResponse('<a:CatLoad:804368444526297109> | ¿A quien quieres buscar?');
 
         let { data } = await mybo.mybot(args[0]);
 
         if (data.message)
-            return embedResponse('<:cancel:779536630041280522> | ' + data.message)
+            return embedResponse('<:cancel:804368628861763664> | ' + data.message)
 
         let embed = new Discord.MessageEmbed()
             .setColor(client.color)

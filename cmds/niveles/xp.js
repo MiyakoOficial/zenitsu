@@ -58,15 +58,15 @@ module.exports = class Comando extends Command {
         let member = message.guild.members.cache.find(a => a.user.username === args.join(' ')) || message.guild.members.cache.find(a => a.user.tag === args.join(' ')) || message.guild.members.cache.find(a => a.displayName === args.join(' ')) || message.guild.members.cache.get(args[0]) || message.mentions.members.first() || message.member
         let levelup = (nivel) => 5 * (nivel ** 2) + 50 * nivel + 100;
         let embed = new Discord.MessageEmbed()
-            .setDescription(`<a:cargando:650442822083674112>`)
+            .setDescription(`<a:cargando:804396706354954250>`)
             .setColor(color)
             .setThumbnail(member.user.displayAvatarURL({ dynamic: true }))
             .setTimestamp()
         return message.channel.send({ embed: embed }).then(async a => {
             let dato = await Promise.all([getRank(member), getGlobalRank(member)]);
-			let rank = dato[0]
+            let rank = dato[0]
             let global = dato[1]
-            return a.edit(a.embeds[0].setDescription(`<:upvote:721259868937388033> Nivel: ${rank.data.nivel ? rank.data.nivel : 0} \n🔷 XP: ${rank.data.xp ? rank.data.xp : 0}/${levelup(rank.data.nivel) ? levelup(rank.data.nivel) : '100'}\n<:member:779536579966271488> Rank: ${rank.rank ? rank.rank : '❌'}\n🌐 Rank global: ${global.rank ? global.rank : '❌'}`))
+            return a.edit(a.embeds[0].setDescription(`<:upvote:804368320983465995> Nivel: ${rank.data.nivel ? rank.data.nivel : 0} \n🔷 XP: ${rank.data.xp ? rank.data.xp : 0}/${levelup(rank.data.nivel) ? levelup(rank.data.nivel) : '100'}\n<:member:804368573186441237> Rank: ${rank.rank ? rank.rank : '❌'}\n🌐 Rank global: ${global.rank ? global.rank : '❌'}`))
         });
     }
 };

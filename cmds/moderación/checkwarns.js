@@ -10,7 +10,7 @@ module.exports = class Comando extends Command {
     }
     async run({ client, message, args, embedResponse }) {
 
-        if (!message.mentions.members.first()) return embedResponse('<:cancel:779536630041280522> | Necesitas mencionar a un miembro.')
+        if (!message.mentions.members.first()) return embedResponse('<:cancel:804368628861763664> | Necesitas mencionar a un miembro.')
 
         let miembro = message.mentions.users.first();
 
@@ -22,15 +22,15 @@ module.exports = class Comando extends Command {
 
         let datos = data.warns.reverse()[pagina - 1];
 
-        if (!datos) return embedResponse(`<:cancel:779536630041280522> | En la pagina ${pagina} no hay datos.`)
+        if (!datos) return embedResponse(`<:cancel:804368628861763664> | En la pagina ${pagina} no hay datos.`)
 
         let embed = new Discord.MessageEmbed()
             .setColor(client.color)
             .setTimestamp()
-            .setTitle('<a:alarma:767497168381935638> Advertencia del miembro <a:alarma:767497168381935638>')
+            .setTitle('<a:alarma:804396920466178088> Advertencia del miembro <a:alarma:804396920466178088>')
             .setAuthor(miembro.tag, miembro.displayAvatarURL({ dynamic: true }))
-            .addField(pagina == 1 ? '<:reason2:779695137205911552> Ultima razón:' : '<:reason2:779695137205911552> Razón:', datos.razon.slice(0, 1024))
-            .addField(pagina == 1 ? '<:moderator:779536592431087619> Ultimo moderador:' : '<:moderator:779536592431087619> Moderador:', datos.mod)
+            .addField(pagina == 1 ? '<:reason2:804368699887845376> Ultima razón:' : '<:reason2:804368699887845376> Razón:', datos.razon.slice(0, 1024))
+            .addField(pagina == 1 ? '<:moderator:804368587115593800> Ultimo moderador:' : '<:moderator:804368587115593800> Moderador:', datos.mod)
             .addField('🗓️ Fecha', datos.fecha)
             .addField('🆔 ID', datos.token)
             .setFooter(`📄 Pagina: ${pagina}/${data.warns.length}`)

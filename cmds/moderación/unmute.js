@@ -20,24 +20,24 @@ module.exports = class Comando extends Command {
 
         let miembro = message.mentions.members.first();
 
-        if (!miembro || miembro?.user?.bot) return embedResponse('<:cancel:779536630041280522> | Menciona a un miembro del servidor.')
+        if (!miembro || miembro?.user?.bot) return embedResponse('<:cancel:804368628861763664> | Menciona a un miembro del servidor.')
 
         if (miembro.roles.highest.comparePositionTo(message.member.roles.highest) > 0)
-            return embedResponse('<:cancel:779536630041280522> | No puedes quitarle el silencio a este usuario.')
+            return embedResponse('<:cancel:804368628861763664> | No puedes quitarle el silencio a este usuario.')
 
         if (miembro.roles.highest.comparePositionTo(message.guild.me.roles.highest) > 0)
-            return embedResponse('<:cancel:779536630041280522> | No puedo moderar a este usuario.')
+            return embedResponse('<:cancel:804368628861763664> | No puedo moderar a este usuario.')
 
-        if (!args[0].match(/<@(!)?[0-9]{18}>/g)) return embedResponse('<:cancel:779536630041280522> | La mencion tiene que ser el primer argumento.')
+        if (!args[0].match(/<@(!)?[0-9]{18}>/g)) return embedResponse('<:cancel:804368628861763664> | La mencion tiene que ser el primer argumento.')
 
         if (message.author.id != message.guild.ownerID) {
             if (miembro.hasPermission('ADMINISTRATOR'))
-                return embedResponse('<:cancel:779536630041280522> | ' + miembro.toString() + ' es administrador.')
+                return embedResponse('<:cancel:804368628861763664> | ' + miembro.toString() + ' es administrador.')
         }
 
         miembro = miembro.user;
 
-        if (miembro.id == message.author.id) return embedResponse('<:cancel:779536630041280522> | No te puedes quitar el silencio a ti mismo.')
+        if (miembro.id == message.author.id) return embedResponse('<:cancel:804368628861763664> | No te puedes quitar el silencio a ti mismo.')
 
         return message.guild.member(miembro).roles.remove(role).then(() => {
             let types = ['text', 'category', 'news']
@@ -59,9 +59,9 @@ module.exports = class Comando extends Command {
             let embed = new Discord.MessageEmbed()
                 .setColor(client.color)
                 .setTimestamp()
-                .setTitle('<a:alarma:767497168381935638> Miembro desmuteado <a:alarma:767497168381935638>')
+                .setTitle('<a:alarma:804396920466178088> Miembro desmuteado <a:alarma:804396920466178088>')
                 .setAuthor(miembro.tag, miembro.displayAvatarURL({ dynamic: true }))
-                .addField('<:moderator:779536592431087619> Moderador', message.author.tag, true)
+                .addField('<:moderator:804368587115593800> Moderador', message.author.tag, true)
             return message.channel.send({ embed: embed }).finally(async () => {
                 for (let c of canales) {
                     await Discord.Util.delayFor(2000)
@@ -76,7 +76,7 @@ module.exports = class Comando extends Command {
             let embed = new Discord.MessageEmbed()
                 .setColor(client.color)
                 .setTimestamp()
-                .setDescription('<:cancel:779536630041280522> | Error al intentar quitar el silencio al miembro.')
+                .setDescription('<:cancel:804368628861763664> | Error al intentar quitar el silencio al miembro.')
             return message.channel.send({ embed: embed }).catch(() => { });
         })
     }

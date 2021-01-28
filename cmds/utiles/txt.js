@@ -8,7 +8,7 @@ module.exports = class Comando extends Command {
         this.memberPermissions.channel = ['ATTACH_FILES']
     }
     run({ message, args, embedResponse }) {
-        if (!args[0]) return embedResponse('<:cancel:779536630041280522> | Escribe algo para convertirlo a un archivo de texto.');
+        if (!args[0]) return embedResponse('<:cancel:804368628861763664> | Escribe algo para convertirlo a un archivo de texto.');
         return message.channel.send({
             files: [{
                 attachment: Buffer.from(args.join(' ') + '\n\n\n' + new Date().toDateString()),

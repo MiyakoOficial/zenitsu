@@ -9,10 +9,10 @@ module.exports = async (client, message) => {
     if (!message.content) return;
     await client.updateData({ id: message.channel.id }, { nombre: message.author.tag, avatarURL: message.author.displayAvatarURL({ dynamic: true }), mensaje: message.content }, 'snipe')
 
-    let data = (await client.getData({ id: message.guild.id }, 'logs'))
-
+    let data = message.guild.cacheLogs || (await require('../../models/logs').findOne({ id: message.guild.id }))
     if (!data) return;
-    if (!message.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return;
+    if (!message.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return require('../../models/logs').deleteOne({ id: message.guild.id });
+    message.guild.cacheLogs = data;
     let embed = new Discord.MessageEmbed()
         .setColor(client.color)
         .setTitle('<:zsMessageDelete:709728834915794974> Message Deleted')

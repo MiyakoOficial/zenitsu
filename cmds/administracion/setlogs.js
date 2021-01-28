@@ -16,14 +16,14 @@ module.exports = module.exports = class Comando extends Command {
         let channel = message.mentions.channels.first();
         let embedErr = new MessageEmbed()
             .setColor(client.color)
-            .setDescription(`<:cancel:779536630041280522> | No has mencionado un canal.`)
+            .setDescription(`<:cancel:804368628861763664> | No has mencionado un canal.`)
             .setTimestamp()
 
         if (!channel) return message.channel.send({ embed: embedErr })
 
         let embedE = new MessageEmbed()
             .setColor(client.color)
-            .setDescription(`<:cancel:779536630041280522> | No tengo permisos para enviar mensajes en el canal mencionado.`)
+            .setDescription(`<:cancel:804368628861763664> | No tengo permisos para enviar mensajes en el canal mencionado.`)
             .setTimestamp()
 
         if (!channel.permissionsFor(client.user).has(`SEND_MESSAGES`))
@@ -33,16 +33,16 @@ module.exports = module.exports = class Comando extends Command {
 
             let embed = new MessageEmbed()
                 .setColor(client.color)
-                .setDescription(`<:moderator:779536592431087619> | ${message.author.username} ha establecido el canal de logs en: <#${data.channellogs}>`)
+                .setDescription(`<:moderator:804368587115593800> | ${message.author.username} ha establecido el canal de logs en: <#${data.channellogs}>`)
                 .setTimestamp()
-
+            message.guild.cacheLogs = data;
             return message.channel.send({ embed: embed })
 
         }).catch(err => {
 
             let embed = new MessageEmbed()
                 .setColor(client.color)
-                .setDescription(`<:cancel:779536630041280522> | Error al establecer el canal de logs.`)
+                .setDescription(`<:cancel:804368628861763664> | Error al establecer el canal de logs.`)
                 .setTimestamp()
                 .setFooter(err)
 

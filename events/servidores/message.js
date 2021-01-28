@@ -173,17 +173,13 @@ module.exports = async (client, message) => {
     let filter = e => {
         if (message.guild.id != '645463565813284865' && e.category == 'servidor') return false;
         else if ((e.category == 'developer') && !client.devseval.includes(message.author.id)) return false;
-		else if (e.dev && (message.author.id != '507367752391196682')) return false;
+        else if (e.dev && (message.author.id != '507367752391196682')) return false;
         return true;
     }
 
     let commandfile = client.commands.filter(filter).get(command)
         || client.commands.filter(filter).find(item => item.alias.includes(command))
-   if (commandfile) {
-        let dataB = (await client.getData({ id: message.author.id }, 'blacklist'))
-        if (dataB.bol) {
-            return;
-        }
+    if (commandfile) {
 
         if (!cooldowns.has(commandfile.name)) {
             cooldowns.set(commandfile.name, new Discord.Collection());
@@ -224,7 +220,7 @@ module.exports = async (client, message) => {
 
             let embed = new Discord.MessageEmbed()
                 .setColor(client.color)
-                .setDescription('<:cancel:779536630041280522> | Ups, me faltan algun/algunos permiso(s) en el canal: `' + check.join(', ') + "`")
+                .setDescription('<:cancel:804368628861763664> | Ups, me faltan algun/algunos permiso(s) en el canal: `' + check.join(', ') + "`")
                 .setTimestamp()
                 .setFooter('\u200b', 'https://media1.tenor.com/images/41334cbe64331dad2e2dc6272334b47f/tenor.gif');
 
@@ -248,7 +244,7 @@ module.exports = async (client, message) => {
 
             let embed = new Discord.MessageEmbed()
                 .setColor(client.color)
-                .setDescription('<:cancel:779536630041280522> | Ups, te faltan algun/algunos permiso(s) en el canal: `' + check.join(', ') + "`")
+                .setDescription('<:cancel:804368628861763664> | Ups, te faltan algun/algunos permiso(s) en el canal: `' + check.join(', ') + "`")
                 .setTimestamp()
                 .setFooter('\u200b', 'https://media1.tenor.com/images/41334cbe64331dad2e2dc6272334b47f/tenor.gif');
 
@@ -271,7 +267,7 @@ module.exports = async (client, message) => {
 
             let embed = new Discord.MessageEmbed()
                 .setColor(client.color)
-                .setDescription('<:cancel:779536630041280522> | Ups, me faltan algun/algunos permiso(s) en el servidor: `' + check.join(', ') + "`")
+                .setDescription('<:cancel:804368628861763664> | Ups, me faltan algun/algunos permiso(s) en el servidor: `' + check.join(', ') + "`")
                 .setTimestamp()
                 .setFooter('\u200b', 'https://media1.tenor.com/images/41334cbe64331dad2e2dc6272334b47f/tenor.gif');
 
@@ -295,7 +291,7 @@ module.exports = async (client, message) => {
 
             let embed = new Discord.MessageEmbed()
                 .setColor(client.color)
-                .setDescription('<:cancel:779536630041280522> | Ups, te faltan algun/algunos permiso(s) en el servidor: `' + check.join(', ') + "`")
+                .setDescription('<:cancel:804368628861763664> | Ups, te faltan algun/algunos permiso(s) en el servidor: `' + check.join(', ') + "`")
                 .setTimestamp()
                 .setFooter('\u200b', 'https://media1.tenor.com/images/41334cbe64331dad2e2dc6272334b47f/tenor.gif');
 

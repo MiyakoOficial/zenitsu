@@ -23,19 +23,19 @@ module.exports = class Comando extends Command {
 		const { message, client, args } = obj;
 
 		if (message.guild.game)
-			return sendEmbed({ channel: message.channel, description: ':x: | Hay una partida en curso en este servidor.' })
+			return sendEmbed({ channel: message.channel, description: '<:cancel:804368628861763664> | Hay una partida en curso en este servidor.' })
 
 		let usuario = ['easy', 'medium', 'hard'].includes(args[0]?.toLowerCase()) ? client.user : message.mentions.users.first();
 
 		if (!usuario || usuario.id == message.author.id || (usuario.bot && usuario.id != client.user.id))
 			return sendEmbed({
 				channel: message.channel,
-				description: `<:cancel:779536630041280522> | Menciona a un miembro para jugar.`,
+				description: `<:cancel:804368628861763664> | Menciona a un miembro para jugar.`,
 				footerText: 'Tambien puedes jugar con Zenitsu poniendo z!connect4 easy/medium/hard'
 			});
 
 		if (usuario.id != client.user.id) {
-			
+
 			if (usuario.TURNO) {
 				return sendEmbed({
 					channel: message.channel,
@@ -49,12 +49,12 @@ module.exports = class Comando extends Command {
 					description: `${message.author.tag} estas activo en otra partida.`
 				});
 			}
-			
+
 			message.guild.game = new Connect4();
 			message.guild.game.jugadores = [message.author.id, usuario.id]
 			await sendEmbed({
 				channel: message.channel,
-				description: `<a:amongushappy:798373703880278016> | ${usuario} tienes 1 minuto para responder...\n¿Quieres jugar?: ~~responde "s"~~\n¿No quieres?: ~~responde "n"~~`
+				description: `<a:waiting:804396292793040987> | ${usuario} tienes 1 minuto para responder...\n¿Quieres jugar?: ~~responde "s"~~\n¿No quieres?: ~~responde "n"~~`
 			});
 
 			let respuesta = await awaitMessage({ channel: message.channel, filter: (m) => m.author.id == usuario.id && ['s', 'n'].some(item => item == m.content), time: (1 * 60) * 1000, max: 1 }).catch(() => { })
@@ -98,14 +98,14 @@ module.exports = class Comando extends Command {
 			message.author.TURNO = usuario.TURNO == 2 ? 1 : 2;
 			let res = await displayConnectFourBoard(displayBoard(message.guild.game.ascii()), message.guild.game);
 			let att = new MessageAttachment(res, '4enraya.gif')
-			
+
 			sendEmbed({
 				attachFiles: att,
 				channel: message.channel,
 				imageURL: 'attachment://4enraya.gif',
 				description: `🤔 | Empieza ${message.author.TURNO == 1 ? message.author.tag : usuario.tag}, elige un numero del 1 al 7. [\`🔴\`]`
 			})
-			
+
 			const colector = message.channel.createMessageCollector(msg => msg.guild.game.jugadores.includes(msg.author.id) && msg.author.TURNO === msg.guild.game.gameStatus().currentPlayer && !isNaN(msg.content) && (Number(msg.content) >= 1 && Number(msg.content) <= 7) && message.guild.game.canPlay(parseInt(msg.content) - 1) && !message.guild.game.gameStatus().gameOver || msg.content == 'surrender', { idle: (3 * 60) * 1000, time: (30 * 60) * 1000 });
 
 			colector.on('collect', async (msg) => {

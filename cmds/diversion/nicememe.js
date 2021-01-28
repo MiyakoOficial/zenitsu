@@ -12,15 +12,15 @@ module.exports = class Comando extends Command {
 		this.category = 'diversion'
 	}
 	/**
-     * @param {Object} obj
-     * @param {Message} obj.message
-     * @param {Client} obj.client
-     */
+	 * @param {Object} obj
+	 * @param {Message} obj.message
+	 * @param {Client} obj.client
+	 */
 	async run(obj) {
 		const { message, client, embedResponse } = obj;
 		let foto = (message.attachments.array()[0] ? message.attachments.array()[0].url : null) || (message.mentions.users.first() ? message.mentions.users.first().displayAvatarURL({ size: 2048, format: 'png' }) : null);
 		if (!foto)
-			return embedResponse('<:cancel:779536630041280522> | Necesitas adjuntar una imagen o mencionar a alguien.')
+			return embedResponse('<:cancel:804368628861763664> | Necesitas adjuntar una imagen o mencionar a alguien.')
 		foto = await Canvas.loadImage(foto)
 		const canvas = Canvas.createCanvas(552, 513);
 		let bck = await Canvas.loadImage('https://cdn.discordapp.com/attachments/803346384144433154/804045257587032097/AZwCgO7.png');

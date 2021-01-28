@@ -351,7 +351,7 @@ client.among = (mensaje, member, canalVoz, canalText, bol) => {
 		a.voice.setMute(bol)
 	});
 
-	response('<a:cargando:650442822083674112> En proceso!', canalText).then(async (msg) => {
+	response('<a:cargando:804396706354954250> En proceso!', canalText).then(async (msg) => {
 		//msg.delete({ timeout: 5000 })
 		let embed = new Discord.MessageEmbed()
 			.setColor(client.color)

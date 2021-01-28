@@ -9,16 +9,16 @@ module.exports = class Comando extends Command {
     }
     run({ client, message, args, embedResponse }) {
 
-        if (!args[0]) return embedResponse('<:cancel:779536630041280522> | Necesitas especificar la sugerencia.')
+        if (!args[0]) return embedResponse('<:cancel:804368628861763664> | Necesitas especificar la sugerencia.')
         let embed = new Discord.MessageEmbed()
             .setColor(client.color)
-            .setDescription(`[<:reason2:779695137205911552>] | ${args.join(' ')}`)
+            .setDescription(`[<:reason2:804368699887845376>] | ${args.join(' ')}`)
             .setTimestamp()
             .setAuthor(`${message.author.tag}(${message.author.id})`)
             .setFooter('Enviado desde ' + message.guild.name, message.guild.iconURL({ dynamic: true, size: 2048 }))
             .setThumbnail(message.author.displayAvatarURL({ dynamic: true, size: 2048 }))
         return client.channels.cache.get('727948582556270682').send({ embed: embed }).then(() => {
-            return embedResponse('<:reason2:779695137205911552> | Sugerencia enviada!');
+            return embedResponse('<:reason2:804368699887845376> | Sugerencia enviada!');
         })
     }
 }
