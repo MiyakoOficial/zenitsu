@@ -98,6 +98,7 @@ module.exports = class Comando extends Command {
 			message.author.TURNO = usuario.TURNO == 2 ? 1 : 2;
 			let res = await displayConnectFourBoard(displayBoard(message.guild.game.ascii()), message.guild.game);
 			let att = new MessageAttachment(res, '4enraya.gif')
+			
 			sendEmbed({
 				attachFiles: att,
 				channel: message.channel,
@@ -196,7 +197,7 @@ module.exports = class Comando extends Command {
 
 			const difficulty = ["hard", "medium", "easy"].includes(args[0]?.toLowerCase()) ? args[0]?.toLowerCase() : "medium";
 			message.guild.game = new Connect4AI();
-
+			message.guild.game.jugadores = [message.author.id, client.user.id]
 			if (message.author.TURNO) {
 				message.guild.game = undefined;
 				return sendEmbed({

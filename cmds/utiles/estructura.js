@@ -46,7 +46,7 @@ module.exports = class Comando extends Command {
 			let embed = new Discord.MessageEmbed()
 			.setTimestamp()
 			.setColor(message.client.color)
-			.setDescription('```js\n'+a+'```')
+			.setDescription('```'+a+'```')
 			
 			await message.channel.send({embed}).catch(() => { })
 		}
