@@ -5,6 +5,7 @@ module.exports = class Comando extends Command {
 		this.name = "asynceval"
 		this.alias = ['ae']
 		this.category = 'developer'
+		this.dev = true;
 	}
 	async run(obj) {
 

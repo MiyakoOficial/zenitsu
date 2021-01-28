@@ -8,8 +8,6 @@ module.exports = class Comando extends Command {
     }
     async run({ client, message, args, embedResponse }) {
 
-        if (!["507367752391196682"].includes(message.author.id))
-            return;
         let user = client.users.cache.get(args[0]) || message.mentions.users.first();
 
         if (!user)

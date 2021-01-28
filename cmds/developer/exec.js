@@ -11,9 +11,6 @@ module.exports = class Comando extends Command {
 	// eslint-disable-next-line no-unused-vars
 	async run({ message, args }) {
 
-		if (!['507367752391196682'].includes(message.author.id))
-			return;
-
 		if (!args[0])
 			return message.channel.send('eres o te haces?');
 

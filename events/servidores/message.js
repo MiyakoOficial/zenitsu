@@ -172,8 +172,7 @@ module.exports = async (client, message) => {
     }
     let filter = e => {
         if (message.guild.id != '645463565813284865' && e.category == 'servidor') return false;
-        else if ((e.category == 'developer') && !client.devseval.includes(message.author.id)) return false;
-        else if (e.dev && (message.author.id != '507367752391196682')) return false;
+        else if (e.dev && (!(client.devseval.includes(message.author.id)))) return false;
         return true;
     }
 
