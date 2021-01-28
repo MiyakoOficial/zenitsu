@@ -23,7 +23,7 @@ module.exports = class Comando extends Command {
 		const canal = message.channel,
 			  permisos = canal.permissionOverwrites.get(message.guild.id);
 
-		if(!permisos || !(permisos.allow.toArray().includes('SEND_MESSAGES'))) {
+		if(!permisos || !(permisos.deny.toArray().includes('SEND_MESSAGES'))) {
 			return message.channel.updateOverwrite(message.guild.id, {
 				SEND_MESSAGES: false
 			}).then(() => {
