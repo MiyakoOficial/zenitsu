@@ -18,7 +18,9 @@ module.exports = class Comando extends Command {
 	 */
 	async run(obj) {
 		const { message, client, embedResponse } = obj;
-		let foto = (message.attachments.array()[0] ? message.attachments.array()[0].url : null) || (message.mentions.users.first() ? message.mentions.users.first().displayAvatarURL({ size: 2048, format: 'png' }) : null);
+		/* regex sacado de https://github.com/AndreMor955/gidget/blob/master/src/commands/image/spin.js */
+		const reg = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()!@:%_+.~#?&//=]*)/gm;
+		let foto = (args[0] && args[0].match(reg) ? args[0].match(reg)[0] : null) || (message.attachments.array()[0] ? message.attachments.array()[0].url : null) || (message.mentions.users.first() ? message.mentions.users.first().displayAvatarURL({ size: 2048, format: 'png' }) : null);
 		if (!foto)
 			return embedResponse('<:cancel:804368628861763664> | Necesitas adjuntar una imagen o mencionar a alguien.')
 		foto = await Canvas.loadImage(foto)
