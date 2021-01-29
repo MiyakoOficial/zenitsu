@@ -24,10 +24,16 @@ Discord.Structures.extend('Guild', g => {
 });
 
 const client = new Discord.Client(
-	{
-		partials: ['MESSAGE', 'REACTION', 'PRESENCE'],
-		http: { version: 7 }
-	}
+    {
+        partials: ['PRESENCE'],
+        http: { version: 7 },
+        ws: { intents: 14335 },
+        messageCacheMaxSize: 7,
+        messageSweepInterval: 3600,
+        messageCacheLifetime: 1800,
+        messageEditHistoryMaxSize: 1,
+        allowedMentions: { parse: [] }
+    }
 );
 
 const DBL = require("dblapi.js");
@@ -317,7 +323,7 @@ global.updateData = async ({ ...find }, { ...newValue }, model) => {
 	}
 
 }
-
+/*
 client.among = (mensaje, member, canalVoz, canalText, bol) => {
 	let message = mensaje;
 
@@ -377,7 +383,7 @@ client.rModel = (n) => {
 	return require(`./models/${n}.js`)
 
 }
-
+*/
 global.modelGet = (n) => {
 	return client.rModel(n)
 }
