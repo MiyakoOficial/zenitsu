@@ -27,7 +27,6 @@ const client = new Discord.Client(
     {
         partials: ['PRESENCE'],
         http: { version: 7 },
-        ws: { intents: 14335 },
         messageCacheMaxSize: 7,
         messageSweepInterval: 3600,
         messageCacheLifetime: 1800,
