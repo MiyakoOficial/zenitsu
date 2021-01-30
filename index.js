@@ -24,15 +24,15 @@ Discord.Structures.extend('Guild', g => {
 });
 
 const client = new Discord.Client(
-    {
-        partials: ['PRESENCE'],
-        http: { version: 7 },
-        messageCacheMaxSize: 75,
-        messageSweepInterval: 3600,
-        messageCacheLifetime: 1800,
-        messageEditHistoryMaxSize: 1,
-        allowedMentions: { parse: [] }
-    }
+	{
+		partials: ['PRESENCE'],
+		http: { version: 7 },
+		messageCacheMaxSize: 75,
+		messageSweepInterval: 3600,
+		messageCacheLifetime: 1800,
+		messageEditHistoryMaxSize: 1,
+		allowedMentions: { parse: [] }
+	}
 );
 
 const DBL = require("dblapi.js");
@@ -54,7 +54,6 @@ client.devseval = [
 ];
 // eslint-disable-next-line no-unused-vars
 const Classes = require('./Utils/Classes.js');
-//global.classes = require('./Classes/Classes.js');
 /**
  * 
  * @param {Classes.embedOptions} object 
@@ -271,120 +270,10 @@ function duration(segundos) {
 	}
 }
 
-global.getData = async ({ ...find }, model) => {
-
-	const { readdir } = require("fs").promises;
-	const db_files = await readdir(require("path").join(__dirname, "./models/"));
-	const available_models = db_files.map(elem => elem.endsWith("js") ? elem.slice(0, -3) : elem);
-
-	if (!available_models.includes(model)) throw new Error('[GET_DATA]: Model no encontrado!')
-
-	let db = require('./models/' + model + '.js');
-
-	let getModel = (await db.findOne(find));
-
-	if (!getModel) {
-
-		await db.create(find)
-
-		return (await db.findOne(find)) || {};
-
-	}
-
-	else return getModel || {};
-
-}
-
-global.updateData = async ({ ...find }, { ...newValue }, model) => {
-
-	const { readdir } = require("fs").promises;
-	const db_files = await readdir(require("path").join(__dirname, "./models/"));
-	const available_models = db_files.map(elem => elem.endsWith("js") ? elem.slice(0, -3) : elem);
-
-	if (!available_models.includes(model)) throw new Error('[UPDATE_DATA]: Model no encontrado!')
-
-	let db = require('./models/' + model + '.js');
-
-	let getModel = (await db.findOne(find));
-
-	if (!getModel) {
-
-		await db.create(find)
-
-		return await db.findOneAndUpdate(find, newValue, { new: true });
-
-	}
-
-	else {
-
-		return await db.findOneAndUpdate(find, newValue, { new: true });
-
-	}
-
-}
-/*
-client.among = (mensaje, member, canalVoz, canalText, bol) => {
-	let message = mensaje;
-
-	if (!canalVoz) return response('Tienes que estar en un canal de voz!', canalText);
-
-	if (!canalVoz.name.includes('Among Us')) return response('Tienes que estar en el canal llamado: `Among Us`', canalText);
-
-	if (!message.guild.me.hasPermission('MANAGE_CHANNELS') || !member.voice.channel.permissionsFor(client.user).has("MANAGE_CHANNELS")) return response('Tengo que tener el permiso `MANAGE_CHANNELS`!', canalText);
-
-	let rol = message.guild.roles.cache.find(a => a.name === 'Among Us manager');
-
-	if (!rol) {
-		message.guild.roles.create({ data: { name: 'Among Us manager' } });
-	}
-
-	if (!rol || !member.roles.cache.has(rol.id)) return response('Tienes que tener el rol llamado: `Among Us manager`!', canalText);
-
-	if (!message.guild.me.hasPermission('MUTE_MEMBERS') || !member.voice.channel.permissionsFor(client.user).has("MUTE_MEMBERS")) return response('Tengo que tener el permiso `MUTE_MEMBERS`!', canalText);
-
-	if (!message.guild.me.hasPermission('MANAGE_MESSAGES') || !member.voice.channel.permissionsFor(client.user).has("MANAGE_MESSAGES")) return response('Tengo que tener el permiso `MANAGE_MESSAGES`!', canalText);
-
-	if (canalVoz.userLimit != 10) {
-		canalVoz.edit({ userLimit: 10 })
-	}
-	if (canalVoz.members.size > 15) return response('Hay más de 15 miembros en el canal!', canalText);
-
-	let p = canalVoz.members.map(a => {
-		a.voice.setMute(bol)
-	});
-
-	response('<a:cargando:804396706354954250> En proceso!', canalText).then(async (msg) => {
-		//msg.delete({ timeout: 5000 })
-		let embed = new Discord.MessageEmbed()
-			.setColor(client.color)
-			.setTimestamp()
-			.setDescription('Listo!')
-
-		await Promise.all(p);
-
-		msg.edit({ embed: embed }).then(a => { a.delete({ timeout: 5000 }).catch(() => { }) })
-		//message.delete({ timeout: 5000 });
-	});
-
-}
-
-function response(d, c) {
-	let color = client.color;
-	let embed = new Discord.MessageEmbed()
-		.setTimestamp()
-		.setDescription(d)
-		.setColor(color)
-	return c.send({ embed: embed })
-}
-
 client.rModel = (n) => {
 
 	return require(`./models/${n}.js`)
 
-}
-*/
-global.modelGet = (n) => {
-	return client.rModel(n)
 }
 
 process.on("unhandledRejection", e => {
