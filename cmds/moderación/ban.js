@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 const Discord = require('discord.js');
 
 const Command = require('../../Utils/Classes').Command;
@@ -17,16 +18,16 @@ module.exports = class Comando extends Command {
 	* @param {Array<String>} obj.args
 	*/
 
-	async run(obj) {
+	run(obj) {
 
-		const { client, message, args, embedResponse, Hora } = obj;
+		const { message, args, embedResponse } = obj;
 
 		let miembro = message.mentions.members.first();
 
 		let razon = args.slice(1).join(' ') || 'No especificada';
 		razon = razon.slice(0, 500)
 
-		if (!miembro || miembro?.user?.bot || (miembro.user.id == message.author.id)) return embedResponse('<:cancel:804368628861763664> | Menciona a un miembro del servidor.')
+		if (!miembro || (miembro.user.id == message.author.id)) return embedResponse('<:cancel:804368628861763664> | Menciona a un miembro del servidor.')
 
 		if (miembro.roles.highest.comparePositionTo(message.member.roles.highest) > 0)
 			return embedResponse('<:cancel:804368628861763664> | No puedes banear a este usuario.')
@@ -44,7 +45,7 @@ module.exports = class Comando extends Command {
 		let usuario = miembro.user;
 
 		if (message.mentions.members.first().kickable) return message.mentions.members.first().ban({ reason: razon, days: 7 })
-			.then(async () => {
+			.then(() => {
 				return embedResponse('<:accept:804368642913206313> | ' + usuario.tag + ' fue baneado').catch(() => { })
 			})
 			.catch(() => {
