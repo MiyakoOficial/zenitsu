@@ -28,7 +28,7 @@ module.exports = class Comando extends Command {
         if (miembro.roles.highest.comparePositionTo(message.guild.me.roles.highest) > 0)
             return embedResponse('<:cancel:804368628861763664> | No puedo moderar a este usuario.')
 
-        if (!args[0].match(/<@(!)?[0-9]{18}>/g)) return embedResponse('<:cancel:804368628861763664> | La mencion tiene que ser el primer argumento.')
+        if (!args[0].match(/<@(!)?[0-9]{17,18}>/g)) return embedResponse('<:cancel:804368628861763664> | La mencion tiene que ser el primer argumento.')
 
         if (message.author.id != message.guild.ownerID) {
             if (miembro.hasPermission('ADMINISTRATOR'))
