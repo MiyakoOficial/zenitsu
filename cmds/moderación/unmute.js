@@ -30,10 +30,7 @@ module.exports = class Comando extends Command {
 
         if (!args[0].match(/<@(!)?[0-9]{17,18}>/g)) return embedResponse('<:cancel:804368628861763664> | La mencion tiene que ser el primer argumento.')
 
-        if (message.author.id != message.guild.ownerID) {
-            if (miembro.hasPermission('ADMINISTRATOR'))
-                return embedResponse('<:cancel:804368628861763664> | ' + miembro.toString() + ' es administrador.')
-        }
+
 
         miembro = miembro.user;
 
