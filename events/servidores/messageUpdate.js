@@ -15,11 +15,12 @@ module.exports = async (client, oldMessage, newMessage) => {
     } if (!data) return;
     if (!newMessage.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return;
     newMessage.guild.cacheLogs = data;
+    const attachment = newMessage.attachments.first()?.url
     let embed = new Discord.MessageEmbed()
         .setColor(client.color)
         .setTitle('<:zsMessageUpdate:709728834626519081> Message Updated')
-        .addField('• Old message', oldMessage.content, true)
-        .addField('• New message', newMessage.content, true)
+        .addField('• Old message', oldMessage.content.slice(0, 1024) || '\u200b', true)
+        .addField('• New message', newMessage.content.slice(0, 1024) || '\u200b', true)
         .addField('• Link', `[Link of the message](https://discordapp.com/channels/${newMessage.guild.id}/${newMessage.channel.id}/${newMessage.id})`, false)
         .addField('• Author', newMessage.author.tag, true)
         .addField('• Author ID', newMessage.author.id, true)
@@ -29,6 +30,9 @@ module.exports = async (client, oldMessage, newMessage) => {
         .addField('• Author channel mention', `<#${newMessage.channel.id}>`, false)
         .setFooter(newMessage.guild.name, newMessage.guild.iconURL({ dynamic: true, size: 2048 }))
         .setTimestamp()
+
+    if (attachment) embed.setImage(attachment)
+
     return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(() => { })
 
 };
