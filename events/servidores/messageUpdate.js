@@ -2,9 +2,6 @@ const Discord = require("discord.js");
 
 module.exports = async (client, oldMessage, newMessage) => {
 
-    if (!newMessage.author) return;
-    if (!oldMessage.content) return;
-    if (!newMessage.content) return;
     if (!newMessage.guild || !oldMessage.guild) return;
     let data = newMessage.guild.cacheLogs || (await client.getData({ id: newMessage.guild.id }, 'logs'))
     if (newMessage.author.bot) return;
