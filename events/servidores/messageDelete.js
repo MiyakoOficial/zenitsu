@@ -31,6 +31,12 @@ module.exports = async (client, message) => {
         .addField('• Author channel mention', `<#${message.channel.id}>`, false)
         .setFooter(message.guild.name, message.guild.iconURL({ dynamic: true, size: 2048 }))
         .setTimestamp()
-    if (attachment) embed.setImage(attachment);
+
+    if (attachment) {
+        const att = new Discord.MessageAttachment(attachment, 'img.png')
+        embed.attachFiles(att)
+            .setImage('attachment://img.png')
+    }
+
     return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(() => { })
 };

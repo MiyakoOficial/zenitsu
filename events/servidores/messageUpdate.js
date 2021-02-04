@@ -28,7 +28,11 @@ module.exports = async (client, oldMessage, newMessage) => {
         .setFooter(newMessage.guild.name, newMessage.guild.iconURL({ dynamic: true, size: 2048 }))
         .setTimestamp()
 
-    if (attachment) embed.setImage(attachment)
+    if (attachment) {
+        const att = new Discord.MessageAttachment(attachment, 'img.png')
+        embed.attachFiles(att)
+            .setImage('attachment://img.png')
+    }
 
     return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(() => { })
 
