@@ -13,7 +13,7 @@ module.exports = async (client, oldMessage, newMessage) => {
     } if (!data) return;
     if (!newMessage.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return;
     newMessage.guild.cacheLogs = data;
-    const attachment = newMessage.attachments.first()?.url
+    const attachment = newMessage.attachments.first()?.proxyURL
     let embed = new Discord.MessageEmbed()
         .setColor(client.color)
         .setTitle('<:zsMessageUpdate:709728834626519081> Message Updated')

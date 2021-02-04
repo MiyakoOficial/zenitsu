@@ -11,7 +11,7 @@ module.exports = async (client, message) => {
     if (!message.author) return;
     if (message.author.bot) return;
     if (message.channel.type === 'dm') return;
-    const attachment = message.attachments.first()?.url
+    const attachment = message.attachments.first()?.proxyURL
     if (!message.content && !attachment) return;
     await client.updateData({ id: message.channel.id }, { nombre: message.author.tag, avatarURL: message.author.displayAvatarURL({ dynamic: true }), mensaje: message.content }, 'snipe')
 
