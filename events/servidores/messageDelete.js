@@ -1,5 +1,5 @@
 const Discord = require("discord.js");
-
+const image = require('is-image');
 /**
  * 
  * @param {Discord.Client} client 
@@ -32,8 +32,13 @@ module.exports = async (client, message) => {
         .setFooter(message.guild.name, message.guild.iconURL({ dynamic: true, size: 2048 }))
         .setTimestamp()
 
-    if (attachment) {
-        const att = new Discord.MessageAttachment(attachment, 'img.png')
+    if (attachment && image(attachment)) {
+        const Canvas = require('canvas');
+        const canvas = Canvas.createCanvas(300, 300);
+        const ctx = canvas.getContext('2d')
+        const bck = await Canvas.loadImage(attachment);
+        ctx.drawImage(bck, 0, 0, 300, 300);
+        const att = new Discord.MessageAttachment(canvas.toBuffer(), 'img.png')
         embed.attachFiles(att)
             .setImage('attachment://img.png')
     }

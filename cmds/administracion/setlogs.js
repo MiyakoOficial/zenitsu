@@ -1,4 +1,4 @@
-const { MessageEmbed } = require("discord.js");
+const { MessageEmbed, Message, Client } = require("discord.js");
 
 //Después de Alias es opcional.
 const Command = require('../../Utils/Classes').Command;
@@ -11,15 +11,25 @@ module.exports = module.exports = class Comando extends Command {
         this.botPermissions = { guild: ['MANAGE_CHANNELS'], channel: [] }
         this.memberPermissions = { guild: ['ADMINISTRATOR'], channel: [] }
     }
-    run({ client, message }) {
+
+    /**
+     * 
+     * @param {Object} obj
+     * @param {Message} obj.message
+     * @param {Client} obj.client
+     */
+
+    run(obj) {
+
+        const { client, message } = obj;
 
         let channel = message.mentions.channels.first();
         let embedErr = new MessageEmbed()
             .setColor(client.color)
-            .setDescription(`<:cancel:804368628861763664> | No has mencionado un canal.`)
+            .setDescription(`<:cancel:804368628861763664> | No has mencionado un canal valido.`)
             .setTimestamp()
 
-        if (!channel) return message.channel.send({ embed: embedErr })
+        if (!channel || !channel.guild || !(channel.guild.id == message.guild.id)) return message.channel.send({ embed: embedErr })
 
         let embedE = new MessageEmbed()
             .setColor(client.color)
