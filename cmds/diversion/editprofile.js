@@ -38,8 +38,8 @@ module.exports = class Comando extends Command {
 			case 'img':
 				const url = ((message.attachments.array()[0] && image(message.attachments.array()[0].proxyURL))
 					? message.attachments.array()[0].proxyURL
-					: null) || ((args[1].match(regex) && image(args[1].match(regex)[0]))
-						? args[1].match(regex)[0]
+					: null) || ((args[1]?.match(regex) && image(args[1]?.match(regex)[0]))
+						? args[1]?.match(regex)[0]
 						: null)
 
 				if (!url)
@@ -52,8 +52,8 @@ module.exports = class Comando extends Command {
 			case 'thumbnail':
 				const url1 = ((message.attachments.array()[0] && image(message.attachments.array()[0].proxyURL))
 					? message.attachments.array()[0].proxyURL
-					: null) || ((args[1].match(regex) && image(args[1].match(regex)[0]))
-						? args[1].match(regex)[0]
+					: null) || ((args[1]?.match(regex) && image(args[1]?.match(regex)[0]))
+						? args[1]?.match(regex)[0]
 						: null)
 
 				if (!url1)
@@ -67,8 +67,8 @@ module.exports = class Comando extends Command {
 
 				const url2 = ((message.attachments.array()[0] && image(message.attachments.array()[0].proxyURL))
 					? message.attachments.array()[0].proxyURL
-					: null) || ((args[1].match(regex) && image(args[1].match(regex)[0]))
-						? args[1].match(regex)[0]
+					: null) || ((args[1]?.match(regex) && image(args[1]?.match(regex)[0]))
+						? args[1]?.match(regex)[0]
 						: null)
 
 				if (!url2)
