@@ -15,7 +15,7 @@ module.exports = class Comando extends Command {
         let ping_db = await new Promise((r, j) => {
             require('mongoose').connection.db.admin().ping((err, result) => (err || !result) ? j(err || result) : r(Date.now() - date))
         });
-        const pingApi = Date.now() - date;
+        const pingApi = date - message.createdTimestamp;
         let embed = new Discord.MessageEmbed()
             .setDescription(`🏓 Bot: ${client.ws.ping}ms [${getStatus(client.ws.ping)}]\n📡 Discord API: ${pingApi}ms [${getStatus(pingApi)}]\n🗃️ DB: ${ping_db}ms [${getStatus(ping_db)}]`)
             .setTimestamp()
