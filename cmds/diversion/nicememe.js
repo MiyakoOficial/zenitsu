@@ -18,11 +18,13 @@ module.exports = class Comando extends Command {
 	 */
 	async run(obj) {
 		const { message, client, embedResponse, args } = obj;
-		/* regex sacado de https://github.com/AndreMor955/gidget/blob/master/src/commands/image/spin.js */
-		const reg = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()!@:%_+.~#?&//=]*)/gm;
-		let foto = (args[0] && args[0].match(reg) ? args[0].match(reg)[0] : null) || (message.attachments.array()[0] ? message.attachments.array()[0].url : null) || (message.mentions.users.first() ? message.mentions.users.first().displayAvatarURL({ size: 2048, format: 'png' }) : null);
-		if (!foto)
-			return embedResponse('<:cancel:804368628861763664> | Necesitas adjuntar una imagen o mencionar a alguien.')
+
+		let atte = message.attachments.find(item => require('is-image')(item.proxyURL))?.proxyURL
+		let foto =
+			atte || (require('is-image')(args[0] ? args[0] : 'ARGS IS UNDEFINED') ? args[0] : null)
+			|| message.mentions.users.first()?.displayAvatarURL({ format: 'png' })
+			|| message.author.displayAvatarURL({ format: 'png' });
+
 		foto = await Canvas.loadImage(foto)
 		const canvas = Canvas.createCanvas(552, 513);
 		let bck = await Canvas.loadImage('https://cdn.discordapp.com/attachments/803346384144433154/804045257587032097/AZwCgO7.png');
@@ -30,6 +32,7 @@ module.exports = class Comando extends Command {
 		ctx.drawImage(bck, 0, 0, 552, 513)
 		ctx.drawImage(foto, 15, 10, 525, 350)
 		return enviar(message, canvas.toBuffer(), 'img.png')
+
 	}
 }
 

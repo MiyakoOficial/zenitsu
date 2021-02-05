@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 const { MessageEmbed, Message, Client } = require("discord.js");
 
 //Después de Alias es opcional.

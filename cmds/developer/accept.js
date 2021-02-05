@@ -4,9 +4,9 @@ module.exports = class Comando extends Command {
         super()
         this.name = "accept"
         this.category = 'developer'
-		this.dev = true;
+        this.dev = true;
     }
-    async run({ client, message, args, embedResponse }) {
+    async run({ client, args, embedResponse }) {
 
         if (!args[0]) return embedResponse('Escribe una ID valida')
         if (!args[1]) return embedResponse('Escribe algo!')
