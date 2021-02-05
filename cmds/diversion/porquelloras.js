@@ -26,8 +26,10 @@ module.exports = class Comando extends Command {
         let atte = message.attachments.find(item => require('is-image')(item.proxyURL))?.proxyURL
         let image =
             atte || (require('is-image')(args[0] ? args[0] : 'ARGS IS UNDEFINED') ? args[0] : null)
+            || client.users.cache.get(args[0])?.displayAvatarURL({ format: 'png' })
             || message.mentions.users.first()?.displayAvatarURL({ format: 'png' })
             || message.author.displayAvatarURL({ format: 'png' });
+
         image = await Canvas.loadImage(image)
         ctx.drawImage(image, 230, 125, 580, 475)
 

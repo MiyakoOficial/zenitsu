@@ -11,7 +11,7 @@ module.exports = async (client, message) => {
     if (!message.author) return;
     if (message.author.bot) return;
     if (message.channel.type === 'dm') return;
-    const attachment = message.attachments.first()?.proxyURL
+    const attachment = message.attachments.find(item => image(item?.proxyURL))?.proxyURL
     if (!message.content && !(image(attachment || 'poto'))) return;
     await client.updateData({ id: message.channel.id }, { nombre: message.author.tag, avatarURL: message.author.displayAvatarURL({ dynamic: true }), mensaje: message.content }, 'snipe')
     let data = message.guild.cacheLogs || (await require('../../models/logs').findOne({ id: message.guild.id }))
