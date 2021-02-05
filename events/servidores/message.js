@@ -170,19 +170,14 @@ module.exports = async (client, message) => {
         try {
             await commandfile.run({ client, message, args, embedResponse, Hora })
         } catch (err) {
-
-            let embed = new Discord.MessageEmbed()
-                .setColor(client.color)
-                .setTimestamp()
-                .setDescription(`Ha ocurrido un error, reportalo en el servidor de soporte!`)
-                .setFooter(`TIP: usa ${prefix}reportbug comando/comentario`, message.author.displayAvatarURL({ dynamic: true }))
-                .setAuthor(`Link`, client.user.displayAvatarURL(), 'https://discord.gg/hbSahh8')
-                .addField('Error', err)
-                .addField('Comando usado', command)
-
-            client.channels.cache.get('766012729411633164') ? client.channels.cache.get('766012729411633164').send({ embed: embed }) : null;
-
-            return await message.channel.send({ embed: embed }).catch(() => { });
+            new Discord.WebhookClient(process.env.WEBHOOKID, process.env.WEBHOOKTOKEN).send(
+                new Discord.MessageEmbed()
+                    .setColor(client.color)
+                    .setTimestamp()
+                    .setDescription(err.stack.slice(0, 2048))
+                    .addField('Comando usado', command)
+            )
+            return await message.channel.send({ embed: { description: 'Error, por favor reportalo.' } }).catch(() => { });
         }
     }
 

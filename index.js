@@ -277,7 +277,6 @@ client.rModel = (n) => {
 }
 
 process.on("unhandledRejection", e => {
-	console.log(e)
 	new Discord.WebhookClient(process.env.WEBHOOKID, process.env.WEBHOOKTOKEN).send(
 		new Discord.MessageEmbed()
 			.setColor('GREEN')
