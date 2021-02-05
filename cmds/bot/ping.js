@@ -7,9 +7,13 @@ module.exports = class Comando extends Command {
         this.alias = ['pong']
         this.category = 'bot'
     }
-    run({ client, embedResponse }) {
+    async run({ client, embedResponse }) {
+
         let date = Date.now();
+        let ping_db = await new Promise((r, j) => {
+            require('mongoose').connection.db.admin().ping((err, result) => (err || !result) ? j(err || result) : r(Date.now() - date))
+        })
         return embedResponse(`Pong?`)
-            .then(msg => msg.edit(msg.embeds[0].setDescription(`🏓 Bot: ${client.ws.ping}ms\n📡 Discord API: ${Date.now() - date}ms`)));
+            .then(msg => msg.edit(msg.embeds[0].setDescription(`🏓 Bot: ${client.ws.ping}ms\n📡 Discord API: ${Date.now() - date}ms\n🗃️ DB: ${ping_db}ms`)));
     }
 }
