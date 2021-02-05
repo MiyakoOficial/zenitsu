@@ -66,7 +66,7 @@ module.exports.replace = function (string, array) {
  */
 
 module.exports.mapaCanvas = async function (mapatest, win = false) {
-    let modelo = require('../models/attachment.js');
+
     let numeros = [
         '1️⃣', '2️⃣', '3️⃣',
         '4️⃣', '5️⃣', '6️⃣',
@@ -74,13 +74,6 @@ module.exports.mapaCanvas = async function (mapatest, win = false) {
     ]
 
     let soniguales = mapatest.every((_, i) => _ == numeros[i]);
-
-    if (!soniguales) {
-        let check = await modelo.findOne({ mapa: mapatest.join('') });
-
-        if (check)
-            return check.Attachment.buffer;
-    }
     const GIFEncoder = require('gifencoder');
     const encoder = new GIFEncoder(300, 300);
 
@@ -469,11 +462,7 @@ module.exports.mapaCanvas = async function (mapatest, win = false) {
     else {
         final = attachment
     }
-    if (!soniguales) {
-        await modelo.create({ mapa: mapatest.join(''), Attachment: final })
-    }
     return final;
-
 }
 
 
