@@ -47,7 +47,13 @@ module.exports = class Comando extends Command {
 
 				data = await client.updateData({ id: message.author.id }, { img: url }, 'profile')
 
-				return embedResponse(`Imagen cambiada, ahora prueba con el comando profile.`);
+				let embed = new Discord.MessageEmbed()
+					.setColor(client.color)
+					.setTimestamp()
+					.setImage(url)
+					.setDescription('Imagen cambiada.')
+
+				return message.channel.send({ embed })
 
 			case 'thumbnail':
 				const url1 = ((message.attachments.array()[0] && image(message.attachments.array()[0].proxyURL))
@@ -61,8 +67,13 @@ module.exports = class Comando extends Command {
 
 				data = await client.updateData({ id: message.author.id }, { thumbnail: url1 }, 'profile')
 
-				return embedResponse(`Thumbnail cambiado, ahora prueba con el comando profile.`);
+				let embed1 = new Discord.MessageEmbed()
+					.setColor(client.color)
+					.setTimestamp()
+					.setThumbnail(url1)
+					.setDescription('Thumbnail cambiado.')
 
+				return message.channel.send({ embed: embed1 })
 			case 'footerimg':
 
 				const url2 = ((message.attachments.array()[0] && image(message.attachments.array()[0].proxyURL))
@@ -76,9 +87,13 @@ module.exports = class Comando extends Command {
 
 				data = await client.updateData({ id: message.author.id }, { footer: url2 }, 'profile')
 
-				return embedResponse(`Imagen del footer cambiado, ahora prueba con el comando profile.`);
+				let embed2 = new Discord.MessageEmbed()
+					.setColor(client.color)
+					.setTimestamp()
+					.setFooter('\u200b', url2)
+					.setDescription('Imagen del pie de pagina cambiada.')
 
-
+				return message.channel.send({ embed: embed2 })
 
 			case 'footertext':
 				if (!valor) return embedResponse('<:cancel:804368628861763664> | Necesitas especificar el texto para introducir.')
@@ -109,12 +124,12 @@ module.exports = class Comando extends Command {
 
 				data = await client.updateData({ id: message.author.id }, { color: `${args[1]}` }, 'profile')
 
-				let embed = new Discord.MessageEmbed()
+				let embed3 = new Discord.MessageEmbed()
 					.setColor(data.color)
 					.setTimestamp()
 					.setDescription('Color cambiado.\n\n<-- Fue cambiado a este. (' + data.color + ')')
 
-				return message.channel.send({ embed })
+				return message.channel.send({ embed: embed3 })
 
 			default:
 				embedResponse(

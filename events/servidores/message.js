@@ -18,7 +18,7 @@ module.exports = async (client, message) => {
     message.guild.cachePrefix = prefix;
     const args = message.content.slice(prefix.length).trim().split(/ +/);
     const command = args.shift().toLowerCase()
-
+    if (!message.content?.startsWith(prefix)) return;
     if (message.author.bot) return;
     let emojiFinded = message.guild.emojis.cache.find(a => a.name === message.content.slice(2)) || client.emojis.cache.find(a => a.name === message.content.slice(2));
     //console.log(emojiFinded)
