@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 const ms = require('ms');
 const cooldowns = new Discord.Collection();
-let cooldownniveles = new Set();
+//let cooldownniveles = new Set();
 /**
  * 
  * @param {Discord.Client} client 
@@ -9,35 +9,11 @@ let cooldownniveles = new Set();
  */
 module.exports = async (client, message) => {
 
-    /* function emojiNitro(msg) {
-         if (!msg.channel.permissionsFor(client.user).has('MANAGE_CHANNELS'))
-             return;
-         client.emojis.cache.filter(e => e.animated).map(e => e).forEach(async e => { //filtramos los emojis animados y luego los mapeamos
-             if (msg.member.user.displayAvatarURL({ dynamic: true }).endsWith(".gif")) {
-                 return;
-             } //acá verificamos si el usuario tiene una foto animada, si es así retorna
-             if (msg.content.includes(`:${e.name}:`)) {
-                 let finalMessage = msg.content.replace(new RegExp(`:${e.name}:`, "gi"), e.toString()); // acá reemplazamos el emote en string del usuario por el animado que dará el bot
- 
-                 let name = msg.member.nickname || msg.member.user.username; //esto nos servirá para los webhooks
- 
-                 let webhook = await msg.channel.createWebhook(name, {
-                     avatar: msg.member.user.displayAvatarURL({ dynamic: true }),
-                     reason: `Emoji nitro ${name}`
-                 }); //creamos el webhook con los datos proporcionados anteriormente
-                 webhook.send(finalMessage).then(() => { //enviamos el mensaje
-                     msg.delete(); //eliminamos el mensaje del autor
-                     webhook.delete("Used"); //eliminamos el webhook luego de haberlo usado
-                 });
-             }
-         });
-     }*/
-
     //const prefix = (await client.getData({ id: message.guild.id }, 'prefix')).prefix || 'z!';
     if (!message || !message.guild || !message.author) return;
     client.serverQueue = client.queue.get(message.guild.id);
 
-    client.updateData({ idMember: message.author.id, idGuild: message.guild.id }, { cacheName: message.author.tag }, 'niveles').catch(() => { })
+    //client.updateData({ idMember: message.author.id, idGuild: message.guild.id }, { cacheName: message.author.tag }, 'niveles').catch(() => { })
     const prefix = message.guild.cachePrefix || await message.guild.getPrefix();
     message.guild.cachePrefix = prefix;
     const args = message.content.slice(prefix.length).trim().split(/ +/);
@@ -50,7 +26,6 @@ module.exports = async (client, message) => {
         if (message.deletable) message.delete();
         return message.channel.send(emojiFinded.toString())
     }
-    let Random = Math.floor(Math.random() * 24) + 1;
 
     /*if (!message.member.hasPermission('ADMINISTRATOR') && settings.borrarInv && message.content.match(/(https?:\/\/)?(www\.)?(discord\.(gg|io|me|li)|discordapp\.com\/invite)\/.+[a-z]/g)) {
 
@@ -65,111 +40,6 @@ module.exports = async (client, message) => {
 
     }*/
 
-    if (!message.content.startsWith(prefix)) {
-
-        /*  if (['470235112873787402'].includes(message.guild.id)) {
-              emojiNitro(message);
-          }*/
-        /*if (!settings.sistemaDeNiveles)
-            return;
-*/
-        let guild = `${message.guild.id}_${message.author.id}`;
-        //console.log(cooldownniveles)
-        if (cooldownniveles.has(guild)) {
-            return;
-        }
-        else {
-            let dataN = await client.getData({ idMember: message.author.id, idGuild: message.guild.id }, 'niveles')
-            let { xp, nivel } = await client.getData({ idGuild: `${message.guild.id}`, idMember: `${message.author.id}` }, 'niveles');
-            let levelup = 5 * (nivel ** 2) + 50 * nivel + 100;
-
-            cooldownniveles.add(guild);
-            setTimeout(() => {
-                cooldownniveles.delete(guild);
-            }, ms('45s'));
-
-            if ((xp + Random) > levelup) {
-
-                await client.updateData({ idGuild: `${message.guild.id}`, idMember: `${message.author.id}` }, { xp: 0 }, 'niveles');
-                await client.updateData({ idGuild: `${message.guild.id}`, idMember: `${message.author.id}` }, { $inc: { nivel: 1 } }, 'niveles');
-
-                //if (settings.mostrarAnuncio) {
-
-                let { canal } = await client.getData({ id: message.guild.id }, 'logslevel')
-                let channel = client.channels.cache.get(canal) || message.channel;
-                //if (!channel) channel = message.channel;
-                /*
-                                let text = encodeURIComponent(`${message.author.tag}, subiste al nivel ${nivel + 1}!`)
-                                let link = `https://api.alexflipnote.dev/challenge?text=${text}&icon=2`
-                                let embed = new Discord.MessageEmbed()
-                                    .setColor(color)
-                                    .setImage(link);
-                                channel.send({ embed: embed }).catch(a => { });
-                
-                */
-                let usuario = message.author
-                if (dataN.disableNotify) {
-                    const { createCanvas, loadImage, registerFont } = require('canvas');
-
-                    registerFont('/home/MARCROCK22/zenitsu/OpenSansEmoji.ttf', { family: "Open Sans Emoji" })
-                    registerFont('/home/MARCROCK22/zenitsu/Minecrafter.Reg.ttf', { family: "Minecraft" })
-
-                    const canvas = createCanvas(700, 100);
-                    const ctx = canvas.getContext('2d');
-
-                    const background = await loadImage('https://cdn.discordapp.com/attachments/621139895729258528/747968079191081010/challenge.png');
-                    ctx.drawImage(background, 0, 0, canvas.width, canvas.height)
-
-                    const avatar = await loadImage(usuario.displayAvatarURL({ format: 'png' }));
-
-                    const applyText = (canvas, text) => {
-                        const ctx = canvas.getContext('2d');
-
-                        let fontSize = 70;
-
-                        do {
-
-                            ctx.font = `${fontSize -= 1}px "Open Sans Emoji"`;
-
-                        } while (ctx.measureText(text).width > canvas.width - 105);
-
-                        return ctx.font;
-                    };
-
-                    let txt = 'Level up!';
-                    ctx.fillStyle = "#ea899a";
-                    ctx.font = '40px "Minecraft"'
-                    ctx.fillText(txt, 95, 45);
-
-
-                    let text = `${usuario.tag} has subido al nivel ${nivel + 1}!`;
-                    ctx.font = applyText(canvas, text, 90, 84);
-                    ctx.fillStyle = '#FFFFFF';
-                    ctx.fillText(text, 95, 80);
-
-                    //circulo
-                    ctx.beginPath();
-                    ctx.arc(50, 50, 40, 0, Math.PI * 2, true);
-                    ctx.closePath();
-                    ctx.clip();
-                    //circulo
-
-                    ctx.drawImage(avatar, 10, 10, 80, 80);
-                    channel.send(new Discord.MessageAttachment(canvas.toBuffer(), 'levelImage.png')).catch(() => { })
-                } // Yes
-                //}
-                //embedResponse(`<@${message.author.id}>, subiste al nivel ${nivel + 1}!`, channel).catch(a => { });
-
-            }
-
-            else {
-                await client.updateData({ idGuild: `${message.guild.id}`, idMember: `${message.author.id}` }, { $inc: { xp: Random } }, 'niveles');
-                //console.log(`${ message.author.tag } ganó ${ random }, es nivel: ${ nivel }, xp que tiene: ${ xp } `);
-            }
-            return; //console.log('no prefix message')
-        }
-
-    }
     let filter = e => {
         if (message.guild.id != '645463565813284865' && e.category == 'servidor') return false;
         else if (e.dev && (!(client.devseval.includes(message.author.id)))) return false;

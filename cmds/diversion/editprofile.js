@@ -1,5 +1,8 @@
 /* eslint-disable no-case-declarations */
+const regex = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/gi
 const Command = require('../../Utils/Classes').Command;
+const image = require('is-image');
+const Discord = require('discord.js');
 module.exports = class Comando extends Command {
 	constructor() {
 		super()
@@ -8,22 +11,19 @@ module.exports = class Comando extends Command {
 	}
 
 	/**
-     * 
-     * @param {Object} obj
-     * @param {import('discord.js').Message} obj.message
-     * @param {import('discord.js').Client} obj.client
-     * @param {Array<String>} obj.args
-     * @returns {Promise<(import('discord.js').Message|void)>}
-     */
+	 * 
+	 * @param {Object} obj
+	 * @param {import('discord.js').Message} obj.message
+	 * @param {import('discord.js').Client} obj.client
+	 * @param {Array<String>} obj.args
+	 * @returns {Promise<(import('discord.js').Message|void)>}
+	 */
 
 	async run(obj) {
-		return;
+
 		const { client, message, args, embedResponse } = obj
-
 		let data;
-
 		let valor = args.slice(1).join(' ');
-
 		switch (args[0]) {
 			case 'description':
 
@@ -36,8 +36,11 @@ module.exports = class Comando extends Command {
 				return embedResponse(`Descripción cambiada correctamente.`);
 
 			case 'img':
-				const regex = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/gi,
-					  url = (message.attachments.array()[0] ? message.attachments.array()[0].attachment : null) || (args[1].match(regex) ? args[1].match(regex)[0] : null)
+				const url = ((message.attachments.array()[0] && image(message.attachments.array()[0].proxyURL))
+					? message.attachments.array()[0].proxyURL
+					: null) || ((args[1].match(regex) && image(args[1].match(regex)[0]))
+						? args[1].match(regex)[0]
+						: null)
 
 				if (!url)
 					return embedResponse('<:cancel:804368628861763664> | Adjunta un archivo o introduce una URL valida.');
@@ -46,67 +49,84 @@ module.exports = class Comando extends Command {
 
 				return embedResponse(`Imagen cambiada, ahora prueba con el comando profile.`);
 
-
-
 			case 'thumbnail':
+				const url1 = ((message.attachments.array()[0] && image(message.attachments.array()[0].proxyURL))
+					? message.attachments.array()[0].proxyURL
+					: null) || ((args[1].match(regex) && image(args[1].match(regex)[0]))
+						? args[1].match(regex)[0]
+						: null)
 
-				if (!args[1].match(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/gi))
-					return embedResponse('Introduce una URL valida!');
+				if (!url1)
+					return embedResponse('<:cancel:804368628861763664> | Adjunta un archivo o introduce una URL valida.');
 
-				data = await client.updateData({ id: message.author.id }, { thumbnail: args[1] }, 'profile')
+				data = await client.updateData({ id: message.author.id }, { thumbnail: url1 }, 'profile')
 
 				return embedResponse(`Thumbnail cambiado, ahora prueba con el comando profile.`);
 
-
-
 			case 'footerimg':
 
-				if (!args[1].match(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/gi))
-					return embedResponse('Introduce una URL valida!');
+				const url2 = ((message.attachments.array()[0] && image(message.attachments.array()[0].proxyURL))
+					? message.attachments.array()[0].proxyURL
+					: null) || ((args[1].match(regex) && image(args[1].match(regex)[0]))
+						? args[1].match(regex)[0]
+						: null)
 
-				data = await client.updateData({ id: message.author.id }, { footer: args[1] }, 'profile')
+				if (!url2)
+					return embedResponse('<:cancel:804368628861763664> | Adjunta un archivo o introduce una URL valida.');
+
+				data = await client.updateData({ id: message.author.id }, { footer: url2 }, 'profile')
 
 				return embedResponse(`Imagen del footer cambiado, ahora prueba con el comando profile.`);
 
 
 
 			case 'footertext':
+				if (!valor) return embedResponse('<:cancel:804368628861763664> | Necesitas especificar el texto para introducir.')
 
-				if (valor.length >= 1024) return embedResponse('Limite de caracteres sobrepasados.')
+				if (valor.length >= 1024) return embedResponse('<:cancel:804368628861763664> | Limite de caracteres sobrepasados. (1024)')
 
 				data = await client.updateData({ id: message.author.id }, { footertext: valor }, 'profile')
 
-				return embedResponse('Ahora tu footer es ' + data.footertext);
+				return embedResponse('Texto del footer cambiado.');
 
 
 
 			case 'nick':
 
-				if (valor.length >= 1024) return embedResponse('Limite de caracteres sobrepasados.')
+				if (!valor) return embedResponse('<:cancel:804368628861763664> | Necesitas especificar el apodo.')
+
+				if (valor.length >= 1024) return embedResponse('<:cancel:804368628861763664> | Limite de caracteres sobrepasados. (1024)')
 
 				data = await client.updateData({ id: message.author.id }, { nick: valor }, 'profile')
 
-				return embedResponse('Ahora tu apodo es ' + data.nick);
-
-
+				return embedResponse('Apodo cambiado.');
 
 			case 'color':
-
 				// eslint-disable-next-line no-case-declarations
-				const check = /^#[a-fA-F0-9]{3,6}$/.test(valor)
+				const check = /^#[a-fA-F0-9]{3,6}$/.test(args[1])
 
-				if (!check) return embedResponse('Usa el tipo "hexcolor", ejemplo: z!editprofile color #FF0000')
+				if (!check) return embedResponse('<:cancel:804368628861763664> | Necesitas introducir un color valido. (hex color)')
 
-				data = await client.updateData({ id: message.author.id }, { color: `${valor}` }, 'profile')
+				data = await client.updateData({ id: message.author.id }, { color: `${args[1]}` }, 'profile')
 
-				return embedResponse('Ahora tu color de embed es ' + data.color);
+				let embed = new Discord.MessageEmbed()
+					.setColor(data.color)
+					.setTimestamp()
+					.setDescription('Color cambiado.\n\n<-- Fue cambiado a este. (' + data.color + ')')
 
-
+				return message.channel.send({ embed })
 
 			default:
-
-				embedResponse(`Elije entre las opciones disponibles: img, thumbnail, footerimg, footertext, nick, description, color`)
-
+				embedResponse(
+					"Elige entre las opciones:\n" +
+					"color <hex color>\n" +
+					"nick <apodo>\n" +
+					"footertext <nuevo pie de pagina>\n" +
+					"footerimg <nueva imagen en el pie de pagina>(puedes adjuntar una imagen)\n" +
+					"thumbnail <nuevo thumbnail>(puedes adjuntar una imagen)\n" +
+					"img <nueva imagen>(puedes adjuntar una imagen)\n" +
+					"description <nueva descripcion>"
+				)
 				break;
 		}
 	}
