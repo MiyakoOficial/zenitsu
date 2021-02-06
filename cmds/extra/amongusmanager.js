@@ -6,7 +6,7 @@ const Command = require('../../Utils/Classes').Command;
 module.exports = module.exports = class Comando extends Command {
     constructor() {
         super()
-        this.name = "amongusmessage"
+        this.name = "amongusmanager"
         this.alias = [];
         this.cooldown = 10
         this.category = 'extra';
