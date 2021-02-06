@@ -25,9 +25,9 @@ Discord.Structures.extend('Guild', g => {
 
 const client = new Discord.Client(
 	{
-		partials: ['PRESENCE'],
+		partials: ['PRESENCE', 'MESSAGE', 'REACTION'],
 		http: { version: 7 },
-		messageCacheMaxSize: 75,
+		messageCacheMaxSize: 100,
 		messageSweepInterval: 3600,
 		messageCacheLifetime: 1800,
 		messageEditHistoryMaxSize: 1,

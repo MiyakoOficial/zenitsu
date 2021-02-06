@@ -1,5 +1,7 @@
 // eslint-disable-next-line no-unused-vars
-const Classes = require('./Classes.js');
+const Classes = require('./Classes.js'),
+    // eslint-disable-next-line no-unused-vars
+    Discord = require('discord.js');
 /**
  * @param {Classes.embedOptions} object 
  * @param {Object} options
@@ -619,3 +621,68 @@ async function displayConnectFourBoard(mapa, game) {
 }
 
 module.exports.displayConnectFourBoard = displayConnectFourBoard;
+
+
+/**
+ * 
+ * @param {Object} ALL
+ * @param {Discord.Guild} ALL.guild
+ * @param {Discord.Collection<Discord.Snowflake, Discord.Role>} ALL.memberRoles
+ * @param {Discord.TextChannel} ALL.TextChannel
+ * @param {Discord.VoiceChannel} ALL.VoiceChannel
+ * @param {Boolean} ALL.whichAction
+ * @param {Boolean} ALL.perm
+ * @returns {Promise<undefined>} 
+ */
+
+
+async function AmongUs(ALL) {
+    const roleName = 'Among Us Manager';
+
+    const { guild, memberRoles, VoiceChannel, whichAction } = ALL;
+
+    if (!guild.roles.cache.find(role => role.name == roleName)) {
+        return;
+    }
+
+    if (!memberRoles.find(role => role.name == roleName))
+        return;
+
+    if (!VoiceChannel || !VoiceChannel.name.includes('Among Us'))
+        return;
+
+    let PERMISSIONS = ['MUTE_MEMBERS', 'MANAGE_CHANNELS'].filter(item => VoiceChannel.permissionsFor(guild.client.user).has(item))
+
+    if (PERMISSIONS.length != 2) return;
+
+    if (VoiceChannel.userLimit >= 11) await VoiceChannel.setUserLimit(10)
+
+    for (let member of sortMembers(VoiceChannel.members).slice(0, 10)) {
+
+        await member.voice.setMute(whichAction == 'mute' ? true : false, `${whichAction == 'mute' ? 'MUTEANDO' : 'DESMUTEANDO'} para una partida de Among Us.`).catch(() => { })
+
+    }
+}
+
+module.exports.AmongUs = AmongUs;
+
+/**
+ * 
+ * @param {Discord.Collection<Discord.Snowflake, Discord.GuildMember>} members
+ * @returns {Discord.Collection<Discord.Snowflake, Discord.GuildMember>}
+ */
+
+function sortMembers(members) {
+
+    let items = members.array()
+
+    return items.sort(function (a, b) {
+        if (a.displayName > b.displayName) {
+            return 1;
+        }
+        if (a.displayName < b.displayName) {
+            return -1;
+        }
+        return 0;
+    });
+}

@@ -8,11 +8,9 @@ module.exports = (client) => {
         const commands = readdirSync(`./cmds/${dirs}/`).filter(d => {
             return d.endsWith('.js');
         });
-        console.log(commands)
         for (let file of commands) {
             try {
                 let carpeta = require(`../cmds/${dirs}/${file}`);
-                console.log(new carpeta().name)
                 client.commands.set(new carpeta().name, new carpeta());
                 if (carpeta.name) {
                     table.addRow(file, '✅');
