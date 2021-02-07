@@ -5,6 +5,13 @@ module.exports = async (client, oldMessage, newMessage) => {
 
     if (!newMessage.guild || !oldMessage.guild) return;
     let data = newMessage.guild.cacheLogs || (await client.getData({ id: newMessage.guild.id }, 'logs'))
+    if (oldMessage.partial || newMessage.partial) {
+        oldMessage = await oldMessage.fetch().catch(() => { })
+        newMessage = newMessage.partial ? await newMessage.fetch().catch(() => { }) : newMessage
+    }
+
+    if (!oldMessage || !newMessage) return;
+
     if (!oldMessage.author || !newMessage.author || newMessage.author.bot) return;
     if (newMessage.channel.type === 'dm') return;
     if (newMessage.content === oldMessage.content) return;
