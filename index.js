@@ -77,20 +77,6 @@ const client = new Discord.Client(
 	}
 );
 
-const Topgg = require("@top-gg/sdk");
-const express = require("express");
-
-const app = express();
-
-const webhook = new Topgg.Webhook(process.env.PASSWORDDBL);
-
-app.post("/dblwebhook", webhook.middleware(), (req, res) => {
-	// req.vote wil lbe your vote object, e.g
-	console.log(req.vote.user); // 395526710101278721 < user who voted
-});
-
-app.listen(3000);
-
 const DBL = require("dblapi.js");
 client.dbl = new DBL(process.env.DBLTOKEN, client);
 
