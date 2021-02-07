@@ -30,14 +30,18 @@ module.exports = async (client, oldMessage, newMessage) => {
         .setTimestamp()
 
     if (attachment && image(attachment)) {
-        const Canvas = require('canvas');
-        const canvas = Canvas.createCanvas(300, 300);
-        const ctx = canvas.getContext('2d')
-        const bck = await Canvas.loadImage(attachment);
-        ctx.drawImage(bck, 0, 0, 300, 300);
-        const att = new Discord.MessageAttachment(canvas.toBuffer(), 'img.png')
-        embed.attachFiles(att)
-            .setImage('attachment://img.png')
+        try {
+            const Canvas = require('canvas');
+            const canvas = Canvas.createCanvas(300, 300);
+            const ctx = canvas.getContext('2d')
+            const bck = await Canvas.loadImage(attachment);
+            ctx.drawImage(bck, 0, 0, 300, 300);
+            const att = new Discord.MessageAttachment(canvas.toBuffer(), 'img.png')
+            embed.attachFiles(att)
+                .setImage('attachment://img.png')
+        } catch {
+            ''
+        }
     }
 
     return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(() => { })
