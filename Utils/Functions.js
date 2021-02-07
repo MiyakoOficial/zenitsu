@@ -657,7 +657,7 @@ async function AmongUs(ALL) {
 
     if (VoiceChannel.userLimit >= 11) await VoiceChannel.setUserLimit(10)
 
-    for (let member of sortMembers(VoiceChannel.members).slice(0, 10)) {
+    for (let member of sortMembers(VoiceChannel.members).slice(0, 10).filter(m => whichAction == 'mute' ? !m.voice.serverMute : m.voice.serverMute)) {
 
         await member.voice.setMute(whichAction == 'mute' ? true : false, `${whichAction == 'mute' ? 'MUTEANDO' : 'DESMUTEANDO'} para una partida de Among Us.`).catch(() => { })
 
@@ -669,7 +669,7 @@ module.exports.AmongUs = AmongUs;
 /**
  * 
  * @param {Discord.Collection<Discord.Snowflake, Discord.GuildMember>} members
- * @returns {Discord.Collection<Discord.Snowflake, Discord.GuildMember>}
+ * @returns {Array<Discord.GuildMember>}
  */
 
 function sortMembers(members) {
