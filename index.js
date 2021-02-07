@@ -175,7 +175,7 @@ client.getData = async ({ ...find }, model, createifnoexists = true) => {
 	const db_files = await readdir(require("path").join(__dirname, "./models/"));
 	const available_models = db_files.map(elem => elem.endsWith("js") ? elem.slice(0, -3) : elem);
 
-	if (!available_models.includes(model)) return console.log('[GET_DATA]: Model no encontrado!')
+	if (!available_models.includes(model)) throw new Error('[GET_DATA]: Model no encontrado!')
 
 	let db = require('./models/' + model + '.js');
 
@@ -199,7 +199,7 @@ client.updateData = async ({ ...find }, { ...newValue }, model) => {
 	const db_files = await readdir(require("path").join(__dirname, "./models/"));
 	const available_models = db_files.map(elem => elem.endsWith("js") ? elem.slice(0, -3) : elem);
 
-	if (!available_models.includes(model)) return console.log('[UPDATE_DATA]Model no encontrado!')
+	if (!available_models.includes(model)) throw new Error('[UPDATE_DATA]Model no encontrado!')
 
 	let db = require('./models/' + model + '.js');
 
