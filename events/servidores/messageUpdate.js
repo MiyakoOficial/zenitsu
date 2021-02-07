@@ -5,7 +5,7 @@ module.exports = async (client, oldMessage, newMessage) => {
 
     if (!newMessage.guild || !oldMessage.guild) return;
     let data = newMessage.guild.cacheLogs || (await client.getData({ id: newMessage.guild.id }, 'logs'))
-    if (newMessage.author.bot) return;
+    if (!oldMessage.author || !newMessage.author || newMessage.author.bot) return;
     if (newMessage.channel.type === 'dm') return;
     if (newMessage.content === oldMessage.content) return;
     if (newMessage.author.id == '507367752391196682') {
