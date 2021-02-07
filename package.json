@@ -16,6 +16,7 @@
     "dependencies": {
         "@discordjs/opus": "^0.3.2",
         "@sindresorhus/to-milliseconds": "^1.2.0",
+        "@top-gg/sdk": "^3.0.7",
         "ascii-table": "0.0.9",
         "canvas": "^2.6.1",
         "connect4-ai": "^0.1.3",
