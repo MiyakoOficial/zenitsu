@@ -18,8 +18,30 @@ module.exports = async (client, message) => {
     message.guild.cachePrefix = prefix;
     const args = message.content.slice(prefix.length).trim().split(/ +/);
     const command = args.shift().toLowerCase()
-    if (!message.content?.startsWith(prefix)) return;
+    const afk = await message.author.fetchAfk()
+    if (afk.status) {
+        await message.author.deleteAfk()
+        return message.reply('<:sesonroja:804750422828515339> | ¡Bienvenido de vuelta!')
+    }
+
+    for (let user of message.mentions.users.array()) {
+        if (!user.cacheAfk) {
+            await user.fetchAfk();
+        }
+        if (user.cacheAfk && user.cacheAfk.status) {
+
+            let embed = new Discord.MessageEmbed()
+                .setColor(client.color)
+                .setAuthor(user.tag, user.displayAvatarURL({ dynamic: true, size: 2048 }))
+                .setDescription(user.cacheAfk.reason)
+                .setFooter(require('moment')(user.cacheAfk.date).fromNow())
+
+            return message.channel.send({ embed })
+        }
+    }
+
     if (message.author.bot) return;
+    if (!message.content?.startsWith(prefix)) return;
     let emojiFinded = message.guild.emojis.cache.find(a => a.name === message.content.slice(2)) || client.emojis.cache.find(a => a.name === message.content.slice(2));
     //console.log(emojiFinded)
     if (message.content.slice(0, 2) === ': ' && emojiFinded) {

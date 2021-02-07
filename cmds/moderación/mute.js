@@ -24,18 +24,19 @@ module.exports = class Comando extends Command {
 
         if (!miembro || miembro?.user?.bot) return embedResponse('<:cancel:804368628861763664> | Menciona a un miembro del servidor.')
 
-        if (miembro.roles.highest.comparePositionTo(message.member.roles.highest) > 0)
+        if (miembro.id == message.author.id)
+            return embedResponse('<:cancel:804368628861763664> | No te puedes silenciar a ti mismo.')
+
+        if (miembro.roles.highest.comparePositionTo(message.member.roles.highest) >= 0)
             return embedResponse('<:cancel:804368628861763664> | No puedes silenciar a este usuario.')
 
-        if (miembro.roles.highest.comparePositionTo(message.guild.me.roles.highest) > 0)
+        if (miembro.roles.highest.comparePositionTo(message.guild.me.roles.highest) >= 0)
             return embedResponse('<:cancel:804368628861763664> | No puedo moderar a este usuario.')
 
         if (!args[0].match(/<@(!)?[0-9]{17,18}>/g)) return embedResponse('<:cancel:804368628861763664> | La mencion tiene que ser el primer argumento.')
 
 
         miembro = miembro.user;
-
-        if (miembro.id == message.author.id) return embedResponse('<:cancel:804368628861763664> | No te puedes silenciar a ti mismo.')
 
         return message.guild.member(miembro).roles.add(role).then(() => {
             let types = ['text', 'category', 'news']

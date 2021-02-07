@@ -27,9 +27,12 @@ module.exports = class Comando extends Command {
 		let razon = args.slice(1).join(' ') || 'No especificada';
 		razon = razon.slice(0, 500)
 
-		if (!miembro || (miembro.user.id == message.author.id)) return embedResponse('<:cancel:804368628861763664> | Menciona a un miembro del servidor.')
+		if (!miembro) return embedResponse('<:cancel:804368628861763664> | Menciona a un miembro del servidor.')
 
-		if (miembro.roles.highest.comparePositionTo(message.member.roles.highest) > 0)
+		if ((miembro.user.id == message.author.id))
+			return embedResponse('<:cancel:804368628861763664> | No te puedes banear a ti mismo.')
+
+		if (miembro.roles.highest.comparePositionTo(message.member.roles.highest) >= 0)
 			return embedResponse('<:cancel:804368628861763664> | No puedes banear a este usuario.')
 
 		if (!miembro.bannable)

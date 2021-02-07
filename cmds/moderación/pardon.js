@@ -14,9 +14,9 @@ module.exports = class Comando extends Command {
 
         if (!miembro || miembro?.user?.bot) return embedResponse('<:cancel:804368628861763664> | Menciona a un miembro del servidor.')
 
-        miembro = miembro.user;
+        if (message.author.id == miembro.user.id) return embedResponse(`<:cancel:804368628861763664> | No te puedes quitar una advertencia a ti mismo.`)
 
-        if (miembro.id == message.author.id) return embedResponse('<:cancel:804368628861763664> | No te puedes perdonar a ti mismo.')
+        miembro = miembro.user;
 
         let datazo = (await client.getData({ idGuild: message.guild.id, idMember: miembro.id }, 'warns'));
 

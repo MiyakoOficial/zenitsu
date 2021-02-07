@@ -1,9 +1,11 @@
+require('moment').locale('es')
 const Discord = require('discord.js'),
 	{ Collection } = require('discord.js');
 const nekos = require('nekos.life');
 const tnai = require('tnai');
 const mongoose = require('mongoose');
 require('dotenv').config();
+
 Discord.Structures.extend('Guild', g => {
 
 	class Guild extends g {
@@ -23,13 +25,53 @@ Discord.Structures.extend('Guild', g => {
 	return Guild;
 });
 
+Discord.Structures.extend('User', g => {
+
+	class User extends g {
+
+		constructor(client, data) {
+			super(client, data);
+		}
+
+		async fetchAfk() {
+			let func = async () => {
+				// eslint-disable-next-line no-prototype-builtins
+				if (this.hasOwnProperty('cacheIsAfk'))
+					return this.cacheAfk
+				else return await require('./models/afk').findOne({ id: this.id })
+
+			}
+			this.cacheAfk = await func() || {}
+			return this.cacheAfk
+		}
+
+		async deleteAfk() {
+			await this.setAfk(this.cacheAfk.reason, this.cacheAfk.date, false)
+			return true;
+		}
+
+		/**
+		 * 
+		 * @param {String} reason 
+		 */
+
+		async setAfk(reason = 'AFK', date = Date.now(), status = true) {
+			let info = await client.updateData({ id: this.id }, { reason, date, status }, 'afk');
+			this.cacheAfk = info
+			return this.cacheAfk
+		}
+
+	}
+	return User;
+});
+
 const client = new Discord.Client(
 	{
 		partials: ['PRESENCE', 'MESSAGE', 'REACTION'],
 		http: { version: 7 },
 		messageCacheMaxSize: 100,
-		messageSweepInterval: 3600,
-		messageCacheLifetime: 1800,
+		/*messageSweepInterval: 3600,
+		messageCacheLifetime: 1800,*/
 		messageEditHistoryMaxSize: 1,
 		allowedMentions: { parse: [] }
 	}

@@ -16,17 +16,17 @@ module.exports = class Comando extends Command {
 
 		let razon = args.slice(1).join(' ') || 'No especificada';
 
-		if (!miembro || miembro?.user?.bot || (miembro.user.id == message.author.id)) return embedResponse('<:cancel:804368628861763664> | Menciona a un miembro del servidor.')
+		if (!miembro || miembro?.user?.bot) return embedResponse('<:cancel:804368628861763664> | Menciona a un miembro del servidor.')
 
-		if (miembro.roles.highest.comparePositionTo(message.member.roles.highest) > 0)
+		if (message.author.id == miembro.user.id) return embedResponse(`<:cancel:804368628861763664> | No te puedes advertir a ti mismo.`)
+
+		if (miembro.roles.highest.comparePositionTo(message.member.roles.highest) >= 0)
 			return embedResponse('<:cancel:804368628861763664> | No puedes advertir a este usuario.')
 
 		if (!miembro.kickable)
 			return embedResponse('<:cancel:804368628861763664> | No puedo advertir a este usuario.')
 
 		if (!args[0].match(/<@(!)?[0-9]{17,18}>/g)) return embedResponse('<:cancel:804368628861763664> | La mencion tiene que ser el primer argumento.')
-
-
 
 		miembro = miembro.user;
 
