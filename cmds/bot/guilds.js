@@ -18,7 +18,7 @@ module.exports = class Comando extends Command {
 
         let embed = new Discord.MessageEmbed()
             .setColor(client.color)
-            .setDescription(`Actualmente estoy en ${client.guilds.cache.size} servidores y ${client.users.cache.size} usuarios en cache.`)
+            .setDescription(`Actualmente estoy en **${client.guilds.cache.size}** servidores y **${client.users.cache.size}** usuarios en cache.`)
             .setTimestamp()
             .setFooter(`Shard #${message.guild.shardID}`)
 
