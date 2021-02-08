@@ -8,7 +8,7 @@ module.exports = class Comando extends Command {
         this.name = "unban"
         this.category = 'moderacion'
         this.botPermissions.guild = ['BAN_MEMBERS', 'MANAGE_MESSAGES', 'ADD_REACTIONS']
-        //  this.memberPermissions.guild = ['BAN_MEMBERS'];
+        this.memberPermissions.guild = ['BAN_MEMBERS'];
     }
 
     /**
