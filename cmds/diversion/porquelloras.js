@@ -37,7 +37,7 @@ module.exports = class Comando extends Command {
             embed = new Discord.MessageEmbed()
                 .setTimestamp()
                 .setColor(client.color)
-                .setFooter(message.content.endsWith('-girl') ? 'Plantilla creada por: zPablo 鯉#3793' : 'Puedes usar -girl al final del mensaje para cambiar la plantilla a modo femenino.', message.author.displayAvatarURL({ dynamic: true, size: 2048 }))
+                .setFooter(message.content.endsWith('-girl') ? 'Plantilla femenina creada por: zPablo 鯉#3793' : 'Puedes usar -girl al final del mensaje para cambiar la plantilla a modo femenino.', message.author.displayAvatarURL({ dynamic: true, size: 2048 }))
                 .attachFiles(att)
                 .setImage('attachment://image.png')
 
