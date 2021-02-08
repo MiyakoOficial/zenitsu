@@ -58,6 +58,7 @@ module.exports.replace = function (string, array) {
     return res;
 
 }
+
 /**
  * 
  * @param {Array<string>} mapatest 
@@ -96,31 +97,31 @@ module.exports.mapaCanvas = async function (mapatest, win = false) {
             let IMAGEN = img[mapatest[i]]
             if (!IMAGEN) continue;
             if (i == 0) {
-                ctx.drawImage(IMAGEN, 10, 5, 85, 85)
+                ctx.drawImage(IMAGEN, 5, 5, 90, 90)
             }
             else if (i == 1) {
-                ctx.drawImage(IMAGEN, 110, 5, 85, 85)
+                ctx.drawImage(IMAGEN, 105, 5, 90, 90)
             }
             else if (i == 2) {
-                ctx.drawImage(IMAGEN, 210, 5, 85, 85)
+                ctx.drawImage(IMAGEN, 205, 5, 90, 90)
             }
             else if (i == 3) {
-                ctx.drawImage(IMAGEN, 10, 110, 85, 85)
+                ctx.drawImage(IMAGEN, 5, 105, 90, 90)
             }
             else if (i == 4) {
-                ctx.drawImage(IMAGEN, 110, 110, 85, 85)
+                ctx.drawImage(IMAGEN, 105, 105, 90, 90)
             }
             else if (i == 5) {
-                ctx.drawImage(IMAGEN, 210, 110, 85, 85)
+                ctx.drawImage(IMAGEN, 205, 105, 90, 90)
             }
             else if (i == 6) {
-                ctx.drawImage(IMAGEN, 10, 205, 85, 85)
+                ctx.drawImage(IMAGEN, 5, 205, 90, 90)
             }
             else if (i == 7) {
-                ctx.drawImage(IMAGEN, 110, 205, 85, 85)
+                ctx.drawImage(IMAGEN, 105, 205, 90, 90)
             }
             else if (i == 8) {
-                ctx.drawImage(IMAGEN, 210, 205, 85, 85)
+                ctx.drawImage(IMAGEN, 205, 205, 90, 90)
             }
             continue;
         }
@@ -146,7 +147,7 @@ module.exports.mapaCanvas = async function (mapatest, win = false) {
      */
     let whowin = () => {
 
-        return pos.find(p => p.every(x => mapatest[x] == '❌')) ? '#b24443' : pos.find(p => p.every(x => mapatest[x] == '⭕')) ? '#257f9e' : '#000000';
+        return pos.find(p => p.every(x => mapatest[x] == '❌')) ? '#D60A0A' : pos.find(p => p.every(x => mapatest[x] == '⭕')) ? '#257f9e' : '#000000';
 
     }
 
