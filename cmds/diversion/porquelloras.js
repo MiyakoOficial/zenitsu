@@ -36,6 +36,7 @@ module.exports = class Comando extends Command {
         const att = new Discord.MessageAttachment(canvas.toBuffer(), 'image.png'),
             embed = new Discord.MessageEmbed()
                 .setTimestamp()
+                .setColor(client.color)
                 .setFooter('Puedes usar -girl al final del mensaje para cambiar la plantilla a modo femenino.', message.author.displayAvatarURL({ dynamic: true, size: 2048 }))
                 .attachFiles(att)
                 .setImage('attachment://image.png')
