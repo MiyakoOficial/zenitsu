@@ -87,8 +87,8 @@ module.exports.mapaCanvas = async function (mapatest, win = false) {
     ctx.drawImage(bck, 0, 0, canvas.width, canvas.height)
 
     const img = {
-        '❌': await Canvas.loadImage(`https://cdn.discordapp.com/attachments/730181305433587744/798284234598121507/X_de_tic_tac_toe.png`),
-        '⭕': await Canvas.loadImage(`https://cdn.discordapp.com/attachments/730181305433587744/798284232354824222/O_de_tic_tac_toe.png`)
+        '❌': await Canvas.loadImage(`/home/MARCROCK22/zenitsu/Utils/Images/x_tic.png`),
+        '⭕': await Canvas.loadImage(`/home/MARCROCK22/zenitsu/Utils/Images/o_tic.png`)
     }
 
     if (!soniguales) {

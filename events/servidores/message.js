@@ -199,6 +199,7 @@ module.exports = async (client, message) => {
                     .setDescription(err.stack.slice(0, 2048))
                     .addField('Comando usado', command)
             )
+            console.log(err)
             return await message.channel.send({ embed: { description: 'Error, por favor reportalo.' } }).catch(() => { });
         }
     }
