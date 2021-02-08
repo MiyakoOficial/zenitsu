@@ -21,7 +21,7 @@ module.exports = class Comando extends Command {
         const Discord = require('discord.js');
         const canvas = Canvas.createCanvas(834, 824)
         const ctx = canvas.getContext('2d')
-        const bck = await Canvas.loadImage('https://cdn.discordapp.com/attachments/803346384144433154/806882490484391936/36b8a20b5ab437f21c2ad7aa7d2f99ca9122e652r1-729-720v2_uhq.jpg')
+        const bck = await Canvas.loadImage(message.content.endsWith('-girl') ? '/home/MARCROCK22/zenitsu/Utils/Images/chica.png' : '/home/MARCROCK22/zenitsu/Utils/Images/chico.jpg')
         ctx.drawImage(bck, 0, 0, 834, 824)
         let atte = message.attachments.find(item => require('is-image')(item.proxyURL))?.proxyURL
         let image =
@@ -33,9 +33,14 @@ module.exports = class Comando extends Command {
         image = await Canvas.loadImage(image)
         ctx.drawImage(image, 230, 125, 580, 475)
 
-        const att = new Discord.MessageAttachment(canvas.toBuffer(), 'image.png');
+        const att = new Discord.MessageAttachment(canvas.toBuffer(), 'image.png'),
+            embed = new Discord.MessageEmbed()
+                .setTimestamp()
+                .setFooter('Puedes usar -girl al final del mensaje para cambiar la plantilla a modo femenino.', message.author.displayAvatarURL({ dynamic: true, size: 2048 }))
+                .attachFiles(att)
+                .setImage('attachment://image.png')
 
-        message.channel.send({ files: [att] })
+        message.channel.send({ embed })
 
 
     }
