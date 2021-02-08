@@ -41,7 +41,7 @@ module.exports = class Comando extends Command {
                 .attachFiles(att)
                 .setImage('attachment://image.png')
 
-        message.channel.send({ embed })
+        return message.channel.send({ embed })
 
 
     }
