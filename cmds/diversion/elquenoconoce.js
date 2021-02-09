@@ -22,15 +22,12 @@ module.exports = class Comando extends Command {
 
         const attachments = message.attachments.filter(att => require('is-image')(att?.proxyURL))
 
-        let primero =
-            attachments.first()?.proxyURL
-            || (require('is-image')(args[0]) ? args[0] : null)
-            || message.author.displayAvatarURL({ dynamic: true, size: 2048, format: 'png' });
+        let primero = attachments.first()?.proxyURL || (require('is-image')(args[0]) ? args[0] : null) || message.author.displayAvatarURL({ dynamic: true, size: 2048, format: 'png' });
 
         let segundo =
-            attachments.array()[1]?.proxyURL
-            || (require('is-image')(args[1]) ? args[1] : null)
-            || message.mentions.users.first()?.displayAvatarURL({ dynamic: true, size: 2048 });
+            attachments.array()[1]?.proxyURL || (require('is-image')(args[1]) ? args[1] : null) || message.mentions.users.first()?.displayAvatarURL({ dynamic: true, size: 2048 });
+
+        console.log(primero, segundo)
 
         if (!segundo)
             return embedResponse('<:cancel:804368628861763664> | Necesitas adjuntar un archivo o mencionar a alguien.')
