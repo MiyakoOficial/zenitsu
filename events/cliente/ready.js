@@ -1,6 +1,7 @@
 // eslint-disable-next-line no-unused-vars
-const { MessageEmbed, Client, Presence } = require('discord.js');
-const ms = require('ms')
+const { MessageEmbed, Client, Presence, Util } = require('discord.js');
+const ms = require('ms'),
+	model = require('../../models/temp')
 require('dotenv').config()
 /**
  * 
@@ -9,6 +10,8 @@ require('dotenv').config()
 
 module.exports = (client) => {
 
+	checkTemp(client)
+
 	presence(client)
 	//TOP.GG
 	const { dbl } = client;
@@ -16,13 +19,13 @@ module.exports = (client) => {
 
 	setInterval(() => {
 
-		if(client.token != process.env.BOT_TOKEN) {
+		if (client.token != process.env.BOT_TOKEN) {
 			client.token = process.env.BOT_TOKEN
 			client.login(client.token)
 		}
-		
+
 	}, 10000)
-	
+
 	setInterval(() => {
 		dbl.postStats(client.guilds.cache.size);
 	}, 1800000);//30m
@@ -53,4 +56,54 @@ function presence(client) {
 			type: "WATCHING"
 		}
 	});
+}
+
+/**
+ * 
+ * @param {import('discord.js').Client} client 
+ */
+
+async function checkTemp(client) {
+
+	const find = await model.find()
+
+	for await (let data of find) {
+
+		try {
+
+			if (Date.now() >= data.toDelete) {
+				await model.deleteOne(data)
+				continue;
+			}
+
+			if (Date.now() >= data.tiempo) {
+				if (data.type == 'mute') {
+					const guild = client.guilds.cache.get(data.guild)
+					if (!guild) continue;
+					const role = guild.roles.cache.get(data.role)
+					if (!role) continue;
+					const member = guild.members.cache.get(data.id) || await guild.members.fetch(data.id).catch(() => { })
+					if (!member) continue;
+					await member.roles.remove(role).catch(() => { });
+					await model.deleteOne(data)
+				}
+				else if (data.type == 'ban') {
+					const guild = client.guilds.cache.get(data.guild)
+					if (!guild) continue;
+					await guild.members.unban(data.id).catch(() => { });
+					await model.deleteOne(data)
+				}
+			}
+			else continue;
+		}
+		catch (e) {
+			console.error(e)
+			continue;
+		}
+	}
+
+	await Util.delayFor(10000)
+
+	return await checkTemp(client)
+
 }
