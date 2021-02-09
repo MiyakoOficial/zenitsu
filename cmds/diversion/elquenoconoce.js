@@ -23,12 +23,12 @@ module.exports = class Comando extends Command {
         const attachments = message.attachments.filter(att => require('is-image')(att?.proxyURL))
 
         let primero =
-            attachments.first()
+            attachments.first()?.proxyURL
             || (require('is-image')(args[0]) ? args[0] : null)
             || message.author.displayAvatarURL({ dynamic: true, size: 2048, format: 'png' });
 
         let segundo =
-            attachments.array()[1]
+            attachments.array()[1]?.proxyURL
             || (require('is-image')(args[1]) ? args[1] : null)
             || message.mentions.users.first()?.displayAvatarURL({ dynamic: true, size: 2048 });
 
@@ -37,7 +37,7 @@ module.exports = class Comando extends Command {
 
         const avatares = [primero, segundo];
 
-        if (args.join(' ').toLowerCase().endsWith(' -reverse')) avatares.reverse();
+        if (args.join(' ').toLowerCase().endsWith('-reverse')) avatares.reverse();
         const canvas = Canvas.createCanvas(908, 920);
         const cxt = canvas.getContext('2d');
 
