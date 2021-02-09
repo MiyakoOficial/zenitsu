@@ -20,7 +20,7 @@ module.exports = class Comando extends Command {
 
         let miembro = message.mentions.members.first();
 
-        if (!miembro || miembro?.user?.bot) return embedResponse('<:cancel:804368628861763664> | Menciona a un miembro del servidor.')
+        if (!miembro) return embedResponse('<:cancel:804368628861763664> | Menciona a un miembro del servidor.')
 
         if (miembro.user.id == message.author.id) return embedResponse(
             '<:cancel:804368628861763664> | No te puedes quitar el silencio a ti mismo.'

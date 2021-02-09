@@ -35,7 +35,7 @@ module.exports = class Comando extends Command {
 
         let tiempo = require('ms')(args[1] || 'poto galactico')
 
-        if (!miembro || miembro?.user?.bot) return embedResponse('<:cancel:804368628861763664> | Menciona a un miembro del servidor.')
+        if (!miembro) return embedResponse('<:cancel:804368628861763664> | Menciona a un miembro del servidor.')
 
         if (miembro.id == message.author.id)
             return embedResponse('<:cancel:804368628861763664> | No te puedes silenciar a ti mismo.')

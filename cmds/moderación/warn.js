@@ -16,7 +16,7 @@ module.exports = class Comando extends Command {
 
 		let razon = args.slice(1).join(' ') || 'No especificada';
 
-		if (!miembro || miembro?.user?.bot) return embedResponse('<:cancel:804368628861763664> | Menciona a un miembro del servidor.')
+		if (!miembro) return embedResponse('<:cancel:804368628861763664> | Menciona a un miembro del servidor.')
 
 		if (message.author.id == miembro.user.id) return embedResponse(`<:cancel:804368628861763664> | No te puedes advertir a ti mismo.`)
 
