@@ -9,18 +9,35 @@ module.exports = class Comando extends Command {
         this.category = 'diversion'
     }
 
-    async run({ message, args, embedResponse }) {
+    /**
+     * 
+     * @param {Object} obj 
+     * @param {Discord.Message} obj.message
+     * @param {Array<String>} obj.args
+     */
 
-        let userAvatar = message.author.displayAvatarURL({ dynamic: true, size: 2048, format: 'png' });
+    async run(obj) {
 
-        let user = message.mentions.users.first() || null;
+        const { message, args, embedResponse } = obj;
 
-        if (!user)
-            return embedResponse('<:cancel:804368628861763664> | Debes de mencionar a un usuario.')
+        const attachments = message.attachments.filter(att => require('is-image')(att?.proxyURL))
 
-        const avatares = [userAvatar, user.displayAvatarURL({ format: 'png', size: 2048, dynamic: true })];
+        let primero =
+            attachments.first()
+            || (require('is-image')(args[0]) ? args[0] : null)
+            || message.author.displayAvatarURL({ dynamic: true, size: 2048, format: 'png' });
 
-        if (args.join(' ').toLowerCase().endsWith(' --reverse')) avatares.reverse();
+        let segundo =
+            attachments.array()[1]
+            || (require('is-image')(args[0]) ? args[0] : null)
+            || message.mentions.users.first()?.displayAvatarURL({ dynamic: true, size: 2048 });
+
+        if (!segundo)
+            return embedResponse('<:cancel:804368628861763664> | Necesitas adjuntar un archivo o mencionar a alguien.')
+
+        const avatares = [primero, segundo];
+
+        if (args.join(' ').toLowerCase().endsWith(' -reverse')) avatares.reverse();
         const canvas = Canvas.createCanvas(908, 920);
         const cxt = canvas.getContext('2d');
 
@@ -52,6 +69,13 @@ module.exports = class Comando extends Command {
         cxt.drawImage(lastAvatar, 120, 550, 650, 320);
 
         const image = new Discord.MessageAttachment(canvas.toBuffer(), 'meme.png');
-        message.channel.send(image);
+
+        let embed = new Discord.MessageEmbed()
+            .attachFiles(image)
+            .setImage('attachment://meme.png')
+            .setTimestamp()
+            .setFooter('Puedes usar -reverse para cambiar de posición las imagenes.')
+
+        return message.channel.send({ embed });
     }
 }

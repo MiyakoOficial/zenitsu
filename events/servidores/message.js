@@ -199,8 +199,14 @@ module.exports = async (client, message) => {
                     .setDescription(err.stack.slice(0, 2048))
                     .addField('Comando usado', command)
             )
-            console.log(err)
-            return await message.channel.send({ embed: { description: 'Error, por favor reportalo.' } }).catch(() => { });
+            return message.channel.send({
+                embed:
+                    new Discord.MessageEmbed()
+                        .setDescription('Ocurrio un error, reportalo en el servidor de [soporte](https://discord.gg/hbSahh8).')
+                        .setColor(client.color)
+                        .setTimestamp()
+                        .setFooter(message.author.displayAvatarURL({ dynamic: true, size: 2048 }))
+            }).catch(() => { });
         }
     }
 
