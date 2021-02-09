@@ -29,7 +29,7 @@ module.exports = class Comando extends Command {
 
         let segundo =
             attachments.array()[1]
-            || (require('is-image')(args[0]) ? args[0] : null)
+            || (require('is-image')(args[1]) ? args[1] : null)
             || message.mentions.users.first()?.displayAvatarURL({ dynamic: true, size: 2048 });
 
         if (!segundo)
