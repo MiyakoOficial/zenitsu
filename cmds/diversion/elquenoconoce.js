@@ -29,8 +29,6 @@ module.exports = class Comando extends Command {
         let segundo =
             attachments.array()[1]?.proxyURL || (require('is-image')(args[1] || 'poto') ? args[1] : null) || message.mentions.users.first()?.displayAvatarURL({ format: 'png', size: 2048 });
 
-        console.log(primero, segundo)
-
         if (!segundo)
             return embedResponse('<:cancel:804368628861763664> | Necesitas adjuntar un archivo o mencionar a alguien.')
 
