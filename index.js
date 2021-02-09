@@ -92,7 +92,8 @@ client.newDate = (ms) => {
 }
 client.kaomojis = ['(* ^ ω ^)', '(o^▽^o)', 'ヽ(・∀・)ﾉ', '(o･ω･o)', '( ´ ω ` )', '╰(▔∀▔)╯', '(✯◡✯)', '(⌒‿⌒)', 'ヽ(>∀<☆)ノ', '＼(￣▽￣)／', '(╯✧▽✧)╯', '(⁀ᗢ⁀)', '(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧', 'ヽ(*⌒▽⌒*)ﾉ', '☆*:.｡.o(≧▽≦)o.｡.:*☆', '(๑˃ᴗ˂)ﻭ', '(b ᵔ▽ᵔ)b', '(⌒ω⌒)', '(´ ∀ ` *)', '(─‿‿─)'];
 client.devseval = [
-	'507367752391196682' // Lil MARCROCK22
+	'507367752391196682', // Lil MARCROCK22
+	'577000793094488085' // AndreMor
 ];
 // eslint-disable-next-line no-unused-vars
 const Classes = require('./Utils/Classes.js');

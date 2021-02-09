@@ -56,7 +56,7 @@ module.exports = class Comando extends Command {
             let embed = new Discord.MessageEmbed()
                 .setColor(client.color)
                 .setTimestamp()
-                .setTitle('<a:alarma:804396920466178088> Miembro desmuteado <a:alarma:804396920466178088>')
+                .setTitle('Miembro desmuteado')
                 .setAuthor(miembro.tag, miembro.displayAvatarURL({ dynamic: true }))
                 .addField('<:moderator:804368587115593800> Moderador', message.author.tag, true)
             return message.channel.send({ embed: embed }).finally(async () => {

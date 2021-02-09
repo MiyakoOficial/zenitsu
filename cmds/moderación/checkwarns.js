@@ -27,7 +27,7 @@ module.exports = class Comando extends Command {
         let embed = new Discord.MessageEmbed()
             .setColor(client.color)
             .setTimestamp()
-            .setTitle('<a:alarma:804396920466178088> Advertencia del miembro <a:alarma:804396920466178088>')
+            .setTitle('Advertencias del miembro')
             .setAuthor(miembro.tag, miembro.displayAvatarURL({ dynamic: true }))
             .addField(pagina == 1 ? '<:reason2:804368699887845376> Ultima razón:' : '<:reason2:804368699887845376> Razón:', datos.razon.slice(0, 1024))
             .addField(pagina == 1 ? '<:moderator:804368587115593800> Ultimo moderador:' : '<:moderator:804368587115593800> Moderador:', datos.mod)
