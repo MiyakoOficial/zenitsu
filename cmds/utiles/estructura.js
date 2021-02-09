@@ -11,9 +11,9 @@ module.exports = class Comando extends Command {
 
 		let todo = '';
 		let memberXD = message.guild.members.cache.find(a => a.displayName == args.join(' ') || a.user.tag == args.join(' ') || a.user.username == args.join(' ')) || message.mentions.members.first()
-		|| message.mentions.roles.first()
-		|| message.guild.roles.cache.get(args[0])
-		|| message.guild.roles.cache.find(r => r.name === args.join(' '))
+			|| message.mentions.roles.first()
+			|| message.guild.roles.cache.get(args[0])
+			|| message.guild.roles.cache.find(r => r.name === args.join(' '))
 		message.member;
 		if (!memberXD) memberXD = message.member
 		let printT = message.guild.channels.cache.filter(a => a.type == 'category').sort((a, b) => a.position - b.position);
@@ -40,15 +40,15 @@ module.exports = class Comando extends Command {
 
 		todo += `\n${printT.join('')}`
 
-		let res = Discord.Util.splitMessage(`**Estructura de ${memberXD?.user?.tag || memberXD.name}** [${(memberXD instanceof Discord.GuildMember) ? 'miembro' : 'rol'}]\n\n`+todo, { maxLength: 1900 });
+		let res = Discord.Util.splitMessage(`**Estructura de ${memberXD?.user?.tag || memberXD.name}** [${(memberXD instanceof Discord.GuildMember) ? 'miembro' : 'rol'}]\n\n` + todo, { maxLength: 1900 });
 
-		for (let a of res){
+		for (let a of res) {
 			let embed = new Discord.MessageEmbed()
-			.setTimestamp()
-			.setColor(message.client.color)
-			.setDescription('```'+a+'```')
-			
-			await message.channel.send({embed}).catch(() => { })
+				.setTimestamp()
+				.setColor(message.client.color)
+				.setDescription('```' + a + '```')
+
+			await message.channel.send({ embed }).catch(() => { })
 		}
 
 		function membersInfoInChannel(channel) {
@@ -74,9 +74,14 @@ module.exports = class Comando extends Command {
 	}
 }
 
+/**
+ * 
+ * @param {import('discord.js').TextChannel} a
+ * @returns {String}
+ */
 function name(a) {
 
-	return a.guild.systemChannelID == a.id ? `[📥] ${a.name}` : a.guild.rulesChannelID == a.id ? `[📕] ${a.name}` : a.type == 'text' ? `[💬] ${a.name}` : a.type == 'news' ? `[🔔] ${a.name}` : a.type == 'store' ? `[🏬] ${a.name}` : `[❓] ${a.name}`;
+	return a.guild.systemChannelID == a.id ? `[📥] ${a.name}` : a.guild.rulesChannelID == a.id ? `[📕] ${a.name}` : a.nsfw ? `[🔞] ${a.name}` : a.type == 'text' ? `[💬] ${a.name}` : a.type == 'news' ? `[🔔] ${a.name}` : a.type == 'store' ? `[🏬] ${a.name}` : `[❓] ${a.name}`;
 
 }
 
