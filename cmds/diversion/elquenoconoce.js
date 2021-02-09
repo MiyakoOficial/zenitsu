@@ -73,6 +73,7 @@ module.exports = class Comando extends Command {
             .attachFiles(image)
             .setImage('attachment://meme.png')
             .setTimestamp()
+            .setColor(message.client.color)
             .setFooter('Puedes usar -reverse para cambiar de posición las imagenes.')
 
         return message.channel.send({ embed });

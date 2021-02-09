@@ -205,7 +205,7 @@ module.exports = async (client, message) => {
                         .setDescription('Ocurrio un error, reportalo en el servidor de [soporte](https://discord.gg/hbSahh8).')
                         .setColor(client.color)
                         .setTimestamp()
-                        .setFooter(message.author.displayAvatarURL({ dynamic: true, size: 2048 }))
+                        .setFooter(message.author.tag, message.author.displayAvatarURL({ dynamic: true, size: 2048 }))
             }).catch(() => { });
         }
     }
