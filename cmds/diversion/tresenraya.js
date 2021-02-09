@@ -8,8 +8,8 @@ const Command = require('../../Utils/Classes').Command;
 module.exports = class Comando extends Command {
     constructor() {
         super()
-        this.name = "ttt"
-        this.alias = ['tresenraya']
+        this.name = "tresenraya"
+        this.alias = ['ttt']
         this.category = 'diversion'
     }
     /**
