@@ -23,11 +23,11 @@ module.exports = class Comando extends Command {
         const attachments = message.attachments.filter(att => require('is-image')(att?.proxyURL))
 
         let primero = attachments.first()?.proxyURL
-            || (require('is-image')(args[0]) ? args[0] : null)
+            || (require('is-image')(args[0] || 'poto') ? args[0] : null)
             || message.author.displayAvatarURL({ size: 2048, format: 'png' });
 
         let segundo =
-            attachments.array()[1]?.proxyURL || (require('is-image')(args[1]) ? args[1] : null) || message.mentions.users.first()?.displayAvatarURL({ format: 'png', size: 2048 });
+            attachments.array()[1]?.proxyURL || (require('is-image')(args[1] || 'poto') ? args[1] : null) || message.mentions.users.first()?.displayAvatarURL({ format: 'png', size: 2048 });
 
         console.log(primero, segundo)
 
