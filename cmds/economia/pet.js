@@ -82,14 +82,13 @@ module.exports = class Comando extends Command {
                     })
 
                 // eslint-disable-next-line no-case-declarations
-                let data;
-                if (Date.now() > hours)
-                    data = await economy_model.findOneAndUpdate({ id: message.author.id }, { 'pet.hours': Date.now() + require('ms')('3h'), food: -1 }, { new: true })
-                else data = await economy_model.findOneAndUpdate({ id: message.author.id }, { $inc: { 'pet.hours': require('ms')('3h'), food: -1 } }, { new: true })
+                let data,
+                    datee = Date.now()
+
+                data = await economy_model.findOne({ id: message.author.id })
 
                 // eslint-disable-next-line no-case-declarations
-                let datee = Date.now(),
-                    ress = ~~(((data.pet.hours - datee) / 864) / 1000)
+                let ress = ~~(((data.pet.hours - datee) / 864) / 1000)
 
                 if (ress >= 90) {
                     await economy_model.updateOne({ id: message.author.id }, { $inc: { 'pet.hours': -require('ms')('3h'), food: 1 } })
@@ -98,6 +97,13 @@ module.exports = class Comando extends Command {
                         description: `${data.pet.name} tiene más del 90% de su energia.`
                     })
                 }
+
+                if (Date.now() > hours)
+                    data = await economy_model.findOneAndUpdate({ id: message.author.id }, { 'pet.hours': Date.now() + require('ms')('3h'), food: -1 }, { new: true })
+                else data = await economy_model.findOneAndUpdate({ id: message.author.id }, { $inc: { 'pet.hours': require('ms')('3h'), food: -1 } }, { new: true })
+
+                // eslint-disable-next-line no-case-declarations
+                ress = ~~(((data.pet.hours - datee) / 864) / 1000)
 
                 return sendEmbed({
                     channel: message.channel,
