@@ -39,7 +39,8 @@ const Discord = require('discord.js'),
         'Leri quiere tener un frase, a cambio te dio **{MONEY}**.',
         'Trabajaste para himura, te dio: **{MONEY}**.',
         'Ilias te pago para que seas su esclavo, te dio: **{MONEY}**.',
-        'Ro_CrackGamer quiere contratarte para bailar, aceptas y te da **{MONEY}**.'
+        'Ro_CrackGamer quiere contratarte para bailar, aceptas y te da **{MONEY}**.',
+        'Descubriste a Ahzucar simpeando a alguien, te descubre y te da **{MONEY}** para que no digas nada.'
     ];
 
 function generarFrase() {
