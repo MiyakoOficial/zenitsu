@@ -83,7 +83,7 @@ module.exports = class Comando extends Command {
         if (culdaunn)
             return embedResponse(`<a:waiting:804396292793040987> | Espera ${(culdaunn.get(message.author.id) - Date.now()) / 1000}s para volver a robar.`)
 
-        if (chance() > 50) {
+        if (45 > chance()) {
             await economy_model.updateOne({ id: message.author.id }, { $inc: { money: ~~((-coins) / 2) } })
             return sendEmbed({
                 channel: message.channel,
