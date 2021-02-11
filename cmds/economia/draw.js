@@ -25,7 +25,7 @@ module.exports = class Comando extends Command {
 
         const { message, args } = obj;
 
-        const { money, bank } = await checkEconomy(message);
+        const { bank } = await checkEconomy(message);
 
         const [dinero] = args;
 
