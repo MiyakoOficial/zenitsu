@@ -8,7 +8,7 @@ const Command = require('../../Utils/Classes').Command;
 module.exports = class Comando extends Command {
     constructor() {
         super()
-        this.name = 'draw'
+        this.name = 'pet'
         this.category = 'economy'
     }
 
