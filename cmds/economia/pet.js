@@ -39,6 +39,12 @@ module.exports = class Comando extends Command {
                         description: `<:cancel:804368628861763664> | Necesitas tener **100**${icon_money}.`
                     })
 
+                if (!name || !name.length)
+                    return sendEmbed({
+                        channel: message.channel,
+                        description: `<:cancel:804368628861763664> | Tienes que elegir el nuevo nombre.`
+                    })
+
                 if (name.length >= 100)
                     return sendEmbed({
                         channel: message.channel,
