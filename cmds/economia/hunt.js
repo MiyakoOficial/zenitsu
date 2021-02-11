@@ -45,7 +45,7 @@ module.exports = class Comando extends Command {
 
         const { items } = await checkEconomy(message);
 
-        if (!items && !items.includes('gun'))
+        if (!items.includes('gun'))
             return embedResponse('<:cancel:804368628861763664> | No tienes una pistola.');
 
         let chance = generarNumero(0, 100)
