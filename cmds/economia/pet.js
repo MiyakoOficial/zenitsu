@@ -69,6 +69,7 @@ module.exports = class Comando extends Command {
                         .setColor(message.client.color)
                         .addField('Nombre', nombre, true)
                         .addField('Nivel', hability, true)
+                        .addField('Comida', food, true)
                         .addField('Energia', await barra(res, 100).catch(() => { }) || '**0**%')
                 return message.channel.send({ embed })
 
