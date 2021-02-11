@@ -82,7 +82,7 @@ module.exports = class Comando extends Command {
             },
             chance = generarNumero(0, 100);
         if (chances[hability] >= chance) {
-            total += Math.round((coins * hability) / 14)
+            total += Math.round((coins * hability) / 20)
             res.footerText = `¡Tu mascota ${name} ha cazado!, Toma ${total - coins}💰 más.`
         }
         await economy_model.updateOne({ id: message.author.id }, { $inc: { money: total }, $set: { cacheName: message.author.tag } })
