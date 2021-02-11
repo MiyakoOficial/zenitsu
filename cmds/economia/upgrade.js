@@ -36,7 +36,7 @@ module.exports = class Comando extends Command {
                     })
                 }
 
-                await economy_model.updateOne({ id: message.author.id }, { $inc: { maxSpace: 1500 } });
+                await economy_model.updateOne({ id: message.author.id }, { $inc: { maxSpace: 1500, money: -2000 } });
 
                 return sendEmbed({
                     channel: message.channel,
@@ -59,7 +59,7 @@ module.exports = class Comando extends Command {
                     })
 
                 // eslint-disable-next-line no-case-declarations
-                const { pet: { hability } } = await economy_model.findOneAndUpdate({ id: message.author.id }, { $inc: { 'pet.hability': 1 } }, { new: true });
+                const { pet: { hability } } = await economy_model.findOneAndUpdate({ id: message.author.id }, { $inc: { 'pet.hability': 1, money: -2000 } }, { new: true });
 
                 return sendEmbed({
                     channel: message.channel,
