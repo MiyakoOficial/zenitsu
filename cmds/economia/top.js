@@ -11,7 +11,7 @@ module.exports = class Comando extends Command {
         this.category = 'niveles'
     }
     async run({ client, message, args, embedResponse }) {
-        let seleccion = parseInt(args[1]) || 1;
+        let seleccion = parseInt(args[0]) || 1;
 
         const { color } = client;
         let ress = await require('../../models/economy').find()
