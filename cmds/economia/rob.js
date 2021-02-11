@@ -60,7 +60,7 @@ module.exports = class Comando extends Command {
         const data_mention = await economy_model.findOne({ id: user.id });
 
         if (!data_mention)
-            return embedResponse(`<:cancel:804368628861763664> | Sin datos sobre ${user.tag}.`)
+            return embedResponse(`<:cancel:804368628861763664> | Sin datos sobre **${user.tag}**.`)
 
         let coins = generarDinero(25, 800);
 
@@ -69,7 +69,7 @@ module.exports = class Comando extends Command {
         if (data_mention.money <= 1000)
             return sendEmbed({
                 channel: message.channel,
-                description: `<:cancel:804368628861763664> | ${user.tag} tiene menos de **1000**${icon_money}.`
+                description: `<:cancel:804368628861763664> | **${user.tag}** tiene menos de **1000**${icon_money}.`
             })
 
         if (money <= 1000)
@@ -87,7 +87,7 @@ module.exports = class Comando extends Command {
             await economy_model.updateOne({ id: message.author.id }, { $inc: { money: ~~((-coins) / 2) } })
             return sendEmbed({
                 channel: message.channel,
-                description: `<:cancel:804368628861763664> | Al intentar robar a ${user.tag} te atraparon intentando escaparte, perdiste: **${~~(coins / 2)}**${icon_money}.`
+                description: `<:cancel:804368628861763664> | Al intentar robar a **${user.tag}** te atraparon intentando escaparte, perdiste: **${~~(coins / 2)}**${icon_money}.`
             })
         }
 
@@ -97,7 +97,7 @@ module.exports = class Comando extends Command {
             await economy_model.updateOne({ id: user.id }, { $inc: { money: ~~(-coins) } })
             return sendEmbed({
                 channel: message.channel,
-                description: `<:noice:804368487564312627> | Al entrar en la casa de ${user.tag} haz conseguido robar: **${~~coins}**${icon_money}.`
+                description: `<:noice:804368487564312627> | Al entrar en la casa de **${user.tag}** haz conseguido robar: **${~~coins}**${icon_money}.`
             })
 
         }

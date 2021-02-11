@@ -35,7 +35,7 @@ module.exports = class Comando extends Command {
         if (!data)
             return sendEmbed({
                 channel: message.channel,
-                description: '<:cancel:804368628861763664> | Sin datos de ' + user.tag + '.'
+                description: '<:cancel:804368628861763664> | Sin datos de **' + user.tag + '**.'
             })
 
         return sendEmbed({
