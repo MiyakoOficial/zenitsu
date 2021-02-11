@@ -37,7 +37,7 @@ module.exports = class Comando extends Command {
                 }
 
                 // eslint-disable-next-line no-case-declarations
-                const { shields } = await economy_model.updateOne({ id: message.author.id }, { $inc: { shields: 1, money: -1000 } });
+                const { shields } = await economy_model.findOneAndUpdate({ id: message.author.id }, { $inc: { shields: 1, money: -1000 } }, { new: true });
 
                 return sendEmbed({
                     channel: message.channel,
@@ -54,7 +54,7 @@ module.exports = class Comando extends Command {
                 }
 
                 // eslint-disable-next-line no-case-declarations
-                const { bombs } = await economy_model.updateOne({ id: message.author.id }, { $inc: { bombs: 1, money: -1500 } });
+                const { bombs } = await economy_model.findOneAndUpdate({ id: message.author.id }, { $inc: { bombs: 1, money: -1500 } }, { new: true });
 
                 return sendEmbed({
                     channel: message.channel,
