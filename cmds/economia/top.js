@@ -33,6 +33,6 @@ module.exports = class Comando extends Command {
             .setFooter(`Pagina actual: ${seleccion <= 0 ? 1 : seleccion} de ${Math.round(ress.length / 10) || 1}`)
             .setColor(color)
 
-        message.channel.send({ embed: embedd }).catch(() => { })
+        return message.channel.send({ embed: embedd }).catch(() => { })
     }
 }
