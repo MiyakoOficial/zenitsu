@@ -46,7 +46,7 @@ module.exports = class Comando extends Command {
                     })
 
                 // eslint-disable-next-line no-case-declarations
-                const { pet } = await economy_model.findOneAndUpdate({ id: message.author.id }, { $set: { 'pet.name': name }, $inc: { money: -100 } })
+                const { pet } = await economy_model.findOneAndUpdate({ id: message.author.id }, { $set: { 'pet.name': name }, $inc: { money: -100 } }, { new: true })
 
                 return sendEmbed({
                     channel: message.channel,
