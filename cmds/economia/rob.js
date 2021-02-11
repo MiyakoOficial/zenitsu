@@ -66,13 +66,13 @@ module.exports = class Comando extends Command {
 
         let chance = () => generarNumero(0, 100);
 
-        if (data_mention.money <= 1000)
+        if (data_mention.money < 1000)
             return sendEmbed({
                 channel: message.channel,
                 description: `<:cancel:804368628861763664> | **${user.tag}** tiene menos de **1000**${icon_money}.`
             })
 
-        if (money <= 1000)
+        if (money < 1000)
             return sendEmbed({
                 channel: message.channel,
                 description: `<:cancel:804368628861763664> | Tienes menos de **1000**${icon_money}, no puedes robar.`
