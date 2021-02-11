@@ -8,7 +8,7 @@ function checkCooldown(message) {
         culdaun.set(message.author.id, Date.now() + require("ms")('2m'))
         setTimeout(() => {
             culdaun.delete(message.author.id)
-        }, require('ms')('1m'))
+        }, require('ms')('2m'))
         return false;
     }
 
