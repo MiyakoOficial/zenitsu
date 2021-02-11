@@ -10,7 +10,6 @@ module.exports = class Comando extends Command {
         super()
         this.name = "upgrade"
         this.category = 'economy'
-        this.cooldown = 0
     }
 
     /**
