@@ -8,7 +8,7 @@ const Command = require('../../Utils/Classes').Command;
 module.exports = class Comando extends Command {
     constructor() {
         super()
-        this.name = "upgrade"
+        this.name = "buy"
         this.category = 'economy'
     }
 
@@ -24,10 +24,10 @@ module.exports = class Comando extends Command {
 
         const { message, args } = obj
 
-        let { money, pet: { hability: h } } = await checkEconomy(message)
+        let { money } = await checkEconomy(message)
 
         switch (args[0]) {
-            case 'bank':
+            case 'shield':
 
                 if (money < 2000) {
                     return sendEmbed({
@@ -36,40 +36,35 @@ module.exports = class Comando extends Command {
                     })
                 }
 
-                await economy_model.updateOne({ id: message.author.id }, { $inc: { maxSpace: 1500, money: -2000 } });
+                // eslint-disable-next-line no-case-declarations
+                const { shields } = await economy_model.updateOne({ id: message.author.id }, { $inc: { shields: 1, money: -2000 } });
 
                 return sendEmbed({
                     channel: message.channel,
-                    description: '<:accept:804368642913206313> | Ahora tienes **1500** más de espacio.'
+                    description: '<:accept:804368642913206313> | Ahora tienes **' + shields + '** escudos.'
                 })
 
-            case 'pet':
+            case 'bomb':
 
-                if (money < 3500) {
+                if (money < 2000) {
                     return sendEmbed({
                         channel: message.channel,
-                        description: '<:cancel:804368628861763664> | No tienes suficiente dinero, necesitas **3500**' + icon_money + '.'
+                        description: '<:cancel:804368628861763664> | No tienes suficiente dinero, necesitas **2000**' + icon_money + '.'
                     })
                 }
 
-                if (h >= 15)
-                    return sendEmbed({
-                        channel: message.channel,
-                        description: `<a:spinthink:804368278063415316> | Tu mascota ya es nivel **${h}**.`
-                    })
-
                 // eslint-disable-next-line no-case-declarations
-                const { pet: { hability } } = await economy_model.findOneAndUpdate({ id: message.author.id }, { $inc: { 'pet.hability': 1, money: -3500 } }, { new: true });
+                const { bombs } = await economy_model.updateOne({ id: message.author.id }, { $inc: { bombs: 1, money: -2000 } });
 
                 return sendEmbed({
                     channel: message.channel,
-                    description: '<:accept:804368642913206313> | Ahora tu mascota es nivel **' + hability + '**.'
+                    description: '<:accept:804368642913206313> | Ahora tienes **' + bombs + '** bombas.'
                 })
 
             default:
                 return sendEmbed({
                     channel: message.channel,
-                    description: `¿Que quieres mejorar?\nz!upgrade pet/bank`
+                    description: `¿Que quieres comprar?\nz!buy bomb/shield`
                 })
         }
     }
