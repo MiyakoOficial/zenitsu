@@ -38,7 +38,7 @@ const Discord = require('discord.js'),
         '\\*Inserte frase acá, te dio: **{MONEY}**\\*.',
         'Leri quiere tener un frase, a cambio te dio **{MONEY}**.',
         'Trabajaste para himura, te dio: **{MONEY}**.',
-        'Ilias te pago para que seas su esclavo, te dio: **{MONEY}**'
+        'Ilias te pago para que seas su esclavo, te dio: **{MONEY}**.'
     ];
 
 function generarFrase() {
