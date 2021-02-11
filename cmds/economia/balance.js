@@ -62,8 +62,8 @@ module.exports = class Comando extends Command {
                     true
                 ],
                 [
-                    '\u200b',
-                    '\u200b',
+                    'Mascota',
+                    `${data.pet.name}(${data.pet.hability})`,
                     true
                 ],
                 [
