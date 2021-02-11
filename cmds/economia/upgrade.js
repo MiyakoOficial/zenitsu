@@ -29,14 +29,14 @@ module.exports = class Comando extends Command {
         switch (args[0]) {
             case 'bank':
 
-                if (money < 2000) {
+                if (money < 3500) {
                     return sendEmbed({
                         channel: message.channel,
-                        description: '<:cancel:804368628861763664> | No tienes suficiente dinero, necesitas **2000**' + icon_money + '.'
+                        description: '<:cancel:804368628861763664> | No tienes suficiente dinero, necesitas **3500**' + icon_money + '.'
                     })
                 }
 
-                await economy_model.updateOne({ id: message.author.id }, { $inc: { maxSpace: 1500, money: -2000 } });
+                await economy_model.updateOne({ id: message.author.id }, { $inc: { maxSpace: 1500, money: -3500 } });
 
                 return sendEmbed({
                     channel: message.channel,

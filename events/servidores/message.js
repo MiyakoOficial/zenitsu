@@ -199,7 +199,7 @@ module.exports = async (client, message) => {
                     .setDescription(err.stack.slice(0, 2048))
                     .addField('Comando usado', command)
             )
-            //console.log(err)
+            console.log(err)
             return message.channel.send({
                 embed:
                     new Discord.MessageEmbed()

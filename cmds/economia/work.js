@@ -38,7 +38,8 @@ const Discord = require('discord.js'),
         '\\*Inserte frase acá, te dio: **{MONEY}**\\*.',
         'Leri quiere tener un frase, a cambio te dio **{MONEY}**.',
         'Trabajaste para himura, te dio: **{MONEY}**.',
-        'Ilias te pago para que seas su esclavo, te dio: **{MONEY}**.'
+        'Ilias te pago para que seas su esclavo, te dio: **{MONEY}**.',
+        'Ro_CrackGamer quiere contratarte para bailar, aceptas y te da **{MONEY}**.'
     ];
 
 function generarFrase() {
@@ -73,7 +74,7 @@ module.exports = class Comando extends Command {
         if (culdaun)
             return embedResponse(`<a:waiting:804396292793040987> | Espera ${(culdaun.get(message.author.id) - Date.now()) / 1000}s para volver a trabajar.`)
 
-        const { pet: { name, hability } } = await checkEconomy(message)
+        const { pet: { name, hability, hours } } = await checkEconomy(message)
         let coins = generarDinero(25, 200),
             total = coins,
             res = {
@@ -81,10 +82,16 @@ module.exports = class Comando extends Command {
                 description: generarFrase().replace('{MONEY}', coins + icon_money)
             },
             chance = generarNumero(0, 100);
-        if (chances[hability] >= chance) {
+
+        if (Date.now() > hours) {
+            res.footerText = `Tu mascota ${name} está cansada.`
+        }
+
+        else if (chances[hability] >= chance) {
             total += Math.round((coins * hability) / 20)
             res.footerText = `¡Tu mascota ${name} ha cazado!, Toma ${total - coins}💰 más.`
         }
+
         await economy_model.updateOne({ id: message.author.id }, { $inc: { money: total }, $set: { cacheName: message.author.tag } })
         return sendEmbed(res);
     }

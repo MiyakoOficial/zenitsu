@@ -157,7 +157,7 @@ module.exports.checkEconomy = async function (message) {
             pet: {
                 name: generarNombre(),
                 hability: 1,
-                hours: Date.now() + require('ms')('10d')
+                hours: Date.now() + require('ms')('1d')
             }
         });
 

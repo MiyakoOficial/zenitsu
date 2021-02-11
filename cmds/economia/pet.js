@@ -25,7 +25,7 @@ module.exports = class Comando extends Command {
 
         const { message, args } = obj;
 
-        const { money } = await checkEconomy(message);
+        const { money, food, pet: { hours, name: nombre, hability } } = await checkEconomy(message);
 
         const name = args.slice(1).join(' '),
             caso = args[0];
@@ -59,12 +59,76 @@ module.exports = class Comando extends Command {
                     description: `<:accept:804368642913206313> | Ahora tu mascota se llama ${pet.name}`
                 })
 
-            default:
+            case 'view':
+
+                // eslint-disable-next-line no-case-declarations
+                let date = Date.now(),
+                    h = (hours),
+                    res = ~~(((h - date) / 864) / 1000),
+                    embed = new Discord.MessageEmbed()
+                        .setColor(message.client.color)
+                        .addField('Nombre', nombre, true)
+                        .addField('Nivel', hability, true)
+                        .addField('Energia', await barra(res, 100).catch(() => { }) || '**0**%')
+                return message.channel.send({ embed })
+
+            case 'feed':
+
+                if (!food)
+                    return sendEmbed({
+                        channel: message.channel,
+                        description: `<:cancel:804368628861763664> | No tienes comida.`
+                    })
+
+                // eslint-disable-next-line no-case-declarations
+                let data;
+                if (Date.now() > hours)
+                    data = await economy_model.findOneAndUpdate({ id: message.author.id }, { 'pet.hours': Date.now() + require('ms')('3h'), food: -1 }, { new: true })
+                else data = await economy_model.findOneAndUpdate({ id: message.author.id }, { $inc: { 'pet.hours': require('ms')('3h'), food: -1 } }, { new: true })
+
+                // eslint-disable-next-line no-case-declarations
+                let datee = Date.now(),
+                    ress = ~~(((data.pet.hours - datee) / 864) / 1000)
+
+                if (ress >= 90) {
+                    await economy_model.updateOne({ id: message.author.id }, { $inc: { 'pet.hours': -require('ms')('3h'), food: 1 } })
+                    return sendEmbed({
+                        channel: message.channel,
+                        description: `${data.pet.name} tiene más del 90% de su energia.`
+                    })
+                }
 
                 return sendEmbed({
                     channel: message.channel,
-                    description: `<:angery:804368531415629875> | Por ahora solo puedes renombrar a tu mascota, z!pet rename Awooooooo.`
+                    fields: [
+                        [
+                            'Energia actual',
+                            await barra(ress, 100).catch(() => { }) || '**0**%'
+                        ]
+                    ]
+                })
+
+            default:
+                return sendEmbed({
+                    channel: message.channel,
+                    description: `¿Que quieres hacer?\nz!pet view\nz!pet rename [nombre]\nz!pet feed`
                 })
         }
     }
 };
+
+// eslint-disable-next-line require-await
+async function barra(valor, maximo) {
+    const resultado = (valor * 100) / maximo;
+    const porcentaje = resultado / 100;
+    let cantidad = "15"
+    const progreso = Math.round((cantidad * porcentaje));
+    const vacio = cantidad - progreso;
+
+    const texto1 = '▬'.repeat(progreso);
+    const texto2 = ''.repeat(vacio);
+    const texto3 = '**' + Math.round(porcentaje * 100) + '**%';
+
+    const barra = '' + texto1 + texto2 + ' ' + texto3 + '';
+    return barra;
+}

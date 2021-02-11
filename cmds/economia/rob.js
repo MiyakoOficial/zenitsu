@@ -93,33 +93,13 @@ module.exports = class Comando extends Command {
 
         else {
 
-            const { bombs, shields } = data_mention;
+            await economy_model.updateOne({ id: message.author.id }, { $inc: { money: ~~coins } })
+            await economy_model.updateOne({ id: user.id }, { $inc: { money: ~~(-coins) } })
+            return sendEmbed({
+                channel: message.channel,
+                description: `<:noice:804368487564312627> | Al entrar en la casa de ${user.tag} haz conseguido robar: **${~~coins}**${icon_money}.`
+            })
 
-            if (bombs == 0 && shields == 0) {
-                await economy_model.updateOne({ id: message.author.id }, { $inc: { money: ~~coins } })
-                await economy_model.updateOne({ id: user.id }, { $inc: { money: ~~(-coins) } })
-                return sendEmbed({
-                    channel: message.channel,
-                    description: `<:noice:804368487564312627> | Al entrar en la casa de ${user.tag} haz conseguido robar: **${~~coins}**${icon_money}.`
-                })
-            }
-
-            else if (shields) {
-                await economy_model.updateOne({ id: user.id }, { $inc: { shields: -1 } })
-                return sendEmbed({
-                    channel: message.channel,
-                    description: `<:cancel:804368628861763664> | Ups, parece que al intentar robar a ${user.tag} te ha bloqueado un escudo, al menos tiene uno menos.`
-                })
-            }
-
-            else if (bombs) {
-                await economy_model.updateOne({ id: user.id }, { $inc: { bombs: -1, money: ~~(coins / 2) } })
-                await economy_model.updateOne({ id: message.author.id }, { $inc: { money: ~~((-coins) / 2) } })
-                return sendEmbed({
-                    channel: message.channel,
-                    description: `<:cancel:804368628861763664> | Al intentar robar a ${user.tag} una bomba te exploto, para que ${user.tag} no llame la policia lo sobornaste con: **${~~(coins / 2)}**${icon_money}.`
-                })
-            }
         }
     }
 };
