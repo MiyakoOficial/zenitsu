@@ -29,15 +29,15 @@ module.exports = class Comando extends Command {
         switch (args[0]) {
             case 'shield':
 
-                if (money < 2000) {
+                if (money < 1000) {
                     return sendEmbed({
                         channel: message.channel,
-                        description: '<:cancel:804368628861763664> | No tienes suficiente dinero, necesitas **2000**' + icon_money + '.'
+                        description: '<:cancel:804368628861763664> | No tienes suficiente dinero, necesitas **1000**' + icon_money + '.'
                     })
                 }
 
                 // eslint-disable-next-line no-case-declarations
-                const { shields } = await economy_model.updateOne({ id: message.author.id }, { $inc: { shields: 1, money: -2000 } });
+                const { shields } = await economy_model.updateOne({ id: message.author.id }, { $inc: { shields: 1, money: -1000 } });
 
                 return sendEmbed({
                     channel: message.channel,
@@ -46,15 +46,15 @@ module.exports = class Comando extends Command {
 
             case 'bomb':
 
-                if (money < 2000) {
+                if (money < 1500) {
                     return sendEmbed({
                         channel: message.channel,
-                        description: '<:cancel:804368628861763664> | No tienes suficiente dinero, necesitas **2000**' + icon_money + '.'
+                        description: '<:cancel:804368628861763664> | No tienes suficiente dinero, necesitas **1500**' + icon_money + '.'
                     })
                 }
 
                 // eslint-disable-next-line no-case-declarations
-                const { bombs } = await economy_model.updateOne({ id: message.author.id }, { $inc: { bombs: 1, money: -2000 } });
+                const { bombs } = await economy_model.updateOne({ id: message.author.id }, { $inc: { bombs: 1, money: -1500 } });
 
                 return sendEmbed({
                     channel: message.channel,
