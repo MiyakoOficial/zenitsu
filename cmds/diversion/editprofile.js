@@ -1,7 +1,7 @@
 /* eslint-disable no-case-declarations */
 const regex = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/gi
 const Command = require('../../Utils/Classes').Command;
-const image = require('is-image');
+const { default: image } = require('image-url-validator');
 const Discord = require('discord.js');
 module.exports = class Comando extends Command {
 	constructor() {
@@ -36,9 +36,9 @@ module.exports = class Comando extends Command {
 				return embedResponse(`Descripción cambiada correctamente.`);
 
 			case 'img':
-				const url = ((message.attachments.array()[0] && image(message.attachments.array()[0].proxyURL))
+				const url = ((message.attachments.array()[0] && await image(message.attachments.array()[0].proxyURL))
 					? message.attachments.array()[0].proxyURL
-					: null) || ((args[1]?.match(regex) && image(args[1]?.match(regex)[0]))
+					: null) || ((args[1]?.match(regex) && await image(args[1]?.match(regex)[0]))
 						? args[1]?.match(regex)[0]
 						: null)
 
@@ -56,9 +56,9 @@ module.exports = class Comando extends Command {
 				return message.channel.send({ embed })
 
 			case 'thumbnail':
-				const url1 = ((message.attachments.array()[0] && image(message.attachments.array()[0].proxyURL))
+				const url1 = ((message.attachments.array()[0] && await image(message.attachments.array()[0].proxyURL))
 					? message.attachments.array()[0].proxyURL
-					: null) || ((args[1]?.match(regex) && image(args[1]?.match(regex)[0]))
+					: null) || ((args[1]?.match(regex) && await image(args[1]?.match(regex)[0]))
 						? args[1]?.match(regex)[0]
 						: null)
 
@@ -76,9 +76,9 @@ module.exports = class Comando extends Command {
 				return message.channel.send({ embed: embed1 })
 			case 'footerimg':
 
-				const url2 = ((message.attachments.array()[0] && image(message.attachments.array()[0].proxyURL))
+				const url2 = ((message.attachments.array()[0] && await image(message.attachments.array()[0].proxyURL))
 					? message.attachments.array()[0].proxyURL
-					: null) || ((args[1]?.match(regex) && image(args[1]?.match(regex)[0]))
+					: null) || ((args[1]?.match(regex) && await image(args[1]?.match(regex)[0]))
 						? args[1]?.match(regex)[0]
 						: null)
 

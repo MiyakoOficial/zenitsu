@@ -12,7 +12,7 @@ module.exports = async (client, message) => {
     if (message.author.bot) return;
     if (message.channel.type === 'dm') return;
     const attachment = message.attachments.find(item => image(item?.proxyURL))?.proxyURL
-    if (!message.content && !(image(attachment || 'poto'))) return;
+    if (!message.content && !(await image(attachment || 'poto'))) return;
     await client.updateData({ id: message.channel.id }, { nombre: message.author.tag, avatarURL: message.author.displayAvatarURL({ dynamic: true }), mensaje: message.content }, 'snipe')
     let data = message.guild.cacheLogs || (await require('../../models/logs').findOne({ id: message.guild.id }))
     if (!data) return;
@@ -31,7 +31,7 @@ module.exports = async (client, message) => {
         .setFooter(message.guild.name, message.guild.iconURL({ dynamic: true, size: 2048 }))
         .setTimestamp()
 
-    if (attachment && image(attachment)) {
+    if (attachment && await image(attachment)) {
         try {
             const Canvas = require('canvas');
             const canvas = Canvas.createCanvas(300, 300);

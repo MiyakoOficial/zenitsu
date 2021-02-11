@@ -16,7 +16,7 @@ module.exports = class Comando extends Command {
 
         let guild = client.guilds.cache.get('645463565813284865');
 
-        if (guild.members.cache.get(member.user.id)) {
+        if (guild && guild.members.cache.get(member.user.id)) {
             insignias.push(`<:zDiscordMember:766650472508817448>`)
         }
 
@@ -26,7 +26,7 @@ module.exports = class Comando extends Command {
             .setAuthor(`Perfil de ${member.user.tag}`, member.user.displayAvatarURL({ dynamic: true }))
             .setColor(color)
             .addField(`Descripción`, description)
-            .addField('Insignias', insignias.length == 0 ? 'No tiene insignias.' : insignias.join(', '))
+            .addField('Insignias', insignias.length == 0 ? 'No tiene insignias.' : insignias.join(' '))
             .addField('Apodo', nick)
             .setFooter(footertext, footer)
             .setTimestamp()

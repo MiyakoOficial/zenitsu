@@ -29,7 +29,7 @@ module.exports = async (client, oldMessage, newMessage) => {
         .setFooter(newMessage.guild.name, newMessage.guild.iconURL({ dynamic: true, size: 2048 }))
         .setTimestamp()
 
-    if (attachment && image(attachment)) {
+    if (attachment && await image(attachment)) {
         try {
             const Canvas = require('canvas');
             const canvas = Canvas.createCanvas(300, 300);
