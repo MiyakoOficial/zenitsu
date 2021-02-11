@@ -53,6 +53,6 @@ function getStatus(number) {
     else if (number >= 200) color = `🟠`
     else if (number >= 100) color = `🟡`
     else color = `🟢`
-    return '`' + color + '`';
+    return `\\${color}`
 
 }

@@ -184,9 +184,7 @@ client.getData = async ({ ...find }, model, createifnoexists = true) => {
 
 	if (!getModel && createifnoexists) {
 
-		await db.create(find)
-
-		return (await db.findOne(find)) || {};
+		return await db.create(find) || {};
 
 	}
 
@@ -204,9 +202,9 @@ client.updateData = async ({ ...find }, { ...newValue }, model) => {
 
 	let db = require('./models/' + model + '.js');
 
-	let getModel = (await db.findOne(find));
+	let update = await db.findOneAndUpdate(find, newValue, { new: true });
 
-	if (!getModel) {
+	if (!update) {
 
 		await db.create(find)
 
@@ -216,7 +214,7 @@ client.updateData = async ({ ...find }, { ...newValue }, model) => {
 
 	else {
 
-		return await db.findOneAndUpdate(find, newValue, { new: true });
+		return update;
 
 	}
 
@@ -320,10 +318,12 @@ client.rModel = (n) => {
 }
 
 process.on("unhandledRejection", e => {
+	console.log(e)
 	new Discord.WebhookClient(process.env.WEBHOOKID, process.env.WEBHOOKTOKEN).send(
 		new Discord.MessageEmbed()
 			.setColor('GREEN')
 			.setTitle('Error')
 			.setDescription(`Promesa denegada sin manejar: ${e.stack}`.slice(0, 2000))
-			.setTimestamp())
+			.setTimestamp()
+	).catch(() => { })
 });

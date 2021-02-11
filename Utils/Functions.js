@@ -59,6 +59,117 @@ module.exports.replace = function (string, array) {
 
 }
 
+const nombres = [
+    'Bruno',
+    'MiniBruno',
+    'Aqua',
+    'Akua',
+    'Basman',
+    'Blue',
+    'Ahzucar',
+    'Jeandant',
+    'Ux',
+    'Giorno',
+    'Bobi',
+    'Badeline',
+    'Josito',
+    'Aria',
+    'Rock',
+    'Nico',
+    'Mansana',
+    'Buttercup',
+    'Sandia',
+    'Lil JR',
+    'Mr. Pompis',
+    'Yee',
+    'Glob',
+    'Zia',
+    'Eater',
+    'Aviii',
+    'Awoo',
+    'Bulzy',
+    'Luigi',
+    'Jairo',
+    'Fabrisio',
+    'Yeni',
+    'Jiu',
+    'Matias',
+    'Deivi',
+    'Tick',
+    'Zack',
+    'Frank',
+    'Gruby',
+    'Kiwi',
+    'Rex',
+    'Rubius',
+    'Fernan',
+    'PeceraTonta'
+];
+
+function generarNombre() {
+
+    return nombres[Math.floor(Math.random() * nombres.length)]
+
+}
+
+module.exports.generarNumero = function (min = 1, max = 100) {
+
+    return Math.floor(Math.random() * (max - min)) + min;
+
+}
+/**@type {Map<String, Number>} */
+const culdaun = new Map()
+module.exports.checkCooldown = function (message) {
+
+    if (culdaun.has(message.author.id) && Date.now() <= culdaun.get(message.author.id))
+        return culdaun;
+
+    if (!culdaun.has(message.author.id)) {
+        culdaun.set(message.author.id, Date.now() + require("ms")('20s'))
+        setTimeout(() => {
+            culdaun.delete(message.author.id)
+        }, require('ms')('20s'))
+        return false;
+    }
+
+}
+
+/**
+ * 
+ * @param {import('discord.js').Message} message
+ * @returns {Promise<(import('discord.js').Message|void)>}
+ */
+
+module.exports.checkEconomy = async function (message) {
+
+    const economy_model = require('../models/economy')
+    const check = await economy_model.findOne({ id: message.author.id })
+
+    if (!check) {
+        let msg = await message.channel.send(`<a:CatLoad:804368444526297109> | Creando documento...`)
+
+        let data = await economy_model.create({
+            id: message.author.id,
+            money: 0,
+            bombs: 0,
+            bank: 0,
+            shields: 0,
+            pet: {
+                name: generarNombre(),
+                hability: 1
+            }
+        });
+
+        msg.edit('<:sesonroja:804750422828515339> | Creado.').catch(() => { })
+
+        return data;
+
+    }
+
+    return check;
+
+}
+
 /**
  * 
  * @param {Array<string>} mapatest 

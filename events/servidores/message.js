@@ -78,7 +78,7 @@ module.exports = async (client, message) => {
 
         const now = Date.now();
         const timestamps = cooldowns.get(commandfile.name);
-        const cooldownAmount = (commandfile.cooldown || 4) * 1000;
+        const cooldownAmount = (commandfile.cooldown || 0) * 1000;
 
         if (!client.devseval.includes(message.author.id)) {
             if (timestamps.has(message.author.id)) {
@@ -199,6 +199,7 @@ module.exports = async (client, message) => {
                     .setDescription(err.stack.slice(0, 2048))
                     .addField('Comando usado', command)
             )
+            //console.log(err)
             return message.channel.send({
                 embed:
                     new Discord.MessageEmbed()
