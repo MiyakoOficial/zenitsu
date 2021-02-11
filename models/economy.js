@@ -8,7 +8,8 @@ const Guild = Schema({
     bombs: { type: Number, default: 0 },
     shields: { type: Number, default: 0 },
     maxSpace: { type: Number, default: 1500 },
-    pet: { type: Object, default: {} }
+    pet: { type: Object, default: {} },
+    cacheName: { type: String, default: '' }
 
 })
 module.exports = model('Economy', Guild)

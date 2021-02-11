@@ -37,7 +37,7 @@ const Discord = require('discord.js'),
         'Ayudaste a AndreMor mejorando errores en su Github, te premia con: **{MONEY}**.',
         '\\*Inserte frase acá, te dio: **{MONEY}**\\*.',
         'Leri quiere tener un frase, a cambio te dio **{MONEY}**.',
-        'Trabajaste con himura, te dio: **{MONEY}**.'
+        'Trabajaste para himura, te dio: **{MONEY}**.'
     ];
 
 function generarFrase() {
@@ -84,7 +84,7 @@ module.exports = class Comando extends Command {
             total += Math.round((coins * hability) / 8)
             res.footerText = `¡Tu mascota ${name} ha cazado!, Toma ${total - coins}💰 más.`
         }
-        await economy_model.updateOne({ id: message.author.id }, { $inc: { money: total } })
+        await economy_model.updateOne({ id: message.author.id }, { $inc: { money: total }, $set: { cacheName: message.author.tag } })
         return sendEmbed(res);
     }
 };
