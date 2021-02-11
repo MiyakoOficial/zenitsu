@@ -146,7 +146,7 @@ module.exports.checkEconomy = async function (message) {
     const check = await economy_model.findOne({ id: message.author.id })
 
     if (!check) {
-        let msg = await message.channel.send(`<a:CatLoad:804368444526297109> | Creando documento...`)
+        let msg = await message.channel.send(`<a:CatLoad:804368444526297109> | Creando documento...`).catch(() => { })
 
         let data = await economy_model.create({
             id: message.author.id,
@@ -156,7 +156,8 @@ module.exports.checkEconomy = async function (message) {
             shields: 0,
             pet: {
                 name: generarNombre(),
-                hability: 1
+                hability: 1,
+                hours: Date.now() + require('ms')('10d')
             }
         });
 

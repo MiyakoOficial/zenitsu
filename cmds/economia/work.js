@@ -36,8 +36,10 @@ const Discord = require('discord.js'),
         'Ayudaste a TheEaterOfSouls con su bot, te dio: **{MONEY}**.',
         'Ayudaste a AndreMor mejorando errores en su Github, te premia con: **{MONEY}**.',
         '\\*Inserte frase acá, te dio: **{MONEY}**\\*.',
-        'Leri quiere tener un frase, a cambio te dio **{MONEY}**.'
+        'Leri quiere tener un frase, a cambio te dio **{MONEY}**.',
+        'Trabajaste con himura, te dio: **{MONEY}**.'
     ];
+
 function generarFrase() {
 
     return frases[Math.floor(Math.random() * frases.length)]
