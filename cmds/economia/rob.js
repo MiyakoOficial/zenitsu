@@ -39,9 +39,9 @@ module.exports = class Comando extends Command {
 
     async run(obj) {
 
-        const { message, embedResponse } = obj
+        const { message, embedResponse, args, client } = obj
 
-        let user = message.mentions.users.first();
+        let user = client.users.cache.get(args[0]) || (args[0] ? await client.users.fetch(args[0]).catch(() => { }) : null) || message.mentions.users.first();
 
         if (!user)
             return sendEmbed({
