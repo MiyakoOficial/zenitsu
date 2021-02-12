@@ -62,7 +62,7 @@ module.exports = class Comando extends Command {
         if (!data_mention)
             return embedResponse(`<:cancel:804368628861763664> | Sin datos sobre **${user.tag}**.`)
 
-        let coins = generarDinero(300, 800);
+        let coins = generarDinero(300, 900);
 
         let chance = () => generarNumero(0, 100);
 
