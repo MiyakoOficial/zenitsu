@@ -72,7 +72,8 @@ module.exports = class Comando extends Command {
                     true
                 ]
             ],
-            thumbnailURL: user.displayAvatarURL({ dynamic: true, size: 2048 })
+            thumbnailURL: user.displayAvatarURL({ dynamic: true, size: 2048 }),
+            authorText: `Balance de ${user.tag}`
         })
 
     }
