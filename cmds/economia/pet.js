@@ -75,7 +75,7 @@ module.exports = class Comando extends Command {
 
             case 'feed':
 
-                if (!food)
+                if (!food || 0 >= food)
                     return sendEmbed({
                         channel: message.channel,
                         description: `<:cancel:804368628861763664> | No tienes comida.`

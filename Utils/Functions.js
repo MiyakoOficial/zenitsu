@@ -158,7 +158,9 @@ module.exports.checkEconomy = async function (message) {
                 name: generarNombre(),
                 hability: 1,
                 hours: Date.now() + require('ms')('1d')
-            }
+            },
+            food: 5,
+            items: []
         });
 
         msg.edit('<:sesonroja:804750422828515339> | Creado.').catch(() => { })
