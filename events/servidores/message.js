@@ -34,9 +34,10 @@ module.exports = async (client, message) => {
                 .setColor(client.color)
                 .setAuthor(user.tag, user.displayAvatarURL({ dynamic: true, size: 2048 }))
                 .setDescription(user.cacheAfk.reason)
-                .setFooter(require('moment')(user.cacheAfk.date).fromNow())
+                .setFooter('AFK | ' + require('moment')(user.cacheAfk.date).fromNow())
 
-            return message.channel.send({ embed })
+            message.channel.send({ embed }).catch(() => { })
+            break;
         }
     }
 
