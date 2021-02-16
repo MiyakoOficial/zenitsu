@@ -4,14 +4,14 @@ module.exports = class Comando extends Command {
         super()
         this.name = "reset"
         this.category = 'developer'
-		this.dev = true;
+        this.dev = true;
     }
     // eslint-disable-next-line no-unused-vars
     run({ client, message, args, embedResponse, Hora }) {
 
-       try {
+        try {
 
-            require('child_process').execSync(`git pull && pm2 restart 0`).toString();
+            require('child_process').execSync(`git pull && pm2 restart Zenitsu`).toString();
 
         } catch (err) {
 
