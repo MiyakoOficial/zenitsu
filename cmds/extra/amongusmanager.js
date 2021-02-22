@@ -44,12 +44,12 @@ module.exports = module.exports = class Comando extends Command {
                 'El bot necesita tener los permisos de **mutear a los miembros** en el canal de voz y **administrar** ese canal.'
             )
 
-        message.channel.send({ embed })
+        return message.channel.send({ embed })
             .then(async msg => {
                 await msg.react('807729858649391105')
                 await msg.react('807729857693876224')
                 let data = await model.findOneAndUpdate({ idGuild: message.guild.id }, { idMessage: msg.id });
-                if (!data) await model.create({ idGuild: message.guild.id, idMessage: msg.id })
+                if (!data) return await model.create({ idGuild: message.guild.id, idMessage: msg.id })
             })
     }
 }
