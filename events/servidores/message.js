@@ -42,6 +42,9 @@ module.exports = async (client, message) => {
     }
 
     if (message.author.bot) return;
+    if (message.content.toLowerCase() == 'nezuko' || message.content.toLowerCase() == 'nezuko chan')
+        return message.channel.send(`Nezuko chaaan!`);
+
     if (!message.content?.startsWith(prefix)) return;
     let emojiFinded = message.guild.emojis.cache.find(a => a.name === message.content.slice(2)) || client.emojis.cache.find(a => a.name === message.content.slice(2));
     //console.log(emojiFinded)

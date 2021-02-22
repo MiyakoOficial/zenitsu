@@ -21,7 +21,8 @@ module.exports = class Comando extends Command {
         const Discord = require('discord.js');
         const canvas = Canvas.createCanvas(834, 824)
         const ctx = canvas.getContext('2d')
-        const bck = await Canvas.loadImage(message.content.endsWith('-girl') ? '/home/MARCROCK22/zenitsu/Utils/Images/chica.png' : '/home/MARCROCK22/zenitsu/Utils/Images/chico.jpg')
+        const { imagenes: { porquelloras: { chico, chica } } } = client;
+        const bck = message.content.toLowerCase().endsWith('-girl') ? chica : chico
         ctx.drawImage(bck, 0, 0, 834, 824)
         let atte = message.attachments.find(item => require('is-image')(item.proxyURL))?.proxyURL
         let image =

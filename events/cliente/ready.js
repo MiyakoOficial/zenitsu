@@ -2,13 +2,26 @@
 const { MessageEmbed, Client, Presence, Util } = require('discord.js');
 const ms = require('ms'),
 	model = require('../../models/temp')
-require('dotenv').config()
+require('dotenv').config();
+const { loadImage } = require("canvas")
 /**
  * 
  * @param {Client} client 
  */
 
-module.exports = (client) => {
+module.exports = async (client) => {
+
+	client.imagenes = {
+
+		porquellooras: {
+			chica: await loadImage('/home/MARCROCK22/zenitsu/Utils/Images/chica.png'),
+			chico: await loadImage('/home/MARCROCK22/zenitsu/Utils/Images/chico.jpg')
+		},
+		nicememe: {
+			background: await loadImage('/home/MARCROCK22/zenitsu/Utils/Images/nicememe.png')
+		}
+
+	}
 
 	checkTemp(client)
 

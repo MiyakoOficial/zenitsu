@@ -28,7 +28,7 @@ module.exports = class Comando extends Command {
 
 		foto = await Canvas.loadImage(foto)
 		const canvas = Canvas.createCanvas(552, 513);
-		let bck = await Canvas.loadImage('https://cdn.discordapp.com/attachments/803346384144433154/804045257587032097/AZwCgO7.png');
+		let bck = client.imagenes.nicememe.background
 		const ctx = canvas.getContext('2d');
 		ctx.drawImage(bck, 0, 0, 552, 513)
 		ctx.drawImage(foto, 15, 10, 525, 350)
