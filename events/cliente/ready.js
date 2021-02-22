@@ -11,6 +11,14 @@ const { loadImage } = require("canvas")
 
 module.exports = async (client) => {
 
+	client.user.setPresence({
+		status: "dnd",
+		activity: {
+			name: "Cargando imagenes...",
+			type: "WATCHING"
+		}
+	});
+
 	client.imagenes = {
 
 		porquelloras: {
