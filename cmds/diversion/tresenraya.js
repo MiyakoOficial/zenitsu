@@ -61,7 +61,7 @@ module.exports = class Comando extends Command {
             return sendEmbed({
                 channel: message.channel,
                 description: `<:zsUHHHHHH:649036589195853836> | ¡Ha ganado ${client.users.cache.get(jugador).username}!\n\n${tablero.string}`,
-                attachFiles: new MessageAttachment(await mapaCanvas(tablero.array, true), 'tictactoe.gif'),
+                attachFiles: new MessageAttachment(await mapaCanvas(tablero.array, client.imagenes, true), 'tictactoe.gif'),
                 imageURL: 'attachment://tictactoe.gif'
             });
         });
@@ -71,7 +71,7 @@ module.exports = class Comando extends Command {
             return sendEmbed({
                 channel: message.channel,
                 description: `<:wtfDuddd:797933539454091305> | Un empate entre ${jugadores.map(user => client.users.cache.get(user).username).join(' y ')}!\n\n${tablero.string}`,
-                attachFiles: new MessageAttachment(await mapaCanvas(tablero.array), 'tictactoe.gif'),
+                attachFiles: new MessageAttachment(await mapaCanvas(tablero.array, client.imagenes), 'tictactoe.gif'),
                 imageURL: 'attachment://tictactoe.gif'
             });
 
@@ -82,7 +82,7 @@ module.exports = class Comando extends Command {
             return sendEmbed({
                 channel: message.channel,
                 description: `<:wtfDuddd:797933539454091305> | Tiempo excedido!\n\n${tablero.string}`,
-                attachFiles: new MessageAttachment(await mapaCanvas(tablero.array), 'tictactoe.gif'),
+                attachFiles: new MessageAttachment(await mapaCanvas(tablero.array, client.imagenes), 'tictactoe.gif'),
                 imageURL: 'attachment://tictactoe.gif'
             });
         })
@@ -90,7 +90,7 @@ module.exports = class Comando extends Command {
         await sendEmbed({
             description: `🤔 | Empieza ${client.users.cache.get(partida.turno.jugador).username}, elige un número del 1 al 9 [\`${partida.turno.ficha}\`]\n\n${partida.tablero.string}`,
             channel: message.channel,
-            attachFiles: new MessageAttachment(await mapaCanvas(partida.tablero.array), 'tictactoe.gif'),
+            attachFiles: new MessageAttachment(await mapaCanvas(partida.tablero.array, client.imagenes), 'tictactoe.gif'),
             imageURL: 'attachment://tictactoe.gif'
         });
 
@@ -105,7 +105,7 @@ module.exports = class Comando extends Command {
             return await sendEmbed({
                 channel: msg.channel,
                 description: `😆 | Turno de ${client.users.cache.get(partida.turno.jugador).username} [\`${partida.turno.ficha}\`]\n\n ${partida.tablero.string}`,
-                attachFiles: new MessageAttachment(await mapaCanvas(partida.tablero.array), 'tictactoe.gif'),
+                attachFiles: new MessageAttachment(await mapaCanvas(partida.tablero.array, client.imagenes), 'tictactoe.gif'),
                 imageURL: 'attachment://tictactoe.gif'
             })
 

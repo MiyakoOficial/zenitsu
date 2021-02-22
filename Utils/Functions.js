@@ -182,7 +182,7 @@ module.exports.checkEconomy = async function (message) {
  * mapaCanvas(partida.tablero.array)
  */
 
-module.exports.mapaCanvas = async function (mapatest, win = false) {
+module.exports.mapaCanvas = async function (mapatest, imagenes, win = false) {
 
     let numeros = [
         '1️⃣', '2️⃣', '3️⃣',
@@ -198,12 +198,12 @@ module.exports.mapaCanvas = async function (mapatest, win = false) {
 
     const ctx = canvas.getContext('2d');
 
-    let bck = await Canvas.loadImage(`/home/MARCROCK22/zenitsu/Utils/Images/inicio_tictactoe.gif`)
+    let bck = imagenes.tictactoe.background;
     ctx.drawImage(bck, 0, 0, canvas.width, canvas.height)
 
     const img = {
-        '❌': await Canvas.loadImage(`/home/MARCROCK22/zenitsu/Utils/Images/x_tic.png`),
-        '⭕': await Canvas.loadImage(`/home/MARCROCK22/zenitsu/Utils/Images/o_tic.png`)
+        '❌': imagenes.tictactoe.equis,
+        '⭕': imagenes.tictactoe.circulo
     }
 
     if (!soniguales) {
@@ -658,7 +658,7 @@ function toBuffer(stream, callback) {
  * @returns {Promise<Buffer>}
  */
 
-async function displayConnectFourBoard(mapa, game) {
+async function displayConnectFourBoard(mapa, game, imagenes) {
     const GIFEncoder = require('gifencoder');
     const toBuffer = require('util').promisify(module.exports.buffer);
     const encoder = new GIFEncoder(700, 600);
@@ -668,11 +668,11 @@ async function displayConnectFourBoard(mapa, game) {
     encoder.setDelay(200);  // frame delay in ms
     encoder.setQuality(10); // image quality. 10 is default.
     mapa = mapa.map(a => a.map(e => e.replace('⬛', '⚪')))
-    const win = await Canvas.loadImage('/home/MARCROCK22/zenitsu/Utils/Images/morado_de_4.png')
-    const bck = await Canvas.loadImage('/home/MARCROCK22/zenitsu/Utils/Images/4enraya.png')
+    const win = imagenes.connect4.win
+    const bck = imagenes.connect4.background;
     const imgs = {
-        "🟢": await Canvas.loadImage('/home/MARCROCK22/zenitsu/Utils/Images/rojo_de_cuatro.png'),
-        "🟡": await Canvas.loadImage('/home/MARCROCK22/zenitsu/Utils/Images/amarillo_de_cuatro.png')
+        "🟢": imagenes.connect4.verde,
+        "🟡": imagenes.connect4.amarillo
     }
     const canvas = Canvas.createCanvas(700, 600)
     const ctx = canvas.getContext('2d')

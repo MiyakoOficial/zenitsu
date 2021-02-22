@@ -96,7 +96,7 @@ module.exports = class Comando extends Command {
 			}
 			usuario.TURNO = Math.floor(Math.random() * 2) + 1;
 			message.author.TURNO = usuario.TURNO == 2 ? 1 : 2;
-			let res = await displayConnectFourBoard(displayBoard(message.guild.game.ascii()), message.guild.game);
+			let res = await displayConnectFourBoard(displayBoard(message.guild.game.ascii()), message.guild.game, client.imagenes);
 			let att = new MessageAttachment(res, '4enraya.gif')
 
 			sendEmbed({
@@ -115,7 +115,7 @@ module.exports = class Comando extends Command {
 
 				msg.guild.game.play(parseInt(msg.content) - 1)
 				if (msg.guild.game.gameStatus().gameOver && msg.guild.game.gameStatus().solution) {
-					let res = await displayConnectFourBoard(displayBoard(message.guild.game.ascii()), msg.guild.game);
+					let res = await displayConnectFourBoard(displayBoard(message.guild.game.ascii()), msg.guild.game, client.imagenes);
 					let att = new MessageAttachment(res, '4enraya.gif')
 					sendEmbed({
 						description: `<:zsUHHHHHH:649036589195853836> | ${msg.author.tag} ha ganado la partida!`,
@@ -130,7 +130,7 @@ module.exports = class Comando extends Command {
 				}
 
 				else if (msg.guild.game.gameStatus().gameOver) {
-					let res = await displayConnectFourBoard(displayBoard(message.guild.game.ascii()), msg.guild.game);
+					let res = await displayConnectFourBoard(displayBoard(message.guild.game.ascii()), msg.guild.game, client.imagenes);
 					let att = new MessageAttachment(res, '4enraya.gif')
 					sendEmbed({
 						channel: msg.channel,
@@ -144,7 +144,7 @@ module.exports = class Comando extends Command {
 					return colector.stop();
 				}
 
-				let res = await displayConnectFourBoard(displayBoard(msg.guild.game.ascii()), msg.guild.game);
+				let res = await displayConnectFourBoard(displayBoard(msg.guild.game.ascii()), msg.guild.game, client.imagenes);
 				let att = new MessageAttachment(res, '4enraya.gif')
 
 				await sendEmbed({
@@ -159,7 +159,7 @@ module.exports = class Comando extends Command {
 					sendEmbed({
 						channel: message.channel,
 						description: `<:wtfDuddd:797933539454091305> | Juego terminado...`,
-						attachFiles: new MessageAttachment(await displayConnectFourBoard(displayBoard(message.guild.game.ascii()), message.guild.game), '4enraya.gif'),
+						attachFiles: new MessageAttachment(await displayConnectFourBoard(displayBoard(message.guild.game.ascii()), message.guild.game, client.imagenes), '4enraya.gif'),
 						imageURL: 'attachment://4enraya.gif'
 					})
 					message.author.TURNO = undefined;
@@ -171,7 +171,7 @@ module.exports = class Comando extends Command {
 					sendEmbed({
 						channel: message.channel,
 						description: `<:dislike1:369553357377110027> | Duraste tres minutos sin responder, juego terminado!`,
-						attachFiles: new MessageAttachment(await displayConnectFourBoard(displayBoard(message.guild.game.ascii()), message.guild.game), '4enraya.gif'),
+						attachFiles: new MessageAttachment(await displayConnectFourBoard(displayBoard(message.guild.game.ascii()), message.guild.game, client.imagenes), '4enraya.gif'),
 						imageURL: 'attachment://4enraya.gif'
 					})
 					message.author.TURNO = undefined;
@@ -183,7 +183,7 @@ module.exports = class Comando extends Command {
 					sendEmbed({
 						channel: message.channel,
 						description: `<:dislike1:369553357377110027> | Ya pasaron 30 minutos, juego terminado!`,
-						attachFiles: new MessageAttachment(await displayConnectFourBoard(displayBoard(message.guild.game.ascii()), message.guild.game), '4enraya.gif'),
+						attachFiles: new MessageAttachment(await displayConnectFourBoard(displayBoard(message.guild.game.ascii()), message.guild.game, client.imagenes), '4enraya.gif'),
 						imageURL: 'attachment://4enraya.gif'
 					})
 					message.author.TURNO = undefined;
@@ -207,7 +207,7 @@ module.exports = class Comando extends Command {
 			}
 
 			message.author.TURNO = 1
-			let res = await displayConnectFourBoard(displayBoard(message.guild.game.ascii()), message.guild.game);
+			let res = await displayConnectFourBoard(displayBoard(message.guild.game.ascii()), message.guild.game, client.imagenes);
 			let att = new MessageAttachment(res, '4enraya.gif')
 			sendEmbed({
 				attachFiles: att,
@@ -226,7 +226,7 @@ module.exports = class Comando extends Command {
 
 				msg.guild.game.play(parseInt(msg.content) - 1)
 				if (msg.guild.game.gameStatus().gameOver && msg.guild.game.gameStatus().solution) {
-					let res = await displayConnectFourBoard(displayBoard(message.guild.game.ascii()), msg.guild.game);
+					let res = await displayConnectFourBoard(displayBoard(message.guild.game.ascii()), msg.guild.game, client.imagenes);
 					let att = new MessageAttachment(res, '4enraya.gif')
 					sendEmbed({
 						description: `<:zsUHHHHHH:649036589195853836> | ${message.author.tag} ha ganado la partida!`,
@@ -243,7 +243,7 @@ module.exports = class Comando extends Command {
 				}
 
 				else if (msg.guild.game.gameStatus().gameOver) {
-					let res = await displayConnectFourBoard(displayBoard(message.guild.game.ascii()), msg.guild.game);
+					let res = await displayConnectFourBoard(displayBoard(message.guild.game.ascii()), msg.guild.game, client.imagenes);
 					let att = new MessageAttachment(res, '4enraya.gif')
 					sendEmbed({
 						channel: msg.channel,
@@ -262,7 +262,7 @@ module.exports = class Comando extends Command {
 				msg.guild.game.playAI(difficulty)
 
 				if (msg.guild.game.gameStatus().gameOver && msg.guild.game.gameStatus().solution) {
-					let res = await displayConnectFourBoard(displayBoard(message.guild.game.ascii()), msg.guild.game);
+					let res = await displayConnectFourBoard(displayBoard(message.guild.game.ascii()), msg.guild.game, client.imagenes);
 					let att = new MessageAttachment(res, '4enraya.gif')
 					sendEmbed({
 						description: `<:zsUHHHHHH:649036589195853836> | ${client.user.tag} ha ganado la partida!`,
@@ -279,7 +279,7 @@ module.exports = class Comando extends Command {
 				}
 
 				else if (msg.guild.game.gameStatus().gameOver) {
-					let res = await displayConnectFourBoard(displayBoard(message.guild.game.ascii()), msg.guild.game);
+					let res = await displayConnectFourBoard(displayBoard(message.guild.game.ascii()), msg.guild.game, client.imagenes);
 					let att = new MessageAttachment(res, '4enraya.gif')
 					sendEmbed({
 						channel: msg.channel,
@@ -295,7 +295,7 @@ module.exports = class Comando extends Command {
 					return colector.stop();
 				}
 
-				let res = await displayConnectFourBoard(displayBoard(msg.guild.game.ascii()), msg.guild.game);
+				let res = await displayConnectFourBoard(displayBoard(msg.guild.game.ascii()), msg.guild.game, client.imagenes);
 				let att = new MessageAttachment(res, '4enraya.gif')
 
 				await sendEmbed({
@@ -311,7 +311,7 @@ module.exports = class Comando extends Command {
 					sendEmbed({
 						channel: message.channel,
 						description: `<:wtfDuddd:797933539454091305> | Juego terminado...`,
-						attachFiles: new MessageAttachment(await displayConnectFourBoard(displayBoard(message.guild.game.ascii()), message.guild.game), '4enraya.gif'),
+						attachFiles: new MessageAttachment(await displayConnectFourBoard(displayBoard(message.guild.game.ascii()), message.guild.game, client.imagenes), '4enraya.gif'),
 						imageURL: 'attachment://4enraya.gif',
 						footerText: difficulty
 					})
@@ -325,7 +325,7 @@ module.exports = class Comando extends Command {
 					sendEmbed({
 						channel: message.channel,
 						description: `<:dislike1:369553357377110027> | Duraste tres minutos sin responder, juego terminado!`,
-						attachFiles: new MessageAttachment(await displayConnectFourBoard(displayBoard(message.guild.game.ascii()), message.guild.game), '4enraya.gif'),
+						attachFiles: new MessageAttachment(await displayConnectFourBoard(displayBoard(message.guild.game.ascii()), message.guild.game, client.imagenes), '4enraya.gif'),
 						imageURL: 'attachment://4enraya.gif',
 						footerText: difficulty
 					})
@@ -339,7 +339,7 @@ module.exports = class Comando extends Command {
 					sendEmbed({
 						channel: message.channel,
 						description: `<:dislike1:369553357377110027> | Ya pasaron 30 minutos, juego terminado!`,
-						attachFiles: new MessageAttachment(await displayConnectFourBoard(displayBoard(message.guild.game.ascii()), message.guild.game), '4enraya.gif'),
+						attachFiles: new MessageAttachment(await displayConnectFourBoard(displayBoard(message.guild.game.ascii()), message.guild.game, client.imagenes), '4enraya.gif'),
 						imageURL: 'attachment://4enraya.gif',
 						footerText: difficulty
 					})
