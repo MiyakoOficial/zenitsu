@@ -13,7 +13,7 @@ module.exports = async (client) => {
 
 	client.imagenes = {
 
-		porquellooras: {
+		porquelloras: {
 			chica: await loadImage('/home/MARCROCK22/zenitsu/Utils/Images/chica.png'),
 			chico: await loadImage('/home/MARCROCK22/zenitsu/Utils/Images/chico.jpg')
 		},
