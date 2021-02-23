@@ -4,7 +4,7 @@ module.exports = (client, guild) => {
 
     let add1 = `\`\`\`diff
 + Nombre: ${guild.name}
-+ Dueño: ${guild.owner.user.tag}
++ Dueño: ${guild.owner?.user?.tag || '.?.'}
 + Server ID: ${guild.id}
 + Miembros: ${guild.members.cache.size}(Humanos: ${guild.members.cache.filter(a => !a.user.bot).size})\`\`\`
 `
