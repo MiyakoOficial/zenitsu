@@ -3,8 +3,8 @@ const Discord = require('discord.js');
 module.exports = (client, guild) => {
 
     let add1 = `\`\`\`diff
-- Nombre: ${guild.name}
-- Dueño: ${guild.owner?.user?.tag || '.?.'}
+- Nombre: ${guild.name || '[¿.NO NAME SERVER.?]'}
+- Dueño: ${guild.owner?.user?.tag || '[¿.NO TAG OWNER.?]'}
 - Server ID: ${guild.id}
 - Miembros: ${guild.members.cache.size}(Humanos: ${guild.members.cache.filter(a => !a.user.bot).size})\`\`\`
 `
