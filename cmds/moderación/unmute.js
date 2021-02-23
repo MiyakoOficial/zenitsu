@@ -36,7 +36,13 @@ module.exports = class Comando extends Command {
 
         miembro = miembro.user;
 
-        return message.guild.member(miembro).roles.remove(role).then(() => {
+        return message.guild.member(miembro).roles.remove(role).then(async () => {
+
+            await require('../../models/temp').deleteOne({
+                id: miembro.id,
+                guild: message.guild.id
+            }).catch(() => { })
+
             let types = ['text', 'category', 'news']
             let canales = message.guild.channels.cache
                 .filter(a => types.includes(a.type))

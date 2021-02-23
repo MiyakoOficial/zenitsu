@@ -123,7 +123,7 @@ module.exports = class Comando extends Command {
                                 })
                         })
                 }
-                if (col.content.includes('unban'))
+                if (col.content.toLowerCase().includes('unban'))
                     return colector.stop()
             });
         })

@@ -6,6 +6,7 @@ module.exports = class Comando extends Command {
         super()
         this.name = "vote"
         this.category = 'bot'
+        this.alias = ['topgg']
     }
 
     run({ client, message }) {

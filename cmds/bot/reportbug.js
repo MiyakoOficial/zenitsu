@@ -6,6 +6,7 @@ module.exports = class Comando extends Command {
         super()
         this.name = "reportbug"
         this.category = 'bot'
+        this.cooldown = 120
     }
     run({ client, message, args, embedResponse }) {
         if (!args[0]) return embedResponse('<:cancel:804368628861763664> | Necesitas especificar el error/bug.')

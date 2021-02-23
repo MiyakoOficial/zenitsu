@@ -6,6 +6,7 @@ module.exports = class Comando extends Command {
         super()
         this.name = "suggest"
         this.category = 'bot'
+        this.cooldown = 120
     }
     run({ client, message, args, embedResponse }) {
 
