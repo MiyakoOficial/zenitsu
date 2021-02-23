@@ -1,5 +1,5 @@
 const { MessageEmbed } = require('discord.js');
-//Después de Alias es opcional.
+
 const Command = require('../../Utils/Classes').Command;
 module.exports = class Comando extends Command {
     constructor() {

@@ -1,4 +1,4 @@
-//Después de Alias es opcional.
+
 const Discord = require('discord.js');
 
 const Command = require('../../Utils/Classes').Command;

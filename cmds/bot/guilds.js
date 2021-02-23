@@ -1,4 +1,4 @@
-//Después de Alias es opcional.
+
 const Command = require('../../Utils/Classes').Command,
     Discord = require('discord.js')
 module.exports = class Comando extends Command {
