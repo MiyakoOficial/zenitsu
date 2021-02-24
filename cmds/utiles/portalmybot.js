@@ -14,7 +14,7 @@ module.exports = class Comando extends Command {
 
         if (!args[0]) return embedResponse('<a:CatLoad:804368444526297109> | ¿A quien quieres buscar?');
 
-        let buscar = message.mentions.users.first() ? (await mybot.findOne({ id: message.mentions.users.first().id })).profile : args[0];
+        let buscar = message.mentions.users.first() ? (await mybot.findOne({ id: message.mentions.users.first().id }))?.profile : args[0];
 
         let { data } = await mybo.mybot(buscar);
 
