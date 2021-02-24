@@ -23,10 +23,12 @@ module.exports = class Comando extends Command {
 
         let usuario = message.mentions.members.first()
 
-        if (!usuario || usuario.id == message.author.id || usuario.user.bot) return sendEmbed({
+        if (!usuario || usuario.id == message.author.id || (usuario.user.bot && usuario.id != client.user.id)) return sendEmbed({
             channel: message.channel,
-            description: `<:cancel:804368628861763664> | Menciona a un miembro del servidor para jugar.`
-        })
+            description: `<:cancel:804368628861763664> | Menciona a un miembro del servidor para jugar.`,
+            footerText: 'Si quieres jugar solo menciona al bot...'
+        });
+
         usuario = usuario.user
         if (message.guild.partida)
             return sendEmbed({ channel: message.channel, description: '<:cancel:804368628861763664> | Hay otra persona jugando en este servidor.' })
@@ -35,7 +37,19 @@ module.exports = class Comando extends Command {
             channel: message.channel,
             description: `<a:waiting:804396292793040987> | ${usuario} tienes 1 minuto para responder...\n¿Quieres jugar?: ~~responde "s"~~\n¿No quieres?: ~~responde "n"~~`
         });
+
         message.guild.partida = new tresenraya.partida({ jugadores: [message.author.id, usuario.id] });
+
+        if (usuario.user.id == client.user.id) {
+
+            setTimeout(() => {
+
+                message.channel.send('s')
+
+            }, 3000)
+
+        }
+
         let respuesta = await awaitMessage({ channel: message.channel, filter: (m) => m.author.id == usuario.id && ['s', 'n'].some(item => item == m.content), time: (1 * 60) * 1000, max: 1 }).catch(() => { })
 
         if (!respuesta) {
@@ -94,6 +108,8 @@ module.exports = class Comando extends Command {
             imageURL: 'attachment://tictactoe.gif'
         });
 
+        if (partida.turno.jugador == client.user.id) partida.elegir(4)
+
         const colector = message.channel.createMessageCollector(msg => msg.author.id === partida.turno.jugador && !isNaN(msg.content) && (Number(msg.content) >= 1 && Number(msg.content) <= 9) && partida.disponible(msg.content) && !partida.finalizado, { time: (10 * 60) * 1000 });
         colector.on('collect', async (msg) => {
             partida.elegir(msg.content);
@@ -102,12 +118,28 @@ module.exports = class Comando extends Command {
                 delete message.numero;
                 return;
             }
-            return await sendEmbed({
+
+            await sendEmbed({
                 channel: msg.channel,
                 description: `😆 | Turno de ${client.users.cache.get(partida.turno.jugador).username} [\`${partida.turno.ficha}\`]\n\n ${partida.tablero.string}`,
                 attachFiles: new MessageAttachment(await mapaCanvas(partida.tablero.array, client.imagenes), 'tictactoe.gif'),
                 imageURL: 'attachment://tictactoe.gif'
             })
+
+            if (partida && !partida.finalizado) {
+                let disponibles = [1, 2, 3, 4, 5, 6, 7, 8, 9].filter(partida.disponible);
+                let jugada = disponibles[Math.floor(Math.random() * disponibles.length)]
+                partida.elegir(jugada)
+
+                if (partida && !partida.finalizado) {
+                    await sendEmbed({
+                        channel: msg.channel,
+                        description: `😆 | Turno de ${client.users.cache.get(partida.turno.jugador).username} [\`${partida.turno.ficha}\`]\n\n ${partida.tablero.string}`,
+                        attachFiles: new MessageAttachment(await mapaCanvas(partida.tablero.array, client.imagenes), 'tictactoe.gif'),
+                        imageURL: 'attachment://tictactoe.gif'
+                    })
+                }
+            }
 
         });
         colector.on('end', () => !partida || partida.finalizado ? null : partida.emit('finalizado', partida.jugadores, partida.tablero, partida.paso))
