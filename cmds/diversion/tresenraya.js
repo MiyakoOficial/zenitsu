@@ -108,14 +108,17 @@ module.exports = class Comando extends Command {
             imageURL: 'attachment://tictactoe.gif'
         });
 
-        if (partida.turno.jugador == client.user.id) partida.elegir(4)
-
-        await sendEmbed({
-            channel: message.channel,
-            description: `😆 | Turno de ${client.users.cache.get(partida.turno.jugador).username} [\`${partida.turno.ficha}\`]\n\n ${partida.tablero.string}`,
-            attachFiles: new MessageAttachment(await mapaCanvas(partida.tablero.array, client.imagenes), 'tictactoe.gif'),
-            imageURL: 'attachment://tictactoe.gif'
-        })
+        if (partida.turno.jugador == client.user.id) {
+            let disponibles = [1, 2, 3, 4, 5, 6, 7, 8, 9].filter(a => partida.disponible(a));
+            let jugada = disponibles[Math.floor(Math.random() * disponibles.length)];
+            partida.elegir(jugada)
+            await sendEmbed({
+                channel: message.channel,
+                description: `😆 | Turno de ${client.users.cache.get(partida.turno.jugador).username} [\`${partida.turno.ficha}\`]\n\n ${partida.tablero.string}`,
+                attachFiles: new MessageAttachment(await mapaCanvas(partida.tablero.array, client.imagenes), 'tictactoe.gif'),
+                imageURL: 'attachment://tictactoe.gif'
+            })
+        }
 
         const colector = message.channel.createMessageCollector(msg => msg.author.id === partida.turno.jugador && !isNaN(msg.content) && (Number(msg.content) >= 1 && Number(msg.content) <= 9) && partida.disponible(msg.content) && !partida.finalizado, { time: (10 * 60) * 1000 });
 
