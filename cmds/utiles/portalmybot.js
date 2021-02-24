@@ -29,7 +29,7 @@ module.exports = class Comando extends Command {
             .addField("Numero de logros", data.logros.length, true)
             .addField('Numero de seguidores', data.seguidores, true)
             .addField('Puntos web', data.puntosWeb, true)
-            .addField('Link del perfil', `https://portalmybot.com/u/${args[0]}`, true)
+            .addField('Link del perfil', `https://portalmybot.com/u/${buscar}`, true)
             .addField('Logros', data.logros && data.logros.length >= 1 ? data.logros.join(', ').slice(0, 1000) : 'Sin logros.', true)
             .setFooter(`Ubicacion: ${data.ubicacion ? data.ubicacion.slice(0, 1000) : 'Sin especificar.'}`)
         return message.channel.send({ embed: embed }).catch(() => { });
