@@ -12,9 +12,11 @@ module.exports = class Comando extends Command {
     }
     async run({ message, args, embedResponse, client }) {
 
-        if (!args[0]) return embedResponse('<a:CatLoad:804368444526297109> | ¿A quien quieres buscar?');
 
-        let buscar = message.mentions.users.first() ? (await mybot.findOne({ id: message.mentions.users.first().id }))?.profile : args[0];
+        let buscar = args[0]
+            ? (message.mentions.users.first()
+                ? (await mybot.findOne({ id: message.mentions.users.first().id }))?.profile : args[0])
+            : (await mybot.findOne({ id: message.author.id }))?.profile
 
         let { data } = await mybo.mybot(buscar);
 
@@ -33,6 +35,5 @@ module.exports = class Comando extends Command {
             .addField('Logros', data.logros && data.logros.length >= 1 ? data.logros.join(', ').slice(0, 1000) : 'Sin logros.', true)
             .setFooter(`Ubicacion: ${data.ubicacion ? data.ubicacion.slice(0, 1000) : 'Sin especificar.'}`)
         return message.channel.send({ embed: embed }).catch(() => { });
-
     }
 };
