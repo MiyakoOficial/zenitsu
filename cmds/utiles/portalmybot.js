@@ -23,7 +23,7 @@ module.exports = class Comando extends Command {
 
         let embed = new Discord.MessageEmbed()
             .setColor(client.color)
-            .setAuthor(data.nombre, data.avatar, `https://portalmybot.com/u/${buscar.profile || buscar}`)
+            .setAuthor(data.nombre, data.avatar, `https://portalmybot.com/u/${buscar}`)
             .addField('Nivel', data.nivel, true)
             .addField('Biografia', data.biografia ? data.biografia.slice(0, 1000) : 'Sin biografia.', true)
             .addField("Numero de logros", data.logros.length, true)
