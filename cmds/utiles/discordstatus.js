@@ -21,7 +21,7 @@ module.exports = class Comando extends Command {
         const data = await page.content();
         await browser.close();
         const Canvas = require('canvas'),
-            canvas = Canvas.createCanvas(655, 60 * 7),
+            canvas = Canvas.createCanvas(650, 60 * 7),
             ctx = canvas.getContext('2d')
         const texts = {
             '1': 'API',
