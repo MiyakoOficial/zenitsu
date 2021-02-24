@@ -6,8 +6,12 @@ module.exports = class Comando extends Command {
         super()
         this.name = "discordstatus"
         this.category = 'utiles'
+        this.cooldown = 15
     }
     async run({ message }) {
+
+        message.channel.send('<a:CatLoad:804368444526297109> | Espere un momento...')
+
         const url = `https://discordstatus.com`;
         const puppeteer = require('puppeteer')
         const browser = await puppeteer.launch();
@@ -17,7 +21,7 @@ module.exports = class Comando extends Command {
         const data = await page.content();
         await browser.close();
         const Canvas = require('canvas'),
-            canvas = Canvas.createCanvas(445, 60 * 5),
+            canvas = Canvas.createCanvas(900, 60 * 7),
             ctx = canvas.getContext('2d')
         const texts = {
             '1': 'API',
