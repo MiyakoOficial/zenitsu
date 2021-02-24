@@ -40,7 +40,7 @@ module.exports = class Comando extends Command {
 
         message.guild.partida = new tresenraya.partida({ jugadores: [message.author.id, usuario.id] });
 
-        if (usuario.user.id == client.user.id) {
+        if (usuario.id == client.user.id) {
 
             setTimeout(() => {
 
