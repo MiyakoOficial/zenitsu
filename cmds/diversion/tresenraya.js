@@ -138,11 +138,11 @@ module.exports = class Comando extends Command {
                     imageURL: 'attachment://tictactoe.gif'
                 })
 
-            if (partida && !partida.finalizado && partida.turno.jugador == client.user.id) {
+            if (!partida.finalizado && partida.turno.jugador == client.user.id) {
                 let disponibles = [1, 2, 3, 4, 5, 6, 7, 8, 9].filter(a => partida.disponible(a));
                 let jugada = disponibles[Math.floor(Math.random() * disponibles.length)]
                 partida.elegir(jugada)
-                if (partida && !partida.finalizado) {
+                if (!partida.finalizado) {
                     await sendEmbed({
                         channel: msg.channel,
                         description: `😆 | Turno de ${client.users.cache.get(partida.turno.jugador).username} [\`${partida.turno.ficha}\`]\n\n ${partida.tablero.string}`,
