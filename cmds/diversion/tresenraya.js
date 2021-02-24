@@ -127,7 +127,7 @@ module.exports = class Comando extends Command {
             })
 
             if (partida && !partida.finalizado) {
-                let disponibles = [1, 2, 3, 4, 5, 6, 7, 8, 9].filter(partida.disponible);
+                let disponibles = [1, 2, 3, 4, 5, 6, 7, 8, 9].filter(a => partida.disponible(a));
                 let jugada = disponibles[Math.floor(Math.random() * disponibles.length)]
                 partida.elegir(jugada)
 
