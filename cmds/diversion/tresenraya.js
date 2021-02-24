@@ -138,7 +138,7 @@ module.exports = class Comando extends Command {
                     imageURL: 'attachment://tictactoe.gif'
                 })
 
-            if (partida && !partida.finalizado) {
+            if (partida && !partida.finalizado && partida.turno.jugador == client.user.id) {
                 let disponibles = [1, 2, 3, 4, 5, 6, 7, 8, 9].filter(a => partida.disponible(a));
                 let jugada = disponibles[Math.floor(Math.random() * disponibles.length)]
                 partida.elegir(jugada)
