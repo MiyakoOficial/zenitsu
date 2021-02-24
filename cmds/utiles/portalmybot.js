@@ -1,5 +1,6 @@
 const Discord = require('discord.js')
-const mybo = require("myscrapper");
+const mybo = require("myscrapper"),
+    mybot = require('../../models/mybot')
 
 const Command = require('../../Utils/Classes').Command;
 module.exports = class Comando extends Command {
@@ -13,7 +14,9 @@ module.exports = class Comando extends Command {
 
         if (!args[0]) return embedResponse('<a:CatLoad:804368444526297109> | ¿A quien quieres buscar?');
 
-        let { data } = await mybo.mybot(args[0]);
+        let buscar = message.mentions.users.first() ? (await mybot.findOne({ id: message.mentions.users.first().id })).profile : args[0];
+
+        let { data } = await mybo.mybot(buscar);
 
         if (data.message)
             return embedResponse('<:cancel:804368628861763664> | ' + data.message)
@@ -29,7 +32,7 @@ module.exports = class Comando extends Command {
             .addField('Link del perfil', `https://portalmybot.com/u/${args[0]}`, true)
             .addField('Logros', data.logros && data.logros.length >= 1 ? data.logros.join(', ').slice(0, 1000) : 'Sin logros.', true)
             .setFooter(`Ubicacion: ${data.ubicacion ? data.ubicacion.slice(0, 1000) : 'Sin especificar.'}`)
+        return message.channel.send({ embed: embed }).catch(() => { });
 
-        message.channel.send({ embed: embed }).catch(() => { });
     }
 };
