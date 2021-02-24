@@ -56,7 +56,7 @@ module.exports = class Comando extends Command {
 			let str = '';
 
 			let streaming = sortMembers(channel.members.filter(a => a.voice.streaming));
-			streaming = streaming.map(member => member.user.bot ? `\n\t\t[${emojisVoice(member, '🎧🤖', '🤖')}] ${member.displayName} [EN DIRECTO]` : `\n\t\t[${emojisVoice(member, '🧏', '🙎')}] ${member.displayName} [EN DIRECTO]`)
+			streaming = streaming.map(member => member.user.bot ? `\n\t\t[${emojisVoice(member, '🎧🤖', '🤖')}] ${member.displayName} [EN DIRECTO]` : `\n\t\t[${emojisVoice(member, '🎧🙎', '🙎')}] ${member.displayName} [EN DIRECTO]`)
 			streaming.forEach(a => {
 
 				str += a
@@ -64,12 +64,13 @@ module.exports = class Comando extends Command {
 			});
 
 			let noStreaming = sortMembers(channel.members.filter(a => !a.voice.streaming));
-			noStreaming = noStreaming.map(member => member.user.bot ? `\n\t\t[${emojisVoice(member, "🎧🤖", '🤖')}] ${member.displayName}` : `\n\t\t[${emojisVoice(member, '🧏', '🙎')}] ${member.displayName}`)
+			noStreaming = noStreaming.map(member => member.user.bot ? `\n\t\t[${emojisVoice(member, "🎧🤖", '🤖')}] ${member.displayName}` : `\n\t\t[${emojisVoice(member, '🎧🙎', '🙎')}] ${member.displayName}`)
 			noStreaming.forEach(a => {
-				str += a
-			});
-			return str
 
+				str += a
+
+			});
+			return str;
 		}
 	}
 }
