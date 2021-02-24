@@ -155,6 +155,7 @@ module.exports = class Comando extends Command {
 				})
 			})
 			colector.on('end', async (_, r) => {
+
 				if (r === 'SURRENDER' && message.guild.game) {
 					sendEmbed({
 						channel: message.channel,
@@ -167,7 +168,7 @@ module.exports = class Comando extends Command {
 					return message.guild.game = undefined;
 				}
 
-				if (r === 'idle' && message.guild.game) {
+				else if (r === 'idle' && message.guild.game) {
 					sendEmbed({
 						channel: message.channel,
 						description: `<:dislike1:369553357377110027> | Duraste tres minutos sin responder, juego terminado!`,
@@ -179,7 +180,7 @@ module.exports = class Comando extends Command {
 					return message.guild.game = undefined;
 				}
 
-				if (message.guild.game) {
+				else if (message.guild.game && r === 'time') {
 					sendEmbed({
 						channel: message.channel,
 						description: `<:dislike1:369553357377110027> | Ya pasaron 30 minutos, juego terminado!`,
