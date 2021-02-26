@@ -20,7 +20,7 @@ module.exports = class Comando extends Command {
 			let evalued = await eval(code);
 			let TYPE = typeof (evalued)
 			evalued = require("util").inspect(evalued, { depth: 0 });
-			evalued = replace(evalued, [client.token, process.env.PASSWORDDBL, process.env.MONGODB, process.env.WEBHOOKID, process.env.WEBHOOKTOKEN, process.env.DBLTOKEN])
+			evalued = replace(evalued, [client.token, process.env.PASSWORDDBL, process.env.MONGODB, process.env.WEBHOOKID, process.env.WEBHOOKTOKEN, process.env.DBLTOKEN, require('mongoose').connection.pass, require('mongoose').connection.user, require('mongoose').connection.host])
 			const res = Discord.Util.splitMessage(evalued, { char: '', maxLength: 2000 });
 
 			for (let minires of res) {
