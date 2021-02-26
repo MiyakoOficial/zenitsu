@@ -8,16 +8,21 @@ module.exports = class Comando extends Command {
         this.category = 'utiles'
         this.cooldown = 15
     }
+    /**
+     * 
+     * @param {Object} param0
+     * @param {Discord.Message} param0.message
+     */
     async run({ message }) {
 
-        message.channel.send('<a:CatLoad:804368444526297109> | Espere un momento...')
+        let msg = await message.channel.send('<a:CatLoad:804368444526297109> | Espere un momento...');
 
         const url = `https://discordstatus.com`;
         const puppeteer = require('puppeteer')
         const browser = await puppeteer.launch();
         const page = await browser.newPage();
         await page.goto(url, { waitUntil: 'domcontentloaded' });
-        await page.waitFor(1500);
+        await page.waitForTimeout(1500);
         const data = await page.content();
         await browser.close();
         const Canvas = require('canvas'),
@@ -44,7 +49,7 @@ module.exports = class Comando extends Command {
         const svg2img = require('node-svg2img')
         let res = await require('util').promisify(svg2img)(`<svg><path fill="none" d="${svg}" class="highcharts-graph" data-z-index="1" stroke="#738bd7" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></path></svg>`, { format: 'png', width: 900, height: 100 })
         res = await require('canvas').loadImage(res)
-        ctx.drawImage(res, 0, 320, 900, 100)
+        ctx.drawImage(res, 0, 320, 900, 100);
 
         let att = new Discord.MessageAttachment(canvas.toBuffer(), 'img.png');
         let embed = new Discord.MessageEmbed()
@@ -52,8 +57,12 @@ module.exports = class Comando extends Command {
             .setTimestamp()
             .attachFiles(att)
             .setImage('attachment://img.png')
-            .setAuthor('Discord Status', 'https://cdn.discordapp.com/attachments/649043690765025352/813915354010222642/750851146884710541.png', 'https://discordstatus.com/')
-
-        return message.channel.send({ embed })
+            .setAuthor('Discord Status', 'https://cdn.discordapp.com/attachments/649043690765025352/813915354010222642/750851146884710541.png', 'https://discordstatus.com/');
+        return message.channel.send({ embed }).finally(() => {
+            try {
+                if (msg.deletable) return msg.delete();
+                // eslint-disable-next-line no-empty
+            } catch { }
+        })
     }
 }
