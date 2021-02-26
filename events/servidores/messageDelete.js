@@ -13,10 +13,16 @@ module.exports = async (client, message) => {
     if (message.channel.type === 'dm') return;
     const attachment = message.attachments.find(item => image(item?.proxyURL))?.proxyURL
     if (!message.content && !(await image(attachment || 'poto'))) return;
-    await client.updateData({ id: message.channel.id }, { nombre: message.author.tag, avatarURL: message.author.displayAvatarURL({ dynamic: true }), mensaje: message.content }, 'snipe')
+
+    if (message.content) {
+        await client.updateData({ id: message.channel.id }, { date: Date.now(), nombre: message.author.tag, avatarURL: message.author.displayAvatarURL({ dynamic: true }), mensaje: message.content }, 'snipe').catch(() => { })
+    }
     let data = message.guild.cacheLogs || (await require('../../models/logs').findOne({ id: message.guild.id }))
     if (!data) return;
-    if (!message.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return require('../../models/logs').deleteOne({ id: message.guild.id });
+    if (!message.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) {
+        message.guild.cacheLogs = null;
+        return require('../../models/logs').deleteOne({ id: message.guild.id });
+    }
     message.guild.cacheLogs = data;
     let embed = new Discord.MessageEmbed()
         .setColor(client.color)

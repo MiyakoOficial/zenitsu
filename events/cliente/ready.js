@@ -41,6 +41,7 @@ module.exports = async (client) => {
 
 	checkTemp(client)
 	presence(client)
+	checkMessages()
 
 	const { dbl } = client;
 	client.color = '#E09E36';
@@ -121,5 +122,23 @@ async function checkTemp(client) {
 	await Util.delayFor(5000)
 
 	return await checkTemp(client)
+
+}
+
+
+async function checkMessages() {
+
+	const find = await require('../../models/snipe').find();
+
+	for await (let data of find) {
+
+		if (!data.date || (data.date + require("ms")('5d') < Date.now()))
+			return await require('../../models/snipe').deleteOne(data);
+
+	}
+
+	await Util.delayFor(require('ms')('1m'));
+
+	return checkMessages();
 
 }

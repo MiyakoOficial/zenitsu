@@ -4,7 +4,8 @@ const Snipe = Schema({
     id: String,
     mensaje: String,
     avatarURL: String,
-    nombre: String
+    nombre: String,
+    date: Number
 });
 
 module.exports = model('Snipe', Snipe)
