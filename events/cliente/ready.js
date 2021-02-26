@@ -133,7 +133,8 @@ async function checkMessages() {
 	for await (let data of find) {
 
 		if (!data.date || (data.date + require("ms")('5d') < Date.now()))
-			return await require('../../models/snipe').deleteOne(data);
+			await require('../../models/snipe').deleteOne(data);
+		else continue;
 
 	}
 
