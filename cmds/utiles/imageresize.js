@@ -26,49 +26,37 @@ module.exports = class Comando extends Command {
             !att || !att.proxyURL
             || !(await require('image-url-validator').default(att.proxyURL))
         )
-            return embedResponse('<:cancel:804368628861763664> | Necesitas adjuntar un archivo.')
+            return embedResponse('<:cancel:804368628861763664> | Necesitas adjuntar un archivo.');
 
-        let numerito = parseInt(args[0]);
+        let numerito = parseInt(args[0]),
+            segundonumerito = parseInt(args[1]);
 
-        if (!numerito) return embedResponse(`<:cancel:804368628861763664> | ${numerito == 0 ? 'Numero invalido' : 'Necesita ser un numero'}.`)
+        if (!numerito || !segundonumerito)
+            return embedResponse(`<:cancel:804368628861763664> | ${message.guild.cachePrefix}imgresize <positive number> <positive number>.`);
 
-        let { width, height } = att
-        const Canvas = require('canvas')
+        if (isNegative(numerito) || isNegative(segundonumerito))
+            return embedResponse(`<:cancel:804368628861763664> | ${message.guild.cachePrefix}imgresize <positive number> <positive number>.`);
 
-        if (isNegative(numerito)) {
-            let restar = numerito
-            const canvas2 = Canvas.createCanvas(width + restar, height + restar),
-                ctx2 = canvas2.getContext('2d'),
-                image2 = await Canvas.loadImage(att.proxyURL)
-            ctx2.drawImage(image2, 0, 0, width + restar, height + restar);
+        if (numerito > 2700)
+            return embedResponse(`<:cancel:804368628861763664> | El tamaño máximo es 2700x2700.`);
 
-            let embed = new MessageEmbed()
-                .attachFiles(new MessageAttachment(canvas2.toBuffer(), att.name))
-                .setImage('attachment://' + att.name)
-                .setColor(client.color)
-                .setTimestamp()
-                .setFooter(`width actual: ${width + restar} height actual: ${height + restar}`)
+        const Canvas = require('canvas');
 
-            return message.channel.send({ embed });
-        }
+        const canvas = Canvas.createCanvas(numerito, segundonumerito),
+            ctx = canvas.getContext('2d'),
+            image = await Canvas.loadImage(att.proxyURL);
 
-        else {
+        ctx.drawImage(image, 0, 0, numerito, segundonumerito);
 
-            let sumar = numerito
-            const canvas = Canvas.createCanvas(width + sumar, height + sumar),
-                ctx = canvas.getContext('2d'),
-                image = await Canvas.loadImage(att.proxyURL)
-            ctx.drawImage(image, 0, 0, width + sumar, height + sumar);
+        let embed = new MessageEmbed()
+            .attachFiles(new MessageAttachment(canvas.toBuffer(), att.name))
+            .setImage('attachment://' + att.name)
+            .setColor(client.color)
+            .setTimestamp()
+            .setFooter(`width actual: ${numerito} height actual: ${segundonumerito}`);
 
-            let embed = new MessageEmbed()
-                .attachFiles(new MessageAttachment(canvas.toBuffer(), att.name))
-                .setImage('attachment://' + att.name)
-                .setColor(client.color)
-                .setTimestamp()
-                .setFooter(`width actual: ${width + sumar} height actual: ${height + sumar}`)
+        return message.channel.send({ embed });
 
-            return message.channel.send({ embed });
-        }
     }
 }
 /**
@@ -78,5 +66,5 @@ module.exports = class Comando extends Command {
  */
 function isNegative(num) {
     if (isNaN(num)) throw new Error('Invalid number.');
-    return num < 0
+    return num < 0;
 }
