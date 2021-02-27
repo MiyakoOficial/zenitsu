@@ -24,7 +24,7 @@ module.exports = class Comando extends Command {
 
         if (
             !att || !att.proxyURL
-            || !(await require('image-url-validator')(att.proxyURL))
+            || !(await require('image-url-validator').default(att.proxyURL))
         )
             return embedResponse('<:cancel:804368628861763664> | Necesitas adjuntar un archivo.')
 
