@@ -29,7 +29,11 @@ module.exports = class Comando extends Command {
 
         const { message, args, embedResponse } = obj;
 
-        let str = args.join(' ')?.split('🇵🇾')?.join('Ese país no existe')?.split('🥑')?.join('palta')?.split(';').join('Símbolo restringido por Awoo');
+        let str = args.join(' ')
+            ?.split('🇵🇾')?.join('Ese país no existe')
+            ?.split('🥑')?.join('palta')
+            ?.split(';').join('Símbolo restringido por Awoo')
+            ?.split('😳').join('asteriscos Se flushea asteriscos');
 
         if (!str)
             return embedResponse('<:cancel:804368628861763664> | Necesitas ingresar un texto.')
