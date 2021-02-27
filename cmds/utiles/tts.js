@@ -29,7 +29,7 @@ module.exports = class Comando extends Command {
 
         const { message, args, embedResponse } = obj;
 
-        let str = args.join(' ');
+        let str = args.join(' ')?.split('🇵🇾')?.join('Ese país no existe');
 
         if (!str)
             return embedResponse('<:cancel:804368628861763664> | Necesitas ingresar un texto.')
