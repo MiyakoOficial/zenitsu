@@ -37,7 +37,7 @@ module.exports = class Comando extends Command {
         if (isNegative(numerito) || isNegative(segundonumerito))
             return embedResponse(`<:cancel:804368628861763664> | ${message.guild.cachePrefix}imgresize <positive number> <positive number>.`);
 
-        if (numerito > 2700)
+        if (numerito > 2700 || segundonumerito > 2700)
             return embedResponse(`<:cancel:804368628861763664> | El tamaño máximo es 2700x2700.`);
 
         const Canvas = require('canvas');
