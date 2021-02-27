@@ -43,8 +43,8 @@ module.exports = class Comando extends Command {
             ctx2.drawImage(image2, 0, 0, width + restar, height + restar);
 
             let embed = new MessageEmbed()
-                .attachFiles(new MessageAttachment(canvas2.toBuffer(), 'img.png'))
-                .setImage('attachment://img.png')
+                .attachFiles(new MessageAttachment(canvas2.toBuffer(), att.name))
+                .setImage('attachment://' + att.name)
                 .setColor(client.color)
                 .setTimestamp()
                 .setFooter(`width actual: ${width + restar} height actual: ${height + restar}`)
@@ -61,8 +61,8 @@ module.exports = class Comando extends Command {
             ctx.drawImage(image, 0, 0, width + sumar, height + sumar);
 
             let embed = new MessageEmbed()
-                .attachFiles(new MessageAttachment(canvas.toBuffer(), 'img.png'))
-                .setImage('attachment://img.png')
+                .attachFiles(new MessageAttachment(canvas.toBuffer(), att.name))
+                .setImage('attachment://' + att.name)
                 .setColor(client.color)
                 .setTimestamp()
                 .setFooter(`width actual: ${width + sumar} height actual: ${height + sumar}`)

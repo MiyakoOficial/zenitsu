@@ -209,6 +209,7 @@ module.exports = async (client, message) => {
                     new Discord.MessageEmbed()
                         .setDescription('Ocurrio un error, reportalo en el servidor de [soporte](https://discord.gg/hbSahh8).')
                         .setColor(client.color)
+                        .setThumbnail(`https://media1.tenor.com/images/9603c39870bd2d6c72fb748761279d87/tenor.gif?itemid=17682808`)
                         .setTimestamp()
                         .setFooter(message.author.tag, message.author.displayAvatarURL({ dynamic: true, size: 2048 }))
             }).catch(() => { });
