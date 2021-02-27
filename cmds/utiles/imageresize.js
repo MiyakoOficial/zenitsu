@@ -49,7 +49,7 @@ module.exports = class Comando extends Command {
                 .setTimestamp()
                 .setFooter(`width actual: ${width + restar} height actual: ${height + restar}`)
 
-            return message.channel.send({ embed }).catch(message.channel.send)
+            return message.channel.send({ embed });
         }
 
         else {
@@ -67,7 +67,7 @@ module.exports = class Comando extends Command {
                 .setTimestamp()
                 .setFooter(`width actual: ${width + sumar} height actual: ${height + sumar}`)
 
-            return message.channel.send({ embed }).catch(message.channel.send)
+            return message.channel.send({ embed });
         }
     }
 }
