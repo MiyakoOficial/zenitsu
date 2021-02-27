@@ -10,7 +10,6 @@ module.exports = module.exports = class Comando extends Command {
         this.alias = [];
         this.cooldown = 10
         this.category = 'extra';
-        this.botPermissions.guild = ['MANAGE_MESSAGES', 'ADD_REACTIONS']
         this.botPermissions.channel = ['MANAGE_MESSAGES', 'ADD_REACTIONS']
     }
 
