@@ -40,10 +40,9 @@ module.exports = class Comando extends Command {
         if (numerito > 2700 || segundonumerito > 2700)
             return embedResponse(`<:cancel:804368628861763664> | El tamaño máximo es 2700x2700.`);
 
-        let bufferTest = await (await require('node-fetch')(att.proxyURL)).buffer(),
-            bufferEnd = false;
+        let bufferEnd = false;
 
-        if (require('is-gif')(bufferTest, 0, 3)) {
+        /*if (require('is-gif')(bufferTest, 0, 3)) {
 
             let msg = await message.channel.send(`Cargando gif...`).catch(() => { })
 
@@ -80,19 +79,19 @@ module.exports = class Comando extends Command {
 
         }
 
-        else {
+        else {*/
 
-            const Canvas = require('canvas');
+        const Canvas = require('canvas');
 
-            const canvas = Canvas.createCanvas(numerito, segundonumerito),
-                ctx = canvas.getContext('2d'),
-                image = await Canvas.loadImage(att.proxyURL);
+        const canvas = Canvas.createCanvas(numerito, segundonumerito),
+            ctx = canvas.getContext('2d'),
+            image = await Canvas.loadImage(att.proxyURL);
 
-            ctx.drawImage(image, 0, 0, numerito, segundonumerito);
+        ctx.drawImage(image, 0, 0, numerito, segundonumerito);
 
-            bufferEnd = canvas.toBuffer();
+        bufferEnd = canvas.toBuffer();
 
-        }
+        // }
 
         let embed = new MessageEmbed()
             .attachFiles(new MessageAttachment(bufferEnd, att.name))
@@ -114,7 +113,7 @@ function isNegative(num) {
     if (isNaN(num)) throw new Error('Invalid number.');
     return num < 0;
 }
-
+/*
 function toArray(stream, callback) {
     let arr = []
 
@@ -154,4 +153,4 @@ function toBuffer(stream, callback) {
     })
 
     return stream
-}
+}*/
