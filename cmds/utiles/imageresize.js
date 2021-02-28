@@ -45,14 +45,14 @@ module.exports = class Comando extends Command {
 
         if (require('is-gif')(bufferTest, 0, 3)) {
 
-            message.channel.send(`Cargando gif...`).catch(() => { })
+            let msg = await message.channel.send(`Cargando gif...`).catch(() => { })
 
             const gifFrames = require('gif-frames'),
                 GIFEncoder = require('gifencoder')
 
             const encoder = new GIFEncoder(numerito, segundonumerito);
             encoder.setRepeat(0);
-            encoder.setDelay(55);
+            encoder.setDelay(63);
             encoder.start();
             let stream = encoder.createReadStream();
 
@@ -72,7 +72,9 @@ module.exports = class Comando extends Command {
                 encoder.finish();
 
             });
-
+            if (msg.deletable) {
+                msg.delete().catch(() => { })
+            }
             let buffer = await require('util').promisify(toBuffer)(stream)
             bufferEnd = buffer;
 
