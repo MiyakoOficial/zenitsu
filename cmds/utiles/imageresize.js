@@ -45,10 +45,34 @@ module.exports = class Comando extends Command {
 
         if (require('is-gif')(bufferTest, 0, 3)) {
 
-            const resize = require('@gumlet/gif-resize'),
-                res = await resize({ width: numerito, height: segundonumerito, stretch: true })(bufferTest);
+            const gifFrames = require('gif-frames'),
+                GIFEncoder = require('gifencoder')
 
-            bufferEnd = res;
+            const encoder = new GIFEncoder(200, 200);
+            encoder.setRepeat(0);
+            encoder.setDelay(55);
+            encoder.start();
+            let stream = encoder.createReadStream();
+
+            const Canvas = require('canvas'),
+                canvas = Canvas.createCanvas(200, 200),
+                ctx = canvas.getContext('2d');
+
+            await gifFrames({ url: att.proxyURL, frames: 'all' }).then(async (frameData) => {
+
+                for await (let frame of frameData) {
+                    console.log(frame)
+                    let image = await Canvas.loadImage(frame.getImage()._obj);
+                    ctx.drawImage(image, 0, 0, 200, 200)
+                    encoder.addFrame(ctx)
+                }
+
+                encoder.finish();
+
+            });
+
+            let buffer = await require('util').promisify(toBuffer)(stream)
+            bufferEnd = buffer;
 
         }
 
@@ -85,4 +109,45 @@ module.exports = class Comando extends Command {
 function isNegative(num) {
     if (isNaN(num)) throw new Error('Invalid number.');
     return num < 0;
+}
+
+function toArray(stream, callback) {
+    let arr = []
+
+    stream.on('data', onData)
+    stream.once('end', onEnd)
+    stream.once('error', callback)
+    stream.once('error', cleanup)
+    stream.once('close', cleanup)
+
+    function onData(doc) {
+        arr.push(doc)
+    }
+
+    function onEnd() {
+        callback(null, arr)
+        cleanup()
+    }
+
+    function cleanup() {
+        arr = null
+        stream.removeListener('data', onData)
+        stream.removeListener('end', onEnd)
+        stream.removeListener('error', callback)
+        stream.removeListener('error', cleanup)
+        stream.removeListener('close', cleanup)
+    }
+
+    return stream
+}
+
+function toBuffer(stream, callback) {
+    toArray(stream, function (err, arr) {
+        if (err || !arr)
+            callback(err)
+        else
+            callback(null, Buffer.concat(arr))
+    })
+
+    return stream
 }
