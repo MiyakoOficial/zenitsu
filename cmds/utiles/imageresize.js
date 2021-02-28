@@ -40,55 +40,57 @@ module.exports = class Comando extends Command {
         if (numerito > 2700 || segundonumerito > 2700)
             return embedResponse(`<:cancel:804368628861763664> | El tamaño máximo es 2700x2700.`);
 
-        let bufferTest = await (await require('node-fetch')(att.proxyURL)).buffer(),
-            bufferEnd = false;
+        let bufferEnd = false;
 
-        if (require('is-gif')(bufferTest, 0, 3)) {
+        /*let bufferTest = await (await require('node-fetch')(att.proxyURL)).buffer(),
+        bufferEnd = false;
+    
+            if (require('is-gif')(bufferTest, 0, 3)) {
+    
+                const gifFrames = require('gif-frames'),
+                    GIFEncoder = require('gifencoder')
+    
+                const encoder = new GIFEncoder(numerito, segundonumerito);
+                encoder.setRepeat(0);
+                encoder.setDelay(55);
+                encoder.start();
+                let stream = encoder.createReadStream();
+    
+                const Canvas = require('canvas'),
+                    canvas = Canvas.createCanvas(numerito, segundonumerito),
+                    ctx = canvas.getContext('2d');
+    
+                await gifFrames({ url: att.proxyURL, frames: 'all' }).then(async (frameData) => {
+    
+                    for await (let frame of frameData) {
+                        console.log(frame)
+                        let image = await Canvas.loadImage(frame.getImage()._obj);
+                        ctx.drawImage(image, 0, 0, numerito, segundonumerito)
+                        encoder.addFrame(ctx)
+                    }
+    
+                    encoder.finish();
+    
+                });
+    
+                let buffer = await require('util').promisify(toBuffer)(stream)
+                bufferEnd = buffer;
+    
+            }
+    
+            else {
+    */
+        const Canvas = require('canvas');
 
-            const gifFrames = require('gif-frames'),
-                GIFEncoder = require('gifencoder')
+        const canvas = Canvas.createCanvas(numerito, segundonumerito),
+            ctx = canvas.getContext('2d'),
+            image = await Canvas.loadImage(att.proxyURL);
 
-            const encoder = new GIFEncoder(numerito, segundonumerito);
-            encoder.setRepeat(0);
-            encoder.setDelay(55);
-            encoder.start();
-            let stream = encoder.createReadStream();
+        ctx.drawImage(image, 0, 0, numerito, segundonumerito);
 
-            const Canvas = require('canvas'),
-                canvas = Canvas.createCanvas(numerito, segundonumerito),
-                ctx = canvas.getContext('2d');
+        bufferEnd = canvas.toBuffer();
 
-            await gifFrames({ url: att.proxyURL, frames: 'all' }).then(async (frameData) => {
-
-                for await (let frame of frameData) {
-                    console.log(frame)
-                    let image = await Canvas.loadImage(frame.getImage()._obj);
-                    ctx.drawImage(image, 0, 0, numerito, segundonumerito)
-                    encoder.addFrame(ctx)
-                }
-
-                encoder.finish();
-
-            });
-
-            let buffer = await require('util').promisify(toBuffer)(stream)
-            bufferEnd = buffer;
-
-        }
-
-        else {
-
-            const Canvas = require('canvas');
-
-            const canvas = Canvas.createCanvas(numerito, segundonumerito),
-                ctx = canvas.getContext('2d'),
-                image = await Canvas.loadImage(att.proxyURL);
-
-            ctx.drawImage(image, 0, 0, numerito, segundonumerito);
-
-            bufferEnd = canvas.toBuffer();
-
-        }
+        //}
 
         let embed = new MessageEmbed()
             .attachFiles(new MessageAttachment(bufferEnd, att.name))
@@ -110,7 +112,7 @@ function isNegative(num) {
     if (isNaN(num)) throw new Error('Invalid number.');
     return num < 0;
 }
-
+/*
 function toArray(stream, callback) {
     let arr = []
 
@@ -150,4 +152,4 @@ function toBuffer(stream, callback) {
     })
 
     return stream
-}
+}*/
