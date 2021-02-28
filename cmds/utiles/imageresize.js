@@ -48,14 +48,14 @@ module.exports = class Comando extends Command {
             const gifFrames = require('gif-frames'),
                 GIFEncoder = require('gifencoder')
 
-            const encoder = new GIFEncoder(200, 200);
+            const encoder = new GIFEncoder(numerito, segundonumerito);
             encoder.setRepeat(0);
             encoder.setDelay(55);
             encoder.start();
             let stream = encoder.createReadStream();
 
             const Canvas = require('canvas'),
-                canvas = Canvas.createCanvas(200, 200),
+                canvas = Canvas.createCanvas(numerito, segundonumerito),
                 ctx = canvas.getContext('2d');
 
             await gifFrames({ url: att.proxyURL, frames: 'all' }).then(async (frameData) => {
@@ -63,7 +63,7 @@ module.exports = class Comando extends Command {
                 for await (let frame of frameData) {
                     console.log(frame)
                     let image = await Canvas.loadImage(frame.getImage()._obj);
-                    ctx.drawImage(image, 0, 0, 200, 200)
+                    ctx.drawImage(image, 0, 0, numerito, segundonumerito)
                     encoder.addFrame(ctx)
                 }
 
