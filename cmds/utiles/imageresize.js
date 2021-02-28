@@ -40,16 +40,34 @@ module.exports = class Comando extends Command {
         if (numerito > 2700 || segundonumerito > 2700)
             return embedResponse(`<:cancel:804368628861763664> | El tamaño máximo es 2700x2700.`);
 
-        const Canvas = require('canvas');
+        let bufferTest = await (await require('node-fetch')(att.proxyURL)).buffer(),
+            bufferEnd = false;
 
-        const canvas = Canvas.createCanvas(numerito, segundonumerito),
-            ctx = canvas.getContext('2d'),
-            image = await Canvas.loadImage(att.proxyURL);
+        if (require('is-gif')(bufferTest, 0, 3)) {
 
-        ctx.drawImage(image, 0, 0, numerito, segundonumerito);
+            const resize = require('@gumlet/gif-resize'),
+                res = await resize({ width: numerito, height: segundonumerito })(bufferTest);
+
+            bufferEnd = res;
+
+        }
+
+        else {
+
+            const Canvas = require('canvas');
+
+            const canvas = Canvas.createCanvas(numerito, segundonumerito),
+                ctx = canvas.getContext('2d'),
+                image = await Canvas.loadImage(att.proxyURL);
+
+            ctx.drawImage(image, 0, 0, numerito, segundonumerito);
+
+            bufferEnd = canvas.toBuffer();
+
+        }
 
         let embed = new MessageEmbed()
-            .attachFiles(new MessageAttachment(canvas.toBuffer(), att.name))
+            .attachFiles(new MessageAttachment(bufferEnd, att.name))
             .setImage('attachment://' + att.name)
             .setColor(client.color)
             .setTimestamp()
