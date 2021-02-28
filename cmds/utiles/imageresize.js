@@ -45,6 +45,8 @@ module.exports = class Comando extends Command {
 
         if (require('is-gif')(bufferTest, 0, 3)) {
 
+            message.channel.send('Es gif...')
+
             const resize = require('@gumlet/gif-resize'),
                 res = await resize({ width: numerito, height: segundonumerito })(bufferTest);
 
@@ -53,6 +55,8 @@ module.exports = class Comando extends Command {
         }
 
         else {
+
+            message.channel.send('**No** es gif...')
 
             const Canvas = require('canvas');
 
