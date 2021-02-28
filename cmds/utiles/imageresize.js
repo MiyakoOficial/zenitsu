@@ -46,7 +46,7 @@ module.exports = class Comando extends Command {
         if (require('is-gif')(bufferTest, 0, 3)) {
 
             const resize = require('@gumlet/gif-resize'),
-                res = await resize({ width: numerito, height: segundonumerito })(bufferTest);
+                res = await resize({ width: numerito, height: segundonumerito, stretch: true })(bufferTest);
 
             bufferEnd = res;
 
