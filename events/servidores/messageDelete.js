@@ -11,8 +11,8 @@ module.exports = async (client, message) => {
     if (!message.author) return;
     if (message.author.bot) return;
     if (message.channel.type === 'dm') return;
-    const attachment = message.attachments.find(item => image(item?.proxyURL))?.proxyURL
-    if (!message.content && !(await image(attachment || 'poto'))) return;
+    const attachment = message.attachments.find(item => image(item?.proxyURL))
+    if (!message.content && !(image(attachment?.proxyURL || 'poto'))) return;
 
     if (message.content) {
         await client.updateData({ id: message.channel.id }, { date: Date.now(), nombre: message.author.tag, avatarURL: message.author.displayAvatarURL({ dynamic: true }), mensaje: message.content }, 'snipe').catch(() => { })
@@ -37,13 +37,13 @@ module.exports = async (client, message) => {
         .setFooter(message.guild.name, message.guild.iconURL({ dynamic: true, size: 2048 }))
         .setTimestamp()
 
-    if (attachment && await image(attachment)) {
+    if (attachment && image(attachment.proxyURL || 'poto')) {
         try {
             const Canvas = require('canvas');
-            const canvas = Canvas.createCanvas(300, 300);
+            const canvas = Canvas.createCanvas(attachment.width, attachment.height);
             const ctx = canvas.getContext('2d')
-            const bck = await Canvas.loadImage(attachment);
-            ctx.drawImage(bck, 0, 0, 300, 300);
+            const bck = await Canvas.loadImage(attachment.proxyURL);
+            ctx.drawImage(bck, 0, 0, attachment.width, attachment.height);
             const att = new Discord.MessageAttachment(canvas.toBuffer(), 'img.png')
             embed.attachFiles(att)
                 .setImage('attachment://img.png')

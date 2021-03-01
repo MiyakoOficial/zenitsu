@@ -1,6 +1,13 @@
 const Discord = require("discord.js");
 const image = require('is-image');
 
+/**
+ * 
+ * @param {Discord.Client} client 
+ * @param {Discord.Message} oldMessage 
+ * @param {Discord.Message} newMessage 
+ */
+
 module.exports = async (client, oldMessage, newMessage) => {
 
     if (!newMessage.guild || !oldMessage.guild) return;
@@ -13,7 +20,7 @@ module.exports = async (client, oldMessage, newMessage) => {
     } if (!data) return;
     if (!newMessage.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return;
     newMessage.guild.cacheLogs = data;
-    const attachment = newMessage.attachments.find(item => image(item?.proxyURL))?.proxyURL
+    const attachment = newMessage.attachments.find(item => image(item?.proxyURL))
     let embed = new Discord.MessageEmbed()
         .setColor(client.color)
         .setTitle('<:zsMessageUpdate:709728834626519081> Message Updated')
@@ -29,13 +36,13 @@ module.exports = async (client, oldMessage, newMessage) => {
         .setFooter(newMessage.guild.name, newMessage.guild.iconURL({ dynamic: true, size: 2048 }))
         .setTimestamp()
 
-    if (attachment && await image(attachment)) {
+    if (attachment && await image(attachment.proxyURL)) {
         try {
             const Canvas = require('canvas');
-            const canvas = Canvas.createCanvas(300, 300);
+            const canvas = Canvas.createCanvas(attachment.width, attachment.height);
             const ctx = canvas.getContext('2d')
-            const bck = await Canvas.loadImage(attachment);
-            ctx.drawImage(bck, 0, 0, 300, 300);
+            const bck = await Canvas.loadImage(attachment.proxyURL);
+            ctx.drawImage(bck, 0, 0, attachment.width, attachment.height);
             const att = new Discord.MessageAttachment(canvas.toBuffer(), 'img.png')
             embed.attachFiles(att)
                 .setImage('attachment://img.png')
