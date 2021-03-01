@@ -15,7 +15,7 @@ module.exports = class Comando extends Command {
 
     async run({ message, args, embedResponse }) {
 
-        if (!args[0] || args[0].length < 3 || args[0].length > 25) return embedResponse('<:cancel:804368628861763664> | Elige un nombre para establecerlo, debe tener más de 3 caracteres y menor a 25 caracteres.');
+        if (!args[0] || args[0].length < 3 || args[0].length > 25) return embedResponse('<:cancel:804368628861763664> | Elige un nombre para establecerlo, debe tener más de 3 caracteres y menos de 25 caracteres.');
 
         let { data } = await mybo.mybot(args[0]);
 
