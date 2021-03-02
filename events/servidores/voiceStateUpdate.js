@@ -19,7 +19,7 @@ module.exports = async (client, oldState, newState) => {
             .setAuthor(oldState?.member?.user?.tag || '\u200b', oldState.member?.user?.displayAvatarURL({ dynamic: true }) || 'https://media.discordapp.net/attachments/541473170105040931/816408806778470490/unknown.png')
             .setDescription(`Un miembro ha salido del canal de voz llamado: ${oldState.channel.name}`)
 
-        let wbk = new Discord.WebhookClient(guild.cacheLogs.idWeb, guild.cacheLogs.tokenWeb)
+        let wbk = new Discord.WebhookClient(guild.cacheVoiceLogs.idWeb, guild.cacheVoiceLogs.tokenWeb)
         try {
             wbk.send({ embeds: [embed] })
         } catch { null }
@@ -32,7 +32,7 @@ module.exports = async (client, oldState, newState) => {
             .setAuthor(oldState?.member?.user?.tag || '\u200b', oldState.member?.user?.displayAvatarURL({ dynamic: true }) || 'https://media.discordapp.net/attachments/541473170105040931/816408806778470490/unknown.png')
             .setDescription(`Un miembro ha entrado al canal de voz llamado: ${newState.channel.name}`)
 
-        let wbk = new Discord.WebhookClient(guild.cacheLogs.idWeb, guild.cacheLogs.tokenWeb)
+        let wbk = new Discord.WebhookClient(guild.cacheVoiceLogs.idWeb, guild.cacheVoiceLogs.tokenWeb)
         try {
             wbk.send({ embeds: [embed] })
         } catch { null }
