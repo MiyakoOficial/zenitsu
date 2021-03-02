@@ -7,7 +7,7 @@ const image = require('is-image');
  * @param {Discord.VoiceState} newState 
  */
 module.exports = async (client, oldState, newState) => {
-
+    console.log('a')
     const guild = newState.guild;
     let data = guild.cacheLogs || (await require('../../models/logs').findOne({ id: guild.id }))
     if (!data) return;
@@ -18,7 +18,7 @@ module.exports = async (client, oldState, newState) => {
     guild.cacheLogs = data;
 
     if (oldState.channel && !newState.channel) {
-
+        console.log('a')
         let embed = new Discord.MessageEmbed()
             .setColor('RED')
             .setTimestamp()
@@ -30,7 +30,7 @@ module.exports = async (client, oldState, newState) => {
     }
 
     else if (!oldState.channel && newState.channel) {
-
+        console.log('a')
         let embed = new Discord.MessageEmbed()
             .setColor('GREEN')
             .setTimestamp()
