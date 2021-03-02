@@ -10,10 +10,6 @@ module.exports = async (client, oldState, newState) => {
     const guild = newState.guild;
     let data = guild.cacheLogs || (await require('../../models/logs').findOne({ id: guild.id }))
     if (!data) return;
-    if (!guild.channels.cache.map(a => a?.id).includes(data.channellogs)) {
-        guild.cacheLogs = null;
-        return require('../../models/logs').deleteOne({ id: guild.id });
-    }
     guild.cacheLogs = data;
 
     if (oldState.channel && !newState.channel) {
@@ -25,7 +21,7 @@ module.exports = async (client, oldState, newState) => {
 
         let wbk = new Discord.Webhook(guild.cacheLogs.idWeb, guild.cacheLogs.tokenWeb)
         try {
-            wbk.send(embed).catch(() => { })
+            wbk.send({ embeds: [embed] })
         } catch { null }
     }
 
@@ -38,7 +34,7 @@ module.exports = async (client, oldState, newState) => {
 
         let wbk = new Discord.Webhook(guild.cacheLogs.idWeb, guild.cacheLogs.tokenWeb)
         try {
-            wbk.send(embed).catch(() => { })
+            wbk.send({ embeds: [embed] })
         } catch { null }
     }
 
@@ -52,7 +48,7 @@ module.exports = async (client, oldState, newState) => {
 
         let wbk = new Discord.Webhook(guild.cacheLogs.idWeb, guild.cacheLogs.tokenWeb)
         try {
-            wbk.send(embed).catch(() => { })
+            wbk.send({ embeds: [embed] })
         } catch (e) {
             console.log(e)
         }
