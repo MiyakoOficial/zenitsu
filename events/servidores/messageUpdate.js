@@ -53,7 +53,7 @@ module.exports = async (client, oldMessage, newMessage) => {
 
     try {
         let wbk = new Discord.WebhookClient(newMessage.guild.cacheLogs.idWeb, newMessage.guild.cacheLogs.tokenWeb)
-        wbk.send({ embeds: [embed] })
+        wbk.send({ embeds: [embed] }).catch(() => { })
     } catch {
         ''
     }

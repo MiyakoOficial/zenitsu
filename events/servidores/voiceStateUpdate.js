@@ -21,7 +21,7 @@ module.exports = async (client, oldState, newState) => {
 
         try {
             let wbk = new Discord.WebhookClient(guild.cacheVoiceLogs.idWeb, guild.cacheVoiceLogs.tokenWeb)
-            wbk.send({ embeds: [embed] })
+            wbk.send({ embeds: [embed] }).catch(() => { })
         } catch {
             ''
         }
@@ -36,7 +36,7 @@ module.exports = async (client, oldState, newState) => {
 
         try {
             let wbk = new Discord.WebhookClient(guild.cacheVoiceLogs.idWeb, guild.cacheVoiceLogs.tokenWeb)
-            wbk.send({ embeds: [embed] })
+            wbk.send({ embeds: [embed] }).catch(() => { })
         } catch {
             ''
         }
@@ -52,7 +52,7 @@ module.exports = async (client, oldState, newState) => {
 
         try {
             let wbk = new Discord.WebhookClient(guild.cacheVoiceLogs.idWeb, guild.cacheVoiceLogs.tokenWeb)
-            wbk.send({ embeds: [embed] })
+            wbk.send({ embeds: [embed] }).catch(() => { })
         } catch {
             ''
         }
