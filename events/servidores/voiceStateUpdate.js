@@ -8,7 +8,7 @@ const Discord = require("discord.js");
 module.exports = async (client, oldState, newState) => {
 
     const guild = newState.guild;
-    let data = guild.cacheLogs || (await require('../../models/logs').findOne({ id: guild.id }))
+    let data = guild.cacheLogs || (await require('../../models/logsmember').findOne({ id: guild.id }))
     if (!data) return;
     guild.cacheLogs = data;
 
