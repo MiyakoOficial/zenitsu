@@ -8,9 +8,9 @@ const Discord = require("discord.js");
 module.exports = async (client, oldState, newState) => {
 
     const guild = newState.guild;
-    let data = guild.cacheLogs || (await require('../../models/logsmember').findOne({ id: guild.id }))
+    let data = guild.cacheVoiceLogs || (await require('../../models/logsmember').findOne({ id: guild.id }))
     if (!data) return;
-    guild.cacheLogs = data;
+    guild.cacheVoiceLogs = data;
 
     if (oldState.channel && !newState.channel) {
         let embed = new Discord.MessageEmbed()

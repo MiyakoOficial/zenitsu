@@ -47,7 +47,7 @@ module.exports = module.exports = class Comando extends Command {
             .setColor(client.color)
             .setDescription(`<:moderator:804368587115593800> | ${message.author.username} ha establecido el canal de logs(voz) en: ${channel}`)
             .setTimestamp()
-        message.guild.cacheLogs = data;
+        message.guild.cacheVoiceLogs = data;
         return message.channel.send({ embed: embed })
     }
 }
