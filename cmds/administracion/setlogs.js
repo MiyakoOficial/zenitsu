@@ -45,7 +45,7 @@ module.exports = module.exports = class Comando extends Command {
 
         let embed = new MessageEmbed()
             .setColor(client.color)
-            .setDescription(`<:moderator:804368587115593800> | ${message.author.username} ha establecido el canal de logs en: <#${data.channellogs}>`)
+            .setDescription(`<:moderator:804368587115593800> | ${message.author.username} ha establecido el canal de logs en: ${channel}`)
             .setTimestamp()
         message.guild.cacheLogs = data;
         return message.channel.send({ embed: embed })
