@@ -35,7 +35,7 @@ module.exports = async (client, oldState, newState) => {
             .setColor('GREEN')
             .setTimestamp()
             .setAuthor(oldState?.member?.user?.tag || '\u200b', oldState.member?.user?.displayAvatarURL({ dynamic: true }) || 'https://media.discordapp.net/attachments/541473170105040931/816408806778470490/unknown.png')
-            .setDescription(`Un miembro ha entrado al canal de voz llamado ${oldState.channel.name}`)
+            .setDescription(`Un miembro ha entrado al canal de voz llamado ${newState.channel.name}`)
 
         return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(() => { })
 
