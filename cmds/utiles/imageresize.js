@@ -8,6 +8,7 @@ module.exports = class Comando extends Command {
         this.name = "imageresize"
         this.alias = ['imgresize']
         this.category = 'utiles'
+        this.cooldown = 20;
     }
 
     /**
@@ -34,6 +35,8 @@ module.exports = class Comando extends Command {
         let numerito = parseInt(args[0]),
             segundonumerito = parseInt(args[1]),
             bufferEnd = null;
+
+        //NORMAL
 
         if (!isNaN(numerito)) {
 
@@ -98,6 +101,8 @@ module.exports = class Comando extends Command {
 
         }
 
+        //BIG
+
         else if (args[0] == 'big') {
 
             const buffer = await (await require('node-fetch')(att.proxyURL)).buffer();
@@ -149,6 +154,8 @@ module.exports = class Comando extends Command {
             }
         }
 
+        //SMALL
+
         else if (args[0] == 'small') {
 
             const buffer = await (await require('node-fetch')(att.proxyURL)).buffer();
@@ -158,17 +165,49 @@ module.exports = class Comando extends Command {
                 if ((width - 100) <= 0 || (height - 100) <= 0)
                     return embedResponse(`<:cancel:804368628861763664> | No puedo poner más pequeño el gif...`);
 
-                const gumlet = require("@gumlet/gif-resize")
-                bufferEnd = await gumlet({ height: height - 100 })(buffer);
+                const gifFrames = require('gif-frames'),
+                    GIFEncoder = require('gifencoder'),
+                    Canvas = require('canvas'),
+                    canvas = Canvas.createCanvas(width - 100, height - 100),
+                    ctx = canvas.getContext('2d'),
+                    image = await Canvas.loadImage(att.proxyURL),
+                    gifInfo = require('gif-info');
 
-                let embed = new MessageEmbed()
-                    .attachFiles(new MessageAttachment(bufferEnd, att.name))
-                    .setImage('attachment://' + att.name)
-                    .setColor(client.color)
-                    .setTimestamp()
-                    .setFooter(`width actual: ?¿ height actual: ${height - 100}`);
+                const { images } = (new gifInfo(toArrayBuffer(buffer)))
 
-                return message.channel.send({ embed });
+
+                const encoder = new GIFEncoder(width - 100, height - 100);
+                encoder.setRepeat(0);
+                encoder.setDelay(55);
+                encoder.start();
+                const stream = encoder.createReadStream();
+
+                gifFrames({ url: att.proxyURL, frames: 'all' })
+                    .then(async (frameData) => {
+
+                        let i = 0;
+                        for (let frame of frameData) {
+                            let image = await Canvas.loadImage(frame.getImage()._obj);
+                            ctx.drawImage(image, 0, 0, 100, 500)
+                            encoder.setDelay(images[i].delay)
+                            i++
+                            encoder.addFrame(ctx)
+                        }
+
+                        encoder.finish();
+
+                        bufferEnd = await require('util').promisify(toBuffer)(stream)
+
+                        let embed = new MessageEmbed()
+                            .attachFiles(new MessageAttachment(bufferEnd, att.name))
+                            .setImage('attachment://' + att.name)
+                            .setColor(client.color)
+                            .setTimestamp()
+                            .setFooter(`width actual: ?¿ height actual: ${height - 100}`);
+
+                        return message.channel.send({ embed });
+
+                    });
 
             }
 
@@ -225,7 +264,6 @@ function isNegative(num) {
     if (isNaN(num)) throw new Error('Invalid number.');
     return num < 0;
 }
-/*
 function toArray(stream, callback) {
     let arr = []
 
@@ -265,4 +303,13 @@ function toBuffer(stream, callback) {
     })
 
     return stream
-}*/
+}
+
+function toArrayBuffer(buf) {
+    const ab = new ArrayBuffer(buf.length);
+    const view = new Uint8Array(ab);
+    for (let i = 0; i < buf.length; ++i) {
+        view[i] = buf[i];
+    }
+    return ab;
+}
