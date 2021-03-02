@@ -6,7 +6,7 @@ const Command = require('../../Utils/Classes').Command;
 module.exports = module.exports = class Comando extends Command {
     constructor() {
         super()
-        this.name = "setlogs" //nombre del cmd
+        this.name = "setlogsvoice" //nombre del cmd
         this.alias = [] //Alias
         this.category = 'administracion'
         this.memberPermissions = { guild: ['MANAGE_GUILD'], channel: [] }
