@@ -43,7 +43,7 @@ module.exports = class Comando extends Command {
             if (isNegative(numerito) || isNegative(segundonumerito))
                 return embedResponse(`<:cancel:804368628861763664> | El tamaño máximo es 2700x2700, pero positivos <:_XD:599689626835484672>.`);
 
-            let attachment = await resizeImage(`https://cdn.discordapp.com/attachments/359425464885837827/816397866821615676/778372818718818334.gif`, numerito, segundonumerito)
+            let attachment = await resizeImage(att.proxyURL, numerito, segundonumerito)
 
             return message.channel.send(attachment);
 
@@ -161,7 +161,6 @@ async function resizeImage(link, width, height) {
                 for (let frame of frameData) {
                     let image = await Canvas.loadImage(frame.getImage()._obj);
                     ctx.drawImage(image, 0, 0, width, height)
-                    console.log(frame.frameInfo)
                     encoder.setDelay(frame.frameInfo.delay * 10)
                     encoder.addFrame(ctx)
                 }
