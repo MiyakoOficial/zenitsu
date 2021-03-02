@@ -19,10 +19,12 @@ module.exports = async (client, oldState, newState) => {
             .setAuthor(oldState?.member?.user?.tag || '\u200b', oldState.member?.user?.displayAvatarURL({ dynamic: true }) || 'https://media.discordapp.net/attachments/541473170105040931/816408806778470490/unknown.png')
             .setDescription(`Un miembro ha salido del canal de voz llamado: ${oldState.channel.name}`)
 
-        let wbk = new Discord.WebhookClient(guild.cacheVoiceLogs.idWeb, guild.cacheVoiceLogs.tokenWeb)
         try {
+            let wbk = new Discord.WebhookClient(guild.cacheVoiceLogs.idWeb, guild.cacheVoiceLogs.tokenWeb)
             wbk.send({ embeds: [embed] })
-        } catch { null }
+        } catch {
+            ''
+        }
     }
 
     else if (!oldState.channel && newState.channel) {
@@ -32,10 +34,12 @@ module.exports = async (client, oldState, newState) => {
             .setAuthor(oldState?.member?.user?.tag || '\u200b', oldState.member?.user?.displayAvatarURL({ dynamic: true }) || 'https://media.discordapp.net/attachments/541473170105040931/816408806778470490/unknown.png')
             .setDescription(`Un miembro ha entrado al canal de voz llamado: ${newState.channel.name}`)
 
-        let wbk = new Discord.WebhookClient(guild.cacheVoiceLogs.idWeb, guild.cacheVoiceLogs.tokenWeb)
         try {
+            let wbk = new Discord.WebhookClient(guild.cacheVoiceLogs.idWeb, guild.cacheVoiceLogs.tokenWeb)
             wbk.send({ embeds: [embed] })
-        } catch { null }
+        } catch {
+            ''
+        }
     }
 
     else if ((newState.channel && oldState.channel) && (oldState.channelID != newState.channelID)) {
@@ -46,11 +50,11 @@ module.exports = async (client, oldState, newState) => {
             .setAuthor(oldState?.member?.user?.tag || '\u200b', oldState.member?.user?.displayAvatarURL({ dynamic: true }) || 'https://media.discordapp.net/attachments/541473170105040931/816408806778470490/unknown.png')
             .setDescription(`Un miembro ha entrado al canal de voz llamado: ${newState.channel.name} y salio de ${oldState.channel.name}`)
 
-        let wbk = new Discord.WebhookClient(guild.cacheVoiceLogs.idWeb, guild.cacheVoiceLogs.tokenWeb)
         try {
+            let wbk = new Discord.WebhookClient(guild.cacheVoiceLogs.idWeb, guild.cacheVoiceLogs.tokenWeb)
             wbk.send({ embeds: [embed] })
         } catch {
-            null
+            ''
         }
     }
 
