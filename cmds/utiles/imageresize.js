@@ -208,6 +208,7 @@ module.exports = class Comando extends Command {
                 .addField('Poner más grande la imagen', `${message.guild.cachePrefix}imgresize big ||100 pixeles mas 🔺||`)
                 .addField('Poner más pequeña la imagen', `${message.guild.cachePrefix}imgresize small ||100 pixeles menos 🔻||`)
                 .addField('Poner más grande/pequeña la imagen', `${message.guild.cachePrefix}imgresize <ancho> <altura> ||Limite 2700x2700 🔺🔻||`)
+                .setFooter(`Si es un gif solo podras modificar la altura...`);
 
             return message.channel.send({ embed });
 
