@@ -23,7 +23,7 @@ module.exports = async (client, message) => {
     message.guild.cacheLogs = data;
     let embed = new Discord.MessageEmbed()
         .setColor(client.color)
-        .setTitle('<:zsMessageDelete:709728834915794974> Message Deleted')
+        .setTitle('Message Deleted')
         .addField('• Message', message.content.slice(0, 1024) || '\u200b')
         .addField('• Author', message.author.tag, true)
         .addField('• Author ID', message.author.id, true)

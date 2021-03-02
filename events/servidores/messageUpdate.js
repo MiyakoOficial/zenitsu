@@ -23,7 +23,7 @@ module.exports = async (client, oldMessage, newMessage) => {
     const attachment = newMessage.attachments.find(item => image(item?.proxyURL))
     let embed = new Discord.MessageEmbed()
         .setColor(client.color)
-        .setTitle('<:zsMessageUpdate:709728834626519081> Message Updated')
+        .setTitle('Message Updated')
         .addField('• Old message', oldMessage.content.slice(0, 1024) || '\u200b', true)
         .addField('• New message', newMessage.content.slice(0, 1024) || '\u200b', true)
         .addField('• Link', `[Link of the message](https://discordapp.com/channels/${newMessage.guild.id}/${newMessage.channel.id}/${newMessage.id})`, false)
