@@ -41,7 +41,7 @@ module.exports = module.exports = class Comando extends Command {
 
         let wbk = await channel.createWebhook(`${client.user.tag} logs voice`, { avatar: `https://cdn.discordapp.com/attachments/758009020526362715/816417154341666856/f6d50e1fb963564e638b7bec3b02e5b8.jpg` });
 
-        let data = await client.updateData({ id: channel.id }, { idWeb: wbk.id, tokenWeb: wbk.token }, 'logsmember');
+        let data = await client.updateData({ id: message.guild.id }, { idWeb: wbk.id, tokenWeb: wbk.token }, 'logsmember');
 
         let embed = new MessageEmbed()
             .setColor(client.color)
