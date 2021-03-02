@@ -37,86 +37,166 @@ module.exports = class Comando extends Command {
 
         if (!isNaN(numerito)) {
 
-            if (!numerito || !segundonumerito)
-                return embedResponse(`<:cancel:804368628861763664> | ${message.guild.cachePrefix}imgresize <positive number> <positive number>.`);
+            const buffer = await (await require('node-fetch')(att.proxyURL)).buffer();
 
-            if (isNegative(numerito) || isNegative(segundonumerito))
-                return embedResponse(`<:cancel:804368628861763664> | ${message.guild.cachePrefix}imgresize <positive number> <positive number>.`);
+            if (require('is-gif')(buffer)) {
 
-            if (numerito > 2700 || segundonumerito > 2700)
-                return embedResponse(`<:cancel:804368628861763664> | El tamaño máximo es 2700x2700.`);
+                if (!numerito)
+                    return embedResponse(`<:cancel:804368628861763664> | ${message.guild.cachePrefix}imgresize <positive number>`);
 
-            const Canvas = require('canvas');
+                if (isNegative(numerito))
+                    return embedResponse(`<:cancel:804368628861763664> | ${message.guild.cachePrefix}imgresize <positive number>`);
 
-            const canvas = Canvas.createCanvas(numerito, segundonumerito),
-                ctx = canvas.getContext('2d'),
-                image = await Canvas.loadImage(att.proxyURL);
+                if (numerito > 2700)
+                    return embedResponse(`<:cancel:804368628861763664> | El tamaño máximo es 2700.`);
 
-            ctx.drawImage(image, 0, 0, numerito, segundonumerito);
+                const gumlet = require("@gumlet/gif-resize")
+                bufferEnd = await gumlet({ height: numerito })(buffer);
 
-            bufferEnd = canvas.toBuffer();
+                let embed = new MessageEmbed()
+                    .attachFiles(new MessageAttachment(bufferEnd, att.name))
+                    .setImage('attachment://' + att.name)
+                    .setColor(client.color)
+                    .setTimestamp()
+                    .setFooter(`width actual: ?¿ height actual: ${numerito}`);
 
-            let embed = new MessageEmbed()
-                .attachFiles(new MessageAttachment(bufferEnd, att.name))
-                .setImage('attachment://' + att.name)
-                .setColor(client.color)
-                .setTimestamp()
-                .setFooter(`width actual: ${numerito} height actual: ${segundonumerito}`);
+                return message.channel.send({ embed });
 
-            return message.channel.send({ embed });
+            }
+
+            else {
+
+                if (!numerito || !segundonumerito)
+                    return embedResponse(`<:cancel:804368628861763664> | ${message.guild.cachePrefix}imgresize <positive number> <positive number>.`);
+
+                if (isNegative(numerito) || isNegative(segundonumerito))
+                    return embedResponse(`<:cancel:804368628861763664> | ${message.guild.cachePrefix}imgresize <positive number> <positive number>.`);
+
+                if (numerito > 2700 || segundonumerito > 2700)
+                    return embedResponse(`<:cancel:804368628861763664> | El tamaño máximo es 2700x2700.`);
+
+                const Canvas = require('canvas');
+
+                const canvas = Canvas.createCanvas(numerito, segundonumerito),
+                    ctx = canvas.getContext('2d'),
+                    image = await Canvas.loadImage(att.proxyURL);
+
+                ctx.drawImage(image, 0, 0, numerito, segundonumerito);
+
+                bufferEnd = canvas.toBuffer();
+
+                let embed = new MessageEmbed()
+                    .attachFiles(new MessageAttachment(bufferEnd, att.name))
+                    .setImage('attachment://' + att.name)
+                    .setColor(client.color)
+                    .setTimestamp()
+                    .setFooter(`width actual: ${numerito} height actual: ${segundonumerito}`);
+
+                return message.channel.send({ embed });
+
+            }
 
         }
 
         else if (args[0] == 'big') {
 
-            if ((width + 100) > 2700 || (height + 100) > 2700)
-                return embedResponse(`<:cancel:804368628861763664> | No puedo poner más grande la imagen...`);
+            const buffer = await (await require('node-fetch')(att.proxyURL)).buffer();
 
-            const Canvas = require('canvas');
+            if (require('is-gif')(buffer)) {
 
-            const canvas = Canvas.createCanvas(width + 100, height + 100),
-                ctx = canvas.getContext('2d'),
-                image = await Canvas.loadImage(att.proxyURL);
+                if ((width + 100) > 2700 || (height + 100) > 2700)
+                    return embedResponse(`<:cancel:804368628861763664> | No puedo poner más grande el gif...`);
 
-            ctx.drawImage(image, 0, 0, width + 100, height + 100);
+                const gumlet = require("@gumlet/gif-resize")
+                bufferEnd = await gumlet({ height: height + 100 })(buffer);
 
-            bufferEnd = canvas.toBuffer();
+                let embed = new MessageEmbed()
+                    .attachFiles(new MessageAttachment(bufferEnd, att.name))
+                    .setImage('attachment://' + att.name)
+                    .setColor(client.color)
+                    .setTimestamp()
+                    .setFooter(`width actual: ?¿ height actual: ${height + 100}`);
 
-            let embed = new MessageEmbed()
-                .attachFiles(new MessageAttachment(bufferEnd, att.name))
-                .setImage('attachment://' + att.name)
-                .setColor(client.color)
-                .setTimestamp()
-                .setFooter(`width actual: ${width} to ${width + 100} height actual: ${height} to ${height + 100}`);
+                return message.channel.send({ embed });
 
-            return message.channel.send({ embed });
+            }
 
+            else {
+
+
+                if ((width + 100) > 2700 || (height + 100) > 2700)
+                    return embedResponse(`<:cancel:804368628861763664> | No puedo poner más grande la imagen...`);
+
+                const Canvas = require('canvas');
+
+                const canvas = Canvas.createCanvas(width + 100, height + 100),
+                    ctx = canvas.getContext('2d'),
+                    image = await Canvas.loadImage(att.proxyURL);
+
+                ctx.drawImage(image, 0, 0, width + 100, height + 100);
+
+                bufferEnd = canvas.toBuffer();
+
+                let embed = new MessageEmbed()
+                    .attachFiles(new MessageAttachment(bufferEnd, att.name))
+                    .setImage('attachment://' + att.name)
+                    .setColor(client.color)
+                    .setTimestamp()
+                    .setFooter(`width actual: ${width} to ${width + 100} height actual: ${height} to ${height + 100}`);
+
+                return message.channel.send({ embed });
+
+            }
         }
 
         else if (args[0] == 'small') {
 
-            if ((width - 100) <= 0 || (height - 100) <= 0)
-                return embedResponse(`<:cancel:804368628861763664> | No puedo poner más pequeña la imagen...`);
+            const buffer = await (await require('node-fetch')(att.proxyURL)).buffer();
 
-            const Canvas = require('canvas');
+            if (require('is-gif')(buffer)) {
 
-            const canvas = Canvas.createCanvas(width - 100, height - 100),
-                ctx = canvas.getContext('2d'),
-                image = await Canvas.loadImage(att.proxyURL);
+                if ((width - 100) <= 0 || (height - 100) <= 0)
+                    return embedResponse(`<:cancel:804368628861763664> | No puedo poner más pequeño el gif...`);
 
-            ctx.drawImage(image, 0, 0, width - 100, height - 100);
+                const gumlet = require("@gumlet/gif-resize")
+                bufferEnd = await gumlet({ height: height - 100 })(buffer);
 
-            bufferEnd = canvas.toBuffer();
+                let embed = new MessageEmbed()
+                    .attachFiles(new MessageAttachment(bufferEnd, att.name))
+                    .setImage('attachment://' + att.name)
+                    .setColor(client.color)
+                    .setTimestamp()
+                    .setFooter(`width actual: ?¿ height actual: ${height - 100}`);
 
-            let embed = new MessageEmbed()
-                .attachFiles(new MessageAttachment(bufferEnd, att.name))
-                .setImage('attachment://' + att.name)
-                .setColor(client.color)
-                .setTimestamp()
-                .setFooter(`width actual: ${width} to ${width - 100} height actual: ${height} to ${height - 100}`);
+                return message.channel.send({ embed });
 
-            return message.channel.send({ embed });
+            }
 
+            else {
+
+                if ((width - 100) <= 0 || (height - 100) <= 0)
+                    return embedResponse(`<:cancel:804368628861763664> | No puedo poner más pequeña la imagen...`);
+
+                const Canvas = require('canvas');
+
+                const canvas = Canvas.createCanvas(width - 100, height - 100),
+                    ctx = canvas.getContext('2d'),
+                    image = await Canvas.loadImage(att.proxyURL);
+
+                ctx.drawImage(image, 0, 0, width - 100, height - 100);
+
+                bufferEnd = canvas.toBuffer();
+
+                let embed = new MessageEmbed()
+                    .attachFiles(new MessageAttachment(bufferEnd, att.name))
+                    .setImage('attachment://' + att.name)
+                    .setColor(client.color)
+                    .setTimestamp()
+                    .setFooter(`width actual: ${width} to ${width - 100} height actual: ${height} to ${height - 100}`);
+
+                return message.channel.send({ embed });
+
+            }
         }
 
         else {
