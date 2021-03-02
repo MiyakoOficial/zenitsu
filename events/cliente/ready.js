@@ -17,28 +17,28 @@ module.exports = async (client) => {
 			type: "WATCHING"
 		}
 	});
-
-	client.imagenes = {
-		porquelloras: {
-			chica: await loadImage('/home/MARCROCK22/zenitsu/Utils/Images/chica.png'),
-			chico: await loadImage('/home/MARCROCK22/zenitsu/Utils/Images/chico.jpg')
-		},
-		nicememe: {
-			background: await loadImage('/home/MARCROCK22/zenitsu/Utils/Images/nicememe.png')
-		},
-		tictactoe: {
-			background: await loadImage(`/home/MARCROCK22/zenitsu/Utils/Images/inicio_tictactoe.gif`),
-			equis: await loadImage(`/home/MARCROCK22/zenitsu/Utils/Images/x_tic.png`),
-			circulo: await loadImage(`/home/MARCROCK22/zenitsu/Utils/Images/o_tic.png`)
-		},
-		connect4: {
-			background: await loadImage('/home/MARCROCK22/zenitsu/Utils/Images/4enraya.png'),
-			win: await loadImage('/home/MARCROCK22/zenitsu/Utils/Images/morado_de_4.png'),
-			verde: await loadImage('/home/MARCROCK22/zenitsu/Utils/Images/rojo_de_cuatro.png'),
-			amarillo: await loadImage('/home/MARCROCK22/zenitsu/Utils/Images/amarillo_de_cuatro.png')
+	try {
+		client.imagenes = {
+			porquelloras: {
+				chica: await loadImage('/home/MARCROCK22/zenitsu/Utils/Images/chica.png'),
+				chico: await loadImage('/home/MARCROCK22/zenitsu/Utils/Images/chico.jpg')
+			},
+			nicememe: {
+				background: await loadImage('/home/MARCROCK22/zenitsu/Utils/Images/nicememe.png')
+			},
+			tictactoe: {
+				background: await loadImage(`/home/MARCROCK22/zenitsu/Utils/Images/inicio_tictactoe.gif`),
+				equis: await loadImage(`/home/MARCROCK22/zenitsu/Utils/Images/x_tic.png`),
+				circulo: await loadImage(`/home/MARCROCK22/zenitsu/Utils/Images/o_tic.png`)
+			},
+			connect4: {
+				background: await loadImage('/home/MARCROCK22/zenitsu/Utils/Images/4enraya.png'),
+				win: await loadImage('/home/MARCROCK22/zenitsu/Utils/Images/morado_de_4.png'),
+				verde: await loadImage('/home/MARCROCK22/zenitsu/Utils/Images/rojo_de_cuatro.png'),
+				amarillo: await loadImage('/home/MARCROCK22/zenitsu/Utils/Images/amarillo_de_cuatro.png')
+			}
 		}
-	}
-
+	} catch { null; }
 	checkTemp(client)
 	presence(client)
 	checkMessages()

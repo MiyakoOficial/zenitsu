@@ -1,8 +1,6 @@
 require('moment').locale('es')
 const Discord = require('discord.js'),
 	{ Collection } = require('discord.js');
-const nekos = require('nekos.life');
-const tnai = require('tnai');
 const mongoose = require('mongoose');
 require('dotenv').config();
 
@@ -141,10 +139,7 @@ moment.updateLocale('es', {
 );
 moment.locale("es");*/
 
-client.neko = new nekos().sfw;
-client.star = require('star-labs');
 client.queue = new Map();
-client.tnai = new tnai()
 
 require('dotenv').config();
 
