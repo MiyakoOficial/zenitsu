@@ -71,7 +71,10 @@ const client = new Discord.Client(
 		/*messageSweepInterval: 3600,
 		messageCacheLifetime: 1800,*/
 		messageEditHistoryMaxSize: 1,
-		allowedMentions: { parse: [] }
+		allowedMentions: { parse: [] },
+		ws: {
+			intents: 1701
+		}
 	}
 );
 
