@@ -2,9 +2,7 @@ const { Schema, model } = require('mongoose');
 
 const Guild = Schema({
     id: String,
-    channellogs: {
-        default: 'default',
-        type: String
-    },
+    idWeb: String,
+    tokenWeb: String
 })
 module.exports = model('Logs', Guild)

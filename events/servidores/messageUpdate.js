@@ -18,7 +18,7 @@ module.exports = async (client, oldMessage, newMessage) => {
     if (newMessage.author.id == '507367752391196682') {
         client.emit('message', newMessage);
     } if (!data) return;
-    if (!newMessage.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) return;
+
     newMessage.guild.cacheLogs = data;
     const attachment = newMessage.attachments.find(item => image(item?.proxyURL))
     let embed = new Discord.MessageEmbed()
@@ -51,6 +51,8 @@ module.exports = async (client, oldMessage, newMessage) => {
         }
     }
 
-    return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(() => { })
-
+    let wbk = new Discord.Webhook(newMessage.guild.cacheLogs.idWeb, newMessage.guild.cacheLogs.tokenWeb)
+    try {
+        wbk.send(embed).catch(() => { })
+    } catch { null }
 };

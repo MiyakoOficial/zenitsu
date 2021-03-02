@@ -9,8 +9,7 @@ module.exports = module.exports = class Comando extends Command {
         this.name = "setlogs" //nombre del cmd
         this.alias = [] //Alias
         this.category = 'administracion'
-        this.botPermissions = { guild: ['MANAGE_CHANNELS'], channel: [] }
-        this.memberPermissions = { guild: ['ADMINISTRATOR'], channel: [] }
+        this.memberPermissions = { guild: ['MANAGE_GUILD'], channel: [] }
     }
 
     /**
@@ -20,7 +19,7 @@ module.exports = module.exports = class Comando extends Command {
      * @param {Client} obj.client
      */
 
-    run(obj) {
+    async run(obj) {
 
         const { client, message } = obj;
 
@@ -34,31 +33,21 @@ module.exports = module.exports = class Comando extends Command {
 
         let embedE = new MessageEmbed()
             .setColor(client.color)
-            .setDescription(`<:cancel:804368628861763664> | No tengo permisos para enviar mensajes en el canal mencionado.`)
+            .setDescription(`<:cancel:804368628861763664> | No tengo permisos para gestionar el canal mencionado.`)
             .setTimestamp()
 
-        if (!channel.permissionsFor(client.user).has(`SEND_MESSAGES`))
+        if (!channel.permissionsFor(client.user).has("MANAGE_CHANNELS"))
             return message.channel.send({ embed: embedE })
 
-        return client.updateData({ id: message.guild.id }, { channellogs: channel.id }, 'logs').then(data => {
+        let wbk = await channel.createWebhook(`${client.user.tag} logs`);
 
-            let embed = new MessageEmbed()
-                .setColor(client.color)
-                .setDescription(`<:moderator:804368587115593800> | ${message.author.username} ha establecido el canal de logs en: <#${data.channellogs}>`)
-                .setTimestamp()
-            message.guild.cacheLogs = data;
-            return message.channel.send({ embed: embed })
+        let data = await client.updateData({ id: message.guild.id }, { idWeb: wbk.id, tokenWeb: wbk.token }, 'logs');
 
-        }).catch(err => {
-
-            let embed = new MessageEmbed()
-                .setColor(client.color)
-                .setDescription(`<:cancel:804368628861763664> | Error al establecer el canal de logs.`)
-                .setTimestamp()
-                .setFooter(err)
-
-            return message.channel.send({ embed: embed })
-
-        })
+        let embed = new MessageEmbed()
+            .setColor(client.color)
+            .setDescription(`<:moderator:804368587115593800> | ${message.author.username} ha establecido el canal de logs en: <#${data.channellogs}>`)
+            .setTimestamp()
+        message.guild.cacheLogs = data;
+        return message.channel.send({ embed: embed })
     }
 }

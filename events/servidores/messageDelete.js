@@ -19,10 +19,7 @@ module.exports = async (client, message) => {
     }
     let data = message.guild.cacheLogs || (await require('../../models/logs').findOne({ id: message.guild.id }))
     if (!data) return;
-    if (!message.guild.channels.cache.filter(a => a.type === "text").map(a => a.id).includes(data.channellogs)) {
-        message.guild.cacheLogs = null;
-        return require('../../models/logs').deleteOne({ id: message.guild.id });
-    }
+
     message.guild.cacheLogs = data;
     let embed = new Discord.MessageEmbed()
         .setColor(client.color)
@@ -52,5 +49,8 @@ module.exports = async (client, message) => {
         }
     }
 
-    return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(() => { })
+    let wbk = new Discord.Webhook(message.guild.cacheLogs.idWeb, message.guild.cacheLogs.tokenWeb)
+    try {
+        wbk.send(embed).catch(() => { })
+    } catch { null }
 };

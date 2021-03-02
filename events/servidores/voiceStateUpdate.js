@@ -23,7 +23,10 @@ module.exports = async (client, oldState, newState) => {
             .setAuthor(oldState?.member?.user?.tag || '\u200b', oldState.member?.user?.displayAvatarURL({ dynamic: true }) || 'https://media.discordapp.net/attachments/541473170105040931/816408806778470490/unknown.png')
             .setDescription(`Un miembro ha salido del canal de voz llamado: ${oldState.channel.name}`)
 
-        return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(() => { })
+        let wbk = new Discord.Webhook(guild.cacheLogs.idWeb, guild.cacheLogs.tokenWeb)
+        try {
+            wbk.send(embed).catch(() => { })
+        } catch { null }
     }
 
     else if (!oldState.channel && newState.channel) {
@@ -33,7 +36,10 @@ module.exports = async (client, oldState, newState) => {
             .setAuthor(oldState?.member?.user?.tag || '\u200b', oldState.member?.user?.displayAvatarURL({ dynamic: true }) || 'https://media.discordapp.net/attachments/541473170105040931/816408806778470490/unknown.png')
             .setDescription(`Un miembro ha entrado al canal de voz llamado: ${newState.channel.name}`)
 
-        return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(() => { })
+        let wbk = new Discord.Webhook(guild.cacheLogs.idWeb, guild.cacheLogs.tokenWeb)
+        try {
+            wbk.send(embed).catch(() => { })
+        } catch { null }
     }
 
     else if ((newState.channel && oldState.channel) && (oldState.channelID != newState.channelID)) {
@@ -44,8 +50,10 @@ module.exports = async (client, oldState, newState) => {
             .setAuthor(oldState?.member?.user?.tag || '\u200b', oldState.member?.user?.displayAvatarURL({ dynamic: true }) || 'https://media.discordapp.net/attachments/541473170105040931/816408806778470490/unknown.png')
             .setDescription(`Un miembro ha entrado al canal de voz llamado: ${newState.channel.name} y salio de ${oldState.channel.name}`)
 
-        return client.channels.cache.get(`${data.channellogs}`).send({ embed: embed }).catch(() => { })
-
+        let wbk = new Discord.Webhook(guild.cacheLogs.idWeb, guild.cacheLogs.tokenWeb)
+        try {
+            wbk.send(embed).catch(() => { })
+        } catch { null }
     }
 
 }
