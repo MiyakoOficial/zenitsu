@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-unused-vars
-const { Message, MessageAttachment, MessageEmbed } = require("discord.js")
+const { Message, MessageAttachment, MessageEmbed, Util } = require("discord.js")
 
 const Command = require('../../Utils/Classes').Command;
 module.exports = class Comando extends Command {
@@ -163,6 +163,7 @@ async function resizeImage(link, width, height) {
                     ctx.drawImage(image, 0, 0, width, height)
                     encoder.setDelay(frame.frameInfo.delay * 10)
                     encoder.addFrame(ctx)
+                    await Util.delayFor(1500);
                 }
                 encoder.finish();
                 return new MessageAttachment(await require('util').promisify(toBuffer)(stream), 'file.gif')
