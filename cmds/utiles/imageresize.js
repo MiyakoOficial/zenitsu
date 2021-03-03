@@ -43,7 +43,7 @@ module.exports = class Comando extends Command {
             if (isNegative(numerito) || isNegative(segundonumerito))
                 return embedResponse(`<:cancel:804368628861763664> | El tamaño máximo es 2700x2700, pero positivos <:_XD:599689626835484672>.`);
 
-            let attachment = await resizeImage(att.proxyURL, numerito, segundonumerito)
+            let attachment = await resizeImage(att.proxyURL, numerito, segundonumerito, message.channel)
 
             return message.channel.send(attachment);
 
