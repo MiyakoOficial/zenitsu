@@ -24,13 +24,14 @@ module.exports = class Comando extends Command {
 
         let att = message.attachments.first();
 
-        if (
-            !att || !att.proxyURL
-            || !(await require('image-url-validator').default(att.proxyURL))
-        )
+        let validate = require('image-url-validator'),
+            at = await validate(att?.proxyURL || 'askdakd'),
+            argsito = await validate(args[2] || 'adkao')
+
+        if (!(at) && !(argsito))
             return embedResponse('<:cancel:804368628861763664> | Necesitas adjuntar un archivo.');
 
-        const { width, height } = att;
+        const url = (at ? att.proxyURL : argsito ? args[2] : null)
 
         const numerito = parseInt(args[0]),
             segundonumerito = parseInt(args[1])
@@ -43,7 +44,7 @@ module.exports = class Comando extends Command {
             if (isNegative(numerito) || isNegative(segundonumerito))
                 return embedResponse(`<:cancel:804368628861763664> | El tamaño máximo es 1350x1350, pero positivos <:_XD:599689626835484672>.`);
 
-            let attachment = await resizeImage(att.proxyURL, numerito, segundonumerito, message.channel)
+            let attachment = await resizeImage(url, numerito, segundonumerito, message.channel)
 
             return message.channel.send(attachment);
 
@@ -52,14 +53,12 @@ module.exports = class Comando extends Command {
         else {
 
             let embed = new MessageEmbed()
-                .setAuthor('En mantenimiento...')
-                .setColor(client.color)
                 .setTimestamp()
-                .setDescription(`<:angery:804368531415629875> | Para poder usar el comando necesitas especificar el tamaño...`)
-                .addField('Poner más grande la imagen', `${message.guild.cachePrefix}imgresize big ||100 pixeles mas 🔺||`)
-                .addField('Poner más pequeña la imagen', `${message.guild.cachePrefix}imgresize small ||100 pixeles menos 🔻||`)
-                .addField('Poner más grande/pequeña la imagen', `${message.guild.cachePrefix}imgresize <ancho> <altura> ||Limite 1350x1350 🔺🔻||`)
-                .setFooter(`Si es un gif solo podras modificar la altura...`);
+                .setColor(client.color)
+                .setDescription()
+                .setFooter(message.author.tag, message.author.displayAvatarURL({ dynamic: true }))
+                .setDescription(`Para poder modificar un gif necesitas espeficicar la altura y el ancho`)
+                .addField('Ejemplo', `${message.guild.cachePrefix}imgresize 50 150 [url/attachment]`)
 
             return message.channel.send({ embed });
 
@@ -116,7 +115,7 @@ function toBuffer(stream, callback) {
 
     return stream
 }
-
+/*
 function toArrayBuffer(buf) {
     const ab = new ArrayBuffer(buf.length);
     const view = new Uint8Array(ab);
@@ -124,7 +123,7 @@ function toArrayBuffer(buf) {
         view[i] = buf[i];
     }
     return ab;
-}
+}*/
 
 /**
  * 
