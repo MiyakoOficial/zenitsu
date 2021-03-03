@@ -8,7 +8,7 @@ module.exports = class Comando extends Command {
         this.name = "imageresize"
         this.alias = ['imgresize']
         this.category = 'utiles'
-        this.cooldown = 20;
+        this.cooldown = 60;
     }
 
     /**
@@ -176,7 +176,7 @@ async function resizeImage(link = 'https://', width = 50, height = 50, channel =
                     encoder.addFrame(ctx)
                     await Util.delayFor(1500);
                     if (i == 5) {
-                        if (msg && !msg.deleted) msg.edit(`Proceso: ${frames} de ${frameData.length} completos...`).catch(() => { })
+                        if (msg && !msg.deleted) msg.edit(`Proceso: ${frames} de ${frameData.length} frames completos...`).catch(() => { })
                         i = 0
                     }
                     i++
