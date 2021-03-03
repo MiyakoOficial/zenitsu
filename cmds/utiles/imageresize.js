@@ -37,11 +37,11 @@ module.exports = class Comando extends Command {
 
         if (!isNaN(numerito) && !isNaN(segundonumerito)) {
 
-            if (numerito > 2700 || segundonumerito > 2700)
-                return embedResponse(`<:cancel:804368628861763664> | El tamaño máximo es 2700x2700.`);
+            if (numerito > 1350 || segundonumerito > 1350)
+                return embedResponse(`<:cancel:804368628861763664> | El tamaño máximo es 1350x1350.`);
 
             if (isNegative(numerito) || isNegative(segundonumerito))
-                return embedResponse(`<:cancel:804368628861763664> | El tamaño máximo es 2700x2700, pero positivos <:_XD:599689626835484672>.`);
+                return embedResponse(`<:cancel:804368628861763664> | El tamaño máximo es 1350x1350, pero positivos <:_XD:599689626835484672>.`);
 
             let attachment = await resizeImage(att.proxyURL, numerito, segundonumerito, message.channel)
 
@@ -58,7 +58,7 @@ module.exports = class Comando extends Command {
                 .setDescription(`<:angery:804368531415629875> | Para poder usar el comando necesitas especificar el tamaño...`)
                 .addField('Poner más grande la imagen', `${message.guild.cachePrefix}imgresize big ||100 pixeles mas 🔺||`)
                 .addField('Poner más pequeña la imagen', `${message.guild.cachePrefix}imgresize small ||100 pixeles menos 🔻||`)
-                .addField('Poner más grande/pequeña la imagen', `${message.guild.cachePrefix}imgresize <ancho> <altura> ||Limite 2700x2700 🔺🔻||`)
+                .addField('Poner más grande/pequeña la imagen', `${message.guild.cachePrefix}imgresize <ancho> <altura> ||Limite 1350x1350 🔺🔻||`)
                 .setFooter(`Si es un gif solo podras modificar la altura...`);
 
             return message.channel.send({ embed });
