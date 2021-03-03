@@ -165,7 +165,7 @@ async function resizeImage(link = 'https://', width = 50, height = 50, channel =
         encoder.start();
         const stream = encoder.createReadStream();
 
-        return gifFrames({ url: link, frames: 'all' })
+        return gifFrames({ url: link, frames: 'all', cumulative: true })
             .then(async (frameData) => {
                 for (let frame of frameData) {
                     let image = await Canvas.loadImage(frame.getImage()._obj);
