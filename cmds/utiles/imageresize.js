@@ -166,7 +166,7 @@ async function resizeImage(link = 'https://', width = 50, height = 50, channel =
                     ctx.drawImage(image, 0, 0, width, height)
                     encoder.setDelay(frame.frameInfo.delay * 10)
                     encoder.addFrame(ctx)
-                    await Util.delayFor(500);
+                    await Util.delayFor(1500);
                 }
                 encoder.finish();
                 return new MessageAttachment(await require('util').promisify(toBuffer)(stream), 'file.gif')
