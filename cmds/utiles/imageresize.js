@@ -46,7 +46,14 @@ module.exports = class Comando extends Command {
 
             let attachment = await resizeImage(url, numerito, segundonumerito, message.channel)
 
-            return message.channel.send(attachment);
+            let embed = new MessageEmbed()
+                .attachFiles([attachment])
+                .setImage(`attachment://${attachment.name}`)
+                .setColor(client.color)
+                .setTimestamp()
+                .setFooter(message.author.tag, message.author.displayAvatarURL({ dynamic: true }))
+
+            return message.channel.send({ content: `${message.member}`, embed });
 
         }
 
