@@ -176,7 +176,7 @@ async function resizeImage(link = 'https://', width = 50, height = 50, channel =
                     encoder.addFrame(ctx)
                     await Util.delayFor(1500);
                     if (i == 5) {
-                        if (msg && !msg.deleted) msg.edit(`Proceso: ${frames} de ${frameData} completos...`).catch(() => { })
+                        if (msg && !msg.deleted) msg.edit(`Proceso: ${frames} de ${frameData.length} completos...`).catch(() => { })
                         i = 0
                     }
                     i++
