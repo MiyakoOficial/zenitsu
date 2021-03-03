@@ -24,7 +24,7 @@ module.exports = class Comando extends Command {
 
         let att = message.attachments.first();
 
-        let validate = require('image-url-validator'),
+        let validate = require('image-url-validator').default,
             at = await validate(att?.proxyURL || 'askdakd'),
             argsito = await validate(args[2] || 'adkao')
 
