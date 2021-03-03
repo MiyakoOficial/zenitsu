@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-unused-vars
-const { Message, MessageAttachment, MessageEmbed, Util } = require("discord.js")
+const { Message, MessageAttachment, MessageEmbed, Util, TextChannel } = require("discord.js")
 
 const Command = require('../../Utils/Classes').Command;
 module.exports = class Comando extends Command {
@@ -132,10 +132,11 @@ function toArrayBuffer(buf) {
  * @param {Number} width 
  * @param {Number} height 
  * @param {Boolean} isGif
+ * @param {TextChannel} channel
  * @returns {Promise<MessageAttachment>}
  */
 
-async function resizeImage(link, width, height) {
+async function resizeImage(link = 'https://', width = 50, height = 50, channel = null) {
 
     const sharp = require('sharp');
 
@@ -143,6 +144,8 @@ async function resizeImage(link, width, height) {
     const buffer = await require('node-fetch')(link).then(esto => esto.buffer())
 
     if (require('is-gif')(buffer)) {
+
+        channel.send(`<:wearymonke:816652946418827284> | Cargando el gif...`).catch(() => { })
 
         const gifFrames = require('gif-frames'),
             GIFEncoder = require('gifencoder'),
@@ -163,7 +166,7 @@ async function resizeImage(link, width, height) {
                     ctx.drawImage(image, 0, 0, width, height)
                     encoder.setDelay(frame.frameInfo.delay * 10)
                     encoder.addFrame(ctx)
-                    await Util.delayFor(1500);
+                    await Util.delayFor(500);
                 }
                 encoder.finish();
                 return new MessageAttachment(await require('util').promisify(toBuffer)(stream), 'file.gif')
