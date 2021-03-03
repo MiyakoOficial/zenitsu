@@ -151,7 +151,7 @@ async function resizeImage(link = 'https://', width = 50, height = 50, channel =
 
     if (require('is-gif')(buffer)) {
 
-        channel.send(`<:wearymonke:816652946418827284> | Cargando el gif...`).catch(() => { })
+        let msg = await channel.send(`<:wearymonke:816652946418827284> | Cargando el gif...`).catch(() => { });
 
         const gifFrames = require('gif-frames'),
             GIFEncoder = require('gifencoder'),
@@ -165,6 +165,8 @@ async function resizeImage(link = 'https://', width = 50, height = 50, channel =
         encoder.start();
         const stream = encoder.createReadStream();
 
+        let i = 0;
+        let frames = 0
         return gifFrames({ url: link, frames: 'all', cumulative: false })
             .then(async (frameData) => {
                 for (let frame of frameData) {
@@ -173,6 +175,12 @@ async function resizeImage(link = 'https://', width = 50, height = 50, channel =
                     encoder.setDelay(frame.frameInfo.delay * 10)
                     encoder.addFrame(ctx)
                     await Util.delayFor(1500);
+                    if (i == 5) {
+                        if (msg && !msg.deleted) msg.edit(`Proceso: ${frames} de ${frameData} completos...`).catch(() => { })
+                        i = 0
+                    }
+                    i++
+                    frames++
                 }
                 encoder.finish();
                 return new MessageAttachment(await require('util').promisify(toBuffer)(stream), 'file.gif')
