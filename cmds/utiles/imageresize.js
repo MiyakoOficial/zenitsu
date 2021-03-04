@@ -64,7 +64,7 @@ module.exports = class Comando extends Command {
                 .setColor(client.color)
                 .setDescription()
                 .setFooter(message.author.tag, message.author.displayAvatarURL({ dynamic: true }))
-                .setDescription(`Para poder modificar un gif necesitas espeficicar la altura y el ancho`)
+                .setDescription(`Para poder modificar una imagen/gif necesitas espeficicar la altura y el ancho`)
                 .addField('Ejemplo', `${message.guild.cachePrefix}imgresize 50 150 [url/attachment]`)
 
             return message.channel.send({ embed });
@@ -101,13 +101,14 @@ async function resizeImage(link = 'https://', width = 50, height = 50, channel) 
 
     if (require('is-gif')(buffer)) {
 
-        channel.send('<:wearymonke:816652946418827284> | Espere un momento...')
+        let msg = await channel.send('<:wearymonke:816652946418827284> | Espere un momento...').catch(() => { });
 
         const { resizeGif } = require('../../Utils/Functions');
 
         const res = await resizeGif({ width, height, stretch: true })(buffer)
 
         let att = new MessageAttachment(res, 'file.gif');
+        if (msg && !msg.deleted && msg.deletable) msg.delete({ timeout: 3000 }).catch(() => null);
 
         return att;
 
