@@ -140,10 +140,11 @@ function toArrayBuffer(buf) {
  * @param {Number} height 
  * @param {Boolean} isGif
  * @param {TextChannel} channel
+ * @param {String} id
  * @returns {Promise<MessageAttachment>}
  */
 
-async function resizeImage(link = 'https://', width = 50, height = 50, channel = null) {
+async function resizeImage(link = 'https://', width = 50, height = 50, channel = null, id = 'no-id') {
 
     const sharp = require('sharp');
 
@@ -152,40 +153,50 @@ async function resizeImage(link = 'https://', width = 50, height = 50, channel =
 
     if (require('is-gif')(buffer)) {
 
-        let msg = await channel.send(`<:wearymonke:816652946418827284> | Cargando el gif...`).catch(() => { });
+        channel.send(`<:wearymonke:816652946418827284> | Cargando el gif...`).catch(() => { });
 
-        const gifFrames = require('gif-frames'),
-            GIFEncoder = require('gifencoder'),
-            Canvas = require('canvas'),
-            canvas = Canvas.createCanvas(width, height),
-            ctx = canvas.getContext('2d')
+        await createFrames({
+            input: link,
+            output: id + '-frame-%d.png',
+        })
 
-        const encoder = new GIFEncoder(width, height);
-        encoder.setRepeat(0);
-        encoder.setDelay(55);
+        await Util.delayFor(2000)
+        const frames = await loadFrames(id)
+        const gifencoder = require('gifencoder');
+
+        const encoder = new gifencoder(100, 100)
         encoder.start();
+        encoder.setRepeat(1);
+        encoder.setQuality(10);
+        encoder.setDelay(55);
+        const canvas = require('canvas').createCanvas(100, 100);
+        const ctx = canvas.getContext('2d');
+        const gifFrames = require('gif-frames')
         const stream = encoder.createReadStream();
 
+        let gifframes = await gifFrames(
+            {
+                url: link,
+                frames: 'all',
+                cumulative: false
+            }
+        )
         let i = 0;
-        let frames = 0
-        return gifFrames({ url: link, frames: 'all', cumulative: false })
-            .then(async (frameData) => {
-                for (let frame of frameData) {
-                    let image = await Canvas.loadImage(frame.getImage()._obj);
-                    ctx.drawImage(image, 0, 0, width, height)
-                    encoder.setDelay(frame.frameInfo.delay * 10)
-                    encoder.addFrame(ctx)
-                    await Util.delayFor(1500);
-                    if (i == 5) {
-                        if (msg && !msg.deleted) msg.edit(`Proceso: ${frames} de ${frameData.length} frames completos...`).catch(() => { })
-                        i = 0
-                    }
-                    i++
-                    frames++
-                }
-                encoder.finish();
-                return new MessageAttachment(await require('util').promisify(toBuffer)(stream), 'file.gif')
-            });
+        for (let img of frames) {
+
+            ctx.fillStyle = '#ffffff'
+            ctx.fillRect(0, 0, 100, 100)
+            ctx.drawImage(img, 0, 0, 100, 100)
+            encoder.setDelay(gifframes[i].frameInfo.delay * 10)
+            encoder.addFrame(ctx)
+            i++
+
+        }
+        encoder.finish();
+        let buffer = await require('util').promisify(toBuffer)(stream),
+            att = new MessageAttachment(buffer, 'file.gif');
+
+        return att;
 
     } else {
 
@@ -197,5 +208,112 @@ async function resizeImage(link = 'https://', width = 50, height = 50, channel =
 
     }
 
+
+}
+
+/*
+    copi pasteado pq si
+*/
+
+const fs = require('fs')
+const path = require('path')
+const pify = require('pify')
+const pump = require('pump-promise')
+const getPixels = pify(require('get-pixels'))
+const savePixels = require('save-pixels')
+const { loadImage } = require('canvas')
+
+const supportedFormats = new Set([
+    'jpg',
+    'png',
+    'gif'
+])
+
+async function createFrames(opts) {
+    const {
+        input,
+        output,
+        coalesce = true
+    } = opts
+
+    const format = output
+        ? path.extname(output).substr(1)
+        : undefined
+
+    if (format && !supportedFormats.has(format)) {
+        throw new Error(`invalid output format "${format}"`)
+    }
+
+    const results = await getPixels(input)
+    const { shape } = results
+
+    if (shape.length === 4) {
+        // animated gif with multiple frames
+        const [
+            frames,
+            width,
+            height,
+            channels
+        ] = shape
+
+        const numPixelsInFrame = width * height
+
+        for (let i = 0; i < frames; ++i) {
+            if (i > 0 && coalesce) {
+                const currIndex = results.index(i, 0, 0, 0)
+                const prevIndex = results.index(i - 1, 0, 0, 0)
+
+                for (let j = 0; j < numPixelsInFrame; ++j) {
+                    const curr = currIndex + j * channels
+
+                    if (results.data[curr + channels - 1] === 0) {
+                        const prev = prevIndex + j * channels
+
+                        for (let k = 0; k < channels; ++k) {
+                            results.data[curr + k] = results.data[prev + k]
+                        }
+                    }
+                }
+            }
+
+            if (output) {
+                await saveFrame(results.pick(i), format, output.replace('%d', i))
+            }
+        }
+    } else if (output) {
+        // non-animated gif with a single frame
+        await saveFrame(results, format, output.replace('%d', 0))
+    }
+
+    return results
+}
+
+function saveFrame(data, format, filename) {
+    const stream = savePixels(data, format)
+    return pump(stream, fs.createWriteStream(path.join('Utils', 'temp', `${filename}`)))
+}
+
+async function loadFrames(id) {
+
+    const frames = fs.readdirSync('/home/MARCROCK22/zenitsu/Utils/temp').filter(item => item.includes(id))
+        .sort((a, b) => {
+            let first = a.split('frame-')[1]?.split('.')[0],
+                second = b.split('frame-')[1]?.split('.')[0]
+            first = parseInt(first)
+            second = parseInt(second)
+            return first - second
+        })
+
+    const framesLoad = frames.map((img) => loadImage(`/home/MARCROCK22/zenitsu/Utils/temp/${img}`));
+
+    const res = await Promise.all(framesLoad);
+
+    for (let i of frames) {
+
+        fs.unlinkSync(`/home/MARCROCK22/zenitsu/Utils/temp/${i}`);
+
+    }
+
+    return res;
 
 }
