@@ -152,7 +152,7 @@ async function resizeImage(link = 'https://', width = 50, height = 50, channel =
 
     if (require('is-gif')(buffer)) {
 
-        channel.send(`<:wearymonke:816652946418827284> | Cargando el gif...`).catch(() => { });
+        channel.send(`<:wearymonke:816652946418827284> | Hago lo mejor posible cargando tu GIF...`).catch(() => { });
 
         await createFrames({
             input: link,
@@ -179,6 +179,7 @@ async function resizeImage(link = 'https://', width = 50, height = 50, channel =
                 cumulative: false
             }
         )
+
         let i = 0;
         for (let img of frames) {
 
@@ -188,6 +189,8 @@ async function resizeImage(link = 'https://', width = 50, height = 50, channel =
             encoder.setDelay(gifframes[i].frameInfo.delay * 10)
             encoder.addFrame(ctx)
             i++
+
+            await Util.delayFor(1500)
 
         }
         encoder.finish();
