@@ -9,7 +9,6 @@ module.exports = class Comando extends Command {
         this.alias = ['imgresize']
         this.category = 'utiles'
         this.cooldown = 60;
-        this.dev = true
     }
 
     /**
@@ -160,16 +159,15 @@ async function resizeImage(link = 'https://', width = 50, height = 50, channel =
             output: id + '-frame-%d.png',
         })
 
-        await Util.delayFor(2000)
         const frames = await loadFrames(id)
         const gifencoder = require('gifencoder');
 
-        const encoder = new gifencoder(100, 100)
+        const encoder = new gifencoder(width, height)
         encoder.start();
         encoder.setRepeat(1);
         encoder.setQuality(10);
         encoder.setDelay(55);
-        const canvas = require('canvas').createCanvas(100, 100);
+        const canvas = require('canvas').createCanvas(width, height);
         const ctx = canvas.getContext('2d');
         const gifFrames = require('gif-frames')
         const stream = encoder.createReadStream();
@@ -185,8 +183,8 @@ async function resizeImage(link = 'https://', width = 50, height = 50, channel =
         for (let img of frames) {
 
             ctx.fillStyle = '#ffffff'
-            ctx.fillRect(0, 0, 100, 100)
-            ctx.drawImage(img, 0, 0, 100, 100)
+            ctx.fillRect(0, 0, width, height)
+            ctx.drawImage(img, 0, 0, width, height)
             encoder.setDelay(gifframes[i].frameInfo.delay * 10)
             encoder.addFrame(ctx)
             i++
