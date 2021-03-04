@@ -8,7 +8,7 @@ module.exports = class Comando extends Command {
         this.name = "imageresize"
         this.alias = ['imgresize']
         this.category = 'utiles'
-        this.cooldown = 60;
+        this.cooldown = 20;
     }
 
     /**
@@ -64,7 +64,7 @@ module.exports = class Comando extends Command {
                 .setColor(client.color)
                 .setDescription()
                 .setFooter(message.author.tag, message.author.displayAvatarURL({ dynamic: true }))
-                .setDescription(`Para poder modificar una imagen/gif necesitas espeficicar la altura y el ancho`)
+                .setDescription(`Para poder modificar una imagen/gif necesitas espeficicar la altura y el ancho.`)
                 .addField('Ejemplo', `${message.guild.cachePrefix}imgresize 50 150 [url/attachment]`)
 
             return message.channel.send({ embed });
