@@ -44,7 +44,7 @@ module.exports = class Comando extends Command {
             if (isNegative(numerito) || isNegative(segundonumerito))
                 return embedResponse(`<:cancel:804368628861763664> | El tamaño máximo es 1000x1000, pero positivos <:_XD:599689626835484672>.`);
 
-            let attachment = await resizeImage(url, numerito, segundonumerito, message.channel, message.author.id)
+            let attachment = await resizeImage(url, numerito, segundonumerito, message.channel)
 
             let embed = new MessageEmbed()
                 .attachFiles([attachment])
@@ -82,57 +82,6 @@ function isNegative(num) {
     if (isNaN(num)) throw new Error('Invalid number.');
     return num < 0;
 }
-/*
-function toArray(stream, callback) {
-    let arr = []
-
-    stream.on('data', onData)
-    stream.once('end', onEnd)
-    stream.once('error', callback)
-    stream.once('error', cleanup)
-    stream.once('close', cleanup)
-
-    function onData(doc) {
-        arr.push(doc)
-    }
-
-    function onEnd() {
-        callback(null, arr)
-        cleanup()
-    }
-
-    function cleanup() {
-        arr = null
-        stream.removeListener('data', onData)
-        stream.removeListener('end', onEnd)
-        stream.removeListener('error', callback)
-        stream.removeListener('error', cleanup)
-        stream.removeListener('close', cleanup)
-    }
-
-    return stream
-}
-
-function toBuffer(stream, callback) {
-    toArray(stream, function (err, arr) {
-        if (err || !arr)
-            callback(err)
-        else
-            callback(null, Buffer.concat(arr))
-    })
-
-    return stream
-}
-
-function toArrayBuffer(buf) {
-    const ab = new ArrayBuffer(buf.length);
-    const view = new Uint8Array(ab);
-    for (let i = 0; i < buf.length; ++i) {
-        view[i] = buf[i];
-    }
-    return ab;
-}*/
-
 /**
  * 
  * @param {String} link 
@@ -140,11 +89,10 @@ function toArrayBuffer(buf) {
  * @param {Number} height 
  * @param {Boolean} isGif
  * @param {TextChannel} channel
- * @param {String} id
  * @returns {Promise<MessageAttachment>}
  */
 
-async function resizeImage(link = 'https://', width = 50, height = 50) {
+async function resizeImage(link = 'https://', width = 50, height = 50, channel) {
 
     const sharp = require('sharp');
 
@@ -152,6 +100,8 @@ async function resizeImage(link = 'https://', width = 50, height = 50) {
     const buffer = await require('node-fetch')(link).then(esto => esto.buffer())
 
     if (require('is-gif')(buffer)) {
+
+        channel.send('<:wearymonke:816652946418827284> | Espere un momento...')
 
         const { resizeGif } = require('../../Utils/Functions');
 
