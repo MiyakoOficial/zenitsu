@@ -45,7 +45,7 @@ module.exports = class Comando extends Command {
             if (isNegative(numerito) || isNegative(segundonumerito))
                 return embedResponse(`<:cancel:804368628861763664> | El tamaño máximo es 1000x1000, pero positivos <:_XD:599689626835484672>.`);
 
-            let attachment = await resizeImage(url, numerito, segundonumerito, message.channel)
+            let attachment = await resizeImage(url, numerito, segundonumerito, message.channel, message.author.id)
 
             let embed = new MessageEmbed()
                 .attachFiles([attachment])
@@ -290,7 +290,7 @@ async function createFrames(opts) {
 
 function saveFrame(data, format, filename) {
     const stream = savePixels(data, format)
-    return pump(stream, fs.createWriteStream(path.join('Utils', 'temp', `${filename}`)))
+    return pump(stream, fs.createWriteStream(`/home/MARCROCK22/zenitsu/Utils/temp/${filename}`))
 }
 
 async function loadFrames(id) {
