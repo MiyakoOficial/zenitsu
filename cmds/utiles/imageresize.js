@@ -82,6 +82,7 @@ function isNegative(num) {
     if (isNaN(num)) throw new Error('Invalid number.');
     return num < 0;
 }
+/*
 function toArray(stream, callback) {
     let arr = []
 
@@ -122,7 +123,7 @@ function toBuffer(stream, callback) {
 
     return stream
 }
-/*
+
 function toArrayBuffer(buf) {
     const ab = new ArrayBuffer(buf.length);
     const view = new Uint8Array(ab);
@@ -166,7 +167,7 @@ async function resizeImage(link = 'https://', width = 50, height = 50) {
             .resize({
                 width,
                 height,
-                fill: sharp.fit.fill,
+                fit: `fill`,
             })
             .toBuffer();
 
