@@ -9,6 +9,7 @@ module.exports = class Comando extends Command {
         this.alias = ['imgresize']
         this.category = 'utiles'
         this.cooldown = 60;
+        this.dev = true
     }
 
     /**
