@@ -37,6 +37,7 @@
         "ms": "^2.1.2",
         "myscrapper": "^0.2.2",
         "node-fetch": "^2.6.0",
+        "node-svg2img": "^1.1.0",
         "npm": "^7.6.0",
         "opusscript": "0.0.7",
         "puppeteer": "^8.0.0",
