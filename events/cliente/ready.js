@@ -69,7 +69,7 @@ function presence(client) {
 	return client.user.setPresence({
 		status: "idle",
 		activity: {
-			name: "z!help | " + client.guilds.cache.size + " servidores",
+			name: "z!suggest | " + client.guilds.cache.size + " servidores",
 			type: "WATCHING"
 		}
 	});
