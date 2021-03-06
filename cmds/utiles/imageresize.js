@@ -50,7 +50,8 @@ module.exports = class Comando extends Command {
                 .setImage(attachment)
                 .setColor(client.color)
                 .setTimestamp()
-                .setFooter(message.author.tag, message.author.displayAvatarURL({ dynamic: true }))
+                .setAuthor(message.author.tag, message.author.displayAvatarURL({ dynamic: true, size: 2048 }))
+                .setFooter(`La imagen solo durara un dia, si quieres puedes descargartela...`)
 
             return message.channel.send({ content: `${message.member}`, embed });
 
@@ -100,7 +101,7 @@ async function resizeImage(link = 'https://', width = 50, height = 50, channel) 
 
     if (require('is-gif')(buffer)) {
 
-        await channel.send('<:wearymonke:816652946418827284> | Espere un momento...').catch(() => { });
+        let msg = await channel.send('<:wearymonke:816652946418827284> | Espere un momento...').catch(() => { });
 
         const { resizeGif } = require('../../Utils/Functions');
 
@@ -120,6 +121,9 @@ async function resizeImage(link = 'https://', width = 50, height = 50, channel) 
                 },
             }),
             { link } = await res1.json();
+
+        if (!msg.deleted && msg.deletable) msg.delete({ timeout: 3000 }).catch(() => { })
+
         return link;
 
     } else {
