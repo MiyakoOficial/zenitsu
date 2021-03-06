@@ -39,8 +39,8 @@ module.exports = class Comando extends Command {
             imagen = attachment?.proxyURL,
             imagenCargada = await Canvas.loadImage(imagen);
 
-        if (numero > 25)
-            return embedResponse(`<:cancel:804368628861763664> | El numero limite es **25**.`);
+        if (numero > 20)
+            return embedResponse(`<:cancel:804368628861763664> | El numero limite es **20**.`);
 
         if (numero <= 1)
             return embedResponse(`<:cancel:804368628861763664> | El numero minimo es **2**.`)
@@ -78,7 +78,7 @@ module.exports = class Comando extends Command {
         const rutazipfinal = ruta(`${message.author.id}-tempzip.zip`),
             zipFinal = await fs.readFile(rutazipfinal);
         await fs.unlink(rutazipfinal);
-        let att = new MessageAttachment(zipFinal, 'widdleemoji-' + message.author.id + '-.zip')
+        let att = new MessageAttachment(zipFinal, 'widdleemoji-' + message.author.id + '.zip')
         return message.channel.send(att);
     }
 }
