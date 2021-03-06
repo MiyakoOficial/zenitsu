@@ -45,6 +45,9 @@ module.exports = class Comando extends Command {
         if (numero <= 1)
             return embedResponse(`<:cancel:804368628861763664> | El numero minimo es **2**.`)
 
+        if (!parseInt(width / numero) || !parseInt(heigth / numero))
+            return embedResponse(`<:cancel:804368628861763664> | La imagen es muy pequeña para el numero seleccionado (${numero}).`);
+
         let n = 0;
         for (let x in [...new Array(numero)]) for (let y in [...new Array(numero)]) {
 
