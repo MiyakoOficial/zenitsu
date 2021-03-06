@@ -45,7 +45,7 @@ module.exports = class Comando extends Command {
                 return embedResponse(`<:cancel:804368628861763664> | El tamaño máximo es 1000x1000, pero positivos <:_XD:599689626835484672>.`);
 
             let attachment = await resizeImage(url, numerito, segundonumerito, message.channel)
-
+            console.log(attachment)
             let embed = new MessageEmbed()
                 .attachFiles()
                 .setImage(attachment)
