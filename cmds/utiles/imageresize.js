@@ -47,8 +47,8 @@ module.exports = class Comando extends Command {
             let attachment = await resizeImage(url, numerito, segundonumerito, message.channel)
 
             let embed = new MessageEmbed()
-                .attachFiles([attachment])
-                .setImage(`attachment://${attachment.name}`)
+                .attachFiles()
+                .setImage(attachment)
                 .setColor(client.color)
                 .setTimestamp()
                 .setFooter(message.author.tag, message.author.displayAvatarURL({ dynamic: true }))
@@ -89,7 +89,7 @@ function isNegative(num) {
  * @param {Number} height 
  * @param {Boolean} isGif
  * @param {TextChannel} channel
- * @returns {Promise<MessageAttachment>}
+ * @returns {Promise<String>}
  */
 
 async function resizeImage(link = 'https://', width = 50, height = 50, channel) {
@@ -101,30 +101,42 @@ async function resizeImage(link = 'https://', width = 50, height = 50, channel) 
 
     if (require('is-gif')(buffer)) {
 
-        let msg = await channel.send('<:wearymonke:816652946418827284> | Espere un momento...').catch(() => { });
+        await channel.send('<:wearymonke:816652946418827284> | Espere un momento...').catch(() => { });
 
         const { resizeGif } = require('../../Utils/Functions');
 
         const res = await resizeGif({ width, height, stretch: true })(buffer)
 
-        let att = new MessageAttachment(res, 'file.gif');
-        if (msg && !msg.deleted && msg.deletable) msg.delete({ timeout: 3000 }).catch(() => null);
+        const FormData = require('form-data'),
+            formData1 = new FormData()
 
-        return att;
+        formData1.append('file', res, { contentType: 'image/gif', name: 'file', filename: 'file.gif' });
+
+        const fetch = require('node-fetch'),
+            res1 = await fetch(`https://zenitsu.eastus.cloudapp.azure.com/images`, {
+                method: 'POST',
+                body: formData1,
+            }),
+            { link } = await res1.json();
+        return link;
 
     } else {
-
         const bufferSharp = await sharp(buffer)
             .resize({
                 width,
                 height,
                 fit: `fill`,
             })
-            .toBuffer();
-
-        return new MessageAttachment(bufferSharp, 'file.png')
-
+            .toBuffer(),
+            FormData = require('form-data'),
+            formData2 = new FormData()
+        formData2.append('file', bufferSharp, { contentType: 'image/png', name: 'file', filename: 'file.png' })
+        const fetch = require('node-fetch'),
+            res2 = await fetch(`https://zenitsu.eastus.cloudapp.azure.com/images`, {
+                method: 'POST',
+                body: formData2,
+            }),
+            { link } = await res2.json();
+        return link;
     }
-
-
 }
