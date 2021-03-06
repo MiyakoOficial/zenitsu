@@ -42,6 +42,9 @@ module.exports = class Comando extends Command {
         if (numero > 25)
             return embedResponse(`<:cancel:804368628861763664> | El numero limite es **25**.`);
 
+        if (numero <= 1)
+            return embedResponse(`<:cancel:804368628861763664> | El numero minimo es **2**.`)
+
         let n = 0;
         for (let x in [...new Array(numero)]) for (let y in [...new Array(numero)]) {
 
