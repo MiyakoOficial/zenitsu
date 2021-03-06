@@ -26,7 +26,7 @@ module.exports = class Comando extends Command {
         const fs = require('fs/promises')
         const attachment = message.attachments.find(item => require('is-image')(item?.proxyURL));
 
-        if (attachment)
+        if (!attachment)
             return sendEmbed({
                 description: `<:cancel:804368628861763664> | Necesitas **adjuntar** una imagen...`,
                 footerText: `Puedes especificar el numero de imagenes por columna, ${message.guild.cachePrefix}widdleemoji <num>[default=3].`,
