@@ -47,7 +47,6 @@ module.exports = class Comando extends Command {
             let attachment = await resizeImage(url, numerito, segundonumerito, message.channel)
             console.log(attachment)
             let embed = new MessageEmbed()
-                .attachFiles()
                 .setImage(attachment)
                 .setColor(client.color)
                 .setTimestamp()
