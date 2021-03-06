@@ -29,7 +29,8 @@ module.exports = class Comando extends Command {
         if (attachment)
             return sendEmbed({
                 description: `<:cancel:804368628861763664> | Necesitas **adjuntar** una imagen...`,
-                footerText: `Puedes especificar el numero de imagenes por columna, ${message.guild.cachePrefix}widdleemoji <num>[default=3].`
+                footerText: `Puedes especificar el numero de imagenes por columna, ${message.guild.cachePrefix}widdleemoji <num>[default=3].`,
+                channel: message.channel
             })
 
         const width = attachment.width,
