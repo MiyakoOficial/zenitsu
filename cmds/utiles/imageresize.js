@@ -50,7 +50,7 @@ module.exports = class Comando extends Command {
                 .setImage(attachment)
                 .setColor(client.color)
                 .setTimestamp()
-                .setAuthor(message.author.tag, message.author.displayAvatarURL({ dynamic: true, size: 2048 }))
+                .setAuthor(message.author.tag, message.author.displayAvatarURL({ dynamic: true, size: 2048 }), attachment)
                 .setFooter(`La imagen solo durara un dia, si quieres puedes descargartela...`)
 
             return message.channel.send({ content: `${message.member}`, embed });
