@@ -80,7 +80,9 @@ module.exports = class Comando extends Command {
         const rutazipfinal = ruta(`${message.author.id}-tempzip.zip`),
             zipFinal = await fs.readFile(rutazipfinal);
         await fs.unlink(rutazipfinal);
+
         let att = (ext) => new MessageAttachment(zipFinal, 'widdleemoji-' + message.author.id + '.' + ext)
+
         return message.channel.send({ files: [att('zip'), att('rar')] });
     }
 }
