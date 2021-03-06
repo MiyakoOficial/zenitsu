@@ -107,6 +107,9 @@ async function resizeImage(link = 'https://', width = 50, height = 50, channel) 
 
         const res = await resizeGif({ width, height, stretch: true })(buffer)
 
+        console.
+            log(res)
+
         const FormData = require('form-data'),
             formData1 = new FormData()
 
