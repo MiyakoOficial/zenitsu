@@ -15,7 +15,7 @@ module.exports = class Comando extends Command {
         this.name = "tts"
         this.category = 'utiles'
         this.botPermissions.guild = ['ATTACH_FILES']
-        this.cooldown = 10;
+        this.cooldown = 15;
 
     }
 
