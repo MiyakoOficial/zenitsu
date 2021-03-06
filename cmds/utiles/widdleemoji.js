@@ -66,11 +66,10 @@ module.exports = class Comando extends Command {
         for (let i of filesPng) {
             let img = await fs.readFile(ruta(i));
             zip.file('img-' + n + '.png', img)
+            const data = zip.generate({ base64: false, compression: 'DEFLATE' });
+            await fs.writeFile(ruta(message.author.id + '-tempzip.zip'), data, 'binary');
             n++
         }
-
-        const data = zip.generate({ base64: false, compression: 'DEFLATE' });
-        await fs.writeFile(ruta(message.author.id + '-tempzip.zip'), data, 'binary');
 
         for (let file of (await fs.readdir(path.join(__dirname, '..', '..', 'Utils', 'temp'))).filter(item => item.startsWith(message.author.id) && item.endsWith('.png')))
             await fs.unlink(ruta(file))
