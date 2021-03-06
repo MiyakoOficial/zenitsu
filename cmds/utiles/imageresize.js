@@ -38,11 +38,11 @@ module.exports = class Comando extends Command {
 
         if (!isNaN(numerito) && !isNaN(segundonumerito)) {
 
-            if (numerito > 1000 || segundonumerito > 1000)
-                return embedResponse(`<:cancel:804368628861763664> | El tamaño máximo es 1000x1000.`);
+            if (numerito > 2700 || segundonumerito > 2700)
+                return embedResponse(`<:cancel:804368628861763664> | El tamaño máximo es 2700x2700.`);
 
             if (isNegative(numerito) || isNegative(segundonumerito))
-                return embedResponse(`<:cancel:804368628861763664> | El tamaño máximo es 1000x1000, pero positivos <:_XD:599689626835484672>.`);
+                return embedResponse(`<:cancel:804368628861763664> | El tamaño máximo es 2700x2700, pero positivos <:_XD:599689626835484672>.`);
 
             let attachment = await resizeImage(url, numerito, segundonumerito, message.channel)
             console.log(attachment)
