@@ -115,6 +115,9 @@ async function resizeImage(link = 'https://', width = 50, height = 50, channel) 
             res1 = await fetch(`https://zenitsu.eastus.cloudapp.azure.com/images`, {
                 method: 'POST',
                 body: formData1,
+                headers: {
+                    authorization: process.env.PASSWORD
+                },
             }),
             { link } = await res1.json();
         return link;
@@ -134,6 +137,9 @@ async function resizeImage(link = 'https://', width = 50, height = 50, channel) 
             res2 = await fetch(`https://zenitsu.eastus.cloudapp.azure.com/images`, {
                 method: 'POST',
                 body: formData2,
+                headers: {
+                    authorization: process.env.PASSWORD
+                },
             }),
             { link } = await res2.json();
         return link;
