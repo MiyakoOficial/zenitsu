@@ -25,6 +25,7 @@
         "easymaty": "^1.0.22",
         "express": "^4.17.1",
         "ffmpeg-static": "^4.2.6",
+        "form-data": "^2.3.3",
         "get-pixels": "^3.3.2",
         "gif-frames": "^1.0.1",
         "gifencoder": "^2.0.1",
