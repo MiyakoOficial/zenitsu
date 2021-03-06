@@ -52,7 +52,7 @@ module.exports = class Comando extends Command {
                 ctx = canvas.getContext('2d');
 
             console.log(x * -width / numero, y * -heigth / numero);
-            ctx.drawImage(imagenCargada, x * -500 / numero, y * -500 / numero, width, heigth);
+            ctx.drawImage(imagenCargada, x * -width / numero, y * -heigth / numero, width, heigth);
             await fs.writeFile(ruta(`${message.author.id}-${n}-foto.png`), canvas.toBuffer());
             n++
 
