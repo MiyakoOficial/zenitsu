@@ -118,7 +118,7 @@ module.exports = class Comando extends Command {
             .setColor(emojisColores[message.author.juego.emoji])
             .setDescription(res)
             .setTimestamp()
-            .setFooter(`¿En que posición está ${message.author.juego.emoji}?`)
+            .setFooter(`¿En que posición está ${message.author.juego.emoji}? (20 segundos)`)
 
         await msg.edit({ embed })
 
@@ -137,7 +137,7 @@ module.exports = class Comando extends Command {
             let dosxd = unoxd[parseInt(splited[1]) - 1]
 
             if (dosxd == game.emoji) {
-                return embedResponse('Ganaste!')
+                return embedResponse('<a:waiting:804396292793040987> | Ganaste!')
             }
 
             else {
