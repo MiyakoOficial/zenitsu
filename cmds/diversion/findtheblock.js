@@ -6,7 +6,7 @@ module.exports = class Comando extends Command {
         super()
         this.name = "findtheblock"
         this.category = 'diversion'
-        this.cooldown = 30
+        this.cooldown = 25
     }
 
     /**
@@ -118,14 +118,14 @@ module.exports = class Comando extends Command {
             .setColor(emojisColores[message.author.juego.emoji])
             .setDescription(res)
             .setTimestamp()
-            .setFooter(`¿En que posición está ${message.author.juego.emoji}? (20 segundos)`)
+            .setFooter(`¿En que posición está ${message.author.juego.emoji}? (15 segundos)`)
 
         await msg.edit({ embed })
 
-        const resMessage = await message.channel.awaitMessages(msg => msg.content && msg.author.id == message.author.id, { max: 1, time: 20000 }).catch(() => { });
+        const resMessage = await message.channel.awaitMessages(msg => msg.content && msg.author.id == message.author.id, { max: 1, time: 150000 }).catch(() => { });
 
         if (!resMessage?.size)
-            return message.channel.send('No respondiste :sob:');
+            return message.channel.send('<:cancel:804368628861763664> | No respondiste a tiempo...');
 
         const awaitMessage = resMessage.first();
 
