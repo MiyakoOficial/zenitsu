@@ -130,11 +130,11 @@ module.exports = class Comando extends Command {
         const awaitMessage = resMessage.first();
 
         const splited = awaitMessage.content.split(' ') || [],
-            unoxd = tablero[parseInt(splited[0]) - 1];
+            unoxd = tablero[parseInt(splited[1]) - 1];
 
         if (unoxd) {
 
-            let dosxd = unoxd[parseInt(splited[1]) - 1]
+            let dosxd = unoxd[parseInt(splited[0]) - 1]
 
             if (dosxd == game.emoji) {
                 return embedResponse('<a:waiting:804396292793040987> | Ganaste!')
