@@ -6,7 +6,7 @@ module.exports = class Comando extends Command {
         super()
         this.name = "findtheblock"
         this.category = 'diversion'
-        this.cooldown = 15
+        this.cooldown = 30
     }
 
     /**
