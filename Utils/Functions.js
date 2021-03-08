@@ -809,8 +809,8 @@ const execa = require('execa');
 module.exports.resizeGif = opts => async buf => {
 
     opts = Object.assign({
-        resize_method: "lanczos2",
-        optimizationLevel: 2
+        resize_method: "catrom",
+        optimizationLevel: 1
     }, opts);
 
     if (!Buffer.isBuffer(buf)) {
