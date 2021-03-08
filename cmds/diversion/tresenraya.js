@@ -33,41 +33,35 @@ module.exports = class Comando extends Command {
         if (message.guild.partida)
             return sendEmbed({ channel: message.channel, description: '<:cancel:804368628861763664> | Hay otra persona jugando en este servidor.' })
 
-        sendEmbed({
-            channel: message.channel,
-            description: `<a:waiting:804396292793040987> | ${usuario} tienes 1 minuto para responder...\n¿Quieres jugar?: ~~responde "s"~~\n¿No quieres?: ~~responde "n"~~`
-        });
-
+        if (client.user.id != usuario.id) {
+            sendEmbed({
+                channel: message.channel,
+                description: `<a:waiting:804396292793040987> | ${usuario} tienes 1 minuto para responder...\n¿Quieres jugar?: ~~responde "s"~~\n¿No quieres?: ~~responde "n"~~`
+            });
+        }
         message.guild.partida = new tresenraya.partida({ jugadores: [message.author.id, usuario.id] });
 
-        if (usuario.id == client.user.id) {
+        let respuesta;
 
-            setTimeout(() => {
+        if (client.user.id != usuario.id) {
+            respuesta = await awaitMessage({ channel: message.channel, filter: (m) => m.author.id == usuario.id && ['s', 'n'].some(item => item == m.content), time: (1 * 60) * 1000, max: 1 }).catch(() => { })
 
-                message.channel.send('s')
+            if (!respuesta) {
+                sendEmbed({
+                    channel: message.channel,
+                    description: `😔 | ${usuario} no respondió...`
+                })
+                return message.guild.partida = undefined;
+            }
 
-            }, 3000)
-
+            if (respuesta.first().content == 'n') {
+                sendEmbed({
+                    channel: message.channel,
+                    description: '😔 | Rechazó la invitación...'
+                })
+                return message.guild.partida = undefined;
+            }
         }
-
-        let respuesta = await awaitMessage({ channel: message.channel, filter: (m) => m.author.id == usuario.id && ['s', 'n'].some(item => item == m.content), time: (1 * 60) * 1000, max: 1 }).catch(() => { })
-
-        if (!respuesta) {
-            sendEmbed({
-                channel: message.channel,
-                description: `😔 | ${usuario} no respondió...`
-            })
-            return message.guild.partida = undefined;
-        }
-
-        if (respuesta.first().content == 'n') {
-            sendEmbed({
-                channel: message.channel,
-                description: '😔 | Rechazó la invitación...'
-            })
-            return message.guild.partida = undefined;
-        }
-
         const { partida } = message.guild;
 
         partida.on('ganador', async (jugador, tablero, paso) => {
