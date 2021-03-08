@@ -809,7 +809,7 @@ const execa = require('execa');
 module.exports.resizeGif = opts => async buf => {
 
     opts = Object.assign({
-        resize_method: "catrom",
+        resize_method: "lanczos2",
         optimizationLevel: 1
     }, opts);
 
