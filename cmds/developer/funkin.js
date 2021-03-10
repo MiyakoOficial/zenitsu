@@ -52,19 +52,13 @@ module.exports = class Comando extends Command {
             ctx.drawImage(imagenes[i], 700, 300, 300, 350)
             encoder.addFrame(ctx);
             await require('discord.js').Util.delayFor(2000)
-            console.log(num)
             if (num >= 5) {
-                console.log(msg, msg.deleted)
                 if (msg && !msg.deleted) {
-
                     try {
-
-                        msg = await msg.edit(`${total} frames de ${moves.length}...`)
-
+                        msg = await msg.edit(`${total} frames de ${moves.length}...`).catch(() => { })
                     } catch {
                         null;
                     }
-
                 }
                 num = 0;
             }
