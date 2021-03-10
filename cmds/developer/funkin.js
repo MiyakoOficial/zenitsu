@@ -44,7 +44,8 @@ module.exports = class Comando extends Command {
         encoder.setQuality(10);
         const canvas = createCanvas(1235, 675);
         let msg = await message.channel.send('Cargando...').catch(() => { });
-        let num = 0;
+        let num = 0,
+            total = 0
         const ctx = canvas.getContext('2d');
         for (let i of moves) {
             ctx.drawImage(background, 0, 0, canvas.width, canvas.height)
@@ -58,7 +59,7 @@ module.exports = class Comando extends Command {
 
                     try {
 
-                        msg = await msg.edit(`${num} frames de ${moves.length}...`)
+                        msg = await msg.edit(`${total} frames de ${moves.length}...`)
 
                     } catch {
                         null;
@@ -68,6 +69,7 @@ module.exports = class Comando extends Command {
                 num = 0;
             }
             num++
+            total++
         }
         const stream = encoder.createReadStream();
         encoder.finish();
