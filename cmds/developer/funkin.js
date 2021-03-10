@@ -2,6 +2,7 @@ const { buffer: toBuffer } = require('../../Utils/Functions')
 const Command = require('../../Utils/Classes').Command;
 const { loadImage, createCanvas } = require('canvas');
 const gifencoder = require('gifencoder')
+const { Message } = require('discord.js')
 module.exports = class Comando extends Command {
     constructor() {
         super()
@@ -12,6 +13,10 @@ module.exports = class Comando extends Command {
         this.cooldown = 60;
     }
     // eslint-disable-next-line no-unused-vars
+    /**
+     * @param {Object} param0
+     * @param {Message} param0.message
+     */
     async run({ message, args, client }) {
 
 
@@ -37,12 +42,32 @@ module.exports = class Comando extends Command {
         encoder.setDelay(150);
         encoder.setQuality(10);
         const canvas = createCanvas(1235, 675);
+        let msg = await message.channel.send('Cargando...').catch(() => { });
+        let num = 0;
         const ctx = canvas.getContext('2d');
         for (let i of moves) {
             ctx.drawImage(background, 0, 0, canvas.width, canvas.height)
             ctx.drawImage(imagenes[i], 700, 300, 300, 350)
             encoder.addFrame(ctx);
-            await require('discord.js').Util.delayFor(1500)
+            await require('discord.js').Util.delayFor(2000)
+            num++
+
+            if (num == 5) {
+
+                if (msg && msg.editable && !msg.deleted) {
+
+                    try {
+
+                        msg.edit(`${num} frames de ${moves}...`)
+
+                    } catch {
+                        null;
+                    }
+
+                }
+
+            }
+
         }
         const stream = encoder.createReadStream();
         encoder.finish();
