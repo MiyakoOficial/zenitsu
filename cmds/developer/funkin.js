@@ -2,6 +2,7 @@ const { buffer: toBuffer } = require('../../Utils/Functions')
 const Command = require('../../Utils/Classes').Command;
 const { loadImage, createCanvas } = require('canvas');
 const gifencoder = require('gifencoder')
+// eslint-disable-next-line no-unused-vars
 const { Message } = require('discord.js')
 module.exports = class Comando extends Command {
     constructor() {
@@ -58,7 +59,7 @@ module.exports = class Comando extends Command {
 
                     try {
 
-                        msg.edit(`${num} frames de ${moves}...`)
+                        msg.edit(`${num} frames de ${moves.length}...`)
 
                     } catch {
                         null;
