@@ -52,8 +52,8 @@ module.exports = class Comando extends Command {
             encoder.addFrame(ctx);
             await require('discord.js').Util.delayFor(2000)
             num++
-
-            if (num == 5) {
+            console.log(num)
+            if (num >= 5) {
 
                 if (msg && msg.editable && !msg.deleted) {
 
