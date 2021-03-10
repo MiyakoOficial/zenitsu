@@ -51,7 +51,6 @@ module.exports = class Comando extends Command {
             ctx.drawImage(imagenes[i], 700, 300, 300, 350)
             encoder.addFrame(ctx);
             await require('discord.js').Util.delayFor(2000)
-            num++
             console.log(num)
             if (num >= 5) {
                 console.log(msg, msg.deleted)
@@ -68,7 +67,7 @@ module.exports = class Comando extends Command {
                 }
                 num = 0;
             }
-
+            num++
         }
         const stream = encoder.createReadStream();
         encoder.finish();
