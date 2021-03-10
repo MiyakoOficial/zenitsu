@@ -54,7 +54,7 @@ module.exports = class Comando extends Command {
             num++
             console.log(num)
             if (num >= 5) {
-
+                console.log(msg, msg.deleted)
                 if (msg && !msg.deleted) {
 
                     try {
