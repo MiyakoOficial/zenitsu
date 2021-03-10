@@ -66,7 +66,7 @@ module.exports = class Comando extends Command {
                     }
 
                 }
-
+                num = 0;
             }
 
         }
