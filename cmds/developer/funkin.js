@@ -59,7 +59,7 @@ module.exports = class Comando extends Command {
 
                     try {
 
-                        msg.edit(`${num} frames de ${moves.length}...`)
+                        msg = await msg.edit(`${num} frames de ${moves.length}...`)
 
                     } catch {
                         null;
